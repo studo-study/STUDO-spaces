@@ -1,0 +1,99 @@
+{
+  "id": 1,
+  "title": "Human Anatomy Basics",
+  "subject": "Biology",
+  "folder": {
+    "id": 3,
+    "name": "Semester 1 - Biology",
+    "owner": 1
+  },
+  "global_term_language": "en",
+  "global_definition_language": "en",
+  "created_at": "2025-10-12T14:32:00Z",
+  "last_studied": "2025-10-20T19:22:00Z",
+  "last_updated": "2025-10-21T08:10:00Z",
+  "public": true,
+  "hearts": 28,
+
+  "user": {
+    "id": 1,
+    "displayName": "Charles D.",
+    "email": "charles@example.com",
+    "join_date": "2024-10-01T10:15:00Z",
+    "streak_started": "2025-10-15T00:00:00Z",
+    "streak_count": 6,
+    "streak_last_update": "2025-10-21T08:00:00Z",
+    "last_login": "2025-10-21T07:50:00Z",
+    "hearts": 134,
+    "role": "student"
+  },
+
+  "cards": [
+    {
+      "id": 101,
+      "term": "Femur",
+      "definition": "The longest bone in the human body, located in the thigh.",
+      "created_at": "2025-10-12T14:35:00Z",
+      "updated_at": "2025-10-19T10:00:00Z",
+      "card_viewcount": 1
+    },
+    {
+      "id": 102,
+      "term": "Biceps brachii",
+      "definition": "Muscle of the upper arm that bends the elbow.",
+      "created_at": "2025-10-12T14:36:00Z",
+      "updated_at": "2025-10-18T09:00:00Z",
+      "card_viewcount": 37
+    },
+    {
+      "id": 103,
+      "term": "Skull",
+      "definition": "Bony structure that forms the head, protecting the brain.",
+      "created_at": "2025-10-12T14:37:00Z",
+      "updated_at": "2025-10-18T09:10:00Z",
+      "card_viewcount": 20
+    }
+  ],
+
+  "likes": [
+    {
+      "user_id": 12,
+      "created_at": "2025-10-19T11:22:00Z"
+    },
+    {
+      "user_id": 18,
+      "created_at": "2025-10-20T09:15:00Z"
+    }
+  ],
+
+  "classrooms": [
+    {
+      "id": 5,
+      "name": "Bio 101 - Anatomy Group",
+      "owner": 2,
+      "type": "public",
+      "verified": true,
+      "created_at": "2025-09-01T12:00:00Z",
+      "role": "student"
+    }
+  ],
+
+  "study_sessions": [
+    {
+      "id": 201,
+      "started_at": "2025-10-19T10:00:00Z",
+      "duration_min": 30,
+      "second_last_login": "2025-10-17T17:00:00Z",
+      "last_login": "2025-10-21T07:50:00Z",
+      "user_id": 1
+    },
+    {
+      "id": 202,
+      "started_at": "2025-10-20T19:00:00Z",
+      "duration_min": 45,
+      "second_last_login": "2025-10-19T10:00:00Z",
+      "last_login": "2025-10-21T07:50:00Z",
+      "user_id": 1
+    }
+  ]
+}

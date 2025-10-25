@@ -1,0 +1,338 @@
+@import url('https://use.typekit.net/fmn3jvz.css');
+body {
+    background-color: rgb(239, 246, 255); /* light mode: bg-blue-50 */
+}
+
+/* Voor dark mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: rgb(31, 41, 55); /* dark mode: bg-gray-800 */
+    }
+}
+
+
+
+
+/* Je @font-face declaraties blijven hetzelfde, maar fix de paths (zie stap 2) */
+@font-face {
+    font-family: 'SF Pro';
+    src: url('assets/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro';
+    src: url('assets/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'akira';
+    src: url('assets/fonts/akira/akira.otf') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'atrament';
+    src: url('assets/fonts/atrament/AtramentTRIAL-Bold-BF65a72dd31b6de.otf') format('woff2');
+    font-weight: bolder;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'atrament';
+    src: url('assets/fonts/atrament/AtramentTRIAL-Regular-BF65a72dd34bb43.otf') format('woff2');
+    font-weight: light;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'atrament';
+    src: url('assets/fonts/atrament/AtramentTRIAL-Semibold-BF65a72dd347e22.otf') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'atrament';
+    src: url('assets/fonts/atrament/AtramentTRIAL-Medium-BF65a72dd3576a5.otf') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import 'tailwindcss';
+
+@theme {
+    --font-akira: akira, sans-serif;
+    --font-sfpro: SF Pro, sans-serif;
+    --font-atrament: atrament-web, sans-serif;
+    --color-studogreen: #8bcca3;
+    --color-studoblue: #4f83ff;
+    --color-studodarkblue: #2a3a42;
+    --color-studodark: rgba(224, 224, 224, 0.19);
+    --color-studogrey: rgba(200, 210, 210, 0.19);
+    --color-studowhite: rgba(224, 224, 224, 0.19);
+    --color-studoborder: rgba(255, 255, 255, 0.3);
+    --color-inputcolor: rgba(255, 255, 255, 0.175);
+}
+
+.nav {
+    width: 50px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+.nav svg {
+    fill: none;
+
+    stroke-width: 7px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+.nav svg use:nth-of-type(1) {
+    opacity: 1;
+    stroke-dashoffset: 221;
+    stroke-dasharray: 46 249;
+    transition: stroke-dashoffset 0.12s linear 0.2s,
+    stroke-dasharray 0.12s linear 0.2s, opacity 0s linear 0.2s;
+}
+
+.nav svg use:nth-of-type(2) {
+    animation: stroke-animation-reverse 1.2s ease-out forwards;
+}
+
+.nav input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.nav input:checked + svg use:nth-of-type(1) {
+    stroke-dashoffset: 175;
+    stroke-dasharray: 0 295;
+    opacity: 0;
+    transition: stroke-dashoffset 0.07s linear 0.07s,
+    stroke-dasharray 0.07s linear 0.07s, opacity 0s linear 0.14s;
+}
+
+.nav input:checked + svg use:nth-of-type(2) {
+    animation: stroke-animation 1.2s ease-out forwards;
+}
+
+@keyframes stroke-animation {
+    0% {
+        stroke-dashoffset: 295;
+        stroke-dasharray: 25 270;
+    }
+    50% {
+        stroke-dashoffset: 68;
+        stroke-dasharray: 59 236;
+    }
+    65% {
+        stroke-dashoffset: 59;
+        stroke-dasharray: 59 236;
+    }
+    100% {
+        stroke-dashoffset: 68;
+        stroke-dasharray: 59 236;
+    }
+}
+
+@keyframes stroke-animation-reverse {
+    0% {
+        stroke-dashoffset: 68;
+        stroke-dasharray: 59 236;
+    }
+    50% {
+        stroke-dashoffset: 290;
+        stroke-dasharray: 25 270;
+    }
+    65% {
+        stroke-dashoffset: 295;
+        stroke-dasharray: 25 270;
+    }
+    100% {
+        stroke-dashoffset: 290;
+        stroke-dasharray: 25 270;
+    }
+}
+
+.scroll-hidden {
+    overflow-y: scroll;   /* of auto */
+    scrollbar-width: none; /* voor Firefox */
+}
+.scroll-hidden::-webkit-scrollbar {
+    display: none; /* voor Chrome, Safari en Edge */
+}
+
+
+.custom-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.custom-select select {
+    padding-left: 2vh;
+    padding-right: 4vh;
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    background-color: rgba(213, 213, 213, 0.175);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.15);
+    border-bottom: 1.3px solid rgba(255, 255, 255, 0.352);
+    appearance: none;
+    width: 100%;
+}
+
+.custom-select::before,
+.custom-select::after {
+    --size: 0.3rem;
+    content: "";
+    position: absolute;
+    right: 1rem;
+    pointer-events: none;
+}
+
+.custom-select::before {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid black;
+    top: 40%;
+}
+
+.custom-select::after {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid black;
+    top: 55%;
+}
+
+.background-profile {
+    background: linear-gradient(
+            90deg,
+            rgba(255, 154, 0, 0.8) 0%,   /* goudoranje */
+            rgba(255, 204, 0, 0.8) 33%,   /* goudgeel */
+            rgba(255, 120, 45, 0.8) 66%,    /* oranje terug */
+            rgba(255, 154, 0, 0.8) 100%
+    );
+    background-size: 300% 300%;
+    animation: metallicShine 10s linear infinite;
+    box-shadow:
+            inset 0 0 8px rgba(255, 255, 255, 0.25),
+            inset 0 0 16px rgba(0, 0, 0, 0.2),
+            0 4px 12px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+}
+
+
+@keyframes metallicShine {
+    0% {
+        background-position: 300% 0;
+    }
+    100% {
+        background-position: -300% 0;
+    }
+}
+
+
+
+.neu-wrapper {
+    min-height: 100px;
+    width: 15vh;
+    border-radius: 20px;
+    position: relative;
+    padding: 1rem;
+    margin: 0;
+    padding: 3%;
+}
+
+.progress-svg {
+    width: 100%;
+    height: auto;
+}
+
+.progress-bg {
+    fill: none;
+    stroke: #d1d9e6;
+    stroke-width: 20;
+    stroke-linecap: round;
+}
+
+.progress-bar {
+    fill: none;
+    stroke: #6c63ff;
+    stroke-width: 20;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    transition: stroke-dashoffset 0.5s ease;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.progress-text {
+    position: absolute;
+    font-family: "sf pro", sans-serif;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.progress-vorm {
+    background: rgba(161, 189, 217, 0.19);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), 8px 8px 16px #bebebe,
+    -8px -8px 16px rgba(255, 255, 255, 0.33);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: bounceIn 1s ease-in-out;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 15vh;
+    max-height: 25vh;
+    padding: 5%;
+    gap: 0;
+    overflow: hidden;
+    gap: 1vh;
+    cursor: pointer;
+    stroke-linecap: round;
+}
+
+#progress-outer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+}
+
+.title-progress {
+    font-weight: 800;
+    color: #2a3a42;
+}
+
+
+.editable-field {
+    @apply min-w-full h-max bg-transparent text-gray-800
+    dark:text-white font-bold text-base
+    border-none outline-none p-0 m-0;
+}
