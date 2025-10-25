@@ -34,7 +34,7 @@ Zorg dat je **Node.js (>= 18)** en **pnpm** geïnstalleerd hebt.
 
 ```bash
 # Clone de repository
-git clone https://github.com/<jouw-username>/studo.git
+git clone https://github.com/CharlesDegraeuwe/studo.git
 cd studo
 
 # Installeer dependencies voor frontend en backend
