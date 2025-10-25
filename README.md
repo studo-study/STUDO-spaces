@@ -1,39 +1,41 @@
-# Examenopdracht Front-end Web Development & Web Services
+# Studo
 
-> Schrap hierboven eventueel wat niet past
+**Studo** (voorheen *SWOT*) is een slimme leerapp die studenten helpt efficiënt te studeren via interactieve study sets, flashcards, en klasgroeperingen.  
+De applicatie combineert een moderne web-frontend met een krachtige NestJS-backend in één repository.
 
-- Student: Charles Degraeuwe
-- Studentennummer: 404835cd
-- E-mailadres: <charle.degraeuwe@student.hogent.be>
+---
 
-## Vereisten
+## 🚀 Features
 
-> Vul de vereisten eventueel aan
+- 📚 **Study Sets** – maak, bewerk en deel studiepakketten  
+- 🧠 **Flashcards** – leer met slimme revisie-algoritmes  
+- 🏫 **Classrooms** – werk samen met klasgenoten  
+- 💾 **Offline caching** – behoud je voortgang zonder internet  
+- 🧩 **REST API** – schaalbare backend met NestJS  
+- 💡 **Clean UI** – moderne neomorfische stijl, gebouwd met SF Pro & Akira fonts  
 
-Ik verwacht dat volgende software reeds geïnstalleerd is:
+---
 
-- [NodeJS](https://nodejs.org)
-- [pnpm](https://pnpm.io)
-- [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
+## 🏗️ Tech Stack
 
-> Je kan ook een aparte README per project (in de respectievelijke map) voorzien. Verwijs er dan hier naar.
+| Component | Technologie |
+|------------|--------------|
+| Frontend | Vite + React + Javascript |
+| Styling | Tailwind CSS + custom neomorphism design |
+| Backend | NestJS (Node.js + TypeScript) |
+| Database | (voeg hier jouw DB toe, bv. Firebase / PostgreSQL / MongoDB) |
+| Tools | pnpm, ESLint, Prettier |
 
-## Front-end
+---
 
-## Opstarten
+## 📦 Installatie
 
-> Schrijf hier hoe we de applicatie starten (.env bestanden aanmaken, commando's om uit te voeren...)
+Zorg dat je **Node.js (>= 18)** en **pnpm** geïnstalleerd hebt.
 
-## Testen
+```bash
+# Clone de repository
+git clone https://github.com/<jouw-username>/studo.git
+cd studo
 
-> Schrijf hier hoe we de testen uitvoeren (.env bestanden aanmaken, commando's om uit te voeren...)
-
-## Back-end
-
-## Opstarten
-
-> Schrijf hier hoe we de applicatie starten (.env bestanden aanmaken, commando's om uit te voeren...)
-
-## Testen
-
-> Schrijf hier hoe we de testen uitvoeren (.env bestanden aanmaken, commando's om uit te voeren...)
+# Installeer dependencies voor frontend en backend
+pnpm install
