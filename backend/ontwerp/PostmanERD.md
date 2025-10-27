@@ -54,8 +54,6 @@ times_relearned
 *id
 title
 subject
-global_term_language
-global_definition_language
 created_at
 last_studied
 last_updated
