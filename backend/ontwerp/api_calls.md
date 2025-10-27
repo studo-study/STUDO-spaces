@@ -1,85 +1,190 @@
-# API CALLS STUDO:
+# STUDO API CALLS
 
-## 1. USERS:
+## 1. USERS
 
-### 1.1 BESCHRIJVING:
+### Beschrijving
 
-- Een gebruiker moet kunnen worden aangemaakt
-- Een gebruiker moet zijn eigen data kunnen uitlezen op de profielpagina
-- Een gebruiker moet zijn of haar account kunnen verwijderen
-- Een gebruiker moet al zijn/haar classrooms kunnen bekijken
-- Een gebruiker moet één specifieke classroom waar hij/zij inzit kunnen bekijken
+- Nieuwe gebruiker aanmaken
+- Profielfoto uploaden
+- Alle gebruikers opvragen
+- Specifieke gebruiker opvragen
+- Alle studysets van gebruiker opvragen
+- Specifieke studyset van gebruiker opvragen
+- Statistieken van gebruiker opvragen
+- Alle classrooms van gebruiker opvragen
+- Specifieke classroom van gebruiker opvragen
+- Gebruiker updaten
+- Gebruiker verwijderen
 
-<br>
+### Calls
 
-### 1.2 CALLS:
+| **CALL**                                         | **UITLEG**                                      |
+|--------------------------------------------------|-------------------------------------------------|
+| `POST /api/user`                                 | Nieuwe gebruiker aanmaken                       |
+| `POST /api/user/:id/profile-picture`             | Profielfoto uploaden                            |
+| `GET /api/user`                                  | Alle gebruikers opvragen                        |
+| `GET /api/user/:user_id`                         | Info van een specifieke gebruiker opvragen      |
+| `GET /api/user/:user_id/studyset`                | Alle studysets van gebruiker opvragen           |
+| `GET /api/user/:user_id/studyset/:set_id`        | Één specifieke studyset van gebruiker opvragen  |
+| `GET /api/user/:user_id/stats`                   | Alle statistieken van gebruiker opvragen        |
+| `GET /api/user/:user_id/classroom`               | Alle classrooms van gebruiker opvragen          |
+| `GET /api/user/:user_id/classroom/:classroom_id` | Één specifieke classroom van gebruiker opvragen |
+| `PUT /api/user/:user_id`                         | Gebruiker updaten                               |
+| `DELETE /api/user/:user_id`                      | Gebruiker verwijderen                           |
 
-| **CALL**                                    | **UITLEG**                                            |
-|---------------------------------------------|-------------------------------------------------------|
-| `POST /api/users`                         | Een nieuwe user kan worden aangemaakt                 |
-| `GET /api/users/:id`                        | Statistieken en info van een specifieke user opvragen |
-| `DELETE /api/users/:id`                     | Je account verwijderen                                |
-| `GET /api/users/:id/classrooms/`            | Alle classrooms waar een user inzit opvragen          |
-| `GET /api/users/:id/classrooms/:classroom_id` | Specifieke classroom waar een user inzit opvragen     |
+---
 
-<br>
+## 2. STUDYSETS
 
-## 2. STUDYSETS:
+### Beschrijving
 
-### 2.1 BESCHRIJVING: 
-- Een gebruiker moet al zijn/haar studysets kunnen bekijken
-- Een gebruiker moet een studyset kunnen bekijken
-- Een gebruiker moet een nieuwe studyset kunnen aanmaken
-- Een gebruiker moet een bestaande studyset kunnen aanpassen
-- Een gebruiker moet een studyset kunnen verwijderen
+- Alle studysets opvragen
+- Een specifieke studyset opvragen
+- Studysessions van specifieke studyset opvragen
+- Een nieuwe studyset aanmaken
+- Een studyset liken
+- Een bestaande studyset updaten
+- Een studyset naar andere folder verplaatsen
+- Een studyset verwijderen
 
-<br>
+### Calls
 
-### 2.2 CALLS:
+| **CALL**                                 | **UITLEG**                              |
+|------------------------------------------|-----------------------------------------|
+| `GET /api/studyset`                      | Alle studysets opvragen                 |
+| `GET /api/studyset/:set_id`              | Specifieke studyset opvragen            |
+| `GET /api/studyset/:set_id/studysession` | Studysessions van studyset opvragen     |
+| `POST /api/studyset`                     | Nieuwe studyset aanmaken                |
+| `POST /api/studyset/:set_id/likes`       | Studyset liken                          |
+| `PUT /api/studyset/:set_id`              | Bestaande studyset updaten              |
+| `PUT /api/studyset/:set_id/folder`       | Studyset naar andere folder verplaatsen |
+| `DELETE /api/studyset/:set_id`           | Specifieke studyset verwijderen         |
 
-|**CALL**| **UITLEG**   |
-|---|--------------|
-| `GET /api/studysets`     | Alle studysets van een user opvragen                  |
-| `GET /api/studysets/:id` | Specifieke studyset van een user opvragen             |
-| `POST /api/studysets/:id` | Nieuwe studyset van een user aanmaken                 |
-| `PATCH /api/studysets/:id` | Bestaande studyset van een user aanpassen             |
-| `DELETE /api/studysets/:id` | Specifieke studyset van een user verwijderen          |
+---
 
-## 3. CLASSROOMS:
+## 3. VISUALSETS
 
-### 3.1 BESCHRIJVING:
+### Beschrijving
 
-- Er kan een classroom worden aangemaakt
-- Er kan gezocht worden naar één specifieke classroom
-- Er kan een overzicht getoond worden van alle studysets binnen de classroom
-- Er kan een specifieke studyset worden opgevraagd binnen de classroom
-- Er kan een overzicht getoond worden van alle users binnen de classroom
-- Er kan gezocht worden naar één specifieke classroom user
+- Alle visualsets opvragen
+- Een specifieke visualset opvragen
+- Studysessions van specifieke visualset opvragen
+- Een nieuwe visualset aanmaken
+- Een visualset liken
+- Een bestaande visualset updaten
+- Een visualset naar andere folder verplaatsen
+- Een visualset verwijderen
 
-<br>
+### Calls
 
-### 3.2 CALLS:
+| **CALL**                                  | **UITLEG**                               |
+|-------------------------------------------|------------------------------------------|
+| `GET /api/visualset`                      | Alle visualsets opvragen                 |
+| `GET /api/visualset/:set_id`              | Specifieke visualset opvragen            |
+| `GET /api/visualset/:set_id/studysession` | Studysessions van visualset opvragen     |
+| `POST /api/visualset`                     | Nieuwe visualset aanmaken                |
+| `POST /api/visualset/:set_id/likes`       | Visualset liken                          |
+| `PUT /api/visualset/:set_id`              | Bestaande visualset updaten              |
+| `PUT /api/visualset/:set_id/folder`       | Visualset naar andere folder verplaatsen |
+| `DELETE /api/visualset/:set_id`           | Specifieke visualset verwijderen         |
 
-| **CALL**                                | **UITLEG**                                 |
-|-----------------------------------------|--------------------------------------------|
-| `POST /api/classrooms/`               | een nieuwe classroom kan worden aangemaakt |
-| `GET /api/classrooms/:id`               | specifieke classroom opvragen              |
-| `GET /api/classrooms/:id/sets`          | alle classroomsets opvragen                |
-| `GET /api/classrooms/:id/sets/:set_id`  | specifieke set opvragen                    |
-| `GET /api/classrooms/:id/users`         | alle classroomusers opvragen               |
-| `GET /api/classrooms/:id/users/:user_id` | Specifieke classroom user opvragen         |
+---
 
-## 4. STUDYSESSIONS:
+## 4. CLASSROOMS
 
-### 4.1 BESCHRIJVING:
+### Beschrijving
 
-- Alle statistieken van de gebruiker opvragen voor de profielpagina
-- Specifieke statistieken voor op de overzichtspagina van een set opvragen
-<br>
+- Alle classrooms opvragen
+- Een specifieke classroom opvragen
+- Alle studysets van een classroom opvragen
+- Alle gebruikers van een classroom opvragen
+- Een nieuwe classroom aanmaken
+- Een studyset toevoegen aan classroom
+- Een gebruiker toevoegen aan classroom
+- Een classroom updaten
+- Een classroom verwijderen
+- Een gebruiker verwijderen uit classroom
+- Een studyset verwijderen uit classroom
 
-### 4.2 CALLS:
+### Calls
 
-| **CALL**                                   | **UITLEG**                              |
-|--------------------------------------------|-----------------------------------------|
-| `GET /api/users/:id/studysessions`         | alle studysession statistieken opvragen |
-| `GET /api/users/:id/studysessions/:set_id` | specifieke statistieken opvragen        |
+| **CALL**                                           | **UITLEG**                                |
+|----------------------------------------------------|-------------------------------------------|
+| `GET /api/classroom`                               | Alle classrooms opvragen                  |
+| `GET /api/classroom/:classroom_id`                 | Specifieke classroom opvragen             |
+| `GET /api/classroom/:classroom_id/sets`            | Alle studysets binnen classroom opvragen  |
+| `GET /api/classroom/:classroom_id/users`           | Alle gebruikers binnen classroom opvragen |
+| `POST /api/classroom`                              | Nieuwe classroom aanmaken                 |
+| `POST /api/classroom/:classroom_id/sets`           | Studyset toevoegen aan classroom          |
+| `POST /api/classroom/:classroom_id/users`          | Gebruiker toevoegen aan classroom         |
+| `PUT /api/classroom/:classroom_id`                 | Classroom updaten                         |
+| `DELETE /api/classroom/:classroom_id`              | Classroom verwijderen                     |
+| `DELETE /api/classroom/:classroom_id/users/:id`    | Gebruiker verwijderen uit classroom       |
+| `DELETE /api/classroom/:classroom_id/sets/:set_id` | Studyset verwijderen uit classroom        |
+
+---
+
+## 5. STUDYSESSIONS
+
+### Beschrijving
+
+- Alle studysessions opvragen
+- Een specifieke studysession opvragen
+- Een studysession updaten
+- Een studysession verwijderen
+
+### Calls
+
+| **CALL**                               | **UITLEG**                       |
+|----------------------------------------|----------------------------------|
+| `GET /api/studysession`                | Alle studysessions opvragen      |
+| `GET /api/studysession/:session_id`    | Specifieke studysession opvragen |
+| `PATCH /api/studysession/:session_id`  | Studysession updaten             |
+| `DELETE /api/studysession/:session_id` | Studysession verwijderen         |
+
+---
+
+## 6. FOLDERS
+
+### Beschrijving
+
+- Alle folders opvragen
+- Één specifieke folder opvragen
+- Een folder verwijderen
+
+### Calls
+
+| **CALL**                        | **UITLEG**                 |
+|---------------------------------|----------------------------|
+| `GET /api/folder`               | Alle folders opvragen      |
+| `GET /api/folder/:folder_id`    | Specifieke folder opvragen |
+| `DELETE /api/folder/:folder_id` | Folder verwijderen         |
+
+---
+
+## 7. PROFILE
+
+### Beschrijving
+
+> Deze controller is gekoppeld aan de `user`, en dient vooral voor profieldata die visueel getoond wordt in de app.  
+> En die wordt doorgaans automatisch geüpdatet met user-data.
+> Deze gaat nooit direct worden geupdate, altijd tesamen met de user.
+
+### Calls
+
+| **CALL**               | **UITLEG**                           |
+|------------------------|--------------------------------------|
+| `GET /api/profile`     | Alle profielen opvragen              |
+| `GET /api/profile/:id` | Profiel van specifieke user opvragen |
+
+---
+
+## Opmerkingen
+
+- Alle routes zijn geprefixed met `/api/`
+- Consistente RESTful structuur per entiteit (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`)
+- **Visualset** en **Studyset** hebben vrijwel identieke functionaliteit
+- **Folder switching** gebeurt via de studyset/visualset endpoints met `PUT /:set_id/folder`
+- **Likes** worden toegevoegd via `POST /:set_id/likes` op studyset/visualset
+- **Classroom users/sets** worden beheerd via de classroom endpoints
+- **Profile** en **User** controllers zijn conceptueel gekoppeld (Profile haalt visuele data van User)

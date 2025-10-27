@@ -1,40 +1,27 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersController } from './user/users.controller';
-import { StudysetsController } from './studyset/studysets.controller';
-import { ClassroomController } from './classroom/classroom.controller';
-import { StudysessionController } from './studysession/studysession.controller';
-import { HealthController } from './health/health.controller';
-import { FolderController } from './folder/folder.controller';
-import { CardController } from './card/card.controller';
-import { CardService } from './card/card.service';
-import { ClassroomService } from './classroom/classroom.service';
-import { FolderService } from './folder/folder.service';
-import { StudysessionService } from './studysession/studysession.service';
-import { StudysetService } from './studyset/studyset.service';
-import { UserService } from './user/users.service';
+import { UserModule } from './user/user.module';
+import { StudysetModule } from './studyset/studyset.module';
+import { StudysessionModule } from './studysession/studysession.module';
+import { ProfileModule } from './profile/profile.module';
+import { FolderModule } from './folder/folder.module';
+import { ClassroomModule } from './classroom/classroom.module';
+import { PinModule } from './pin/pin.module';
+import { VisualsetModule } from './visualset/visualset.module';
 
 @Module({
-  imports: [],
-  controllers: [
-    AppController,
-    HealthController,
-    UsersController,
-    StudysetsController,
-    ClassroomController,
-    StudysessionController,
-    FolderController,
-    CardController,
+  imports: [
+    UserModule,
+    StudysetModule,
+    StudysessionModule,
+    ProfileModule,
+    FolderModule,
+    ClassroomModule,
+    PinModule,
+    VisualsetModule,
   ],
-  providers: [
-    AppService,
-    CardService,
-    ClassroomService,
-    FolderService,
-    StudysessionService,
-    StudysetService,
-    UserService,
-  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -1,13 +1,23 @@
 export class CreateFolderDto {
-  id: number;
   name: string;
   owner: string;
 }
 
-export class UpdateFolderDto extends CreateFolderDto {}
+export class UpdateFolderDto {
+  name?: string;
+}
 
-export class FolderResponseDto extends CreateFolderDto {}
+export class FolderResponseDto {
+  id: string;
+  name: string;
+  user_id: string;
+}
 
 export class FolderListResponseDto {
   folders: FolderResponseDto[];
+}
+
+export class SwitchFolderDto {
+  set_id: string;
+  destinationFolder_id: string;
 }

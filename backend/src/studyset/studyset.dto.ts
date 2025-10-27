@@ -1,4 +1,5 @@
-import { CardListResponseDto } from './card.dto';
+import { CardListResponseDto, CreateCardListDto } from './card.dto';
+import { SetLikeResponseDto, SetLikeResponseListDto } from './setlike.dto';
 
 export class CreateStudysetDto {
   title: string;
@@ -7,6 +8,7 @@ export class CreateStudysetDto {
   global_definition_language: string;
   user_id: string;
   folder_id: string;
+  cardlist: CreateCardListDto[];
 }
 
 export class UpdateStudysetDto {
@@ -40,6 +42,7 @@ export class StudysetResponseDto {
 
 export class fullSetResponseDto extends StudysetResponseDto {
   cards: CardListResponseDto;
+  likes: SetLikeResponseListDto;
 }
 
 export class StudysetListResponseDto {

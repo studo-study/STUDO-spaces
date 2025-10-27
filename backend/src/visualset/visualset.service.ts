@@ -1,44 +1,42 @@
 import { Injectable } from '@nestjs/common';
-import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
+import {} from '../studyset/studyset.dto';
+import { CreateCardDto, CreateCardListDto } from '../studyset/card.dto';
 import {
-  CreateStudysetDto,
-  fullSetResponseDto,
-  StudysetListResponseDto,
-  StudysetResponseDto,
-  UpdateStudysetDto,
-} from './studyset.dto';
-import {
-  STUDYSETS,
-  Studyset,
-  CARDS,
   Cards,
+  CARDS,
   SESSIONS,
   SET_LIKES,
   SetLike,
+  Studyset,
+  STUDYSETS,
 } from '../data/mock_data';
-import { SwitchFolderDto } from '../folder/folder.dto';
+import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
-import { CreateCardDto, CreateCardListDto } from './card.dto';
-import { CreateSetLikeDto, SetLikeResponseDto } from './setlike.dto';
+import { SwitchFolderDto } from '../folder/folder.dto';
+import { CreateSetLikeDto, SetLikeResponseDto } from '../studyset/setlike.dto';
+import { CreateVisualsetDto, VisualsetResponseDto } from './visualset.dto';
 
 @Injectable()
-export class StudysetService {
-  create(data: CreateStudysetDto): StudysetResponseDto {
+export class VisualsetService {
+  create(data: CreateVisualsetDto): VisualsetResponseDto {
     const date = new Date();
     const setId = uuidv4.toString();
     const set = {
-      id: setId,
-      title: data.title,
-      subject: data.subject,
-      global_term_language: data.global_term_language,
-      global_definition_language: data.global_definition_language,
-      created_at: date.toISOString(),
-      last_studied: '',
-      last_updated: '',
-      publicSet: false,
-      hearts: 0,
-      user_id: data.user_id,
-      folder_id: data.folder_id,
+        id: setId,
+        title: data.title,
+        subject: data.subject,
+        global_term_language: data.global_term_language
+        global_definition_language: data.global_definition_language,
+        created_at: date.toISOString(),
+        last_studied: '',
+        last_updated: date.toISOString(),
+        publicSet: boolean;
+        hearts: number;
+        user_id: string;
+        folder_id: string;
+        grid_x: number;
+        grid_y: number;
+        scale: number;
     };
 
     //sessie creeeren

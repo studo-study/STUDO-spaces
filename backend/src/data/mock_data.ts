@@ -1,18 +1,33 @@
-import { CardListResponseDto } from '../studyset/card.dto';
+import { CardListResponseDto, CardResponseDto } from '../studyset/card.dto';
 import { ClassroomResponseDto } from '../classroom/classroom.dto';
+import { StudysetListResponseDto } from '../studyset/studyset.dto';
+import { ProfileListResponseDto } from '../profile/profile.dto';
+import { PinResponseDto } from '../pin/pin.dto';
 
 export interface User {
   id: string;
   email: string;
   password: string;
   displayName: string;
+  img_url: string;
   join_date: string;
+  joinNumber: number;
   streak_started?: string | null;
   streak_count?: string | null;
   streak_last_update?: string | null;
   last_login: string;
   hearts: number;
   role: string;
+}
+
+export interface Profile {
+  user_id: string;
+  email: string;
+  displayName: string;
+  img_url: string;
+  joinDate: string;
+  streak: number;
+  joinNumber: number;
 }
 
 export interface Studyset {
@@ -34,9 +49,64 @@ export interface Cards {
   id: string;
   term: string;
   definition: string;
+  number: number;
   created_at: string;
   updated_at: string;
   card_viewcount: number;
+  card_totalviewcount: number;
+  inQueue: boolean;
+  mastered: boolean;
+  times_relearned: number;
+  set_id: string;
+  owner_id: string;
+}
+
+export interface Visualset {
+  id: string;
+  title: string;
+  subject: string;
+  global_term_language: string;
+  global_definition_language: string;
+  created_at: string;
+  last_studied: string;
+  last_updated: string;
+  publicSet: boolean;
+  hearts: number;
+  user_id: string;
+  folder_id: string;
+  grid_x: number;
+  grid_y: number;
+  scale: number;
+}
+
+export interface Pin {
+  id: string;
+  definition: string;
+  x: string;
+  y: string;
+  number: number;
+  created_at: string;
+  updated_at: string;
+  pin_viewcount: number;
+  pin_totalviewcount: number;
+  set_id: string;
+  owner_id: string;
+}
+
+export interface Studysession {
+  id: string;
+  started_at: string;
+  duration: number;
+  second_last_login: string;
+  last_login: string;
+  ended_at: string;
+  index: number;
+  accuracy: number;
+  average_response_time: number;
+  longest_focus_streak: number;
+  device_type: string;
+  last_seen: string;
+  user_id: string;
   set_id: string;
 }
 
@@ -47,6 +117,7 @@ export interface Folder {
 }
 
 export interface SetLike {
+  id: string;
   user_id: string;
   set_id: string;
   created_at: string;
@@ -72,16 +143,6 @@ export interface ClassroomSet {
   classroom_id: string;
 }
 
-export interface Studysession {
-  id: string;
-  started_at: string;
-  duration: number;
-  second_last_login: string;
-  last_login: string;
-  user_id: string;
-  set_id: string;
-}
-
 //data
 export const USERS: User[] = [
   {
@@ -89,7 +150,9 @@ export const USERS: User[] = [
     email: 'charles.degraeuwe@icloud.com',
     password: 'Wachtwoord',
     displayName: 'Charles',
+    img_url: '',
     join_date: '24 October 2025 15:51 UTC',
+    joinNumber: 1,
     streak_started: null,
     streak_count: null,
     streak_last_update: null,
@@ -102,7 +165,9 @@ export const USERS: User[] = [
     email: 'emma.vandenberg@example.com',
     password: 'Wachtwoord',
     displayName: 'Emma',
+    img_url: '',
     join_date: '24 September 2025 16:30 UTC',
+    joinNumber: 2,
     streak_started: null,
     streak_count: null,
     streak_last_update: null,
@@ -115,7 +180,9 @@ export const USERS: User[] = [
     email: 'lucas.peeters@example.com',
     password: 'Wachtwoord',
     displayName: 'Lucas',
+    img_url: '',
     join_date: '24 October 2025 16:35 UTC',
+    joinNumber: 3,
     streak_started: null,
     streak_count: null,
     streak_last_update: null,
@@ -128,7 +195,9 @@ export const USERS: User[] = [
     email: 'sofie.declercq@example.com',
     password: 'Wachtwoord',
     displayName: 'Sofie',
+    img_url: '',
     join_date: '24 October 2025 16:40 UTC',
+    joinNumber: 4,
     streak_started: null,
     streak_count: null,
     streak_last_update: null,
@@ -178,6 +247,35 @@ export const CLASSROOMS: Classroom[] = [
   },
 ];
 
-export const CLASSROOM_USERS: ClassroomUser[] = [];
+export const CLASSROOM_USERS: ClassroomUser[] = [
+  {
+    user_id: '229c6879-ce55-4e62-9fec-615a17bfb057',
+    classroom_id: '9504e8e1-9683-49bf-99e1-22f4810d6bc3',
+    role: 'owner', // Charles is eigenaar van het klaslokaal
+  },
+  {
+    user_id: '4a2b9e11-dc33-45e8-9f77-91ac2b34e9a2',
+    classroom_id: '9504e8e1-9683-49bf-99e1-22f4810d6bc3',
+    role: 'student',
+  },
+  {
+    user_id: '7b3c1d22-af44-4d19-8a88-b2bd4c45f0b3',
+    classroom_id: '9504e8e1-9683-49bf-99e1-22f4810d6bc3',
+    role: 'student',
+  },
+];
+
+export const CLASSROOM_SETS: ClassroomSet[] = [
+  {
+    set_id: '3d9dd36f-8f2a-48b6-b56a-28afb30fe6c0',
+    classroom_id: '9504e8e1-9683-49bf-99e1-22f4810d6bc3',
+  },
+];
 
 export const SET_LIKES: SetLike[] = [];
+
+export const PROFILES: Profile[] = [];
+
+export const VISUALSETS: Visualset[] = [];
+
+export const PINS: Pin[] = [];

@@ -5,10 +5,11 @@ export class CreateUserDto {
   role: string;
 }
 
-export class UpdateUsersDTO {
+export class UpdateUserDTO {
   email?: string;
   password?: string;
   displayName?: string;
+  img_url?: string;
   streak_started?: string;
   streak_count?: string;
   streak_last_update?: string;
@@ -22,7 +23,9 @@ export class UserResponseDto {
   email: string;
   password: string;
   displayName: string;
+  img_url: string;
   join_date: string;
+  joinNumber: number;
   streak_started?: string | null;
   streak_count?: string | null;
   streak_last_update?: string | null;
@@ -33,27 +36,4 @@ export class UserResponseDto {
 
 export class UserListResponseDto {
   Users: UserResponseDto[];
-}
-
-//classroom_user
-export class CreateClassroomUserDto {
-  user_id: string;
-  classroom_id: string;
-  role: string;
-}
-
-export class UpdateClassroomUsersDTO {
-  user_id?: string;
-  classroom_id?: string;
-  role?: string;
-}
-
-export class ClassroomUserResponseDto {
-  user_id: string;
-  classroom_id: string;
-  role: string;
-}
-
-export class ClassroomUserListResponseDto {
-  ClassroomUsers: ClassroomUserResponseDto[];
 }

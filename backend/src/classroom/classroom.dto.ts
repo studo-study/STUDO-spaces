@@ -25,3 +25,41 @@ export class ClassroomResponseDto {
 export class ClassroomListResponseDto {
   classrooms: ClassroomResponseDto[];
 }
+
+//classroom sets
+export class CreateClassroomSetDto {
+  set_id: string;
+  classroom_id: string;
+}
+
+export class ClassroomSetDto {
+  set_id: string;
+  classroom_id: string;
+}
+
+export class ClassroomSetListDto {
+  sets: ClassroomSetDto[];
+}
+
+//classroom_user
+export class CreateClassroomUserDto {
+  user_id: string;
+  classroom_id: string;
+  role: string;
+}
+
+export class UpdateClassroomUsersDTO {
+  user_id?: string;
+  classroom_id?: string;
+  role?: string;
+}
+
+export class ClassroomUserResponseDto {
+  user_id: string;
+  classroom_id: string;
+  role: string;
+}
+
+export class ClassroomUserListResponseDto {
+  ClassroomUsers: ClassroomUserResponseDto[];
+}

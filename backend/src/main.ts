@@ -3,6 +3,10 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  /*app.enableCors({
+    origins: ['http://localhost:5173'],
+    maxAge: 3 * 60 * 60,
+  });*/
   app.setGlobalPrefix('api');
   await app.listen(process.env.PORT ?? 3000);
   console.log('Joehoe, server is opgestart op poort 3000');

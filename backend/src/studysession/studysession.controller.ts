@@ -10,36 +10,39 @@ import {
   Post,
 } from '@nestjs/common';
 
-import { CreateStudysessionDto } from './studysession.dto';
 import { StudysessionService } from './studysession.service';
-
+import { UpdateStudysessionDto } from './studysession.dto';
 
 @Controller('studysession')
 export class StudysessionController {
-  constructor(private readonly studysessionService: StudysessionService) {}
+  constructor(private readonly seshService: StudysessionService) {}
+  //OPVRAGEN VAN SESSION-DATA
+  //alle sessies opvragen
   @Get()
   getAllStudysessions() {
-    return 'This action returns all study sessions';
+    return this.seshService.getAll();
   }
 
-  @Get(':id')
-  getStudysessionById(@Param('id') id: string) {
-    return `This action returns study session #${id}`;
+  //specifieke sessie opvragen
+  @Get('/:session_id')
+  getStudysessionById(@Param('session_id') session_id: string) {
+    return this.seshService.getById(session_id);
   }
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  updateStudysession(@Body() studysesh: CreateStudysessionDto) {
-    return `This action creates a new classroom #${studysesh.id} with duration ${studysesh.duration}`;
+  //UPDATEN
+  //updaten van specifieke sessie
+  @Patch(':session_id')
+  updateStudysessionById(
+    @Param('session_id') session_id: string,
+    @Body() update: UpdateStudysessionDto,
+  ) {
+    return this.seshService.updateById(session_id, update);
   }
 
-  @Patch(':id')
-  updateStudysessionById(@Param('id') id: string) {
-    return `This action updates classroom #${id}`;
-  }
-
-  @Delete(':id')
-  deleteStudysessionById(@Param('id') id: string) {
-    return `This action deletes classroom #${id}`;
+  //DELETEN
+  //deleten van specifieke sessie
+  @Delete(':session_id')
+  deleteStudysessionById(@Param('session_id') session_id: string) {
+    return this.seshService.deleteById(session_id);
   }
 }

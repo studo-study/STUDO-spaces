@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  Patch,
   Post,
   Put,
 } from '@nestjs/common';
@@ -14,22 +13,22 @@ import {
   CreateStudysetDto,
   StudysetResponseDto,
   UpdateStudysetDto,
-} from './studyset.dto';
-import { StudysetService } from './studyset.service';
+} from '../studyset/studyset.dto';
+import { CreateSetLikeDto, SetLikeResponseDto } from '../studyset/setlike.dto';
 import { SwitchFolderDto } from '../folder/folder.dto';
-import { CreateSetLikeDto, SetLikeResponseDto } from './setlike.dto';
+import { VisualsetService } from './visualset.service';
 
-@Controller('studyset')
-export class StudysetsController {
-  constructor(private readonly studysetService: StudysetService) {}
-  //OPVRAGEN VAN STUDYSET-DATA
+@Controller('visualset')
+export class VisualsetController {
+  constructor(private readonly VsService: VisualsetService) {}
+  //OPVRAGEN VAN VISUALSET-DATA
   //alle studysets opvragen (api/studyset/)
   @Get()
-  getAllStudysets() {
-    return this.studysetService.getAll();
+  getAllVisualsets() {
+    return this.VsService.getAll();
   }
 
-  //specifieke studyset opvragen (api/studyset/:id)
+  //specifieke studyset opvragen (api/visualset/:id)
   @Get(':set_id')
   getSetById(@Param('set_id') id: string) {
     return this.studysetService.getById(id);
@@ -37,32 +36,32 @@ export class StudysetsController {
 
   @Get(':set_id/studysession')
   getStudysessionBySetId(@Param('set_id') set_id: string) {
-    return this.studysetService.getBySetId(set_id);
+    return this.VsService.getBySetId(set_id);
   }
 
   //CREËEREN VAN STUDYSET
-  //aanmaken van één studyset (api/studyset/
+  //aanmaken van één studyset (api/visualset/
   @Post()
   @HttpCode(HttpStatus.CREATED)
   createStudyset(@Body() set: CreateStudysetDto) {
-    return this.studysetService.create(set);
+    return this.VsService.create(set);
   }
 
   //set liken
   @Post(':set_id/likes')
   @HttpCode(HttpStatus.CREATED)
   likeStudyset(@Body() body: CreateSetLikeDto): SetLikeResponseDto {
-    return this.studysetService.likeSet(body);
+    return this.VsService.likeSet(body);
   }
 
   //UDPATEN
-  //updaten van één studyset (api/studyset/:id)
+  //updaten van één studyset (api/visualset/:id)
   @Put(':set_id')
   updateStudysetById(
     @Param('set_id') id: string,
     @Body() update: UpdateStudysetDto,
   ): StudysetResponseDto {
-    return this.studysetService.updateById(id, update);
+    return this.VsService.updateById(id, update);
   }
 
   @Put(':set_id/folder')
@@ -70,13 +69,13 @@ export class StudysetsController {
     @Param('set_id') id: string,
     @Body() switchbody: SwitchFolderDto,
   ) {
-    return this.studysetService.switchFolder(switchbody);
+    return this.VsService.switchFolder(switchbody);
   }
 
   //DELETEN
-  //verwijderen van één studyset (api/studyset/:id)
+  //verwijderen van één visualset (api/visualset/:id)
   @Delete(':set_id')
   deleteStudysetById(@Param('set_id') id: string): string {
-    return this.studysetService.deleteById(id);
+    return this.VsService.deleteById(id);
   }
 }

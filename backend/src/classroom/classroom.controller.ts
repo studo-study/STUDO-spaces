@@ -8,57 +8,102 @@ import {
   HttpCode,
   HttpStatus,
   Body,
+  Put,
 } from '@nestjs/common';
-import { CreateStudysetDto } from '../studyset/studyset.dto';
-import { CreateClassroomDto } from './classroom.dto';
+import {
+  CreateStudysetDto,
+  StudysetResponseDto,
+} from '../studyset/studyset.dto';
+import {
+  ClassroomSetDto,
+  ClassroomUserResponseDto,
+  CreateClassroomDto,
+  CreateClassroomSetDto,
+  CreateClassroomUserDto,
+  UpdateClassroomDto,
+} from './classroom.dto';
 import { ClassroomService } from './classroom.service';
+import { UserResponseDto } from '../user/users.dto';
 
 @Controller('classroom')
 export class ClassroomController {
-  constructor(private readonly classroomservice: ClassroomService) {}
-  @Get(':id')
-  getClassroomById(@Param('id') id: string) {
-    return 'not yet implemented';
+  constructor(private readonly classService: ClassroomService) {}
+
+  //OPHALEN VAN CLASSROOM-DATA
+  //alle klassen ophalen
+  @Get()
+  getAllClassrooms() {
+    return this.classService.getAll();
   }
 
-  @Get(':id/sets')
-  getStudysetsFromClassroom(@Param('id') id: string) {
-    return `This action returns all studysets from classroom #${id}`;
+  //één specifieke classroom ophalen
+  @Get(':classroom_id')
+  getClassroomById(@Param('classroom_id') id: string) {
+    return this.classService.getById(id);
   }
 
-  @Get(':id/sets/:set_id')
-  getStudysetByIdFromClassroom(
-    @Param('id') id: string,
-    @Param('set_id') set_id: string,
-  ) {
-    return `This action returns studyset #${set_id} from classroom #${id}`;
+  //all studysets van een classroom ophalen
+  @Get(':classroom_id/sets')
+  getStudysetsFromClassroom(@Param('classroom_id') classroom_id: string) {
+    return this.classService.getSetsById(classroom_id);
   }
 
-  @Get(':id/users')
-  getUsersFromClassroom(@Param('id') id: string) {
-    return `This action returns users from classroom #${id}`;
-  }
-  @Get(':id/users/:user_id')
-  getUserByIdFromClassroom(
-    @Param('id') id: string,
-    @Param('user_id') user_id: string,
-  ) {
-    return `This action returns user #${user_id} from classroom #${id}`;
+  //alle gejoinde users van een classroom ophalen
+  @Get(':classroom_id/users')
+  getUsersFromClassroom(@Param('classroom_id') classroom_id: string) {
+    return this.classService.getUsers(classroom_id);
   }
 
+  //CREËEREN VAN CLASSROOM
+  //classroom aanmaken
   @Post()
   @HttpCode(HttpStatus.CREATED)
   createClassroom(@Body() classroom: CreateClassroomDto) {
-    return `This action creates a new classroom with name${classroom.name}`;
+    return this.classService.create(classroom);
   }
 
-  @Patch(':id')
-  updateClassroomById(@Param('id') id: string) {
-    return `This action updates classroom #${id}`;
+  //set toevoegen aan classroom
+  @Post(':classroom_id/sets')
+  @HttpCode(HttpStatus.CREATED)
+  createClassroomSet(@Body() set: CreateClassroomSetDto) {
+    return this.classService.add(set);
   }
 
-  @Delete(':id')
+  //user toevoegen aan classroom
+  @Post(':classroom_id/users')
+  @HttpCode(HttpStatus.CREATED)
+  joinClassroom(@Body() user: CreateClassroomUserDto) {
+    return this.classService.join(user);
+  }
+
+  //UPDATEN
+  //classroom updaten
+  @Put(':classroom_id')
+  updateClassroomById(
+    @Param('classroom_id') classroom_id: string,
+    @Body() set: UpdateClassroomDto,
+  ) {
+    return this.classService.updateById(classroom_id, set);
+  }
+
+  //DELETEN
+  //classroom verwijderen
+  @Delete(':classroom_id')
   deleteClassroom(@Param('id') id: string) {
-    return `This action deletes classroom #${id}`;
+    return this.classService.deleteById(id);
+  }
+
+  //classroom_user verwijderen
+  @Delete(':classroom_id/users/:id')
+  @HttpCode(HttpStatus.GONE)
+  leaveClassroom(@Body() user: ClassroomUserResponseDto) {
+    return this.classService.leave(user);
+  }
+
+  //classroom_set verwijderen
+  @Delete(':classroom_id/sets/:set_id')
+  @HttpCode(HttpStatus.GONE)
+  removeSetClassroom(@Body() set: ClassroomSetDto) {
+    return this.classService.remove(set);
   }
 }
