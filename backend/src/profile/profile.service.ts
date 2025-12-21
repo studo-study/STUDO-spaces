@@ -1,35 +1,44 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { ProfileListResponseDto, ProfileResponseDto } from './profile.dto';
+import { StudysetResponseDto } from '../studyset/studyset.dto';
 import {
-  ProfileDto,
-  ProfileListResponseDto,
-  ProfileResponseDto,
-} from './profile.dto';
-import { PROFILES, STUDYSETS } from '../data/mock_data';
-import {
-  StudysetListResponseDto,
-  StudysetResponseDto,
-} from '../studyset/studyset.dto';
+  type DatabaseProvider,
+  InjectDrizzle,
+} from '../drizzle/drizzle.provider';
+import { profiles, studysets, visualsets } from '../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import { VisualsetResponseDto } from '../visualset/visualset.dto';
 
 @Injectable()
 export class ProfileService {
-  getAll(): ProfileListResponseDto {
-    return { profiles: PROFILES };
+  constructor(
+    @InjectDrizzle()
+    private readonly db: DatabaseProvider,
+  ) {}
+
+  async getAll(): Promise<ProfileListResponseDto> {
+    return { profiles: await this.db.query.profiles.findMany() };
   }
 
-  getById(id: string): ProfileResponseDto {
-    const profile = PROFILES.find(
-      (profile: ProfileDto) => profile.user_id === id,
-    );
+  async getById(user_id: string): Promise<ProfileResponseDto> {
+    const profile = await this.db.query.profiles.findFirst({
+      where: eq(profiles.user_id, user_id),
+    });
     if (!profile) {
       throw new NotFoundException();
     }
-    const studysets: StudysetListResponseDto = {
-      sets: STUDYSETS.filter((set: StudysetResponseDto) => set.user_id === id),
-    };
 
-    if (!studysets) {
-      throw new NotFoundException();
-    }
-    return { profile: profile, sets: studysets };
+    const ss: StudysetResponseDto[] = await this.db.query.studysets.findMany({
+      where: eq(studysets.user_id, user_id),
+    });
+    const vs: VisualsetResponseDto[] = await this.db.query.visualsets.findMany({
+      where: eq(visualsets.user_id, user_id),
+    });
+
+    return {
+      profile: profile,
+      studysets: ss,
+      visualsets: vs,
+    };
   }
 }

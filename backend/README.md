@@ -1,98 +1,133 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# STUDO-backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend for the web application STUDO, built with NestJS, Drizzle ORM, and Vitest.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Requirements
 
-## Description
+- [NodeJS v22 (LTS)](https://nodejs.org/)
+- [pnpm](https://pnpm.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [pgAdmin](https://www.pgadmin.org/download/pgadmin-4-windows/)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Before starting/testing this project
 
-## Project setup
+Create a `.env` (development) or `.env.test` (testing) file with the following template. Complete the environment
+variables with your secrets, credentials, etc.
 
 ```bash
-$ pnpm install
+# General configuration
+NODE_ENV=testing
+PORT=3001
+
+# CORS configuration
+CORS_ORIGINS=["http://localhost:5173"]
+CORS_MAX_AGE=10800
+
+# Database configuration
+DATABASE_URL=postgresql://devusr:devpwd@localhost:5433/studo_test
+
+# Auth configuration
+AUTH_JWT_SECRET=eensuperveiligsecretvoorindevelopment
+AUTH_JWT_AUDIENCE=studo-api
+AUTH_JWT_ISSUER=studo-api
+AUTH_HASH_LENGTH=32
+AUTH_HASH_TIME_COST=6
+AUTH_HASH_MEMORY_COST=65536
+AUTH_MAX_DELAY=2000
+
+# Logging configuration
+LOG_DISABLED=true
 ```
 
-## Compile and run the project
+## Start this project
+
+### Development
+
+1. Install all dependencies:
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+pnpm install
 ```
 
-## Run tests
+2. Make sure a `.env` exists (see above)
+
+3. Create a database with the name given in the `.env` file
+
+4. Generate the database:
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+pnpm db:generate
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+5. Migrate the database:
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+pnpm db:migrate
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+6. Seed the database:
 
-## Resources
+```bash
+pnpm db:seed
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+7. Start the development server:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+pnpm start:dev
+```
 
-## Support
+### Production
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. Install all dependencies:
 
-## Stay in touch
+```bash
+pnpm install
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+2. Make sure all environment variables are available in the environment
 
-## License
+3. Create a database with the name given in the environment variable
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+4. Migrate the database:
+
+```bash
+pnpm db:migrate
+```
+
+5. Start the production server:
+
+```bash
+pnpm start
+```
+
+### Running Tests
+
+The test database will be created and dropped each time the tests are run! You don't have to specify the DATABASE_URL in
+the `.env.test` file.
+
+- Install all dependencies: `pnpm install`
+- Make sure `.env.test` exists (it's recommended to disabled logging in the testing environment)
+- Run the tests: `pnpm test:e2e`
+    - This will start a new server for each test suite that runs, you won't see any output as logging is disabled to
+      make output more clean.
+    - To enable logging change the config parameter `LOG_DISABLED` to `false`.
+    - The user suite will take 'long' (around 6s) to complete, this is normal as many cryptographic operations are being
+      performed.
+
+### Usefull Scripts
+
+| Script                | Description                                |
+|-----------------------|--------------------------------------------|
+| `pnpm start`          | Start production server                    |
+| `pnpm start:dev`      | Start development server with watch mode   |
+| `pnpm start:debug`    | Start server in debug mode                 |
+| `pnpm build`          | Build the NestJS application               |
+| `pnpm lint`           | Lint the code and auto-fix issues          |
+| `pnpm format`         | Format the code using Prettier             |
+| `pnpm test:e2e`       | Run all end-to-end tests                   |
+| `pnpm test:e2e:watch` | Run tests in watch mode                    |
+| `pnpm db:migrate`     | Migrate the database to the latest version |
+| `pnpm db:drop`        | Drop the database                          |
+| `pnpm db:reset`       | Drop and reset the database                |
+| `pnpm db:seed`        | Seed the database with initial/test data   |

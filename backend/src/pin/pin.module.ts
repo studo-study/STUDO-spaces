@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PinController } from './pin.controller';
-import { Pin } from './pin';
+import { DrizzleModule } from '../drizzle/drizzle.module';
 
 @Module({
-  imports: [],
-  controllers: [PinController],
-  providers: [Pin],
+  imports: [DrizzleModule],
+  controllers: [],
+  providers: [],
 })
 export class PinModule {}

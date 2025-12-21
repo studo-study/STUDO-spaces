@@ -1,210 +1,604 @@
 import {
-  ForbiddenException,
+  BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import {
-  Cards,
-  CARDS,
-  Classroom,
-  CLASSROOM_USERS,
-  CLASSROOMS,
-  ClassroomUser,
-  FOLDERS,
-  PROFILES,
-  SESSIONS,
-  Studysession,
-  Studyset,
-  STUDYSETS,
-  User,
-  USERS,
-} from '../data/mock_data';
-import { v4 as uuidv4 } from 'uuid';
-import {
-  CreateUserDto,
+  ClassActivitiesDto,
+  HeaderResposneDto,
+  LastStudiedDto,
+  StartPagina,
   UpdateUserDTO,
   UserListResponseDto,
   UserResponseDto,
+  UserResponseStatsDto,
 } from './users.dto';
 import {
   ClassroomListResponseDto,
-  ClassroomResponseDto,
+  ClassroomResponseDto, ClassroomSetDto,
   ClassroomUserResponseDto,
+  FullClassroomResponseDto,
 } from '../classroom/classroom.dto';
 import {
-  StudysetListResponseDto,
+  AllsetsResponseDto,
+  fullSetResponseDto,
   StudysetResponseDto,
 } from '../studyset/studyset.dto';
-import { TotalStats } from '../studysession/studysession.dto';
-import { ProfileDto } from '../profile/profile.dto';
+import {
+  StudysessionDTO,
+  StudysessionResponseDto,
+  TotalStats,
+} from '../studysession/studysession.dto';
+import {
+  type DatabaseProvider,
+  InjectDrizzle,
+} from '../drizzle/drizzle.provider';
+import { and, eq, gte, inArray, ne, not } from 'drizzle-orm';
+import {
+  cards,
+  classroomactivities,
+  classrooms, classroomsets,
+  classroomusers,
+  folders,
+  images,
+  sessioncards,
+  sessionpins,
+  setlikes,
+  studysessions,
+  studysets,
+  users,
+  visualsets,
+} from '../drizzle/schema';
+import { CardResponseDto } from '../studyset/card.dto';
+import { ClassroomService } from '../classroom/classroom.service';
+import {
+  FullVSResponseListDto,
+  ImageResponseDto,
+  VisualsetResponseDto,
+} from '../visualset/visualset.dto';
+import { StudysetService } from '../studyset/studyset.service';
+import { VisualsetService } from '../visualset/visualset.service';
+import { PinResponseDto } from '../pin/pin.dto';
+import { plainToInstance } from 'class-transformer';
+import { SessionCardResponseDTO } from '../studysession/sessioncard.dto';
+import { StudysessionService } from '../studysession/studysession.service';
+import { SessionPinResponseDTO } from '../studysession/sessionpin.dto';
+import { AuthConfig, ServerConfig } from '../config/configuration';
+import * as argon2 from 'argon2';
+import { ConfigService } from '@nestjs/config';
+import { User } from '../types/user';
 
 @Injectable()
 export class UserService {
-  create({
-    email,
-    password,
-    displayName,
-    role,
-  }: CreateUserDto): UserResponseDto {
-    const date = new Date();
-    const uid = uuidv4.toString();
-    const joinDate = date.toISOString();
-    const joinNumber = USERS.length + 1;
-    //user
-    const newUser = {
-      id: uid,
-      email: email,
-      password: password,
-      displayName: displayName,
-      img_url: '',
-      join_date: joinDate,
-      joinNumber: joinNumber,
-      streak_started: '',
-      streak_count: '',
-      streak_last_update: '',
-      last_login: date.toISOString(),
-      hearts: 0,
-      role: role,
-    };
-
-    //profile
-    const newProfile = {
-      user_id: uid,
-      email: email,
-      displayName: displayName,
-      img_url: '',
-      joinDate: date.toISOString(),
-      streak: 0,
-      joinNumber: joinNumber,
-    };
-
-    //rootfolder
-    const rootFolder = {
-      id: uuidv4.toString(),
-      name: `${displayName}' folder`,
-      user_id: uid,
-    };
-
-    USERS.push(newUser);
-    PROFILES.push(newProfile);
-    FOLDERS.push(rootFolder);
-    return newUser;
+  constructor(
+    @InjectDrizzle()
+    private readonly db: DatabaseProvider,
+    private readonly configService: ConfigService<ServerConfig>,
+  ) {
   }
 
-  getAll(): UserListResponseDto {
-    return { Users: USERS };
+  async existsById(user_id: string): Promise<boolean> {
+    const result = await this.db
+      .select({ id: users.id })
+      .from(users)
+      .where(eq(users.id, user_id))
+      .limit(1);
+
+    return result.length > 0;
   }
 
-  getById(user_id: string): UserResponseDto {
-    const User = USERS.find((u: User) => u.id === user_id);
+  async hashPassword(password: string): Promise<string> {
+    const authConfig = this.configService.get<AuthConfig>('auth')!; // 👈 2
+    // 👇 3
+    return argon2.hash(password, {
+      type: argon2.argon2id,
+      hashLength: authConfig.hashLength,
+      timeCost: authConfig.timeCost,
+      memoryCost: authConfig.memoryCost,
+    });
+  }
+
+  async getAll(): Promise<UserListResponseDto> {
+    const dbUsers = await this.db.query.users.findMany();
+
+    return {
+      users: plainToInstance(UserResponseDto, dbUsers, {
+        excludeExtraneousValues: true, // Only expose fields with @Expose()
+      }),
+    };
+  }
+
+  async getById(user_id: string): Promise<UserResponseStatsDto> {
+    const User = await this.db.query.users.findFirst({
+      where: eq(users.id, user_id),
+    });
 
     if (!User) {
-      throw new Error('No user with this id exists');
-    }
-
-    return User;
-  }
-
-  getTotalStats(user_id: string): TotalStats {
-    const number = CARDS.filter((c: Cards) => c.owner_id === user_id).reduce(
-      (pv: number, card) => {
-        if (card.card_totalviewcount > 2) {
-          return (pv += 1);
-        }
-      },
-      0,
-    );
-
-    if (!number) {
-      throw new Error('there are no cards');
+      throw new NotFoundException('No user with this id exists');
     }
 
     return {
-      joinNumber: 1,
-      joinDate: 'joindate',
-      totalsets: STUDYSETS.length,
-      timeLearned: SESSIONS.reduce(
-        (pv: number, sesh: Studysession) => pv + sesh.duration,
+      ...plainToInstance(UserResponseStatsDto, User, {
+        excludeExtraneousValues: true,
+      }),
+      stats: await this.getTotalStats(user_id),
+      lastTen: await this.getLastTen(user_id),
+    };
+  }
+
+  async getTotalStats(user_id: string): Promise<TotalStats> {
+    //hier hoef ik geen controles en errors te werpe want de waarden mogen nul zijn
+    //stats ophalen
+    const stats = await this.db.query.studysessions.findMany({
+      where: eq(studysessions.user_id, user_id),
+    });
+
+    //setjes ophalen
+    const ss = await this.db.query.studysets.findMany({
+      where: eq(studysets.user_id, user_id),
+    });
+
+    const vs = await this.db.query.visualsets.findMany({
+      where: eq(visualsets.user_id, user_id),
+    });
+
+    const sets = [...ss, ...vs];
+
+    //cards ophalen
+    const cds = await this.db.query.sessioncards.findMany({
+      where: eq(sessioncards.owner_id, user_id),
+    });
+
+    //result returnen
+
+    return {
+      totalsets: sets.length,
+      timeLearned: stats.reduce(
+        (pv: number, sesh: StudysessionResponseDto) => pv + sesh.duration_min,
         0,
       ),
-      cardsLearned: number,
+      cardsLearned: cds
+        .filter((card: SessionCardResponseDTO) => {
+          if (!card) {
+            throw new Error('card not found');
+          }
+          return card.owner_id === user_id;
+        })
+        .reduce((pv: number, card: SessionCardResponseDTO) => {
+          if (card.card_viewcount >= 2) {
+            return (pv += 1);
+          } else {
+            if (!card) {
+              throw new Error('card not found');
+            } else {
+              return pv;
+            }
+          }
+        }, 0),
     };
   }
 
-  getAllSetsById(user_id: string): StudysetListResponseDto {
-    return {
-      sets: STUDYSETS.filter(
-        (set: StudysetResponseDto) => set.user_id === user_id,
-      ),
-    };
-  }
+  async getLastTen(user_id: string): Promise<LastStudiedDto[]> {
+    // Haal sessions op, gesorteerd op last_studied
+    const seshes = await this.db.query.studysessions.findMany({
+      where: eq(studysessions.user_id, user_id),
+    });
 
-  getSetById(user_id: string, set_id: string) {
-    const set = STUDYSETS.find((item: Studyset) => item.id === set_id);
-    if (!set) throw new NotFoundException('Studyset not found');
-    if (set.user_id !== user_id) throw new ForbiddenException('Access denied');
+    // Sorteer op last_studied (meest recent eerst)
+    const sortedSeshes = seshes
+      .filter((s) => s.last_studied)
+      .sort(
+        (a, b) =>
+          new Date(b.last_studied).getTime() -
+          new Date(a.last_studied).getTime(),
+      )
+      .slice(0, 10);
 
-    return {
-      ...set,
-      cards: {
-        cards: CARDS.filter((item: Cards) => item.set_id === set_id),
-      },
-    };
-  }
+    const last: LastStudiedDto[] = [];
 
-  getAllClassroomsByUserId(userId: string): ClassroomListResponseDto {
-    const classroomUsers: ClassroomUserResponseDto[] = CLASSROOM_USERS.filter(
-      (u: ClassroomUser) => u.user_id === userId,
-    );
+    for (const sesh of sortedSeshes) {
+      if (sesh.set_type === 'studyset') {
+        const studyset = await this.db.query.studysets.findFirst({
+          where: eq(studysets.id, sesh.set_id),
+        });
 
-    const classIds: string[] = classroomUsers.map(
-      (u: ClassroomUserResponseDto) => u.classroom_id,
-    );
+        if (!studyset) continue;
 
-    return {
-      classrooms: CLASSROOMS.filter((classroom) =>
-        classIds.includes(classroom.id),
-      ),
-    };
-  }
+        const seshCards = await this.db.query.sessioncards.findMany({
+          where: eq(sessioncards.session_id, sesh.id),
+        });
 
-  getClassroomByUserId(
-    userId: string,
-    ClassroomId: string,
-  ): ClassroomResponseDto {
-    const classroomUsers: ClassroomUserResponseDto[] = CLASSROOM_USERS.filter(
-      (u: ClassroomUser) => u.user_id === userId,
-    );
+        const setCards = await this.db.query.cards.findMany({
+          where: eq(cards.set_id, sesh.set_id),
+        });
 
-    const classIds: string[] = classroomUsers.map(
-      (u: ClassroomUserResponseDto) => u.classroom_id,
-    );
-
-    if (classIds.includes(ClassroomId)) {
-      const classroom = CLASSROOMS.find(
-        (room: Classroom) => room.id === ClassroomId,
-      );
-
-      if (!classroom) {
-        throw new Error('Classroom not found');
+        last.push({
+          set_id: studyset.id,
+          last_studied: sesh.last_studied,
+          title: studyset.title,
+          Course: studyset.course,
+          type: sesh.set_type,
+          progress: seshCards.reduce(
+            (pv: number, card: SessionCardResponseDTO) =>
+              pv + (card.card_viewcount || 0),
+            0,
+          ),
+          length: setCards.length,
+        });
       }
 
-      return classroom as ClassroomResponseDto;
+      if (sesh.set_type === 'visualset') {
+        const vs = await this.db.query.visualsets.findFirst({
+          where: eq(visualsets.id, sesh.set_id),
+        });
+
+        if (!vs) continue;
+
+        const seshPins = await this.db.query.sessionpins.findMany({
+          where: eq(sessionpins.session_id, sesh.id),
+        });
+
+        const setImages = await this.db.query.images.findMany({
+          where: eq(images.set_id, sesh.set_id),
+        });
+
+        last.push({
+          set_id: vs.id,
+          last_studied: sesh.last_studied,
+          title: vs.title,
+          Course: vs.course,
+          type: sesh.set_type,
+          progress: seshPins.reduce(
+            (pv: number, pin: SessionPinResponseDTO) =>
+              pv + (pin.pin_viewcount || 0),
+            0,
+          ),
+          length: setImages.length,
+        });
+      }
     }
 
-    throw new Error('User is not a member of this classroom');
+    return last;
   }
 
-  updateById(user_id: string, updateBody: UpdateUserDTO) {
-    throw new Error('not yet implemented');
+  async getAllSetsById(user_id: string): Promise<AllsetsResponseDto> {
+    // Haal alle sessies op
+    //er kunnen ook geen sessies zijn
+    const sessies: StudysessionDTO[] =
+      await this.db.query.studysessions.findMany({
+        where: eq(studysessions.user_id, user_id),
+      });
+
+    // Gebruik Set om duplicaten te voorkomen
+    const ssids = [
+      ...new Set(
+        sessies
+          .filter((sess) => sess.set_type === 'studyset')
+          .map((sess) => sess.set_id),
+      ),
+    ];
+
+    const vsids = [
+      ...new Set(
+        sessies
+          .filter((sess) => sess.set_type === 'visualset')
+          .map((sess) => sess.set_id),
+      ),
+    ];
+
+    // Gebruik inArray() om alle sets in één query op te halen
+    let ss: StudysetResponseDto[] = [];
+    let vs: VisualsetResponseDto[] = [];
+
+    if (ssids.length > 0) {
+      ss = await this.db.query.studysets.findMany({
+        where: inArray(studysets.id, ssids),
+      });
+    }
+
+    if (vsids.length > 0) {
+      vs = await this.db.query.visualsets.findMany({
+        where: inArray(visualsets.id, vsids),
+      });
+    }
+
+    return {
+      studysets: ss,
+      visualsets: vs,
+    };
   }
 
-  deleteById(user_id: string) {
-    throw new Error('not yet implemented');
+  async getSetById(
+    user_id: string,
+    set_id: string,
+  ): Promise<fullSetResponseDto> {
+    const set = await this.db.query.studysets.findFirst({
+      where: eq(studysets.id, set_id),
+    });
+
+    if (!set) {
+      throw new NotFoundException('No studyset with this id exists');
+    }
+
+    const classusers = await this.db.query.classroomusers.findMany({
+      where: eq(classroomusers.user_id, user_id),
+    });
+    const classes = [];
+    for (const u of classusers) {
+      const set = await this.db.query.classrooms.findFirst({
+        where: eq(classrooms.id, u.classroom_id),
+      });
+      if (set) {
+        classes.push(set);
+      }
+    }
+
+    const foldrs = await this.db.query.folders.findMany({
+      where: eq(folders.owner_id, user_id),
+    });
+
+    if (!foldrs) {
+      throw new NotFoundException('No folders');
+    }
+
+    const session = await this.db.query.studysessions.findFirst({
+      where: eq(studysessions.set_id, set_id),
+    });
+
+    if (!session) {
+      throw new NotFoundException('Session doesn\'t exist');
+    }
+
+    const seshcards = await this.db.query.sessioncards.findMany({
+      where: eq(sessioncards.session_id, session.id),
+    });
+
+
+    const sesh = { ...session, cards: seshcards, pins: null };
+    return {
+      ...set,
+      cards: await this.db.query.cards.findMany({
+        where: eq(cards.set_id, set_id),
+      }),
+      likes: await this.db.query.setlikes.findMany({
+        where: eq(setlikes.set_id, set_id),
+      }),
+
+      session: sesh,
+      folders: foldrs,
+      classrooms: classes,
+    };
+  }
+
+  async getAllClassroomsByUserId(
+    user_id: string,
+  ): Promise<ClassroomListResponseDto> {
+    //user kan ook geen classrooms gejoined zijn
+    const classroomUsers: ClassroomUserResponseDto[] =
+      await this.db.query.classroomusers.findMany({
+        where: eq(classroomusers.user_id, user_id),
+      });
+
+    const classIds: string[] = classroomUsers.map(
+      (u: ClassroomUserResponseDto) => u.classroom_id,
+    );
+
+    const Clsrms: ClassroomResponseDto[] = [];
+
+    for (const id of classIds) {
+      const clsrm = await this.db.query.classrooms.findFirst({
+        where: eq(classrooms.id, id),
+      });
+
+      if (clsrm) {
+        Clsrms.push(clsrm);
+      }
+    }
+    return {
+      classrooms: Clsrms,
+    };
+  }
+
+  async getClassroomByUserId(
+    user_id: string,
+    classroom_id: string,
+  ): Promise<FullClassroomResponseDto> {
+    const userconfirm = await this.db.query.classroomusers.findFirst({
+      where: and(
+        eq(classroomusers.user_id, user_id),
+        eq(classroomusers.classroom_id, classroom_id),
+      ),
+    });
+
+    const css = new ClassroomService(this.db);
+    const room = await css.getById(classroom_id);
+    if (!userconfirm) {
+      throw new BadRequestException('User is not a member of this classroom');
+    }
+
+    return room;
+  }
+
+  async updateById(
+    user_id: string,
+    body: UpdateUserDTO,
+  ): Promise<UserResponseDto> {
+    const user = await this.db.query.users.findFirst({
+      where: eq(users.id, user_id),
+    });
+    if (!user) {
+      throw new NotFoundException('User does not exist');
+    }
+
+    if (body.email) {
+      const existingUser = await this.db.query.users.findFirst({
+        where: eq(users.email, body.email),
+      });
+
+      if (existingUser) {
+        throw new ConflictException(
+          'There is already a user with this email address',
+        );
+      }
+    }
+
+    let passwordhash = null;
+    if (body.password) {
+      passwordhash = await this.hashPassword(body.password);
+    }
+    const updated = await this.db
+      .update(users)
+      .set({
+        email: body.email ?? user.email,
+        passwordHash: passwordhash ?? user.passwordHash,
+        displayName: body.displayName ?? user.displayName,
+        img_url: body.img_url ?? user.img_url,
+        streak_started: body.streak_started ?? user.streak_started,
+        streak_count: body.streak_count ?? user.streak_count,
+        streak_last_update: body.streak_last_update ?? user.streak_last_update,
+        last_login: body.last_login ?? user.last_login,
+        roles: body.role ?? user.roles,
+      })
+      .where(eq(users.id, user_id));
+
+    return this.getById(user_id);
+  }
+
+  async deleteById(user_id: string) {
+    const existingUser = await this.db.query.users.findFirst({
+      where: eq(users.id, user_id),
+    });
+
+    if (!existingUser) {
+      throw new NotFoundException('No user with this id exists');
+    }
+
+    await this.db.delete(users).where(eq(users.id, user_id));
   }
 
   //TODO
-  uploadProfilePicutre(user_id: string, body: any) {
+  uploadProfilePicture(user_id: string, body: any) {
     throw new Error('not yet implemented');
+  }
+
+  async headerInfo(user_id: string): Promise<HeaderResposneDto> {
+    const usr = await this.db.query.users.findFirst({
+      where: eq(users.id, user_id),
+    });
+
+    if (!usr) {
+      throw new NotFoundException('User not found');
+    }
+    return {
+      displayName: usr.displayName,
+      email: usr.email,
+      streak_count: usr.streak_count,
+      pfp: usr.img_url,
+    };
+  }
+
+  async startPagina(user_id: string): Promise<StartPagina> {
+    return {
+      lastTen: await this.getLastTen(user_id),
+      courses: await this.getCourses(user_id),
+      class: await this.getClassmateActivity(user_id),
+    };
+  }
+
+  async getCourses(user_id: string): Promise<string[]> {
+    const courseSet: Set<string> = new Set();
+    const sets = await this.getAllSetsById(user_id);
+
+    if (!sets) {
+      return [];
+    }
+
+    sets.visualsets.forEach((set: VisualsetResponseDto) => {
+      if (set?.course && set.course.trim() !== '') {
+        courseSet.add(set.course);
+      }
+    });
+
+    sets.studysets.forEach((set: StudysetResponseDto) => {
+      if (set?.course && set.course.trim() !== '') {
+        courseSet.add(set.course);
+      }
+    });
+
+    return Array.from(courseSet);
+  }
+
+  async getClassmateActivity(user_id: string): Promise<ClassActivitiesDto[]> {
+    const userClassrooms = await this.db.query.classroomusers.findMany({
+      where: eq(classroomusers.user_id, user_id),
+    });
+
+    // Bereken datum van 2 dagen geleden
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+    const userArray: ClassActivitiesDto[] = [];
+    for (const c of userClassrooms) {
+      const activities: ClassActivitiesDto[] =
+        await this.db.query.classroomactivities.findMany({
+          where: and(
+            eq(classroomactivities.classroom_id, c.classroom_id),
+            ne(classroomactivities.user_id, user_id),
+            gte(classroomactivities.last_seen, twoDaysAgo.toISOString()),
+          ),
+        });
+
+      userArray.push(...activities);
+    }
+
+    return userArray;
+  }
+
+
+  async getCourse(user_id: string, course_id: string): Promise<AllsetsResponseDto> {
+    //er kunnen ook geen sessies zijn
+    const sessies: StudysessionDTO[] =
+      await this.db.query.studysessions.findMany({
+        where: eq(studysessions.user_id, user_id),
+      });
+
+    // Gebruik Set om duplicaten te voorkomen
+    const ssids = [
+      ...new Set(
+        sessies
+          .filter((sess) => sess.set_type === 'studyset')
+          .map((sess) => sess.set_id),
+      ),
+    ];
+
+    const vsids = [
+      ...new Set(
+        sessies
+          .filter((sess) => sess.set_type === 'visualset')
+          .map((sess) => sess.set_id),
+      ),
+    ];
+
+    // Gebruik inArray() om alle sets in één query op te halen
+    let ss: StudysetResponseDto[] = [];
+    let vs: VisualsetResponseDto[] = [];
+
+    if (ssids.length > 0) {
+      ss = await this.db.query.studysets.findMany({
+        where: inArray(studysets.id, ssids),
+      });
+    }
+
+    if (vsids.length > 0) {
+      vs = await this.db.query.visualsets.findMany({
+        where: inArray(visualsets.id, vsids),
+      });
+    }
+
+    return {
+      studysets: ss.filter((ss) => ss.course === course_id),
+      visualsets: vs.filter((vs) => vs.course === course_id),
+    };
   }
 }

@@ -1,56 +1,93 @@
-import {useTranslation} from 'react-i18next';
-import Streak from '../../assets/icons/streak.svg';
-import Cal from '../../assets/icons/calendar.svg';
-import {Link} from 'react-router-dom';
-import {useRef} from 'react';
+import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import useSWR from "swr";
+import ProfileHeader from "./profileheader/ProfileHeader.jsx";
+import Studoheader from "./studoheader/Studoheader.jsx";
+import { useAuth } from "../../contexts/auth.js";
 
 export default function Profile() {
-//variables
   const DeleteBtn = useRef(null);
   const LogOutBtn = useRef(null);
-  //TODO
-  const Name = 'Chacha';
-  //TODO
-  const date = 'June 17, 2025';
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { t } = useTranslation();
 
-  const { t, i18n } = useTranslation();
+  const { data: Profile, isLoading, error } = useSWR(`profiles/${id}`);
 
-  //return statement
-  return(
-    <div className="w-full h-screen flex flex-col items-center justify-baseline pt-35">
-      <div className="flex w-3/5 flex-col items-center justify-center gap-5">
-        <div className="flex flex-row justify-baseline items-center
-			  bg-studowhite min-h-32 w-full gap-5 border-1 border-transparent
-			  border-studoborder rounded-4xl
-			  shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#bebebe] backdrop-blur-xs p-4
-			dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]">
-          <div className="bg-green-300 rounded-full h-22 w-22"></div>
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-row justify-baseline items-center gap-3">
-              <span className="flex items-center text-2xl
-              font-sfpro font-bold text-studodarkblue dark:text-white">{Name}</span>
-              <span className="flex flex-col items-center text-studodarkblue dark:text-white cursor-pointer">#</span>
-              <img className="h-5 cursor-pointer" src={Streak} alt="calendar icon"/>
-            </div>
-            <div className="flex flex-row justify-baseline items-center gap-3">
-              <img className="h-5 dark:brightness-0 dark:invert"src={Cal} alt="calendar icon"/>
-              <span className="text-studodarkblue dark:text-white">{t('Joined')}: {date}</span>
-            </div>
-          </div>
-        </div>
+  useEffect(() => {
+    if (Profile && Profile.profile.id === user.id) {
+      navigate("/account");
+    }
+  }, [Profile, user, navigate]);
 
-        <div className="w-full h-40 flex flex-col gap-5">
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="text-studodarkblue dark:text-white">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="text-red-500">Error: {error.message}</div>
+      </div>
+    );
+  }
+
+  if (!Profile) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="text-studodarkblue dark:text-white">No profile found</div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="w-full min-h-screen flex flex-col items-center justify-baseline pt-20 sm:pt-25 md:pt-35 px-4 sm:px-6 lg:px-8">
+      <div
+        className="flex w-full sm:w-11/12 md:w-4/5 lg:w-3/5 flex-col items-center justify-center gap-3 sm:gap-4 md:gap-5">
+
+        <ProfileHeader profile={Profile.profile} />
+
+
+        <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5">
           <div className="flex flex-row justify-between">
-            <span className="text-2xl font-bold font-sfpro text-studodarkblue dark:text-white">
-              {Name}'s {t(`sets`)}:
-			</span>
-          </div>
-          <div>{}</div>
-          <div className="w-full h-10 flex flex-row justify-end items-center">
-            <div className="text-studodarkblue dark:text-white cursor-pointer">{t('all sets')}</div>
+            <div className="flex flex-row gap-2 sm:gap-3 px-3 sm:px-5 md:px-7">
+              <NavLink
+                to="studysets"
+                className={({ isActive }) =>
+                  `min-w-16 sm:min-w-20 text-sm sm:text-base ${isActive ? "font-bold" : "opacity-50"}`
+                }>
+                {t("studysets")}
+              </NavLink>
+              <span className="text-sm sm:text-base">|</span>
+              <NavLink
+                to="visualsets"
+                className={({ isActive }) =>
+                  `min-w-16 sm:min-w-20 text-sm sm:text-base ${isActive ? "font-bold" : "opacity-50"}`
+                }>
+                {t("visualsets")}
+              </NavLink>
+            </div>
           </div>
 
+          <Outlet context={{
+            studysets: Profile.studysets,
+            visualsets: Profile.visualsets
+          }} />
+
+          <div className="w-full h-10 flex flex-row justify-end items-center">
+            <div className="text-studodarkblue dark:text-white cursor-pointer text-sm sm:text-base">
+              {t("all sets")}
+            </div>
+          </div>
         </div>
       </div>
-    </div>);
+    </div>
+  );
 }

@@ -1,0 +1,11 @@
+services:
+  budget-app-frontend:
+    image: studo-app-frontend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        VITE_API_URL: http://localhost:3000/api
+    container_name: studo-app-frontend
+    ports:
+      - '80:80'

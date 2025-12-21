@@ -1,0 +1,23 @@
+import { describe, it, expect } from 'vitest'; // ✅ Importeer expliciet
+import type supertest from 'supertest';
+
+export function testAuthHeader(requestFactory: () => supertest.Test): void {
+  describe('Authentication', () => {
+    it('should respond with 401 when not authenticated', async () => {
+      const response = await requestFactory();
+
+      expect(response.statusCode).toBe(401);
+      expect(response.body.message).toBe('You need to be signed in');
+    });
+
+    it('should respond with 401 with a malformed token', async () => {
+      const response = await requestFactory().set(
+        'Authorization',
+        'Bearer INVALID_TOKEN',
+      );
+
+      expect(response.statusCode).toBe(401);
+      expect(response.body.message).toBe('Invalid authentication token');
+    });
+  });
+}

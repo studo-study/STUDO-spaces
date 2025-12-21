@@ -6,43 +6,138 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  Patch,
-  Post,
+  ParseUUIDPipe,
+  Put,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 
 import { StudysessionService } from './studysession.service';
-import { UpdateStudysessionDto } from './studysession.dto';
+import {
+  UpdateStudysessionDto,
+  StudysessionResponseDto,
+  StudysessionListResponseDto,
+} from './studysession.dto';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/roles';
+import { CheckUserAccessGuard } from '../auth/guards/userAccess.guard';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+} from '@nestjs/swagger';
+import { Request as ExpressRequest } from 'express';
 
-@Controller('studysession')
+interface AuthenticatedRequest extends ExpressRequest {
+  user: {
+    id: string;
+    email?: string;
+    role?: string;
+    // wat je JWT ook bevat
+  };
+}
+
+@ApiTags('studysessions')
+@ApiBearerAuth()
+@Controller('studysessions')
 export class StudysessionController {
-  constructor(private readonly seshService: StudysessionService) {}
-  //OPVRAGEN VAN SESSION-DATA
-  //alle sessies opvragen
+  constructor(private readonly seshService: StudysessionService) {
+  }
+
+  // GET ALL STUDYSESSIONS ------------------------------------------
+  @ApiOperation({ summary: 'Haal alle studysessions op (admin).' })
+  @ApiResponse({
+    status: 200,
+    description: 'Alle studysessions opgehaald',
+    type: StudysessionListResponseDto,
+  })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.ADMIN)
   @Get()
-  getAllStudysessions() {
+  async getAllStudysessions(): Promise<StudysessionListResponseDto> {
     return this.seshService.getAll();
   }
 
-  //specifieke sessie opvragen
+  // GET STUDYSESSION BY ID -----------------------------------------
+  @ApiOperation({ summary: 'Haal specifieke studysession op.' })
+  @ApiParam({ name: 'session_id', type: 'uuid' })
+  @ApiResponse({
+    status: 200,
+    description: 'Studysession gevonden',
+    type: StudysessionResponseDto,
+  })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.USER)
   @Get('/:session_id')
-  getStudysessionById(@Param('session_id') session_id: string) {
-    return this.seshService.getById(session_id);
+  async getStudysessionById(
+    @Request() req: AuthenticatedRequest,
+    @Param('session_id', ParseUUIDPipe) session_id: string,
+  ): Promise<StudysessionResponseDto> {
+    const user_id = req.user.id;
+    return this.seshService.getById(user_id, session_id);
   }
 
-  //UPDATEN
-  //updaten van specifieke sessie
-  @Patch(':session_id')
-  updateStudysessionById(
-    @Param('session_id') session_id: string,
+  // UPDATE STUDYSESSION --------------------------------------------
+  @ApiOperation({ summary: 'Wijzig een studysession.' })
+  @ApiParam({ name: 'session_id', type: 'uuid' })
+  @ApiBody({ type: UpdateStudysessionDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Studysession geüpdatet',
+    type: StudysessionResponseDto,
+  })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.USER)
+  @Put(':session_id')
+  async updateStudysessionById(
+    @Request() req: AuthenticatedRequest,
+    @Param('session_id', ParseUUIDPipe) session_id: string,
     @Body() update: UpdateStudysessionDto,
-  ) {
-    return this.seshService.updateById(session_id, update);
+  ): Promise<StudysessionResponseDto> {
+    const user_id = req.user.id;
+    return this.seshService.updateById(user_id, session_id, update);
   }
 
-  //DELETEN
-  //deleten van specifieke sessie
+  // RESET STUDYSESSION --------------------------------------------
+  @ApiOperation({ summary: 'Wijzig een studysession.' })
+  @ApiParam({ name: 'session_id', type: 'uuid' })
+  @ApiBody({ type: UpdateStudysessionDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Studysession geüpdatet',
+    type: StudysessionResponseDto,
+  })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.USER)
+  @Put(':session_id/reset')
+  async resetStudysessionById(
+    @Request() req: AuthenticatedRequest,
+    @Param('session_id', ParseUUIDPipe) session_id: string,
+  ): Promise<StudysessionResponseDto> {
+    const user_id = req.user.id;
+    return this.seshService.resetById(user_id, session_id);
+  }
+
+  // DELETE STUDYSESSION --------------------------------------------
+
+  @ApiOperation({ summary: 'Verwijder een studysession.' })
+  @ApiParam({ name: 'session_id', type: 'uuid' })
+  @ApiResponse({
+    status: 204,
+    description: 'Studysession verwijderd',
+  })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.USER)
   @Delete(':session_id')
-  deleteStudysessionById(@Param('session_id') session_id: string) {
-    return this.seshService.deleteById(session_id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteStudysessionById(
+    @Request() req: AuthenticatedRequest,
+    @Param('session_id', ParseUUIDPipe) session_id: string,
+  ): Promise<void> {
+    const user_id = req.user.id;
+    return this.seshService.deleteById(user_id, session_id);
   }
 }

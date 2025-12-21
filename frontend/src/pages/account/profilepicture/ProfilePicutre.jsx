@@ -1,7 +1,9 @@
-import Profile from '../../../assets/icons/uploadpicca.svg';
-import {useRef} from 'react';
-export default function ProfilePicutre() {
-  //events
+import Profile from "../../../../public/assets/icons/uploadpicca.svg";
+import { useRef } from "react";
+import { PiStudent } from "react-icons/pi";
+
+export default function ProfilePicutre(image) {
+
   const button = useRef(null);
   const input = useRef(null);
 
@@ -9,11 +11,30 @@ export default function ProfilePicutre() {
     input.current?.click();
   };
 
-  //return statements
+
   return (
-    <div className="bg-green-300 rounded-full h-22 w-22 cursor-pointer">
-      <input type="file" ref={input} accept="image/png, image/jpeg, image/webp" hidden />
-      <img src={Profile} onClick={TriggerButton} alt="upload-icon" className="w-full h-auto p-6 invert
-	hover:opacity-100 opacity-0 transition-opacity duration-300"/>
+    <div
+      className="bg-emerald-400 flex items-center justify-center rounded-full min-h-22 min-w-22 relative cursor-pointer overflow-hidden group">
+      {/*<input
+        type="file"
+        ref={input}
+        accept="image/png, image/jpeg, image/webp"
+        hidden
+      />*/}
+
+      {image.img === "default" ? <PiStudent size={40} color={"white"} /> : (
+        <img
+          src={image.img}
+          alt="profile"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+      <img
+        src={Profile}
+        onClick={TriggerButton}
+        alt="upload-icon"
+        className="absolute inset-0 w-full h-full p-6 invert opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      />
     </div>);
+
 }

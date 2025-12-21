@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpBackend from 'i18next-http-backend';
 
@@ -9,15 +9,13 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    supportedLngs: ['en', 'nl', 'fr','de', 'hi', 'es', 'bn', 'ru', 'ja', 'zh','ko', 'pt'],
-    interpolation: { escapeValue: false },
+    supportedLngs: ['en', 'nl', 'fr', 'de', 'hi', 'es', 'bn', 'ru', 'ja', 'zh', 'ko', 'pt'],
+    interpolation: {escapeValue: false},
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
       caches: ['localStorage'],
     },
   });
-
-console.log(LanguageDetector);
 
 export default i18n;
 //localStorage.setItem('i18nextLng', 'de');
