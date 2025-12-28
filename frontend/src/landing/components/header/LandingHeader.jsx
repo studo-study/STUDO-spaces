@@ -2,25 +2,38 @@ import TriggerMethods from "./dropdownmethods/TriggerMethods.jsx";
 import TriggerTools from "./dropdowntools/TriggerTools.jsx";
 import { Link } from "react-router-dom";
 import { t } from "i18next";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Menu, X } from "react-feather";
 
 export default function LandingHeader() {
   const [MethodsOpen, setMethodsOpen] = useState(false);
   const [ToolsOpen, setToolsOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setScrolled(window.scrollY > 20);
+		};
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
 
   return (
     <header
-      className="w-screen h-20 md:h-25 fixed top-0 left-0 right-0 z-[999]
-      bg-white dark:bg-[#182536] border-b border-solid border-studogrey/20
-      flex items-center justify-between px-4 sm:px-8 lg:px-20"
+      className={`w-screen h-20 md:h-20 fixed top-0 left-0 right-0 z-[999] border-b border-transparent transition-all duration-300
+      bg-transparent ${scrolled ? "bg-white dark:bg-[#182536] border-b border-studogrey/20" : null}
+      flex items-center justify-between px-4 sm:px-8 lg:px-20`}
     >
       <div className="flex items-center justify-start gap-6 md:gap-10 flex-1">
-        <Link to={"/welcome"}
-              className="font-akira text-emerald-400 dark:text-white text-3xl md:text-4xl whitespace-nowrap">
-          STUDO
-        </Link>
+		  <Link
+			  to="/welcome"
+			  className="group relative font-akira text-3xl md:text-4xl whitespace-nowrap"
+		  >
+          <span className="relative z-10 bg-gradient-to-r from-emerald-500 to-emerald-400 dark:from-white dark:to-blue-200 bg-clip-text text-transparent transition-all duration-300">
+            STUDO
+          </span>
+		  </Link>
 
         <nav className="hidden md:flex flex-row gap-10 items-center">
           <TriggerMethods MethodsOpen={MethodsOpen} setMethodsOpen={setMethodsOpen} />

@@ -7,11 +7,12 @@ export default function LandingLayout() {
     <div className="w-full min-h-screen text-studodarkblue dark:text-white bg-blue-50 dark:bg-gray-800 flex flex-col">
       <LandingHeader />
 
-      <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Outlet />
-      </main>
 
-      <LandingFooter />
+        <Outlet />
+		<div className="flex flex-col w-full h-fit z-[9999]">
+			<LandingFooter />
+		</div>
+
     </div>
   );
 }

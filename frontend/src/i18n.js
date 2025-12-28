@@ -4,18 +4,21 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpBackend from 'i18next-http-backend';
 
 i18n
-  .use(HttpBackend)
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    fallbackLng: 'en',
-    supportedLngs: ['en', 'nl', 'fr', 'de', 'hi', 'es', 'bn', 'ru', 'ja', 'zh', 'ko', 'pt'],
-    interpolation: {escapeValue: false},
-    detection: {
-      order: ['localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
-      caches: ['localStorage'],
-    },
-  });
+	.use(HttpBackend)
+	.use(LanguageDetector)
+	.use(initReactI18next)
+	.init({
+		fallbackLng: 'en',
+		supportedLngs: ['en', 'nl', 'fr', 'de', 'hi', 'es', 'bn', 'ru', 'ja', 'zh', 'ko', 'pt'],
+		interpolation: { escapeValue: false },
+		detection: {
+			order: ['localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+			caches: ['localStorage'],
+		},
+		backend: {
+			loadPath: '/locales/{{lng}}/translation.json', // Pad naar je vertaalbestanden
+		},
+	});
 
 export default i18n;
 //localStorage.setItem('i18nextLng', 'de');
