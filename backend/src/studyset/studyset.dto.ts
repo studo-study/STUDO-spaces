@@ -39,7 +39,7 @@ export class CreateStudysetDto {
   global_term_language: string;
 
   @ApiProperty({
-    example: 'nl',
+    example: 'nl-NL',
     description: 'Language of the definitions of the studyset (ISO 639-1 code)',
   })
   @IsString({ name: 'global_definition_language', maxLength: 2 })
@@ -92,7 +92,7 @@ export class UpdateStudysetDto {
   global_term_language?: string;
 
   @ApiProperty({
-    example: 'nl',
+    example: 'nl-NL',
     description: 'Updated language of the definitions (ISO 639-1 code)',
     required: false,
   })
@@ -151,7 +151,7 @@ export class StudysetResponseDto {
   global_term_language: string;
 
   @ApiProperty({
-    example: 'nl',
+    example: 'nl-NL',
     description: 'Language code of the definitions',
   })
   @Expose()

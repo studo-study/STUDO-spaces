@@ -9,7 +9,7 @@ export default function ProfileHeader({ profile }) {
   const { t } = useTranslation();
   const [hovering, setHovering] = useState(false);
 
-  const lang = localStorage.getItem("i18nextLng") || "nl-NL";
+  const lang = localStorage.getItem("i18nextLng") || "nl-NL-NL";
   const date = new Date(profile.join_date);
 
   const formattedDate = date.toLocaleDateString(lang, {

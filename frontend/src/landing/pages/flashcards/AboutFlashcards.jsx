@@ -1,49 +1,50 @@
 import { t } from "i18next";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import hero from "../../../../public/assets/icons/start/flashcards-hero-img.svg";
 
 export default function AboutFlashcards() {
-  return (
-    <div
-      className="w-full min-h-[90vh] dark:text-white text-studodarkblue flex items-center justify-center bg-gradient-to-b from-transparent via-transparent to-blue-900/40">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center py-12 lg:py-0">
-          {/* Text section */}
-          <div className="flex flex-col items-start justify-center space-y-8 text-left">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight whitespace-pre-line">
-              {t("Flip - \n Learn - \n Repeat")}
-            </h1>
+	const [mounted, setMounted] = useState(false);
 
-            <p className="text-xl sm:text-2xl lg:text-3xl font-bold">
-              {t("Quickly review terms and definitions with interactive flashcards")}
-            </p>
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
-            <ul className="space-y-4 text-base sm:text-lg font-medium list-disc list-inside">
-              <li>{t("Swipe or flip to reveal answers")}</li>
-              <li>{t("Learn at your own pace")}</li>
-              <li>{t("Shuffle and repeat until you’re confident")}</li>
-            </ul>
-
-            <div className="mt-4">
-              <Link
-                to="/register"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-full text-white bg-blue-500 hover:bg-blue-600 font-bold text-lg transition"
-              >
-                {t("try it out")}
-              </Link>
-            </div>
-          </div>
-
-          {/* Image section */}
-          <div className="flex justify-center lg:justify-end">
-            <img
-              src={hero}
-              alt="Flashcards illustration"
-              className="w-full max-w-md lg:max-w-lg xl:max-w-xl object-contain drop-shadow-2xl"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+	return <div className={`
+    w-full dark:text-white text-studodarkblue ` +
+		' max-h-screen min-h-[90vh] pt-25 p-10 md:p-20 xl:p-0 xl:pt-0 h-screen flex justify-center items-center ' +
+		'bg-gradient-to-b from-transparent via-transparent to-blue-900/40'}>
+		<div className={'w-full h-full flex flex-col xl:flex-row gap-15 justify-center items-center'}>
+			<div className={'w-full xl:w-1/2 h-full flex flex-col items-end justify-center'}>
+				<div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
+          <span className={`w-full h-fit font-bold text-5xl whitespace-pre-line
+            transition-all duration-700 delay-100 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
+            {t("Flip - \nLearn - \nRepeat")}</span>
+					<span
+						className={`w-full h-fit text-2xl font-bold
+            transition-all duration-700 delay-200
+          ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
+            {t("Quickly review terms and definitions with interactive flashcards")}</span>
+					<ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
+          transition-all duration-700 delay-300
+       ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
+                   text-base items-baseline justify-baseline mb-7`}>
+						<li className={"list-disc"}>{t("Swipe or flip to reveal answers")}</li>
+						<li className={"list-disc"}>{t("Learn at your own pace")}</li>
+						<li className={"list-disc"}>{t("Shuffle and repeat until you're confident")}</li>
+					</ul>
+					<div className={`w-full flex items-center justify-baseline
+          transition-all duration-700 delay-1000
+          ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"} `}>
+						<Link to={"/register"}
+							  className={"px-6 py-3 rounded-full flex items-center justify-center " +
+								  "text-white bg-blue-500 font-bold"}>{t("try it out")}</Link>
+					</div>
+				</div>
+			</div>
+			<div className={`hidden xl:flex xl:w-1/2 h-full flex-col justify-center  overflow-hidden items-baseline`}>
+				<img src={hero} alt="" className={`w-3/4  transition-all duration-700 delay-400 origin-bottom-left ${mounted ? "opacity-100 rotate-0" : "opacity-0 rotate-45"}`} />
+			</div>
+		</div>
+	</div>;
 }

@@ -7,6 +7,7 @@ import eyeOpened from "../../../public/assets/icons/eye-open.svg";
 import eyeClosed from "../../../public/assets/icons/eye-closed.svg";
 import google from "../../../public/assets/icons/logos/google.svg";
 import microsoft from "../../../public/assets/icons/logos/microsoft.svg";
+import smartschool from "../../../public/assets/icons/logos/smartschool.png";
 
 const validationRules = {
   email: {
@@ -54,7 +55,7 @@ export default function Form() {
   }, []);
 
   return (
-    <div className="w-full flex items-center justify-center">
+    <div className="w-fit flex items-center justify-center">
       <FormProvider {...methods}>
         <form
           className="w-full max-w-md h-fit transition-all z-[9999]
@@ -153,6 +154,12 @@ export default function Form() {
                     data-cy="login_microsoft">
                     <img className="h-8 sm:h-9 md:h-10" src={microsoft} alt="microsoft-icon" />
                   </button>
+					<button
+						className="cursor-pointer hover:scale-110 active:scale-95 transition-transform"
+						type="button"
+						data-cy="login-smartschool">
+						<img className="h-8 sm:h-9 md:h-10" src={smartschool} alt="smartschool-icon" />
+					</button>
                 </div>
               </div>
             </div>

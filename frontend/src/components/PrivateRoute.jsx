@@ -21,5 +21,5 @@ export default function PrivateRoute() {
     return <Outlet />;
   }
 
-  return <Navigate replace to={`/login?redirect=${pathname}`} />;
+  return <Navigate replace to={`/welcome`} />;
 }

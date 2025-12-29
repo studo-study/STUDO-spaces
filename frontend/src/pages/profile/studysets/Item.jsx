@@ -4,7 +4,7 @@ import Studyset from "../../../../public/assets/icons/studyset.svg";
 import CourseIcons from "../../../data/Index.js";
 
 export default function Item({ set }) {
-  const lang = localStorage.getItem("i18nextLng") || "nl-NL";
+  const lang = localStorage.getItem("i18nextLng") || "nl-NL-NL";
   const date = new Date(set.last_updated);
   const formattedDate = date.toLocaleDateString(lang, {
     day: "numeric",

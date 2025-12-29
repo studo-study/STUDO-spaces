@@ -28,12 +28,12 @@ export default function Hero() {
 
 	return (
     <section
-      className="relative min-h-screen flex flex-col items-center justify-start pt-8 pb-20 px-4 overflow-hidden">
-      <div className="absolute inset-0 hidden dark:flex select-none pointer-events-none z-0">
+      className={"relative w-full max-w-screen overflow-visible  h-fit xxl:h-3/4 flex flex-col items-center justify-start pt-8 px-4"}>
+      <div className="absolute max-w-screen w-full inset-0 hidden dark:flex select-none pointer-events-none z-0">
         <HeroBackground color="to-white/10" />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center text-center pt-5 gap-8 max-w-5xl md:max-w-screen">
+      <div className="relative z-10 flex flex-col items-center text-center pt-5 xxl:pt-20 overflow-visible  gap-8 3xl:w-2/3 max-w-screen">
 		  <div
 			  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full 
             bg-emerald-400/20 dark:bg-studoblue/20 
@@ -59,7 +59,7 @@ export default function Hero() {
 		  </h1>
 
 		  <p
-			  className={`text-lg sm:text-xl md:text-2xl text-studodarkblue/70 dark:text-white/70 max-w-2xl
+			  className={`text-lg text-xl md:text-2xl text-studodarkblue/70 dark:text-white/70 max-w-2xl
             transition-all duration-700 delay-300
             ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}
 		  >
@@ -83,7 +83,7 @@ export default function Hero() {
 			  ))}
 		  </div>
 
-        <div className={`grid grid-cols-2 grid-rows-1 gap-4 mt-6 w-7/15 max-w-150
+        <div className={`grid grid-cols-1 md:grid-cols-2 grid-rows-1 gap-4 md:mt-6 md:w-full max-w-150
         ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
             transition-all duration-700 delay-500`}>
           <Link
@@ -103,14 +103,20 @@ export default function Hero() {
           </LinkHash>
         </div>
 
-        <div className={`flex flex-col md:grid  ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
-            transition-all duration-700 delay-600
-          grid-cols-2 md:grid-cols-5 gap-6 md:gap-8 mt-12 w-full max-w-4/5 md:w-screen px-4 sm:px-8 md:px-0`}
+        <div className={`flex flex-col md:flex-col xl:flex-row md:grid  ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
+            transition-all duration-700 delay-600 overflow-visible
+          md:grid-cols-2 xl:grid-cols-5 gap-6 md:gap-8 mt-12 w-full xl:w-3/2 px-4 sm:px-3 md:px-0`}
 		>
-			{studyModes.map((item) =>
+			{studyModes.map((item, index) =>
 				<Link
 					to={item.to}
-					className={`group relative overflow-hidden rounded-3xl bg-radial ${item.color} flex flex-col justify-between h-64 sm:h-80 transition-transform hover:scale-105`}
+					style={{ transitionDelay: `${index * 200}ms` }}
+					className={`
+						group relative overflow-hidden rounded-3xl bg-radial ${item.color}
+						${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
+						transition-all duration-700 delay-0
+						flex flex-col justify-between h-64 sm:h-80 hover:scale-105
+					  `}
 				>
 					<span className="text-2xl sm:text-3xl font-bold text-studodarkblue text-center pt-6">
 					  {t(item.label)}

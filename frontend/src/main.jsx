@@ -1,8 +1,8 @@
-import { StrictMode } from "react";
+ import {StrictMode, Suspense} from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import "./i18n.js";
+import './i18n';
 import { SWRConfig } from "swr";
 
 import { AuthProvider } from "./contexts/Auth.context.jsx";
@@ -299,20 +299,22 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <SWRConfig
-        value={{
-          fetcher: (url) => getById(url),
-          revalidateOnFocus: false,
-          revalidateOnReconnect: false,
-          shouldRetryOnError: false,
-          dedupingInterval: 60_000
+	<Suspense fallback={<div>Loading...</div>}>
+		<AuthProvider>
+		  <SWRConfig
+			value={{
+			  fetcher: (url) => getById(url),
+			  revalidateOnFocus: false,
+			  revalidateOnReconnect: false,
+			  shouldRetryOnError: false,
+			  dedupingInterval: 60_000
 
-        }}
+			}}
 
-      >
-        <RouterProvider router={router} />
-      </SWRConfig>
+		  >
+			<RouterProvider router={router} />
+		  </SWRConfig>
     </AuthProvider>
+	</Suspense>
   </StrictMode>
 );

@@ -67,7 +67,7 @@ export default function LandingFooter() {
               {t("Built with 💙 using React")}
             </p>
             <p className="text-xs opacity-75 order-first sm:order-none">
-              {t("Version")} 2.01
+              {t("Version")} 2.02
             </p>
             <p className="text-center sm:text-right">
               &copy; {CurrentYear} {t("STUDO inc. All Rights Reserved.")}

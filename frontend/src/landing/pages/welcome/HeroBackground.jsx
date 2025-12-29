@@ -23,9 +23,9 @@ export default function HeroBackground({ color }) {
   }, []);
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="fixed max-w-screen w-full inset-0 overflow-hidden pointer-events-none">
       {/* Subtiele gradient overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-b from-transparent via-transparent ${color}`} />
+      <div className={`absolute max-w-screen w-full inset-0 bg-gradient-to-b from-transparent via-transparent ${color}`} />
 
       {floatingItems.map((item, i) => (
         <img

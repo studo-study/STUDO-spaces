@@ -202,7 +202,7 @@ describe('Studysets', () => {
         title: 'New Test Set',
         course: 'Test Course',
         global_term_language: 'en',
-        global_definition_language: 'nl',
+        global_definition_language: 'nl-NL',
         folder_id: folderId2,
         cardlist: [
           {
@@ -264,7 +264,7 @@ describe('Studysets', () => {
         title: 'Test Set',
         course: 'Test Course',
         global_term_language: 'en',
-        global_definition_language: 'nl',
+        global_definition_language: 'nl-NL',
         folder_id: folderId2,
         cardlist: [],
       };
@@ -283,7 +283,7 @@ describe('Studysets', () => {
         title: 'Test Set',
         course: 'Test Course',
         global_term_language: 'en',
-        global_definition_language: 'nl',
+        global_definition_language: 'nl-NL',
         folder_id: folderId2,
         unknownField: 'should be rejected',
         cardlist: [
@@ -394,7 +394,7 @@ describe('Studysets', () => {
       const updateDto = {
         title: 'Updated Title',
         course: 'Updated Course',
-        global_term_language: 'nl',
+        global_term_language: 'nl-NL',
         global_definition_language: 'de',
         public_set: true,
       };
@@ -407,7 +407,7 @@ describe('Studysets', () => {
 
       expect(response.body).toHaveProperty('title', 'Updated Title');
       expect(response.body).toHaveProperty('course', 'Updated Course');
-      expect(response.body).toHaveProperty('global_term_language', 'nl');
+      expect(response.body).toHaveProperty('global_term_language', 'nl-NL');
       expect(response.body).toHaveProperty('global_definition_language', 'de');
       expect(response.body).toHaveProperty('public_set', true);
     });
@@ -710,7 +710,7 @@ describe('Studysets', () => {
         title: 'Test & <Special> "Characters"',
         course: 'Biology\'s Course (Advanced)',
         global_term_language: 'en',
-        global_definition_language: 'nl',
+        global_definition_language: 'nl-NL',
         folder_id: folderId2,
         cardlist: [
           {
