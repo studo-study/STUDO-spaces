@@ -45,7 +45,7 @@ export default function AboutPin() {
 			</div>
 			<div className={`hidden xl:flex xl:w-1/2 h-full flex-col justify-center overflow-hidden items-baseline
       transition-all duration-700 delay-400 ${mounted ? "opacity-100" : "opacity-0"} `}>
-				<img src={hero} alt="" className={"w-3/4"} />
+				<img src={hero} alt="hero" className={"w-3/4"} />
 			</div>
 		</div>
 	</div>;
