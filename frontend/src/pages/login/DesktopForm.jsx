@@ -21,14 +21,6 @@ const validationRules = {
 };
 
 
-const studyModes = [
-	{ label: "Learn", icon: learn, color: "from-emerald-500 to-emerald-400" },
-	{ label: "Flashcards", icon: flash, color: "from-blue-500 to-blue-400" },
-	{ label: "Speedy", icon: speedy, color: "from-amber-500 to-orange-400" },
-	{ label: "Identify", icon: pin, color: "from-rose-500 to-red-400" },
-	{ label: "Point", icon: point, color: "from-violet-500 to-purple-400" },
-];
-
 export default function DesktopForm() {
 	const language = i18n.language;
 	const { search } = useLocation();
@@ -71,7 +63,7 @@ export default function DesktopForm() {
 	return (
 		<div className="w-full h-full flex justify-end">
 			<FormProvider {...methods}>
-				<div className={`w-1/3 h-full flex flex-row overflow-hidden
+				<div className={`w-3/5 xl:w-1/3 h-full flex flex-row overflow-hidden
 					rounded-4xl 
 					shadow-2xl shadow-black/20
 					transition-all duration-700
@@ -84,7 +76,7 @@ export default function DesktopForm() {
 
 							<div className={`flex flex-col gap-2 transition-all duration-500 delay-200
 								${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
-								<h1 className="text-4xl font-bold text-white">{t("Welcome back")}</h1>
+								<h1 className="text-4xl font-bold text-studodarkblue dark:text-white">{t("Welcome back")}</h1>
 								<p className="text-slate-400 text-sm">{t("log into account")}</p>
 							</div>
 
@@ -167,32 +159,35 @@ export default function DesktopForm() {
 									<button
 										type="button"
 										onClick={loginGoogle}
-										className="flex-1  min-h-13 py-2 flex items-center justify-center gap-2 rounded-full
-											bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
+										className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
+											bg-studodarkblue/5 border-studodarkblue/5
+											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
 											transition-all duration-300 cursor-pointer"
 										data-cy="login_google">
 										<img src={google} alt="" className="h-6" />
-										<span className="text-sm text-slate-300">Google</span>
+										<span className="text-sm text-studodarkblue dark:text-slate-300">Google</span>
 									</button>
 									<button
 										type="button"
 										onClick={loginMicrosoft}
-										className="flex-1  min-h-13 flex items-center justify-center gap-2 rounded-full
-											bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
+										className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
+											bg-studodarkblue/5 border-studodarkblue/5
+											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
 											transition-all duration-300 cursor-pointer"
 										data-cy="login_microsoft">
 										<img src={microsoft} alt="" className="h-6" />
-										<span className="text-sm text-slate-300">Microsoft</span>
+										<span className="text-sm text-studodarkblue dark:text-slate-300">Microsoft</span>
 									</button>
 									{language === "nl-BE" || language === "fr-FR-BE"  ? (
 										<button
 											type="button"
 											className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
-											bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
+											bg-studodarkblue/5 border-studodarkblue/5
+											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
 											transition-all duration-300 cursor-pointer"
 											data-cy="login_smartschool">
 											<img src={smartschool} alt="" className="h-6" />
-											<span className="text-sm text-slate-300">{t("Smartschool")}</span>
+											<span className="text-sm text-studodarkblue dark:text-slate-300">{t("Smartschool")}</span>
 										</button>
 									): null}
 								</div>

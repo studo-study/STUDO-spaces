@@ -103,28 +103,32 @@ export default function Hero() {
           </LinkHash>
         </div>
 
-        <div className={`flex flex-col md:flex-col xl:flex-row md:grid  ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
-            transition-all duration-700 delay-600 overflow-visible
-          md:grid-cols-2 xl:grid-cols-5 gap-6 md:gap-8 mt-12 w-full xl:w-3/2 px-4 sm:px-3 md:px-0`}
-		>
-			{studyModes.map((item, index) =>
-				<Link
-					to={item.to}
-					style={{ transitionDelay: `${index * 200}ms` }}
-					className={`
-						group relative overflow-hidden rounded-3xl bg-radial ${item.color}
+		  <div className={`flex flex-wrap justify-center gap-6 md:gap-8 mt-12 w-full px-4 sm:px-3 md:px-0
+			  ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
+			  transition-all duration-700`}
+		  >
+			  {studyModes.map((item, index) => (
+				  <Link
+					  key={index}
+					  to={item.to}
+					  style={{ transitionDelay: `${index * 200}ms` }}
+					  className={`
+						group relative overflow-hidden rounded-3xl
+						bg-gradient-to-br ${item.color}
 						${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
-						transition-all duration-700 delay-0
-						flex flex-col justify-between h-64 sm:h-80 hover:scale-105
+						transition-all duration-700
+						flex flex-col justify-between 
+						w-full h-full sm:w-48 sm:h-64 md:w-52 md:h-72 lg:w-56 lg:h-80
+						hover:scale-105
 					  `}
-				>
-					<span className="text-2xl sm:text-3xl font-bold text-studodarkblue text-center pt-6">
-					  {t(item.label)}
-					</span>
-					<img src={item.icon} alt="Learn icon" className="w-full object-cover object-bottom" />
-				</Link>
-			)}
-        </div>
+				  >
+      <span className="text-xl sm:text-2xl md:text-2xl font-bold text-studodarkblue text-center pt-5 sm:pt-6">
+        {t(item.label)}
+      </span>
+					  <img src={item.icon} alt={`${item.label} icon`} className="w-full object-cover object-bottom" />
+				  </Link>
+			  ))}
+		  </div>
       </div>
     </section>
   );

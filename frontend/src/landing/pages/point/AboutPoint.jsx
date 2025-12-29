@@ -19,20 +19,20 @@ export default function AboutPoint() {
 				<div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
           <span className={`w-full h-fit font-bold text-5xl whitespace-pre-line
             transition-all duration-700 delay-100 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Read - \nPoint - \nRemember")}</span>
+            {t("title_point")}</span>
 					<span
 						className={`w-full h-fit text-2xl font-bold
             transition-all duration-700 delay-200
           ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Select the correct identify on the image based on the given definition")}</span>
+            {t("block1_point")}</span>
 					<ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
           transition-all duration-700 delay-300
        ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
                    text-base items-baseline justify-baseline mb-7`}>
-						<li className={"list-disc"}>{t("Get a definition as your prompt")}</li>
-						<li className={"list-disc"}>{t("Identify the right spot on the image")}</li>
-						<li className={"list-disc"}>{t("Wrong choices come back until learned")}</li>
-						<li className={"list-disc"}>{t("Only possible with visualsets")}</li>
+						<li className={"list-disc"}>{t("block2_point")}</li>
+						<li className={"list-disc"}>{t("block3_point")}</li>
+						<li className={"list-disc"}>{t("block4_point")}</li>
+						<li className={"list-disc"}>{t("block5_point")}</li>
 					</ul>
 					<div className={`w-full flex items-center justify-baseline
           transition-all duration-700 delay-1000

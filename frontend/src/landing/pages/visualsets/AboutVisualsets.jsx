@@ -19,20 +19,20 @@ export default function AboutVisualsets() {
 				<div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
           <span className={`w-full h-fit font-bold text-5xl 
             transition-all duration-700 delay-100 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Visual Learning, Identify by Identify")}</span>
+            {t("title_visualset")}</span>
 					<span
 						className={`w-full h-fit text-2xl font-bold
             transition-all duration-700 delay-200
           ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("A Visualset lets you study by linking definitions to pins on an image — perfect for anatomy, maps, and diagrams")}</span>
+            {t("block1_visualset")}</span>
 					<ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
           transition-all duration-700 delay-300
        ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
                    text-base items-baseline justify-baseline mb-7`}>
-						<li className={"list-disc"}>{t("Instead of just text terms, you upload an image")}</li>
-						<li className={"list-disc"}>{t("Each identify on the image acts as the term")}</li>
-						<li className={"list-disc"}>{t("To every identify, you attach the correct definition")}</li>
-						<li className={"list-disc"}>{t("Use your Visualset in Identify or Point")}</li>
+						<li className={"list-disc"}>{t("block2_visualset")}</li>
+						<li className={"list-disc"}>{t("block3_visualset")}</li>
+						<li className={"list-disc"}>{t("block4_visualset")}</li>
+						<li className={"list-disc"}>{t("block5_visualset")}</li>
 					</ul>
 					<div className={`w-full flex items-center justify-baseline
           transition-all duration-700 delay-1000

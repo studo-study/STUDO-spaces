@@ -19,19 +19,19 @@ export default function AboutLearn() {
 				<div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
           <span className={`w-full h-fit font-bold text-5xl whitespace-pre-line
             transition-all duration-700 delay-100 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Write - \nRepeat - \nRemember")}</span>
+            {t("title_learn")}</span>
 					<span
 						className={`w-full h-fit text-2xl font-bold
             transition-all duration-700 delay-200
           ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("An interactive study mode that quizzes you until every term is mastered.")}</span>
+            {t("block1_learn")}</span>
 					<ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
           transition-all duration-700 delay-300
        ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
                    text-base items-baseline justify-baseline mb-7`}>
-						<li className={"list-disc"}>{t("Type your answer - no multiple choice")}</li>
-						<li className={"list-disc"}>{t("Master each term after two correct recalls")}</li>
-						<li className={"list-disc"}>{t("Build long-term memory through active learning")}</li>
+						<li className={"list-disc"}>{t("block2_learn")}</li>
+						<li className={"list-disc"}>{t("block3_learn")}</li>
+						<li className={"list-disc"}>{t("block4_learn")}</li>
 					</ul>
 					<div className={`w-full flex items-center justify-baseline
           transition-all duration-700 delay-1000

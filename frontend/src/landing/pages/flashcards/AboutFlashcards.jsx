@@ -19,19 +19,19 @@ export default function AboutFlashcards() {
 				<div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
           <span className={`w-full h-fit font-bold text-5xl whitespace-pre-line
             transition-all duration-700 delay-100 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Flip - \nLearn - \nRepeat")}</span>
+            {t("title_flashcard")}</span>
 					<span
 						className={`w-full h-fit text-2xl font-bold
             transition-all duration-700 delay-200
           ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Quickly review terms and definitions with interactive flashcards")}</span>
+            {t("block1_flashcard")}</span>
 					<ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
           transition-all duration-700 delay-300
        ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
                    text-base items-baseline justify-baseline mb-7`}>
-						<li className={"list-disc"}>{t("Swipe or flip to reveal answers")}</li>
-						<li className={"list-disc"}>{t("Learn at your own pace")}</li>
-						<li className={"list-disc"}>{t("Shuffle and repeat until you're confident")}</li>
+						<li className={"list-disc"}>{t("block2_flashcard")}</li>
+						<li className={"list-disc"}>{t("block3_flashcard")}</li>
+						<li className={"list-disc"}>{t("block4_flashcard")}</li>
 					</ul>
 					<div className={`w-full flex items-center justify-baseline
           transition-all duration-700 delay-1000

@@ -19,20 +19,20 @@ export default function AboutPin() {
 				<div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
           <span className={`w-full h-fit font-bold text-5xl whitespace-pre-line
             transition-all duration-700 delay-100 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Identify the parts,\nLearn the \nwhole")}</span>
+            {t("title_pin")}</span>
 					<span
 						className={`w-full h-fit text-2xl font-bold
             transition-all duration-700 delay-200
           ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Identify by typing the correct terms for each identify—perfect for anatomy, maps, diagrams, and more")}</span>
+            {t("block1_pin")}</span>
 					<ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
           transition-all duration-700 delay-300
        ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
                    text-base items-baseline justify-baseline mb-7`}>
-						<li className={"list-disc"}>{t("Step through pins one by one")}</li>
-						<li className={"list-disc"}>{t("Type the matching definition")}</li>
-						<li className={"list-disc"}>{t("Missed pins return later until mastered")}</li>
-						<li className={"list-disc"}>{t("Only possible with visualsets")}</li>
+						<li className={"list-disc"}>{t("block2_pin")}</li>
+						<li className={"list-disc"}>{t("block3_pin")}</li>
+						<li className={"list-disc"}>{t("block4_pin")}</li>
+						<li className={"list-disc"}>{t("block5_pin")}</li>
 					</ul>
 					<div className={`w-full flex items-center justify-baseline
           transition-all duration-700 delay-1000

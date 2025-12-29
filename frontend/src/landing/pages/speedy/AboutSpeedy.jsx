@@ -19,19 +19,19 @@ export default function AboutSpeedy() {
 				<div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
           <span className={`w-full h-fit font-bold text-5xl whitespace-pre-line
             transition-all duration-700 delay-100 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("Speed Meets Knowledge")}</span>
+            {t("title_speedy")}</span>
 					<span
 						className={`w-full h-fit text-2xl font-bold
             transition-all duration-700 delay-200
           ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("A timed quiz mode with rounds that push you to recall terms under pressure")}</span>
+            {t("block1_speedy")}</span>
 					<ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
           transition-all duration-700 delay-300
        ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
                    text-base items-baseline justify-baseline mb-7`}>
-						<li className={"list-disc"}>{t("Beat the timer in every round")}</li>
-						<li className={"list-disc"}>{t("Wrong answers move to the next round")}</li>
-						<li className={"list-disc"}>{t("Clear all terms to win the session")}</li>
+						<li className={"list-disc"}>{t("block2_speedy")}</li>
+						<li className={"list-disc"}>{t("block3_speedy")}</li>
+						<li className={"list-disc"}>{t("block4_speedy")}</li>
 					</ul>
 					<div className={`w-full flex items-center justify-baseline
           transition-all duration-700 delay-500

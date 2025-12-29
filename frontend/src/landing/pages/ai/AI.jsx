@@ -19,20 +19,20 @@ export default function AI() {
 				<div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
           <span className={`w-full h-fit font-bold text-5xl 
             transition-all duration-700 delay-100 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("AI That Builds Your Sets")}</span>
+            {t("title_ai")}</span>
 					<span
 						className={`w-full h-fit text-2xl font-bold text-pink-600 dark:text-pink-400
             transition-all duration-700 delay-200
           ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t("* coming soon")}</span>
+            {t("block1_ai")}</span>
 					<ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
           transition-all duration-700 delay-300
        ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
                    text-base items-baseline justify-baseline mb-7`}>
-						<li className={"list-disc"}>{t("Upload a vocabulary list, glossary, or lecture notes and turn them into a studyset")}</li>
-						<li className={"list-disc"}>{t("Snap a photo of a textbook page or diagram and let AI detect the terms")}</li>
-						<li className={"list-disc"}>{t("AI cleans up the data into ready-to-use pairs")}</li>
-						<li className={"list-disc"}>{t("Generated sets work across all modes")}</li>
+						<li className={"list-disc"}>{t("block2_ai")}</li>
+						<li className={"list-disc"}>{t("block3_ai")}</li>
+						<li className={"list-disc"}>{t("block4_ai")}</li>
+						<li className={"list-disc"}>{t("block5_ai")}</li>
 					</ul>
 				</div>
 			</div>

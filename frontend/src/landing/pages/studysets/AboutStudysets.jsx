@@ -19,20 +19,19 @@ export default function AboutStudysets() {
       <div className={'w-full xl:w-1/2 h-full gap-8 flex flex-col items-center justify-center'}>
           <span className={`w-full h-fit font-bold text-5xl 
 			  'transition-all duration-700 delay-100	${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t('Your Study Starts Here')}</span>
+            {t('title_studyset')}</span>
           <span
             className={`w-full h-fit  text-2xl font-bold
             transition-all duration-700 delay-200
 			${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} `}>
-            {t('A Study Set is the core of your learning experience: a collection of terms ' +
-				'and definitions you can master through different modes')}</span>
+            {t('block1_studyset')}</span>
           <ul className={`w-full flex pl-5 gap-4 flex-col font-bold 
           transition-all duration-700 delay-300
 		${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"} 
 						text-base items-baseline justify-baseline mb-7`}>
-            <li className={'list-disc'}>{t('Each study set contains terms and their definitions')}</li>
-            <li className={'list-disc'}>{t('Create your own sets, import existing ones, or collaborate with others')}</li>
-            <li className={'list-disc'}>{t('Use the same set across all study modes')}</li>
+            <li className={'list-disc'}>{t('block2_studyset')}</li>
+            <li className={'list-disc'}>{t('block3_studyset')}</li>
+            <li className={'list-disc'}>{t('block4_studyset')}</li>
           </ul>
           <div className={`w-full flex items-center justify-baseline
           transition-all duration-700 delay-1000
