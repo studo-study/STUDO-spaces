@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import made from "../../../public/assets/icons/europe-big.svg";
+import made from "../../assets/icons/europe-big.svg";
 
 export default function Footer() {
   const talen = {

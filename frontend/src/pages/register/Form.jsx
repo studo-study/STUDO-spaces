@@ -3,11 +3,11 @@ import {useCallback, useState, useMemo, useEffect} from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../contexts/auth";
-import eyeOpened from "../../../public/assets/icons/eye-open.svg";
-import eyeClosed from "../../../public/assets/icons/eye-closed.svg";
-import google from "../../../public/assets/icons/logos/google.svg";
-import microsoft from "../../../public/assets/icons/logos/microsoft.svg";
-import smartschool from "../../../public/assets/icons/logos/smartschool.png";
+import eyeOpened from "../../assets/icons/eye-open.svg";
+import eyeClosed from "../../assets/icons/eye-closed.svg";
+import google from "../../assets/icons/logos/google.svg";
+import microsoft from "../../assets/icons/logos/microsoft.svg";
+import smartschool from "../../assets/icons/logos/smartschool.png";
 import i18n from "i18next";
 
 export default function Form() {

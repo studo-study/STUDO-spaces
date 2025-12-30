@@ -1,4 +1,4 @@
-import Folder from "../../../../../public/assets/icons/folder.svg";
+import Folder from "../../../../assets/icons/folder.svg";
 import { Link } from "react-router-dom";
 import ThreeDots from "../components/ThreeDots.jsx";
 

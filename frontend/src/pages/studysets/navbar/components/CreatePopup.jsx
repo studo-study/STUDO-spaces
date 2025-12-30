@@ -1,6 +1,6 @@
-import studyset from "../../../../../public/assets/icons/studyset.svg";
-import visual from "../../../../../public/assets/icons/visualset.svg";
-import folder from "../../../../../public/assets/icons/folder2.svg";
+import studyset from "../../../../assets/icons/studyset.svg";
+import visual from "../../../../assets/icons/visualset.svg";
+import folder from "../../../../assets/icons/folder2.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef } from "react";

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import smart from "../../../../public/assets/icons/start/studysmart.svg";
-import ready from "../../../../public/assets/icons/start/ready.svg";
-import laptop from "../../../../public/assets/icons/laptop.svg";
+import smart from "../../../assets/icons/start/studysmart.svg";
+import ready from "../../../assets/icons/start/ready.svg";
+import laptop from "../../../assets/icons/laptop.svg";
 import {useTranslation} from "react-i18next";
 
 

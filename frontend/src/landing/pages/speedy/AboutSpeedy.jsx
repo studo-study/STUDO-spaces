@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import hero from "../../../../public/assets/icons/start/speedy-hero-img.svg";
+import hero from "../../../assets/icons/start/speedy-hero-img.svg";
 
 export default function AboutSpeedy() {
 	const [mounted, setMounted] = useState(false);

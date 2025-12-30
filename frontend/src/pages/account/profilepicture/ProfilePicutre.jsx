@@ -1,4 +1,4 @@
-import Profile from "../../../../public/assets/icons/uploadpicca.svg";
+import Profile from "../../../assets/icons/uploadpicca.svg";
 import { useRef } from "react";
 import { PiStudent } from "react-icons/pi";
 

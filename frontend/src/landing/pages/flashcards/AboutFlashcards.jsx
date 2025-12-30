@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import hero from "../../../../public/assets/icons/start/flashcards-hero-img.svg";
+import hero from "../../../assets/icons/start/flashcards-hero-img.svg";
 
 export default function AboutFlashcards() {
 	const [mounted, setMounted] = useState(false);

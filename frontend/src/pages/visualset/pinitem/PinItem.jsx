@@ -1,5 +1,5 @@
-import Pencil from "../../../../public/assets/icons/pencil.svg";
-import PinIcon from "../../../../public/assets/icons/pin-icon.svg";
+import Pencil from "../../../assets/icons/pencil.svg";
+import PinIcon from "../../../assets/icons/pin-icon.svg";
 import "animate.css";
 import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";

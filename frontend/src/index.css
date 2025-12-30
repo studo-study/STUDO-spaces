@@ -19,24 +19,24 @@ body::-webkit-scrollbar {
 }
 
 
-/* Je @font-face declaraties blijven hetzelfde, maar fix de paths (zie stap 2) */
+
 @font-face {
     font-family: 'SF Pro';
-    src: url('../public/assets/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('woff2');
+    src: url('./assets/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'SF Pro';
-    src: url('../public/assets/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('woff2');
+    src: url('./assets/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'akira';
-    src: url('../public/assets/fonts/akira/akira.otf') format('woff2');
+    src: url('./assets/fonts/akira/akira.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }

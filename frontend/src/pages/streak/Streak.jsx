@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
-import Cross from '../../../public/assets/icons/close.svg';
-import animation from '../../../public/assets/animations/Streak.webm';
+import Cross from '../../assets/icons/close.svg';
+import animation from '../../assets/animations/Streak.webm';
 import {useTranslation} from 'react-i18next';
 import Phrases from './phrases/Phrases.jsx';
 

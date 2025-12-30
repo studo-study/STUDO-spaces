@@ -3,16 +3,16 @@ import { useCallback, useState, useEffect } from "react";
 import { useAuth } from "../../contexts/auth";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import eyeOpened from "../../../public/assets/icons/eye-open.svg";
-import eyeClosed from "../../../public/assets/icons/eye-closed.svg";
-import google from "../../../public/assets/icons/logos/google.svg";
-import microsoft from "../../../public/assets/icons/logos/microsoft.svg";
-import smartschool from "../../../public/assets/icons/logos/smartschool.png";
-import learn from "../../../public/assets/icons/start/learn.svg";
-import flash from "../../../public/assets/icons/start/flashcards.svg";
-import speedy from "../../../public/assets/icons/start/speedy.svg";
-import pin from "../../../public/assets/icons/start/point.svg";
-import point from "../../../public/assets/icons/start/hero-pin.svg";
+import eyeOpened from "../../assets/icons/eye-open.svg";
+import eyeClosed from "../../assets/icons/eye-closed.svg";
+import google from "../../assets/icons/logos/google.svg";
+import microsoft from "../../assets/icons/logos/microsoft.svg";
+import smartschool from "../../assets/icons/logos/smartschool.png";
+import learn from "../../assets/icons/start/learn.svg";
+import flash from "../../assets/icons/start/flashcards.svg";
+import speedy from "../../assets/icons/start/speedy.svg";
+import pin from "../../assets/icons/start/point.svg";
+import point from "../../assets/icons/start/hero-pin.svg";
 import i18n from "i18next";
 
 const validationRules = {

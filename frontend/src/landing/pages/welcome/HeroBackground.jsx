@@ -1,9 +1,9 @@
-import brain from "../../../../public/assets/animations/animation assets/brain.svg";
-import pencil from "../../../../public/assets/animations/animation assets/pencil.svg";
-import graduate from "../../../../public/assets/animations/animation assets/graduate.svg";
-import ruler from "../../../../public/assets/animations/animation assets/ruler.svg";
-import book from "../../../../public/assets/animations/animation assets/book.svg";
-import book2 from "../../../../public/assets/animations/animation assets/book2.svg";
+import brain from "../../../assets/animations/animation assets/brain.svg";
+import pencil from "../../../assets/animations/animation assets/pencil.svg";
+import graduate from "../../../assets/animations/animation assets/graduate.svg";
+import ruler from "../../../assets/animations/animation assets/ruler.svg";
+import book from "../../../assets/animations/animation assets/book.svg";
+import book2 from "../../../assets/animations/animation assets/book2.svg";
 import { useEffect, useState } from "react";
 
 const floatingItems = [

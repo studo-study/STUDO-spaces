@@ -1,6 +1,6 @@
-import Pencil from "../../../../public/assets/icons/pencil.svg";
-import Star from "../../../../public/assets/icons/star.svg";
-import Starred from "../../../../public/assets/icons/starred.svg";
+import Pencil from "../../../assets/icons/pencil.svg";
+import Star from "../../../assets/icons/star.svg";
+import Starred from "../../../assets/icons/starred.svg";
 import "animate.css";
 import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";

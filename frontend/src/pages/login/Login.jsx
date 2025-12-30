@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import HeroBackground from "../../landing/pages/welcome/HeroBackground.jsx";
-import Back from "../../../public/assets/icons/right.svg";
+import Back from "../../assets/icons/right.svg";
 import Form from "./Form.jsx";
 import DesktopForm from "./DesktopForm.jsx";
 import {useEffect, useState} from "react";

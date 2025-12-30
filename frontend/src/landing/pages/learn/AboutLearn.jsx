@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import hero from "../../../../public/assets/icons/start/learn-hero-img.svg";
+import hero from "../../../assets/icons/start/learn-hero-img.svg";
 
 export default function AboutLearn() {
 	const [mounted, setMounted] = useState(false);

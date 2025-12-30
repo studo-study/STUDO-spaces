@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import ss from "../../../../../public/assets/icons/studyset.svg";
-import vs from "../../../../../public/assets/icons/visualset.svg";
-import ai from "../../../../../public/assets/icons/sparkle.svg";
+import ss from "../../../../assets/icons/studyset.svg";
+import vs from "../../../../assets/icons/visualset.svg";
+import ai from "../../../../assets/icons/sparkle.svg";
 
 const menuItems = [
 	{ to: "/about-studysets", icon: ss, label: "studysets", color: "from-emerald-400 to-teal-500" },

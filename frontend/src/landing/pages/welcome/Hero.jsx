@@ -1,11 +1,11 @@
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 import { HashLink as LinkHash } from "react-router-hash-link";
-import learn from "../../../../public/assets/icons/start/learn.svg";
-import flash from "../../../../public/assets/icons/start/flashcards.svg";
-import speedy from "../../../../public/assets/icons/start/speedy.svg";
-import pin from "../../../../public/assets/icons/start/point.svg";
-import point from "../../../../public/assets/icons/start/hero-pin.svg";
+import learn from "../../../assets/icons/start/learn.svg";
+import flash from "../../../assets/icons/start/flashcards.svg";
+import speedy from "../../../assets/icons/start/speedy.svg";
+import pin from "../../../assets/icons/start/point.svg";
+import point from "../../../assets/icons/start/hero-pin.svg";
 import HeroBackground from "./HeroBackground.jsx";
 import {useEffect, useState} from "react";
 import {FaCheck} from "react-icons/fa";

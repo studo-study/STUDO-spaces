@@ -1,7 +1,7 @@
-import IG from "../../../../public/assets/icons/socialmedia/instagram-svgrepo-com.svg";
-import TT from "../../../../public/assets/icons/socialmedia/tiktok-svgrepo-com.svg";
+import IG from "../../../assets/icons/socialmedia/instagram-svgrepo-com.svg";
+import TT from "../../../assets/icons/socialmedia/tiktok-svgrepo-com.svg";
 import { FaYoutube } from "react-icons/fa6";
-import LI from "../../../../public/assets/icons/socialmedia/linkedin-svgrepo-com.svg";
+import LI from "../../../assets/icons/socialmedia/linkedin-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import { getById } from "../../../../api/index.js";
 import FolderItem from "./FolderItem.jsx";
-import plusIcon from "../../../../../public/assets/icons/cross.png";
+import plusIcon from "../../../../assets/icons/cross.png";
 import CreateFolder from "../components/CreateFolder.jsx";
 import { useTranslation } from "react-i18next";
 

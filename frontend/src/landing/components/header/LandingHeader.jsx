@@ -5,14 +5,14 @@ import { t } from "i18next";
 import {useEffect, useRef, useState} from "react";
 import { Menu, X } from "react-feather";
 import {useTranslation} from "react-i18next";
-import ss from "../../../../public/assets/icons/studyset.svg";
-import vs from "../../../../public/assets/icons/visualset.svg";
-import ai from "../../../../public/assets/icons/sparkle.svg";
-import learn from "../../../../public/assets/icons/pencil.svg";
-import speedy from "../../../../public/assets/icons/clock.svg";
-import cards from "../../../../public/assets/icons/cards.svg";
-import pin from "../../../../public/assets/icons/pin-icon.svg";
-import point from "../../../../public/assets/icons/point.svg";
+import ss from "../../../assets/icons/studyset.svg";
+import vs from "../../../assets/icons/visualset.svg";
+import ai from "../../../assets/icons/sparkle.svg";
+import learn from "../../../assets/icons/pencil.svg";
+import speedy from "../../../assets/icons/clock.svg";
+import cards from "../../../assets/icons/cards.svg";
+import pin from "../../../assets/icons/pin-icon.svg";
+import point from "../../../assets/icons/point.svg";
 
 const menuItems = [
 	{ to: "/about-studysets", icon: ss, label: "studysets", color: "from-emerald-400 to-teal-500" },

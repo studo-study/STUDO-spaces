@@ -1,7 +1,7 @@
 // AI.jsx
 import { t } from "i18next";
 import { useEffect, useState } from "react";
-import hero from "../../../../public/assets/icons/start/ai.svg";
+import hero from "../../../assets/icons/start/ai.svg";
 
 export default function AI() {
 	const [mounted, setMounted] = useState(false);

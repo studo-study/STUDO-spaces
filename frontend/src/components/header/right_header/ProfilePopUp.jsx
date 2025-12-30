@@ -1,7 +1,7 @@
-import profile from "../../../../public/assets/icons/profile.svg";
-import logout from "../../../../public/assets/icons/logout.svg";
-import privacy from "../../../../public/assets/icons/privacy.svg";
-import streak from "../../../../public/assets/icons/streak.svg";
+import profile from "../../../assets/icons/profile.svg";
+import logout from "../../../assets/icons/logout.svg";
+import privacy from "../../../assets/icons/privacy.svg";
+import streak from "../../../assets/icons/streak.svg";
 import "animate.css";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -77,14 +77,12 @@ export default function ProfilePopUp({ isOpen, onClose, headerData }) {
                   font-bold h-fit w-fit max-w-3/4 truncate">
                   {displayName}
                 </span>
-                <Link to="/streak">
                   <img
                     src={streak}
                     className={`${parseInt(streak_count) > 2 && parseInt(streak_count) < 10 ? "flex" : "hidden"}
                       transition-scale duration-300 hover:scale-110 h-fit w-4 sm:w-5`}
                     alt="streak"
                   />
-                </Link>
               </div>
               <span className={`truncate w-full text-xs sm:text-sm text-gray-400 
                 ${parseInt(streak_count) > 9 ? "dark:text-studodarkblue" : "dark:text-gray-400"} 

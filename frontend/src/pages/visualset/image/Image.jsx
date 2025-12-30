@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Left from "../../../../public/assets/icons/left.svg";
-import PinIcon from "../../../../public/assets/icons/pin.svg";
+import Left from "../../../assets/icons/left.svg";
+import PinIcon from "../../../assets/icons/pin.svg";
 
 const GRID_SIZE = 40;
 

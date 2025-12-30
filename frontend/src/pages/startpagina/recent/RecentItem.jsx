@@ -1,5 +1,5 @@
-import Visualset from "../../../../public/assets/icons/visualset.svg";
-import Studyset from "../../../../public/assets/icons/studyset.svg";
+import Visualset from "../../../assets/icons/visualset.svg";
+import Studyset from "../../../assets/icons/studyset.svg";
 import { t } from "i18next";
 import CourseIcons from "../../../data/Index.js";
 import { Link } from "react-router-dom";

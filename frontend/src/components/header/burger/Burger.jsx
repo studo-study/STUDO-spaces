@@ -1,9 +1,9 @@
-import Home from "../../../../public/assets/icons/home.svg";
-import List from "../../../../public/assets/icons/list.svg";
-import Folder from "../../../../public/assets/icons/folder.svg";
-import Courses from "../../../../public/assets/icons/course.svg";
-import Class from "../../../../public/assets/icons/classroom.svg";
-import Account from "../../../../public/assets/icons/profile.svg";
+import Home from "../../../assets/icons/home.svg";
+import List from "../../../assets/icons/list.svg";
+import Folder from "../../../assets/icons/folder.svg";
+import Courses from "../../../assets/icons/course.svg";
+import Class from "../../../assets/icons/classroom.svg";
+import Account from "../../../assets/icons/profile.svg";
 import MenuPart from "./MenuPart.jsx";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";

@@ -1,5 +1,5 @@
-import SearchIcon from "../../../../public/assets/icons/search.svg";
-import Close from "../../../../public/assets/icons/close.svg";
+import SearchIcon from "../../../assets/icons/search.svg";
+import Close from "../../../assets/icons/close.svg";
 import { useRef } from "react";
 import { useAuth } from "../../../contexts/auth.js";
 import { useNavigate } from "react-router-dom";

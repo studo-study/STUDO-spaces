@@ -1,4 +1,4 @@
-import hero from '../../../../public/assets/icons/start/create.svg';
+import hero from '../../../assets/icons/start/create.svg';
 import {t} from 'i18next';
 import {Link} from 'react-router-dom';
 import {useEffect, useState} from "react";

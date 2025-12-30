@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import Upload from "../../../../../public/assets/icons/uploadpicca.svg";
-import PinIcon from "../../../../../public/assets/icons/pin.svg";
+import Upload from "../../../../assets/icons/uploadpicca.svg";
+import PinIcon from "../../../../assets/icons/pin.svg";
 
 const GRID_SIZE = 40;
 

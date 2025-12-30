@@ -1,4 +1,4 @@
-import error from '../../../public/assets/animations/Error.webm';
+import error from '../../assets/animations/Error.webm';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
