@@ -161,7 +161,7 @@
   "studyets": "studysets",
   "visualsets": "visualsets",
   "ai": "ai",
-  "pin": "pin",
+  "pin": "identify",
   "point": "point",
   "Study Smart, Stay Ahead": "Study Smart, Stay Ahead",
   "Free study tools for smarter and faster learning": "Free study tools for smarter and faster learning",
@@ -357,6 +357,149 @@
   "block2_point": "Je krijgt een definitie als opdracht",
   "block3_point": "Wijs de juiste plek aan op de afbeelding",
   "block4_point": "Foute keuzes komen terug tot je ze beheerst",
-  "block5_point": "Alleen mogelijk met Visualsets"
-
+  "block5_point": "Alleen mogelijk met Visualsets",
+  "seo": {
+    "welcome": {
+      "title": "Smart online studying | Studo",
+      "description": "Studo helps students learn faster with flashcards, visual study sets, and AI-driven learning methods. Free to use.",
+      "keywords": "flashcards, study, learn, Quizlet alternative, AI learning, online studying, Studo, students",
+      "imageAlt": "Studo - Smart flashcards for students"
+    },
+    "ai": {
+      "title": "AI Tools | Studo",
+      "description": "Discover Studo's AI-powered study tools. Generate flashcards automatically, get smart study recommendations, and learn faster with artificial intelligence.",
+      "keywords": "AI flashcards, AI study tool, automatic flashcards, smart learning, AI education, Studo AI",
+      "imageAlt": "Studo AI - Smart study tools"
+    },
+    "flashcards": {
+      "title": "Flashcards | Studo",
+      "description": "Master any subject with Studo's interactive flashcards. Flip through cards, track your progress, and study smarter with our free flashcard tool.",
+      "keywords": "flashcards, study cards, digital flashcards, free flashcards, online flashcards, Studo flashcards",
+      "imageAlt": "Studo Flashcards - Interactive study cards"
+    },
+    "learn": {
+      "title": "Learn | Studo",
+      "description": "Master your study material with Studo's Learn mode. Using spaced repetition and smart algorithms, we help you remember more in less time.",
+      "keywords": "spaced repetition, learn mode, smart studying, memorization, study technique, Studo learn",
+      "imageAlt": "Studo Learn Mode - Spaced repetition study tool"
+    },
+    "identify": {
+      "title": "Identify | Studo",
+      "description": "Learn visually with Studo's Identify mode. Perfect for anatomy, geography, diagrams, and any image-based learning. Point and identify parts on images.",
+      "keywords": "visual learning, identify mode, image study, anatomy learning, diagram study, Studo identify",
+      "imageAlt": "Studo Identify Mode - Visual learning tool"
+    },
+    "point": {
+      "title": "Point | Studo",
+      "description": "Study images interactively with Studo's Point mode. Click on the correct location to test your visual knowledge. Perfect for maps, anatomy, and diagrams.",
+      "keywords": "point mode, interactive learning, image quiz, visual study, click to learn, Studo point",
+      "imageAlt": "Studo Point Mode - Interactive image learning"
+    },
+    "speedy": {
+      "title": "Speedy | Studo",
+      "description": "Challenge yourself with Studo's Speedy mode. Race against the clock to answer questions quickly and improve your recall speed under pressure.",
+      "keywords": "speed quiz, timed study, quick recall, fast learning, study game, Studo speedy",
+      "imageAlt": "Studo Speedy Mode - Timed quiz challenge"
+    },
+    "studysets": {
+      "title": "Studysets | Studo",
+      "description": "Create custom studysets with Studo. Add terms, definitions, and images to build the perfect study material. Share with classmates or keep private.",
+      "keywords": "study sets, create flashcards, custom study material, share study sets, Studo study sets",
+      "imageAlt": "Studo Studysets - Create and share"
+    },
+    "visualsets": {
+      "title": "Visualsets | Studo",
+      "description": "Create visual studysets with Studo. Upload images and add interactive labels for anatomy, geography, diagrams, and any image-based learning.",
+      "keywords": "visual learning, image flashcards, anatomy study, diagram learning, visual sets, Studo visual",
+      "imageAlt": "Studo Visualsets - Image-based learning"
+    }
+  },
+  "faq": {
+    "what": {
+      "question": "What is Studo?",
+      "answer": "Studo is a free online learning platform that helps students study smarter with flashcards, visual study sets, and AI-powered learning methods."
+    },
+    "free": {
+      "question": "Is Studo free to use?",
+      "answer": "Yes, Studo is 100% free. You can create unlimited study sets and use all study tools without paying."
+    },
+    "tools": {
+      "question": "What study tools does Studo offer?",
+      "answer": "Studo offers 5 study tools: Learn mode, Flashcards, Speedy quiz, Identify (visual learning), and Point mode for visual study sets."
+    },
+    "quizlet": {
+      "question": "How is Studo different from Quizlet?",
+      "answer": "Studo offers unique visual learning features, AI-assisted studying, and is completely free without ads or premium paywalls."
+    },
+    "flashcards": {
+      "what": {
+        "question": "What are flashcards?",
+        "answer": "Flashcards are a study tool where you have a question or term on one side and the answer on the other. They help with memorization through active recall."
+      },
+      "free": {
+        "question": "Are Studo flashcards free?",
+        "answer": "Yes, Studo flashcards are 100% free. You can create unlimited flashcard sets and study them anytime."
+      }
+    },
+    "learn": {
+      "what": {
+        "question": "What is Learn?",
+        "answer": "Learn mode uses spaced repetition to help you memorize content efficiently. It shows you cards at optimal intervals based on how well you know them."
+      },
+      "spaced": {
+        "question": "What is spaced repetition?",
+        "answer": "Spaced repetition is a learning technique where you review material at increasing intervals. It's scientifically proven to improve long-term memory retention."
+      }
+    },
+    "identify": {
+      "what": {
+        "question": "What is Identify?",
+        "answer": "Identify mode lets you learn from images by identifying labeled parts. It's perfect for anatomy, maps, diagrams, and any visual subject."
+      },
+      "use": {
+        "question": "What can I use Identify mode for?",
+        "answer": "Identify mode is great for anatomy, geography, biology diagrams, art history, engineering schematics, and any subject where you need to learn parts of an image."
+      }
+    },
+    "point": {
+      "what": {
+        "question": "What is Point?",
+        "answer": "Point mode tests your knowledge by asking you to click on the correct location on an image. It's great for learning anatomy, geography, and diagram-based subjects."
+      },
+      "difference": {
+        "question": "What's the difference between Point and Identify?",
+        "answer": "In Identify mode, you name labeled parts. In Point mode, you click where something is located. Both help with visual learning but test different skills."
+      }
+    },
+    "speedy": {
+      "what": {
+        "question": "What is Speedy?",
+        "answer": "Speedy mode is a timed quiz that challenges you to answer questions as fast as possible. It helps improve recall speed and makes studying more engaging."
+      },
+      "benefit": {
+        "question": "Why use Speedy?",
+        "answer": "Speedy mode helps you practice under time pressure, which can improve performance on timed exams. It also makes studying more fun and game-like."
+      }
+    },
+    "studysets": {
+      "what": {
+        "question": "What are studysets?",
+        "answer": "Study sets are collections of flashcards with terms and definitions. You can create them for any subject and study them using various modes like Learn, Flashcards, or Speedy."
+      },
+      "share": {
+        "question": "Can I share my studysets?",
+        "answer": "Yes! You can make your study sets public to share with classmates or the community, or keep them private for personal use."
+      }
+    },
+    "visualsets": {
+      "what": {
+        "question": "What are visualsets?",
+        "answer": "Visual sets are image-based study materials where you can label parts of an image. They're perfect for anatomy, maps, diagrams, and any visual subject."
+      },
+      "create": {
+        "question": "How do I create a visualset?",
+        "answer": "Upload an image, then click to add labels to different parts. You can add as many labels as you need and then study using Identify or Point mode."
+      }
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import Cal from "../../../../public/assets/icons/calendar.svg";
+import Cal from "../../../assets/icons/calendar.svg";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 import { useState } from "react";

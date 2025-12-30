@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Meer from "../../../../public/assets/icons/more.svg";
+import Meer from "../../../assets/icons/more.svg";
 
 export default function More() {
   return (

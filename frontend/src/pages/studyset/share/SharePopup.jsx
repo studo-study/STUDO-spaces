@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Copy from "../../../../public/assets/icons/copy.svg";
+import Copy from "../../../assets/icons/copy.svg";
 import { useTranslation } from "react-i18next";
 import { FaFacebook, FaTwitter, FaWhatsapp, FaLinkedin, FaEnvelope } from "react-icons/fa";
 

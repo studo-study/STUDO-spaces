@@ -5,14 +5,14 @@ import { t } from "i18next";
 import {useEffect, useRef, useState} from "react";
 import { Menu, X } from "react-feather";
 import {useTranslation} from "react-i18next";
-import ss from "../../../../public/assets/icons/studyset.svg";
-import vs from "../../../../public/assets/icons/visualset.svg";
-import ai from "../../../../public/assets/icons/sparkle.svg";
-import learn from "../../../../public/assets/icons/pencil.svg";
-import speedy from "../../../../public/assets/icons/clock.svg";
-import cards from "../../../../public/assets/icons/cards.svg";
-import pin from "../../../../public/assets/icons/pin-icon.svg";
-import point from "../../../../public/assets/icons/point.svg";
+import ss from "../../../assets/icons/studyset.svg";
+import vs from "../../../assets/icons/visualset.svg";
+import ai from "../../../assets/icons/sparkle.svg";
+import learn from "../../../assets/icons/pencil.svg";
+import speedy from "../../../assets/icons/clock.svg";
+import cards from "../../../assets/icons/cards.svg";
+import pin from "../../../assets/icons/pin-icon.svg";
+import point from "../../../assets/icons/point.svg";
 
 const menuItems = [
 	{ to: "/about-studysets", icon: ss, label: "studysets", color: "from-emerald-400 to-teal-500" },
@@ -90,7 +90,7 @@ export default function LandingHeader() {
 	return (<>
     <header
       className={`w-screen h-20 md:h-20 fixed top-0 left-0 right-0 z-[999] border-b border-transparent transition-all duration-300
-      bg-transparent ${scrolled ? "bg-white dark:bg-[#182536] border-b border-studogrey/20" : null}
+      bg-transparent ${scrolled ? "backdrop-blur-2xl border-b border-studoborder" : null}
       flex items-center justify-between px-4 sm:px-8 lg:px-20`}
     >
       <div className="flex items-center justify-start gap-6 md:gap-10 flex-1">
@@ -200,8 +200,8 @@ export default function LandingHeader() {
 													to={item.to}
 													onClick={() => setMobileMenuOpen(false)}
 													className={`group relative flex items-center gap-3 px-3 py-2.5 rounded-xl
-												  text-studodarkblue dark:text-white
-												  bg-studodarkblue/5 dark:bg-white/5
+												  text-studodarkblue dark:text-white max-h-15
+												  bg-studodarkblue/5 dark:bg-white/5 overflow-hidden
 												  transition-all duration-200 ease-out
 												  ${mobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
                     `}
@@ -210,7 +210,7 @@ export default function LandingHeader() {
 													}}
 												>
 													{/* Icon Container */}
-													<div className={`flex items-center justify-center w-9 h-9 rounded-xl
+													<div className={`flex items-center justify-center min-w-9 min-h-9 rounded-xl
 													  bg-gradient-to-br ${item.gradient}
 													  shadow-md shadow-black/10 overflow-hidden
 													  transition-all duration-200`}
@@ -224,7 +224,7 @@ export default function LandingHeader() {
 
 													{/* Label */}
 													<div className="flex flex-col">
-													  <span className="font-medium text-sm group-hover:text-studodarkblue dark:group-hover:text-white transition-colors">
+													  <span className="font-medium w-full truncate overflow-hidden text-sm group-hover:text-studodarkblue dark:group-hover:text-white transition-colors">
 														{t(item.label)}
 													  </span>
 													</div>

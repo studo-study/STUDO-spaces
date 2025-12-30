@@ -2,12 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import { useTranslation } from "react-i18next";
-import LeftArrow from "../../../../public/assets/icons/left.svg";
-import PinIcon from "../../../../public/assets/icons/pin.svg";
-import WrongPinIcon from "../../../../public/assets/icons/wrongPin.svg";
-import HalfCorrectPinIcon from "../../../../public/assets/icons/halfcorrectPin.svg";
-import CorrectPinIcon from "../../../../public/assets/icons/correctPin.svg";
-import CardsEndImage from "../../../../public/assets/icons/icon.png";
+import LeftArrow from "../../../assets/icons/left.svg";
+import PinIcon from "../../../assets/icons/pin.svg";
+import WrongPinIcon from "../../../assets/icons/wrongPin.svg";
+import HalfCorrectPinIcon from "../../../assets/icons/halfcorrectPin.svg";
+import CorrectPinIcon from "../../../assets/icons/correctPin.svg";
+import CardsEndImage from "../../../assets/icons/icon.png";
 import { put } from "../../../api/index.js";
 
 export default function Identify() {

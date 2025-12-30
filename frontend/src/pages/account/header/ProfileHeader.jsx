@@ -2,7 +2,7 @@ import Profile from "../profilepicture/ProfilePicutre.jsx";
 import Joined from "../../components/joined/Joined.jsx";
 import { Link } from "react-router-dom";
 import Streak from "../../components/streak/Streak.jsx";
-import Cal from "../../../../public/assets/icons/calendar.svg";
+import Cal from "../../../assets/icons/calendar.svg";
 import { t } from "i18next";
 
 export default function ProfileHeader({ user }) {

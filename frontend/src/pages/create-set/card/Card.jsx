@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import Delete from "../../../../public/assets/icons/delete.svg";
-import Grab from "../../../../public/assets/icons/grab.svg";
+import Delete from "../../../assets/icons/delete.svg";
+import Grab from "../../../assets/icons/grab.svg";
 import AddImage from "../addImage/AddImage.jsx";
 
 const Card = memo(function Card({ index, disabled, onRemove }) {

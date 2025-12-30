@@ -1,4 +1,4 @@
-import Plus from "../../../../public/assets/icons/plus.svg";
+import Plus from "../../../assets/icons/plus.svg";
 import { useTranslation } from "react-i18next";
 import FolderItem from "./FolderItem.jsx";
 import { Link } from "react-router-dom";

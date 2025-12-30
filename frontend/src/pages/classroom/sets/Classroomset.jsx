@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Studyset from "../../../../public/assets/icons/studyset.svg";
-import Imageset from "../../../../public/assets/icons/image.svg";
-import Delete from "../../../../public/assets/icons/delete.svg";
+import Studyset from "../../../assets/icons/studyset.svg";
+import Imageset from "../../../assets/icons/image.svg";
+import Delete from "../../../assets/icons/delete.svg";
 import { Progress } from "../../account/set/progress/Progress.jsx";
 import { t } from "i18next";
 import { FaChevronRight } from "react-icons/fa";

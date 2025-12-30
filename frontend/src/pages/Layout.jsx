@@ -3,6 +3,8 @@ import Header from "../components/header/Header.jsx";
 import useSWR from "swr";
 import { getById } from "../api/index.js";
 import { useTranslation } from "react-i18next";
+import NoIndex from "../components/NoIndex.jsx";
+import { Helmet } from "react-helmet-async";
 
 export default function Layout() {
   const {
@@ -12,14 +14,20 @@ export default function Layout() {
   } = useSWR("users/me/headers");
 
 
-  return (
-    <div
-      className="w-full min-h-screen text-studodarkblue  scroll-hidden dark:text-white scroll-hidden bg-blue-50 dark:bg-gray-800">
-      <Header headerData={headerData} />
-      <div>
-        <Outlet />
-      </div>
+  return (<>
+      <Helmet>
+        <link rel="icon" type="image/png" href="/favicon.ico" />
+      </Helmet>
 
-    </div>
+      <div
+        className="w-full min-h-screen text-studodarkblue  scroll-hidden dark:text-white scroll-hidden bg-blue-50 dark:bg-gray-800">
+        <Header headerData={headerData} />
+        <div>
+          <Outlet />
+        </div>
+
+      </div>
+  </>
+
   );
 }

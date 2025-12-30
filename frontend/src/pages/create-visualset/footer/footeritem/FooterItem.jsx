@@ -1,6 +1,6 @@
 import { memo } from "react";
-import Plus from "../../../../../public/assets/icons/cross.png";
-import Photo from "../../../../../public/assets/icons/image.svg";
+import Plus from "../../../../assets/icons/cross.png";
+import Photo from "../../../../assets/icons/image.svg";
 
 const FooterItem = memo(function FooterItem({
                                               index,
