@@ -33,7 +33,7 @@ export default function LandingFooter() {
                 <a href="https://www.youtube.com/@STUDO-app" target="_blank" rel="noopener noreferrer">
                   <FaYoutube size={30} />
                 </a>
-                <a href="https://www.linkedin.com/in/studo-app-67a487381/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/studo" target="_blank" rel="noopener noreferrer">
                   <img src={LI} alt="LinkedIn" className="h-10 invert" />
                 </a>
               </div>
