@@ -133,6 +133,7 @@
   "2 hrs": "2 u",
   "Create Account": "Account maken",
   "Log in": "Inloggen",
+  "Log In": "Inloggen",
   "Learn Modes": "Leermodi",
   "Study Tools": "Studietools",
   "ABOUT STUDO": "OVER STUDO",
@@ -313,10 +314,10 @@
       "imageAlt": "Studo Identificeer Modus - Visuele leertool"
     },
     "point": {
-      "title": "Scan | Studo",
-      "description": "Studeer afbeeldingen interactief met Studo's Aanwijs modus. Klik op de juiste locatie om je visuele kennis te testen. Perfect voor kaarten en anatomie.",
-      "keywords": "aanwijs modus, interactief leren, afbeelding quiz, visueel studeren, klik om te leren, Studo aanwijs",
-      "imageAlt": "Studo Aanwijs Modus - Interactief beeld leren"
+      "title": "Spot | Studo",
+      "description": "Studeer afbeeldingen interactief met Studo's spot modus. Klik op de juiste locatie om je visuele kennis te testen. Perfect voor kaarten en anatomie.",
+      "keywords": "Spot modus, interactief leren, afbeelding quiz, visueel studeren, klik om te leren, Studo spot",
+      "imageAlt": "Studo spot Modus - Interactief beeld leren"
     },
     "speedy": {
       "title": "Tijdstrijd | Studo",

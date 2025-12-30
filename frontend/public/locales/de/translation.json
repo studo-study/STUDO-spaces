@@ -1,12 +1,12 @@
 {
   "HOME": "ÜBERSICHT",
-  "STUDYSETS": "LERNSSETS",
+  "STUDYSETS": "LERNSETS",
   "FOLDERS": "ORDNER",
   "CLASSROOMS": "KLASSEN",
   "ACCOUNT": "KONTO",
   "COURSES": "FÄCHER",
   "SETS": "SETS",
-  "STUDYSET": "LERNSSET",
+  "STUDYSET": "LERNSET",
   "VISUALSET": "VISUELLES SET",
   "FOLDER": "ORDNER",
   "Recently": "Zuletzt gelernt",
@@ -24,17 +24,17 @@
   "Log Out": "Abmelden",
   "Delete Account": "Konto löschen",
   "more sets": "mehr Sets",
-  "CREATE STUDYSET": "LERNSSET ERSTELLEN",
+  "CREATE STUDYSET": "LERNSET ERSTELLEN",
   "CREATE FOLDER": "ORDNER ERSTELLEN",
   "CREATE VISUALSET": "VISUELLES SET ERSTELLEN",
   "close": "schließen",
   "day streak": "Tagesstreak",
   "You have studied ": "Du hast ",
   " day in a row": " Tage am Stück gelernt",
-  "Nice work": "Super gemacht",
+  "Nice work": "Läuft bei dir",
   "return": "zurück",
   "404": "404 – Seite nicht gefunden",
-  "Members": "Schüler",
+  "Members": "Mitglieder",
   "all sets": "alle Sets",
   "sets": "Sets",
   "leave classroom": "Klasse verlassen",
@@ -64,13 +64,13 @@
   "Well done": "Gut gemacht",
   "Keep on going": "Weiter so",
   "You got this": "Du schaffst das",
-  "You're halfway there": "Halb geschafft",
-  "You're doing great": "Du machst das toll",
-  "Keep pushing": "Gib weiter Gas",
-  "Stay focused": "Bleib konzentriert",
+  "You're halfway there": "Halbzeit!",
+  "You're doing great": "Du machst das super",
+  "Keep pushing": "Bleib dran",
+  "Stay focused": "Bleib fokussiert",
   "You can do it": "Du packst das",
-  "Don't give up": "Nicht aufgeben",
-  "Nice progress": "Gute Fortschritte",
+  "Don't give up": "Gib nicht auf",
+  "Nice progress": "Läuft bei dir",
   "You're improving": "Du wirst besser",
   "Keep up the good work": "Mach weiter so",
   "Just a bit more": "Noch ein bisschen",
@@ -80,23 +80,23 @@
   "Every step counts": "Jeder Schritt zählt",
   "Believe in yourself": "Glaub an dich",
   "Go Kylie, Go": "Go Kylie, Go",
-  "You're doing amazing, sweetie": "Du bist der Hammer, Süßer",
-  "Slay the day away": "Rock den Tag",
-  "Main character energy": "Main-Character-Energie",
+  "You're doing amazing, sweetie": "Du bist der Hammer",
+  "Slay the day away": "Du slayed das",
+  "Main character energy": "Main-Character-Energy",
   "Look at you go, productivity queen": "Schau dich an, Produktivitäts-Queen",
-  "Big brain moment": "Großer Hirnmoment",
-  "Somebody’s been studying": "Jemand hat fleißig gelernt",
-  "Ate and left no crumbs": "Alles weggefuttert, nichts übrig gelassen",
+  "Big brain moment": "Großgehirn-Moment",
+  "Somebody's been studying": "Da hat jemand gelernt",
+  "Ate and left no crumbs": "Hast einfach served",
   "Who needs sleep when you have talent?": "Wer braucht Schlaf, wenn man Talent hat?",
   "You deserve a little dance break": "Zeit für eine kleine Tanzpause",
   "Certified genius mode unlocked": "Genie-Modus freigeschaltet",
   "Zero chill, maximum brainpower": "Null Chill, maximale Hirnleistung",
   "WOW WOW WOW": "WOW WOW WOW",
-  "Highkey crushing it right now": "Du rockst das gerade total",
+  "Highkey crushing it right now": "Du killst das gerade",
   "Language": "Sprache",
   "add card": "Karte hinzufügen",
   "Created by": "Erstellt von",
-  " people loved this set": " Personen mochten dieses Set",
+  " people loved this set": " Personen gefällt dieses Set",
   "flashcards": "Flashcards",
   "Not Studied": "Nicht gelernt",
   "Reviewed": "Wiederholt",
@@ -133,11 +133,12 @@
   "2 hrs": "2 Std.",
   "Create Account": "Konto erstellen",
   "Log in": "Anmelden",
+  "Log In": "Anmelden",
   "Learn Modes": "Lernmodi",
-  "Study Tools": "Lernwerkzeuge",
+  "Study Tools": "Lerntools",
   "ABOUT STUDO": "ÜBER STUDO",
   "VISUALSETS": "VISUELLE SETS",
-  "Study Smart, Stay Ahead!": "Klug lernen, immer voraus",
+  "Study Smart, Stay Ahead!": "Klug lernen, immer voraus!",
   "Built with 💚 using React": "Mit 💚 in React gebaut",
   "Built with 💙 using React": "Mit 💙 in React gebaut",
   "About Us": "Über uns",
@@ -145,21 +146,21 @@
   "Version": "Version",
   "STUDO inc. All Rights Reserved.": "STUDO inc. Alle Rechte vorbehalten.",
   "ai": "ki",
-  "Free study tools for smarter and faster learning": "Kostenlose Lernwerkzeuge für klügeres und schnelleres Lernen",
+  "Free study tools for smarter and faster learning": "Kostenlose Lerntools für smarteres Lernen",
   "Create your own study sets – text or visual.": "Erstelle deine eigenen Lernsets – Text oder visuell.",
-  "Sign Up For Free": "Kostenlos anmelden",
+  "Sign Up For Free": "Kostenlos registrieren",
   "learn more": "mehr erfahren",
   "password": "Passwort",
   "email": "E-Mail",
   "log into account": "anmelden",
   "sign up": "registrieren",
-  "or log in with": "oder melde dich an mit",
+  "or log in with": "oder anmelden mit",
   "register new account": "neues Konto erstellen",
   "name": "Name",
   "Register": "Registrieren",
-  "student": "Schüler/in",
-  "teacher": "Lehrer/in",
-  "professor": "Professor/in",
+  "student": "Schüler:in",
+  "teacher": "Lehrer:in",
+  "professor": "Professor:in",
   "I am a": "Ich bin",
   "added by": "hinzugefügt von",
   "no activity": "keine Aktivität",
@@ -184,7 +185,7 @@
   "Create Studyset": "Lernset erstellen",
   "or": "oder",
   "Create Visualset": "Visuelles Set erstellen",
-  "Click to upload image": "Klicken zum Hochladen eines Bildes",
+  "Click to upload image": "Klicken zum Hochladen",
   "Pins": "Pins",
   "Type in a definition": "Definition eingeben",
   "Cancel": "Abbrechen",
@@ -195,7 +196,7 @@
   "Image title": "Bildtitel",
   "Click on the image to add pins": "Auf das Bild klicken, um Pins hinzuzufügen",
   "create visualset": "visuelles Set erstellen",
-  "go to classrooms": "zu den Klassen gehen",
+  "go to classrooms": "zu den Klassen",
   "add to classroom": "zur Klasse hinzufügen",
   "share studyset": "Lernset teilen",
   "create": "erstellen",
@@ -207,16 +208,16 @@
   "type is required": "Typ ist erforderlich",
   "Privacy": "Privatsphäre",
   "test": "Testphrase erfolgreich",
-  "Your New Study Tool": "Dein neues Lernwerkzeug",
-  "block1": "Von Notizen bis zu chaotischen Skizzen – verwandle alles in interaktive Flashcards, kurze Tests und visuelle Lernsets. STUDO bleibt leicht, schnell und fokussiert, damit du weniger Zeit mit Organisieren und mehr mit echtem Lernen verbringst.",
-  "block2": "Ich bin Charles, ein Student, der genug hatte von Apps, die entweder bezahlt, langsam oder überladen waren. Deshalb habe ich STUDO gebaut: das Tool, bei dem jede Funktion einen Zweck hat und nichts deinem Lernen im Weg steht.",
-  "block3": "Ob Vokabeln, Formeln oder ganze Kapitel – STUDO passt sich deinem Lernstil an. Personalisierte Übungsmodi und Wiederholungssessions machen es einfacher, das Wichtige zu behalten. Und bald kannst du alles einfach in der Tasche mitnehmen mit der kommenden iOS-App.",
+  "Your New Study Tool": "Dein neues Lerntool",
+  "block1": "Von Notizen bis zu chaotischen Skizzen – verwandle alles in interaktive Flashcards, kurze Tests und visuelle Lernsets. STUDO ist leicht, schnell und fokussiert, damit du weniger Zeit mit Organisieren und mehr mit echtem Lernen verbringst.",
+  "block2": "Ich bin Charles, ein Student, der genug hatte von Apps, die entweder kostenpflichtig, langsam oder überladen waren. Deshalb habe ich STUDO gebaut: das Tool, bei dem jede Funktion einen Zweck hat und nichts deinem Lernen im Weg steht.",
+  "block3": "Ob Vokabeln, Formeln oder ganze Kapitel – STUDO passt sich deinem Lernstil an. Personalisierte Übungsmodi und Wiederholungssessions machen es einfacher, das Wichtige zu behalten. Und bald kannst du alles in der Tasche mitnehmen mit der kommenden iOS-App.",
   "Learn": "Lernen",
   "learn": "lernen",
   "Flashcards": "Flashcards",
   "flashkaarten": "Flashcards",
-  "Speedy": "Zeitduell",
-  "speedy": "zeitduell",
+  "Speedy": "Speedrun",
+  "speedy": "speedrun",
   "Pin": "Zuordnen",
   "Identify": "Identifizieren",
   "pin": "zuordnen",
@@ -228,27 +229,27 @@
   "Text or visual learning": "Text- oder visuelles Lernen",
   "Study anywhere, anytime": "Überall und jederzeit lernen",
   "endless sets": "unbegrenzte Sets",
-  "5 study tools": "5 Lernwerkzeuge",
+  "5 study tools": "5 Lerntools",
   "100% free": "100 % kostenlos",
   "Feature": "Feature",
-  "Study the smart way": "Lerne auf die kluge Art",
-  "Created by students, for students": "Von Studenten für Studenten gemacht",
+  "Study the smart way": "Lerne smart",
+  "Created by students, for students": "Von Studis für Studis",
   "Everything you need to": "Alles, was du brauchst, um",
-  "ace your studies": "in deinem Studium zu glänzen",
+  "ace your studies": "dein Studium zu rocken",
   "Why Studo?": "Warum Studo?",
-  "Ready for every challenge": "Bereit für jede Herausforderung",
-  "Select a study mode to begin": "Wähle einen Lernmodus zum Starten",
+  "Ready for every challenge": "Bereit für jede Challenge",
+  "Select a study mode to begin": "Wähle einen Lernmodus",
   "studysets": "Lernsets",
   "visualsets": "visuelle Sets",
   "try it out": "ausprobieren",
   "create your own": "selbst erstellen",
   "Welcome back": "Willkommen zurück",
   "Don't have an account?": "Noch kein Konto?",
-  "students already studying": "Studenten lernen schon",
+  "students already studying": "Studis lernen schon",
   "Create account": "Konto erstellen",
   "confirm password": "Passwort bestätigen",
-  "or sign up with": "oder registriere dich mit",
-  "Already have an account?": "Hast du schon ein Konto?",
+  "or sign up with": "oder registrieren mit",
+  "Already have an account?": "Schon ein Konto?",
   "title_studyset": "Hier beginnt dein Lernen",
   "block1_studyset": "Ein Lernset ist der Kern deiner Lernerfahrung: eine Sammlung von Begriffen und Definitionen, die du über verschiedene Lernmodi meisterst.",
   "block2_studyset": "Jedes Lernset enthält Begriffe mit zugehörigen Definitionen.",
@@ -266,112 +267,112 @@
   "block3_ai": "Mache ein Foto von einer Buchseite oder einem Diagramm und lass die KI die Begriffe erkennen.",
   "block4_ai": "Die KI wandelt alles sauber in fertige Paare um.",
   "block5_ai": "Generierte Sets funktionieren in allen Lernmodi.",
-  "title_learn": "Schreibe –\nWiederhole –\nBehalte",
+  "title_learn": "Schreiben –\nWiederholen –\nBehalten",
   "block1_learn": "Ein interaktiver Lernmodus, der dich testet, bis jeder Begriff wirklich sitzt.",
   "block2_learn": "Tippe deine Antwort – kein Multiple-Choice.",
-  "block3_learn": "Beherrsche einen Begriff nach zwei korrekten Erinnerungen.",
+  "block3_learn": "Beherrsche einen Begriff nach zwei richtigen Antworten.",
   "block4_learn": "Baue nachhaltiges Wissen durch aktives Lernen auf.",
-  "title_speedy": "Tempo trifft Wissen",
-  "block1_speedy": "Ein Quiz-Modus mit Zeitlimit, der dich herausfordert, Begriffe unter Druck zu erinnern.",
+  "title_speedy": "Speed trifft Wissen",
+  "block1_speedy": "Ein Quiz mit Zeitlimit, das dich herausfordert, Begriffe unter Druck abzurufen.",
   "block2_speedy": "Besiege den Timer in jeder Runde.",
-  "block3_speedy": "Falsche Antworten rutschen in die nächste Runde.",
-  "block4_speedy": "Bearbeite alle Begriffe, um die Session zu gewinnen.",
+  "block3_speedy": "Falsche Antworten kommen in die nächste Runde.",
+  "block4_speedy": "Schaffe alle Begriffe, um die Session zu gewinnen.",
   "title_flashcard": "Drehen –\nLernen –\nWiederholen",
-  "block1_flashcard": "Wiederhole schnell Begriffe und Definitionen mit interaktiven Flashcards.",
+  "block1_flashcard": "Geh Begriffe und Definitionen schnell durch mit interaktiven Flashcards.",
   "block2_flashcard": "Swipe oder drehe, um die Antwort zu sehen.",
   "block3_flashcard": "Lerne in deinem eigenen Tempo.",
-  "block4_flashcard": "Mische und wiederhole, bis du sicher bist.",
+  "block4_flashcard": "Mische und wiederhole, bis es sitzt.",
   "seo": {
     "welcome": {
-      "title": "Klug online lernen | Studo",
-      "description": "Studo hilft Studenten schneller zu lernen mit Flashcards, visuellen Lernsets und KI-gestützten Lernmethoden. Kostenlos nutzbar.",
-      "keywords": "flashcards, lernen, studieren, Quizlet Alternative, KI Lernen, online lernen, Studo, Studenten",
-      "imageAlt": "Studo - Smarte Flashcards für Studenten"
+      "title": "Smart online lernen | Studo",
+      "description": "Studo hilft Studierenden schneller zu lernen mit Flashcards, visuellen Lernsets und smarten Lernmethoden. Komplett kostenlos.",
+      "keywords": "Karteikarten, lernen, studieren, Quizlet Alternative, KI Lernen, online lernen, Studo, Studenten",
+      "imageAlt": "Studo - Smarte Flashcards für Studierende"
     },
     "ai": {
       "title": "KI-Tools | Studo",
-      "description": "Entdecke Studos KI-gestützte Lernwerkzeuge. Generiere automatisch Flashcards, erhalte smarte Lernempfehlungen und lerne schneller mit künstlicher Intelligenz.",
-      "keywords": "KI Flashcards, KI Lernwerkzeug, automatische Flashcards, klug lernen, KI Bildung, Studo KI",
-      "imageAlt": "Studo KI - Smarte Lernwerkzeuge"
+      "description": "Entdecke Studos KI-gestützte Lerntools. Generiere automatisch Flashcards, erhalte smarte Lernempfehlungen und lerne schneller mit künstlicher Intelligenz.",
+      "keywords": "KI Flashcards, KI Lerntool, automatische Flashcards, smart lernen, KI Bildung, Studo KI",
+      "imageAlt": "Studo KI - Smarte Lerntools"
     },
     "flashcards": {
       "title": "Flashcards | Studo",
-      "description": "Meistere jedes Thema mit Studos interaktiven Flashcards. Blättere durch Karten, verfolge deinen Fortschritt und lerne klüger mit unserem kostenlosen Tool.",
-      "keywords": "flashcards, lernkarten, digitale flashcards, kostenlose flashcards, online flashcards, Studo flashcards",
+      "description": "Meistere jedes Thema mit Studos interaktiven Flashcards. Blättere durch Karten, verfolge deinen Fortschritt und lerne smarter mit unserem kostenlosen Tool.",
+      "keywords": "Karteikarten, Lernkarten, digitale Karteikarten, kostenlose Karteikarten, online Karteikarten, Studo Karteikarten",
       "imageAlt": "Studo Flashcards - Interaktive Lernkarten"
     },
     "learn": {
       "title": "Lernen | Studo",
-      "description": "Beherrsche dein Lernmaterial mit Studos Lernmodus. Mit verteilter Wiederholung und smarten Algorithmen behältst du mehr in weniger Zeit.",
-      "keywords": "verteilte Wiederholung, lernmodus, klug lernen, merken, lerntechnik, Studo lernen",
-      "imageAlt": "Studo Lernmodus - Werkzeug für verteilte Wiederholung"
+      "description": "Beherrsche dein Lernmaterial mit Studos Lernmodus. Mit Spaced Repetition und smarten Algorithmen behältst du mehr in weniger Zeit.",
+      "keywords": "Spaced Repetition, Lernmodus, smart lernen, merken, Lerntechnik, Studo lernen",
+      "imageAlt": "Studo Lernmodus - Spaced Repetition Tool"
     },
     "identify": {
       "title": "Zuordnen | Studo",
       "description": "Lerne visuell mit Studos Zuordnen-Modus. Perfekt für Anatomie, Geografie, Diagramme und jedes bildbasierte Lernen.",
-      "keywords": "visuelles Lernen, zuordnen modus, bild lernen, anatomie lernen, diagramm lernen, Studo zuordnen",
-      "imageAlt": "Studo Zuordnen-Modus - Visuelles Lernwerkzeug"
+      "keywords": "visuelles Lernen, Zuordnen-Modus, Bild lernen, Anatomie lernen, Diagramm lernen, Studo zuordnen",
+      "imageAlt": "Studo Zuordnen-Modus - Visuelles Lerntool"
     },
     "point": {
       "title": "Markieren | Studo",
       "description": "Lerne Bilder interaktiv mit Studos Markieren-Modus. Klicke auf die richtige Stelle, um dein visuelles Wissen zu testen. Perfekt für Karten und Anatomie.",
-      "keywords": "markieren modus, interaktives lernen, bild quiz, visuelles lernen, klicken zum lernen, Studo markieren",
+      "keywords": "Markieren-Modus, interaktives Lernen, Bild-Quiz, visuelles Lernen, klicken zum Lernen, Studo markieren",
       "imageAlt": "Studo Markieren-Modus - Interaktives Bildlernen"
     },
     "speedy": {
-      "title": "Zeitduell | Studo",
-      "description": "Fordere dich heraus mit Studos Zeitduell-Modus. Renne gegen die Uhr, um Fragen schnell zu beantworten und deine Reaktionsgeschwindigkeit unter Druck zu verbessern.",
-      "keywords": "zeit quiz, lernen auf zeit, schnell merken, schnell lernen, lernspiel, Studo zeitduell",
-      "imageAlt": "Studo Zeitduell-Modus - Quiz gegen die Uhr"
+      "title": "Speedrun | Studo",
+      "description": "Fordere dich heraus mit Studos Speedrun-Modus. Renne gegen die Uhr, um Fragen schnell zu beantworten und verbessere deine Reaktion unter Druck.",
+      "keywords": "Zeit-Quiz, Lernen auf Zeit, schnell merken, schnell lernen, Lernspiel, Studo Speedrun",
+      "imageAlt": "Studo Speedrun-Modus - Quiz gegen die Uhr"
     },
     "studysets": {
       "title": "Lernsets | Studo",
-      "description": "Erstelle angepasste Lernsets mit Studo. Füge Begriffe, Definitionen und Bilder hinzu, um das perfekte Lernmaterial zu schaffen. Teile mit Mitschülern oder halte privat.",
-      "keywords": "lernsets, flashcards erstellen, angepasstes lernmaterial, lernsets teilen, Studo lernsets",
+      "description": "Erstelle individuelle Lernsets mit Studo. Füge Begriffe, Definitionen und Bilder hinzu für perfektes Lernmaterial. Teile mit Kommilitonen oder behalte sie privat.",
+      "keywords": "Lernsets, Flashcards erstellen, individuelles Lernmaterial, Lernsets teilen, Studo Lernsets",
       "imageAlt": "Studo Lernsets - Erstellen und teilen"
     },
     "visualsets": {
       "title": "Visuelle Sets | Studo",
-      "description": "Erstelle visuelle Lernsets mit Studo. Lade Bilder hoch und füge interaktive Markierungen hinzu für Anatomie, Geografie, Diagramme und jedes visuelle Lernen.",
-      "keywords": "visuelles lernen, bild flashcards, anatomie lernen, diagramm lernen, visuelle sets, Studo visuell",
+      "description": "Erstelle visuelle Lernsets mit Studo. Lade Bilder hoch und füge interaktive Markierungen hinzu für Anatomie, Geografie, Diagramme und visuelles Lernen.",
+      "keywords": "visuelles Lernen, Bild-Flashcards, Anatomie lernen, Diagramm lernen, visuelle Sets, Studo visuell",
       "imageAlt": "Studo Visuelle Sets - Bildbasiertes Lernen"
     }
   },
   "faq": {
     "what": {
       "question": "Was ist Studo?",
-      "answer": "Studo ist eine kostenlose Online-Lernplattform, die Studenten hilft, klüger zu lernen mit Flashcards, visuellen Lernsets und einem umfangreichen Lernmodus."
+      "answer": "Studo ist eine kostenlose Online-Lernplattform, die Studierenden hilft, smarter zu lernen mit Flashcards, visuellen Lernsets und einem umfangreichen Lernmodus."
     },
     "free": {
       "question": "Ist Studo kostenlos?",
-      "answer": "Ja! Die wichtigsten Lernfunktionen sind komplett kostenlos. Du kannst so viele Lernsets erstellen, wie du möchtest, und alle wesentlichen Tools nutzen, ohne zu bezahlen."
+      "answer": "Ja! Die wichtigsten Lernfunktionen sind komplett kostenlos. Du kannst so viele Lernsets erstellen, wie du willst, und alle Tools nutzen, ohne zu bezahlen."
     },
     "tools": {
-      "question": "Welche Lernwerkzeuge bietet Studo?",
-      "answer": "Studo bietet 5 kostenlose Werkzeuge: Lernmodus, Flashcards, Zeitduell-Quiz, Zuordnen (visuelles Lernen) und Markieren für visuelle Sets."
+      "question": "Welche Lerntools bietet Studo?",
+      "answer": "Studo bietet 5 kostenlose Tools: Lernmodus, Flashcards, Speedrun-Quiz, Zuordnen (visuelles Lernen) und Markieren für visuelle Sets."
     },
     "quizlet": {
       "question": "Wie unterscheidet sich Studo von Quizlet?",
-      "answer": "Im Vergleich zu Quizlet bietet Studo deutlich fortschrittlichere visuelle Lernsets und detaillierte Lernstatistiken. Außerdem sind die Kernfunktionen kostenlos, was bei Quizlet nicht der Fall ist. Auch wenn es optionale Premium-Upgrades und ein paar Werbeanzeigen gibt, bleiben die wichtigsten Lernwerkzeuge 100 % kostenlos, damit du dich auf effektives Lernen konzentrieren kannst."
+      "answer": "Im Vergleich zu Quizlet bietet Studo deutlich bessere visuelle Lernsets und detaillierte Lernstatistiken. Außerdem sind die Kernfunktionen kostenlos, was bei Quizlet nicht mehr der Fall ist. Auch wenn es optionale Premium-Upgrades und ein paar Werbeanzeigen gibt, bleiben die wichtigsten Lerntools 100 % kostenlos."
     },
     "flashcards": {
       "what": {
         "question": "Was sind Flashcards?",
-        "answer": "Flashcards sind ein Lernwerkzeug mit einer Frage oder einem Begriff auf der einen Seite und der Antwort auf der anderen. Sie helfen beim Merken durch aktives Abrufen."
+        "answer": "Flashcards sind ein Lerntool mit einer Frage oder einem Begriff auf der einen Seite und der Antwort auf der anderen. Sie helfen beim Merken durch aktives Abrufen."
       },
       "free": {
         "question": "Sind Studo-Flashcards kostenlos?",
-        "answer": "Ja, Studo-Flashcards sind 100 % kostenlos. Du kannst unbegrenzt Sets erstellen und immer lernen."
+        "answer": "Ja, Studo-Flashcards sind 100 % kostenlos. Du kannst unbegrenzt Sets erstellen und jederzeit lernen."
       }
     },
     "learn": {
       "what": {
         "question": "Was ist der Lernmodus?",
-        "answer": "Der Lernmodus nutzt verteilte Wiederholung, um dir zu helfen, Inhalte effizient zu merken. Er zeigt dir Karten in optimalen Abständen, je nachdem, wie gut du sie kennst."
+        "answer": "Der Lernmodus nutzt Spaced Repetition, um dir zu helfen, Inhalte effizient zu merken. Er zeigt dir Karten in optimalen Abständen, je nachdem, wie gut du sie kennst."
       },
       "spaced": {
-        "question": "Was ist verteilte Wiederholung?",
-        "answer": "Verteilte Wiederholung ist eine Lerntechnik, bei der du Material in zunehmenden Abständen wiederholst. Sie ist wissenschaftlich bewiesen, das Langzeitgedächtnis zu verbessern."
+        "question": "Was ist Spaced Repetition?",
+        "answer": "Spaced Repetition ist eine Lerntechnik, bei der du Material in zunehmenden Abständen wiederholst. Sie ist wissenschaftlich bewiesen, das Langzeitgedächtnis zu verbessern."
       }
     },
     "identify": {
@@ -381,37 +382,37 @@
       },
       "use": {
         "question": "Wofür kann ich den Zuordnen-Modus nutzen?",
-        "answer": "Er ist super für Anatomie, Geografie, Biologie-Diagramme, Kunstgeschichte, technische Schaltpläne und jedes Thema, bei dem du Teile eines Bildes lernen musst."
+        "answer": "Er ist super für Anatomie, Geografie, Biologie-Diagramme, Kunstgeschichte, technische Schaltpläne und alles, wo du Teile eines Bildes lernen musst."
       }
     },
     "point": {
       "what": {
         "question": "Was ist der Markieren-Modus?",
-        "answer": "Der Markieren-Modus testet dein Wissen, indem du auf die richtige Stelle auf einem Bild klicken musst. Ideal für Anatomie, Geografie und diagrammbasierte Themen."
+        "answer": "Der Markieren-Modus testet dein Wissen, indem du auf die richtige Stelle auf einem Bild klicken musst. Ideal für Anatomie, Geografie und Diagramme."
       },
       "difference": {
         "question": "Was ist der Unterschied zwischen Markieren und Zuordnen?",
-        "answer": "Beim Zuordnen benennst du markierte Teile. Beim Markieren klickst du, wo etwas ist. Beide helfen beim visuellen Lernen, testen aber unterschiedliche Fähigkeiten."
+        "answer": "Beim Zuordnen benennst du markierte Teile. Beim Markieren klickst du, wo etwas ist. Beide helfen beim visuellen Lernen, testen aber unterschiedliche Skills."
       }
     },
     "speedy": {
       "what": {
-        "question": "Was ist der Zeitduell-Modus?",
-        "answer": "Zeitduell ist ein zeitlich begrenztes Quiz, das dich herausfordert, so schnell wie möglich zu antworten. Es verbessert die Abrufgeschwindigkeit und macht Lernen spannender."
+        "question": "Was ist der Speedrun-Modus?",
+        "answer": "Speedrun ist ein Quiz mit Zeitlimit, das dich herausfordert, so schnell wie möglich zu antworten. Es verbessert die Abrufgeschwindigkeit und macht Lernen spannender."
       },
       "benefit": {
-        "question": "Warum Zeitduell nutzen?",
-        "answer": "Es trainiert dich unter Zeitdruck, was die Leistung bei getakteten Prüfungen verbessern kann. Und es macht Lernen spielerischer."
+        "question": "Warum Speedrun nutzen?",
+        "answer": "Es trainiert dich unter Zeitdruck, was die Leistung bei Prüfungen verbessern kann. Und es macht das Lernen spielerischer."
       }
     },
     "studysets": {
       "what": {
         "question": "Was sind Lernsets?",
-        "answer": "Lernsets sind Sammlungen von Flashcards mit Begriffen und Definitionen. Du kannst sie für jedes Fach erstellen und mit verschiedenen Modi lernen: Lernen, Flashcards oder Zeitduell."
+        "answer": "Lernsets sind Sammlungen von Flashcards mit Begriffen und Definitionen. Du kannst sie für jedes Fach erstellen und mit verschiedenen Modi lernen: Lernen, Flashcards oder Speedrun."
       },
       "share": {
         "question": "Kann ich meine Lernsets teilen?",
-        "answer": "Ja! Du kannst sie öffentlich machen, um sie mit Mitschülern oder der Community zu teilen, oder privat halten."
+        "answer": "Ja! Du kannst sie öffentlich machen, um sie mit Kommilitonen oder der Community zu teilen, oder privat halten."
       }
     },
     "visualsets": {
@@ -421,7 +422,7 @@
       },
       "create": {
         "question": "Wie erstelle ich ein visuelles Set?",
-        "answer": "Lade ein Bild hoch, klicke dann, um Markierungen an verschiedenen Stellen hinzuzufügen. Du kannst so viele Markierungen hinzufügen, wie nötig, und dann im Zuordnen- oder Markieren-Modus lernen."
+        "answer": "Lade ein Bild hoch, klicke dann, um Markierungen hinzuzufügen. Du kannst so viele Pins setzen wie nötig und dann im Zuordnen- oder Markieren-Modus lernen."
       }
     }
   }

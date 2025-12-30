@@ -121,7 +121,7 @@ export default function LandingHeader() {
             dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
             bg-emerald-400 dark:bg-white dark:text-studodarkblue"
           >
-            {t("Log in")}
+            {t("Log In")}
           </Link>
           <Link
             to={"/register"}
