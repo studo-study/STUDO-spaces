@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import Sortable from "sortablejs";
-import Plus from "../../../../public/assets/icons/cross.png";
+import Plus from "../../../assets/icons/cross.png";
 import FooterItem from "./footeritem/FooterItem.jsx";
 
 export default function VsFooter({

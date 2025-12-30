@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import StreakIcon from '../../../../public/assets/icons/streak.svg';
+import StreakIcon from '../../../assets/icons/streak.svg';
 import StreakPopup from './StreakPopup.jsx';
 
 export default function Streak({streak}) {

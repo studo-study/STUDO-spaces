@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import ToggleImg from "../../../../../public/assets/icons/down.svg";
+import ToggleImg from "../../../../assets/icons/down.svg";
 import { t } from "i18next";
 import ToolsPopup from "./ToolsPopup.jsx";
 

@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import Delete from "../../public/assets/icons/delete.svg";
+import Delete from "../assets/icons/delete.svg";
 import { useEffect, useRef } from "react";
 import useSWR from "swr";
 import { del } from "../api/index.js";

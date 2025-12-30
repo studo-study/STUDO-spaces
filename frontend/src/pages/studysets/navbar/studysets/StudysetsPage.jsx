@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { t } from "i18next";
 import StudysetItem from "./StudysetItem.jsx";
-import plusIcon from "../../../../../public/assets/icons/cross.png";
+import plusIcon from "../../../../assets/icons/cross.png";
 import CreatePopup from "../components/CreatePopup.jsx";
 
 export default function StudysetsPage() {

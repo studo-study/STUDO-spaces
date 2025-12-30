@@ -1,17 +1,17 @@
- import {StrictMode, Suspense} from "react";
+import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate, Outlet } from "react-router-dom";
 import './i18n';
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from './i18n';
 import { SWRConfig } from "swr";
+import { HelmetProvider } from "react-helmet-async";
 
 import { AuthProvider } from "./contexts/Auth.context.jsx";
-
-
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import Layout from "./pages/Layout.jsx";
 import LandingLayout from "./landing/LandingLayout.jsx";
-
+import LanguageWrapper from "./components/LanguageWrapper.jsx";
 
 import Login from "./pages/login/Login.jsx";
 import Register from "./pages/register/Register.jsx";
@@ -57,7 +57,155 @@ import ClassPage from "./pages/classroom/Class.jsx";
 import Point from "./pages/visualsetmethods/point/Point.jsx";
 import Identify from "./pages/visualsetmethods/identify/Identify.jsx";
 
+// Private routes (no language prefix needed - users are logged in)
+const privateRoutes = [
+  {
+    path: "home",
+    element: <StartingPagina />
+  },
+  {
+    path: "privacy",
+    element: <Privacy />
+  },
+  {
+    path: "studysets",
+    element: <Studysets />,
+    children: [{ index: true, element: <StudysetsPage /> }]
+  },
+  {
+    path: "folders",
+    element: <Studysets />,
+    children: [{ index: true, element: <FoldersPage /> }]
+  },
+  {
+    path: "folders/:id",
+    element: <Studysets />,
+    children: [{ index: true, element: <Folders /> }]
+  },
+  {
+    path: "courses",
+    element: <Studysets />,
+    children: [{ index: true, element: <CoursesPage /> }]
+  },
+  {
+    path: "courses/:id",
+    element: <Studysets />,
+    children: [{ index: true, element: <Course /> }]
+  },
+  {
+    path: "search",
+    element: <Search />
+  },
+  {
+    path: "studyset/:id",
+    element: <Studyset />
+  },
+  {
+    path: "learn/:id",
+    element: <Learn />
+  },
+  {
+    path: "identify/:id",
+    element: <Identify />
+  },
+  {
+    path: "point/:id",
+    element: <Point />
+  },
+  {
+    path: "flashcards/:id",
+    element: <Flashcards />
+  },
+  {
+    path: "speedy/:id",
+    element: <Speedy />
+  },
+  {
+    path: "visualset/:id",
+    element: <Visualset />
+  },
+  {
+    path: "create-set",
+    element: <CreateOrEditSet />
+  },
+  {
+    path: "create-set/:id",
+    element: <CreateOrEditSet />
+  },
+  {
+    path: "create-folder",
+    element: <CreateFolder />
+  },
+  {
+    path: "create-visualset",
+    element: <CreateOrEditVisualset />
+  },
+  {
+    path: "account",
+    element: <Account />
+  },
+  {
+    path: "classroom/:id",
+    element: <ClassPage />
+  },
+  {
+    path: "classrooms",
+    element: <Classrooms />,
+    children: [{ path: ":id", element: <Classroom /> }]
+  },
+  {
+    path: "streak",
+    element: <Streak />
+  },
+  {
+    path: "profile/:id",
+    element: <Profile />,
+    children: [
+      { index: true, element: <Navigate to="studysets" replace /> },
+      { path: "studysets", element: <Sets /> },
+      { path: "visualsets", element: <Visualsets /> }
+    ]
+  }
+];
+
+// Landing pages (public, need language prefixes for SEO)
+const landingRoutes = [
+  { path: "welcome", element: <Welcome /> },
+  { path: "about-us", element: <AboutUs /> },
+  { path: "about-ai", element: <AI /> },
+  { path: "flashcards", element: <AboutFlashcards /> },
+  { path: "learn", element: <AboutLearn /> },
+  { path: "identify", element: <AboutPin /> },
+  { path: "point", element: <AboutPoint /> },
+  { path: "speedy", element: <AboutSpeedy /> },
+  { path: "about-studysets", element: <AboutStudysets /> },
+  { path: "about-visualsets", element: <AboutVisualsets /> },
+];
+
+// Auth pages
+const authRoutes = [
+  { path: "login", element: <Login /> },
+  { path: "register", element: <Register /> },
+  { path: "logout", element: <Logout /> },
+];
+
+// Generate language-prefixed routes for landing pages
+const generateLangRoutes = (routes, layout) => {
+  const langCodes = SUPPORTED_LANGUAGES.map(l => l.code).filter(c => c !== DEFAULT_LANGUAGE);
+
+  return langCodes.map(lang => ({
+    path: lang,
+    element: <LanguageWrapper lang={lang}>{layout}</LanguageWrapper>,
+    children: [
+      // Redirect /nl → /nl/welcome
+      { index: true, element: <Navigate to={`/${lang}/welcome`} replace /> },
+      ...routes
+    ]
+  }));
+};
+
 const router = createBrowserRouter([
+  // App routes (private)
   {
     element: <Layout />,
     children: [
@@ -67,230 +215,39 @@ const router = createBrowserRouter([
       },
       {
         element: <PrivateRoute />,
-        children: [
-          {
-            path: "/home",
-            element: <StartingPagina />
-          },
-          {
-            path: "/privacy",
-            element: <Privacy />
-          },
-          {
-            path: "/studysets",
-            element: <Studysets />,
-            children: [
-              {
-                index: true,
-                element: <StudysetsPage />
-              }
-            ]
-          },
-          {
-            path: "/folders",
-            element: <Studysets />,
-            children: [
-              {
-                index: true,
-                element: <FoldersPage />
-              }
-            ]
-          },
-          {
-            path: "/folders/:id",
-            element: <Studysets />,
-            children: [
-              {
-                index: true,
-                element: <Folders />
-              }
-            ]
-          },
-          {
-            path: "/courses",
-            element: <Studysets />,
-            children: [
-              {
-                index: true,
-                element: <CoursesPage />
-              }
-            ]
-          },
-          {
-            path: "/courses/:id",
-            element: <Studysets />,
-            children: [
-              {
-                index: true,
-                element: <Course />
-              }
-            ]
-          },
-          {
-            path: "/search",
-            element: <Search />
-          },
-          {
-            path: "/studyset/:id",
-            element: <Studyset />
-          },
-          {
-            path: "/learn/:id",
-            element: <Learn />
-          },
-          {
-            path: "/identify/:id",
-            element: <Identify />
-          },
-
-          {
-            path: "/point/:id",
-            element: <Point />
-          },
-          {
-            path: "/flashcards/:id",
-            element: <Flashcards />
-          },
-          {
-            path: "/speedy/:id",
-            element: <Speedy />
-          },
-          {
-            path: "/visualset/:id",
-            element: <Visualset />
-          },
-          {
-            path: "/folders",
-            element: <Folders />
-          },
-          {
-            path: "/create-set",
-            element: <CreateOrEditSet />
-          },
-          {
-            path: "/create-set/:id",
-            element: <CreateOrEditSet />
-          },
-          {
-            path: "/create-folder",
-            element: <CreateFolder />
-          },
-          {
-            path: "/create-visualset",
-            element: <CreateOrEditVisualset />
-          },
-          {
-            path: "/account",
-            element: <Account />
-          },
-          {
-            path: "/classroom/:id",
-            element: <ClassPage />
-          },
-          {
-            path: "/classrooms",
-            element: <Classrooms />,
-            children: [
-              {
-                path: ":id",
-                element: <Classroom />
-              }
-            ]
-          },
-          {
-            path: "/streak",
-            element: <Streak />
-          },
-          {
-            path: "/profile/:id",
-            element: <Profile />,
-            children: [
-              {
-                index: true,
-                element: <Navigate to="studysets" replace />
-              },
-              {
-                path: "studysets",
-                element: <Sets />
-              },
-              {
-                path: "visualsets",
-                element: <Visualsets />
-              }
-            ]
-          }
-        ]
+        children: privateRoutes
       },
       {
         path: "*",
         element: <PrivateRoute />,
-        children: [
-          {
-            index: true,
-            element: <Error />
-          }
-        ]
+        children: [{ index: true, element: <Error /> }]
       }
     ]
   },
 
+  // Landing pages - default language (no prefix)
   {
     element: <LandingLayout />,
-    children: [
-      {
-        path: "/welcome",
-        element: <Welcome />
-      },
-      {
-        path: "/about-us",
-        element: <AboutUs />
-      },
-      {
-        path: "/about-ai",
-        element: <AI />
-      },
-      {
-        path: "/flashcards",
-        element: <AboutFlashcards />
-      },
-      {
-        path: "/learn",
-        element: <AboutLearn />
-      },
-      {
-        path: "/identify",
-        element: <AboutPin />
-      },
-      {
-        path: "/point",
-        element: <AboutPoint />
-      },
-      {
-        path: "/speedy",
-        element: <AboutSpeedy />
-      },
-      {
-        path: "/about-studysets",
-        element: <AboutStudysets />
-      },
-      {
-        path: "/about-visualsets",
-        element: <AboutVisualsets />
-      }
-    ]
+    children: landingRoutes
   },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/register",
-    element: <Register />
-  },
-  {
-    path: "/logout",
-    element: <Logout />
-  },
+
+  // Landing pages - with language prefix (/nl/welcome, /de/welcome, etc.)
+  ...generateLangRoutes(landingRoutes, <LandingLayout />),
+
+  // Auth pages - default language
+  ...authRoutes,
+
+  // Auth pages - with language prefix
+  ...SUPPORTED_LANGUAGES
+    .filter(l => l.code !== DEFAULT_LANGUAGE)
+    .flatMap(lang =>
+      authRoutes.map(route => ({
+        path: `${lang.code}/${route.path}`,
+        element: <LanguageWrapper lang={lang.code}>{route.element}</LanguageWrapper>
+      }))
+    ),
+
+  // Auth callback (no language prefix needed)
   {
     path: "/auth/callback",
     element: <AuthCallback />
@@ -299,22 +256,22 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-	<Suspense fallback={<div>Loading...</div>}>
-		<AuthProvider>
-		  <SWRConfig
-			value={{
-			  fetcher: (url) => getById(url),
-			  revalidateOnFocus: false,
-			  revalidateOnReconnect: false,
-			  shouldRetryOnError: false,
-			  dedupingInterval: 60_000
-
-			}}
-
-		  >
-			<RouterProvider router={router} />
-		  </SWRConfig>
-    </AuthProvider>
-	</Suspense>
+    <Suspense fallback={<div className="w-screen h-screen flex items-center justify-center">Loading...</div>}>
+      <HelmetProvider>
+        <AuthProvider>
+          <SWRConfig
+            value={{
+              fetcher: (url) => getById(url),
+              revalidateOnFocus: false,
+              revalidateOnReconnect: false,
+              shouldRetryOnError: false,
+              dedupingInterval: 60_000
+            }}
+          >
+            <RouterProvider router={router} />
+          </SWRConfig>
+        </AuthProvider>
+      </HelmetProvider>
+    </Suspense>
   </StrictMode>
 );

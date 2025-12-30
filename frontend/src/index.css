@@ -22,21 +22,21 @@ body::-webkit-scrollbar {
 /* Je @font-face declaraties blijven hetzelfde, maar fix de paths (zie stap 2) */
 @font-face {
     font-family: 'SF Pro';
-    src: url('../public/assets/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('woff2');
+    src: url('assets/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'SF Pro';
-    src: url('../public/assets/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('woff2');
+    src: url('assets/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('woff2');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'akira';
-    src: url('../public/assets/fonts/akira/akira.otf') format('woff2');
+    src: url('assets/fonts/akira/akira.otf') format('woff2');
     font-weight: bold;
     font-style: normal;
 }
@@ -57,6 +57,7 @@ body::-webkit-scrollbar {
     --color-studowhite: rgba(224, 224, 224, 0.19);
     --color-studoborder: rgba(255, 255, 255, 0.3);
     --color-inputcolor: rgba(255, 255, 255, 0.175);
+    --breakpoint-3xl: 1800px;
 }
 
 .nav {

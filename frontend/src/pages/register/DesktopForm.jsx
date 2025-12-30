@@ -3,11 +3,11 @@ import { useCallback, useState, useMemo, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../contexts/auth";
-import eyeOpened from "../../../public/assets/icons/eye-open.svg";
-import eyeClosed from "../../../public/assets/icons/eye-closed.svg";
-import google from "../../../public/assets/icons/logos/google.svg";
-import microsoft from "../../../public/assets/icons/logos/microsoft.svg";
-import smartschool from "../../../public/assets/icons/logos/smartschool.png";
+import eyeOpened from "../../assets/icons/eye-open.svg";
+import eyeClosed from "../../assets/icons/eye-closed.svg";
+import google from "../../assets/icons/logos/google.svg";
+import microsoft from "../../assets/icons/logos/microsoft.svg";
+import smartschool from "../../assets/icons/logos/smartschool.png";
 import i18n from "i18next";
 
 export default function DesktopForm() {
@@ -90,22 +90,26 @@ export default function DesktopForm() {
 		window.location.href = "http://localhost:3000/api/sessions/microsoft";
 	}, []);
 
+  const loginSmartschool = useCallback(() => {
+    window.location.href = "http://localhost:3000/api/sessions/smartschool";
+  }, []);
+
 	return (
-		<div className="w-full h-full flex justify-end">
+    <div className="w-full h-full 3xl:absolute 3xl:inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
 			<FormProvider {...methods}>
 				<div className={`w-3/5 xl:w-1/3 h-full flex flex-row overflow-hidden
-          rounded-4xl 
-          shadow-2xl shadow-black/20
+          rounded-4xl  3xl:max-h-3/4 3xl:max-w-1/4 3xl:h-fit
+          shadow-2xl shadow-black/20 3xl:z-[9999]
           transition-all duration-700
           ${mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
 
-					<div className="w-full backdrop-blur-2xl flex flex-col gap-6 justify-center px-12 py-16 relative overflow-hidden">
+					<div className="w-full  3xl:h-fit backdrop-blur-2xl flex flex-col gap-6 justify-center px-12 py-16 relative overflow-hidden">
 
-						<div className="h-full justify-baseline relative gap-6 z-10 flex flex-col">
+						<div className="h-full 3xl:h-fit justify-baseline relative gap-6 z-10 flex flex-col">
 
 							<div className={`flex flex-col gap-2 transition-all duration-500 delay-200
                 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
-								<h1 className="text-4xl font-bold text-white">{t("Create account")}</h1>
+								<h1 className="text-4xl font-bold text-studodarkblue dark:text-white">{t("Create account")}</h1>
 								<p className="text-slate-400 text-sm">{t("register new account")}</p>
 							</div>
 
@@ -129,11 +133,11 @@ export default function DesktopForm() {
 												data-cy="email_input"
 											/>
 										</div>
-										{methods.formState.errors.email && (
-											<span className="text-red-400 text-xs px-4" data-cy="email_error">
+										{methods.formState.errors.email ? (
+											<span className="text-red-400 h-5 text-xs px-4" data-cy="email_error">
                         {methods.formState.errors.email.message}
                       </span>
-										)}
+										) : <div className={"h-5"}></div>}
 									</div>
 
 									{/* Display Name Input */}
@@ -152,11 +156,11 @@ export default function DesktopForm() {
 												data-cy="displayName_input"
 											/>
 										</div>
-										{methods.formState.errors.displayName && (
-											<span className="text-red-400 text-xs px-4" data-cy="displayName_error">
+										{methods.formState.errors.displayName ? (
+											<span className="text-red-400 h-5 text-xs px-4" data-cy="displayName_error">
                         {methods.formState.errors.displayName.message}
                       </span>
-										)}
+										) : <div className={"h-5"}></div>}
 									</div>
 
 									{/* Password Input */}
@@ -183,11 +187,11 @@ export default function DesktopForm() {
 												data-cy="toggle_password_visibility"
 											/>
 										</div>
-										{methods.formState.errors.password && (
-											<span className="text-red-400 text-xs px-4" data-cy="password_error">
+										{methods.formState.errors.password ? (
+											<span className="text-red-400 h-5 text-xs px-4" data-cy="password_error">
                         {methods.formState.errors.password.message}
                       </span>
-										)}
+										) : <div className={"h-5"}></div>}
 									</div>
 
 									{/* Confirm Password Input */}
@@ -206,11 +210,11 @@ export default function DesktopForm() {
 												data-cy="confirmPassword_input"
 											/>
 										</div>
-										{methods.formState.errors.confirmPassword && (
-											<span className="text-red-400 text-xs px-4" data-cy="confirmPassword_error">
+										{methods.formState.errors.confirmPassword ? (
+											<span className="text-red-400 h-5 text-xs px-4" data-cy="confirmPassword_error">
                         {methods.formState.errors.confirmPassword.message}
                       </span>
-										)}
+										) : <div className={"h-5"}></div>}
 									</div>
 
 									{/* Role Select */}
@@ -273,39 +277,40 @@ export default function DesktopForm() {
 									<div className="flex-1 h-px bg-white/10" />
 								</div>
 
-								<div className="flex gap-3 flex-col">
+								<div className="flex gap-3 flex-row">
 									<button
 										type="button"
 										onClick={loginGoogle}
-										className="flex-1 min-h-13 py-2 flex items-center justify-center gap-2 rounded-full
-                      bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
+										className="flex-1 min-h-13 min-w-13  w-13 flex items-center justify-center gap-2 rounded-full
+                      bg-studodarkblue/5 border-studodarkblue/5
+											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                       transition-all duration-300 cursor-pointer"
 										data-cy="register_google"
 									>
 										<img src={google} alt="" className="h-6" />
-										<span className="text-sm text-slate-300">Google</span>
 									</button>
 									<button
 										type="button"
 										onClick={loginMicrosoft}
-										className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
-                      bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
+										className="flex-1 min-h-13 min-w-13  w-13  flex items-center justify-center gap-2 rounded-full
+                      bg-studodarkblue/5 border-studodarkblue/5
+											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                       transition-all duration-300 cursor-pointer"
 										data-cy="register_microsoft"
 									>
 										<img src={microsoft} alt="" className="h-6" />
-										<span className="text-sm text-slate-300">Microsoft</span>
 									</button>
-									{(language === "nl-BE" || language === "fr-FR-BE") && (
+									{(language === "nl" || language === "fr-BE") && (
 										<button
 											type="button"
-											className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
-                        bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
+                      onClick={loginSmartschool}
+											className="flex-1 min-h-13 min-w-13  w-13  flex items-center justify-center gap-2 rounded-full
+                        bg-studodarkblue/5 border-studodarkblue/5
+											  dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                         transition-all duration-300 cursor-pointer"
 											data-cy="register_smartschool"
 										>
 											<img src={smartschool} alt="" className="h-6" />
-											<span className="text-sm text-slate-300">{t("Smartschool")}</span>
 										</button>
 									)}
 								</div>

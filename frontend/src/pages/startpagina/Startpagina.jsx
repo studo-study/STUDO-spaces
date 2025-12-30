@@ -1,6 +1,6 @@
 import Recent from "./recent/Recent.jsx";
 import Courses from "./courses/Courses.jsx";
-import left from "../../../public/assets/icons/left.svg";
+import left from "../../assets/icons/left.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";

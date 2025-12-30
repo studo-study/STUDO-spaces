@@ -3,16 +3,16 @@ import { useCallback, useState, useEffect } from "react";
 import { useAuth } from "../../contexts/auth";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import eyeOpened from "../../../public/assets/icons/eye-open.svg";
-import eyeClosed from "../../../public/assets/icons/eye-closed.svg";
-import google from "../../../public/assets/icons/logos/google.svg";
-import microsoft from "../../../public/assets/icons/logos/microsoft.svg";
-import smartschool from "../../../public/assets/icons/logos/smartschool.png";
-import learn from "../../../public/assets/icons/start/learn.svg";
-import flash from "../../../public/assets/icons/start/flashcards.svg";
-import speedy from "../../../public/assets/icons/start/speedy.svg";
-import pin from "../../../public/assets/icons/start/point.svg";
-import point from "../../../public/assets/icons/start/hero-pin.svg";
+import eyeOpened from "../../assets/icons/eye-open.svg";
+import eyeClosed from "../../assets/icons/eye-closed.svg";
+import google from "../../assets/icons/logos/google.svg";
+import microsoft from "../../assets/icons/logos/microsoft.svg";
+import smartschool from "../../assets/icons/logos/smartschool.png";
+import learn from "../../assets/icons/start/learn.svg";
+import flash from "../../assets/icons/start/flashcards.svg";
+import speedy from "../../assets/icons/start/speedy.svg";
+import pin from "../../assets/icons/start/point.svg";
+import point from "../../assets/icons/start/hero-pin.svg";
 import i18n from "i18next";
 
 const validationRules = {
@@ -60,11 +60,15 @@ export default function DesktopForm() {
 		window.location.href = "http://localhost:3000/api/sessions/microsoft";
 	}, []);
 
+    const loginSmartschool = useCallback(() => {
+      window.location.href = "http://localhost:3000/api/sessions/smartschool";
+    }, []);
+
 	return (
-		<div className="w-full h-full flex justify-end">
+    <div className="w-full h-full 3xl:absolute 3xl:inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
 			<FormProvider {...methods}>
 				<div className={`w-3/5 xl:w-1/3 h-full flex flex-row overflow-hidden
-					rounded-4xl 
+					rounded-4xl 3xl:h-fit 3xl:max-w-1/4 
 					shadow-2xl shadow-black/20
 					transition-all duration-700
 					${mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
@@ -178,9 +182,10 @@ export default function DesktopForm() {
 										<img src={microsoft} alt="" className="h-6" />
 										<span className="text-sm text-studodarkblue dark:text-slate-300">Microsoft</span>
 									</button>
-									{language === "nl-BE" || language === "fr-FR-BE"  ? (
+									{language === "nl" || language === "fr-BE"  ? (
 										<button
 											type="button"
+                                            onClick={loginSmartschool}
 											className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20

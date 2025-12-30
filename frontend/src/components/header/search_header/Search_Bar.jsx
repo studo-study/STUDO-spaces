@@ -1,5 +1,5 @@
-import SearchIcon from "../../../../public/assets/icons/search.svg";
-import Close from "../../../../public/assets/icons/close.svg";
+import SearchIcon from "../../../assets/icons/search.svg";
+import Close from "../../../assets/icons/close.svg";
 import SearchBarContent from "./SearchBarContent.jsx";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";

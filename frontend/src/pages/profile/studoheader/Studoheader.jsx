@@ -1,4 +1,4 @@
-import verified from "../../../../public/assets/icons/verified.svg";
+import verified from "../../../assets/icons/verified.svg";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 import { useState } from "react";

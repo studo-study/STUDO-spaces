@@ -3,6 +3,7 @@ import Header from "../components/header/Header.jsx";
 import useSWR from "swr";
 import { getById } from "../api/index.js";
 import { useTranslation } from "react-i18next";
+import NoIndex from "../components/NoIndex.jsx";
 
 export default function Layout() {
   const {

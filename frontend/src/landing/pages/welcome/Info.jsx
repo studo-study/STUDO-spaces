@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import smart from "../../../../public/assets/icons/start/studysmart.svg";
-import ready from "../../../../public/assets/icons/start/ready.svg";
-import laptop from "../../../../public/assets/icons/laptop.svg";
+import smart from "../../../assets/icons/start/studysmart.svg";
+import ready from "../../../assets/icons/start/ready.svg";
+import laptop from "../../../assets/icons/laptop.svg";
 import {useTranslation} from "react-i18next";
 
 
@@ -39,7 +39,7 @@ function FeatureCard({ feature, index, isVisible }) {
 	const isReverse = feature.direction === "reverse";
 	const {t} = useTranslation();
 	return (
-		<div
+		<section
 			className={`grid grid-cols-1 overflow-visible lg:grid-cols-2 gap-8 lg:gap-5 items-center
       transition-all duration-1000
       ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
@@ -98,7 +98,7 @@ function FeatureCard({ feature, index, isVisible }) {
 						/>
 					</div>
 				</div>
-		</div>
+		</section>
 
 	);
 }

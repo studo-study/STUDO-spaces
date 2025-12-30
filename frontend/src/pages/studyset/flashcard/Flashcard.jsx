@@ -1,4 +1,4 @@
-import Left from "../../../../public/assets/icons/left.svg";
+import Left from "../../../assets/icons/left.svg";
 import { useState } from "react";
 
 export default function Flashcard({ Cards }) {

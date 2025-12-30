@@ -1,7 +1,7 @@
-import profile from "../../../../public/assets/icons/profile.svg";
-import logout from "../../../../public/assets/icons/logout.svg";
-import privacy from "../../../../public/assets/icons/privacy.svg";
-import streak from "../../../../public/assets/icons/streak.svg";
+import profile from "../../../assets/icons/profile.svg";
+import logout from "../../../assets/icons/logout.svg";
+import privacy from "../../../assets/icons/privacy.svg";
+import streak from "../../../assets/icons/streak.svg";
 import "animate.css";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";

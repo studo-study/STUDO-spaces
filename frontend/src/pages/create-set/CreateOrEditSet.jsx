@@ -5,7 +5,7 @@ import { useCallback, useState, useEffect, useRef } from "react";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import Sortable from "sortablejs";
-import Plus from "../../../public/assets/icons/plus.svg";
+import Plus from "../../assets/icons/plus.svg";
 import Card from "./card/Card.jsx";
 import Importer from "./importer/Importer.jsx";
 import { getAll, getById, save } from "../../api";

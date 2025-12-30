@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Studyset from "../../../../../public/assets/icons/studyset.svg";
-import Imageset from "../../../../../public/assets/icons/image.svg";
+import Studyset from "../../../../assets/icons/studyset.svg";
+import Imageset from "../../../../assets/icons/image.svg";
 import { t } from "i18next";
 import CourseIcons from "../../../../data/Index.js";
 import { FaChevronRight } from "react-icons/fa";

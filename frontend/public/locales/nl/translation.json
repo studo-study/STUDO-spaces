@@ -280,6 +280,149 @@
   "block1_flashcard": "Herhaal snel termen en definities uit je studieset met interactieve flitskaarten",
   "block2_flashcard": "Swipe of draai om het antwoord te zien",
   "block3_flashcard": "Leer op je eigen tempo",
-  "block4_flashcard": "Schud en herhaal tot je zeker bent"
-
+  "block4_flashcard": "Schud en herhaal tot je zeker bent",
+  "seo": {
+    "welcome": {
+      "title": "Slim online studeren | Studo",
+      "description": "Studo helpt studenten sneller te leren met flashcards, visuele studiesets en AI-gestuurde leermethodes. Gratis te gebruiken.",
+      "keywords": "flashcards, studeren, leren, Quizlet alternatief, AI leren, online studeren, Studo, studenten",
+      "imageAlt": "Studo - Slimme flashcards voor studenten"
+    },
+    "ai": {
+      "title": "AI Tools | Studo",
+      "description": "Ontdek Studo's AI-gestuurde studietools. Genereer automatisch flashcards, krijg slimme studieaanbevelingen en leer sneller met kunstmatige intelligentie.",
+      "keywords": "AI flashcards, AI studietool, automatische flashcards, slim leren, AI onderwijs, Studo AI",
+      "imageAlt": "Studo AI - Slimme studietools"
+    },
+    "flashcards": {
+      "title": "Flashcards | Studo",
+      "description": "Beheers elk onderwerp met Studo's interactieve flashcards. Blader door kaarten, volg je voortgang en studeer slimmer met onze gratis flashcard tool.",
+      "keywords": "flashcards, studiekaarten, digitale flashcards, gratis flashcards, online flashcards, Studo flashcards",
+      "imageAlt": "Studo Flashcards - Interactieve studiekaarten"
+    },
+    "learn": {
+      "title": "Leren | Studo",
+      "description": "Beheers je studiemateriaal met Studo's Leermodus. Met spaced repetition en slimme algoritmes helpen we je meer te onthouden in minder tijd.",
+      "keywords": "spaced repetition, leermodus, slim studeren, onthouden, studietechniek, Studo leren",
+      "imageAlt": "Studo Leermodus - Spaced repetition studietool"
+    },
+    "identify": {
+      "title": "Match | Studo",
+      "description": "Leer visueel met Studo's Identificeer modus. Perfect voor anatomie, aardrijkskunde, diagrammen en elk beeld-gebaseerd leren.",
+      "keywords": "visueel leren, identificeer modus, afbeelding studie, anatomie leren, diagram studie, Studo identificeer",
+      "imageAlt": "Studo Identificeer Modus - Visuele leertool"
+    },
+    "point": {
+      "title": "Scan | Studo",
+      "description": "Studeer afbeeldingen interactief met Studo's Aanwijs modus. Klik op de juiste locatie om je visuele kennis te testen. Perfect voor kaarten en anatomie.",
+      "keywords": "aanwijs modus, interactief leren, afbeelding quiz, visueel studeren, klik om te leren, Studo aanwijs",
+      "imageAlt": "Studo Aanwijs Modus - Interactief beeld leren"
+    },
+    "speedy": {
+      "title": "Tijdstrijd | Studo",
+      "description": "Daag jezelf uit met Studo's Speedy modus. Race tegen de klok om vragen snel te beantwoorden en verbeter je reactiesnelheid onder druk.",
+      "keywords": "speed quiz, studeren op tijd, snel onthouden, snel leren, studie spel, Studo speedy",
+      "imageAlt": "Studo Speedy Modus - Quiz tegen de klok"
+    },
+    "studysets": {
+      "title": "Studiesets | Studo",
+      "description": "Maak aangepaste studiesets met Studo. Voeg termen, definities en afbeeldingen toe om het perfecte studiemateriaal te maken. Deel met klasgenoten of houd privé.",
+      "keywords": "studiesets, flashcards maken, aangepast studiemateriaal, studiesets delen, Studo studiesets",
+      "imageAlt": "Studo Studiesets - Maak en deel"
+    },
+    "visualsets": {
+      "title": "Visualsets | Studo",
+      "description": "Maak visuele studiesets met Studo. Upload afbeeldingen en voeg interactieve labels toe voor anatomie, aardrijkskunde, diagrammen en elk visueel leren.",
+      "keywords": "visueel leren, afbeelding flashcards, anatomie studie, diagram leren, visuele sets, Studo visueel",
+      "imageAlt": "Studo Visuele Sets - Beeld-gebaseerd leren"
+    }
+  },
+  "faq": {
+    "what": {
+      "question": "Wat is Studo?",
+      "answer": "Studo is een gratis online leerplatform dat studenten helpt slimmer te studeren met flashcards, visuele studiesets en een uitgebreide leermodus."
+    },
+    "free": {
+      "question": "Is Studo gratis?",
+      "answer": "Ja! De belangrijkste studiefuncties zijn volledig gratis. Je kunt zoveel studiesets maken als je wilt en alle belangrijke leermiddelen gebruiken zonder te betalen."
+    },
+    "tools": {
+      "question": "Welke studietools biedt Studo?",
+      "answer": "Studo biedt 5 gratis studietools: Leermodus, Flashcards, Speedy quiz, Match (visueel leren), en Scan voor visualsets."
+    },
+    "quizlet": {
+      "question": "Hoe verschilt Studo van Quizlet?",
+      "answer": "In vergelijking met Quizlet biedt Studo veel geavanceerdere visuele studysets en statistieken over je studie. Bovendien is de kernfunctionaliteit gratis, wat bij Quizlet niet het geval is. Hoewel er optionele premium upgrades en enkele advertenties zijn, zijn de belangrijkste leermiddelen volledig gratis, zodat je je kunt concentreren op effectief studeren."
+    },
+    "flashcards": {
+      "what": {
+        "question": "Wat zijn flashcards?",
+        "answer": "Flashcards zijn een studietool waarbij je een vraag of term aan één kant hebt en het antwoord aan de andere kant. Ze helpen bij het onthouden door actieve herinnering."
+      },
+      "free": {
+        "question": "Zijn Studo flashcards gratis?",
+        "answer": "Ja, Studo flashcards zijn 100% gratis. Je kunt onbeperkt flashcard sets maken en ze altijd bestuderen."
+      }
+    },
+    "learn": {
+      "what": {
+        "question": "Wat is de Leermodus?",
+        "answer": "Leermodus gebruikt spaced repetition om je te helpen inhoud efficiënt te onthouden. Het toont je kaarten op optimale intervallen gebaseerd op hoe goed je ze kent."
+      },
+      "spaced": {
+        "question": "Wat is spaced repetition?",
+        "answer": "Spaced repetition is een leertechniek waarbij je materiaal herhaalt op toenemende intervallen. Het is wetenschappelijk bewezen dat het langetermijngeheugen verbetert."
+      }
+    },
+    "identify": {
+      "what": {
+        "question": "Wat is de Identificeer modus?",
+        "answer": "Identificeer modus laat je leren van afbeeldingen door gelabelde delen te identificeren. Het is perfect voor anatomie, kaarten, diagrammen en elk visueel onderwerp."
+      },
+      "use": {
+        "question": "Waarvoor kan ik de Identificeer modus gebruiken?",
+        "answer": "Identificeer modus is geweldig voor anatomie, aardrijkskunde, biologie diagrammen, kunstgeschiedenis, technische schema's en elk onderwerp waar je delen van een afbeelding moet leren."
+      }
+    },
+    "point": {
+      "what": {
+        "question": "Wat is de Aanwijs modus?",
+        "answer": "Aanwijs modus test je kennis door je te vragen op de juiste locatie op een afbeelding te klikken. Het is geweldig voor het leren van anatomie, aardrijkskunde en diagram-gebaseerde onderwerpen."
+      },
+      "difference": {
+        "question": "Wat is het verschil tussen Aanwijs en Identificeer?",
+        "answer": "Bij Identificeer modus benoem je gelabelde delen. Bij Aanwijs modus klik je waar iets zich bevindt. Beide helpen bij visueel leren maar testen verschillende vaardigheden."
+      }
+    },
+    "speedy": {
+      "what": {
+        "question": "Wat is de Speedy modus?",
+        "answer": "Speedy modus is een quiz op tijd die je uitdaagt om vragen zo snel mogelijk te beantwoorden. Het helpt de reactiesnelheid te verbeteren en maakt studeren leuker."
+      },
+      "benefit": {
+        "question": "Waarom Speedy modus gebruiken?",
+        "answer": "Speedy modus helpt je oefenen onder tijdsdruk, wat prestaties op getimede examens kan verbeteren. Het maakt studeren ook leuker en meer als een spel."
+      }
+    },
+    "studysets": {
+      "what": {
+        "question": "Wat zijn studiesets?",
+        "answer": "Studiesets zijn verzamelingen flashcards met termen en definities. Je kunt ze maken voor elk onderwerp en bestuderen met verschillende modi zoals Leren, Flashcards of Speedy."
+      },
+      "share": {
+        "question": "Kan ik mijn studiesets delen?",
+        "answer": "Ja! Je kunt je studiesets openbaar maken om te delen met klasgenoten of de community, of ze privé houden voor persoonlijk gebruik."
+      }
+    },
+    "visualsets": {
+      "what": {
+        "question": "Wat zijn visuele sets?",
+        "answer": "Visuele sets zijn beeld-gebaseerd studiemateriaal waarbij je delen van een afbeelding kunt labelen. Ze zijn perfect voor anatomie, kaarten, diagrammen en elk visueel onderwerp."
+      },
+      "create": {
+        "question": "Hoe maak ik een visuele set?",
+        "answer": "Upload een afbeelding, klik dan om labels toe te voegen aan verschillende delen. Je kunt zoveel labels toevoegen als nodig en dan studeren met Identificeer of Aanwijs modus."
+      }
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/auth";
+import NoIndex from "./NoIndex.jsx";
 
 export default function PrivateRoute() {
   const { ready, isAuthed } = useAuth();
@@ -18,7 +19,10 @@ export default function PrivateRoute() {
   }
 
   if (isAuthed) {
-    return <Outlet />;
+    return <div>
+      <NoIndex/>
+      <Outlet />
+    </div>;
   }
 
   return <Navigate replace to={`/welcome`} />;
