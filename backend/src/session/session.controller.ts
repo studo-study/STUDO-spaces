@@ -76,9 +76,6 @@ export class SessionController {
 
     const token = await this.authService.validateGoogleUser(req.user);
 
-    console.log('🔍 Google callback - Token type:', typeof token);
-    console.log('🔍 Google callback - Token value:', token);
-    console.log('🔍 Google callback - Token length:', token?.length);
 
     const frontendUrl = this.configService.get<string>('url.url') || 'http://localhost:5173';
     const redirectUrl = `${frontendUrl}/auth/callback?token=${token}`;
@@ -135,5 +132,28 @@ export class SessionController {
   @UseGuards(AuthGuard('facebook'))
   facebookLoginCallback(@Req() req: Request) {
     return req.user;
+  }
+
+  // inloggen met Smartschool ---------------------------------------------
+  @Public()
+  @UseInterceptors(AuthDelayInterceptor)
+  @Get('smartschool')
+  @UseGuards(AuthGuard('smartschool'))
+  async smartschoolLogin() {
+    // redirect naar Facebook login
+  }
+
+  @ApiOperation({
+    summary: 'De user redirecten van smartschool.',
+  })
+  @Public()
+  @Get('smartschool/callback')
+  @UseGuards(AuthGuard('smartschool'))
+  async smartschoolLoginCallback(@Req() req: Request, @Res() res: Response) {
+    const token = await this.authService.validateSmartschoolUser(req.user);
+    const frontendUrl = this.configService.get<string>('url.url') || 'http://localhost:5173/home';
+    return res.redirect(
+      `${frontendUrl}/auth/callback?token=${token}`,
+    );
   }
 }

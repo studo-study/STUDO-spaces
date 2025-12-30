@@ -50,11 +50,11 @@ function formatDate(date) {
 }
 
 function getCoverImage(subject) {
-  const Import = Object.keys(CourseIcons).find((key) =>
-    subject.toLowerCase().includes(key)
-  );
-  if (!Import) {
-    return "../../../../public/assets/icons/courses/default.svg";
-  }
-  return "../../../../public/assets/icons/courses/" + CourseIcons[Import];
+	const Import = Object.keys(CourseIcons).find((key) =>
+		subject.toLowerCase().includes(key)
+	);
+	if (!Import) {
+		return "./src/assets/icons/courses/default.svg";
+	}
+	return "./src/assets/icons/courses/" + CourseIcons[Import];
 }
