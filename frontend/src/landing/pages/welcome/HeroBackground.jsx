@@ -1,9 +1,9 @@
-import brain from "../../../../public/assets/animations/animation assets/brain.svg";
-import pencil from "../../../../public/assets/animations/animation assets/pencil.svg";
-import graduate from "../../../../public/assets/animations/animation assets/graduate.svg";
-import ruler from "../../../../public/assets/animations/animation assets/ruler.svg";
-import book from "../../../../public/assets/animations/animation assets/book.svg";
-import book2 from "../../../../public/assets/animations/animation assets/book2.svg";
+import brain from "../../../assets/animations/animation assets/brain.svg";
+import pencil from "../../../assets/animations/animation assets/pencil.svg";
+import graduate from "../../../assets/animations/animation assets/graduate.svg";
+import ruler from "../../../assets/animations/animation assets/ruler.svg";
+import book from "../../../assets/animations/animation assets/book.svg";
+import book2 from "../../../assets/animations/animation assets/book2.svg";
 import { useEffect, useState } from "react";
 
 const floatingItems = [
@@ -23,7 +23,7 @@ export default function HeroBackground({ color }) {
   }, []);
 
   return (
-    <div className="fixed max-w-screen w-full inset-0 overflow-hidden pointer-events-none">
+    <section className="fixed max-w-screen w-full inset-0 overflow-hidden pointer-events-none">
       {/* Subtiele gradient overlay */}
       <div className={`absolute max-w-screen w-full inset-0 bg-gradient-to-b from-transparent via-transparent ${color}`} />
 
@@ -50,6 +50,6 @@ export default function HeroBackground({ color }) {
           }}
         />
       ))}
-    </div>
+    </section>
   );
 }

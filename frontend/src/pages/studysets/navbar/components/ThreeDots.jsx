@@ -1,4 +1,4 @@
-import Dots from "../../../../../public/assets/icons/3dots.svg";
+import Dots from "../../../../assets/icons/3dots.svg";
 import { useState } from "react";
 import DeleteFolder from "./DeleteFolder.jsx";
 

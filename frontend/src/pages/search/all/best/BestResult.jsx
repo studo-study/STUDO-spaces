@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import Studyset from "../../../../../public/assets/icons/studyset.svg";
-import Visualset from "../../../../../public/assets/icons/visualset.svg";
+import Studyset from "../../../../assets/icons/studyset.svg";
+import Visualset from "../../../../assets/icons/visualset.svg";
 import { t } from "i18next";
-import Loved from "../../../../../public/assets/icons/loved.svg";
-import verified from "../../../../../public/assets/icons/verified.svg";
-import Classroom from "../../../../../public/assets/icons/classroom.svg";
-import Studoicon from "../../../../../public/assets/icons/studoicon.svg";
+import Loved from "../../../../assets/icons/loved.svg";
+import verified from "../../../../assets/icons/verified.svg";
+import Classroom from "../../../../assets/icons/classroom.svg";
+import Studoicon from "../../../../assets/icons/studoicon.svg";
 
 export default function BestResult({ item }) {
   return (

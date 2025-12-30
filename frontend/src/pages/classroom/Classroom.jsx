@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { del, save } from "../../api/index.js";
 import { useAuth } from "../../contexts/auth.js";
 import AddSets from "../classrooms/navbar/addsets/AddSets.jsx";
-import plusIcon from "../../../public/assets/icons/cross.png";
+import plusIcon from "../../assets/icons/cross.png";
 import useSWRMutation from "swr/mutation";
 
 export default function Classroom() {

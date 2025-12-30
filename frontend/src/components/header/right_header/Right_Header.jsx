@@ -1,6 +1,6 @@
-import plusIcon from "../../../../public/assets/icons/cross.png";
-import profileIcon from "../../../../public/assets/icons/profile.svg";
-import Streak from "../../../../public/assets/icons/streak2.svg";
+import plusIcon from "../../../assets/icons/cross.png";
+import profileIcon from "../../../assets/icons/profile.svg";
+import Streak from "../../../assets/icons/streak2.svg";
 import { PiStudent } from "react-icons/pi";
 
 export default function Right_Header({ onPopupClick, onAddClick, user }) {

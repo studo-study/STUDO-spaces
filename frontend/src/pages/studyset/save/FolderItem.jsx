@@ -1,4 +1,4 @@
-import Folder from "../../../../public/assets/icons/folder.svg";
+import Folder from "../../../assets/icons/folder.svg";
 import { useTranslation } from "react-i18next";
 
 export default function FolderItem({ folder, isSelected, onToggle }) {

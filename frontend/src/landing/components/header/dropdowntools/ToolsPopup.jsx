@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef } from "react";
-import learn from "../../../../../public/assets/icons/pencil.svg";
-import speedy from "../../../../../public/assets/icons/clock.svg";
-import cards from "../../../../../public/assets/icons/cards.svg";
-import pin from "../../../../../public/assets/icons/pin-icon.svg";
-import point from "../../../../../public/assets/icons/point.svg";
+import learn from "../../../../assets/icons/pencil.svg";
+import speedy from "../../../../assets/icons/clock.svg";
+import cards from "../../../../assets/icons/cards.svg";
+import pin from "../../../../assets/icons/pin-icon.svg";
+import point from "../../../../assets/icons/point.svg";
 
 const toolCategories = [
 	{

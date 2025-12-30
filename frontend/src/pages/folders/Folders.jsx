@@ -1,5 +1,5 @@
-import plusIcon from "../../../public/assets/icons/cross.png";
-import Dots from "../../../public/assets/icons/3dots.svg";
+import plusIcon from "../../assets/icons/cross.png";
+import Dots from "../../assets/icons/3dots.svg";
 import FolderItem from "../studysets/navbar/folders/FolderItem.jsx";
 import { FaChevronLeft } from "react-icons/fa";
 import useSWR from "swr";

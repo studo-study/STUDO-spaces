@@ -1,4 +1,4 @@
-import Classroom from "../../../../public/assets/icons/classroom.svg";
+import Classroom from "../../../assets/icons/classroom.svg";
 import { useTranslation } from "react-i18next";
 
 export default function ClassroomItem({ classroom, isSelected, onToggle }) {

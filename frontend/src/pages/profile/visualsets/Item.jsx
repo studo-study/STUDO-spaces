@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { t } from "i18next";
-import Imageset from "../../../../public/assets/icons/image.svg";
+import Imageset from "../../../assets/icons/image.svg";
 import CourseIcons from "../../../data/Index.js";
 
 export default function Item({ set }) {

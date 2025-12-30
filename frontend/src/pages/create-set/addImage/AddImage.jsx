@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
-import ImageIcon from "../../../../public/assets/icons/image.svg";
+import ImageIcon from "../../../assets/icons/image.svg";
 
 export default function AddImage({ index }) {
   const { t } = useTranslation();

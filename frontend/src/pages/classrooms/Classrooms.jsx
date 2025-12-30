@@ -3,7 +3,7 @@ import Navbar from "./navbar/Navbar.jsx";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
-import plusIcon from "../../../public/assets/icons/cross.png";
+import plusIcon from "../../assets/icons/cross.png";
 import AddSets from "./navbar/addsets/AddSets.jsx";
 import CreateClassroom from "../classroom/createclassroom/CreateClassroom.jsx";
 
