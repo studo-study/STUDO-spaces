@@ -1,10 +1,10 @@
-# STUDO
+# STUDO-Mobile
 
 STUDO is een platform dat studenten helpt om zo efficiënt en snel mogelijk te studeren. De applicatie speelt in op specifieke niches, zoals anatomie en vocabulaire, waar gerichte leermethoden een grote meerwaarde bieden.
 
 ## Tech Stack
 
-**Frontend:** React, Tailwind CSS, Animate.css  
+**Frontend:** Next Js, Tailwind CSS, Animate.css  
 **Backend:** NestJS, Drizzle ORM, PostgreSQL  
 **Testing:** Cypress (frontend), Vitest (backend)  
 **Infrastructure:** Docker, Scaleway (object storage)
