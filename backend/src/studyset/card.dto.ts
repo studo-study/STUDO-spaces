@@ -147,7 +147,7 @@ export class CardResponseDto {
 
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
-    description: 'UUID van de studyset',
+    description: 'UUID van de studoset',
   })
   @Expose()
   set_id: string;

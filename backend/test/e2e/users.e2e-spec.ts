@@ -650,7 +650,7 @@ describe('Users', () => {
   });
 
   describe('GET /api/users/:user_id/headers', () => {
-    it('moet 200 retourneren en header info tonen', async () => {
+    it('moet 200 retourneren en app_footer info tonen', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${userId2}/headers`)
         .auth(userAuthToken, { type: 'bearer' });

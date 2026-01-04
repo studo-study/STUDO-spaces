@@ -63,8 +63,8 @@ DATABASE_URL=postgresql://postgres:postgres@localhost:5432/studo
 
 # JWT & authenticatie instellingen:
 AUTH_JWT_SECRET=...
-AUTH_JWT_AUDIENCE=studo-api
-AUTH_JWT_ISSUER=studo-api
+AUTH_JWT_AUDIENCE=studo-(api)
+AUTH_JWT_ISSUER=studo-(api)
 
 # configuratie voor Aragon password hashing
 AUTH_HASH_LENGTH=32
@@ -196,8 +196,8 @@ CORS_MAX_AGE=...
 
 # Auth configuratie
 AUTH_JWT_SECRET=...
-AUTH_JWT_AUDIENCE=studo-api
-AUTH_JWT_ISSUER=studo-api
+AUTH_JWT_AUDIENCE=studo-(api)
+AUTH_JWT_ISSUER=studo-(api)
 AUTH_HASH_LENGTH=XX
 AUTH_HASH_TIME_COST=X
 AUTH_HASH_MEMORY_COST=XXXXX

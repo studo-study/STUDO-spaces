@@ -160,7 +160,7 @@ export default function CreateOrEditSet() {
         <div className="flex w-full sm:w-11/12 md:w-4/5 lg:w-3/5 flex-col items-center justify-center gap-3">
           <span className="w-full text-2xl sm:text-3xl flex flex-col justify-center items-baseline
             text-studodarkblue font-atrament font-semibold dark:text-white">
-            {id ? t("edit studyset").toUpperCase() : t("create new studyset").toUpperCase()}
+            {id ? t("edit studoset").toUpperCase() : t("create new studoset").toUpperCase()}
           </span>
 
           <div className="w-full gap-3 sm:gap-4 md:gap-5 flex-col flex">

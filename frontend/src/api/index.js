@@ -19,16 +19,17 @@ axios.interceptors.request.use((config) => {
 });
 
 axios.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem(JWT_TOKEN_KEY);
-      window.location.href = "/logout";
-    }
-    return Promise.reject(error);
-  }
-);
+	(response) => response,
+	(error) => {
+		const hadToken = localStorage.getItem(JWT_TOKEN_KEY);
 
+		if (error.response?.status === 401 && hadToken) {
+			localStorage.removeItem(JWT_TOKEN_KEY);
+			window.location.href = "/logout";
+		}
+		return Promise.reject(error);
+	}
+);
 
 export async function getAll(url) {
   const { data } = await axios.get(url);

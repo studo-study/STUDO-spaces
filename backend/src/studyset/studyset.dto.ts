@@ -19,41 +19,41 @@ import {
 export class CreateStudysetDto {
   @ApiProperty({
     example: 'Heart Diagram',
-    description: 'Title of the studyset',
+    description: 'Title of the studoset',
   })
   @IsString({ name: 'title', maxLength: 200 })
   title: string;
 
   @ApiProperty({
     example: 'English',
-    description: 'Course of the studyset',
+    description: 'Course of the studoset',
   })
   @IsString({ name: 'course', maxLength: 100 })
   course: string;
 
   @ApiProperty({
     example: 'en',
-    description: 'Language of the terms of the studyset (ISO 639-1 code)',
+    description: 'Language of the terms of the studoset (ISO 639-1 code)',
   })
   @IsString({ name: 'global_term_language', maxLength: 2 })
   global_term_language: string;
 
   @ApiProperty({
     example: 'nl-NL',
-    description: 'Language of the definitions of the studyset (ISO 639-1 code)',
+    description: 'Language of the definitions of the studoset (ISO 639-1 code)',
   })
   @IsString({ name: 'global_definition_language', maxLength: 2 })
   global_definition_language: string;
 
   @ApiProperty({
     example: 'f45cd674-73a5-4d4f-abdb-b405981cd2b3',
-    description: 'Folder ID where the studyset belongs',
+    description: 'Folder ID where the studoset belongs',
   })
   @IsString({ name: 'folder_id', maxLength: 64 })
   folder_id: string;
 
   @ApiProperty({
-    description: 'List of cards in the studyset',
+    description: 'List of cards in the studoset',
     type: [CreateCardListDto],
   })
   @IsArray()
@@ -66,7 +66,7 @@ export class CreateStudysetDto {
 export class UpdateStudysetDto {
   @ApiProperty({
     example: 'Updated Heart Diagram',
-    description: 'Updated title of the studyset',
+    description: 'Updated title of the studoset',
     required: false,
   })
   @IsString({ name: 'title', maxLength: 200 })
@@ -75,7 +75,7 @@ export class UpdateStudysetDto {
 
   @ApiProperty({
     example: 'Biology',
-    description: 'Updated course of the studyset',
+    description: 'Updated course of the studoset',
     required: false,
   })
   @IsString({ name: 'course', maxLength: 100 })
@@ -102,7 +102,7 @@ export class UpdateStudysetDto {
 
   @ApiProperty({
     example: true,
-    description: 'Whether the studyset is public or private',
+    description: 'Whether the studoset is public or private',
     required: false,
   })
   @IsBoolean()
@@ -124,14 +124,14 @@ export class UpdateStudysetDto {
 export class StudysetResponseDto {
   @ApiProperty({
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
-    description: 'Unique identifier of the studyset',
+    description: 'Unique identifier of the studoset',
   })
   @Expose()
   id: string;
 
   @ApiProperty({
     example: 'Heart Diagram',
-    description: 'Title of the studyset',
+    description: 'Title of the studoset',
   })
   @Expose()
   title: string;
@@ -173,7 +173,7 @@ export class StudysetResponseDto {
 
   @ApiProperty({
     example: true,
-    description: 'Whether the studyset is publicly visible',
+    description: 'Whether the studoset is publicly visible',
   })
   @Expose()
   public_set: boolean;
@@ -201,7 +201,7 @@ export class StudysetResponseDto {
 
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
-    description: 'Folder ID where the studyset belongs',
+    description: 'Folder ID where the studoset belongs',
   })
   @Expose()
   folder_id: string;
@@ -209,21 +209,21 @@ export class StudysetResponseDto {
 
 export class fullSetResponseDto extends StudysetResponseDto {
   @ApiProperty({
-    description: 'List of cards in the studyset',
+    description: 'List of cards in the studoset',
     type: [CardResponseDto],
   })
   @Expose()
   cards: CardResponseDto[];
 
   @ApiProperty({
-    description: 'List of likes on the studyset',
+    description: 'List of likes on the studoset',
     type: [SetLikeResponseDto],
   })
   @Expose()
   likes: SetLikeResponseDto[];
 
   @ApiProperty({
-    description: 'Active study session for this studyset',
+    description: 'Active study session for this studoset',
     type: StudysessionResponseDto,
     required: false,
   })
@@ -231,7 +231,7 @@ export class fullSetResponseDto extends StudysetResponseDto {
   session: StudysessionResponseDto | undefined;
 
   @ApiProperty({
-    description: 'Classrooms where this studyset is used',
+    description: 'Classrooms where this studoset is used',
     type: [ClassroomResponseDto],
     required: false,
   })
@@ -239,7 +239,7 @@ export class fullSetResponseDto extends StudysetResponseDto {
   classrooms: ClassroomResponseDto[] | undefined;
 
   @ApiProperty({
-    description: 'Folders containing this studyset',
+    description: 'Folders containing this studoset',
     type: [FolderResponseDto],
     required: false,
   })

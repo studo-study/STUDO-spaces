@@ -298,7 +298,7 @@ export class UserController {
 
   // GET HEADERS ----------------------------------------------------
 
-  @ApiOperation({ summary: 'Haal user header info op.' })
+  @ApiOperation({ summary: 'Haal user app_footer info op.' })
   @ApiParam({ name: 'user_id', type: String })
   @ApiResponse({
     status: 200,

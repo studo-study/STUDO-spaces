@@ -154,7 +154,7 @@ export default function Info() {
       </div>
 
       <div className="max-w-6xl mx-auto flex flex-col justify-center items-center">
-        {/* Section header */}
+        {/* Section app_footer */}
         <header
           className={`text-center mb-16 lg:mb-24 transition-all duration-700
             ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
