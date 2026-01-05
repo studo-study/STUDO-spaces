@@ -1,64 +1,47 @@
-# Examenopdracht Front-end Web Development & Web Services
+# STUDO-Mobile
 
-- Student: Charles Degraeuwe
-- Studentennummer: 240709758250
-- E-mailadres: <charles.degraeuwe@student.hogent.be>
+STUDO is een platform dat studenten helpt om zo efficiënt en snel mogelijk te studeren. De applicatie speelt in op specifieke niches, zoals anatomie en vocabulaire, waar gerichte leermethoden een grote meerwaarde bieden.
 
-## Vereisten (voor zowel front- als back-end):
+## Tech Stack
 
-- [NodeJS](https://nodejs.org) (20 of hoger)
-- [NestJs](https://nestjs.com/)
+**Frontend:** Next Js, Tailwind CSS, Animate.css  
+**Backend:** NestJS, Drizzle ORM, PostgreSQL  
+**Testing:** Cypress (frontend), Vitest (backend)  
+**Infrastructure:** Docker, Scaleway (object storage)
+
+## Vereisten
+
+- [Node.js](https://nodejs.org) v20+
 - [pnpm](https://pnpm.io)
-- [git](https://git-scm.com/install/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [pgAdmin](https://www.pgadmin.org/download/pgadmin-4-windows/)
 - [Docker](https://www.docker.com/)
-- [Browser](https://www.firefox.com/) (als test omgeving)
+- [PostgreSQL](https://www.postgresql.org/)
 
-## Installatie:
-
-Begin natuurlijk met de repository te clonen van GitHub:
+## Installatie
 
 ```bash
-# Clone de repository
-git clone https://github.com/HOGENT-frontendweb/frontendweb-2526-degraeuwechareles
+git clone https://github.com/studo-study/STUDO.git
+cd STUDO
+
+# Frontend dependencies
+cd frontend && pnpm install
+
+# Backend dependencies
+cd ../backend && pnpm install
 ```
 
-Om deze applicatie te runnen is er zo goed als geen voorkennis nodig: via volgend commando kan men alle dependencies
-installeren:
+## Configuratie
 
-```bash
-# navigeer eerst naar de front-end
-cd frontend
-# installeer alle dependencies
-pnpm install
-
-# navigeer daarna naar de back-end
-cd ..
-cd backend
-# installeer ook daar alle dependencies
-pnpm install
-
-```
-
-Creëer daarna ook twee `.env's`, één binnen de root frontend folder en één binnen de root backend.
-Deze moet volgende gegevens bevatten.
-
-### Front-end `.env`:
+### Frontend `.env`
 
 ```bash
 VITE_API_URL=http://localhost:3000/api
-VITE_USER_ID=1f0c076e-f30c-64b0-a0f3-d5a021c6a9cb
 ```
 
-### Back-end `.env`:
+### Backend `.env`
 
 ```bash
-# Database configuratie:
 NODE_ENV=development
 PORT=3000
-CORS_ORIGINS=["http://studo-app-frontend"]
-CORS_MAX_AGE=10800
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/studo
 
 # JWT & authenticatie instellingen:
@@ -66,26 +49,27 @@ AUTH_JWT_SECRET=...
 AUTH_JWT_AUDIENCE=studo-(api)
 AUTH_JWT_ISSUER=studo-(api)
 
-# configuratie voor Aragon password hashing
+# Password hashing (Argon2)
 AUTH_HASH_LENGTH=32
 AUTH_HASH_TIME_COST=6
 AUTH_HASH_MEMORY_COST=65536
 AUTH_MAX_DELAY=2000
-AUTH_JWT_EXPIRATION_INTERVAL=2592000
 
-# OAuth voor Google login (ga hiervoor naar Google Cloud Console)
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
+# CORS
+CORS_ORIGINS=["http://localhost:5173"]
+CORS_MAX_AGE=10800
+
+# OAuth (optioneel)
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 GOOGLE_CALLBACK_URL=http://localhost:3000/api/sessions/google/callback
 
-# OAuth voor Microsoft login (ga hiervoor naar Azure)
-MICROSOFT_CLIENT_ID=...
-MICROSOFT_CLIENT_SECRET=...
+MICROSOFT_CLIENT_ID=
+MICROSOFT_CLIENT_SECRET=
 MICROSOFT_CALLBACK_URL=http://localhost:3000/api/sessions/microsoft/callback
 
-# OAuth voor Facebook login (ga hiervoor naar Facebook Developer)
-FACEBOOK_CLIENT_ID=...
-FACEBOOK_CLIENT_SECRET=...
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
 FACEBOOK_CALLBACK_URL=http://localhost:3000/api/sessions/facebook/callback
 
 # Object storage om afbeeldingen in weg te schrijven
@@ -96,85 +80,21 @@ SCW_DEFAULT_PROJECT_ID=...
 SCALEWAY_BUCKET_NAME=visualsets-images
 SCALEWAY_REGION=fr-par
 
-FRONTEND_URL=http://localhost:80
+FRONTEND_URL=http://localhost:5173
 ```
 
-## Front-end:
+## Development
 
-De front-end van STUDO is ontwikkeld in React en maakt gebruik van UI-bibliotheken zoals Tailwind CSS en Animate.css.
-STUDO is een platform dat studenten helpt om zo efficiënt en snel mogelijk te studeren. Daarom heb ik bewust ingespeeld
-op specifieke niches, zoals anatomie en vocabulaire, waar gerichte leermethoden een grote meerwaarde bieden.
-
-### Verreisten:
-
-- [NodeJS](https://nodejs.org) (20 of hoger)
-- [pnpm](https://pnpm.io)
-- [git](https://git-scm.com/install/)
-- [Browser](https://www.firefox.com/) (als test omgeving)
-
-### Opstarten:
-
-Het opstarten gebeurt zoals in elke andere uitgegeven applicatie:
+### Frontend
 
 ```bash
-# navigeer eerst naar de front-end map
 cd frontend
-
-# run daarna de docker compose file 
-docker compose up
-
-# om de front-end te runnen
 pnpm dev
 ```
 
-Check zeker of de `.env` en `environment variables` zoals hierboven beschreven staat bestaat.
-
-### Testen:
-
-#### Korte beschrijving:
-
-Ik heb gebruik gemaakt van cypress om mijn frontend te testen. Cypress is een end-to-end testing framework waarmee je
-webapplicaties automatisch test door echte gebruikersinteracties in de browser te simuleren. Cypress zelf draait direct
-in de browser, deze is op te starten met het simpele commando:
+### Backend
 
 ```bash
-pnpm test
-```
-
-#### Gebruik:
-
-Start de frontend in development mode: `pnpm dev`
-Start Cypress: `pnpm test`
-Dit opent de Cypress Test Runner in de browser
-
-Voor headless runs (bv. CI): `pnpm test:headless`
-
-Cypress bestuurt zelf de browser en toont duidelijke fouten en snapshots bij falende tests
-*Wegen tijdsgebrek en knopen moeten doorhakken, slagen deze wel niet allemaal.*
-
-## Back-end:
-
-Backend for the web application STUDO, built with NestJS, Drizzle ORM, and Vitest.
-
-### Requirements:
-
-- [NodeJS v22 (LTS)](https://nodejs.org/)
-- [NestJs](https://nestjs.com/)
-- [pnpm](https://pnpm.io)
-- [git](https://git-scm.com/install/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [pgAdmin](https://www.pgadmin.org/download/pgadmin-4-windows/)
-- [Docker](https://www.docker.com/)
-- [Postman](https://www.postman.com/)
--
-
-### Opstarten:
-
-Navigeer om te beginnen naar de juiste root folder:
-
-```bash
-# navigeer eerst naar de front-end map
-cd ..
 cd backend
 
 ```
@@ -217,71 +137,55 @@ Migreer daarna de database:
 
 ```bash
 pnpm db:migrate
-```
-
-Seed de database:
-
-```bash
 pnpm db:seed
-```
 
-Start de development server:
-
-```bash
+# Start server
 pnpm start:dev
 ```
 
-Om de database eventueel te resetten voor een nieuwe migratie run:
+## Productie (Docker)
 
 ```bash
-pnpm db:reset
-```
+# Frontend
+cd frontend
+docker compose up
 
-### Productie:
-
-Dit is heel simpel Run de docker compose file:
-
-```bash
-# run de docker compose file 
+# Backend
+cd backend
 docker compose -f docker-compose-backend.yml up
-
-# seed nu éénmalig
-pnpm db:seed
+pnpm db:seed  # eenmalig
 ```
 
-### Testing
+## Testing
 
-Voor testing heb ik gekozen voor Vitest.
-De testdatabase wordt bij elke test-run automatisch aangemaakt en opnieuw verwijderd. Je hoeft de DATABASE_URL niet te
-definiëren in het bestand .env.test.
+### Frontend (Cypress)
 
-* Installeer alle dependencies: pnpm install
+```bash
+cd frontend
+pnpm dev          # start eerst de dev server
+pnpm test         # open Cypress UI
+pnpm test:headless  # headless voor CI
+```
 
-* Zorg ervoor dat .env.test bestaat (het is aangeraden om logging uit te schakelen in de testomgeving)
+### Backend (Vitest)
 
-* Start de tests: pnpm test:e2e
+```bash
+cd backend
+pnpm test:e2e
+```
 
-* Voor elke testsuite wordt een nieuwe server opgestart; je ziet geen output omdat logging is uitgeschakeld om de output
-  overzichtelijk te houden
+> De testdatabase wordt automatisch aangemaakt en opgeruimd per test-run.
 
-* Om logging te activeren, zet de configuratieparameter LOG_DISABLED op false
+## Scripts
 
-* De user-testsuite duurt relatief lang (ongeveer 6 seconden); dit is normaal omdat er veel cryptografische operaties
-  worden uitgevoerd en zeer veel data wordt opgevraagd.
+| Script | Beschrijving |
+|--------|--------------|
+| `pnpm start:dev` | Development server met hot reload |
+| `pnpm build` | Build voor productie |
+| `pnpm lint` | Lint code |
+| `pnpm format` | Format code met Prettier |
+| `pnpm db:migrate` | Migreer database |
+| `pnpm db:seed` | Seed database |
+| `pnpm db:reset` | Reset database |
 
-### Handige Scripts
-
-| Script                | Description                                |
-|-----------------------|--------------------------------------------|
-| `pnpm start`          | Start production server                    |
-| `pnpm start:dev`      | Start development server with watch mode   |
-| `pnpm start:debug`    | Start server in debug mode                 |
-| `pnpm build`          | Build the NestJS application               |
-| `pnpm lint`           | Lint the code and auto-fix issues          |
-| `pnpm format`         | Format the code using Prettier             |
-| `pnpm test:e2e`       | Run all end-to-end tests                   |
-| `pnpm test:e2e:watch` | Run tests in watch mode                    |
-| `pnpm db:migrate`     | Migrate the database to the latest version |
-| `pnpm db:drop`        | Drop the database                          |
-| `pnpm db:reset`       | Drop and reset the database                |
-| `pnpm db:seed`        | Seed the database with initial/test data   |
+**succes**
