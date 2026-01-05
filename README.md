@@ -149,6 +149,4 @@ pnpm test:e2e
 | `pnpm db:seed` | Seed database |
 | `pnpm db:reset` | Reset database |
 
-## Licentie
-
-MIT
+**succes**
