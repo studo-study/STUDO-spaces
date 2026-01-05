@@ -144,7 +144,7 @@ export class StudysetService {
     });
 
     if (!set) {
-      throw new NotFoundException('No studyset with this id exists');
+      throw new NotFoundException('No studoset with this id exists');
     }
 
     // Get user's classrooms
@@ -253,7 +253,7 @@ export class StudysetService {
     }
 
     if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this studyset');
+      throw new ForbiddenException('You do not own this studoset');
     }
 
     const updated = await this.db
@@ -316,7 +316,7 @@ export class StudysetService {
     }
 
     if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this studyset');
+      throw new ForbiddenException('You do not own this studoset');
     }
 
     await this.db.transaction(async (tx) => {
@@ -350,7 +350,7 @@ export class StudysetService {
         .returning();
 
       if (result.length === 0) {
-        throw new NotFoundException('Failed to delete studyset');
+        throw new NotFoundException('Failed to delete studoset');
       }
     });
   }
@@ -367,7 +367,7 @@ export class StudysetService {
     }
 
     if (checkset.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this studyset');
+      throw new ForbiddenException('You do not own this studoset');
     }
 
     await this.db
@@ -414,7 +414,7 @@ export class StudysetService {
     user_id: string,
     set_id: string,
   ): Promise<StudysessionResponseDto> {
-    // Zoek de studyset op
+    // Zoek de studoset op
     const set = await this.db.query.studysets.findFirst({
       where: eq(studysets.id, set_id),
     });

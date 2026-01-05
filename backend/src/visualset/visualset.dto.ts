@@ -10,14 +10,14 @@ import { IsArray, IsBoolean, IsOptional, MaxLength, ValidateNested } from 'class
 export class VisualsetResponseDto {
   @ApiProperty({
     example: 'vs123',
-    description: 'ID of the visualset',
+    description: 'ID of the ((visualset))',
   })
   @Expose()
   id: string;
 
   @ApiProperty({
     example: 'The Human Body',
-    description: 'Title of the visualset',
+    description: 'Title of the ((visualset))',
   })
   @Expose()
   title: string;
@@ -275,14 +275,14 @@ export class ImageResponseDto {
 export class FullVSResponseListDto extends VisualsetResponseDto {
   @ApiProperty({
     type: [ImageResponseDto],
-    description: 'Images in de visualset',
+    description: 'Images in de ((visualset))',
   })
   @Expose()
   images: ImageResponseDto[];
 
   @ApiProperty({
     type: SetLikeResponseListDto,
-    description: 'Likes van visualset',
+    description: 'Likes van ((visualset))',
   })
   @Expose()
   likes: SetLikeResponseListDto;
@@ -317,7 +317,7 @@ export class VisualsetResponseListDto {
 export class CreateVisualsetDto {
   @ApiProperty({
     example: 'the human body',
-    description: 'The title of the visualset',
+    description: 'The title of the ((visualset))',
   })
   @IsString({
     name: 'title',
@@ -327,7 +327,7 @@ export class CreateVisualsetDto {
 
   @ApiProperty({
     example: 'Biology',
-    description: 'Subject of the visualset',
+    description: 'Subject of the ((visualset))',
   })
   @IsString({ name: 'subject', maxLength: 100 })
   subject: string;
@@ -341,13 +341,13 @@ export class CreateVisualsetDto {
 
   @ApiProperty({
     type: [CreateImageDto],
-    description: 'Images in the visualset',
+    description: 'Images in the ((visualset))',
   })
   images: CreateImageDto[];
 
   @ApiProperty({
     type: [CreatePinDto],
-    description: 'Pins on the visualset',
+    description: 'Pins on the ((visualset))',
   })
   pins: CreatePinDto[];
 }
@@ -365,7 +365,7 @@ export class UpdateVisualsetDto {
 
   @ApiProperty({
     example: true,
-    description: 'Whether the studyset is public or private',
+    description: 'Whether the studoset is public or private',
     required: false,
   })
   @IsBoolean()

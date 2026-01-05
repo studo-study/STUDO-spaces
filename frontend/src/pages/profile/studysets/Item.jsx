@@ -13,7 +13,7 @@ export default function Item({ set }) {
   });
 
   return (
-    <Link to={"/studyset/" + set.id}>
+    <Link to={"/studoset/" + set.id}>
       <div className="flex justify-between w-full min-h-16 sm:min-h-18 md:min-h-20 max-h-20
         rounded-2xl sm:rounded-full
         bg-studowhite border-transparent border-studoborder

@@ -91,7 +91,7 @@ export default function VsFooter({
           dark:shadow-[3px_3px_6px_#3A3939,-3px_-3px_6px_#3A3939]
           bg-studoblue text-white border-t-blue-300 border-l-blue-300
           disabled:opacity-50 flex-shrink-0">
-        {isMutating ? t("saving...").toUpperCase() : t("create visualset").toUpperCase()}
+        {isMutating ? t("saving...").toUpperCase() : t("create ((visualset))").toUpperCase()}
       </button>
     </div>
   );

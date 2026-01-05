@@ -6,7 +6,7 @@ import { Expose } from 'class-transformer';
 export class CreateSetLikeDto {
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
-    description: 'UUID van de studyset die geliked wordt',
+    description: 'UUID van de studoset die geliked wordt',
   })
   @IsString({ name: 'set_id', maxLength: 64 })
   @IsNotEmpty()
@@ -37,7 +37,7 @@ export class SetLikeResponseDto {
 
   @ApiProperty({
     example: 'studyset',
-    description: 'Type van de set (studyset of visualset)',
+    description: 'Type van de set (studoset of ((visualset)))',
   })
   @Expose()
   set_type: string;

@@ -233,6 +233,73 @@ export class AuthService {
     return this.signJwt(user!);
   }
 
+  //smartschool users
+  async validateSmartschoolUser(smartschoolUser: any): Promise<string> {
+    // Check of user bestaat op basis van email
+    let user = await this.db.query.users.findFirst({
+      where: eq(users.email, smartschoolUser.email),
+    });
+
+    if (!user) {
+      // Maak nieuwe user aan voor Microsoft OAuth
+      const date = new Date();
+      const uid = uuidv4();
+
+      const newUser = {
+        id: uid,
+        email: smartschoolUser.email,
+        passwordHash: '',
+        displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
+        img_url: smartschoolUser.picture || 'default',
+        join_date: date.toISOString(),
+        totalSets: 0,
+        streak_started: null,
+        streak_count: 0,
+        streak_last_update: null,
+        last_login: date.toISOString(),
+        roles: [Role.USER],
+        publicRole: 'student',
+        verified: true, // Microsoft users zijn al geverifieerd
+      };
+
+      // Profile
+      const newProfile = {
+        user_id: uid,
+        displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
+        img_url: smartschoolUser.picture || '',
+        banner_url: '',
+        join_date: date.toISOString(),
+        streak: 0,
+        verified: true,
+      };
+
+      // Root folder
+      const rootFolder = {
+        id: uuidv4(),
+        name: `${smartschoolUser.firstName}'s folder`,
+        owner_id: uid,
+      };
+
+      // Insert all records
+      await this.db.insert(users).values(newUser);
+      await this.db.insert(profiles).values(newProfile);
+      await this.db.insert(folders).values(rootFolder);
+
+      // Fetch de nieuwe user
+      user = await this.db.query.users.findFirst({
+        where: eq(users.id, uid),
+      });
+    } else {
+      // Update last_login voor bestaande user
+      await this.db
+        .update(users)
+        .set({ last_login: new Date().toISOString() })
+        .where(eq(users.id, user.id));
+    }
+
+    // Genereer en return JWT token
+    return this.signJwt(user!);
+  }
   //registreer functie
   async register({
                    displayName,

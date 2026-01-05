@@ -64,8 +64,8 @@ export default function SharePopUp({ toggled, id, title, setPopUpToggle }) {
   };
 
   const shareText = title
-    ? t("Check out this visualset: {{title}}", { title })
-    : t("Check out this visualset!");
+    ? t("Check out this ((visualset)): {{title}}", { title })
+    : t("Check out this ((visualset))!");
 
   const socialLinks = {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,

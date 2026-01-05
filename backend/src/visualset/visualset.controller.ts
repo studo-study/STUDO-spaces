@@ -83,7 +83,7 @@ export class VisualsetController {
 
   // GET VISUALSET BY ID --------------------------------------------
 
-  @ApiOperation({ summary: 'Haal een specifieke visualset op.' })
+  @ApiOperation({ summary: 'Haal een specifieke ((visualset)) op.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 200,
@@ -103,7 +103,7 @@ export class VisualsetController {
 
   // GET ALL LIKES --------------------------------------------------
 
-  @ApiOperation({ summary: 'Haal alle likes van een visualset op.' })
+  @ApiOperation({ summary: 'Haal alle likes van een ((visualset)) op.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 200,
@@ -122,7 +122,7 @@ export class VisualsetController {
 
   // CREATE VISUALSET -----------------------------------------------
 
-  @ApiOperation({ summary: 'Maak een nieuwe visualset aan met images.' })
+  @ApiOperation({ summary: 'Maak een nieuwe ((visualset)) aan met images.' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -214,7 +214,7 @@ export class VisualsetController {
 
   // LIKE VISUALSET -------------------------------------------------
 
-  @ApiOperation({ summary: 'Like een visualset.' })
+  @ApiOperation({ summary: 'Like een ((visualset)).' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiBody({ type: CreateSetLikeDto })
   @ApiResponse({
@@ -236,7 +236,7 @@ export class VisualsetController {
 
   // UPDATE VISUALSET -----------------------------------------------
 
-  @ApiOperation({ summary: 'Wijzig een visualset.' })
+  @ApiOperation({ summary: 'Wijzig een ((visualset)).' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiBody({ type: UpdateVisualsetDto })
   @ApiResponse({
@@ -258,7 +258,7 @@ export class VisualsetController {
 
   // SWITCH FOLDER --------------------------------------------------
 
-  @ApiOperation({ summary: 'Verplaats een visualset naar andere folder.' })
+  @ApiOperation({ summary: 'Verplaats een ((visualset)) naar andere folder.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiBody({ type: SwitchFolderDto })
   @ApiResponse({
@@ -280,7 +280,7 @@ export class VisualsetController {
 
   // DELETE VISUALSET -----------------------------------------------
 
-  @ApiOperation({ summary: 'Verwijder een visualset.' })
+  @ApiOperation({ summary: 'Verwijder een ((visualset)).' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 204,
@@ -321,7 +321,7 @@ export class VisualsetController {
   // CREATE STUDYSESSION --------------------------------------------
 
   @ApiOperation({
-    summary: 'Start een nieuwe studysession voor deze visualset.',
+    summary: 'Start een nieuwe studysession voor deze ((visualset)).',
   })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({

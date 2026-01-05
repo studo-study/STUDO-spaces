@@ -29,7 +29,7 @@ export default function DesktopForm() {
 	const { error, loading, login } = useAuth();
 	const navigate = useNavigate();
 	const methods = useForm({});
-	const { handleSubmit } = methods;
+	const { handleSubmit, formState: { errors } } = methods;
 	const { t } = useTranslation();
 
 	useEffect(() => {
@@ -38,17 +38,27 @@ export default function DesktopForm() {
 
 	const handleLogin = useCallback(
 		async ({ email, password }) => {
-			const loggedIn = await login(email, password);
-			if (loggedIn) {
-				const params = new URLSearchParams(search);
-				navigate({
-					pathname: params.get("redirect") || "/home",
-					replace: true
-				});
+			try {
+				const loggedIn = await login(email, password);
+				// Alleen navigeren als login expliciet true returnt
+				if (loggedIn === true) {
+					const params = new URLSearchParams(search);
+					navigate(params.get("redirect") || "/home", { replace: true });
+				}
+				// Bij false, undefined, of andere waarde: blijf op de pagina
+			} catch (err) {
+				// Login mislukt, blijf op de pagina (error wordt getoond via useAuth)
+				console.error("Login failed:", err);
 			}
 		},
 		[login, navigate, search]
 	);
+
+	// Handler voor validatiefouten - voorkomt ongewenst gedrag
+	const onValidationError = useCallback((formErrors) => {
+		console.log("Validation failed:", formErrors);
+		// Blijf op de pagina, fouten worden automatisch getoond
+	}, []);
 
 	const toggleShow = () => setOpen(!open);
 
@@ -60,12 +70,12 @@ export default function DesktopForm() {
 		window.location.href = "http://localhost:3000/api/sessions/microsoft";
 	}, []);
 
-    const loginSmartschool = useCallback(() => {
-      window.location.href = "http://localhost:3000/api/sessions/smartschool";
-    }, []);
+	const loginSmartschool = useCallback(() => {
+		window.location.href = "http://localhost:3000/api/sessions/smartschool";
+	}, []);
 
 	return (
-    <div className="w-full h-full 3xl:absolute 3xl:inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
+		<div className="w-full h-full 3xl:absolute 3xl:inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
 			<FormProvider {...methods}>
 				<div className={`w-3/5 xl:w-1/3 h-full flex flex-row overflow-hidden
 					rounded-4xl 3xl:h-fit 3xl:max-w-1/4 
@@ -84,55 +94,65 @@ export default function DesktopForm() {
 								<p className="text-slate-400 text-sm">{t("log into account")}</p>
 							</div>
 
-							<form onSubmit={handleSubmit(handleLogin)} data-cy="login_form" className="flex flex-col gap-4">
+							<form onSubmit={handleSubmit(handleLogin, onValidationError)} data-cy="login_form" className="flex flex-col gap-4">
 								<div className={`flex flex-col gap-4 transition-all duration-500 delay-300
 									${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
 
-									<div className="flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
-									  rounded-full text-sm sm:text-base border-0
-									  bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-									  border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-									  dark:text-white">
-										<input
-											{...methods.register("email", validationRules.email)}
-											type="text"
-											placeholder={t("email")}
-											autoComplete="none"
-											className="transition-all w-full duration-500 focus:outline-none bg-transparent"
-											data-cy="email_input"
-										/>
-									</div>
-
-									<div className="flex flex-row justify-between items-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
+									<div className="flex flex-col gap-1">
+										<div className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
 										  rounded-full text-sm sm:text-base border-0
 										  bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
 										  border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-										  dark:text-white overflow-hidden gap-2">
-										<input
-											type={open ? "text" : "password"}
-											placeholder={t("password")}
-											autoComplete="none"
-											{...methods.register("password", validationRules.password)}
-											className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
-											data-cy="password_input"
-										/>
-										<img
-											src={open ? eyeOpened : eyeClosed}
-											onClick={toggleShow}
-											className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${
-												open ? "" : "pt-0.5 sm:pt-1"
-											}`}
-											data-cy="toggle_password_visibility"
-										/>
+										  dark:text-white ${errors.email ? 'ring-2 ring-red-400' : ''}`}>
+											<input
+												{...methods.register("email", validationRules.email)}
+												type="text"
+												placeholder={t("email")}
+												autoComplete="none"
+												className="transition-all w-full duration-500 focus:outline-none bg-transparent"
+												data-cy="email_input"
+											/>
+										</div>
+										{errors.email && (
+											<span className="px-4 text-red-400 text-xs">{errors.email.message}</span>
+										)}
+									</div>
+
+									<div className="flex flex-col gap-1">
+										<div className={`flex flex-row justify-between items-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
+											  rounded-full text-sm sm:text-base border-0
+											  bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
+											  border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
+											  dark:text-white overflow-hidden gap-2 ${errors.password ? 'ring-2 ring-red-400' : ''}`}>
+											<input
+												type={open ? "text" : "password"}
+												placeholder={t("password")}
+												autoComplete="none"
+												{...methods.register("password", validationRules.password)}
+												className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
+												data-cy="password_input"
+											/>
+											<img
+												src={open ? eyeOpened : eyeClosed}
+												onClick={toggleShow}
+												className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${
+													open ? "" : "pt-0.5 sm:pt-1"
+												}`}
+												data-cy="toggle_password_visibility"
+											/>
+										</div>
+										{errors.password && (
+											<span className="px-4 text-red-400 text-xs">{errors.password.message}</span>
+										)}
 									</div>
 								</div>
 
 								{error ? (
-									<div className="px-4 min-h-5 rounded-xl text-red-400 text-sm" data-cy="login_error">
-										{error.message}
-									</div>) :
+										<div className="px-4 min-h-5 rounded-xl text-red-400 text-sm" data-cy="login_error">
+											{error.message}
+										</div>) :
 									(<div className={"h-5 w-full"}></div>
-								)}
+									)}
 
 								<button
 									type="submit"
@@ -185,7 +205,7 @@ export default function DesktopForm() {
 									{language === "nl" || language === "fr-BE"  ? (
 										<button
 											type="button"
-                                            onClick={loginSmartschool}
+											onClick={loginSmartschool}
 											className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20

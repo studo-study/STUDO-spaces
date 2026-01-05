@@ -108,10 +108,10 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // GET /api/studysets/:set_id - Get studyset by ID
+  // GET /api/studysets/:set_id - Get studoset by ID
   // ============================================================
   describe('GET /api/studysets/:set_id', () => {
-    it('zou een specifieke studyset met alle details moeten retourneren', async () => {
+    it('zou een specifieke studoset met alle details moeten retourneren', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${studySetId1}`)
         .set('Authorization', `Bearer ${adminToken}`)
@@ -127,7 +127,7 @@ describe('Studysets', () => {
       expect(Array.isArray(response.body.cards)).toBe(true);
     });
 
-    it('zou 404 moeten retourneren voor een niet-bestaande studyset', async () => {
+    it('zou 404 moeten retourneren voor een niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
       await request(app.getHttpServer())
         .get(`${baseUrl}/${fakeId}`)
@@ -157,7 +157,7 @@ describe('Studysets', () => {
   // GET /api/studysets/:set_id/studysession - Get studysession by set ID
   // ============================================================
   describe('GET /api/studysets/:set_id/studysession', () => {
-    it('zou de studysession voor een specifieke studyset moeten retourneren', async () => {
+    it('zou de studysession voor een specifieke studoset moeten retourneren', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${studySetId1}/studysession`)
         .set('Authorization', `Bearer ${adminToken}`)
@@ -194,10 +194,10 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // POST /api/studysets - Create studyset
+  // POST /api/studysets - Create studoset
   // ============================================================
   describe('POST /api/studysets', () => {
-    it('zou een nieuwe studyset moeten aanmaken', async () => {
+    it('zou een nieuwe studoset moeten aanmaken', async () => {
       const newStudyset = {
         title: 'New Test Set',
         course: 'Test Course',
@@ -317,10 +317,10 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // POST /api/studysets/:set_id/likes - Like a studyset
+  // POST /api/studysets/:set_id/likes - Like a studoset
   // ============================================================
   describe('POST /api/studysets/:set_id/likes', () => {
-    it('zou een studyset moeten kunnen liken', async () => {
+    it('zou een studoset moeten kunnen liken', async () => {
 
       const response = await request(app.getHttpServer())
         .post(`${baseUrl}/${studySetId1}/likes`)
@@ -351,7 +351,7 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // DELETE /api/studysets/:set_id/likes - Remove like from studyset
+  // DELETE /api/studysets/:set_id/likes - Remove like from studoset
   // ============================================================
   describe('DELETE /api/studysets/:set_id/likes', () => {
     it('zou een like moeten kunnen verwijderen', async () => {
@@ -387,10 +387,10 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // PUT /api/studysets/:set_id - Update studyset
+  // PUT /api/studysets/:set_id - Update studoset
   // ============================================================
   describe('PUT /api/studysets/:set_id', () => {
-    it('zou een studyset moeten kunnen updaten (owner)', async () => {
+    it('zou een studoset moeten kunnen updaten (owner)', async () => {
       const updateDto = {
         title: 'Updated Title',
         course: 'Updated Course',
@@ -412,7 +412,7 @@ describe('Studysets', () => {
       expect(response.body).toHaveProperty('public_set', true);
     });
 
-    it('zou cards binnen een studyset moeten kunnen updaten', async () => {
+    it('zou cards binnen een studoset moeten kunnen updaten', async () => {
       // First get the set to get card IDs
       const getResponse = await request(app.getHttpServer())
         .get(`${baseUrl}/${studySetId1}`)
@@ -447,7 +447,7 @@ describe('Studysets', () => {
       }
     });
 
-    it('zou 403 moeten retourneren bij update van studyset van andere user', async () => {
+    it('zou 403 moeten retourneren bij update van studoset van andere user', async () => {
       // authToken (paulallen/userId2) tries to update studySetId1 (owned by charles/userId1)
       const updateDto = {
         title: 'Hacked Title',
@@ -460,7 +460,7 @@ describe('Studysets', () => {
         .expect(403);
     });
 
-    it('zou 404 moeten retourneren voor niet-bestaande studyset', async () => {
+    it('zou 404 moeten retourneren voor niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
       await request(app.getHttpServer())
         .put(`${baseUrl}/${fakeId}`)
@@ -491,7 +491,7 @@ describe('Studysets', () => {
   // PUT /api/studysets/:set_id/folder - Switch folder
   // ============================================================
   describe('PUT /api/studysets/:set_id/folder', () => {
-    it('zou een studyset naar een andere folder moeten kunnen verplaatsen', async () => {
+    it('zou een studoset naar een andere folder moeten kunnen verplaatsen', async () => {
       const switchDto = {
         user_id: userId1,
         set_id: studySetId1,
@@ -549,7 +549,7 @@ describe('Studysets', () => {
         .expect(400);
     });
 
-    it('zou 403 moeten retourneren bij folder switch van studyset van andere user', async () => {
+    it('zou 403 moeten retourneren bij folder switch van studoset van andere user', async () => {
       // authToken (paulallen) tries to switch folder of studySetId1 (owned by charles)
       const switchDto = {
         user_id: userId1,
@@ -599,7 +599,7 @@ describe('Studysets', () => {
       expect(Array.isArray(response.body.cards)).toBe(true);
     });
 
-    it('zou 404 moeten retourneren voor niet-bestaande studyset', async () => {
+    it('zou 404 moeten retourneren voor niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
       await request(app.getHttpServer())
         .post(`${baseUrl}/${fakeId}/studysession`)
@@ -624,11 +624,11 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // DELETE /api/studysets/:set_id - Delete studyset
+  // DELETE /api/studysets/:set_id - Delete studoset
   // ============================================================
   describe('DELETE /api/studysets/:set_id', () => {
-    it('zou een studyset moeten kunnen verwijderen (owner)', async () => {
-      // Create a temporary studyset as authToken user (paulallen)
+    it('zou een studoset moeten kunnen verwijderen (owner)', async () => {
+      // Create a temporary studoset as authToken user (paulallen)
       const tempSet = {
         title: 'Temporary Set To Delete',
         course: 'Test',
@@ -669,7 +669,7 @@ describe('Studysets', () => {
         .expect(404);
     });
 
-    it('zou 403 moeten retourneren bij delete van studyset van andere user', async () => {
+    it('zou 403 moeten retourneren bij delete van studoset van andere user', async () => {
       // authToken (paulallen) tries to delete studySetId1 (owned by charles)
       await request(app.getHttpServer())
         .delete(`${baseUrl}/${studySetId1}`)
@@ -677,7 +677,7 @@ describe('Studysets', () => {
         .expect(403);
     });
 
-    it('zou 404 moeten retourneren voor niet-bestaande studyset', async () => {
+    it('zou 404 moeten retourneren voor niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
       await request(app.getHttpServer())
         .delete(`${baseUrl}/${fakeId}`)

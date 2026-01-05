@@ -71,7 +71,7 @@ export class StudysetsController {
 
   //GET specfieke studysets's session ----------------------------------------
 
-  @ApiOperation({ summary: 'Haal alle studysessions op van een studyset.' })
+  @ApiOperation({ summary: 'Haal alle studysessions op van een studoset.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 200,
@@ -90,7 +90,7 @@ export class StudysetsController {
 
   //GET specifieke studysets ---------------------------------------------------
 
-  @ApiOperation({ summary: 'Haal specifieke studyset op.' })
+  @ApiOperation({ summary: 'Haal specifieke studoset op.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 200,
@@ -110,7 +110,7 @@ export class StudysetsController {
 
   //GET alle likes ------------------------------------------------------------
 
-  @ApiOperation({ summary: 'Haal alle likes van een studyset op.' })
+  @ApiOperation({ summary: 'Haal alle likes van een studoset op.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 200,
@@ -127,9 +127,9 @@ export class StudysetsController {
     return this.studysetService.getAllLikes(set_id);
   }
 
-  // POST nieuwe studyset -------------------------------------------------
+  // POST nieuwe studoset -------------------------------------------------
 
-  @ApiOperation({ summary: 'Maak een nieuwe studyset aan.' })
+  @ApiOperation({ summary: 'Maak een nieuwe studoset aan.' })
   @ApiBody({ type: CreateStudysetDto })
   @ApiResponse({
     status: 201,
@@ -148,9 +148,9 @@ export class StudysetsController {
     return this.studysetService.create(user_id, set);
   }
 
-  // POST Like studyset -----------------------------------------------------
+  // POST Like studoset -----------------------------------------------------
 
-  @ApiOperation({ summary: 'Like een studyset.' })
+  @ApiOperation({ summary: 'Like een studoset.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiBody({ type: CreateSetLikeDto })
   @ApiResponse({
@@ -172,7 +172,7 @@ export class StudysetsController {
 
   // POST studysessie ----------------------------------------------------------
 
-  @ApiOperation({ summary: 'Start een nieuwe studysession voor deze studyset.' })
+  @ApiOperation({ summary: 'Start een nieuwe studysession voor deze studoset.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 201,
@@ -190,9 +190,9 @@ export class StudysetsController {
     return this.studysetService.createSession(user_id, set_id);
   }
 
-  // PUT studyset -----------------------------------------------------------
+  // PUT studoset -----------------------------------------------------------
 
-  @ApiOperation({ summary: 'Update een studyset.' })
+  @ApiOperation({ summary: 'Update een studoset.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiBody({ type: UpdateStudysetDto })
   @ApiResponse({
@@ -212,9 +212,9 @@ export class StudysetsController {
     return this.studysetService.updateById(user_id, id, update);
   }
 
-  // PUT studyset van folder -------------------------------------------------
+  // PUT studoset van folder -------------------------------------------------
 
-  @ApiOperation({ summary: 'Verplaats studyset naar andere folder.' })
+  @ApiOperation({ summary: 'Verplaats studoset naar andere folder.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiBody({ type: SwitchFolderDto })
   @ApiResponse({
@@ -236,9 +236,9 @@ export class StudysetsController {
     return this.studysetService.switchFolder(user_id, switchbody);
   }
 
-  // DELETE studyset ---------------------------------------------------------
+  // DELETE studoset ---------------------------------------------------------
 
-  @ApiOperation({ summary: 'Verwijder een studyset.' })
+  @ApiOperation({ summary: 'Verwijder een studoset.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 204,

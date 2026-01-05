@@ -13,7 +13,7 @@ export default function Item({ set }) {
   });
 
   return (
-    <Link to={"/visualset/" + set.id}>
+    <Link to={"/((visualset))/" + set.id}>
       <div className="flex justify-between w-full min-h-16 sm:min-h-18 md:min-h-20 max-h-20
         rounded-2xl sm:rounded-full
         bg-studowhite border-transparent border-studoborder
@@ -44,9 +44,11 @@ export default function Item({ set }) {
 }
 
 function getCoverImage(subject) {
-  const Import = Object.keys(CourseIcons).find((key) => subject.toLowerCase().includes(key));
-  if (!Import) {
-    return "../../../../public/assets/icons/courses/default.svg";
-  }
-  return "../../../../public/assets/icons/courses/" + CourseIcons[Import];
+	const Import = Object.keys(CourseIcons).find((key) =>
+		subject.toLowerCase().includes(key)
+	);
+	if (!Import) {
+		return "./src/assets/icons/courses/default.svg";
+	}
+	return "./src/assets/icons/courses/" + CourseIcons[Import];
 }

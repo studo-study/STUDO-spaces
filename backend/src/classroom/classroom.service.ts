@@ -88,7 +88,7 @@ export class ClassroomService {
       type = 'visualset'
       ;
     } else {
-      throw new NotFoundException('studyset doesn\'t exist');
+      throw new NotFoundException('studoset doesn\'t exist');
     }
 
     const cset: ClassroomSetDto = {

@@ -5,9 +5,22 @@ import made from "../../assets/icons/europe-big.svg";
 export default function Footer() {
   const talen = {
     "en": "English",
-    "nl": "Nederlands"
+    "nl": "Nederlands",
+	  "fr":"Français",
+	  "de":"Deutsch",
+	  "es":"Español",
+	  "pt":"Português",
+	  "it":"Italiano",
+	  "hi":"हिन्दी",
+	  "bn":"বাংলা",
+	  "ru":"Русский",
+	  "ja":"日本語",
+	  "zh":"中文",
+	  "ko":"한국어",
+
 
   };
+
   const selLang = localStorage.getItem("i18nextLng");
   const { t, i18n } = useTranslation();
   return (<div className={"w-full  min-h-15 flex flex-row justify-center items-center"}>

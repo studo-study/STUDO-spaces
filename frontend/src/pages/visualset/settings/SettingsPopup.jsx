@@ -167,7 +167,7 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
         {isOwner && (
           <div className="w-full flex flex-col gap-3">
         <span className="text-sm font-medium dark:text-white">
-          {t("Delete visualset:")}
+          {t("Delete ((visualset)):")}
         </span>
 
 
