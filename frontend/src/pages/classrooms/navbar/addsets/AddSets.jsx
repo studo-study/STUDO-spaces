@@ -135,7 +135,7 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
             cursor-pointer select-none transition-transform duration-300 ease-out">
             <img src={Studyset} alt="" className="h-5 sm:h-6 dark:invert dark:brightness-0" />
             <span className="font-sfpro text-sm sm:text-base dark:text-white truncate">
-              {t("Create new studyset")}
+              {t("Create new studoset")}
             </span>
           </div>
         </Link>
@@ -148,7 +148,7 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
             cursor-pointer select-none transition-transform duration-300 ease-out">
             <img src={Visualset} alt="" className="h-5 sm:h-6 dark:invert dark:brightness-0" />
             <span className="font-sfpro text-sm sm:text-base dark:text-white truncate">
-              {t("Create new visualset")}
+              {t("Create new ((visualset))")}
             </span>
           </div>
         </Link>

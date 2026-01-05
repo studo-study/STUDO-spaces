@@ -1,6 +1,6 @@
 {
   "HOME": "OVERZICHT",
-  "STUDYSETS": "STUDIESETS",
+  "STUDYSETS": "STUDOSETS",
   "FOLDERS": "MAPPEN",
   "CLASSROOMS": "KLASSEN",
   "ACCOUNT": "ACCOUNT",
@@ -11,7 +11,7 @@
   "FOLDER": "MAP",
   "Recently": "Recent gestudeerd",
   "YOUR FILES": "JOUW BESTANDEN",
-  "Studysets": "Studiesets",
+  "Studysets": "Studosets",
   "Folders": "Mappen",
   "Courses": "Vakken",
   "YOUR CLASSROOMS": "JOUW KLASSEN",
@@ -41,8 +41,8 @@
   "account": "account",
   "privacy": "privacy",
   "looking": "Waar ben je naar op zoek…",
-  "create new studyset": "nieuwe studieset maken",
-  "edit studyset": "studieset bewerken",
+  "create new studyset": "nieuwe Studoset maken",
+  "edit studyset": "Studoset bewerken",
   "Fill in a title...": "Titel invullen…",
   "Fill in a course...": "Vak invullen…",
   "Select folder...": "Map kiezen…",
@@ -182,7 +182,7 @@
   "save": "opslaan",
   "add image": "voeg afbeelding toe",
   "no courses yet": "geen vakken",
-  "Create Studyset": "Creëer Studieset",
+  "Create Studyset": "Creëer Studoset",
   "or": "of",
   "Create Visualset": "Creëer Visualset",
   "Click to upload image": "Klik om een afbeelding te uploaden",
@@ -198,7 +198,7 @@
   "create visualset": "creëer visualset",
   "go to classrooms": "ga naar klassen",
   "add to classroom": "voeg toe aan klas",
-  "share studyset": "deel studieset",
+  "share studyset": "deel Studoset",
   "create": "creëer",
   "create classroom": "creëer klas",
   "Classroom Name": "Klas Naam",
@@ -239,7 +239,7 @@
   "Why Studo?": "Waarom Studo?",
   "Ready for every challenge": "Klaar voor elke uitdaging",
   "Select a study mode to begin": "Selecteer een studeermodus om te beginnen",
-  "studysets": "studiesets",
+  "studysets": "Studosets",
   "visualsets": "visualsets",
   "try it out": "probeer het",
   "create your own": "maak het zelf",
@@ -251,8 +251,8 @@
   "or sign up with": "of registreer met",
   "Already have an account?": "All een account?",
   "title_studyset": "Hier begint jouw studie",
-  "block1_studyset": "Een Studieset vormt de kern van je leerervaring: een verzameling termen en definities die je beheerst via verschillende leermodi",
-  "block2_studyset": "Elke Studieset bevat termen met bijhorende definities",
+  "block1_studyset": "Een Studoset vormt de kern van je leerervaring: een verzameling termen en definities die je beheerst via verschillende leermodi",
+  "block2_studyset": "Elke Studoset bevat termen met bijhorende definities",
   "block3_studyset": "Maak je eigen sets, importeer bestaande of werk samen met anderen",
   "block4_studyset": "Gebruik dezelfde set in alle leermodi",
   "title_visualset": "Visueel leren, stap voor stap",
@@ -263,7 +263,7 @@
   "block5_visualset": "Gebruik je Visualset in Match of Spot",
   "title_ai": "AI die je sets opbouwt",
   "block1_ai": "* binnenkort beschikbaar",
-  "block2_ai": "Upload een woordenlijst, begrippenlijst of lesnotities en maak er automatisch een Studieset van",
+  "block2_ai": "Upload een woordenlijst, begrippenlijst of lesnotities en maak er automatisch een Studoset van",
   "block3_ai": "Neem een foto van een boekpagina of schema en laat AI de termen herkennen",
   "block4_ai": "AI zet alles netjes om in kant-en-klare paren",
   "block5_ai": "Gegenereerde sets werken in alle leermodi",
@@ -326,10 +326,10 @@
       "imageAlt": "Studo Speedy Modus - Quiz tegen de klok"
     },
     "studysets": {
-      "title": "Studiesets | Studo",
+      "title": "Studosets | Studo",
       "description": "Maak aangepaste studiesets met Studo. Voeg termen, definities en afbeeldingen toe om het perfecte studiemateriaal te maken. Deel met klasgenoten of houd privé.",
       "keywords": "studiesets, flashcards maken, aangepast studiemateriaal, studiesets delen, Studo studiesets",
-      "imageAlt": "Studo Studiesets - Maak en deel"
+      "imageAlt": "Studo Studosets - Maak en deel"
     },
     "visualsets": {
       "title": "Visualsets | Studo",
@@ -353,7 +353,7 @@
     },
     "quizlet": {
       "question": "Hoe verschilt Studo van Quizlet?",
-      "answer": "In vergelijking met Quizlet biedt Studo veel geavanceerdere visuele studysets en statistieken over je studie. Bovendien is de kernfunctionaliteit gratis, wat bij Quizlet niet het geval is. Hoewel er optionele premium upgrades en enkele advertenties zijn, zijn de belangrijkste leermiddelen volledig gratis, zodat je je kunt concentreren op effectief studeren."
+      "answer": "In vergelijking met Quizlet biedt Studo veel geavanceerdere visuele Studosets en statistieken over je studie. Bovendien is de kernfunctionaliteit gratis, wat bij Quizlet niet het geval is. Hoewel er optionele premium upgrades en enkele advertenties zijn, zijn de belangrijkste leermiddelen volledig gratis, zodat je je kunt concentreren op effectief studeren."
     },
     "flashcards": {
       "what": {
@@ -407,12 +407,12 @@
     },
     "studysets": {
       "what": {
-        "question": "Wat zijn studiesets?",
-        "answer": "Studiesets zijn verzamelingen flashcards met termen en definities. Je kunt ze maken voor elk onderwerp en bestuderen met verschillende modi zoals Leren, Flashcards of Speedy."
+        "question": "Wat zijn Studosets?",
+        "answer": "Studosets zijn verzamelingen flashcards met termen en definities. Je kunt ze maken voor elk onderwerp en bestuderen met verschillende modi zoals Leren, Flashcards of Speedy."
       },
       "share": {
-        "question": "Kan ik mijn studiesets delen?",
-        "answer": "Ja! Je kunt je studiesets openbaar maken om te delen met klasgenoten of de community, of ze privé houden voor persoonlijk gebruik."
+        "question": "Kan ik mijn Studosets delen?",
+        "answer": "Ja! Je kunt je Studosets openbaar maken om te delen met klasgenoten of de community, of ze privé houden voor persoonlijk gebruik."
       }
     },
     "visualsets": {
@@ -424,6 +424,13 @@
         "question": "Hoe maak ik een visuele set?",
         "answer": "Upload een afbeelding, klik dan om labels toe te voegen aan verschillende delen. Je kunt zoveel labels toevoegen als nodig en dan studeren met Identificeer of Aanwijs modus."
       }
+    }
+  },
+  "errormessages": {
+    "log": {
+      "first": "Email of wachtwoord incorrect",
+      "sec": "Te veel pogingen. Probeer later opnieuw.",
+      "else": "Geen connectie met server."
     }
   }
 }

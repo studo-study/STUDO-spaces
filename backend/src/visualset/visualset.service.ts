@@ -189,7 +189,7 @@ export class VisualsetService {
     });
 
     if (!set) {
-      throw new NotFoundException('No visualset with this id exists');
+      throw new NotFoundException('No ((visualset)) with this id exists');
     }
 
     const dbImages = await this.db.query.images.findMany({
@@ -314,7 +314,7 @@ export class VisualsetService {
     }
 
     if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this visualset');
+      throw new ForbiddenException('You do not own this ((visualset))');
     }
 
     await this.db
@@ -376,7 +376,7 @@ export class VisualsetService {
     }
 
     if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this visualset');
+      throw new ForbiddenException('You do not own this ((visualset))');
     }
 
     await this.db.transaction(async (tx) => {
@@ -411,7 +411,7 @@ export class VisualsetService {
         .returning();
 
       if (result.length === 0) {
-        throw new NotFoundException('Failed to delete visualset');
+        throw new NotFoundException('Failed to delete ((visualset))');
       }
     });
   }
@@ -429,7 +429,7 @@ export class VisualsetService {
     }
 
     if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this visualset');
+      throw new ForbiddenException('You do not own this ((visualset))');
     }
 
     await this.db
@@ -479,7 +479,7 @@ export class VisualsetService {
     user_id: string,
     set_id: string,
   ): Promise<StudysessionResponseDto> {
-    // Check of de visualset bestaat
+    // Check of de ((visualset)) bestaat
     const set = await this.db.query.visualsets.findFirst({
       where: eq(visualsets.id, set_id),
     });

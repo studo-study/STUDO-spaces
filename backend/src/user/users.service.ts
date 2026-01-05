@@ -318,7 +318,7 @@ export class UserService {
     });
 
     if (!set) {
-      throw new NotFoundException('No studyset with this id exists');
+      throw new NotFoundException('No studoset with this id exists');
     }
 
     const classusers = await this.db.query.classroomusers.findMany({

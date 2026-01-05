@@ -5,6 +5,7 @@ body {
     background-color: rgb(239, 246, 255); /* light mode: bg-blue-50 */
     scrollbar-width: none;
     -ms-overflow-style: none;
+    font-family: var(--font-sfpro);
 }
 
 body::-webkit-scrollbar {
@@ -21,22 +22,22 @@ body::-webkit-scrollbar {
 
 /* Je @font-face declaraties blijven hetzelfde, maar fix de paths (zie stap 2) */
 @font-face {
-    font-family: 'SF Pro';
-    src: url('assets/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('woff2');
+    font-family: 'SF Pro Display';
+    src: url('./assets/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'SF Pro';
-    src: url('assets/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('woff2');
+    font-family: 'SF Pro Display';
+    src: url('./assets/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'akira';
-    src: url('assets/fonts/akira/akira.otf') format('woff2');
+    src: url('./assets/fonts/akira/akira.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
@@ -44,7 +45,7 @@ body::-webkit-scrollbar {
 
 @theme {
     --font-akira: akira, sans-serif;
-    --font-sfpro: SF Pro, sans-serif;
+    --font-sfpro: 'SF Pro Display', sans-serif;
     --font-sigurd: "sigurd-variable", sans-serif;
     --font-atrament: atrament-web, sans-serif;
     --color-studogreen: #8bcca3;
@@ -458,9 +459,15 @@ body::-webkit-scrollbar {
     pointer-events: none;
     filter: blur(0.5px);
     transition: opacity 3s ease;
-    will-change: transform;
+    /* will-change: transform; */
     animation-timing-function: linear !important;
     animation-fill-mode: forwards;
+    transform: translateZ(0);
+}
+
+.floating-blob.animate {
+    animation: superFloat 100s linear infinite;
+    opacity: 0.2;
 }
 
 /* Hover effectje blijft leuk */

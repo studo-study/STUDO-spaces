@@ -97,7 +97,7 @@ const privateRoutes = [
     element: <Search />
   },
   {
-    path: "studyset/:id",
+    path: "studoset/:id",
     element: <Studyset />
   },
   {
@@ -121,7 +121,7 @@ const privateRoutes = [
     element: <Speedy />
   },
   {
-    path: "visualset/:id",
+    path: "((visualset))/:id",
     element: <Visualset />
   },
   {
@@ -137,7 +137,7 @@ const privateRoutes = [
     element: <CreateFolder />
   },
   {
-    path: "create-visualset",
+    path: "create-((visualset))",
     element: <CreateOrEditVisualset />
   },
   {

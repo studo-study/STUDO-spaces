@@ -153,7 +153,7 @@ export class PinResponseDto {
   @IsString()
   image_id: string;
 
-  @ApiProperty({ description: 'ID van de visualset', example: 'set_456def' })
+  @ApiProperty({ description: 'ID van de ((visualset))', example: 'set_456def' })
   @IsString()
   set_id: string;
 
@@ -167,7 +167,7 @@ export class PinResponseDto {
 
 export class PinResponseListDto {
   @ApiProperty({
-    description: 'Lijst van alle pins van een visualset',
+    description: 'Lijst van alle pins van een ((visualset))',
     type: [PinResponseDto],
   })
   @IsArray()

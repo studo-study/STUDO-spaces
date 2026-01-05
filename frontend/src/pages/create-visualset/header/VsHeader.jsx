@@ -9,7 +9,7 @@ export default function VsHeader({ folders, foldersLoading, errors }) {
     <div className="w-full h-fit flex flex-col gap-2 sm:gap-3 scroll-hidden">
       <span className="w-full text-2xl sm:text-3xl flex flex-col justify-baseline items-baseline
         text-studodarkblue font-atrament font-semibold dark:text-white">
-        {t("create new visualset").toUpperCase()}
+        {t("create new ((visualset))").toUpperCase()}
       </span>
 
       <div className="w-full gap-3 sm:gap-4 flex-col flex">

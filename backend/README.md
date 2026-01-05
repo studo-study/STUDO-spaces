@@ -28,8 +28,8 @@ DATABASE_URL=postgresql://devusr:devpwd@localhost:5433/studo_test
 
 # Auth configuration
 AUTH_JWT_SECRET=eensuperveiligsecretvoorindevelopment
-AUTH_JWT_AUDIENCE=studo-api
-AUTH_JWT_ISSUER=studo-api
+AUTH_JWT_AUDIENCE=studo-(api)
+AUTH_JWT_ISSUER=studo-(api)
 AUTH_HASH_LENGTH=32
 AUTH_HASH_TIME_COST=6
 AUTH_HASH_MEMORY_COST=65536

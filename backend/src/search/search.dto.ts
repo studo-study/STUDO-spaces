@@ -75,7 +75,7 @@ export class SetResponse {
 
   @ApiProperty({
     example: 'studyset',
-    description: 'Type van de set (studyset of visualset)',
+    description: 'Type van de set (studoset of ((visualset)))',
   })
   @Expose()
   type: string;

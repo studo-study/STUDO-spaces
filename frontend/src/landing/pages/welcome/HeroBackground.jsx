@@ -32,7 +32,7 @@ export default function HeroBackground({ color }) {
           key={i}
           src={item.src}
           alt=""
-          className={`absolute opacity-0 ${item.size} floating-blob`}
+		  className={`absolute ${item.size} floating-blob ${mounted ? 'animate' : ''}`}
           style={{
             "--seed": item.seed,
             "--start-x": `${Math.random() * 80 + 10}%`,
@@ -41,9 +41,7 @@ export default function HeroBackground({ color }) {
             "--rotate": `${Math.random() > 0.5 ? "" : "-"}${Math.random() * 720 + 180}deg`,
             "--scale-min": 0.7 + Math.random() * 0.4,
             "--scale-max": 1.0 + Math.random() * 0.5,
-            animation: mounted
-              ? "superFloat var(--duration) linear infinite"
-              : "none",
+
             opacity: mounted ? 0.2 : 0,
             left: "var(--start-x)",
             top: "var(--start-y)"

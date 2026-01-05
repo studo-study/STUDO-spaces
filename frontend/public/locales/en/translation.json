@@ -1,6 +1,6 @@
 {
   "HOME": "HOME",
-  "STUDYSETS": "STUDYSETS",
+  "STUDYSETS": "STUDOSETS",
   "FOLDERS": "FOLDERS",
   "CLASSROOMS": "CLASSROOMS",
   "ACCOUNT": "ACCOUNT",
@@ -20,7 +20,7 @@
   "Log Out": "Log Out",
   "Delete Account": "Delete Account",
   "more sets": "more sets",
-  "CREATE STUDYSET": "CREATE STUDYSET",
+  "CREATE STUDYSET": "CREATE STUDOSET",
   "CREATE FOLDER": "CREATE FOLDER",
   "close": "close",
   "day streak": "day study streak",
@@ -34,8 +34,8 @@
   "account": "account",
   "privacy": "privacy",
   "looking": "What are you looking for...",
-  "create new studyset": "create new studyset",
-  "edit studyset": "edit studyset",
+  "create new studyset": "create new Studoset",
+  "edit studyset": "edit Studoset",
   "Fill in a title...": "Fill in a title...",
   "Fill in a course...": "Fill in a course...",
   "Select folder...": "Select folder...",
@@ -154,11 +154,11 @@
   "About Us": "About Us",
   "Privacy": "Privacy",
   "Terms of Service": "Terms of Service",
-  "Create Studyset": "Create Studyset",
-  "Studysets": "Studysets",
+  "Create Studyset": "Create Studoset",
+  "Studysets": "Studosets",
   "Version": "Version",
   "STUDO inc. All Rights Reserved.": "STUDO inc. All Rights Reserved.",
-  "studyets": "studysets",
+  "studyets": "studosets",
   "visualsets": "visualsets",
   "ai": "ai",
   "pin": "identify",
@@ -213,7 +213,7 @@
   "Use your Visualset in Pin or Point": "Use your Visualset in Pin or Point",
   "AI That Builds Your Sets": "AI That Builds Your Sets",
   "* coming soon": "* coming soon",
-  "Upload a vocabulary list, glossary, or lecture notes and turn them into a studyset": "Upload a vocabulary list, glossary, or lecture notes and turn them into a studyset",
+  "Upload a vocabulary list, glossary, or lecture notes and turn them into a studyset": "Upload a vocabulary list, glossary, or lecture notes and turn them into a Studoset",
   "Snap a photo of a textbook page or diagram and let AI detect the terms": "Snap a photo of a textbook page or diagram and let AI detect the terms",
   "AI cleans up the data into ready-to-use pairs": "AI cleans up the data into ready-to-use pairs",
   "Generated sets work across all modes": "Generated sets work across all modes",
@@ -273,12 +273,12 @@
   "Settings": "Settings",
   "You are not in any classrooms yet": "You are not in any classrooms yet",
   "create": "create",
-  "Create new studyset": "Create new studyset",
+  "Create new studyset": "Create new Studoset",
   "Create new visualset": "Create new visualset",
   "add studysession": "add studysession",
   "create classroom": "create classroom",
   "Classrooom Name": "Classroom Name",
-  "Name of the studyset...": "Name of the studyset...",
+  "Name of the studyset...": "Name of the Studoset...",
   "Classroom type": "Classroom Type",
   "Select type...": "Select type...",
   "studygroup with friends": "studygroup with friends",
@@ -312,11 +312,11 @@
   "block1": "From lecture notes to messy doodles – turn anything into interactive flashcards, quick tests, and visual study sets. STUDO keeps it light, fast, and focused, so you spend less time organising and more time actually learning.",
   "block2": "I'm Charles, a full-time student who got tired of apps that were either paywalled, bloated, or just slow. So I built STUDO: a tool where every feature has a purpose and nothing gets in the way of studying.",
   "block3": "Whether it's vocab, formulas, or entire chapters, STUDO adapts to your study style. Personalised practice modes and revision sessions make it easier to remember what matters most. And soon, you'll be able to carry it all in your pocket with the upcoming iOS app.",
-  "Create custom study sets": "Create custom studysets",
+  "Create custom study sets": "Create custom Studosets",
   "endless sets": "unlimited sets",
   "title_studyset": "Your Study Starts Here",
-  "block1_studyset": "A Studyset is the core of your learning experience: a collection of terms and definitions you can master through different modes",
-  "block2_studyset": "Each studyset contains terms and their definitions",
+  "block1_studyset": "A Studoset is the core of your learning experience: a collection of terms and definitions you can master through different modes",
+  "block2_studyset": "Each Studoset contains terms and their definitions",
   "block3_studyset": "Create your own sets, import existing ones, or collaborate with others",
   "block4_studyset": "Use the same set across all study modes",
   "title_visualset": "Visual Learning, Pin by Pin",
@@ -327,7 +327,7 @@
   "block5_visualset": "Use your Visualset in Identify or Point",
   "title_ai": "AI That Builds Your Sets",
   "block1_ai": "* coming soon",
-  "block2_ai": "Upload a vocabulary list, glossary, or lecture notes and turn them into a studyset",
+  "block2_ai": "Upload a vocabulary list, glossary, or lecture notes and turn them into a Studoset",
   "block3_ai": "Snap a photo of a textbook page or diagram and let AI detect the terms",
   "block4_ai": "AI cleans up the data into ready-to-use pairs",
   "block5_ai": "Generated sets work across all modes",
@@ -402,14 +402,14 @@
       "imageAlt": "Studo Speedy Mode - Timed quiz challenge"
     },
     "studysets": {
-      "title": "Studysets | Studo",
-      "description": "Create custom studysets with Studo. Add terms, definitions, and images to build the perfect study material. Share with classmates or keep private.",
+      "title": "Studosets | Studo",
+      "description": "Create custom Studosets with Studo. Add terms, definitions, and images to build the perfect study material. Share with classmates or keep private.",
       "keywords": "study sets, create flashcards, custom study material, share study sets, Studo study sets",
-      "imageAlt": "Studo Studysets - Create and share"
+      "imageAlt": "Studo Studosets - Create and share"
     },
     "visualsets": {
       "title": "Visualsets | Studo",
-      "description": "Create visual studysets with Studo. Upload images and add interactive labels for anatomy, geography, diagrams, and any image-based learning.",
+      "description": "Create visual Studosets with Studo. Upload images and add interactive labels for anatomy, geography, diagrams, and any image-based learning.",
       "keywords": "visual learning, image flashcards, anatomy study, diagram learning, visual sets, Studo visual",
       "imageAlt": "Studo Visualsets - Image-based learning"
     }
@@ -483,11 +483,11 @@
     },
     "studysets": {
       "what": {
-        "question": "What are studysets?",
+        "question": "What are Studosets?",
         "answer": "Study sets are collections of flashcards with terms and definitions. You can create them for any subject and study them using various modes like Learn, Flashcards, or Speedy."
       },
       "share": {
-        "question": "Can I share my studysets?",
+        "question": "Can I share my Studosets?",
         "answer": "Yes! You can make your study sets public to share with classmates or the community, or keep them private for personal use."
       }
     },
@@ -500,6 +500,13 @@
         "question": "How do I create a visualset?",
         "answer": "Upload an image, then click to add labels to different parts. You can add as many labels as you need and then study using Identify or Point mode."
       }
+    }
+  },
+  "errormessages": {
+    "log": {
+      "first": "Incorrect email or password",
+      "sec": "Too many attempts. Please try again later.",
+      "else": "No server connection."
     }
   }
 }

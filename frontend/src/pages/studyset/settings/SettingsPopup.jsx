@@ -179,7 +179,7 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
           {isOwner && (
             <div className="w-full flex flex-col gap-2 sm:gap-3">
               <span className="text-xs sm:text-sm font-medium dark:text-white">
-                {t("Delete studyset:")}
+                {t("Delete studoset:")}
               </span>
 
               <button

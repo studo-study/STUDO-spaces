@@ -77,14 +77,12 @@ export default function ProfilePopUp({ isOpen, onClose, headerData }) {
                   font-bold h-fit w-fit max-w-3/4 truncate">
                   {displayName}
                 </span>
-                <Link to="/streak">
                   <img
                     src={streak}
                     className={`${parseInt(streak_count) > 2 && parseInt(streak_count) < 10 ? "flex" : "hidden"}
                       transition-scale duration-300 hover:scale-110 h-fit w-4 sm:w-5`}
                     alt="streak"
                   />
-                </Link>
               </div>
               <span className={`truncate w-full text-xs sm:text-sm text-gray-400 
                 ${parseInt(streak_count) > 9 ? "dark:text-studodarkblue" : "dark:text-gray-400"} 

@@ -98,8 +98,8 @@ export class SearchService {
       ClassArray.push(klas);
     }
 
-    //studyset
-    //owner, sessie zoeken studyset + item pushen naar array
+    //studoset
+    //owner, sessie zoeken studoset + item pushen naar array
     const SService = new StudysetService(this.db);
     for (const ss of studysetResult) {
       const ownerProfile = await this.db.query.profiles.findFirst({
@@ -135,7 +135,7 @@ export class SearchService {
       SetArray.push(set);
     }
 
-    //owner zoeken visualset
+    //owner zoeken ((visualset))
     const VService = new VisualsetService(this.db);
     for (const vs of visualsetResult) {
       const ownerProfile = await this.db.query.profiles.findFirst({
