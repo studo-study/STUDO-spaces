@@ -45,13 +45,13 @@ export default function LandingHeader() {
             dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
             bg-emerald-400 dark:bg-white dark:text-studodarkblue"
                     >
-                        {t("Log In")}
+                        {t("LogIn")}
                     </Link>
                     <Link
                         href={"/register"}
                         className="font-semibold text-studodarkblue dark:text-white hover:underline"
                     >
-                        {t("Create Account")}
+                        {t("CreateAccount")}
                     </Link>
                 </div>
 

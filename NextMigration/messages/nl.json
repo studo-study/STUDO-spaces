@@ -1,6 +1,25 @@
 {
   "landing": {
-    "Log In": "Log in",
-    "Create Account": "Creëer Account"
+    "LogIn": "Log in",
+    "CreateAccount": "Creëer Account",
+    "CreateCustom": "Create custom study sets",
+    "TextVisualLearning": "Text or visual learning",
+    "AnywhereAnytime": "Study anywhere, anytime",
+    "HeroSection": "Hero section",
+    "NewStudyTool": "Your New Study Tool",
+    "Quote1": "Study Smart,",
+    "Quote2": "Stay Ahead",
+    "Subtitle":"Free study tools for smarter and faster learning",
+    "KeyFeatures": "Key features",
+    "CTA": "Call to action",
+    "SignUp": "Sign Up For Free",
+    "LearnMore": "learn more",
+    "Methods": "Study methods",
+    "LearnMoreAbout": "Learn more about {mode} study mode",
+    "Learn": "leren",
+    "Flashcards": "Flashcards",
+    "Speedy": "Speedy",
+    "Identify": "Identify",
+    "Point": "Point"
   }
 }
