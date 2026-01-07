@@ -11,7 +11,7 @@
       "learn": "learn",
       "speedy": "speedy",
       "flashcards": "flashcards",
-      "pin": "pin",
+      "identify": "identify",
       "point": "point",
       "select": "Select a study mode to begin"
     },
@@ -49,6 +49,128 @@
       "stat1": "5 study tools",
       "stat2": "endless sets",
       "stat3": "100% free"
+    },
+    "studosets": {
+      "title_studyset": "Your Study\n Starts Here",
+      "block1_studyset": "A Studoset is the core of your learning experience: a collection of terms and definitions you can master through different modes",
+      "block2_studyset": "Each Studoset contains terms and their definitions",
+      "block3_studyset": "Create your own sets, import existing ones, or collaborate with others",
+      "block4_studyset": "Use the same set across all study modes",
+      "create your own": "create your own"
+    },
+    "visualsets": {
+      "title_visualset": "Visual Learning,\nPin by Pin",
+      "block1_visualset": "A Visualset lets you study by linking definitions to pins on an image — perfect for anatomy, maps, and diagrams",
+      "block2_visualset": "Instead of just text terms, you upload an image",
+      "block3_visualset": "Each identify on the image acts as the term",
+      "block4_visualset": "To every identify, you attach the correct definition",
+      "block5_visualset": "Use your Visualset in Identify or Point",
+      "create your own": "create your own"
+    },
+    "ai": {
+      "title_ai": "AI That Builds Your Sets",
+      "block1_ai": "* coming soon",
+      "block2_ai": "Upload a vocabulary list, glossary, or lecture notes and turn them into a Studoset",
+      "block3_ai": "Snap a photo of a textbook page or diagram and let AI detect the terms",
+      "block4_ai": "AI cleans up the data into ready-to-use pairs",
+      "block5_ai": "Generated sets work across all modes"
+    },
+    "learn": {
+      "title_learn": "Write - \nRepeat - \nRemember",
+      "block1_learn": "An interactive study mode that quizzes you until every term is mastered.",
+      "block2_learn": "Type your answer - no multiple choice\n",
+      "block3_learn": "Master each term after two correct recalls\n",
+      "block4_learn": "Build long-term memory through active learning",
+      "try it out": "try it out"
+    },
+    "speedy": {
+      "title_speedy": "Speed Meets Knowledge",
+      "block1_speedy": "A timed quiz mode with rounds that push you to recall terms under pressure",
+      "block2_speedy": "Beat the timer in every round",
+      "block3_speedy": "Wrong answers move to the next round",
+      "block4_speedy": "Clear all terms to win the session",
+      "try it out": "try it out"
+    },
+    "flashcards": {
+      "title_flashcard": "Flip - \nLearn - \nRepeat",
+      "block1_flashcard": "Quickly review terms and definitions with interactive flashcards",
+      "block2_flashcard": "Swipe or flip to reveal answers",
+      "block3_flashcard": "Learn at your own pace",
+      "block4_flashcard": "Shuffle and repeat until you're confident",
+      "try it out": "try it out"
+    },
+    "identify": {
+      "title_identify": "Recognize the parts,\nUnderstand the whole",
+      "block1_identify": "Identify by typing the correct terms for each pin — ideal for anatomy, maps, diagrams, and more",
+      "block2_identify": "Go through pins one by one",
+      "block3_identify": "Type the corresponding definition",
+      "block4_identify": "Missed pins return later until you master them",
+      "block5_identify": "Only available with Visual Sets",
+      "try it out": "try it out"
+    },
+    "point": {
+      "title_point": "Read –\nPoint –\nRemember",
+      "block1_point": "Indicate the correct pin on the image based on the given definition",
+      "block2_point": "You are given a definition as the task",
+      "block3_point": "Point to the correct location on the image",
+      "block4_point": "Incorrect choices will return until you master them",
+      "block5_point": "Only available with Visual Sets",
+      "try it out": "try it out"
+    },
+    "about-us": {
+      "title": "About Us",
+      "lastUpdated": "Last updated: January 7, 2026",
+
+      "intro1": "Hi! I'm Charles – a full-time student and the only engineer working on STUDO. This app started from my own frustration with existing study tools: too many useless features, too many paywalls, and too little focus on what actually helps you learn.",
+      "intro2": "I wanted something clean, fast, and distraction-free – so I decided to build it myself. What started as a personal project has grown into something I'm genuinely proud of, and I'm excited to share it with students everywhere.",
+      "intro3": "STUDO is designed to be exactly what you need to study smarter: no hidden costs, no unnecessary extras, just powerful, intuitive tools that actually make a difference. Every feature exists because it solves a real problem students face – nothing more, nothing less.",
+
+      "storyTitle": "The Story Behind STUDO",
+      "storyText1": "It all started during exam season. I was juggling multiple subjects, trying different study apps, and getting more frustrated by the day. Some apps were bloated with features I'd never use. Others locked basic functionality behind expensive subscriptions. And most of them felt like they were designed by people who hadn't been students in years.",
+      "storyText2": "So I opened my laptop and started coding. The first version was rough – just flashcards and a simple quiz mode. But it worked. And more importantly, it worked the way I needed it to. From there, STUDO kept growing, shaped by my own study needs and feedback from friends who started using it too.",
+
+      "differentTitle": "What Makes STUDO Different",
+      "differentText": "There are plenty of study apps out there. Here's why STUDO stands out:",
+      "different1": "Studosets – our unique approach to flashcards with multiple study modes built in",
+      "different2": "Visualsets – learn with images using pin-the-label and point-to-answer features",
+      "different3": "Speedy mode – race against the clock to test your knowledge under pressure",
+      "different4": "No ads, no distractions – just you and your study material",
+      "different5": "100% free core features – because learning shouldn't have a paywall",
+
+      "listenTitle": "We Listen to You",
+      "listenText1": "Because we're still small, your feedback has a direct impact on the app's future. If you have an idea, request, or even a complaint, I genuinely want to hear it. Every feature request gets read, and many of them make it into the app.",
+      "listenText2": "STUDO grows with its users – and every suggestion helps us make it better for everyone. This isn't just a product; it's a community of students helping each other study smarter.",
+
+      "goingTitle": "Where We're Going",
+      "goingText1": "Right now, STUDO is a small, independent project. But the goal is big: to become the go-to study app for students everywhere, without sacrificing simplicity or accessibility.",
+      "goingText2": "With your support, we can scale while keeping our core mission intact – making studying smarter, fairer, and stress-free. We're not trying to be everything to everyone. We're trying to be the best at helping you learn.",
+
+      "iosTitle": "Exciting News – iOS App Coming Soon",
+      "iosText1": "We're currently working on the first official STUDO iOS app! This will bring all the core features to your iPhone and iPad, with the same focus on speed, simplicity, and distraction-free studying.",
+      "iosText2": "Study on the bus, in the library, or right before an exam – wherever you are, STUDO will be there. Stay tuned for the release – it's closer than you think.",
+
+      "valuesTitle": "Our Values",
+      "valuesIntro": "Everything we build is guided by these core principles:",
+      "value1Title": "Student-first design",
+      "value1Text": "every feature is built with real student needs in mind, not corporate metrics",
+      "value2Title": "No paywalls for essentials",
+      "value2Text": "learning should be accessible to everyone, regardless of budget",
+      "value3Title": "Feedback-driven development",
+      "value3Text": "your input directly shapes what we build next",
+      "value4Title": "Focus over features",
+      "value4Text": "we'd rather do five things brilliantly than fifty things poorly",
+      "value5Title": "Privacy matters",
+      "value5Text": "your study data is yours – we don't sell it or use it for ads",
+
+      "teamTitle": "The Team",
+      "teamText1": "Right now, STUDO is a one-person operation. I handle the design, development, testing, and support – all while being a full-time student myself. It's a lot, but it means I truly understand what students need.",
+      "teamText2": "As STUDO grows, the team might too. But for now, when you reach out, you're talking directly to the person who built the app. That's something I'm proud of.",
+
+      "thanksTitle": "Thank You",
+      "thanksText": "To everyone who has used STUDO, shared it with friends, or sent feedback – thank you. You're the reason this project exists. Every time someone tells me STUDO helped them ace an exam or made studying less stressful, it reminds me why I started this in the first place.",
+
+      "contactTitle": "Get in Touch",
+      "contactText": "Have an idea, found a bug, or just want to say hi? I'd love to hear from you. Here's how you can reach me:"
     }
   }
 }

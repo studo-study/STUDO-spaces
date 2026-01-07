@@ -11,7 +11,7 @@ const studyModes = [
     { to: "/learn", label: "Learn", icon: "/icons/start/learn.svg", color: "from-emerald-500 to-emerald-400" },
     { to: "/flashcards", label: "Flashcards", icon: "/icons/start/flashcards.svg", color: "from-blue-500 to-blue-400" },
     { to: "/speedy", label: "Speedy", icon: "/icons/start/speedy.svg", color: "from-amber-500 to-orange-400" },
-    { to: "/pin", label: "Identify", icon: "/icons/start/point.svg", color: "from-rose-500 to-red-400" },
+    { to: "/identify", label: "Identify", icon: "/icons/start/point.svg", color: "from-rose-500 to-red-400" },
     { to: "/point", label: "Point", icon: "/icons/start/hero-pin.svg", color: "from-violet-500 to-purple-400" },
 ];
 

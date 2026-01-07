@@ -2,6 +2,8 @@
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import {useTranslations} from "next-intl";
+import {useLocale} from 'next-intl';
+
 import TriggerTools from "@/components/landing_header/dropdowntools";
 import TriggerMethods from "@/components/landing_header/dropdownmethods";
 
@@ -10,7 +12,6 @@ export default function LandingHeader() {
     const [MethodsOpen, setMethodsOpen] = useState(false);
     const [ToolsOpen, setToolsOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
     const t = useTranslations('landing.header');
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 20);
@@ -84,7 +85,7 @@ function specialeDag() {
     const dag = date.getDate();
     const maand = date.getMonth();
     const jaar = date.getFullYear();
-
+    const locale = useLocale();
     const feestdagen = {
         christmas: "from-rose-600 via-rose-500 to-rose-400 dark:from-white dark:to-rose-200",
         christmasDay: "from-red-600 via-red-500 to-red-400 dark:from-white dark:to-red-200",
@@ -100,6 +101,9 @@ function specialeDag() {
         carnival: "from-fuchsia-600 via-fuchsia-500 to-fuchsia-400 dark:from-white dark:to-fuchsia-200",
         kingsDay: "from-orange-500 via-orange-400 to-amber-400 dark:from-white dark:to-orange-200",
         midsummer: "from-blue-400 via-green-300 to-amber-300 dark:from-white dark:to-sky-200",
+        belgie: "from-zinc-900 via-amber-300 to-rose-700 dark:from-zinc-900 dark:via-amber-400 dark:to-rose-600",
+        vs: "from-blue-600 to-red-700 dark:from-blue-600 dark:to-red-400",
+        nederland: "from-orange-400 via-amber-500 to-orange-300 dark:from-orange-400 dark:via-amber-500 dark:to-orange-300",
     };
 
     const pasen = berekenPasen(jaar);
@@ -130,6 +134,15 @@ function specialeDag() {
         "25/11": feestdagen.christmasDay,
         "31/11": feestdagen.newYear,
     };
+    if(locale === "nl" && key === "21/6") {
+        return feestdagen.belgie;
+    }
+
+    if(locale === "nl" && key === "27/3") {
+        return feestdagen.belgie;
+    }
+
+
     return vasteDagen[key] || "from-emerald-500 to-emerald-400 dark:from-white dark:to-blue-200";
 }
 

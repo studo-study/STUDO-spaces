@@ -52,7 +52,7 @@ const toolCategories = [
         title: "vs",
         color: "violet",
         items: [
-            { to: "/identify", icon: "/icons/pin-icon.svg", label: "pin", gradient: "from-rose-400 to-red-500" },
+            { to: "/identify", icon: "/icons/pin-icon.svg", label: "identify", gradient: "from-rose-400 to-red-500" },
             { to: "/point", icon: "/icons/point.svg", label: "point", gradient: "from-violet-400 to-purple-500" },
         ],
     },
