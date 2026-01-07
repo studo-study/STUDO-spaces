@@ -1,6 +1,9 @@
 {
   "landing": {
     "Log In": "Log in",
-    "Create Account": "Create Account"
+    "Create Account": "Create Account",
+    "block1": "From lecture notes to messy doodles – turn anything into interactive flashcards, quick tests, and visual study sets. STUDO keeps it light, fast, and focused, so you spend less time organising and more time actually learning.",
+    "block2": "I'm Charles, a full-time student who got tired of apps that were either paywalled, bloated, or just slow. So I built STUDO: a tool where every feature has a purpose and nothing gets in the way of studying.",
+    "block3": "Whether it's vocab, formulas, or entire chapters, STUDO adapts to your study style. Personalised practice modes and revision sessions make it easier to remember what matters most. And soon, you'll be able to carry it all in your pocket with the upcoming iOS app."
   }
 }

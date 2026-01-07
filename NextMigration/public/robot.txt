@@ -1,0 +1,41 @@
+# Robots.txt for studo.study
+
+User-agent: *
+Allow: /
+
+# Public pages
+Allow: /welcome
+Allow: /about-us
+Allow: /about-ai
+Allow: /flashcards
+Allow: /learn
+Allow: /identify
+Allow: /point
+Allow: /speedy
+Allow: /about-studysets
+Allow: /about-visualsets
+
+# Auth pages - no indexing needed
+Disallow: /login
+Disallow: /register
+Disallow: /logout
+Disallow: /auth/
+
+# Private user pages
+Disallow: /home
+Disallow: /account
+Disallow: /privacy
+Disallow: /studysets
+Disallow: /folders
+Disallow: /courses
+Disallow: /classrooms
+Disallow: /classroom/
+Disallow: /create-*
+Disallow: /streak
+Disallow: /search
+
+# Sitemap location
+Sitemap: https://studo.study/sitemap.xml
+
+# Crawl-delay (optional, be nice to your server)
+Crawl-delay: 1
