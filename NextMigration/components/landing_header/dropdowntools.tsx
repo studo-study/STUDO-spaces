@@ -1,14 +1,16 @@
-import { useRef } from "react";
-import ToggleImg from "../../public/icons/down.svg";
+"use client"
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import {useTranslations} from "next-intl";
 
 interface TriggerToolsProps {
     ToolsOpen: boolean;
     setToolsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function TriggerTools({ ToolsOpen, setToolsOpen }: TriggerToolsProps) {
-        const {t} = useTranslation();
-        const containerRef = useRef(null);
+export default function TriggerTools({ ToolsOpen, setToolsOpen }: TriggerToolsProps) {
+        const t = useTranslations('landing.header');
+        const containerRef = useRef<HTMLDivElement>(null);
 
         const togglePopUp = () => {
             setToolsOpen((prev) => !prev);
@@ -21,11 +23,11 @@ function TriggerTools({ ToolsOpen, setToolsOpen }: TriggerToolsProps) {
                 onClick={togglePopUp}
             >
                 <img
-                    src={ToggleImg}
+                    src={"/icons/down.svg"}
                     className={`${ToolsOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
                     alt=""
                 />
-                <span>{t("Study Tools")}</span>
+                <span className={"dark:text-white text-studodarkblue"}>{t("tools")}</span>
                 <ToolsPopup
                     MethodsOpen={ToolsOpen}
                     setMethodsOpen={setToolsOpen}
@@ -35,46 +37,44 @@ function TriggerTools({ ToolsOpen, setToolsOpen }: TriggerToolsProps) {
         );
 }
 
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { useEffect, useRef } from "react";
-import learn from "../../../../assets/icons/pencil.svg";
-import speedy from "../../../../assets/icons/clock.svg";
-import cards from "../../../../assets/icons/cards.svg";
-import pin from "../../../../assets/icons/pin-icon.svg";
-import point from "../../../../assets/icons/point.svg";
 
 const toolCategories = [
     {
-        title: "studysets",
+        title: "ss",
         color: "emerald",
         items: [
-            { to: "/learn", icon: learn, label: "learn", gradient: "from-emerald-400 to-emerald-500" },
-            { to: "/speedy", icon: speedy, label: "speedy", gradient: "from-amber-400 to-orange-500" },
-            { to: "/flashcards", icon: cards, label: "flashcards", gradient: "from-blue-400 to-blue-500" },
+            { to: "/learn", icon: "/icons/pencil.svg", label: "learn", gradient: "from-emerald-400 to-emerald-500" },
+            { to: "/speedy", icon: "/icons/clock.svg", label: "speedy", gradient: "from-amber-400 to-orange-500" },
+            { to: "/flashcards", icon: "/icons/cards.svg", label: "flashcards", gradient: "from-blue-400 to-blue-500" },
         ],
     },
     {
-        title: "visualsets",
+        title: "vs",
         color: "violet",
         items: [
-            { to: "/identify", icon: pin, label: "pin", gradient: "from-rose-400 to-red-500" },
-            { to: "/point", icon: point, label: "point", gradient: "from-violet-400 to-purple-500" },
+            { to: "/identify", icon: "/icons/pin-icon.svg", label: "pin", gradient: "from-rose-400 to-red-500" },
+            { to: "/point", icon: "/icons/point.svg", label: "point", gradient: "from-violet-400 to-purple-500" },
         ],
     },
 ];
 
-function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }) {
-    const { t } = useTranslation();
-    const popupRef = useRef(null);
+interface ToolsPopupProps {
+    MethodsOpen: boolean;
+    setMethodsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    triggerRef: React.RefObject<HTMLDivElement | null>;
+}
+
+function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps) {
+    const t = useTranslations('landing.header');
+    const popupRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (e: MouseEvent) => {
             if (
                 popupRef.current &&
-                !popupRef.current.contains(event.target) &&
+                !popupRef.current.contains(e.target as Node) &&
                 triggerRef.current &&
-                !triggerRef.current.contains(event.target)
+                !triggerRef.current.contains(e.target as Node)
             ) {
                 setMethodsOpen(false);
             }
@@ -140,14 +140,14 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }) {
                                 return (
                                     <Link
                                         key={item.to}
-                                        to={item.to}
+                                        href={item.to}
                                         onClick={() => setMethodsOpen(false)}
                                         className={`group relative flex items-center gap-3 px-3 py-2.5 rounded-xl
-                      text-studodarkblue dark:text-white
-                      hover:bg-studodarkblue/5 dark:hover:bg-white/5
-                      transition-all duration-200 ease-out
-                      ${MethodsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
-                    `}
+                                      text-studodarkblue dark:text-white
+                                      hover:bg-studodarkblue/5 dark:hover:bg-white/5
+                                        transition-all duration-200 ease-out
+                                        ${MethodsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
+                                        `}
                                         style={{
                                             transitionDelay: MethodsOpen ? `${(currentIndex + 1) * 50 + catIndex * 50}ms` : "0ms",
                                         }}
@@ -205,7 +205,7 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }) {
           ${MethodsOpen ? "opacity-100" : "opacity-0"}`}
             >
                 <p className="text-[10px] text-center text-studodarkblue/30 dark:text-white/30">
-                    {t("Select a study mode to begin")}
+                    {t("select")}
                 </p>
             </div>
         </div>

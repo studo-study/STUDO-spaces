@@ -2,10 +2,16 @@
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import {useTranslations} from "next-intl";
+import TriggerTools from "@/components/landing_header/dropdowntools";
+import TriggerMethods from "@/components/landing_header/dropdownmethods";
 
 export default function LandingHeader() {
     const [scrolled, setScrolled] = useState(false);
-    const t = useTranslations('landing');
+    const [MethodsOpen, setMethodsOpen] = useState(false);
+    const [ToolsOpen, setToolsOpen] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const t = useTranslations('landing.header');
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener("scroll", onScroll);
@@ -30,6 +36,8 @@ export default function LandingHeader() {
                 </Link>
 
                 <nav className="hidden md:flex flex-row gap-10 items-center">
+                    <TriggerMethods MethodsOpen={MethodsOpen} setMethodsOpen={setMethodsOpen} />
+                    <TriggerTools ToolsOpen={ToolsOpen} setToolsOpen={setToolsOpen} />
                 </nav>
             </div>
 
