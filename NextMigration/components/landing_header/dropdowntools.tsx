@@ -27,7 +27,7 @@ export default function TriggerTools({ ToolsOpen, setToolsOpen }: TriggerToolsPr
                     className={`${ToolsOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
                     alt=""
                 />
-                <span className={"dark:text-white text-studodarkblue"}>{t("tools")}</span>
+                <span className={"dark:text-white text-studodarkblue truncate"}>{t("tools")}</span>
                 <ToolsPopup
                     MethodsOpen={ToolsOpen}
                     setMethodsOpen={setToolsOpen}

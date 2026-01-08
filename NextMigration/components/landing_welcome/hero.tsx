@@ -25,14 +25,14 @@ export default function Hero() {
     ];
 
     return (
-        <header className="relative w-full max-w-screen overflow-visible h-fit xxl:h-3/4 flex flex-col items-center justify-start pt-8 px-4">
+        <section className="relative w-full max-w-screen overflow-visible h-fit xxl:h-3/4 flex flex-col items-center justify-start pt-10 px-4">
 
             {/* Background - client component, decoratief */}
             <div className="absolute max-w-screen w-full inset-0 hidden dark:flex select-none pointer-events-none z-0" aria-hidden="true">
                 <HeroBackground color="to-white/10" />
             </div>
 
-            <div className="relative z-10 flex flex-col 3xl:min-h-screen items-center text-center pt-5 3xl:pt-20 overflow-visible gap-8 3xl:w-2/3 max-w-screen">
+            <div className="relative z-10 flex flex-col 3xl:min-h-screen items-center text-center pt-15 sm:pt-15 lg:pt-20 3xl:pt-30 overflow-visible gap-8 3xl:w-2/3 max-w-screen">
 
                 {/* Badge - SSR content, client animatie */}
                 <AnimateOnMount delay={100}>
@@ -87,14 +87,14 @@ export default function Hero() {
 
                 {/* Study modes */}
                 <nav
-                    className={`flex flex-wrap justify-center gap-5 mt-12 w-full px-4 sm:px-3 md:px-0 transition-all duration-700`}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap justify-center gap-5 mt-12 w-full sm:px-3 md:px-0 transition-all duration-700"
                     aria-label={t("Methods")}
                 >
                     {studyModes.map((item, index) => (
-                        <AnimateOnMount key={index} delay={600 + index * 200}>
+                        <AnimateOnMount key={index} delay={600 + index * 200} className="w-full sm:w-auto">
                             <Link
                                 href={item.to}
-                                className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br ${item.color} flex flex-col justify-between w-full h-full sm:w-48 sm:h-64 md:w-52 md:h-72 lg:w-56 lg:h-80 hover:scale-105 transition-all duration-700`}
+                                className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br ${item.color} flex flex-col justify-between w-full md:min-h-90 xl:min-h-58 sm:min-w-full sm:h-64 md:w-52 md:h-72 lg:w-56 lg:h-80 hover:scale-105 transition-all duration-700`}
                             >
                                 <span className="text-xl sm:text-2xl font-bold text-studodarkblue text-center pt-5 sm:pt-6">
                                     {t(item.label)}
@@ -105,6 +105,6 @@ export default function Hero() {
                     ))}
                 </nav>
             </div>
-        </header>
+        </section>
     );
 }
