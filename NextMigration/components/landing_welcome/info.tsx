@@ -115,7 +115,7 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
                     >
                         <img
                             src={feature.image}
-                            alt={t(feature.imageAlt)}
+                            alt={feature.imageAlt}
                             className="object-contain transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-500"
                             loading="lazy"
                         />
@@ -135,7 +135,7 @@ export default function Info() {
 
                 {/* Header */}
                 <AnimateOnScroll>
-                    <header className="text-center mb-16 lg:mb-24">
+                    <div className="text-center mb-16 lg:mb-24">
                         <span className="inline-block px-4 py-2 rounded-full text-sm font-medium bg-emerald-100 dark:bg-studoblue/20 text-emerald-700 dark:text-studoblue border border-emerald-200 dark:border-studoblue/30 mb-6">
                             {t("why")}
                         </span>
@@ -145,7 +145,7 @@ export default function Info() {
                                 {t("subtitle2")}
                             </span>
                         </h2>
-                    </header>
+                    </div>
                 </AnimateOnScroll>
 
                 {/* Features */}

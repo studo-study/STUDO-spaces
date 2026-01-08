@@ -27,7 +27,7 @@ export default function TriggerMethods({ MethodsOpen, setMethodsOpen }: TriggerM
                 className={`${MethodsOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
                 alt=""
             />
-            <span className={"dark:text-white text-studodarkblue"}>{t("modes")}</span>
+            <span className={"dark:text-white text-studodarkblue truncate"}>{t("modes")}</span>
             <MethodsPopUp
                 MethodsOpen={MethodsOpen}
                 setMethodsOpen={setMethodsOpen}
@@ -80,7 +80,7 @@ function MethodsPopUp({ MethodsOpen, setMethodsOpen, triggerRef }: MethodsPopUpP
         <div
             ref={popupRef}
             className={`absolute top-full left-1/2 -translate-x-1/2 mt-4
-        z-[9999] w-56 p-2
+        z-[9999] w-56 p-2 truncate
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
         backdrop-blur-xl
