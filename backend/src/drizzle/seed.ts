@@ -177,7 +177,7 @@ async function seedStudo() {
     console.log('Folders seeded\n');
 
     // === 4. Studysets ===
-    console.log('Seeding studysets...');
+    console.log('Seeding about-studosets...');
     await db.insert(schema.studysets).values([
       {
         id: studySetId1,
@@ -211,7 +211,7 @@ async function seedStudo() {
     console.log('Studysets seeded\n');
 
     // === 5. Visualsets ===
-    console.log('Seeding visualsets...');
+    console.log('Seeding about-visualsets...');
     await db.insert(schema.visualsets).values([
       {
         id: visualSetId1,

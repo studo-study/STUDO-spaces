@@ -1,25 +1,551 @@
 {
   "landing": {
-    "LogIn": "Log in",
-    "CreateAccount": "Creëer Account",
-    "CreateCustom": "Create custom study sets",
-    "TextVisualLearning": "Text or visual learning",
-    "AnywhereAnytime": "Study anywhere, anytime",
-    "HeroSection": "Hero section",
-    "NewStudyTool": "Your New Study Tool",
-    "Quote1": "Study Smart,",
-    "Quote2": "Stay Ahead",
-    "Subtitle":"Free study tools for smarter and faster learning",
-    "KeyFeatures": "Key features",
-    "CTA": "Call to action",
-    "SignUp": "Sign Up For Free",
-    "LearnMore": "learn more",
-    "Methods": "Study methods",
-    "LearnMoreAbout": "Learn more about {mode} study mode",
-    "Learn": "leren",
-    "Flashcards": "Flashcards",
-    "Speedy": "Speedy",
-    "Identify": "Identify",
-    "Point": "Point"
+    "header": {
+      "LogIn": "Log in",
+      "CreateAccount": "Maak account",
+      "modes": "Leermodes",
+      "tools": "Tools",
+      "ss": "studosets",
+      "vs": "visualsets",
+      "ai": "ai",
+      "learn": "leren",
+      "speedy": "tijdstrijd",
+      "flashcards": "flashcards",
+      "identify": "spotten",
+      "point": "aanwijzen",
+      "select": "Kies een mode en go",
+      "lm": "Leermodes",
+      "st": "Tools"
+    },
+    "footer": {
+      "footerQuote": "Minder Zweten, Meer Weten!",
+      "aboutTitle": "over studo",
+      "ss": "studosets",
+      "vs": "visualsets",
+      "aboutBlock1": "Over Ons",
+      "aboutBlock2": "Privacy",
+      "aboutBlock3": "Gebruiksvoorwaarden",
+      "ssBlock1": "Creëer Studoset",
+      "ssBlock2": "Studosets",
+      "vsBlock1": "Creëer Visualset",
+      "vsBlock2": "Visualsets",
+      "loveGreen": "Gebouwd met \uD83D\uDC9A met React",
+      "loveBlue": "Gebouwd met \uD83D\uDC99 met React",
+      "Version": "Versie",
+      "rights": "STUDO inc. Alle Rechten Voorbehouden."
+    },
+    "welcome": {
+      "CreateCustom": "Maak je eigen sets",
+      "TextVisualLearning": "Leer met tekst of visuals",
+      "AnywhereAnytime": "Studeer waar en wanneer je wil",
+      "HeroSection": "Hero-sectie",
+      "NewStudyTool": "Jouw nieuwe studeertool",
+      "Quote1": "Minder Zweten,",
+      "Quote2": "Meer Weten",
+      "Subtitle": "Gratis tools om sneller en slimmer te studeren",
+      "KeyFeatures": "Dit kan je ermee",
+      "CTA": "Call to action",
+      "SignUp": "Gratis Aanmelden",
+      "LearnMore": "ontdek meer",
+      "Methods": "Leermethodes",
+      "LearnMoreAbout": "Ontdek de {mode}-mode",
+      "Learn": "Leren",
+      "Flashcards": "Flashcards",
+      "Speedy": "Tijdstrijd",
+      "Identify": "Spotten",
+      "Point": "Aanwijzen",
+      "block1": "Van slordig geschreven notities tot snelle schetsen: maak er interactieve flashcards, quizzes en visuele studysets van. STUDO houdt het simpel en snel — minder gedoe, meer leren.",
+      "block2": "Hey, ik ben Charles. Voltijdstudent en creator van STUDO. Ik was het zat: apps vol paywalls, overbodige features en trage interfaces. Dus bouwde ik iets beters. Elke feature heeft een doel, niets zit in de weg.",
+      "block3": "Of het nu vocab, formules of complete hoofdstukken zijn — STUDO past zich aan jouw manier van leren aan. Slimme oefenmodes en herhalingen zorgen dat het blijft hangen. En binnenkort neem je alles mee in je pocket met onze iOS-app.",
+      "why": "Waarom STUDO?",
+      "subtitle1": "Alles wat je nodig hebt om",
+      "subtitle2": "je studie te crushen",
+      "feature": "feature",
+      "featureTitle1": "Study smarter",
+      "featureTitle2": "Door studenten, voor studenten",
+      "featureTitle3": "Ready for anything",
+      "signupfree": "Gratis Aanmelden",
+      "stat1": "5 studytools",
+      "stat2": "onbeperkt sets maken",
+      "stat3": "100% gratis"
+    },
+    "studosets": {
+      "title_studyset": "Hier begint\nje studie",
+      "block1_studyset": "Een studoset is de basis van je leerervaring: een set termen en definities die je op verschillende manieren kunt oefenen",
+      "block2_studyset": "Elke studoset bevat termen + definities",
+      "block3_studyset": "Maak ze zelf, importeer ze of werk samen",
+      "block4_studyset": "Gebruik dezelfde set in elke mode",
+      "create your own": "maak er eentje"
+    },
+    "visualsets": {
+      "title_visualset": "Visueel leren,\npin voor pin",
+      "block1_visualset": "Met visualsets koppel je definities aan punten op een afbeelding — perfect voor anatomie, kaarten en diagrammen",
+      "block2_visualset": "Upload een afbeelding in plaats van tekst",
+      "block3_visualset": "Elke pin is een term",
+      "block4_visualset": "Koppel de juiste definitie aan elke pin",
+      "block5_visualset": "Gebruik je visualset in Spotten of Aanwijzen",
+      "create your own": "maak er eentje"
+    },
+    "ai": {
+      "title_ai": "AI bouwt je sets",
+      "block1_ai": "* coming soon",
+      "block2_ai": "Upload een woordenlijst, glossary of collegenotities en zet het om in een studoset",
+      "block3_ai": "Maak een foto van een pagina of diagram — AI detecteert de termen",
+      "block4_ai": "AI maakt er nette, direct bruikbare paren van",
+      "block5_ai": "Je gegenereerde sets werken in alle modes"
+    },
+    "learn": {
+      "title_learn": "Typ –\nHerhaal –\nOnthoud",
+      "block1_learn": "Een interactieve mode die je blijft testen tot alles zit.",
+      "block2_learn": "Typ je antwoord — geen multiple choice",
+      "block3_learn": "Twee keer goed = term unlocked",
+      "block4_learn": "Train je geheugen door actief te leren",
+      "try it out": "probeer het"
+    },
+    "speedy": {
+      "title_speedy": "Speed meets kennis",
+      "block1_speedy": "Een race tegen de klok die je scherp houdt onder druk",
+      "block2_speedy": "Race tegen de timer",
+      "block3_speedy": "Foute antwoorden? Die komen terug",
+      "block4_speedy": "Clear alles om te winnen",
+      "try it out": "probeer het"
+    },
+    "flashcards": {
+      "title_flashcard": "Flip –\nLeer –\nHerhaal",
+      "block1_flashcard": "Blader snel door termen en definities met interactieve flashcards",
+      "block2_flashcard": "Swipe of flip voor het antwoord",
+      "block3_flashcard": "Leer op je eigen tempo",
+      "block4_flashcard": "Shuffle en herhaal tot je zeker bent",
+      "try it out": "probeer het"
+    },
+    "identify": {
+      "title_identify": "Herken de delen,\nsnap het geheel",
+      "block1_identify": "Typ de juiste term bij elke pin — ideaal voor anatomie, kaarten, diagrammen en meer",
+      "block2_identify": "Ga pin voor pin door",
+      "block3_identify": "Typ de bijbehorende definitie",
+      "block4_identify": "Gemiste pins komen later terug",
+      "block5_identify": "Alleen beschikbaar met visualsets",
+      "try it out": "probeer het"
+    },
+    "point": {
+      "title_point": "Lees –\nWijs –\nOnthoud",
+      "block1_point": "Wijs de juiste pin aan op basis van de gegeven definitie",
+      "block2_point": "Je krijgt een definitie te zien",
+      "block3_point": "Tap de juiste plek op de afbeelding",
+      "block4_point": "Foute keuzes komen terug tot je ze nailed hebt",
+      "block5_point": "Alleen beschikbaar met visualsets",
+      "try it out": "probeer het"
+    },
+    "about-us": {
+      "title": "Over ons",
+      "lastUpdated": "Laatst geüpdatet: 7 januari 2026",
+
+      "intro1": "Hey! Ik ben Charles — voltijdstudent én de enige dev achter STUDO. Deze app ontstond uit pure frustratie met bestaande studytools: te veel nutteloze features, te veel paywalls, en te weinig focus op wat écht werkt.",
+      "intro2": "Ik wilde iets clean, fast en zonder afleiding — dus bouwde ik het zelf. Wat begon als een side project is uitgegroeid tot iets waar ik mega trots op ben, en ik deel het graag met studenten everywhere.",
+      "intro3": "STUDO is precies wat je nodig hebt om slimmer te studeren: geen hidden costs, geen overbodige extra's — gewoon krachtige, intuïtieve tools die echt impact maken. Elke feature lost een echt probleem op. Punt.",
+
+      "storyTitle": "Het verhaal achter STUDO",
+      "storyText1": "Het begon allemaal tijdens de examenperiode. Ik combineerde meerdere vakken, probeerde allerlei study apps en werd steeds gefrustreerder. Sommige apps zaten vol features die ik nooit gebruikte. Andere sloten basics af achter dure abbos. En de meeste voelden alsof ze gemaakt waren door mensen die al jaren geen student meer waren.",
+      "storyText2": "Dus opende ik mijn laptop en begon te coderen. De eerste versie was basic — alleen flashcards en een simpele quiz. Maar het werkte. En belangrijker: het werkte zoals ík het nodig had. Vanaf daar groeide STUDO, gevormd door mijn eigen studybehoeften en feedback van vrienden die het ook gingen gebruiken.",
+
+      "differentTitle": "Wat STUDO anders maakt",
+      "differentText": "Er zijn genoeg study apps. Dit maakt STUDO uniek:",
+      "different1": "Studosets — onze eigen twist op flashcards met meerdere ingebouwde leermodes",
+      "different2": "Visualsets — leren met afbeeldingen via pins en point-functies",
+      "different3": "Speedy mode — race tegen de klok en test je kennis onder pressure",
+      "different4": "Geen ads, geen afleiding — alleen jij en je studiemateriaal",
+      "different5": "100% gratis core features — want leren hoort geen paywall te hebben",
+
+      "listenTitle": "We luisteren",
+      "listenText1": "Omdat we nog klein zijn, heeft jouw feedback directe impact op de toekomst van de app. Idee, feature request of klacht? Ik hoor het graag. Elke suggestie wordt gelezen en veel ervan haalt de app.",
+      "listenText2": "STUDO groeit met zijn users — elke suggestie maakt het beter voor iedereen. Dit is niet zomaar een product; het is een community van studenten die elkaar helpen slimmer te studeren.",
+
+      "goingTitle": "Waar we naartoe gaan",
+      "goingText1": "Op dit moment is STUDO een klein, indie project. Maar het doel is big: dé study app worden voor studenten overal — zonder in te leveren op simplicity of toegankelijkheid.",
+      "goingText2": "Met jouw support kunnen we groeien terwijl we onze core missie vasthouden: studeren slimmer, eerlijker en minder stressvol maken. We willen niet alles voor iedereen zijn. We willen gewoon de beste zijn in helpen leren.",
+
+      "iosTitle": "Exciting news — iOS app incoming",
+      "iosText1": "We werken momenteel aan de eerste officiële STUDO iOS-app! Alle core features komen naar je iPhone en iPad, met dezelfde focus op speed, simplicity en distraction-free studeren.",
+      "iosText2": "Studeer in de bus, in de bib of vlak voor een examen — waar je ook bent, STUDO is er. Stay tuned voor de release — hij komt sneller dan je denkt.",
+
+      "valuesTitle": "Onze waarden",
+      "valuesIntro": "Alles wat we bouwen wordt gedreven door deze principes:",
+      "value1Title": "Student-first design",
+      "value1Text": "elke feature is gebouwd met echte studentenbehoeften in gedachten, niet met metrics",
+      "value2Title": "Geen paywalls voor essentials",
+      "value2Text": "leren moet accessible zijn voor iedereen, ongeacht budget",
+      "value3Title": "Feedback-driven development",
+      "value3Text": "jouw input bepaalt direct wat we als volgende bouwen",
+      "value4Title": "Focus boven features",
+      "value4Text": "liever vijf dingen briljant dan vijftig middelmatig",
+      "value5Title": "Privacy matters",
+      "value5Text": "jouw data is van jou — we verkopen het niet en gebruiken het niet voor ads",
+
+      "teamTitle": "Het team",
+      "teamText1": "Op dit moment is STUDO een one-person show. Ik doe design, development, testing en support — allemaal terwijl ik zelf fulltime student ben. Het is veel, maar het betekent dat ik écht snap wat studenten nodig hebben.",
+      "teamText2": "Als STUDO groeit, groeit het team misschien mee. Maar voor nu praat je bij contact direct met de persoon die de app bouwde. Daar ben ik best trots op.",
+
+      "thanksTitle": "Thanks",
+      "thanksText": "Aan iedereen die STUDO gebruikt, deelt met vrienden of feedback stuurt — bedankt. Jullie zijn de reden dat dit project bestaat. Elke keer dat iemand zegt dat STUDO hen hielp een examen te halen of studeren minder stressvol maakte, weet ik weer waarom ik hieraan begon.",
+
+      "contactTitle": "Get in touch",
+      "contactText": "Idee, bug gevonden of gewoon hallo zeggen? Let's talk:"
+    },
+    "privacy": {
+      "title": "Privacybeleid",
+      "lastUpdated": "Laatst geüpdatet: 7 januari 2026",
+      "intro": {
+        "welcome": "Welkom bij STUDO. Je privacy is belangrijk voor ons. Dit beleid legt uit hoe we je gegevens verzamelen, gebruiken, opslaan en beschermen wanneer je ons platform gebruikt. STUDO wordt beheerd vanuit België en voldoet aan de GDPR en Belgische privacywetgeving.",
+        "agreement": "Door STUDO te gebruiken, ga je akkoord met het verzamelen en gebruiken van informatie zoals hier beschreven. Niet akkoord? Gebruik onze diensten dan niet."
+      },
+      "whoAreWe": {
+        "title": "1. Wie zijn we?",
+        "description": "STUDO is een digitaal leerplatform dat studenten helpt effectiever te studeren. Wij zijn de verwerkingsverantwoordelijke voor je persoonsgegevens.",
+        "info": {
+          "project": "Project:",
+          "website": "Website:",
+          "email": "E-mail:",
+          "location": "Locatie:"
+        }
+      },
+      "dataCollect": {
+        "title": "2. Welke data verzamelen we?",
+        "provided": {
+          "title": "2.1 Data die je zelf deelt",
+          "description": "Bij het aanmaken van een account of gebruiken van STUDO kun je delen:",
+          "items": {
+            "name": "Naam of username",
+            "email": "E-mailadres",
+            "password": "Wachtwoord (veilig gehasht, nooit plain text)",
+            "profile": "Profielinfo (optioneel)",
+            "content": "Studie-content die je maakt (studosets, visualsets, notities)",
+            "feedback": "Feedback of supportberichten"
+          }
+        },
+        "automatic": {
+          "title": "2.2 Automatisch verzamelde data",
+          "description": "Tijdens het gebruik van STUDO verzamelen we automatisch:",
+          "items": {
+            "ip": "IP-adres",
+            "browser": "Browsertype en -versie",
+            "device": "Device-info",
+            "pages": "Bezochte pagina's en gebruikte features",
+            "time": "Tijd en datum van toegang"
+          }
+        },
+        "thirdParty": {
+          "title": "2.3 Data van derden",
+          "description": "Log je in via Google of Apple? Dan ontvangen we je naam, e-mailadres en profielfoto zoals toegestaan in je instellingen. We hebben geen toegang tot andere data van deze diensten."
+        }
+      },
+      "whyCollect": {
+        "title": "3. Waarom verzamelen we je data?",
+        "description": "We gebruiken je gegevens voor:",
+        "table": {
+          "purpose": "Doel",
+          "legalBasis": "Rechtsgrond (GDPR)"
+        },
+        "purposes": {
+          "account": {
+            "purpose": "Account aanmaken en beheren",
+            "basis": "Uitvoering van overeenkomst"
+          },
+          "features": {
+            "purpose": "Features leveren en je content opslaan",
+            "basis": "Uitvoering van overeenkomst"
+          },
+          "improving": {
+            "purpose": "STUDO verbeteren en bugs fixen",
+            "basis": "Gerechtvaardigd belang"
+          },
+          "responding": {
+            "purpose": "Reageren op vragen of feedback",
+            "basis": "Uitvoering van overeenkomst"
+          },
+          "updates": {
+            "purpose": "Belangrijke updates sturen",
+            "basis": "Gerechtvaardigd belang"
+          },
+          "marketing": {
+            "purpose": "Marketingmails (alleen met toestemming)",
+            "basis": "Toestemming"
+          },
+          "security": {
+            "purpose": "Beveiliging en fraudepreventie",
+            "basis": "Gerechtvaardigd belang"
+          }
+        }
+      },
+      "storage": {
+        "title": "4. Hoe slaan we je data op?",
+        "description": "Je data wordt veilig opgeslagen op servers in de EU. We gebruiken standaard beveiligingsmaatregelen:",
+        "measures": {
+          "https": "HTTPS-encryptie voor alle datatransfers",
+          "hashing": "Veilige wachtwoord-hashing (nooit plain text)",
+          "updates": "Regelmatige security updates en monitoring",
+          "access": "Toegangscontroles die bepalen wie je data kan zien"
+        },
+        "disclaimer": "We nemen security serieus, maar geen systeem is 100% waterdicht. Gebruik een sterk, uniek wachtwoord voor je STUDO-account."
+      },
+      "retention": {
+        "title": "5. Hoe lang bewaren we je data?",
+        "table": {
+          "dataType": "Type data",
+          "period": "Bewaartermijn"
+        },
+        "types": {
+          "account": {
+            "type": "Accountdata (e-mail, naam)",
+            "period": "Tot je je account verwijdert"
+          },
+          "content": {
+            "type": "Studie-content (studosets, visualsets)",
+            "period": "Tot je ze of je account verwijdert"
+          },
+          "logs": {
+            "type": "Gebruikslogs",
+            "period": "90 dagen"
+          },
+          "support": {
+            "type": "Supportberichten",
+            "period": "2 jaar na afhandeling"
+          }
+        },
+        "deletion": "Verwijder je je account? Dan wissen we je persoonsgegevens binnen 30 dagen. Sommige geanonimiseerde data kan behouden blijven voor analytics."
+      },
+      "sharing": {
+        "title": "6. Delen we je data?",
+        "description": "We <bold>verkopen</bold> je data niet. We delen alleen in deze situaties:",
+        "situations": {
+          "providers": "<bold>Dienstverleners:</bold> Trusted partners die ons helpen STUDO te runnen (hosting, e-mail), gebonden aan strikte data-overeenkomsten",
+          "legal": "<bold>Wettelijke verplichtingen:</bold> Indien vereist door wet of rechter, of om onze rechten te beschermen",
+          "consent": "<bold>Met jouw toestemming:</bold> Als je expliciet akkoord gaat met delen"
+        },
+        "compliance": "Alle externe verwerkers die we gebruiken zijn GDPR-compliant en gevestigd in de EU of landen met adequate bescherming."
+      },
+      "cookies": {
+        "title": "7. Cookies",
+        "description": "STUDO gebruikt cookies om je ingelogd te houden en voorkeuren te onthouden. We gebruiken:",
+        "types": {
+          "essential": "<bold>Essentiële cookies:</bold> Nodig voor de werking (authenticatie, sessie)",
+          "preference": "<bold>Voorkeurscookies:</bold> Onthouden je settings (dark mode, taal)",
+          "analytics": "<bold>Analytics cookies:</bold> Helpen ons begrijpen hoe STUDO gebruikt wordt (geanonimiseerd)"
+        },
+        "manage": "Je kunt cookies beheren in je browserinstellingen. Essentiële cookies blocken kan ervoor zorgen dat STUDO niet goed werkt."
+      },
+      "rights": {
+        "title": "8. Je rechten onder de GDPR",
+        "description": "Als EU-gebruiker heb je deze rechten:",
+        "list": {
+          "access": "<bold>Toegang:</bold> Vraag een kopie van je data op",
+          "rectification": "<bold>Correctie:</bold> Laat foute gegevens aanpassen",
+          "erasure": "<bold>Verwijdering:</bold> Vraag verwijdering van je data (\"recht op vergetelheid\")",
+          "restriction": "<bold>Beperking:</bold> Beperk hoe we je data verwerken",
+          "portability": "<bold>Overdraagbaarheid:</bold> Ontvang je data in een exporteerbaar formaat",
+          "object": "<bold>Bezwaar:</bold> Maak bezwaar tegen bepaalde verwerkingen (bv. marketing)",
+          "withdraw": "<bold>Toestemming intrekken:</bold> Trek toestemming wanneer je wilt in"
+        },
+        "contact": "Wil je een van deze rechten uitoefenen? Mail ons op <link>support@studo.study</link>. We reageren binnen 30 dagen."
+      },
+      "children": {
+        "title": "9. Privacy van minderjarigen",
+        "description": "STUDO is bedoeld voor gebruikers van 16+. Ben je jonger? Dan heb je toestemming nodig van een ouder of voogd. We verzamelen bewust geen data van kinderen onder 16 zonder ouderlijke toestemming.",
+        "discovery": "Ontdekken we dat we data van iemand onder 16 zonder juiste toestemming hebben verzameld? Dan verwijderen we die direct. Ouders kunnen contact opnemen via <link>support@studo.study</link>."
+      },
+      "changes": {
+        "title": "10. Wijzigingen in dit beleid",
+        "notify": "We kunnen dit beleid af en toe updaten. Bij belangrijke wijzigingen laten we het je weten via e-mail of een melding in de app. Check de \"Laatst geüpdatet\"-datum bovenaan.",
+        "acceptance": "STUDO blijven gebruiken na wijzigingen = akkoord met het nieuwe beleid."
+      },
+      "contact": {
+        "title": "11. Contact",
+        "description": "Vragen over dit privacybeleid of wil je je rechten uitoefenen? Neem contact op:",
+        "email": "E-mail:",
+        "complaint": "Vind je dat we je data niet correct hebben behandeld? Je kunt een klacht indienen bij de Belgische Gegevensbeschermingsautoriteit:",
+        "authority": {
+          "name": "Gegevensbeschermingsautoriteit (GBA)",
+          "address": "Drukpersstraat 35, 1000 Brussel"
+        }
+      }
+    },
+    "terms": {
+      "title": "Gebruiksvoorwaarden",
+      "lastUpdated": "Laatst geüpdatet: 8 januari 2026",
+      "intro": {
+        "welcome": "Welkom bij STUDO! Deze gebruiksvoorwaarden (\"Voorwaarden\") regelen je gebruik van het STUDO-platform, inclusief onze website, apps en gerelateerde diensten (samen de \"Dienst\"). Door STUDO te gebruiken, ga je akkoord met deze Voorwaarden.",
+        "readCarefully": "Lees deze Voorwaarden goed door. Niet akkoord? Dan kun je de Dienst niet gebruiken."
+      },
+      "about": {
+        "title": "1. Over STUDO",
+        "description": "STUDO is een digitaal studyplatform dat studenten helpt effectiever te leren. We bieden tools zoals studosets (flashcards), visualsets (visueel leren) en verschillende leermodes.",
+        "contact": "STUDO wordt beheerd vanuit België. Vragen? Mail naar <link>support@studo.study</link>."
+      },
+      "account": {
+        "title": "2. Account aanmaken",
+        "description": "Voor bepaalde features heb je een account nodig. Bij registratie ga je akkoord om:",
+        "rules": {
+          "accurate": "Correcte en volledige info te geven",
+          "secure": "Je login veilig en geheim te houden",
+          "notify": "Ons direct te melden bij vermoeden van onbevoegde toegang",
+          "responsible": "Verantwoordelijk te zijn voor alle activiteit onder je account"
+        },
+        "ageRequirement": "Je moet minimaal 16 zijn om een account aan te maken. Jonger dan 16? Dan heb je toestemming nodig van een ouder of voogd."
+      },
+      "acceptableUse": {
+        "title": "3. Acceptabel gebruik",
+        "description": "Je mag STUDO alleen gebruiken voor legale doeleinden en volgens deze Voorwaarden. Je mag <bold>niet</bold>:",
+        "rules": {
+          "illegal": "De Dienst gebruiken voor illegale of ongeautoriseerde doeleinden",
+          "harmful": "Schadelijke, beledigende of rechten-schendende content uploaden",
+          "hack": "Proberen te hacken, verstoren of interfereren met de Dienst of servers",
+          "bots": "Bots, scrapers of geautomatiseerde tools gebruiken zonder toestemming",
+          "impersonate": "Je voordoen als iemand anders",
+          "shareCredentials": "Je accountgegevens delen met anderen",
+          "spam": "De Dienst gebruiken voor spam of ongewenste berichten",
+          "viruses": "Virussen, malware of andere schadelijke code uploaden",
+          "circumvent": "Beveiligingsmaatregelen of toegangsbeperkingen omzeilen"
+        },
+        "reserve": "We kunnen accounts die deze regels overtreden schorsen of verwijderen."
+      },
+      "yourContent": {
+        "title": "4. Jouw content",
+        "ownership": "Je kunt content aanmaken en uploaden (studosets, visualsets, notities, etc. — \"Jouw Content\"). Je blijft eigenaar.",
+        "license": "Door te uploaden geef je STUDO een niet-exclusieve, wereldwijde, royaltyvrije licentie om Jouw Content op te slaan, te tonen en te verwerken — alleen om de Dienst aan jou te leveren. We verkopen of delen Jouw Content niet met derden voor hun eigen doeleinden.",
+        "responsible": "Je bent verantwoordelijk voor Jouw Content. Je garandeert dat:",
+        "rules": {
+          "own": "Je eigenaar bent of het recht hebt om Jouw Content te gebruiken en delen",
+          "infringe": "Jouw Content geen IP-rechten van anderen schendt",
+          "violate": "Jouw Content geen wetten of deze Voorwaarden schendt"
+        },
+        "remove": "We kunnen content die deze Voorwaarden schendt zonder waarschuwing verwijderen."
+      },
+      "sharedContent": {
+        "title": "5. Gedeelde & publieke content",
+        "description": "STUDO laat je studiemateriaal delen of publiek maken. Bij delen:",
+        "rules": {
+          "grant": "Geef je andere users toestemming om je gedeelde content te bekijken en te gebruiken",
+          "owner": "Je blijft eigenaar van je content",
+          "change": "Je kunt deel-instellingen wijzigen of content verwijderen wanneer je wilt",
+          "copied": "Anderen hebben je content mogelijk al gekopieerd voordat je het verwijdert"
+        },
+        "respect": "Respecteer andermans werk. Claim gedeelde content van anderen niet als je eigen werk."
+      },
+      "intellectualProperty": {
+        "title": "6. Intellectueel eigendom",
+        "ownership": "STUDO en zijn originele content (exclusief Jouw Content), features en functionaliteit zijn eigendom van STUDO en beschermd door copyright en andere IP-wetgeving.",
+        "restrictions": "Je mag geen deel van onze Dienst of software kopiëren, wijzigen, verspreiden, verkopen of leasen, noch reverse-engineeren of broncode proberen te achterhalen — tenzij de wet dit verbiedt of je onze schriftelijke toestemming hebt.",
+        "trademarks": "De naam STUDO, logo en branding zijn trademarks van STUDO. Gebruik ze niet zonder onze voorafgaande schriftelijke toestemming."
+      },
+      "premium": {
+        "title": "7. Gratis en premium",
+        "description": "STUDO biedt gratis en premium features. Core studyfeatures zijn gratis. In de toekomst kunnen we betaalde subscriptions of one-time purchases introduceren voor extra features.",
+        "purchase": "Bij aankoop van een premium abo:",
+        "rules": {
+          "payments": "Betalingen worden veilig verwerkt via onze payment provider",
+          "renew": "Abonnementen verlengen automatisch tenzij je opzegt voor de einddatum",
+          "cancel": "Je kunt altijd opzeggen; toegang blijft tot het einde van de factuurperiode",
+          "refunds": "Refunds worden afgehandeld volgens geldende consumentenwetten"
+        },
+        "pricing": "We kunnen prijzen wijzigen met redelijke notice. Bestaande abos blijven onaangetast tot verlenging."
+      },
+      "availability": {
+        "title": "8. Beschikbaarheid",
+        "description": "We streven naar 24/7 beschikbaarheid, maar kunnen dit niet garanderen. De Dienst kan tijdelijk down zijn door:",
+        "reasons": {
+          "maintenance": "Gepland onderhoud (we proberen je vooraf te informeren)",
+          "technical": "Onverwachte technische issues of bugs",
+          "circumstances": "Omstandigheden buiten onze controle (serverproblemen, internetstoringen)"
+        },
+        "liability": "We zijn niet aansprakelijk voor verlies of schade door onderbrekingen."
+      },
+      "disclaimer": {
+        "title": "9. Disclaimer",
+        "description": "STUDO wordt aangeboden \"as is\" en \"as available\" zonder garanties. We garanderen niet dat:",
+        "noGuarantee": {
+          "requirements": "De Dienst aan je specifieke eisen voldoet",
+          "errorFree": "De Dienst foutvrij of ononderbroken is",
+          "accurate": "Content op STUDO (inclusief user content) accuraat of betrouwbaar is",
+          "success": "Gebruik van STUDO academisch succes garandeert"
+        },
+        "studyTool": "STUDO is een studytool, geen vervanging voor lessen volgen, huiswerk maken of de eisen van je school naleven."
+      },
+      "liability": {
+        "title": "10. Beperking van aansprakelijkheid",
+        "description": "Voor zover wettelijk toegestaan is STUDO niet aansprakelijk voor indirecte, incidentele, speciale of gevolgschade, inclusief:",
+        "damages": {
+          "data": "Verlies van data of content",
+          "profits": "Verlies van winst of omzet",
+          "academic": "Academische resultaten of examenuitkomsten",
+          "interruptions": "Onderbrekingen of downtime"
+        },
+        "totalLiability": "Onze totale aansprakelijkheid is hoe dan ook beperkt tot het bedrag dat je ons betaalde (indien van toepassing) in de 12 maanden voor de claim.",
+        "jurisdictions": "Sommige rechtsgebieden staan bepaalde beperkingen niet toe, dus sommige van bovenstaande kunnen niet van toepassing zijn. In dat geval is onze aansprakelijkheid beperkt tot het wettelijk maximum."
+      },
+      "indemnification": {
+        "title": "11. Vrijwaring",
+        "description": "Je vrijwaart STUDO en zijn beheerder van claims, schade, verliezen of kosten (inclusief advocaatkosten) voortkomend uit:",
+        "claims": {
+          "use": "Je gebruik van de Dienst",
+          "content": "Jouw Content",
+          "violation": "Je schending van deze Voorwaarden",
+          "rights": "Je schending van rechten van een ander"
+        }
+      },
+      "termination": {
+        "title": "12. Beëindiging",
+        "userRight": "Je kunt op elk moment stoppen met STUDO en je account verwijderen via je instellingen of door ons te contacteren.",
+        "ourRight": "We kunnen je toegang direct schorsen of beëindigen, zonder notice, als:",
+        "reasons": {
+          "breach": "Je deze Voorwaarden schendt",
+          "harm": "Je gedrag andere users of de Dienst schaadt",
+          "law": "We daartoe wettelijk verplicht zijn",
+          "discontinue": "We de Dienst stopzetten (met redelijke notice)"
+        },
+        "effect": "Bij beëindiging stopt je recht om de Dienst te gebruiken direct. Bepalingen die logischerwijs blijven gelden (zoals eigendom, disclaimers en aansprakelijkheidsbeperkingen) blijven van kracht."
+      },
+      "changes": {
+        "title": "13. Wijzigingen in deze Voorwaarden",
+        "notify": "We kunnen deze Voorwaarden af en toe wijzigen. Bij belangrijke wijzigingen laten we het je weten via e-mail of een duidelijke melding voordat ze ingaan.",
+        "acceptance": "STUDO blijven gebruiken na wijzigingen = akkoord met de nieuwe Voorwaarden. Niet akkoord? Stop dan met gebruiken."
+      },
+      "governingLaw": {
+        "title": "14. Toepasselijk recht & geschillen",
+        "belgium": "Deze Voorwaarden vallen onder Belgisch recht. De Belgische rechtbanken hebben exclusieve bevoegdheid over geschillen.",
+        "eu": "Ben je een consument in de EU? Je behoudt de bescherming van verplichte consumentenwetten van je woonland. Je kunt ook het EU-platform voor online geschillenbeslechting gebruiken op <link>ec.europa.eu/consumers/odr</link>."
+      },
+      "miscellaneous": {
+        "title": "15. Overige bepalingen",
+        "entireAgreement": "<bold>Volledige overeenkomst:</bold> Deze Voorwaarden, samen met ons privacybeleid, vormen de volledige overeenkomst tussen jou en STUDO.",
+        "severability": "<bold>Scheidbaarheid:</bold> Als een bepaling ongeldig of niet-afdwingbaar is, blijven de rest van kracht.",
+        "noWaiver": "<bold>Geen afstand van rechten:</bold> Het niet afdwingen van een recht betekent niet dat we er afstand van doen.",
+        "assignment": "<bold>Overdracht:</bold> Je mag je rechten onder deze Voorwaarden niet overdragen. Wij wel."
+      },
+      "contact": {
+        "title": "16. Contact",
+        "description": "Vragen over deze Voorwaarden? Neem contact op:",
+        "email": "E-mail:",
+        "website": "Website:"
+      }
+    }
+  },
+  "login": {
+    "hook": "students already studying",
+    "Version": "Versie",
+    "rights": "STUDO inc. All Rights Reserved.",
+    "Welcome back": "Welcome back",
+    "email": "email",
+    "password": "password",
+    "Log In": "Log In",
+    "log into account": "log into account",
+    "or log in with": "or log in with",
+    "Google": "Google",
+    "Microsoft": "Microsoft",
+    "Smartschool": "Smartschool",
+    "Don't have an account?": "Don't have an account?",
+    "sign up": "sign up"
+  },
+  "notfound": {
+    "return": "terug",
+    "404": "404"
   }
 }

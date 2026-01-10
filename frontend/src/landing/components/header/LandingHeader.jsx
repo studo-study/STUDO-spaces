@@ -15,9 +15,9 @@ import pin from "../../../assets/icons/pin-icon.svg";
 import point from "../../../assets/icons/point.svg";
 
 const menuItems = [
-	{ to: "/about-studysets", icon: ss, label: "studysets", color: "from-emerald-400 to-teal-500" },
-	{ to: "/about-visualsets", icon: vs, label: "visualsets", color: "from-blue-400 to-indigo-500" },
-	{ to: "/about-ai", icon: ai, label: "ai", color: "from-violet-400 to-purple-500" },
+	{ to: "/about-about-studosets", icon: ss, label: "studysets", color: "from-emerald-400 to-teal-500" },
+	{ to: "/about-about-visualsets", icon: vs, label: "visualsets", color: "from-blue-400 to-indigo-500" },
+	{ to: "/about-about-ai", icon: ai, label: "ai", color: "from-violet-400 to-purple-500" },
 ];
 
 const toolCategories = [

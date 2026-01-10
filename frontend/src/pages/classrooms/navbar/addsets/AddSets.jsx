@@ -13,7 +13,7 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
   const { t } = useTranslation();
   const popupRef = useRef(null);
 
-  const { data: sets, isLoading } = useSWR("users/me/studysets");
+  const { data: sets, isLoading } = useSWR("users/me/about-studosets");
   const { trigger: triggerImport } = useSWRMutation(`classrooms/${classroom}/sets/add`, save);
 
   const [sortedsets, setSortedsets] = useState([]);

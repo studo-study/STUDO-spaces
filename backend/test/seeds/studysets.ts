@@ -1,4 +1,4 @@
-// test/seeds/studysets.ts
+// test/seeds/about-studosets.ts
 import { DatabaseProvider } from '../../src/drizzle/drizzle.provider';
 import { studysets } from '../../src/drizzle/schema';
 
@@ -41,13 +41,13 @@ export const STUDYSETS_SEED = [
 ];
 
 export async function seedStudysets(drizzle: DatabaseProvider) {
-  console.log('🌱 Seeding studysets...');
+  console.log('🌱 Seeding about-studosets...');
   await drizzle.insert(studysets).values(STUDYSETS_SEED);
   console.log('✅ Studysets seeded');
 }
 
 export async function clearStudysets(drizzle: DatabaseProvider) {
-  console.log('🧹 Clearing studysets...');
+  console.log('🧹 Clearing about-studosets...');
   await drizzle.delete(studysets);
   console.log('✅ Studysets cleared');
 }
