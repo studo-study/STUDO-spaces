@@ -1,11 +1,23 @@
-import {useLocale} from "next-intl";
+"use client"
+import {useLocale, useTranslations} from "next-intl";
 import {HiMenuAlt4} from "react-icons/hi";
-import {LuUser} from "react-icons/lu";
-import {IoIosAdd, IoMdNotificationsOutline} from "react-icons/io";
+import {IoMdNotificationsOutline} from "react-icons/io";
 import {PiStudent} from "react-icons/pi";
 import {IoSearch} from "react-icons/io5";
+import Link from "next/link";
+import TriggerAddPopup from "@/components/app_header/add_popup";
+import {useRef, useState} from "react";
+import TriggerNotif from "@/components/app_header/notif_popup";
+import StreakPopup from "@/components/app_header/streak_popup";
+import TriggerProfile from "@/components/app_header/profile_popup";
 
 export default function AppHeader() {
+    const streak = 50;
+    const [AddIsOpen, setAddIsOpen] = useState(false);
+    const [NotifIsOpen, setNotifIsOpen] = useState(false);
+    const [ProfileIsOpen, setProfileIsOpen] = useState(false);
+    const [StreakOpen, setStreakOpen] = useState(false);
+    const t = useTranslations("header");
     return (
         <div className={"h-fit fixed top-0 w-screen flex flex-col "}>
             <div className={"w-screen h-0.5"}></div>
@@ -16,9 +28,9 @@ export default function AppHeader() {
                         className="flex items-center justify-center cursor-pointer text-2xl text-white/30 min-w-10 min-h-10 rounded-full border border-studoborder/20 shadow-xl glass-rgb">
                         <HiMenuAlt4/>
                     </button>
-                    <span className={`font-akira text-2xl truncate bg-gradient-to-r ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
+                    <Link href={"/home"} className={`font-akira text-2xl truncate bg-gradient-to-r ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
                         STUDO
-                    </span>
+                    </Link>
 
                 </div>
 
@@ -35,44 +47,134 @@ export default function AppHeader() {
                 {/* Right section */}
                 <div className="flex items-center gap-5 ml-5 justify-end">
                     {/* Add button */}
-                    <button className="relative flex items-center justify-center cursor-pointer">
-                        <div className="absolute bg-blue-500/50 h-10 w-10 rounded-full blur-sm"/>
-                        <div
-                            className="relative z-10 shadow-2xl bg-blue-500 h-10 min-w-10 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
-                            <IoIosAdd/>
-                        </div>
-                    </button>
+                    <TriggerAddPopup
+                        AddIsOpen={AddIsOpen}
+                        setAddIsOpen={setAddIsOpen}
+                    />
 
                     {/* Notifications */}
-                    <button className="relative flex items-center justify-center cursor-pointer">
-                        <div
-                            className="flex items-center justify-center text-2xl text-white/30 min-w-10 min-h-10 rounded-full border border-studoborder/20 shadow-xl glass-rgb">
-                            <IoMdNotificationsOutline/>
-                        </div>
-                        <div
-                            className="absolute top-0.5 right-0.5 rounded-full border-studoborder border bg-rose-500 w-2 h-2"/>
-                    </button>
+                    <TriggerNotif
+                        NotifIsOpen={NotifIsOpen}
+                        setNotifIsOpen={setNotifIsOpen}
+                    />
 
                     {/* Profile */}
-                    <button className="relative flex items-center justify-center cursor-pointer">
-                        <div className="absolute bg-emerald-500/50 h-10 w-10 rounded-full blur-sm"/>
-                        <div
-                            className="relative z-10 shadow-2xl bg-emerald-600 h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
-                            <PiStudent/>
-                        </div>
+                    <TriggerProfile
+                        ProfileIsOpen={ProfileIsOpen}
+                        setProfileIsOpen={setProfileIsOpen}
+                    />
 
-                    </button>
-                    <div className={"flex justify-center min-w-fit py-1 px-3 bg-studogrey/30 rounded-4xl gap-2 text-bold font-bold text-white items-center"}>
-                        <img src="/icons/streak2.svg" alt="" className={"w-5 saturate-100"} />
-                        <span className={"w-fit"}>100</span>
-                    </div>
+                    {/* Streak */}
+                    <Streak
+                        streak={streak}
+                        StreakOpen={StreakOpen}
+                        setStreakOpen={setStreakOpen}
+                    />
                 </div>
             </div>
         </div>
     );
 }
 
+interface StreakProps {
+    streak: number;
+    StreakOpen: boolean,
+    setStreakOpen: React.Dispatch<React.SetStateAction<boolean>>,
+}
 
+function Streak({ streak, StreakOpen, setStreakOpen  }: StreakProps) {
+    const config = getStreakConfig(streak);
+    const containerRef = useRef(null);
+    const togglePopUp = () => {
+        setStreakOpen((prev) => !prev);
+    };
+
+    return (
+        <Link
+            href={"/streak"}
+            ref={containerRef}
+            onMouseEnter={() => setStreakOpen(true)}
+            onMouseLeave={() => setStreakOpen(false)}
+            className="min-w-20 max-w-20 flex items-center cursor-pointer active:scale-95 transition-all duration-300 justify-center relative">
+            {config.glow && (
+                <div className="absolute z-0 flex justify-center min-w-20 h-8 blur-lg opacity-40 py-1 px-3 bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300 rounded-4xl" />
+            )}
+                <div className={`${config.glow ? 'z-10 relative' : ''} min-w-fit flex justify-center py-1 px-3 ${config.bg} rounded-4xl gap-2 font-bold text-white items-center`}>
+                    <img
+                        src={config.icon}
+                        alt=""
+                        className={`w-5 ${config.saturation}`}
+                    />
+                    <span className={`w-fit ${config.textColor}`}>{streak}</span>
+                </div>
+                <StreakPopup
+                    Streak={streak}
+                    StreakOpen={StreakOpen}
+                    setStreakOpen={setStreakOpen}
+                    containerRef={containerRef}/>
+        </Link>
+    );
+}
+
+function getStreakConfig(streak: number) {
+    if (streak === 0) {
+        return {
+            bg: 'bg-studogrey/30',
+            icon: '/streak/streak-03.svg',
+            saturation: 'saturate-0',
+            textColor: '',
+            glow: false,
+        };
+    }
+
+    if (streak === 67 || streak === 69 || streak >= 200) {
+        return {
+            bg: 'bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300',
+            icon: '/streak/streak-02.svg',
+            saturation: 'saturate-100',
+            textColor: 'text-studodarkblue',
+            glow: streak >= 200,
+        };
+    }
+
+    if (streak <= 10) {
+        return {
+            bg: 'bg-studogrey/30',
+            icon: '/streak/streak-03.svg',
+            saturation: 'saturate-50',
+            textColor: '',
+            glow: false,
+        };
+    }
+
+    if (streak <= 49) {
+        return {
+            bg: 'bg-studogrey/30',
+            icon: '/streak/streak-03.svg',
+            saturation: 'saturate-100',
+            textColor: '',
+            glow: false,
+        };
+    }
+
+    if (streak <= 99) {
+        return {
+            bg: 'bg-studogrey/30',
+            icon: '/streak/streak-02.svg',
+            saturation: 'saturate-100',
+            textColor: '',
+            glow: false,
+        };
+    }
+
+    return {
+        bg: 'bg-gradient-to-r from-amber-300/30 via-amber-600/30 to-yellow-500/30',
+        icon: '/streak/streak-03.svg',
+        saturation: 'saturate-100',
+        textColor: '',
+        glow: false,
+    };
+}
 
 function specialeDag() {
     const date: Date = new Date();
