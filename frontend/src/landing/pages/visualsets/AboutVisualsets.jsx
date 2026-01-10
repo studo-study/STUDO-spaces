@@ -12,29 +12,29 @@ export default function AboutVisualsets() {
     setMounted(true);
   }, []);
 
-  const title = t("seo.visualsets.title", "Visualsets | Studo");
+  const title = t("seo.about-visualsets.title", "Visualsets | Studo");
   const description = t(
-    "seo.visualsets.description",
+    "seo.about-visualsets.description",
     "Create visual study sets with Studo. Upload images and add interactive labels for anatomy, geography, diagrams, and any image-based learning."
   );
   const keywords = t(
-    "seo.visualsets.keywords",
+    "seo.about-visualsets.keywords",
     "visual learning, image flashcards, anatomy study, diagram learning, visual sets, Studo visual"
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "Visual Sets", path: "/about-visualsets" }
+    { name: "Visual Sets", path: "/about-about-visualsets" }
   ];
 
   const faqs = [
     {
-      question: t("faq.visualsets.what.question", "What are visual sets?"),
-      answer: t("faq.visualsets.what.answer", "Visual sets are image-based study materials where you can label parts of an image. They're perfect for anatomy, maps, diagrams, and any visual subject.")
+      question: t("faq.about-visualsets.what.question", "What are visual sets?"),
+      answer: t("faq.about-visualsets.what.answer", "Visual sets are image-based study materials where you can label parts of an image. They're perfect for anatomy, maps, diagrams, and any visual subject.")
     },
     {
-      question: t("faq.visualsets.create.question", "How do I create a visual set?"),
-      answer: t("faq.visualsets.create.answer", "Upload an image, then click to add labels to different parts. You can add as many labels as you need and then study using Identify or Point mode.")
+      question: t("faq.about-visualsets.create.question", "How do I create a visual set?"),
+      answer: t("faq.about-visualsets.create.answer", "Upload an image, then click to add labels to different parts. You can add as many labels as you need and then study using Identify or Point mode.")
     }
   ];
 
@@ -46,7 +46,7 @@ export default function AboutVisualsets() {
         keywords={keywords}
         path="/about-visualsets"
         image="/og/welcome.png"
-        imageAlt={t("seo.visualsets.imageAlt", "Studo Visual Sets - Image-based learning")}
+        imageAlt={t("seo.about-visualsets.imageAlt", "Studo Visual Sets - Image-based learning")}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />

@@ -23,7 +23,7 @@ describe('Studysets', () => {
   let authToken: string; // paulallen@example.com - userId2
   let adminToken: string; // charles@test.com - userId1 (admin)
 
-  const baseUrl = '/api/studysets';
+  const baseUrl = '/api/about-studosets';
 
   // studySetId1 belongs to userId1 (admin/charles)
   // studySetId2 belongs to userId2 (user/paulallen)
@@ -77,10 +77,10 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // GET /api/studysets - Get all studysets (admin only)
+  // GET /api/about-studosets - Get all about-studosets (admin only)
   // ============================================================
-  describe('GET /api/studysets', () => {
-    it('zou alle studysets moeten retourneren voor admin', async () => {
+  describe('GET /api/about-studosets', () => {
+    it('zou alle about-studosets moeten retourneren voor admin', async () => {
       const response = await request(app.getHttpServer())
         .get(baseUrl)
         .set('Authorization', `Bearer ${adminToken}`)
@@ -108,9 +108,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // GET /api/studysets/:set_id - Get studoset by ID
+  // GET /api/about-studosets/:set_id - Get studoset by ID
   // ============================================================
-  describe('GET /api/studysets/:set_id', () => {
+  describe('GET /api/about-studosets/:set_id', () => {
     it('zou een specifieke studoset met alle details moeten retourneren', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${studySetId1}`)
@@ -154,9 +154,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // GET /api/studysets/:set_id/studysession - Get studysession by set ID
+  // GET /api/about-studosets/:set_id/studysession - Get studysession by set ID
   // ============================================================
-  describe('GET /api/studysets/:set_id/studysession', () => {
+  describe('GET /api/about-studosets/:set_id/studysession', () => {
     it('zou de studysession voor een specifieke studoset moeten retourneren', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${studySetId1}/studysession`)
@@ -194,9 +194,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // POST /api/studysets - Create studoset
+  // POST /api/about-studosets - Create studoset
   // ============================================================
-  describe('POST /api/studysets', () => {
+  describe('POST /api/about-studosets', () => {
     it('zou een nieuwe studoset moeten aanmaken', async () => {
       const newStudyset = {
         title: 'New Test Set',
@@ -317,9 +317,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // POST /api/studysets/:set_id/likes - Like a studoset
+  // POST /api/about-studosets/:set_id/likes - Like a studoset
   // ============================================================
-  describe('POST /api/studysets/:set_id/likes', () => {
+  describe('POST /api/about-studosets/:set_id/likes', () => {
     it('zou een studoset moeten kunnen liken', async () => {
 
       const response = await request(app.getHttpServer())
@@ -351,9 +351,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // DELETE /api/studysets/:set_id/likes - Remove like from studoset
+  // DELETE /api/about-studosets/:set_id/likes - Remove like from studoset
   // ============================================================
-  describe('DELETE /api/studysets/:set_id/likes', () => {
+  describe('DELETE /api/about-studosets/:set_id/likes', () => {
     it('zou een like moeten kunnen verwijderen', async () => {
       // First like the set
       await request(app.getHttpServer())
@@ -387,9 +387,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // PUT /api/studysets/:set_id - Update studoset
+  // PUT /api/about-studosets/:set_id - Update studoset
   // ============================================================
-  describe('PUT /api/studysets/:set_id', () => {
+  describe('PUT /api/about-studosets/:set_id', () => {
     it('zou een studoset moeten kunnen updaten (owner)', async () => {
       const updateDto = {
         title: 'Updated Title',
@@ -488,9 +488,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // PUT /api/studysets/:set_id/folder - Switch folder
+  // PUT /api/about-studosets/:set_id/folder - Switch folder
   // ============================================================
-  describe('PUT /api/studysets/:set_id/folder', () => {
+  describe('PUT /api/about-studosets/:set_id/folder', () => {
     it('zou een studoset naar een andere folder moeten kunnen verplaatsen', async () => {
       const switchDto = {
         user_id: userId1,
@@ -581,9 +581,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // POST /api/studysets/:set_id/studysession - Create studysession
+  // POST /api/about-studosets/:set_id/studysession - Create studysession
   // ============================================================
-  describe('POST /api/studysets/:set_id/studysession', () => {
+  describe('POST /api/about-studosets/:set_id/studysession', () => {
     it('zou een nieuwe studysession moeten kunnen aanmaken', async () => {
       // authToken (paulallen) creates session for studySetId2 (which they own)
       const response = await request(app.getHttpServer())
@@ -624,9 +624,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // DELETE /api/studysets/:set_id - Delete studoset
+  // DELETE /api/about-studosets/:set_id - Delete studoset
   // ============================================================
-  describe('DELETE /api/studysets/:set_id', () => {
+  describe('DELETE /api/about-studosets/:set_id', () => {
     it('zou een studoset moeten kunnen verwijderen (owner)', async () => {
       // Create a temporary studoset as authToken user (paulallen)
       const tempSet = {

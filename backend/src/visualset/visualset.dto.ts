@@ -308,7 +308,7 @@ export class FullVSResponseListDto extends VisualsetResponseDto {
 export class VisualsetResponseListDto {
   @ApiProperty({
     type: [VisualsetResponseDto],
-    description: 'List of visualsets',
+    description: 'List of about-visualsets',
   })
   @Expose()
   visualsets: VisualsetResponseDto[];
