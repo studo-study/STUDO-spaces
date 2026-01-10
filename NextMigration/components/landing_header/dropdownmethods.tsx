@@ -95,7 +95,7 @@ function MethodsPopUp({ MethodsOpen, setMethodsOpen, triggerRef }: MethodsPopUpP
         >
             {/* Arrow */}
             <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45
-        bg-white/80 dark:bg-[#1e293b]/90
+        bg-white/80 dark:bg-[#1e293b]/90  backdrop-blur-xl
         border-l border-t border-white/50 dark:border-white/10"
             />
 

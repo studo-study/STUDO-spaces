@@ -17,23 +17,6 @@
       "lm": "Learn Modes",
       "st": "Study Tools"
     },
-    "footer": {
-      "footerQuote": "Study Smart, Stay Ahead!",
-      "aboutTitle": "about studo",
-      "ss": "studosets",
-      "vs": "visualsets",
-      "aboutBlock1": "About Us",
-      "aboutBlock2": "Privacy",
-      "aboutBlock3": "Terms of Service",
-      "ssBlock1": "Create Studoset",
-      "ssBlock2": "Studosets",
-      "vsBlock1": "Create Visualset",
-      "vsBlock2": "Visualsets",
-      "loveGreen": "Built with \uD83D\uDC9A using React",
-      "loveBlue": "Built with \uD83D\uDC99 using React",
-      "Version": "Version",
-      "rights": "STUDO inc. All Rights Reserved."
-    },
     "welcome": {
       "CreateCustom": "Create custom study sets",
       "TextVisualLearning": "Text or visual learning",
