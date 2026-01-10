@@ -544,6 +544,15 @@
     "Don't have an account?": "Don't have an account?",
     "sign up": "sign up"
   },
+  "header": {
+    "create_ss": "Create Studoset",
+    "create_vs": "Create Visualset",
+    "create_f": "Create Folder",
+    "notifs": "notifications",
+    "day streak": "day streak",
+    "studied": "You have studied ",
+    "days": " days in a row"
+  },
   "notfound": {
     "return": "terug",
     "404": "404"
