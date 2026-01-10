@@ -133,7 +133,7 @@ export class UserController {
 
   // GET USER STUDYSETS --------------------------------------------
 
-  @ApiOperation({ summary: 'Haal alle studysets op van een gebruiker.' })
+  @ApiOperation({ summary: 'Haal alle about-studosets op van een gebruiker.' })
   @ApiParam({ name: 'user_id', type: String })
   @ApiResponse({
     status: 200,
@@ -142,7 +142,7 @@ export class UserController {
   })
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER, Role.ADMIN)
-  @Get(':user_id/studysets')
+  @Get(':user_id/about-studosets')
   async getAllSetsById(
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,

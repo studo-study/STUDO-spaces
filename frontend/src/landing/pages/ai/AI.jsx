@@ -11,19 +11,19 @@ export default function AI() {
     setMounted(true);
   }, []);
 
-  const title = t("seo.ai.title", "AI Tools | Studo");
+  const title = t("seo.about-ai.title", "AI Tools | Studo");
   const description = t(
-    "seo.ai.description",
+    "seo.about-ai.description",
     "Discover Studo's AI-powered study tools. Generate flashcards automatically, get smart study recommendations, and learn faster with artificial intelligence."
   );
   const keywords = t(
-    "seo.ai.keywords",
+    "seo.about-ai.keywords",
     "AI flashcards, AI study tool, automatic flashcards, smart learning, AI education, Studo AI"
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "AI", path: "/about-ai" }
+    { name: "AI", path: "/about-about-ai" }
   ];
 
   return (
@@ -34,7 +34,7 @@ export default function AI() {
         keywords={keywords}
         path="/about-ai"
         image="/og/welcome.png"
-        imageAlt={t("seo.ai.imageAlt", "Studo AI - Smart study tools")}
+        imageAlt={t("seo.about-ai.imageAlt", "Studo AI - Smart study tools")}
         breadcrumbs={breadcrumbs}
       />
       <main

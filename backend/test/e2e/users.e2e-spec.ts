@@ -250,8 +250,8 @@ describe('Users', () => {
     );
   });
 
-  describe('GET /api/users/:user_id/studysets', () => {
-    it('moet 200 retourneren en alle studysets van user tonen', async () => {
+  describe('GET /api/users/:user_id/about-studosets', () => {
+    it('moet 200 retourneren en alle about-studosets van user tonen', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${userId2}/studysets`)
         .auth(userAuthToken, { type: 'bearer' });
@@ -695,7 +695,7 @@ describe('Users', () => {
   });
 
   describe('GET /api/users/:user_id/course/:course_id', () => {
-    it('moet 200 retourneren en course studysets tonen', async () => {
+    it('moet 200 retourneren en course about-studosets tonen', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${userId2}/course/Biology`)
         .auth(userAuthToken, { type: 'bearer' });

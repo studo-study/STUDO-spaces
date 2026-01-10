@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 export default function CoursesPage() {
   const [select, setSelect] = useState(true);
-  const { data: data, isLoading } = useSWR("users/me/studysets");
+  const { data: data, isLoading } = useSWR("users/me/about-studosets");
 
   const courses = new Set();
 

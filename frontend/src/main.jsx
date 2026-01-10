@@ -45,7 +45,7 @@ import Welcome from "./landing/pages/welcome/Welcome.jsx";
 import AboutUs from "./landing/pages/aboutus/AboutUs.jsx";
 import AI from "./landing/pages/ai/AI.jsx";
 import AboutFlashcards from "./landing/pages/flashcards/AboutFlashcards.jsx";
-import AboutPin from "./landing/pages/pin/AboutPin.jsx";
+import AboutPin from "./landing/pages/identify/AboutPin.jsx";
 import AboutPoint from "./landing/pages/point/AboutPoint.jsx";
 import AboutSpeedy from "./landing/pages/speedy/AboutSpeedy.jsx";
 import AboutVisualsets from "./landing/pages/visualsets/AboutVisualsets.jsx";
@@ -172,14 +172,14 @@ const privateRoutes = [
 const landingRoutes = [
   { path: "welcome", element: <Welcome /> },
   { path: "about-us", element: <AboutUs /> },
-  { path: "about-ai", element: <AI /> },
+  { path: "about-about-ai", element: <AI /> },
   { path: "flashcards", element: <AboutFlashcards /> },
   { path: "learn", element: <AboutLearn /> },
   { path: "identify", element: <AboutPin /> },
   { path: "point", element: <AboutPoint /> },
   { path: "speedy", element: <AboutSpeedy /> },
-  { path: "about-studysets", element: <AboutStudysets /> },
-  { path: "about-visualsets", element: <AboutVisualsets /> },
+  { path: "about-about-studosets", element: <AboutStudysets /> },
+  { path: "about-about-visualsets", element: <AboutVisualsets /> },
 ];
 
 // Auth pages
