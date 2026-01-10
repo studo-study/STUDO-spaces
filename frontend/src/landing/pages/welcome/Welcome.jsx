@@ -32,7 +32,7 @@ export default function Welcome() {
     },
     {
       question: t("faq.quizlet.question", "How is Studo different from Quizlet?"),
-      answer: t("faq.quizlet.answer", "Compared to Quizlet, Studo offers far more advanced visual studysets and statistics about your studying. Plus the core functionality is free, which Quizlet isn't. While there are optional premium upgrades and some ads, the main learning tools are completely free, letting you focus on studying effectively.")
+      answer: t("faq.quizlet.answer", "Compared to Quizlet, Studo offers far more advanced visual about-studosets and statistics about your studying. Plus the core functionality is free, which Quizlet isn't. While there are optional premium upgrades and some ads, the main learning tools are completely free, letting you focus on studying effectively.")
     }
   ];
 

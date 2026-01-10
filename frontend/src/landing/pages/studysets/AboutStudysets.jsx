@@ -12,29 +12,29 @@ export default function AboutStudysets() {
     setMounted(true);
   }, []);
 
-  const title = t("seo.studysets.title", "Studysets | Studo");
+  const title = t("seo.about-studosets.title", "Studysets | Studo");
   const description = t(
-    "seo.studysets.description",
+    "seo.about-studosets.description",
     "Create custom study sets with Studo. Add terms, definitions, and images to build the perfect study material. Share with classmates or keep private."
   );
   const keywords = t(
-    "seo.studysets.keywords",
+    "seo.about-studosets.keywords",
     "study sets, create flashcards, custom study material, share study sets, Studo study sets"
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "Study Sets", path: "/about-studysets" }
+    { name: "Study Sets", path: "/about-about-studosets" }
   ];
 
   const faqs = [
     {
-      question: t("faq.studysets.what.question", "What are study sets?"),
-      answer: t("faq.studysets.what.answer", "Study sets are collections of flashcards with terms and definitions. You can create them for any subject and study them using various modes like Learn, Flashcards, or Speedy.")
+      question: t("faq.about-studosets.what.question", "What are study sets?"),
+      answer: t("faq.about-studosets.what.answer", "Study sets are collections of flashcards with terms and definitions. You can create them for any subject and study them using various modes like Learn, Flashcards, or Speedy.")
     },
     {
-      question: t("faq.studysets.share.question", "Can I share my study sets?"),
-      answer: t("faq.studysets.share.answer", "Yes! You can make your study sets public to share with classmates or the community, or keep them private for personal use.")
+      question: t("faq.about-studosets.share.question", "Can I share my study sets?"),
+      answer: t("faq.about-studosets.share.answer", "Yes! You can make your study sets public to share with classmates or the community, or keep them private for personal use.")
     }
   ];
 
@@ -46,7 +46,7 @@ export default function AboutStudysets() {
         keywords={keywords}
         path="/about-studysets"
         image="/og/welcome.png"
-        imageAlt={t("seo.studysets.imageAlt", "Studo Study Sets - Create and share")}
+        imageAlt={t("seo.about-studosets.imageAlt", "Studo Study Sets - Create and share")}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />
