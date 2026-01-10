@@ -1,16 +1,17 @@
 "use client"
 import { FaYoutube } from "react-icons/fa6";
-import { useTranslation } from "react-i18next";
+
 import Link from "next/link";
+import {useTranslations} from "next-intl";
 export default function LandingFooter() {
-    const { t } = useTranslation();
+    const t = useTranslations("landing.footer");
     const CurrentYear = new Date().getFullYear();
 
     return (
         <footer className="w-full flex flex-col text-white">
             <div className="w-full flex items-center justify-center py-8 bg-white dark:bg-[#182536]">
         <span className="font-bold text-2xl text-emerald-400 dark:text-white">
-          {t("Study Smart, Stay Ahead!")}
+          {t("footerQuote")}
         </span>
             </div>
 
@@ -36,37 +37,37 @@ export default function LandingFooter() {
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <span className="font-bold text-xl">{t("ABOUT STUDO")}</span>
-                            <Link href="/about-us" className="hover:underline">{t("About Us")}</Link>
-                            <Link href="/privacy" className="hover:underline">{t("Privacy")}</Link>
-                            <Link href="/terms-of-service" className="hover:underline">{t("Terms of Service")}</Link>
+                            <span className="font-bold text-xl">{t("aboutTitle").toUpperCase()}</span>
+                            <Link href="/about-us" className="hover:underline">{t("aboutBlock1")}</Link>
+                            <Link href="/privacy" className="hover:underline">{t("aboutBlock2")}</Link>
+                            <Link href="/terms-of-service" className="hover:underline">{t("aboutBlock3")}</Link>
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <span className="font-bold text-xl">{t("STUDYSETS")}</span>
-                            <Link href="/login" className="hover:underline">{t("Create Studyset")}</Link>
-                            <Link href="/login" className="hover:underline">{t("Studysets")}</Link>
+                            <span className="font-bold text-xl">{t("ss").toUpperCase()}</span>
+                            <Link href="/login" className="hover:underline">{t("ssBlock1")}</Link>
+                            <Link href="/login" className="hover:underline">{t("ssBlock2")}</Link>
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <span className="font-bold text-xl">{t("VISUALSETS")}</span>
-                            <Link href="/login" className="hover:underline">{t("Create Visualset")}</Link>
-                            <Link href="/login" className="hover:underline">{t("Visualsets")}</Link>
+                            <span className="font-bold text-xl">{t("vs").toUpperCase()}</span>
+                            <Link href="/login" className="hover:underline">{t("vsBlock1")}</Link>
+                            <Link href="/login" className="hover:underline">{t("vsBlock2")}</Link>
                         </div>
                     </div>
 
                     <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-base px-6 sm:px-0">
                         <p className="dark:hidden text-center sm:text-left">
-                            {t("Built with 💚 using React")}
+                            {t("loveGreen")}
                         </p>
                         <p className="hidden dark:flex text-center sm:text-left">
-                            {t("Built with 💙 using React")}
+                            {t("loveBlue")}
                         </p>
                         <p className="text-xs opacity-75 order-first sm:order-none">
-                            {t("Version")} 2.02
+                            {t("Version")} {process.env.NEXT_PUBLIC_VERSION}
                         </p>
                         <p className="text-center sm:text-right">
-                            &copy; {CurrentYear} {t("STUDO inc. All Rights Reserved.")}
+                            &copy; {CurrentYear} {t("rights")}
                         </p>
                     </div>
                 </div>

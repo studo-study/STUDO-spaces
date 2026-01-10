@@ -25,7 +25,7 @@ export default function StudosetPage() {
                             {t("block1_studyset")}
                         </p>
                             </AnimateOnMount>
-                        <AnimateOnMount delay={300}>
+                        <AnimateOnMount delay={300} className={"w-full"}>
                         <ul className={`w-full flex pl-5 gap-4 flex-col font-bold
                                       transition-all duration-700 delay-300
                                       text-base items-baseline justify-baseline mb-7`}>
