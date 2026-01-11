@@ -1,34 +1,70 @@
 "use client"
 import {useLocale, useTranslations} from "next-intl";
 import {HiMenuAlt4} from "react-icons/hi";
-import {IoMdNotificationsOutline} from "react-icons/io";
-import {PiStudent} from "react-icons/pi";
 import {IoSearch} from "react-icons/io5";
 import Link from "next/link";
 import TriggerAddPopup from "@/components/app_header/add_popup";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import TriggerNotif from "@/components/app_header/notif_popup";
 import StreakPopup from "@/components/app_header/streak_popup";
 import TriggerProfile from "@/components/app_header/profile_popup";
+import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
+import SearchBar from "@/components/app_header/search";
 
-export default function AppHeader() {
-    const streak = 50;
+interface HeaderProps {
+    burgerOpen: boolean,
+    setBurgerOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    Search: boolean,
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch}: HeaderProps) {
+    const data = {
+        displayName: "Studo Admin",
+        email: "admin@studo.study",
+        streak_count: 29,
+        pfp: "https://i.pravatar.cc/150?img=1",
+        moderator: true
+    };
+
+
     const [AddIsOpen, setAddIsOpen] = useState(false);
     const [NotifIsOpen, setNotifIsOpen] = useState(false);
     const [ProfileIsOpen, setProfileIsOpen] = useState(false);
     const [StreakOpen, setStreakOpen] = useState(false);
+    const searchRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("header");
+
+    const toggleBurger = () => {
+        setBurgerOpen(!burgerOpen);
+    };
+
+    const toggleSearch = () => {
+        setSearch(true);
+        if (searchRef.current) {
+            searchRef.current.focus();
+        }
+    };
+
+    useEffect(() => {
+        if (Search && searchRef.current) {
+            searchRef.current.focus();
+        }
+    }, [Search]);
+
+
+
     return (
-        <div className={"h-fit fixed top-0 w-screen flex flex-col "}>
+        <div className={"h-fit top-0 w-screen flex flex-col"}>
             <div className={"w-screen h-0.5"}></div>
             <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-b border-studogrey/30 gap-5">
                 {/* Left section */}
                 <div className="flex items-center gap-8 min-w-1/4">
                     <button
-                        className="flex items-center justify-center cursor-pointer text-2xl text-white/30 min-w-10 min-h-10 rounded-full border border-studoborder/20 shadow-xl glass-rgb">
-                        <HiMenuAlt4/>
+                        onClick={toggleBurger}
+                        className="flex items-center justify-center cursor-pointer text-2xl text-white min-w-10 min-h-10 rounded-full border border-studoborder/20 shadow-xl glass-rgb">
+                        {burgerOpen ? <TbLayoutSidebarLeftCollapse className={"opacity-30"}/> : <HiMenuAlt4 className={"opacity-30"}/>}
                     </button>
-                    <Link href={"/home"} className={`font-akira text-2xl truncate bg-gradient-to-r ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
+                    <Link href={"/home"} className={`font-akira text-2xl truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
                         STUDO
                     </Link>
 
@@ -36,12 +72,12 @@ export default function AppHeader() {
 
                 {/*center*/}
                 <div className={"w-full h-fit flex justify-end items-center"}>
-                    <div className={"h-10 gap-5 text-white w-1/3 rounded-4xl glass-rgb border-studoborder/30 border focus:border-white shadow-2xl flex justify-around"}>
-                        <input placeholder={"search..."} type="text" className={" w-full h-full outline-none focus:ring-0"}/>
-                        <button className={"w-fit cursor-pointer"}>
-                            <IoSearch />
-                        </button>
-                    </div>
+                    <SearchBar
+                        searchRef={searchRef}
+                        toggleSearch={toggleSearch}
+                        setSearch={setSearch}
+                        Search={Search}
+                    />
                 </div>
 
                 {/* Right section */}
@@ -62,11 +98,12 @@ export default function AppHeader() {
                     <TriggerProfile
                         ProfileIsOpen={ProfileIsOpen}
                         setProfileIsOpen={setProfileIsOpen}
+                        user={data}
                     />
 
                     {/* Streak */}
                     <Streak
-                        streak={streak}
+                        streak={data.streak_count}
                         StreakOpen={StreakOpen}
                         setStreakOpen={setStreakOpen}
                     />
@@ -176,7 +213,7 @@ function getStreakConfig(streak: number) {
     };
 }
 
-function specialeDag() {
+function SpecialeDag() {
     const date: Date = new Date();
     const dag = date.getDate();
     const maand = date.getMonth();
