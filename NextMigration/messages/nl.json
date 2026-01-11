@@ -551,7 +551,22 @@
     "notifs": "notifications",
     "day streak": "day streak",
     "studied": "You have studied ",
-    "days": " days in a row"
+    "days": " days in a row",
+    "settings": "Settings",
+    "privacy": "Privacy",
+    "logout": "Log out",
+    "mod": "moderator",
+    "home": "Home",
+    "sets": "Sets",
+    "courses": "Courses",
+    "folders": "Folders",
+    "create": "Create",
+    "classrooms": "Classrooms",
+    "account": "Account",
+    "search": "Search",
+    "nonotif": "no notifications",
+    "allup": "you're up-to-date"
+
   },
   "notfound": {
     "return": "terug",

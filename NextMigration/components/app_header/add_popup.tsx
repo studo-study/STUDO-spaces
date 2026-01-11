@@ -39,8 +39,8 @@ interface AddPopupProps {
 }
 
 const menuItems = [
-    { to: "/creaet-studoset", icon: "/icons/studyset.svg", label: "create_ss", color: "from-emerald-400 to-teal-500" },
-    { to: "/create-visualsets", icon: "/icons/visualset.svg", label: "create_vs", color: "from-blue-400 to-indigo-500" },
+    { to: "/create-studoset", icon: "/icons/studyset.svg", label: "create_ss", color: "from-emerald-400 to-teal-500" },
+    { to: "/create-visualset", icon: "/icons/visualset.svg", label: "create_vs", color: "from-blue-400 to-indigo-500" },
     { to: "/create-folder", icon: "/icons/folder.svg", label: "create_f", color: "from-violet-400 to-purple-500" },
 ];
 

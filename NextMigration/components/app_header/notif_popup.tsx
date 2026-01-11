@@ -14,6 +14,8 @@ export default function TriggerNotif({NotifIsOpen, setNotifIsOpen}: TriggerNotif
         setNotifIsOpen((prev) => !prev);
     };
 
+    const notifications = {notifications: []};
+
     return(
         <button
             onClick={() => {togglePopUp()}}
@@ -27,19 +29,40 @@ export default function TriggerNotif({NotifIsOpen, setNotifIsOpen}: TriggerNotif
             <NotifPopup
             NotifIsOpen={NotifIsOpen}
             setNotifIsOpen={setNotifIsOpen}
-            containerRef={containerRef}/>
+            containerRef={containerRef}
+            data={notifications}/>
+
         </button>
     )
+}
+
+type NotificationType =
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error'
+
+interface Notification {
+    id: string
+    date: string
+    type: NotificationType
+    message: string
+    isRead: boolean
+}
+
+interface notifications {
+    notifications: Notification[];
 }
 
 interface NotifPopupProps {
     NotifIsOpen: boolean,
     setNotifIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     containerRef: React.RefObject<HTMLDivElement | null>,
+    data: notifications;
 }
 
 
-function NotifPopup({NotifIsOpen, setNotifIsOpen, containerRef}: NotifPopupProps) {
+function NotifPopup({NotifIsOpen, setNotifIsOpen, containerRef, data}: NotifPopupProps) {
     const t = useTranslations("header");
     const popupRef = useRef<HTMLDivElement>(null);
 
@@ -92,7 +115,18 @@ function NotifPopup({NotifIsOpen, setNotifIsOpen, containerRef}: NotifPopupProps
                 <div className={"w-full flex text-sm items-center dark:text-white/30 h-10 border-b border-studoborder/30 px-5 "}>
                     {t("notifs")}:
                 </div>
-                <div className={"w-full h-50"}></div>
+                <div className={"w-full h-50"}>
+                    {!data && <span className={"w-full dark:text-white/30 text-sm text-studodarkblue h-full flex items-center justify-center"}>{t("Loading")}</span>}
+                    {data  && data.notifications.length === 0 &&
+                        <div className={`w-full h-full flex flex-col gap-2 items-center justify-center transition-all duration-200 ease-out
+                         ${NotifIsOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
+                              style={{
+                                  transitionDelay: NotifIsOpen ? `${1 * 50}ms` : "0ms",
+                              }}>
+                            <span className={"dark:text-white/60 font-bold text-base text-studodarkblue"}>{t("nonotif")}</span>
+							<span className={"dark:text-white/30 text-xs text-studodarkblue"}>{t("allup")}</span>
+                    </div>}
+                </div>
             </div>
 
         </div>
