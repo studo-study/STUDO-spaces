@@ -12,6 +12,14 @@ import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
 import SearchBar from "@/components/app_header/search";
 import CreateFolder from "@/components/create-folder/create_folder";
 
+interface user {
+    displayName: string;
+    email: string;
+    streak_count: number;
+    pfp: string;
+    moderator: boolean;
+}
+
 interface HeaderProps {
     burgerOpen: boolean;
     setBurgerOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,15 +28,10 @@ interface HeaderProps {
     createOpen: boolean;
     setCreateOpen: React.Dispatch<React.SetStateAction<boolean>>;
     toggleCreate: () => void;
+    user: user;
 }
-export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate}: HeaderProps) {
-    const data = {
-        displayName: "Studo Admin",
-        email: "admin@studo.study",
-        streak_count: 29,
-        pfp: "https://i.pravatar.cc/150?img=1",
-        moderator: true
-    };
+export default function AppHeader({burgerOpen, user, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate}: HeaderProps) {
+
 
 
     const [AddIsOpen, setAddIsOpen] = useState(false);
@@ -105,12 +108,12 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
                     <TriggerProfile
                         ProfileIsOpen={ProfileIsOpen}
                         setProfileIsOpen={setProfileIsOpen}
-                        user={data}
+                        user={user}
                     />
 
                     {/* Streak */}
                     <Streak
-                        streak={data.streak_count}
+                        streak={user.streak_count}
                         StreakOpen={StreakOpen}
                         setStreakOpen={setStreakOpen}
                     />

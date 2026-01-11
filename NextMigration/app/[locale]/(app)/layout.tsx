@@ -11,6 +11,14 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         setSearch(true);
     }
 
+    const data = {
+        displayName: "Studo Admin",
+        email: "admin@studo.study",
+        streak_count: 29,
+        pfp: "https://i.pravatar.cc/150?img=1",
+        moderator: true
+    };
+
     const toggleCreate = () => {
         setCreateOpen(true);
     }
@@ -24,10 +32,15 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             createOpen={createOpen}
             setCreateOpen={setCreateOpen}
             toggleCreate={toggleCreate}
+            user={data}
         />
 
         <div className={"h-full w-screen flex flex-row"}>
-            <Burger burgerOpen={burgerOpen} toggleSearch={toggleSearch} toggleCreate={toggleCreate} />
+            <Burger
+                burgerOpen={burgerOpen}
+                toggleSearch={toggleSearch}
+                toggleCreate={toggleCreate}
+                isMod={data.moderator}/>
             <main className={"w-full max-h-full overflow-y-scroll scroll-hidden"}>{children}</main>
         </div>
     </div>);
