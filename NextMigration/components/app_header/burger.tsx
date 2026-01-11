@@ -10,11 +10,13 @@ import {IoIosAdd} from "react-icons/io";
 import {MdAccountCircle} from "react-icons/md";
 import {FaChevronDown} from "react-icons/fa";
 import {usePathname} from "next/navigation";
+import UserPopup from "@/components/app_header/user";
 
 interface BurgerProps {
     burgerOpen: boolean,
     toggleSearch: () => void,
     toggleCreate: () => void,
+    isMod: boolean,
 }
 
 const main = [
@@ -31,11 +33,8 @@ const classrooms = [
     {testicon: <img src={"/school.webp"} className={"h-9"}/>, icon: <IoSchoolOutline />, link:"/classrooms", label:"classrooms"},
 ]
 
-const account = [
-    {icon: <MdAccountCircle />, iconSelect: <FaHouse />, link:"/account", label:"account"},
-]
 
-export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerProps) {
+export default function Burger({burgerOpen, toggleSearch, toggleCreate, isMod}: BurgerProps) {
     const t = useTranslations("header")
     const pathname = usePathname();
     const isActive = (link: string) => {
@@ -120,18 +119,10 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerP
             </div>
         </div>
 
-        <div className={"w-full h-full flex flex-col gap-3 justify-end items-baseline px-4"}>
-            {account.map((item, index) => {
-                return (<Link href={item.link} key={index} className={`w-full h-10 aria-selected:opacity-100 rounded-4xl bg-studogrey px-5 opacity-50 transition-all duration-100 flex gap-3 flex-row justify-around items-center`}>
-                    <div className={"w-full flex flex-row items-center  justify-around gap-3 "}>
-                        <div className={`flex items-center min-w-6 justify-center cursor-pointer text-2xl text-white`}>
-                            {item.icon}
-                        </div>
-                        {burgerOpen ? <span className={`text-white ${burgerOpen ? "delay-100 opacity-100" : "opacity-0"} transition-a:l duration-300`}>{t(item.label)}</span> : null}
-                    </div>
-                    {burgerOpen ? <div className={`text-white w-full flex items-center justify-end ${burgerOpen ? "delay-100 opacity-100" : "opacity-0"} transition-a:l duration-300`}><FaChevronDown /></div> : null}
-                </Link>);
-            })}
+        <div className={"w-full h-full flex flex-col gap-3 justify-end items-baseline"}>
+            <UserPopup
+                isMod={isMod}
+            burgerOpen={burgerOpen}/>
         </div>
     </div>)
 }

@@ -34,7 +34,7 @@ export default function CreateFolder({createOpen, setCreateOpen}: CreateFolderPr
 
     return (
         <div className={`fixed z-[9999] -top-1 left-0 w-screen h-screen bg-black/30 
-  flex items-center justify-center
+  flex items-baseline justify-center pt-50
   transition-opacity duration-300 ease-out
   ${createOpen
             ? "opacity-100"
@@ -51,8 +51,10 @@ export default function CreateFolder({createOpen, setCreateOpen}: CreateFolderPr
         shadow-xl shadow-black/10 dark:shadow-black/30
       transition-all duration-300 ease-out origin-top px-7 py-10 flex flex-col gap-3 justify-between items-center
       ${createOpen
-                    ? "opacity-100 scale-100 translate-y-0"
-                    : "opacity-0 scale-95 -translate-y-2"}`}
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 -translate-y-5" +
+                    "" +
+                    ""}`}
             >
                 <div className={"w-full flex px-2 py-2 dark:text-white text-4xl text-studodarkblue items-center justify-end absolute top-0 left-0 z-10"}>
                     <div className={"h-8 w-8 rounded-full hover:bg-studogrey transition-all duration-300 justify-center items-center cursor-pointer active:scale-95 flex"}>
@@ -67,7 +69,7 @@ export default function CreateFolder({createOpen, setCreateOpen}: CreateFolderPr
                                 alt=""
                                 className="h-5 w-5 brightness-0 invert"
                             />
-                        <span className="w-full text-lg sm:text-xl md:text-2xl px-2 sm:px-5 font-bold text-studodarkblue dark:text-white">
+                        <span className="w-full text-lg select-none sm:text-xl md:text-2xl px-2 sm:px-5 font-bold text-studodarkblue dark:text-white">
                             {t("title")}:
                         </span>
 

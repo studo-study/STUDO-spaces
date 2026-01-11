@@ -65,7 +65,7 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
         {link:"/logout", label:"logout", icon: <LuLogOut />, color:"from-cyan-500 to-cyan-600", gradient:"to-cyan-500"},
     ]
 
-   const mod = {link:"/moderator", label:"mod", icon: <MdOutlineVerifiedUser />, color:"from-violet-500 to-purple-600", gradient:"to-violet-500"};
+   const mod = {link:"/admin", label:"ad", icon: <MdOutlineVerifiedUser />, color:"from-violet-500 to-purple-600", gradient:"to-violet-500"};
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (
@@ -153,33 +153,33 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
                             <Link href={item.link} key={index} className={`group p-2 flex w-full items-center h-18
                                     transition-all duration-200 ease-out
                          ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
-                                      style={{
-                                          transitionDelay: ProfileIsOpen ? `${user.moderator ? (index + 1) * 50 : index * 50}ms` : "0ms",
-                                      }}
-                        >
-                            <div className={"w-full rounded-xl px-3 flex flex-row gap-3 h-full transition-all " +
-                                `duration-100 hover:bg-linear-to-r from-transparent ${item.gradient} text-sm dark:text-white text-studodarkblue items-center justify-baseline`}>
-                                <div className={`flex items-center justify-center w-8 h-8 rounded-lg
+                                  style={{
+                                      transitionDelay: ProfileIsOpen ? `${user.moderator ? (index + 1) * 50 : index * 50}ms` : "0ms",
+                                  }}
+                            >
+                                <div className={"w-full rounded-xl px-3 flex flex-row gap-3 h-full transition-all " +
+                                    `duration-100 hover:bg-linear-to-r from-transparent ${item.gradient} text-sm dark:text-white text-studodarkblue items-center justify-baseline`}>
+                                    <div className={`flex items-center justify-center w-8 h-8 rounded-lg
                                   bg-gradient-to-br ${item.color}
                                   shadow-md shadow-black/10
                                   group-hover:scale-110 group-hover:shadow-lg
                                   transition-all duration-200`}
-                                >
-                                    {item.icon}
+                                    >
+                                        {item.icon}
+                                    </div>
+                                    <span>{t(item.label)}</span>
+
+                                    <svg
+                                        className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
                                 </div>
-                                <span>{t(item.label)}</span>
 
-                                <svg
-                                    className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </div>
-
-                        </Link>);
+                            </Link>);
                     })}
 
 
