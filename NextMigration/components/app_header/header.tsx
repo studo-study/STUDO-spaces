@@ -10,14 +10,18 @@ import StreakPopup from "@/components/app_header/streak_popup";
 import TriggerProfile from "@/components/app_header/profile_popup";
 import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
 import SearchBar from "@/components/app_header/search";
+import CreateFolder from "@/components/create-folder/create_folder";
 
 interface HeaderProps {
-    burgerOpen: boolean,
-    setBurgerOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    Search: boolean,
-    setSearch: React.Dispatch<React.SetStateAction<boolean>>
+    burgerOpen: boolean;
+    setBurgerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    Search: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    createOpen: boolean;
+    setCreateOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    toggleCreate: () => void;
 }
-export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch}: HeaderProps) {
+export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate}: HeaderProps) {
     const data = {
         displayName: "Studo Admin",
         email: "admin@studo.study",
@@ -44,6 +48,8 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch}
             searchRef.current.focus();
         }
     };
+
+
 
     useEffect(() => {
         if (Search && searchRef.current) {
@@ -86,6 +92,7 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch}
                     <TriggerAddPopup
                         AddIsOpen={AddIsOpen}
                         setAddIsOpen={setAddIsOpen}
+                        toggleCreate={toggleCreate}
                     />
 
                     {/* Notifications */}
@@ -108,6 +115,11 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch}
                         setStreakOpen={setStreakOpen}
                     />
                 </div>
+               <CreateFolder
+                    createOpen={createOpen}
+                    setCreateOpen={setCreateOpen}
+                />
+
             </div>
         </div>
     );

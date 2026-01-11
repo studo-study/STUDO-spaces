@@ -14,6 +14,7 @@ import {usePathname} from "next/navigation";
 interface BurgerProps {
     burgerOpen: boolean,
     toggleSearch: () => void,
+    toggleCreate: () => void,
 }
 
 const main = [
@@ -24,7 +25,6 @@ const main = [
 
 const folders = [
     {testicon: <img src={"/folders.webp"} className={"h-9"}/>, icon: <IoFolderOpenOutline />, link:"/your-files/folders", label:"folders"},
-    {icon: <IoIosAdd />, link:"/create-folder", label:"create"},
 ]
 
 const classrooms = [
@@ -35,7 +35,7 @@ const account = [
     {icon: <MdAccountCircle />, iconSelect: <FaHouse />, link:"/account", label:"account"},
 ]
 
-export default function Burger({burgerOpen, toggleSearch}: BurgerProps) {
+export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerProps) {
     const t = useTranslations("header")
     const pathname = usePathname();
     const isActive = (link: string) => {
@@ -78,7 +78,17 @@ export default function Burger({burgerOpen, toggleSearch}: BurgerProps) {
                 </div>
             </Link>);
         })}
-
+        <div className={`w-full h-10 px-5 `}>
+            <div onClick={toggleCreate}
+                className={`transition-all duration-200 flex gap-5 rounded-4xl opacity-50 cursor-pointer hover:bg-studogrey flex-row justify-baseline px-5 items-center w-full h-10`}>
+                <div className={`flex items-center min-w-10 justify-center cursor-pointer text-2xl text-white`}>
+                    <IoIosAdd />
+                </div>
+                <span className={`text-white whitespace-nowrap transition-all duration-200
+                            ${burgerOpen ? "opacity-100 translate-x-0 delay-150" : "opacity-0 -translate-x-4"}`}>{t("create")}
+                    </span>
+            </div>
+        </div>
 
 
         <div className={"w-full px-10 my-3 opacity-30"}>
