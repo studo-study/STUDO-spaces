@@ -568,6 +568,11 @@
     "allup": "you're up-to-date"
 
   },
+  "createfolder": {
+    "title": "create a folder",
+    "placeholder": "Fill in a name...",
+    "button": "create"
+  },
   "notfound": {
     "return": "terug",
     "404": "404"

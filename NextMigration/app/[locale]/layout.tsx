@@ -21,7 +21,7 @@ export default async function RootLayout({
 }) {
     const messages = await getMessages();
     const auth: boolean = false;
-
+    
     return (
         <html lang="en">
             <head>
