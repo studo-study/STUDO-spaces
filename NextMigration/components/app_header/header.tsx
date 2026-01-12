@@ -290,7 +290,6 @@ function SpecialeDag() {
         return feestdagen.belgie;
     }
 
-
     return vasteDagen[key] || "from-emerald-500 to-emerald-400 dark:from-white dark:to-blue-200";
 }
 
