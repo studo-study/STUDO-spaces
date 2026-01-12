@@ -8,6 +8,7 @@ interface CreateFolderProps {
 }
 export default function CreateFolder({createOpen, setCreateOpen}: CreateFolderProps) {
     const popupRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("createfolder")
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -31,6 +32,13 @@ export default function CreateFolder({createOpen, setCreateOpen}: CreateFolderPr
     }, [createOpen, setCreateOpen, popupRef]);
 
 
+    useEffect(() => {
+        if (createOpen) {
+            inputRef.current?.focus();
+        } else {
+            inputRef.current?.blur();
+        }
+    }, [createOpen]);
 
     return (
         <div className={`fixed z-[9999] -top-1 left-0 w-screen h-screen bg-black/30 
@@ -78,8 +86,10 @@ export default function CreateFolder({createOpen, setCreateOpen}: CreateFolderPr
 
                     <div className="flex flex-col w-full gap-2 items-center justify-between">
                         <input
-                            placeholder={"search..."}
+                            ref={inputRef}
+                            placeholder={t("placeholder")}
                             type="text"
+                            autoFocus={createOpen}
                             className={"h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}/>
                     </div>
                 </div>

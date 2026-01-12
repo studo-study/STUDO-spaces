@@ -45,16 +45,16 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate, isMod}: 
 
 
 
-    return(<div className={`h-full border-r border-studoborder/30
+    return(<div className={`h-full border-r user-select-none border-studoborder/30
     transition-all duration-300 flex flex-col gap-3 py-10 pb-20
     ${burgerOpen ? " w-57 px-" : "w-30"}`}>
         {main.map((item, index) => {
             return (<Link href={item.link} key={index} className={`w-full h-10 ${isActive(item.link) ? "opacity-75": "opacity-50"} px-5 `}>
-                <div className={`transition-all duration-200 flex gap-5 rounded-4xl hover:bg-studogrey ${isActive(item.link) ? "bg-studogrey" : null} flex-row justify-baseline px-5 items-center w-full h-10`}>
+                <div className={`transition-all user-select-none  duration-200 flex gap-5 rounded-4xl hover:bg-studogrey ${isActive(item.link) ? "bg-studogrey" : null} flex-row justify-baseline px-5 items-center w-full h-10`}>
                     <div className={`flex items-center min-w-10 justify-center cursor-pointer text-2xl text-white`}>
                         {item.icon}
                     </div>
-                    <span className={`text-white whitespace-nowrap transition-all duration-200
+                    <span className={`text-white user-select-none whitespace-nowrap transition-all duration-200
                             ${burgerOpen ? "opacity-100 translate-x-0 delay-150" : "opacity-0 -translate-x-4"}`}>{t(item.label)}
                     </span>
                 </div>
@@ -67,11 +67,11 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate, isMod}: 
 
         {folders.map((item, index) => {
             return (<Link href={item.link} key={index} className={`w-full h-10 ${isActive(item.link) ? "opacity-75": "opacity-50"} px-5 `}>
-                <div className={`transition-all duration-200 flex gap-5 rounded-4xl hover:bg-studogrey ${isActive(item.link) ? "bg-studogrey" : null} flex-row justify-baseline px-5 items-center w-full h-10`}>
+                <div className={`transition-all duration-200 user-select-none  flex gap-5 rounded-4xl hover:bg-studogrey ${isActive(item.link) ? "bg-studogrey" : null} flex-row justify-baseline px-5 items-center w-full h-10`}>
                     <div className={`flex items-center min-w-10 justify-center cursor-pointer text-2xl text-white`}>
                         {item.icon}
                     </div>
-                    <span className={`text-white whitespace-nowrap transition-all duration-200
+                    <span className={`text-white user-select-none whitespace-nowrap transition-all duration-200
                             ${burgerOpen ? "opacity-100 translate-x-0 delay-150" : "opacity-0 -translate-x-4"}`}>{t(item.label)}
                     </span>
                 </div>
@@ -79,11 +79,11 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate, isMod}: 
         })}
         <div className={`w-full h-10 px-5 `}>
             <div onClick={toggleCreate}
-                className={`transition-all duration-200 flex gap-5 rounded-4xl opacity-50 cursor-pointer hover:bg-studogrey flex-row justify-baseline px-5 items-center w-full h-10`}>
+                className={`transition-all duration-200 flex gap-5 user-select-none rounded-4xl opacity-50 cursor-pointer hover:bg-studogrey flex-row justify-baseline px-5 items-center w-full h-10`}>
                 <div className={`flex items-center min-w-10 justify-center cursor-pointer text-2xl text-white`}>
                     <IoIosAdd />
                 </div>
-                <span className={`text-white whitespace-nowrap transition-all duration-200
+                <span className={`text-white user-select-none whitespace-nowrap transition-all duration-200
                             ${burgerOpen ? "opacity-100 translate-x-0 delay-150" : "opacity-0 -translate-x-4"}`}>{t("create")}
                     </span>
             </div>
@@ -97,11 +97,11 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate, isMod}: 
 
         {classrooms.map((item, index) => {
             return (<Link href={item.link} key={index} className={`w-full h-10 ${isActive(item.link) ? "opacity-75": "opacity-50"} px-5 `}>
-                <div className={`transition-all duration-200 flex gap-5 rounded-4xl hover:bg-studogrey ${isActive(item.link) ? "bg-studogrey" : null} flex-row justify-baseline px-5 items-center w-full h-10`}>
+                <div className={`transition-all duration-200 flex gap-5 user-select-none rounded-4xl hover:bg-studogrey ${isActive(item.link) ? "bg-studogrey" : null} flex-row justify-baseline px-5 items-center w-full h-10`}>
                     <div className={`flex items-center min-w-10 justify-center cursor-pointer text-2xl text-white`}>
                         {item.icon}
                     </div>
-                    <span className={`text-white whitespace-nowrap transition-all duration-200
+                    <span className={`text-white whitespace-nowrap user-select-none  transition-all duration-200
                             ${burgerOpen ? "opacity-100 translate-x-0 delay-150" : "opacity-0 -translate-x-4"}`}>{t(item.label)}
                     </span>
                 </div>
@@ -109,11 +109,11 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate, isMod}: 
         })}
 
         <div onClick={toggleSearch}  className={`w-full h-10 aria-selected:opacity-100 px-5 opacity-50 cursor-pointer `}>
-            <div className={`transition-all duration-200 flex gap-5 rounded-4xl hover:bg-studogrey flex-row justify-baseline px-5 items-center w-full h-10`}>
+            <div className={`transition-all duration-200 flex gap-5 user-select-none  rounded-4xl hover:bg-studogrey flex-row justify-baseline px-5 items-center w-full h-10`}>
             <div className={`flex items-center min-w-10 justify-center cursor-pointer text-2xl text-white`}>
                 <IoSearch />
             </div>
-                <span className={`text-white whitespace-nowrap transition-all duration-200
+                <span className={`text-white user-select-none  whitespace-nowrap transition-all duration-200
                             ${burgerOpen ? "opacity-100 translate-x-0 delay-150" : "opacity-0 -translate-x-4"}`}>{t("search")}
                 </span>
             </div>
