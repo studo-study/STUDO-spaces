@@ -6,6 +6,7 @@ import Link from "next/link";
 import {PiStudent} from "react-icons/pi";
 import {MdOutlinePrivacyTip, MdOutlineVerifiedUser} from "react-icons/md";
 import {LuLogOut, LuSettings} from "react-icons/lu";
+import {mockUser} from "@/lib/mocks/startPageMock";
 
 interface ProfileTriggerPopupProps{
     ProfileIsOpen: boolean,
@@ -21,6 +22,7 @@ interface user {
     moderator: boolean
 }
 
+const data = mockUser;
 
 export default function TriggerProfile({ProfileIsOpen, setProfileIsOpen, user}: ProfileTriggerPopupProps) {
     const containerRef = useRef(null);
@@ -33,11 +35,17 @@ export default function TriggerProfile({ProfileIsOpen, setProfileIsOpen, user}: 
             ref={containerRef}
             onClick={togglePopUp}
             className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
-            <div className="absolute bg-emerald-500/50 h-10 w-10 rounded-full blur-sm"/>
-            <div
-                className="relative z-10 shadow-2xl bg-emerald-600 h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
-                <PiStudent/>
+            <div className={"absolute bg-emerald-500/50 h-10 w-10 rounded-full blur-sm"}/>
+            {data.img_url ?
+                <div className="relative z-10 shadow-2xl overflow-hidden h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
+                    <img src={data.img_url} alt="" className={"object-cover h-10 w-10"}/>
+                </div>
+
+            : <div className="relative z-10 shadow-2xl bg-emerald-600 h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
+                    <PiStudent/>
             </div>
+            }
+
             <ProfilePopup
                 ProfileIsOpen={ProfileIsOpen}
                 setProfileIsOpen={setProfileIsOpen}
@@ -110,8 +118,8 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
                 <div className={"w-full h-fit flex flex-col "}>
                     <Link href={"/account"} className={"px-5 flex justify-center items-baseline flex-col w-full glass-rgb h-20 border-b border-studoborder/30"}>
                         <div className={"w-full h-full flex flex-col items-baseline justify-center"}>
-                            <span className={"font-studodarkblue dark:text-white text-start font-bold text-xl truncate overflow-hidden w-full"}>{user.displayName}</span>
-                            <span className={"text-studogrey"}>{user.email}</span>
+                            <span className={"font-studodarkblue dark:text-white text-start font-bold text-xl truncate overflow-hidden w-full"}>{data.displayName}</span>
+                            <span className={"text-studogrey"}>{data.email}</span>
                         </div>
 
                     </Link>
