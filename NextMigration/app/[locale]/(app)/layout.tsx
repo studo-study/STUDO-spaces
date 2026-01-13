@@ -23,25 +23,31 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         setCreateOpen(true);
     }
 
-    return(<div className={`max-h-screen overflow-hidden h-screen w-screen max-w-screen flex flex-col`}>
-        <AppHeader
-            burgerOpen={burgerOpen}
-            setBurgerOpen={setBurgerOpen}
-            Search={Search}
-            setSearch={setSearch}
-            createOpen={createOpen}
-            setCreateOpen={setCreateOpen}
-            toggleCreate={toggleCreate}
-            user={data}
-        />
-
-        <div className={"h-full w-screen flex flex-row"}>
-            <Burger
+    return(
+        <div className="h-screen w-screen flex flex-col overflow-hidden">
+            <AppHeader
                 burgerOpen={burgerOpen}
-                toggleSearch={toggleSearch}
+                setBurgerOpen={setBurgerOpen}
+                Search={Search}
+                setSearch={setSearch}
+                createOpen={createOpen}
+                setCreateOpen={setCreateOpen}
                 toggleCreate={toggleCreate}
-                isMod={data.moderator}/>
-            <main className={"w-full max-h-full flex items-center justify-center overflow-hidden z-0 overflow-y-scroll scroll-hidden"}>{children}</main>
+                user={data}
+            />
+
+            <div className="flex-1 min-h-0 w-full flex flex-row">
+                <Burger
+                    burgerOpen={burgerOpen}
+                    toggleSearch={toggleSearch}
+                    toggleCreate={toggleCreate}
+                    isMod={data.moderator}
+                />
+                <main className="flex-1 min-h-0 overflow-hidden
+                xl:w-9/10 5xl:w-1/2 h-full px-15 pr-55 ">
+                    {children}
+                </main>
+            </div>
         </div>
-    </div>);
+    );
 }
