@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { ReactNode } from "react";
 import AuthLayout from "@/app/[locale]/(app)/layout";
 import MarketingLayout from "@/app/[locale]/(marketing)/layout";
 import {NextIntlClientProvider} from "next-intl";
 import { getMessages } from "next-intl/server";
+import ConsoleEasterEgg from "@/components/easteregg/console";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,16 +22,14 @@ export default async function RootLayout({
     const messages = await getMessages();
     const auth: boolean = false;
 
-    return (
-        <html lang="en">
-            <head>
-                <link rel="stylesheet" href="https://use.typekit.net/fmn3jvz.css" />
-            </head>
+    return (<>
             <NextIntlClientProvider messages={messages}>
                 <body className="">
                 {children}
                 </body>
             </NextIntlClientProvider>
-        </html>
+            <ConsoleEasterEgg/>
+        </>
     );
 }
+
