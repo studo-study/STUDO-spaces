@@ -63,7 +63,7 @@ export default function AppHeader({burgerOpen, user, setBurgerOpen, Search, setS
 
 
     return (
-        <div className={"h-fit top-0 w-screen flex flex-col"}>
+        <div className={"h-fit z-[9999] top-0 w-screen flex flex-col"}>
             <div className={"w-screen h-0.5"}></div>
             <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-b border-studogrey/30 gap-5">
                 {/* Left section */}

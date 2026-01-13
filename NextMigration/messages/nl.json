@@ -576,5 +576,73 @@
   "notfound": {
     "return": "terug",
     "404": "404"
+  },
+  "timed": {
+    "2": [
+      "Welcome back. Just a few more pages and that chapter is finally done.",
+      "Up this late again? You're not the only one...",
+      "The night is still young.. and so are we 🎶"
+    ],
+    "4": [
+      "Glad you're here. Stay focused at this hour.",
+      "Go to sleep, bruv",
+      "Still up... somehow!?",
+      "Are you Batman or sum?"
+    ],
+    "7": [
+      "Good morning",
+      "You're actually up — that's already a win.",
+      "Coffee instead of sleep? Classic student move. Let's do this."
+    ],
+    "11": [
+      "Welcome back, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": [
+      "Good evening, {name}",
+      "Evening shift activated — you can handle this.",
+      "You got this!"
+    ],
+    "19": [
+      "Good evening, {name}",
+      "Welcome Back",
+      "Let's Go Champ"
+    ],
+    "22": [
+      "Welcome back. The evening is advancing — good luck.",
+      "Late-night studying? Respect for keeping at it.",
+      "Everyone else is heading to bed... we're still reviewing notes."
+    ],
+    "0": [
+      "Midnight has passed. Rest if you can, otherwise keep going.",
+      "It's late... but the material isn't finished yet.",
+      "Midnight and that summary is finally complete? Proud of you."
+    ]
+  },
+  "home": {
+    "stats": "Statistics",
+    "Streak": "Streak",
+    "days": "days",
+    "ready": "Ready to study?",
+    "totCards": "Total Cards",
+    "tmStd": "Time Studied",
+    "min": "min",
+    "cards": "cards",
+    "pins": "pins",
+    "week": "per week",
+    "mastered": "Cards Mastered",
+    "dagen": "days",
+    "Continue": "Sets",
+    "checkAll": "all sets",
+    "studied": "studied",
+    "courses": "Courses",
+    "checkCourse": "all courses",
+    "act": "Friends",
+    "CheckAct": "all activity",
+    "create_ss": "create Studoset",
+    "create_vs": "create Visualset",
+    "create_block": "create card or pin sets",
+    "checkStats": "more stats"
   }
 }
