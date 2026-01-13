@@ -40,7 +40,7 @@ export default function HomePage() {
     const courses = Array.from(courseSet);
 
     return (
-        <div className=" w-full 3xl:w-1/2 h-full px-15 py-15 pr-30 flex flex-col gap-10 scroll-hidden">
+        <div className=" w-full h-full py-15 flex flex-col gap-10 scroll-hidden">
             <section className="w-full h-fit">
                 <div className={"w-full h-fit flex flex-col gap-2"}>
                     <span className="font-sfpro font-bold dark:text-white text-studodarkblue text-3xl">
@@ -89,8 +89,8 @@ export default function HomePage() {
                     <Stats
                         color={"from-emerald-500/20 to-emerald-600/20"}
                         icon={<PiMedalLight size={20} color={"white"} opacity={0.5} />}
-                        stat={10}
-                        measurement={"dagen"}
+                        stat={645}
+                        measurement={"cards"}
                         label={"mastered"}
                         extra={""}
                         delay={400}
@@ -157,9 +157,9 @@ export default function HomePage() {
                 </section>
             </div>
 
-            {<section className={"w-full h-full flex items-end justify-center"}>
+            {<section className={"w-full h-fit flex items-end justify-center"}>
                 <AnimateOnMount delay={500}>
-                <div className="mt-10 p-6 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-400/10 border border-studoborder/30">
+                <div className="p-6 rounded-2xl shadow-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-400/10 border border-studoborder/30">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                         <div>
                             <h3 className="text-lg font-semibold text-white mb-1">{t("ready")}</h3>
