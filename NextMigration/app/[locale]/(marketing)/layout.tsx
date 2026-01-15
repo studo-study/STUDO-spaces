@@ -1,3 +1,4 @@
+
 import {ReactNode} from "react";
 import LandingHeader from "@/components/landing_header/header";
 import LandingFooter from "@/components/landing_footer/footer";

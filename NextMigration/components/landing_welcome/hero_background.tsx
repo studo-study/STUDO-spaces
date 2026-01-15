@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState, useMemo } from "react";
+import Image from "next/image";
 
 const floatingItems = [
     { src: "/animations/animation_assets/brain.svg", size: "w-20", seed: 1 },
@@ -37,10 +38,12 @@ export default function HeroBackground({ color }: HeroBackgroundProps) {
             <div className={`absolute max-w-screen w-full inset-0 bg-gradient-to-b from-transparent via-transparent ${color}`} />
 
             {randomValues.map((item, i) => (
-                <img
+                <Image
                     key={i}
                     src={item.src}
                     alt=""
+                    height={0}
+                    width={0}
                     className={`absolute ${item.size} floating-blob ${mounted ? 'animate' : ''}`}
                     style={{
                         "--seed": item.seed,

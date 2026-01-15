@@ -6,7 +6,7 @@ import Link from "next/link";
 import {PiStudent} from "react-icons/pi";
 import {MdOutlinePrivacyTip, MdOutlineVerifiedUser} from "react-icons/md";
 import {LuLogOut, LuSettings} from "react-icons/lu";
-import {mockUser} from "@/lib/mocks/startPageMock";
+import {mockUser} from "@/data/mocks/startPageMock";
 
 interface ProfileTriggerPopupProps{
     ProfileIsOpen: boolean,

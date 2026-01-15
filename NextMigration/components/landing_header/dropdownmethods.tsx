@@ -39,9 +39,9 @@ export default function TriggerMethods({ MethodsOpen, setMethodsOpen }: TriggerM
 
 
 const menuItems = [
-    { to: "/about-studosets", icon: "/icons/studyset.svg", label: "ss", color: "from-emerald-400 to-teal-500" },
-    { to: "/about-visualsets", icon: "/icons/visualset.svg", label: "vs", color: "from-blue-400 to-indigo-500" },
-    { to: "/about-ai", icon: "/icons/sparkle.svg", label: "ai", color: "from-violet-400 to-purple-500" },
+    { to: "/modes/studosets", icon: "/icons/studyset.svg", label: "ss", color: "from-emerald-400 to-teal-500" },
+    { to: "/modes/visualsets", icon: "/icons/visualset.svg", label: "vs", color: "from-blue-400 to-indigo-500" },
+    { to: "/modes/ai", icon: "/icons/sparkle.svg", label: "ai", color: "from-violet-400 to-purple-500" },
 ];
 
 interface MethodsPopUpProps {
