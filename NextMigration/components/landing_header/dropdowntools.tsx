@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import {useTranslations} from "next-intl";
-
+import Image from "next/image";
 interface TriggerToolsProps {
     ToolsOpen: boolean;
     setToolsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,10 +22,12 @@ export default function TriggerTools({ ToolsOpen, setToolsOpen }: TriggerToolsPr
                 className={"relative w-fit h-fit flex flex-row gap-3 cursor-pointer"}
                 onClick={togglePopUp}
             >
-                <img
+                <Image
+                    width={49}
+                    height={49}
                     src={"/icons/down.svg"}
                     className={`${ToolsOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
-                    alt=""
+                    alt="go down icon"
                 />
                 <span className={"dark:text-white text-studodarkblue truncate"}>{t("tools")}</span>
                 <ToolsPopup
@@ -43,17 +45,17 @@ const toolCategories = [
         title: "ss",
         color: "emerald",
         items: [
-            { to: "/learn", icon: "/icons/pencil.svg", label: "learn", gradient: "from-emerald-400 to-emerald-500" },
-            { to: "/speedy", icon: "/icons/clock.svg", label: "speedy", gradient: "from-amber-400 to-orange-500" },
-            { to: "/flashcards", icon: "/icons/cards.svg", label: "flashcards", gradient: "from-blue-400 to-blue-500" },
+            { to: "/tools/learn", icon: "/icons/pencil.svg", label: "learn", gradient: "from-emerald-400 to-emerald-500" },
+            { to: "/tools/speedy", icon: "/icons/clock.svg", label: "speedy", gradient: "from-amber-400 to-orange-500" },
+            { to: "/tools/flashcards", icon: "/icons/cards.svg", label: "flashcards", gradient: "from-blue-400 to-blue-500" },
         ],
     },
     {
         title: "vs",
         color: "violet",
         items: [
-            { to: "/identify", icon: "/icons/pin-icon.svg", label: "identify", gradient: "from-rose-400 to-red-500" },
-            { to: "/point", icon: "/icons/point.svg", label: "point", gradient: "from-violet-400 to-purple-500" },
+            { to: "/tools/identify", icon: "/icons/pin-icon.svg", label: "identify", gradient: "from-rose-400 to-red-500" },
+            { to: "/tools/point", icon: "/icons/point.svg", label: "point", gradient: "from-violet-400 to-purple-500" },
         ],
     },
 ];
@@ -159,10 +161,12 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps
                       group-hover:scale-110 group-hover:shadow-lg group-hover:-rotate-3
                       transition-all duration-200`}
                                         >
-                                            <img
+                                            <Image
                                                 src={item.icon}
-                                                alt=""
+                                                alt={item.label + " icon"}
                                                 className="h-4 w-4 brightness-0 invert"
+                                                width={16}
+                                                height={16}
                                             />
                                         </div>
 

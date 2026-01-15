@@ -15,7 +15,7 @@ import type {
     StudysetListResponse,
 } from '../types';
 
-// GET /users/:userId/about-studosets
+// GET /users/:userId/studosets
 export function useUserSets(userId: string | undefined) {
     return useQuery({
         queryKey: queryKeys.studysets.byUser(userId!),

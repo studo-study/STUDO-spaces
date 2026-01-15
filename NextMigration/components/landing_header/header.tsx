@@ -6,12 +6,13 @@ import {useLocale} from 'next-intl';
 import { FiMenu, FiX } from "react-icons/fi";
 import TriggerTools from "@/components/landing_header/dropdowntools";
 import TriggerMethods from "@/components/landing_header/dropdownmethods";
+import Image from "next/image";
 
 
 const menuItems = [
-    { to: "/about-about-studosets", icon: "/icons/studyset.svg", label: "ss", color: "from-emerald-400 to-teal-500" },
-    { to: "/about-about-visualsets", icon: "icons/visualset.svg", label: "vs", color: "from-blue-400 to-indigo-500" },
-    { to: "/about-about-ai", icon: "/icons/sparkle.svg", label: "ai", color: "from-violet-400 to-purple-500" },
+    { to: "/about-studosets", icon: "/icons/studyset.svg", label: "ss", color: "from-emerald-400 to-teal-500" },
+    { to: "/about-visualsets", icon: "icons/visualset.svg", label: "vs", color: "from-blue-400 to-indigo-500" },
+    { to: "/about-ai", icon: "/icons/sparkle.svg", label: "ai", color: "from-violet-400 to-purple-500" },
 ];
 
 const toolCategories = [
@@ -27,7 +28,7 @@ export default function LandingHeader() {
     const [ToolsOpen, setToolsOpen] = useState<boolean>(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [scrolled, setScrolled] = useState<boolean>(false);
-
+    const locale = useLocale();
 
 
 
@@ -92,7 +93,7 @@ export default function LandingHeader() {
         >
             <div className="flex items-center justify-start gap-6 md:gap-10 flex-1">
                 <Link
-                    href="/"
+                    href={`/welcome`}
                     className="group relative font-akira text-3xl md:text-4xl whitespace-nowrap"
                 >
           <span className={`relative z-10 bg-gradient-to-r ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
@@ -177,7 +178,7 @@ export default function LandingHeader() {
 												shadow-md shadow-black/10 overflow-hidden
 												transition-all duration-200`}
                                         >
-                                            <img src={item.icon} alt="" className="h-3 w-3 brightness-0 invert"/>
+                                            <Image src={item.icon} alt={item.label + " icon"} width={12} height={12} className="h-3 w-3 brightness-0 invert"/>
                                         </div>
 
                                         {/* Label */}
@@ -213,9 +214,11 @@ export default function LandingHeader() {
 													  shadow-md shadow-black/10 overflow-hidden
 													  transition-all duration-200`}
                                             >
-                                                <img
+                                                <Image
                                                     src={item.icon}
-                                                    alt=""
+                                                    alt={item.label + " icon"}
+                                                    width={16}
+                                                    height={16}
                                                     className="h-4 w-4 brightness-0 invert"
                                                 />
                                             </div>

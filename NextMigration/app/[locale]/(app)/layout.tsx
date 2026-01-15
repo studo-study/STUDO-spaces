@@ -1,3 +1,4 @@
+//app/[locale/(app)/layout.tsx
 "use client"
 import {ReactNode, useRef, useState} from "react";
 import AppHeader from "@/components/app_header/header";

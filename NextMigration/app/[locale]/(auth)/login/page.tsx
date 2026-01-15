@@ -7,6 +7,7 @@ import Link from "next/link";
 import DesktopForm from "@/app/[locale]/(auth)/login/desktopform";
 import MobileForm from "@/app/[locale]/(auth)/login/mobileform";
 
+
 export default function LoginPage() {
     const t = useTranslations("login");
     const CurrentYear = new Date().getFullYear();

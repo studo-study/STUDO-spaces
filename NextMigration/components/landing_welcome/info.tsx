@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import Image from "next/image";
 
 interface Feature {
     titleKey: string;
@@ -113,12 +114,15 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
                     <div
                         className={`rounded-3xl ${feature.bgColor} p-8 lg:p-12 overflow-hidden border border-white/50 dark:border-white/10 h-full w-full shadow-xl shadow-black/5 dark:shadow-black/20 backdrop-blur-sm group hover:scale-[1.02] transition-transform duration-500`}
                     >
-                        <img
+                        <Image
                             src={feature.image}
                             alt={feature.imageAlt}
-                            className="object-contain transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-500"
-                            loading="lazy"
+                            className="w-full h-auto object-contain transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-500"
+                            width={0}
+                            height={0}
+                            sizes="100vw"
                         />
+
                     </div>
                 </figure>
             </article>

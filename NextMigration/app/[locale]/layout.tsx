@@ -1,3 +1,4 @@
+//app/[locale/layout.tsx
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import AuthLayout from "@/app/[locale]/(app)/layout";
