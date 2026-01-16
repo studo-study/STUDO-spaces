@@ -54,12 +54,12 @@ export class StudysetsController {
   constructor(private readonly studysetService: StudysetService) {
   }
 
-  //GET alle about-studosets -----------------------------------------------------
+  //GET alle studosets -----------------------------------------------------
 
-  @ApiOperation({ summary: 'Haal alle about-studosets op (admin).' })
+  @ApiOperation({ summary: 'Haal alle studosets op (admin).' })
   @ApiResponse({
     status: 200,
-    description: 'Alle about-studosets opgehaald',
+    description: 'Alle studosets opgehaald',
     type: StudysetListResponseDto,
   })
   @UseGuards(CheckUserAccessGuard)
@@ -69,7 +69,7 @@ export class StudysetsController {
     return this.studysetService.getAll();
   }
 
-  //GET specfieke about-studosets's session ----------------------------------------
+  //GET specfieke studosets's session ----------------------------------------
 
   @ApiOperation({ summary: 'Haal alle studysessions op van een studoset.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
@@ -88,7 +88,7 @@ export class StudysetsController {
     return this.studysetService.getBySetId(user_id, set_id);
   }
 
-  //GET specifieke about-studosets ---------------------------------------------------
+  //GET specifieke studosets ---------------------------------------------------
 
   @ApiOperation({ summary: 'Haal specifieke studoset op.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })

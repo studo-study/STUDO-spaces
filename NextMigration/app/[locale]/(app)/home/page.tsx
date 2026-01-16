@@ -7,7 +7,7 @@ import AnimateOnMount from "@/components/ui/AnimateOnMount";
 import {IoIosArrowForward} from "react-icons/io";
 import Link from "next/link";
 import {PiMedalLight} from "react-icons/pi";
-import {ClassActivity, LastStudied, StartPage, Studyset, User} from "@/lib/api/types";
+import {ClassActivity, LastStudied, StartPage, Studyset, User} from "@/lib/types";
 import {mockStartPage, mockUser} from "@/data/mocks/startPageMock";
 import {Progress} from "@/components/progress/progress";
 import CourseIcons from "../../../../data/index.ts";

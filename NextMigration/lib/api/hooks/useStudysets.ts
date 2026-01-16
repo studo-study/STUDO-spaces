@@ -13,7 +13,7 @@ import type {
     UpdateCard,
     AllSetsResponse,
     StudysetListResponse,
-} from '../types';
+} from '../../types';
 
 // GET /users/:userId/studosets
 export function useUserSets(userId: string | undefined) {

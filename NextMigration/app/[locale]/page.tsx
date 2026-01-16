@@ -1,14 +1,16 @@
-import { cookies } from "next/headers";
+// app/[locale]/page.tsx
+
 import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
+import { auth } from "./../../auth";
 
-// Fallback - middleware zou dit al moeten afhandelen
 export default async function LocalePage() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const locale = await getLocale();
+    const session = await auth();
 
-    if (token) {
-        redirect("/home");
+    if (session) {
+        redirect(`/${locale}/home`);
     } else {
-        redirect("/welcome");
+        redirect(`/${locale}/welcome`); // Of waar je marketing pagina staat
     }
 }

@@ -172,14 +172,14 @@ const privateRoutes = [
 const landingRoutes = [
   { path: "welcome", element: <Welcome /> },
   { path: "about-us", element: <AboutUs /> },
-  { path: "about-about-ai", element: <AI /> },
+  { path: "about-ai", element: <AI /> },
   { path: "flashcards", element: <AboutFlashcards /> },
   { path: "learn", element: <AboutLearn /> },
   { path: "identify", element: <AboutPin /> },
   { path: "point", element: <AboutPoint /> },
   { path: "speedy", element: <AboutSpeedy /> },
-  { path: "about-about-studosets", element: <AboutStudysets /> },
-  { path: "about-about-visualsets", element: <AboutVisualsets /> },
+  { path: "about-studosets", element: <AboutStudysets /> },
+  { path: "about-visualsets", element: <AboutVisualsets /> },
 ];
 
 // Auth pages

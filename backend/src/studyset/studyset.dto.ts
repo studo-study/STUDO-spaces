@@ -250,7 +250,7 @@ export class fullSetResponseDto extends StudysetResponseDto {
 
 export class StudysetListResponseDto {
   @ApiProperty({
-    description: 'List of about-studosets',
+    description: 'List of studosets',
     type: [StudysetResponseDto],
   })
   @Expose()
@@ -259,14 +259,14 @@ export class StudysetListResponseDto {
 
 export class AllsetsResponseDto {
   @ApiProperty({
-    description: 'List of about-studosets',
+    description: 'List of studosets',
     type: [StudysetResponseDto],
   })
   @Expose()
   studysets: StudysetResponseDto[];
 
   @ApiProperty({
-    description: 'List of about-visualsets',
+    description: 'List of visualsets',
     type: [VisualsetResponseDto],
   })
   @Expose()

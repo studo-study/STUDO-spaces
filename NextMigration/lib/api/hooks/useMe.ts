@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import { api } from '../client';
 import { queryKeys } from '../keys';
 import { hasToken } from '@/lib/auth/token';
-import type { User } from '../types';
+import type { User } from '../../types';
 
 /**
  * Haalt de huidige ingelogde user op via GET /users/me

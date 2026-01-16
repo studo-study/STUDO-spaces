@@ -12,7 +12,7 @@ import type {
     Card,
     Folder,
     SetLike,
-} from '../../lib/api/types';
+} from '../../lib/types';
 
 // ============================================================
 // MOCK USER

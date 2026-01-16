@@ -1,10 +1,12 @@
 "use client";
-import { useState } from "react";
+import {useCallback, useState} from "react";
 import AnimateOnMount from "@/components/ui/AnimateOnMount";
 import {error} from "next/dist/build/output/log";
 import Undici from "undici-types";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
+import {useRouter, useSearchParams} from "next/navigation";
+import {signIn} from "next-auth/react";
 
 const validationRules = {
     email: { required: "Email is required" },
@@ -14,11 +16,65 @@ const validationRules = {
 
 export default function DesktopForm() {
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
     const language = useLocale();
     const t = useTranslations("login")
     const errors = false;
     const toggleShow = () => setOpen(!open);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+    const router = useRouter();
+    const locale = useLocale();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl') || `/${locale}/home`;
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        console.log('🚀 Attempting login with:', { email, password: '***' });
+
+        try {
+            const result = await signIn('credentials', {
+                email,
+                password,
+                redirect: false,
+            });
+
+
+            if (result?.error) {
+                setError(t('invalidCredentials') || 'Ongeldige email of wachtwoord');
+                setLoading(false);
+                return;
+            }
+
+            console.log('✅ Login successful, redirecting to:', callbackUrl);
+            router.push(callbackUrl);
+            router.refresh();
+
+        } catch (err) {
+            setError(t('somethingWentWrong') || 'Er ging iets mis');
+            setLoading(false);
+        }
+    };
+
+    const loginGoogle = useCallback(() => {
+        window.location.href = "http://localhost:3001/api/sessions/google";
+    }, []);
+
+    const loginMicrosoft = useCallback(() => {
+        window.location.href = "http://localhost:3001/api/sessions/microsoft";
+    }, []);
+
+    const loginSmartschool = useCallback(() => {
+        window.location.href = "http://localhost:3001/api/sessions/smartschool";
+    }, []);
+
 
     return (
         <div className="w-full h-full 3xl:absolute 3xl:inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
@@ -39,7 +95,7 @@ export default function DesktopForm() {
                             </div>
                             </AnimateOnMount>
 
-                            <form data-cy="login_form" className="flex flex-col gap-4">
+                            <form data-cy="login_form" onSubmit={handleSubmit} className="flex flex-col gap-4">
                                 <AnimateOnMount delay={300}>
                                 <div className={`flex flex-col gap-4 transition-all duration-500 delay-300`}>
                                     <div className="flex flex-col gap-1">
@@ -52,8 +108,12 @@ export default function DesktopForm() {
                                                 type="text"
                                                 placeholder={t("email")}
                                                 autoComplete="none"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
                                                 className="transition-all w-full duration-500 focus:outline-none bg-transparent"
                                                 data-cy="email_input"
+                                                required
+                                                disabled={loading}
                                             />
                                         </div>
                                         {errors && (
@@ -70,9 +130,11 @@ export default function DesktopForm() {
                                                 type={open ? "text" : "password"}
                                                 placeholder={t("password")}
                                                 autoComplete="none"
-
+                                                onChange={(e) => setPassword(e.target.value)}
                                                 className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
                                                 data-cy="password_input"
+                                                required
+                                                disabled={loading}
                                             />
                                             <img
                                                 src={open ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}
@@ -98,6 +160,7 @@ export default function DesktopForm() {
                                 <AnimateOnMount delay={400}>
                                 <button
                                     type="submit"
+                                    disabled={loading}
                                     className={`w-full h-13 mt-2 rounded-full font-semibold text-white
 										bg-gradient-to-r from-studoblue to-blue-400
 										hover:from-blue-500 
@@ -106,7 +169,7 @@ export default function DesktopForm() {
 										shadow-lg shadow-blue-500/25
 										transition-all duration-500 delay-400`}
                                     data-cy="submit_login">
-                                    {loading ? t("Loading...") : t("Log In")}
+                                    {loading ? t("Loading") : t("Log In")}
                                 </button>
                                 </AnimateOnMount>
                             </form>
@@ -123,7 +186,7 @@ export default function DesktopForm() {
                                 <div className="flex gap-4 flex-col">
                                     <button
                                         type="button"
-
+                                        onClick={loginGoogle}
                                         className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
@@ -134,7 +197,7 @@ export default function DesktopForm() {
                                     </button>
                                     <button
                                         type="button"
-
+                                        onClick={loginMicrosoft}
                                         className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
@@ -146,7 +209,7 @@ export default function DesktopForm() {
                                     {language === "nl" || language === "fr-BE"  ? (
                                         <button
                                             type="button"
-
+                                            onClick={loginSmartschool}
                                             className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20

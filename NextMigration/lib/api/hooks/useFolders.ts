@@ -10,7 +10,7 @@ import type {
     UpdateFolder,
     FolderListResponse,
     SwitchFolderRequest,
-} from '../types';
+} from '../../types';
 
 // GET /users/:userId/folders
 export function useUserFolders(userId: string | undefined) {

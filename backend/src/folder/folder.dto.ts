@@ -61,13 +61,13 @@ export class FolderResponseDto {
 
 export class FolderSetsDto {
   @ApiProperty({
-    description: 'Lijst van about-studosets in de folder',
+    description: 'Lijst van studosets in de folder',
     type: [StudysetResponseDto],
   })
   studysets: StudysetResponseDto[];
 
   @ApiProperty({
-    description: 'Lijst van about-visualsets in de folder',
+    description: 'Lijst van visualsets in de folder',
     type: [VisualsetResponseDto],
   })
   visualsets: VisualsetResponseDto[];

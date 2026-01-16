@@ -17,4 +17,4 @@ export { getQueryClient } from '../query-client';
 export { queryKeys } from '../keys';
 
 // Types
-export * from '../types';
+export * from '../../types';
