@@ -1,7 +1,7 @@
 
 import {ReactNode} from "react";
-import LandingHeader from "@/components/landing_header/header";
-import LandingFooter from "@/components/landing_footer/footer";
+import LandingHeader from "@/components/marketing/landing_header/header";
+import LandingFooter from "@/components/marketing/landing_footer/footer";
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
     return (<div className={"scroll-hidden"}>

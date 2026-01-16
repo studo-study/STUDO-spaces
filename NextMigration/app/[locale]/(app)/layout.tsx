@@ -1,8 +1,8 @@
 //app/[locale/(app)/layout.tsx
 "use client"
 import {ReactNode, useRef, useState} from "react";
-import AppHeader from "@/components/app_header/header";
-import Burger from "@/components/app_header/burger";
+import AppHeader from "@/components/app/app_header/header";
+import Burger from "@/components/app/app_header/burger";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
     const [burgerOpen, setBurgerOpen] = useState(false);

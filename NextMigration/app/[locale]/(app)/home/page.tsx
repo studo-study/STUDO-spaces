@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import {useLocale, useTranslations} from "next-intl";
 import TestHomePage from "@/app/[locale]/(app)/home/test";
-import AnimateOnMount from "@/components/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import {IoIosArrowForward} from "react-icons/io";
 import Link from "next/link";
 import {PiMedalLight} from "react-icons/pi";
-import {ClassActivity, LastStudied, StartPage, Studyset, User} from "@/lib/types";
+import {ClassActivity, LastStudied, StartPage, Studyset, User} from "@/types/types";
 import {mockStartPage, mockUser} from "@/data/mocks/startPageMock";
-import {Progress} from "@/components/progress/progress";
+import {Progress} from "@/components/marketing/progress/progress";
 import CourseIcons from "../../../../data/index.ts";
 import {GoPlus} from "react-icons/go";
 

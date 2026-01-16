@@ -11,7 +11,7 @@ export default function Layout() {
     data: headerData = {},
     isLoading: isLoadingHeader,
     error: errorHeader
-  } = useSWR("users/me/headers");
+  } = useSWR("users/me/app");
 
 
   return (<>

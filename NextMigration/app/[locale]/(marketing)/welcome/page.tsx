@@ -1,6 +1,6 @@
-import Hero from "@/components/landing_welcome/hero";
-import Info from "@/components/landing_welcome/info";
-import Stats from "@/components/landing_welcome/stats";
+import Hero from "@/components/marketing/landing_welcome/hero";
+import Info from "@/components/marketing/landing_welcome/info";
+import Stats from "@/components/marketing/landing_welcome/stats";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;

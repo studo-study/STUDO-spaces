@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import {useTranslations} from "next-intl";
-import Link from "next/link";
-import AnimateOnMount from "@/components/ui/AnimateOnMount";
+import {Link} from "@/i18n/routing";
+import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import Image from "next/image";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {

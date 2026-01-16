@@ -12,7 +12,8 @@ import {
   UseGuards,
   Request,
   BadRequestException,
-  NotFoundException, ForbiddenException,
+  NotFoundException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import {
@@ -53,7 +54,6 @@ interface AuthenticatedRequest extends ExpressRequest {
     id: string;
     email?: string;
     role?: string;
-
   };
 }
 
@@ -64,8 +64,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
-  ) {
-  }
+  ) {}
 
   // REGISTER -------------------------------------------------------
 
@@ -307,7 +306,7 @@ export class UserController {
   })
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER, Role.ADMIN)
-  @Get('/:user_id/headers')
+  @Get('/:user_id/app')
   async getHeader(
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,
@@ -318,7 +317,7 @@ export class UserController {
       throw new NotFoundException('User not found');
     }
 
-    // Admin can access any user's headers, regular users only their own
+    // Admin can access any user's app, regular users only their own
     if (req.user.role !== Role.ADMIN && req.user.id !== user_id) {
       throw new NotFoundException('Header not found');
     }
@@ -348,6 +347,4 @@ export class UserController {
     }
     return this.userService.getCourse(user_id, course_id);
   }
-
-
 }

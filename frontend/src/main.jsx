@@ -189,7 +189,7 @@ const authRoutes = [
   { path: "logout", element: <Logout /> },
 ];
 
-// Generate language-prefixed routes for landing pages
+// Generate language-prefixed routes for marketing pages
 const generateLangRoutes = (routes, layout) => {
   const langCodes = SUPPORTED_LANGUAGES.map(l => l.code).filter(c => c !== DEFAULT_LANGUAGE);
 

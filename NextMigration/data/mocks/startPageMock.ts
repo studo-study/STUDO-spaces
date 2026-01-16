@@ -12,7 +12,7 @@ import type {
     Card,
     Folder,
     SetLike,
-} from '../../lib/types';
+} from '../../types/types';
 
 // ============================================================
 // MOCK USER
@@ -266,7 +266,7 @@ export const mockCardsStudyset3: Card[] = [
     {
         id: 'card-003-002',
         term: '6 juni 1944',
-        definition: 'D-Day - Geallieerde landing in Normandië',
+        definition: 'D-Day - Geallieerde marketing in Normandië',
         number: 2,
         created_at: '2025-12-20T11:01:00.000Z',
         updated_at: '2025-12-20T11:01:00.000Z',

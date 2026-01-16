@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import ConsoleEasterEgg from "@/components/easteregg/console";
-import SessionProvider from "@/components/providers/SessionProvider";
+import ConsoleEasterEgg from "@/components/overige/easteregg/console";
+import SessionProvider from "@/components/auth/providers/SessionProvider";
 
 export const metadata: Metadata = {
     title: "Studo",
