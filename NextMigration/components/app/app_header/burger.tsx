@@ -11,12 +11,12 @@ import {MdAccountCircle} from "react-icons/md";
 import {FaChevronDown} from "react-icons/fa";
 import {usePathname} from "next/navigation";
 import UserPopup from "@/components/app/app_header/user";
+import {useUser} from "@/components/providers/UserProvider";
 
 interface BurgerProps {
     burgerOpen: boolean,
     toggleSearch: () => void,
     toggleCreate: () => void,
-    isMod: boolean,
 }
 
 const main = [
@@ -34,19 +34,20 @@ const classrooms = [
 ]
 
 
-export default function Burger({burgerOpen, toggleSearch, toggleCreate, isMod}: BurgerProps) {
+export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerProps) {
     const t = useTranslations("header")
     const pathname = usePathname();
     const isActive = (link: string) => {
         const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, '');
         return pathWithoutLocale === link || pathWithoutLocale.startsWith(link + '/');
     };
-
+    const { user } = useUser();
+    const isMod = user?.verified ?? false;
 
 
 
     return(<div className={`h-full border-r user-select-none border-studoborder/30
-    transition-all duration-300 flex flex-col gap-3 py-10 pb-20
+    transition-all duration-100 flex flex-col gap-3 py-10 pb-20
     ${burgerOpen ? " w-57 px-" : "w-30"}`}>
         {main.map((item, index) => {
             return (<Link href={item.link} key={index} className={`w-full h-10 ${isActive(item.link) ? "opacity-75": "opacity-50"} px-5 `}>

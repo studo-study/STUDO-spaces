@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import ConsoleEasterEgg from "@/components/overige/easteregg/console";
-import SessionProvider from "@/components/auth/providers/SessionProvider";
+import SessionProvider from "@/components/providers/SessionProvider";
 
 export const metadata: Metadata = {
     title: "Studo",
@@ -17,7 +17,7 @@ export default async function LocaleLayout({
                                                params,
                                            }: {
     children: ReactNode;
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
 }) {
     const messages = await getMessages();
 

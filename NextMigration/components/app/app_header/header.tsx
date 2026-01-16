@@ -12,13 +12,38 @@ import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
 import SearchBar from "@/components/app/app_header/search";
 import CreateFolder from "@/components/app/create-folder/create_folder";
 import Image from "next/image";
+import {auth} from "@/auth";
+import {useSession} from "next-auth/react";
+import {useUser} from "@/components/providers/UserProvider";
 
 interface user {
     displayName: string;
     email: string;
+    id: string;
+    img_url: string;
+    joinNumber: number;
+    join_date: string;
+    lastTen: studyset[];
+    publicRole:string;
+    stats: {
+        totalsets: number;
+        timeLearned: number;
+        cardsLearned: number;
+    };
     streak_count: number;
-    pfp: string;
-    moderator: boolean;
+    streak_last_update: string;
+    totalSets: number;
+    verified: boolean;
+}
+
+interface studyset {
+    "set_id": string;
+    "last_studied": string;
+    "title": string;
+    "Course": string;
+    "type": string;
+    "progress": number;
+    "length": number
 }
 
 interface HeaderProps {
@@ -29,12 +54,11 @@ interface HeaderProps {
     createOpen: boolean;
     setCreateOpen: React.Dispatch<React.SetStateAction<boolean>>;
     toggleCreate: () => void;
-    user: user;
 }
-export default function AppHeader({burgerOpen, user, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate}: HeaderProps) {
+ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate}: HeaderProps) {
 
 
-
+     const { user, isLoading } = useUser();
     const [AddIsOpen, setAddIsOpen] = useState(false);
     const [NotifIsOpen, setNotifIsOpen] = useState(false);
     const [ProfileIsOpen, setProfileIsOpen] = useState(false);
@@ -106,15 +130,19 @@ export default function AppHeader({burgerOpen, user, setBurgerOpen, Search, setS
                     />
 
                     {/* Profile */}
-                    <TriggerProfile
-                        ProfileIsOpen={ProfileIsOpen}
-                        setProfileIsOpen={setProfileIsOpen}
-                        user={user}
-                    />
+                    {isLoading ? (
+                        <div className="h-10 w-10 rounded-full bg-studogrey/30 animate-pulse" />
+                    ) : (
+                        <TriggerProfile
+                            ProfileIsOpen={ProfileIsOpen}
+                            setProfileIsOpen={setProfileIsOpen}
+                            user={user}
+                        />
+                    )}
 
                     {/* Streak */}
                     <Streak
-                        streak={user.streak_count}
+                        streak={user?.streak_count ?? 0}
                         StreakOpen={StreakOpen}
                         setStreakOpen={setStreakOpen}
                     />

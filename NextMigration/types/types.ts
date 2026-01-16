@@ -628,7 +628,7 @@ import { DefaultJWT } from 'next-auth/jwt';
 // JOUW USER TYPES
 // ============================================
 
-interface UserStats {
+export interface UserStats {
     totalsets: number;
     timeLearned: number;
     cardsLearned: number;

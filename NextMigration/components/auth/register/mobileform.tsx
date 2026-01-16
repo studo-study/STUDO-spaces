@@ -108,7 +108,7 @@ export default function MobileForm() {
                                                         data-cy="email_input"
                                                     />
                                                 </div>
-                                                {errors.email && (
+                                                {errors.email && errors.email.message && (
                                                     <span className="px-4 text-red-400 text-xs">{t(errors.email.message)}</span>
                                                 )}
                                             </div>
@@ -122,14 +122,13 @@ export default function MobileForm() {
                                                     <input
                                                         type="text"
                                                         placeholder={t("name")}
-                                                        autoComplete="none"
                                                         {...register('displayName')}
                                                         autoComplete="none"
                                                         className="transition-all w-full duration-500 focus:outline-none bg-transparent"
                                                         data-cy="email_input"
                                                     />
                                                 </div>
-                                                {errors.displayName && (
+                                                {errors.displayName && errors.displayName.message && (
                                                     <span className="px-4 text-red-400 text-xs">{t(errors.displayName.message)}</span>
                                                 )}
                                             </div>
@@ -160,7 +159,7 @@ export default function MobileForm() {
                                                         alt="Toggle password visibility"
                                                     />
                                                 </div>
-                                                {errors.password && (
+                                                {errors.password && errors.password.message && (
                                                     <span className="px-4 text-red-400 text-xs">{t(errors.password.message)}</span>
                                                 )}
                                             </div>
@@ -187,7 +186,7 @@ export default function MobileForm() {
                                                         data-cy="toggle_password_visibility"
                                                     />
                                                 </div>
-                                                {errors.confirmPassword && (
+                                                {errors.confirmPassword && errors.confirmPassword.message && (
                                                     <span className="px-4 text-red-400 text-xs">{t(errors.confirmPassword.message)}</span>
                                                 )}
                                             </div>
@@ -209,7 +208,7 @@ export default function MobileForm() {
                                                     <option value="professor" className="bg-slate-800">{t("professor")}</option>
                                                 </select>
                                             </div>
-                                            {errors.role && (
+                                            {errors.role && errors.role.message && (
                                                 <span className="px-4 text-red-400 text-xs">{t(errors.role.message)}</span>
                                             )}
                                         </div>

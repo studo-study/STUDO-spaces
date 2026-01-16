@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Base schema (zonder confirmPassword) - voor API route
 export const registerSchemaBase = z.object({
     email: z
         .string()
@@ -15,10 +14,9 @@ export const registerSchemaBase = z.object({
         .string()
         .min(2, 'name_2_char_min')
         .max(50, 'name_50_char_max'),
-    role: z.enum(['student', 'teacher', 'professor']).default('student'),
+    role: z.enum(['student', 'teacher', 'professor']),
 });
 
-// Extended schema (met confirmPassword) - voor frontend form
 export const registerSchema = registerSchemaBase
     .extend({
         confirmPassword: z.string().min(1, 'confirm_pwd'),
