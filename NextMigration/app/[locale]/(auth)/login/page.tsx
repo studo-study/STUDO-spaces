@@ -1,10 +1,10 @@
-import HeroBackground from "@/components/landing_welcome/hero_background";
+import HeroBackground from "@/components/marketing/landing_welcome/hero_background";
 import {useTranslations} from "next-intl";
-import AnimateOnMount from "@/components/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import {navigate} from "next/dist/client/components/segment-cache/navigation";
 import Link from "next/link";
-import DesktopForm from "@/app/[locale]/(auth)/login/desktopform";
-import MobileForm from "@/app/[locale]/(auth)/login/mobileform";
+import DesktopForm from "@/components/auth/login/desktopform";
+import MobileForm from "@/components/auth/login/mobileform";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;

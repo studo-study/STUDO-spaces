@@ -227,7 +227,6 @@ describe('Users', () => {
       expect(response.body).toHaveProperty('lastTen');
     });
 
-
     it('moet 404 retourneren wanneer user niet bestaat', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/00000000-0000-0000-0000-000000000000`)
@@ -643,13 +642,12 @@ describe('Users', () => {
       expect(response.body).toEqual({});
     });
 
-
     testAuthHeader(() =>
       request(app.getHttpServer()).delete(`${baseUrl}/${userId1}`),
     );
   });
 
-  describe('GET /api/users/:user_id/headers', () => {
+  describe('GET /api/users/:user_id/app', () => {
     it('moet 200 retourneren en app_footer info tonen', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${userId2}/headers`)
@@ -662,7 +660,7 @@ describe('Users', () => {
       expect(response.body).toHaveProperty('pfp');
     });
 
-    it('moet 404 retourneren wanneer andere user headers opvraagt', async () => {
+    it('moet 404 retourneren wanneer andere user app opvraagt', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${userId1}/headers`)
         .auth(userAuthToken, { type: 'bearer' });
@@ -671,7 +669,7 @@ describe('Users', () => {
       expect(response.body.message).toBe('Header not found');
     });
 
-    it('moet 200 retourneren wanneer admin headers opvraagt', async () => {
+    it('moet 200 retourneren wanneer admin app opvraagt', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${userId1}/headers`)
         .auth(adminAuthToken, { type: 'bearer' });
@@ -787,7 +785,7 @@ describe('Users', () => {
       expect(courses.length).toBe(uniqueCourses.length);
 
       // Geen lege strings
-      courses.forEach(course => {
+      courses.forEach((course) => {
         expect(course.trim()).not.toBe('');
       });
     });
@@ -815,7 +813,7 @@ describe('Users', () => {
       expect(Array.isArray(activities)).toBe(true);
 
       // Geen activiteit van de user zelf
-      activities.forEach(activity => {
+      activities.forEach((activity) => {
         expect(activity.user_id).not.toBe(userId2);
       });
     });
@@ -826,9 +824,11 @@ describe('Users', () => {
       const twoDaysAgo = new Date();
       twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
-      activities.forEach(activity => {
+      activities.forEach((activity) => {
         const activityDate = new Date(activity.last_seen);
-        expect(activityDate.getTime()).toBeGreaterThanOrEqual(twoDaysAgo.getTime());
+        expect(activityDate.getTime()).toBeGreaterThanOrEqual(
+          twoDaysAgo.getTime(),
+        );
       });
     });
 

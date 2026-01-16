@@ -1,9 +1,9 @@
-import HeroBackground from "@/components/landing_welcome/hero_background";
+import HeroBackground from "@/components/marketing/landing_welcome/hero_background";
 import {useTranslations} from "next-intl";
-import AnimateOnMount from "@/components/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import Link from "next/link";
-import DesktopForm from "@/app/[locale]/(auth)/register/desktopform";
-import MobileForm from "@/app/[locale]/(auth)/register/mobileform";
+import DesktopForm from "@/components/auth/register/desktopform";
+import MobileForm from "@/components/auth/register/mobileform";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -161,7 +161,7 @@ export default function RegisterPage() {
         text-xs sm:text-sm text-studodarkblue/60 dark:text-white/60">
 
                     <p className="text-[10px] sm:text-xs opacity-75 order-1 sm:order-2">
-                        {t("Version")} 2.02
+                        {t("Version")} {process.env.NEXT_PUBLIC_VERSION}
                     </p>
 
                     <p className="text-center sm:text-right order-3 hidden sm:block">

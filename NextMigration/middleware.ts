@@ -52,12 +52,16 @@ export default auth((request) => {
         "/modes/studosets",
         "/terms-of-service",
         "/modes/visualsets",
+        "/overview",
         "/"];
 
     // Check of huidige route public is
-    const isPublicRoute = publicRoutes.some(route =>
-        pathWithoutLocale === route || pathWithoutLocale.startsWith(route + '/')
-    );
+    const isPublicRoute = publicRoutes.some(route => {
+        if (route === '/') {
+            return pathWithoutLocale === '/' || pathWithoutLocale === '';
+        }
+        return pathWithoutLocale === route || pathWithoutLocale.startsWith(route + '/');
+    });
 
     // Auth routes (login/register) - hier mag je NIET komen als je ingelogd bent
     const authRoutes = ['/login', '/register'];
@@ -73,9 +77,11 @@ export default auth((request) => {
     console.log({
         pathname,
         pathWithoutLocale,
+        locale,
         isLoggedIn,
         isPublicRoute,
         isAuthRoute,
+        checkingFor: publicRoutes.map(r => `/${locale}${r}`)
     });
 
     // Ingelogd + op login/register pagina → redirect naar home
