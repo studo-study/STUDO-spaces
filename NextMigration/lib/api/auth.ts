@@ -1,13 +1,6 @@
-import type { RegisterFormData } from '@/lib/validations/auth';
+import {RegisterResponse, RegisterUserRequest} from "@/types/register-d";
 
-interface RegisterResponse {
-    success: boolean;
-    message: string;
-    userId?: string;
-    errors?: Record<string, string[]>;
-}
-
-export async function registerUser(data: RegisterFormData): Promise<RegisterResponse> {
+export async function registerUser(data: RegisterUserRequest): Promise<RegisterResponse> {
     const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

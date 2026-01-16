@@ -563,7 +563,17 @@
     "Register": "Register",
     "other_register": "or register with",
     "Already": "Already have an account?",
-    "log in": "Log in"
+    "log in": "Log in",
+    "email_required": "Email address is required",
+    "faulty_email": "invalid email address",
+    "pwd_min_8": "Password must be at least 8 characters long",
+    "min_1_capital": "Password must contain at least 1 capital letter",
+    "min_1_number": "Password must contain at least 1 number",
+    "name_2_char_min": "Name must be at least 2 characters long",
+    "name_50_char_max": "Name can be  at most 50 characters",
+    "pwd_dont_match": "Passwords must match",
+    "confirm_pwd": "Please confirm your password"
+
   },
   "header": {
     "create_ss": "Create Studoset",
