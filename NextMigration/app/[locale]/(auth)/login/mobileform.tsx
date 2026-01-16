@@ -3,6 +3,8 @@ import {useCallback, useEffect, useState, useMemo} from "react";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
 import AnimateOnMount from "@/components/ui/AnimateOnMount";
+import {useRouter, useSearchParams} from "next/navigation";
+import {signIn} from "next-auth/react";
 
 const validationRules = {
     email: {
@@ -14,23 +16,64 @@ const validationRules = {
 };
 
 export default function MobileForm() {
-    const language = useLocale();
     const [open, setOpen] = useState(false);
-    const t = useTranslations("login");
+    const language = useLocale();
+    const t = useTranslations("login")
     const errors = false;
-    const loading = false;
     const toggleShow = () => setOpen(!open);
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+    const router = useRouter();
+    const locale = useLocale();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl') || `/${locale}/home`;
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        console.log('🚀 Attempting login with:', { email, password: '***' });
+
+        try {
+            const result = await signIn('credentials', {
+                email,
+                password,
+                redirect: false,
+            });
+
+
+            if (result?.error) {
+                setError(t('invalidCredentials') || 'Ongeldige email of wachtwoord');
+                setLoading(false);
+                return;
+            }
+
+            console.log('✅ Login successful, redirecting to:', callbackUrl);
+            router.push(callbackUrl);
+            router.refresh();
+
+        } catch (err) {
+            setError(t('somethingWentWrong') || 'Er ging iets mis');
+            setLoading(false);
+        }
+    };
+
     const loginGoogle = useCallback(() => {
-        window.location.href = "http://localhost:3000/api/sessions/google";
+        window.location.href = "http://localhost:3001/api/sessions/google";
     }, []);
 
     const loginMicrosoft = useCallback(() => {
-        window.location.href = "http://localhost:3000/api/sessions/microsoft";
+        window.location.href = "http://localhost:3001/api/sessions/microsoft";
     }, []);
 
     const loginSmartschool = useCallback(() => {
-        window.location.href = "http://localhost:3000/api/sessions/smartschool";
+        window.location.href = "http://localhost:3001/api/sessions/smartschool";
     }, []);
 
     return (
@@ -46,7 +89,7 @@ export default function MobileForm() {
                                 </div>
                                 </AnimateOnMount>
 
-                                <form data-cy="login_form" className="flex flex-col gap-4">
+                                <form data-cy="login_form" onSubmit={handleSubmit} className="flex flex-col gap-4">
                                     <AnimateOnMount delay={200}>
                                     <div className={`flex flex-col gap-4 transition-all duration-500 delay-300`}>
                                         <div className="flex flex-col gap-1">
@@ -59,8 +102,12 @@ export default function MobileForm() {
                                                     type="text"
                                                     placeholder={t("email")}
                                                     autoComplete="none"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
                                                     className="transition-all w-full duration-500 focus:outline-none bg-transparent"
                                                     data-cy="email_input"
+                                                    required
+                                                    disabled={loading}
                                                 />
                                             </div>
                                             {errors && (
@@ -78,8 +125,11 @@ export default function MobileForm() {
                                                     type={open ? "text" : "password"}
                                                     placeholder={t("password")}
                                                     autoComplete="none"
+                                                    onChange={(e) => setPassword(e.target.value)}
                                                     className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
                                                     data-cy="password_input"
+                                                    required
+                                                    disabled={loading}
                                                 />
                                                 <img
                                                     src={open ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}

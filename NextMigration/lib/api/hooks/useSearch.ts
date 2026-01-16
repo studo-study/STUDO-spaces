@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../client';
-import type { SearchResults } from '../types';
+import type { SearchResults } from '../../types';
 
 export function useSearch(query: string, enabled = true) {
     return useQuery({

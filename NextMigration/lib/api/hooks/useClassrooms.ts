@@ -12,7 +12,7 @@ import type {
     CreateClassroomUser,
     UpdateClassroomUser,
     CreateClassroomSets,
-} from '../types';
+} from '../../types';
 
 // GET /users/:userId/classrooms
 export function useUserClassrooms(userId: string | undefined) {

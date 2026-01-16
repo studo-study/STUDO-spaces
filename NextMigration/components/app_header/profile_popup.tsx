@@ -7,7 +7,7 @@ import {PiStudent} from "react-icons/pi";
 import {MdOutlinePrivacyTip, MdOutlineVerifiedUser} from "react-icons/md";
 import {LuLogOut, LuSettings} from "react-icons/lu";
 import {mockUser} from "@/data/mocks/startPageMock";
-
+import { signOut } from 'next-auth/react';
 interface ProfileTriggerPopupProps{
     ProfileIsOpen: boolean,
     setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
@@ -70,8 +70,8 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
     const Items = [
         {link:"/settings", label:"settings", icon: <LuSettings />, color:"from-orange-500 to-amber-500", gradient:"to-amber-500"},
         {link:"/privacy", label:"privacy", icon: <MdOutlinePrivacyTip />, color:"from-emerald-500 to-studogreen", gradient:"to-emerald-500"},
-        {link:"/logout", label:"logout", icon: <LuLogOut />, color:"from-cyan-500 to-cyan-600", gradient:"to-cyan-500"},
     ]
+    const logout =  {link:"/logout", label:"logout", icon: <LuLogOut />, color:"from-cyan-500 to-cyan-600", gradient:"to-cyan-500"};
 
    const mod = {link:"/admin", label:"ad", icon: <MdOutlineVerifiedUser />, color:"from-violet-500 to-purple-600", gradient:"to-violet-500"};
     useEffect(() => {
@@ -189,6 +189,39 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
 
                             </Link>);
                     })}
+                    <button
+                        onClick={() => signOut({ callbackUrl: '/' })}
+                        className={`group p-2 flex cursor-pointer w-full items-center h-18
+                                    transition-all duration-200 ease-out
+                         ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
+                          style={{
+                              transitionDelay: ProfileIsOpen ? `${user.moderator ? 4 * 50 : 4 * 50}ms` : "0ms",
+                          }}
+                    >
+                        <div className={"w-full rounded-xl px-3 flex flex-row gap-3 h-full transition-all " +
+                            `duration-100 hover:bg-linear-to-r from-transparent ${logout.gradient} text-sm dark:text-white text-studodarkblue items-center justify-baseline`}>
+                            <div className={`flex items-center justify-center w-8 h-8 rounded-lg
+                                  bg-gradient-to-br ${logout.color}
+                                  shadow-md shadow-black/10
+                                  group-hover:scale-110 group-hover:shadow-lg
+                                  transition-all duration-200`}
+                            >
+                                {logout.icon}
+                            </div>
+                            <span>{t(logout.label)}</span>
+
+                            <svg
+                                className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                    </button>
+
 
 
 
@@ -198,3 +231,4 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
         </div>
     );
 }
+

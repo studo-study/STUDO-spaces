@@ -10,7 +10,7 @@ import type {
     UpdateVisualset,
     UpdatePin,
     Pin,
-} from '../types';
+} from '../../types';
 
 // GET /visualsets/:id
 export function useVisualset(setId: string | undefined) {

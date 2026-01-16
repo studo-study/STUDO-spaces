@@ -24,7 +24,7 @@ export default function Welcome() {
     },
     {
       question: t("faq.free.question", "Is Studo free to use?"),
-      answer: t("faq.free.answer", "Yes! The core study features are completely free. You can create as many study sets as you like and use all the main learning tools without paying.")
+      answer: t("faq.free.answer", "Yes! The core study modes are completely free. You can create as many study sets as you like and use all the main learning tools without paying.")
     },
     {
       question: t("faq.tools.question", "What study tools does Studo offer?"),
@@ -32,7 +32,7 @@ export default function Welcome() {
     },
     {
       question: t("faq.quizlet.question", "How is Studo different from Quizlet?"),
-      answer: t("faq.quizlet.answer", "Compared to Quizlet, Studo offers far more advanced visual about-studosets and statistics about your studying. Plus the core functionality is free, which Quizlet isn't. While there are optional premium upgrades and some ads, the main learning tools are completely free, letting you focus on studying effectively.")
+      answer: t("faq.quizlet.answer", "Compared to Quizlet, Studo offers far more advanced visual studosets and statistics about your studying. Plus the core functionality is free, which Quizlet isn't. While there are optional premium upgrades and some ads, the main learning tools are completely free, letting you focus on studying effectively.")
     }
   ];
 

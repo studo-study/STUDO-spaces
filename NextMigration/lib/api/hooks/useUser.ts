@@ -4,7 +4,7 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { api } from '../client';
 import { queryKeys } from '../keys';
-import type { User, UserStats, StartPagina, HeaderInfo } from '../types';
+import type { User, UserStats, StartPagina, HeaderInfo } from '../../types';
 
 // GET /users/:id
 export function useUser(userId: string | undefined) {

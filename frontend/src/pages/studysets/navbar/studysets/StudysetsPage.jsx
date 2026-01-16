@@ -11,7 +11,7 @@ export default function StudysetsPage() {
   const toggleOpen = () => setIsOpen((isOpen) => !isOpen);
   const closePopup = () => setIsOpen(false);
 
-  const { data: sets, isLoading } = useSWR("users/me/about-studosets");
+  const { data: sets, isLoading } = useSWR("users/me/studosets");
   const [sortedsets, setSortedsets] = useState([]);
   const [studysets, setStudysets] = useState([]);
 

@@ -11,6 +11,7 @@ import TriggerProfile from "@/components/app_header/profile_popup";
 import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
 import SearchBar from "@/components/app_header/search";
 import CreateFolder from "@/components/create-folder/create_folder";
+import Image from "next/image";
 
 interface user {
     displayName: string;
@@ -143,7 +144,7 @@ function Streak({ streak, StreakOpen, setStreakOpen  }: StreakProps) {
 
     return (
         <Link
-            href={"/streak"}
+            href={"/images/streak"}
             ref={containerRef}
             onMouseEnter={() => setStreakOpen(true)}
             onMouseLeave={() => setStreakOpen(false)}
@@ -152,9 +153,11 @@ function Streak({ streak, StreakOpen, setStreakOpen  }: StreakProps) {
                 <div className="absolute z-0 flex justify-center min-w-20 h-8 blur-lg opacity-40 py-1 px-3 bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300 rounded-4xl" />
             )}
                 <div className={`${config.glow ? 'z-10 relative' : ''} min-w-fit flex justify-center py-1 px-3 ${config.bg} rounded-4xl gap-2 font-bold text-white items-center`}>
-                    <img
+                    <Image
                         src={config.icon}
                         alt=""
+                        width={0}
+                        height={0}
                         className={`w-5 ${config.saturation}`}
                     />
                     <span className={`w-fit ${config.textColor}`}>{streak}</span>
@@ -182,7 +185,7 @@ function getStreakConfig(streak: number) {
     if (streak === 67 || streak === 69 || streak >= 200) {
         return {
             bg: 'bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300',
-            icon: '/streak/streak-02.svg',
+            icon: '/images/streak/streak-02.svg',
             saturation: 'saturate-100',
             textColor: 'text-studodarkblue',
             glow: streak >= 200,
@@ -192,7 +195,7 @@ function getStreakConfig(streak: number) {
     if (streak <= 10) {
         return {
             bg: 'bg-studogrey/30',
-            icon: '/streak/streak-03.svg',
+            icon: '/images/streak/streak-03.svg',
             saturation: 'saturate-50',
             textColor: '',
             glow: false,
@@ -202,7 +205,7 @@ function getStreakConfig(streak: number) {
     if (streak <= 49) {
         return {
             bg: 'bg-studogrey/30',
-            icon: '/streak/streak-03.svg',
+            icon: '/images/streak/streak-03.svg',
             saturation: 'saturate-100',
             textColor: '',
             glow: false,
@@ -212,7 +215,7 @@ function getStreakConfig(streak: number) {
     if (streak <= 99) {
         return {
             bg: 'bg-studogrey/30',
-            icon: '/streak/streak-02.svg',
+            icon: '/images/streak/streak-02.svg',
             saturation: 'saturate-100',
             textColor: '',
             glow: false,
@@ -221,7 +224,7 @@ function getStreakConfig(streak: number) {
 
     return {
         bg: 'bg-gradient-to-r from-amber-300/30 via-amber-600/30 to-yellow-500/30',
-        icon: '/streak/streak-03.svg',
+        icon: '/images/streak/streak-03.svg',
         saturation: 'saturate-100',
         textColor: '',
         glow: false,
