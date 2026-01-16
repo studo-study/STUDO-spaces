@@ -30,7 +30,6 @@ export const mockUser: User = {
     streak_count: 7,
     streak_last_update: '2026-01-12T08:30:00.000Z',
     last_login: '2026-01-12T06:45:00.000Z',
-    roles: ['user'],
     publicRole: 'student',
     verified: true,
 };

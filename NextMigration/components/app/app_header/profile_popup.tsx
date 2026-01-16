@@ -11,15 +11,37 @@ import { signOut } from 'next-auth/react';
 interface ProfileTriggerPopupProps{
     ProfileIsOpen: boolean,
     setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    user: user,
+    user: user | null,
 }
 
 interface user {
-    displayName: string,
-    email: string,
-    streak_count: number,
-    pfp: string,
-    moderator: boolean
+    displayName: string;
+    email: string;
+    id: string;
+    img_url: string;
+    joinNumber: number;
+    join_date: string;
+    lastTen: studyset[];
+    publicRole:string;
+    stats: {
+        totalsets: number;
+        timeLearned: number;
+        cardsLearned: number;
+    };
+    streak_count: number;
+    streak_last_update: string;
+    totalSets: number;
+    verified: boolean;
+}
+
+interface studyset {
+    "set_id": string;
+    "last_studied": string;
+    "title": string;
+    "Course": string;
+    "type": string;
+    "progress": number;
+    "length": number
 }
 
 const data = mockUser;
@@ -29,7 +51,6 @@ export default function TriggerProfile({ProfileIsOpen, setProfileIsOpen, user}: 
     const togglePopUp = () => {
         setProfileIsOpen((prev) => !prev);
     };
-
     return(
         <button
             ref={containerRef}
@@ -38,7 +59,7 @@ export default function TriggerProfile({ProfileIsOpen, setProfileIsOpen, user}: 
             <div className={"absolute bg-emerald-500/50 h-10 w-10 rounded-full blur-sm"}/>
             {data.img_url ?
                 <div className="relative z-10 shadow-2xl overflow-hidden h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
-                    <img src={data.img_url} alt="" className={"object-cover h-10 w-10"}/>
+                    <img src={user?.img_url} alt="" className={"object-cover h-10 w-10"}/>
                 </div>
 
             : <div className="relative z-10 shadow-2xl bg-emerald-600 h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
@@ -60,7 +81,7 @@ interface ProfilePopupProps {
     ProfileIsOpen: boolean,
     setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     containerRef: React.RefObject<HTMLDivElement | null>,
-    user: user,
+    user: user | null,
 }
 
 
@@ -118,13 +139,13 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
                 <div className={"w-full h-fit flex flex-col "}>
                     <Link href={"/account"} className={"px-5 flex justify-center items-baseline flex-col w-full glass-rgb h-20 border-b border-studoborder/30"}>
                         <div className={"w-full h-full flex flex-col items-baseline justify-center"}>
-                            <span className={"font-studodarkblue dark:text-white text-start font-bold text-xl truncate overflow-hidden w-full"}>{data.displayName}</span>
-                            <span className={"text-studogrey"}>{data.email}</span>
+                            <span className={"font-studodarkblue dark:text-white text-start font-bold text-xl truncate overflow-hidden w-full"}>{user?.displayName}</span>
+                            <span className={"text-studogrey"}>{user?.email}</span>
                         </div>
 
                     </Link>
 
-                    {user.moderator ?
+                    {user?.verified ?
                         <Link href={mod.link}  className={`group p-2 flex w-full items-center h-18
                                     transition-all duration-200 ease-out
                          ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
@@ -162,7 +183,7 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
                                     transition-all duration-200 ease-out
                          ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
                                   style={{
-                                      transitionDelay: ProfileIsOpen ? `${user.moderator ? (index + 1) * 50 : index * 50}ms` : "0ms",
+                                      transitionDelay: ProfileIsOpen ? `${user?.verified ? (index + 1) * 50 : index * 50}ms` : "0ms",
                                   }}
                             >
                                 <div className={"w-full rounded-xl px-3 flex flex-row gap-3 h-full transition-all " +
@@ -195,7 +216,7 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
                                     transition-all duration-200 ease-out
                          ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
                           style={{
-                              transitionDelay: ProfileIsOpen ? `${user.moderator ? 4 * 50 : 4 * 50}ms` : "0ms",
+                              transitionDelay: ProfileIsOpen ? `${user?.verified ? 4 * 50 : 4 * 50}ms` : "0ms",
                           }}
                     >
                         <div className={"w-full rounded-xl px-3 flex flex-row gap-3 h-full transition-all " +

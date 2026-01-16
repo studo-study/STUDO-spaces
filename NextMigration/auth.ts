@@ -11,7 +11,6 @@ export const {
     handlers,  // API route handlers
     signIn,    // Server-side login
     signOut,   // Server-side logout
-    signUp,
     auth,      // Session ophalen
 } = NextAuth({
 
@@ -80,7 +79,6 @@ export const {
     // ==========================================
     pages: {
         signIn: '/login',
-        signUp: '/register'
     },
 
     // ==========================================
@@ -104,8 +102,8 @@ export const {
             if (user) {
                 token.accessToken = user.accessToken;
                 token.user = {
-                    id: user.id,
-                    email: user.email,
+                    id: user.id!,
+                    email: user.email!,
                     displayName: user.displayName,
                     img_url: user.img_url,
                     join_date: user.join_date,
@@ -113,7 +111,7 @@ export const {
                     totalSets: user.totalSets,
                     streak_count: user.streak_count,
                     streak_last_update: user.streak_last_update,
-                    publicRole: user.publicRole,
+                    publicRole: user.publicRole as "user" | "owner" | "admin",
                     verified: user.verified,
                     stats: user.stats,
                     lastTen: user.lastTen,
@@ -127,9 +125,11 @@ export const {
         // Bepaalt wat beschikbaar is via useSession() en auth()
         // ========================================
         session: async ({ session, token }) => {
-            session.user = token.user;
-            session.accessToken = token.accessToken;
-            return session;
+            return {
+                ...session,
+                user: token.user,
+                accessToken: token.accessToken,
+            };
         },
     },
 });

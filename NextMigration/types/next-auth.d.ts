@@ -1,27 +1,8 @@
 // types/next-auth.d.ts
+import "next-auth";
+import "next-auth/jwt";
 
-import { DefaultSession } from 'next-auth';
-import { DefaultJWT } from 'next-auth/jwt';
-
-// ============================================
-// STUDO USER TYPES
-// ============================================
-
-interface UserStats {
-    totalsets: number;
-    timeLearned: number;
-    cardsLearned: number;
-}
-
-interface RecentSet {
-    set_id: string;
-    last_studied: string;
-    title: string;
-    Course: string;
-    type: 'studyset' | 'visualset';
-    progress: number;
-    length: number;
-}
+type PublicRole = "user" | "owner" | "admin";
 
 interface StudoUser {
     id: string;
@@ -33,18 +14,18 @@ interface StudoUser {
     totalSets: number;
     streak_count: number;
     streak_last_update: string;
-    publicRole: 'owner' | 'admin' | 'user';
+    publicRole: PublicRole;
     verified: boolean;
-    stats: UserStats;
-    lastTen: RecentSet[];
+    stats: {
+        totalsets: number;
+        timeLearned: number;
+        cardsLearned: number;
+    };
+    lastTen: any[];
 }
 
-// ============================================
-// NEXTAUTH TYPE EXTENSIONS
-// ============================================
-
-declare module 'next-auth' {
-    interface Session extends DefaultSession {
+declare module "next-auth" {
+    interface Session {
         user: StudoUser;
         accessToken: string;
     }
@@ -54,8 +35,8 @@ declare module 'next-auth' {
     }
 }
 
-declare module 'next-auth/jwt' {
-    interface JWT extends DefaultJWT {
+declare module "next-auth/jwt" {
+    interface JWT {
         accessToken: string;
         user: StudoUser;
     }
