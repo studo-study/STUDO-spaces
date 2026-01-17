@@ -234,21 +234,21 @@ export default function TermsPage() {
                 {/* 7. Free and Premium Services */}
                 <AnimateOnMount delay={500} className="w-full">
                     <section className="flex flex-col gap-4">
-                        <h2 className="font-bold text-2xl">{t("premium.title")}</h2>
+                        <h2 className="font-bold text-2xl">{t("select.title")}</h2>
                         <p className="text-base leading-relaxed">
-                            {t("premium.description")}
+                            {t("select.description")}
                         </p>
                         <p className="text-base leading-relaxed">
-                            {t("premium.purchase")}
+                            {t("select.purchase")}
                         </p>
                         <ul className="flex flex-col gap-2 pl-5">
-                            <li className="list-disc">{t("premium.rules.payments")}</li>
-                            <li className="list-disc">{t("premium.rules.renew")}</li>
-                            <li className="list-disc">{t("premium.rules.cancel")}</li>
-                            <li className="list-disc">{t("premium.rules.refunds")}</li>
+                            <li className="list-disc">{t("select.rules.payments")}</li>
+                            <li className="list-disc">{t("select.rules.renew")}</li>
+                            <li className="list-disc">{t("select.rules.cancel")}</li>
+                            <li className="list-disc">{t("select.rules.refunds")}</li>
                         </ul>
                         <p className="text-base leading-relaxed">
-                            {t("premium.pricing")}
+                            {t("select.pricing")}
                         </p>
                     </section>
                 </AnimateOnMount>
