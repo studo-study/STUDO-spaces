@@ -6,9 +6,9 @@ import vs from "../../../../assets/icons/visualset.svg";
 import ai from "../../../../assets/icons/sparkle.svg";
 
 const menuItems = [
-	{ to: "/about-about-studosets", icon: ss, label: "studysets", color: "from-emerald-400 to-teal-500" },
-	{ to: "/about-about-visualsets", icon: vs, label: "visualsets", color: "from-blue-400 to-indigo-500" },
-	{ to: "/about-about-ai", icon: ai, label: "ai", color: "from-violet-400 to-purple-500" },
+	{ to: "/about-studosets", icon: ss, label: "studysets", color: "from-emerald-400 to-teal-500" },
+	{ to: "/about-visualsets", icon: vs, label: "visualsets", color: "from-blue-400 to-indigo-500" },
+	{ to: "/about-ai", icon: ai, label: "ai", color: "from-violet-400 to-purple-500" },
 ];
 
 export default function MethodsPopUp({ MethodsOpen, setMethodsOpen, triggerRef }) {

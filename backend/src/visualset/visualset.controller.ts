@@ -68,10 +68,10 @@ export class VisualsetController {
 
   // GET ALL VISUALSETS ---------------------------------------------
 
-  @ApiOperation({ summary: 'Haal alle about-visualsets op (admin).' })
+  @ApiOperation({ summary: 'Haal alle visualsets op (admin).' })
   @ApiResponse({
     status: 200,
-    description: 'Alle about-visualsets opgehaald',
+    description: 'Alle visualsets opgehaald',
     type: VisualsetResponseListDto,
   })
   @UseGuards(CheckUserAccessGuard)

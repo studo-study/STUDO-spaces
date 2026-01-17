@@ -90,7 +90,7 @@ export default function Hero() {
           className={`flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 text-sm sm:text-base text-studodarkblue/60 dark:text-white/60
             transition-all duration-700 delay-400 list-none
             ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}
-          aria-label={t("Key features")}
+          aria-label={t("Key modes")}
         >
           {features.map((feature, i) => (
             <li key={i} className="flex items-center gap-2 text-emerald-500 dark:text-studoblue">

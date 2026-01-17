@@ -1,7 +1,24 @@
 import createNextIntlPlugin from "next-intl/plugin";
+import { NextConfig } from "next";
 
 const withNextIntl = createNextIntlPlugin();
 
-const nextConfig = {};
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: process.env.ANALYZE === "true",
+});
 
-export default withNextIntl(nextConfig);
+const nextConfig: NextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "studo.study",
+            },
+        ],
+    },
+    compiler: {
+        removeConsole: process.env.NODE_ENV === "production",
+    },
+};
+
+export default withBundleAnalyzer(withNextIntl(nextConfig));

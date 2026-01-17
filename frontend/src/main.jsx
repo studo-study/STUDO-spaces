@@ -172,14 +172,14 @@ const privateRoutes = [
 const landingRoutes = [
   { path: "welcome", element: <Welcome /> },
   { path: "about-us", element: <AboutUs /> },
-  { path: "about-about-ai", element: <AI /> },
+  { path: "about-ai", element: <AI /> },
   { path: "flashcards", element: <AboutFlashcards /> },
   { path: "learn", element: <AboutLearn /> },
   { path: "identify", element: <AboutPin /> },
   { path: "point", element: <AboutPoint /> },
   { path: "speedy", element: <AboutSpeedy /> },
-  { path: "about-about-studosets", element: <AboutStudysets /> },
-  { path: "about-about-visualsets", element: <AboutVisualsets /> },
+  { path: "about-studosets", element: <AboutStudysets /> },
+  { path: "about-visualsets", element: <AboutVisualsets /> },
 ];
 
 // Auth pages
@@ -189,7 +189,7 @@ const authRoutes = [
   { path: "logout", element: <Logout /> },
 ];
 
-// Generate language-prefixed routes for landing pages
+// Generate language-prefixed routes for marketing pages
 const generateLangRoutes = (routes, layout) => {
   const langCodes = SUPPORTED_LANGUAGES.map(l => l.code).filter(c => c !== DEFAULT_LANGUAGE);
 
