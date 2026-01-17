@@ -670,5 +670,62 @@
     "sets": "Sets",
     "folders": "Folders",
     "courses": "Courses"
+  },
+  "select": {
+    "pricing": "Pricing",
+    "plan": "Studo Select is our premium subscription, designed for students who want full control over their study workflow. Enjoy an ad-free, distraction-free experience and focus fully on what matters most: studying smarter and more efficiently.",
+    "free": "Free plan",
+    "select": "Studo Select",
+    "month": "/month",
+    "free_expl": "Core features with ads.",
+    "select_expl": "Full access, timelines, printable study sets, and no ads.",
+    "start_tdy": "start today",
+    "current": "current plan"
+
+  },
+  "phrases": {
+    "Nice work": "Nice work",
+    "Well done": "Well done",
+    "Keep on going": "Keep on going",
+    "You got this": "You got this",
+    "You're halfway there": "You're halfway there",
+    "You're doing great": "You're doing great",
+    "Keep pushing": "Keep pushing",
+    "Stay focused": "Stay focused",
+    "You can do it": "You can do it",
+    "Don't give up": "Don't give up",
+    "Nice progress": "Nice progress",
+    "You're improving": "You're improving",
+    "Keep up the good work": "Keep up the good work",
+    "Just a bit more": "Just a bit more",
+    "You're on the right track": "You're on the right track",
+    "Stay motivated": "Stay motivated",
+    "You're stronger than you think": "You're stronger than you think",
+    "Every step counts": "Every step counts",
+    "Believe in yourself": "Believe in yourself",
+
+    "Go Kylie, Go": "Go Kylie, Go",
+    "Look at you go": "Look at you go",
+    "You're doing amazing, sweetie": "You're doing amazing, sweetie",
+    "Slay the day away": "Slay the day away",
+    "Main character energy": "Main character energy",
+    "Look at you go, productivity queen": "Look at you go, productivity queen",
+    "Big brain moment": "Big brain moment",
+    "Somebody’s been studying": "Somebody’s been studying",
+    "Ate and left no crumbs": "Ate and left no crumbs",
+    "Who needs sleep when you have talent?": "Who needs sleep when you have talent?",
+    "You deserve a little dance break": "You deserve a little dance break",
+    "Certified genius mode unlocked": "Certified genius mode unlocked",
+    "Zero chill, maximum brainpower": "Zero chill, maximum brainpower",
+    "WOW WOW WOW": "WOW WOW WOW",
+    "Highkey crushing it right now": "Highkey crushing it right now",
+    "Congratulations, now get back to work": "Congratulations, now get back to work",
+    "yes, we can - Yoda": "yes, we can - Yoda"
+  },
+
+  "streak" : {
+    "phrase_1": "You have studied ",
+    "phrase_2": " day in a row",
+    "d_s": "day streak"
   }
 }

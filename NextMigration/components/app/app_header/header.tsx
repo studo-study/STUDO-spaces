@@ -1,8 +1,7 @@
 "use client"
 import {useLocale, useTranslations} from "next-intl";
 import {HiMenuAlt4} from "react-icons/hi";
-import {IoSearch} from "react-icons/io5";
-import Link from "next/link";
+
 import TriggerAddPopup from "@/components/app/app_header/add_popup";
 import {useEffect, useRef, useState} from "react";
 import TriggerNotif from "@/components/app/app_header/notif_popup";
@@ -12,9 +11,9 @@ import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
 import SearchBar from "@/components/app/app_header/search";
 import CreateFolder from "@/components/app/create-folder/create_folder";
 import Image from "next/image";
-import {auth} from "@/auth";
-import {useSession} from "next-auth/react";
+
 import {useUser} from "@/components/providers/UserProvider";
+import {Link} from "@/i18n/routing";
 
 interface user {
     displayName: string;
@@ -101,6 +100,7 @@ interface HeaderProps {
                     <Link href={"/home"} className={`font-akira text-2xl truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
                         STUDO
                     </Link>
+                    <Link href={"/select"} className={"hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-linear-to-r from-indigo-300 to-white backdrop-blur-2xl text-studodarkblue"}>upgrade to select</Link>
 
                 </div>
 
@@ -172,7 +172,7 @@ function Streak({ streak, StreakOpen, setStreakOpen  }: StreakProps) {
 
     return (
         <Link
-            href={"/images/streak"}
+            href={"/streak"}
             ref={containerRef}
             onMouseEnter={() => setStreakOpen(true)}
             onMouseLeave={() => setStreakOpen(false)}
