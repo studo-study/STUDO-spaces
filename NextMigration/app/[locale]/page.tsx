@@ -1,4 +1,4 @@
-// app/[locale]/page.tsx
+// app/[locale]/layout.tsx
 
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
