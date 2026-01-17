@@ -528,9 +528,155 @@
       }
     }
   },
-  "notfound": {
-    "return": "return",
-    "404": "404"
+  "login": {
+    "hook": "students already studying",
+    "Version": "Version",
+    "rights": "STUDO inc. All Rights Reserved.",
+    "Welcome back": "Welcome back",
+    "email": "email",
+    "password": "password",
+    "Log In": "Log In",
+    "log into account": "log into account",
+    "or log in with": "or log in with",
+    "Google": "Google",
+    "Microsoft": "Microsoft",
+    "Smartschool": "Smartschool",
+    "Loading": "Loading...",
+    "Don't have an account?": "Don't have an account?",
+    "sign up": "sign up"
+  },
+  "register": {
+    "Create account": "Create account",
+    "create_account": "Create a new account",
+    "information": "Personal Information",
+    "email": "email",
+    "name": "your name",
+    "info_title": "Your personal info",
+    "password_title": "Your password",
+    "password": "password",
+    "repeat password": "repeat password",
+    "role_title": "You are a",
+    "teacher": "teacher",
+    "student": "student",
+    "professor": "professor",
+    "Loading": "Registering...",
+    "Register": "Register",
+    "other_register": "or register with",
+    "Already": "Already have an account?",
+    "log in": "Log in",
+    "email_required": "Email address is required",
+    "faulty_email": "invalid email address",
+    "pwd_min_8": "Password must be at least 8 characters long",
+    "min_1_capital": "Password must contain at least 1 capital letter",
+    "min_1_number": "Password must contain at least 1 number",
+    "name_2_char_min": "Name must be at least 2 characters long",
+    "name_50_char_max": "Name can be  at most 50 characters",
+    "pwd_dont_match": "Passwords must match",
+    "confirm_pwd": "Please confirm your password"
 
+  },
+  "header": {
+    "create_ss": "Create Studoset",
+    "create_vs": "Create Visualset",
+    "create_f": "Create Folder",
+    "notifs": "notifications",
+    "day streak": "day streak",
+    "studied": "You have studied ",
+    "days": " days in a row",
+    "settings": "Settings",
+    "privacy": "Privacy",
+    "logout": "Log out",
+    "ad": "Admin",
+    "home": "Home",
+    "sets": "Sets",
+    "courses": "Courses",
+    "folders": "Folders",
+    "create": "Create",
+    "classrooms": "Classrooms",
+    "account": "Account",
+    "search": "Search",
+    "nonotif": "no notifications",
+    "allup": "you're up-to-date"
+
+  },
+  "createfolder": {
+    "title": "create a folder",
+    "placeholder": "Fill in a name...",
+    "button": "create"
+  },
+  "notfound": {
+    "return": "terug",
+    "404": "404"
+  },
+  "timed": {
+    "2": [
+      "Welcome back nightowl",
+      "Up this late again? You're not the only one...",
+      "The night is still young.. and so are we 🎶"
+    ],
+    "4": [
+      "Glad you're here. Stay focused at this hour.",
+      "Go to sleep, bruv",
+      "Still up... somehow!?",
+      "Are you Batman or sum?"
+    ],
+    "7": [
+      "Good morning",
+      "You're actually up — that's already a win.",
+      "Coffee instead of sleep? Classic student move. Let's do this."
+    ],
+    "11": [
+      "Welcome back, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": [
+      "Good evening, {name}",
+      "Evening shift activated — you can handle this.",
+      "You got this!"
+    ],
+    "19": [
+      "Good evening, {name}",
+      "Welcome Back",
+      "Let's Go Champ"
+    ],
+    "22": [
+      "Welcome back. The evening is advancing — good luck.",
+      "Late-night studying? Respect for keeping at it.",
+      "Everyone else is heading to bed... we're still reviewing notes."
+    ],
+    "0": [
+      "Midnight has passed. Rest if you can, otherwise keep going.",
+      "It's late... but the material isn't finished yet.",
+      "Midnight and that summary is finally complete? Proud of you."
+    ]
+  },
+  "home": {
+    "stats": "Statistics",
+    "Streak": "Streak",
+    "days": "days",
+    "ready": "Ready to study?",
+    "totCards": "Total Cards",
+    "tmStd": "Time Studied",
+    "min": "min",
+    "cards": "cards",
+    "pins": "pins",
+    "week": "per week",
+    "mastered": "Cards Mastered",
+    "dagen": "days",
+    "Continue": "Sets",
+    "checkAll": "all sets",
+    "studied": "studied",
+    "courses": "Courses",
+    "checkCourse": "all courses",
+    "act": "Friends",
+    "CheckAct": "all activity",
+    "create_ss": "create Studoset",
+    "create_vs": "create Visualset",
+    "create_block": "create card or pin sets",
+    "checkStats": "more stats"
+  },
+  "y_f" : {
+    "title": "Your Files"
   }
 }

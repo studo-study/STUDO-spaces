@@ -1,8 +1,86 @@
-"use client";
-import HeroBackground from "@/components/landing_welcome/hero_background";
+import HeroBackground from "@/components/marketing/landing_welcome/hero_background";
 import {useTranslations} from "next-intl";
-import AnimateOnMount from "@/components/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import Link from "next/link";
+import DesktopForm from "@/components/auth/register/desktopform";
+import MobileForm from "@/components/auth/register/mobileform";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const messages = (await import(`../../../../messages/seo/register/${locale}.json`)).default;
+
+    const baseUrl = 'https://studo.study';
+    const localeUrl = `${baseUrl}/${locale}`;
+
+    return {
+        title: messages.title,
+        description: messages.description,
+        keywords: messages.keywords,
+
+        alternates: {
+            canonical: localeUrl,
+            languages: {
+                en: `${baseUrl}/en`,
+                nl: `${baseUrl}/nl`,
+                fr: `${baseUrl}/fr`,
+                es: `${baseUrl}/es`,
+                'x-default': `${baseUrl}/en`, // ← default taal voor onbekende locales
+            },
+        },
+
+        openGraph: {
+            title: messages.title,
+            description: messages.description,
+            url: localeUrl,
+            siteName: 'Studo',
+            type: 'website',
+            locale: locale === 'en' ? 'en_US' : `${locale}_${locale.toUpperCase()}`, // ← juiste format (en_US, nl_NL, etc.)
+            alternateLocale: ['en_US', 'nl_NL', 'fr_FR', 'es_ES'].filter(l => !l.startsWith(locale)), // ← alternate locales
+            images: [{
+                url: `${baseUrl}${messages.ogImage}`, // ← absolute URL voor OG image
+                width: 1200,
+                height: 630,
+                alt: messages.title,
+            }],
+        },
+
+        twitter: {
+            card: 'summary_large_image',
+            title: messages.title,
+            description: messages.description,
+            images: [`${baseUrl}${messages.ogImage}`], // ← absolute URL
+            creator: '@studo', // ← optioneel: jouw Twitter handle
+            site: '@studo',
+        },
+
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-snippet': -1,
+                'max-image-preview': 'large',
+                'max-video-preview': -1,
+            },
+        },
+
+        icons: {
+            icon: '/favicon.ico',
+            apple: '/apple-touch-icon.png',
+        },
+
+        applicationName: 'Studo',
+        category: 'education',
+
+        // ← Extra SEO metadata
+        verification: {
+            google: 'jouw-google-verification-code', // Google Search Console
+            // yandex: 'code',
+            // bing: 'code',
+        },
+    };
+}
 
 export default function RegisterPage() {
     const t = useTranslations("login");
@@ -50,13 +128,12 @@ export default function RegisterPage() {
                 </Link>
 
                 <div className="md:relative fixed h-screen w-screen p-10 md:pb-20 flex md:justify-center justify-center z-10">
-                    {<div className={"flex xl:hidden justify-center items-center"}>form1</div>}
+                    {<div className={"flex xl:hidden justify-center items-center"}><MobileForm/></div>}
                     {<div className={"3xl:relative hidden xl:flex justify-between items-center px-10 w-full"}>
-                        <div className={"w-1/4 min-h-full flex flex-col justify-between "}>
+                        <div className={"w-1/4 h-full flex flex-col justify-between"}>
 
                             <AnimateOnMount delay={650} className="w-full h-full">
-                                <div className={`flex items-end gap-6 h-full
-                                  transition-all duration-700 delay-900`}>
+                                <div className={`flex items-end gap-6 min-h-full transition-all duration-700 delay-900`}>
                                     <div className="flex -space-x-3">
                                         {array.map((item, i) => (
                                             <div
@@ -75,7 +152,7 @@ export default function RegisterPage() {
                                 </div>
                             </AnimateOnMount>
                         </div>
-                        form2</div>}
+                        <DesktopForm/></div>}
                 </div>
 
                 <div className="absolute bottom-0 left-0 right-0 z-50
@@ -84,7 +161,7 @@ export default function RegisterPage() {
         text-xs sm:text-sm text-studodarkblue/60 dark:text-white/60">
 
                     <p className="text-[10px] sm:text-xs opacity-75 order-1 sm:order-2">
-                        {t("Version")} 2.02
+                        {t("Version")} {process.env.NEXT_PUBLIC_VERSION}
                     </p>
 
                     <p className="text-center sm:text-right order-3 hidden sm:block">

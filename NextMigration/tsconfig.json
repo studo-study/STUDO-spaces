@@ -11,6 +11,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "typeRoots": ["./types", "./node_modules/@types"],
     "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
@@ -28,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "next-env.d.ts, **/*.ts, **/*.tsx, types/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }
