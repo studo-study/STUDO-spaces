@@ -8,7 +8,7 @@ const header = [
     {url: "/your-files/courses", label: "courses"},
     {url: "/your-files/folders", label: "folders"}
 ]
-export default function FileHeader() {
+export default function ClassroomHeader() {
     const t = useTranslations("y_f")
     const pathname = usePathname();
     const isActive = (link: string) => {

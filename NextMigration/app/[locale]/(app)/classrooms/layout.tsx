@@ -1,13 +1,21 @@
-import {ReactNode} from "react";
+import {useTranslations} from "next-intl";
 import FileHeader from "@/components/app/your-files/header";
+import {ReactNode} from "react";
+
+function ClassHeader() {
+    return null;
+}
 
 export default function Layout({ children }: { children: ReactNode }) {
+    const t = useTranslations("classroom")
     return (
         <div className=" w-full h-full py-15 pr-30 flex flex-col gap-10 scroll-hidden">
             <section className={"w-full h-fit"}>
-                <FileHeader/>
-                    <div>{children}</div>
+                <ClassHeader/>
+                <div>{children}</div>
             </section>
         </div>
     );
+
+
 }

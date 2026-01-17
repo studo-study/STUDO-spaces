@@ -47,7 +47,7 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerP
 
 
     return(<div className={`h-full border-r user-select-none border-studoborder/30
-    transition-all duration-100 flex flex-col gap-3 py-10 pb-20
+    transition-all duration-300 flex flex-col gap-3 py-10 pb-20
     ${burgerOpen ? " w-57 px-" : "w-30"}`}>
         {main.map((item, index) => {
             return (<Link href={item.link} key={index} className={`w-full h-10 ${isActive(item.link) ? "opacity-75": "opacity-50"} px-5 `}>

@@ -664,5 +664,11 @@
     "create_vs": "create Visualset",
     "create_block": "create card or pin sets",
     "checkStats": "more stats"
+  },
+  "y_f" : {
+    "title": "Your files",
+    "sets": "Sets",
+    "folders": "Folders",
+    "courses": "Courses"
   }
 }
