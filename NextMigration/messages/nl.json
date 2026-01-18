@@ -738,5 +738,30 @@
   },
   "classrooms": {
     "title": "Your Classrooms"
+  },
+  "settings": {
+    "title": "Settings",
+    "personal info": "Personal Info",
+    "username": "Username",
+    "email": "Email",
+    "role": "Role",
+    "edit": "edit",
+    "subscription": "Current Plan",
+    "free": "Free plan",
+    "upgrade": "upgrade",
+    "student": "student",
+    "teacher": "teacher",
+    "professor": "professor",
+    "screen_mode": "Screenmode",
+    "language": "language",
+    "page_color": "Page color",
+    "auto": "auto",
+    "dark": "dark",
+    "light": "light",
+    "account_privacy": "Account & Privacy",
+    "private_allsets": "Private all sets",
+    "delete_title": "Delete account",
+    "delete_info": "By deleting your account, all your personal data will be removed, this cannot be undone.",
+    "delete": "delete"
   }
 }

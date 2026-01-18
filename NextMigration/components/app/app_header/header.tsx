@@ -9,7 +9,6 @@ import StreakPopup from "@/components/app/app_header/streak_popup";
 import TriggerProfile from "@/components/app/app_header/profile_popup";
 import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
 import SearchBar from "@/components/app/app_header/search";
-import CreateFolder from "@/components/app/create-folder/create_folder";
 import Image from "next/image";
 
 import {useUser} from "@/components/providers/UserProvider";
@@ -145,10 +144,6 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
                         />
                     )}
                 </div>
-                <CreateFolder
-                    createOpen={createOpen}
-                    setCreateOpen={setCreateOpen}
-                />
             </div>
         </div>
     );

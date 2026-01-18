@@ -43,7 +43,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="w-full h-full py-15 flex flex-col gap-10 scroll-hidden">
+        <div className="w-full h-full py-15 flex flex-col gap-10">
             {/* Welcome Section */}
             <section className="w-full h-fit">
                 <div className="w-full h-fit flex flex-col gap-2">
@@ -159,7 +159,7 @@ interface StatsProps {
 
 const Stats = memo(function Stats({ color, icon, iconComponent, label, stat, measurement, extra, invert, t }: StatsProps) {
     return (
-        <div className={`w-full h-35 border shadow-2xl backdrop-blur-2xl bg-linear-to-r ${color} 
+        <div className={`w-full h-35 border shadow-2xl bg-linear-to-r ${color} 
                         border-studoborder/30 rounded-3xl flex flex-col gap-3 p-3 px-5`}>
             <span className="w-full h-8 text-sm flex gap-2 text-studogrey items-center">
                 {iconComponent ? (

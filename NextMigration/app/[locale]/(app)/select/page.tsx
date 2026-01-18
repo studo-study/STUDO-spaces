@@ -33,7 +33,7 @@ export default function SelectPage() {
 
                 <span className={"w-2/3 h-fit dark:text-white/30 text-center text-xl font-semibold text-studodarkblue "}>{t("plan")}</span>
                 <div className={"w-full h-full flex flex-row gap-10 justify-center items-baseline pt-20"}>
-                    <div className={`w-1/3 hover:scale-102 transition-all duration-300 border shadow-2xl bg-studogrey/10 backdrop-blur-2xl rounded-3xl
+                    <div className={`w-1/3 hover:scale-102 transition-all duration-300 border shadow-2xl bg-studogrey/10 rounded-3xl
                         border-studoborder/30 h-130 p-10 flex flex-col items-baseline gap-8`}>
                         <span className={"dark:text-emerald-500 font-semibold"}>{t("free")}</span>
                         <h2 className={"text-3xl text-white font-bold h-fit "}>Free</h2>
@@ -50,7 +50,7 @@ export default function SelectPage() {
 
                     </div>
 
-                    <div className={`w-2/5 cursor-pointer hover:scale-102 transition-all duration-300 border shadow-2xl bg-linear-to-br from-gray-300/10 via-white/10 to-gray-400/10 backdrop-blur-2xl rounded-3xl
+                    <div className={`w-2/5 cursor-pointer hover:scale-102 transition-all duration-300 border shadow-2xl bg-linear-to-br from-gray-300/10 via-white/10 to-gray-400/10 rounded-3xl
                         border-blue-500 h-150 p-10 flex flex-col items-baseline gap-8`}>
                         <span className={"dark:text-blue-500 font-semibold flex gap-2 items-center"}><RiVerifiedBadgeFill />{t("select")}</span>
                         <div className={"w-full flex gap-2 flex-row items-center dark:text-white"}>

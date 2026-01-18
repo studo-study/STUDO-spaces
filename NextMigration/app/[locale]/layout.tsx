@@ -26,7 +26,6 @@ export default async function LocaleLayout({
             <SessionProvider>
                 {children}
             </SessionProvider>
-            <ConsoleEasterEgg />
         </NextIntlClientProvider>
     );
 }
