@@ -4,6 +4,8 @@ import {memo, ReactNode, useState} from "react";
 import AppHeader from "@/components/app/app_header/header";
 import Burger from "@/components/app/app_header/burger";
 import { UserProvider } from "@/components/providers/UserProvider";
+import ConsoleEasterEgg from "@/components/overige/easteregg/console";
+import CreateFolder from "@/components/app/create-folder/create_folder";
 
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(Burger);
@@ -14,8 +16,11 @@ export default function AppLayoutClient({ children }: { children: ReactNode }) {
     const [createOpen, setCreateOpen] = useState(false);
 
     const toggleSearch = () => setSearch(true);
-    const toggleCreate = () => setCreateOpen(true);
-
+    const toggleCreate = () => {
+        requestAnimationFrame(() => {
+            setCreateOpen(true);
+        });
+    };
     return (
         <UserProvider>
             <div className="h-screen w-screen flex flex-col overflow-hidden">
@@ -30,16 +35,23 @@ export default function AppLayoutClient({ children }: { children: ReactNode }) {
                 />
 
                 <div className="flex-1 min-h-0 w-full flex flex-row relative">
-                    <MemoizedBurger
-                        burgerOpen={burgerOpen}
-                        toggleSearch={toggleSearch}
-                        toggleCreate={toggleCreate}
-                    />
-                    <main className="flex-1 min-h-0 xl:w-9/10 5xl:w-1/2 h-full pl-30 pr-65">
+                    <div className={"w-57 h-full"}>
+                        <MemoizedBurger
+                            burgerOpen={burgerOpen}
+                            toggleSearch={toggleSearch}
+                            toggleCreate={toggleCreate}
+                        />
+                    </div>
+                    <main className="flex-1 min-h-0 xl:w-9/10 5xl:w-1/2 h-full pl-30 pr-65 overflow-y-scroll scroll-hidden">
                         {children}
                     </main>
                 </div>
             </div>
+            <CreateFolder
+                createOpen={createOpen}
+                setCreateOpen={setCreateOpen}
+            />
+            <ConsoleEasterEgg />
         </UserProvider>
     );
 }

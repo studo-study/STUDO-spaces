@@ -44,7 +44,7 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerP
 
     return (
         <div className={`h-full border-r select-none border-studoborder/30
-            transition-[width] duration-200 flex flex-col gap-3 py-10 pb-20
+            transition-[width] duration-300 flex flex-col gap-3 py-10 pb-20
             ${burgerOpen ? "w-57" : "w-30"}`}>
 
             {main.map((item, index) => (
