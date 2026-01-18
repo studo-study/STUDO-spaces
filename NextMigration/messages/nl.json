@@ -20,6 +20,8 @@
     "footer": {
       "footerQuote": "Minder Zweten, Meer Weten!",
       "aboutTitle": "over studo",
+      "selectTitle": "Select",
+      "setTitle": "Sets",
       "ss": "studosets",
       "vs": "visualsets",
       "aboutBlock1": "Over Ons",
@@ -32,7 +34,10 @@
       "loveGreen": "Gebouwd met \uD83D\uDC9A met React",
       "loveBlue": "Gebouwd met \uD83D\uDC99 met React",
       "Version": "Versie",
-      "rights": "STUDO inc. Alle Rechten Voorbehouden."
+      "rights": "STUDO inc. Alle Rechten Voorbehouden.",
+      "select": "Studo Select",
+      "edu": "Studo for Education",
+      "GDPR": "AVG"
     },
     "welcome": {
       "CreateCustom": "Maak je eigen sets",
@@ -680,7 +685,11 @@
     "free_expl": "Core features with ads.",
     "select_expl": "Full access, timelines, printable study sets, and no ads.",
     "start_tdy": "start today",
-    "current": "current plan"
+    "current": "current plan",
+    "popular": "popular",
+    "korting_school": "Studo offers discounts for schools, companies and families",
+    "try_edu": "Try Studo for Education",
+    "group": "Want to place an order for a bigger group?"
 
   },
   "phrases": {
@@ -722,10 +731,12 @@
     "Congratulations, now get back to work": "Congratulations, now get back to work",
     "yes, we can - Yoda": "yes, we can - Yoda"
   },
-
   "streak" : {
     "phrase_1": "You have studied ",
     "phrase_2": " day in a row",
     "d_s": "day streak"
+  },
+  "classrooms": {
+    "title": "Your Classrooms"
   }
 }

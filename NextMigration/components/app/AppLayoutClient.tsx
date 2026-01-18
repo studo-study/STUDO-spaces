@@ -29,7 +29,7 @@ export default function AppLayoutClient({ children }: { children: ReactNode }) {
                     toggleCreate={toggleCreate}
                 />
 
-                <div className="flex-1 min-h-0 w-full flex flex-row">
+                <div className="flex-1 min-h-0 w-full flex flex-row relative">
                     <MemoizedBurger
                         burgerOpen={burgerOpen}
                         toggleSearch={toggleSearch}
