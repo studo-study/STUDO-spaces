@@ -54,10 +54,9 @@ interface HeaderProps {
     setCreateOpen: React.Dispatch<React.SetStateAction<boolean>>;
     toggleCreate: () => void;
 }
- export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate}: HeaderProps) {
 
-
-     const { user, isLoading } = useUser();
+export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate}: HeaderProps) {
+    const { user, isLoading } = useUser();
     const [AddIsOpen, setAddIsOpen] = useState(false);
     const [NotifIsOpen, setNotifIsOpen] = useState(false);
     const [ProfileIsOpen, setProfileIsOpen] = useState(false);
@@ -76,15 +75,11 @@ interface HeaderProps {
         }
     };
 
-
-
     useEffect(() => {
         if (Search && searchRef.current) {
             searchRef.current.focus();
         }
     }, [Search]);
-
-
 
     return (
         <div className={"h-fit z-[9999] top-0 w-screen flex flex-col"}>
@@ -101,7 +96,6 @@ interface HeaderProps {
                         STUDO
                     </Link>
                     <Link href={"/select"} className={"hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-linear-to-r from-indigo-300 to-white backdrop-blur-2xl text-studodarkblue"}>upgrade to select</Link>
-
                 </div>
 
                 {/*center*/}
@@ -141,17 +135,20 @@ interface HeaderProps {
                     )}
 
                     {/* Streak */}
-                    <Streak
-                        streak={user?.streak_count ?? 0}
-                        StreakOpen={StreakOpen}
-                        setStreakOpen={setStreakOpen}
-                    />
+                    {isLoading ? (
+                        <div className="min-w-20 h-8 rounded-4xl bg-studogrey/30 animate-pulse" />
+                    ) : (
+                        <Streak
+                            streak={user?.streak_count ?? 0}
+                            StreakOpen={StreakOpen}
+                            setStreakOpen={setStreakOpen}
+                        />
+                    )}
                 </div>
-               <CreateFolder
+                <CreateFolder
                     createOpen={createOpen}
                     setCreateOpen={setCreateOpen}
                 />
-
             </div>
         </div>
     );
@@ -163,12 +160,9 @@ interface StreakProps {
     setStreakOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-function Streak({ streak, StreakOpen, setStreakOpen  }: StreakProps) {
+function Streak({ streak, StreakOpen, setStreakOpen }: StreakProps) {
     const config = getStreakConfig(streak);
     const containerRef = useRef(null);
-    const togglePopUp = () => {
-        setStreakOpen((prev) => !prev);
-    };
 
     return (
         <Link
@@ -176,25 +170,26 @@ function Streak({ streak, StreakOpen, setStreakOpen  }: StreakProps) {
             ref={containerRef}
             onMouseEnter={() => setStreakOpen(true)}
             onMouseLeave={() => setStreakOpen(false)}
-            className="min-w-20 max-w-20 flex items-center cursor-pointer active:scale-95 transition-all duration-300 justify-center relative">
+            className="min-w-20 max-w-20 max-h-8 flex items-center cursor-pointer active:scale-95 transition-all duration-300 justify-center relative">
             {config.glow && (
-                <div className="absolute z-0 flex justify-center min-w-20 h-8 blur-lg opacity-40 py-1 px-3 bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300 rounded-4xl" />
+                <div className="absolute z-0 flex justify-center min-w-20 min-h-8 max-h-8 blur-lg opacity-40 py-1 px-3 bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300 rounded-4xl" />
             )}
-                <div className={`${config.glow ? 'z-10 relative' : ''} min-w-fit flex justify-center py-1 px-3 ${config.bg} rounded-4xl gap-2 font-bold text-white items-center`}>
-                    <Image
-                        src={config.icon}
-                        alt=""
-                        width={0}
-                        height={0}
-                        className={`w-5 ${config.saturation}`}
-                    />
-                    <span className={`w-fit ${config.textColor}`}>{streak}</span>
-                </div>
-                <StreakPopup
-                    Streak={streak}
-                    StreakOpen={StreakOpen}
-                    setStreakOpen={setStreakOpen}
-                    containerRef={containerRef}/>
+            <div className={`${config.glow ? 'z-10 relative' : ''} min-w-fit flex justify-center py-1 px-3 ${config.bg} rounded-4xl gap-2 font-bold text-white items-center`}>
+                <Image
+                    src={config.icon}
+                    alt=""
+                    width={0}
+                    height={0}
+                    className={`w-5 ${config.saturation}`}
+                />
+                <span className={`w-fit ${config.textColor}`}>{streak}</span>
+            </div>
+            <StreakPopup
+                Streak={streak}
+                StreakOpen={StreakOpen}
+                setStreakOpen={setStreakOpen}
+                containerRef={containerRef}
+            />
         </Link>
     );
 }
@@ -203,7 +198,7 @@ function getStreakConfig(streak: number) {
     if (streak === 0) {
         return {
             bg: 'bg-studogrey/30',
-            icon: '/streak/streak-03.svg',
+            icon: '/images/streak/streak-03.svg',
             saturation: 'saturate-0',
             textColor: '',
             glow: false,
@@ -298,10 +293,8 @@ function SpecialeDag() {
         return feestdagen.carnival;
     }
 
-    // Vaste feestdagen
     const key: string = `${dag}/${maand}`;
-    const vasteDagen: Record<string, string>
-        = {
+    const vasteDagen: Record<string, string> = {
         "1/0": feestdagen.newYear,
         "6/0": feestdagen.threeKings,
         "14/1": feestdagen.valentine,
@@ -313,11 +306,12 @@ function SpecialeDag() {
         "25/11": feestdagen.christmasDay,
         "31/11": feestdagen.newYear,
     };
-    if(locale === "nl" && key === "21/6") {
+
+    if (locale === "nl" && key === "21/6") {
         return feestdagen.belgie;
     }
 
-    if(locale === "nl" && key === "27/3") {
+    if (locale === "nl" && key === "27/3") {
         return feestdagen.belgie;
     }
 
@@ -343,4 +337,3 @@ function berekenPasen(jaar: number) {
 
     return { dag, maand };
 }
-

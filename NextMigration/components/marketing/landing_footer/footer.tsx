@@ -41,19 +41,23 @@ export default function LandingFooter() {
                             <Link href="/about-us" className="hover:underline">{t("aboutBlock1")}</Link>
                             <Link href="/privacy" className="hover:underline">{t("aboutBlock2")}</Link>
                             <Link href="/terms-of-service" className="hover:underline">{t("aboutBlock3")}</Link>
+                            <Link href="/GDPR" className="hover:underline">{t("GDPR")}</Link>
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <span className="font-bold text-xl">{t("ss").toUpperCase()}</span>
-                            <Link href="/login" className="hover:underline">{t("ssBlock1")}</Link>
-                            <Link href="/login" className="hover:underline">{t("ssBlock2")}</Link>
+                            <span className="font-bold text-xl">{t("selectTitle").toUpperCase()}</span>
+                            <Link href="/studo-select" className="hover:underline">{t("select")}</Link>
+                            <Link href="/studo-education" className="hover:underline">{t("edu")}</Link>
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <span className="font-bold text-xl">{t("vs").toUpperCase()}</span>
-                            <Link href="/login" className="hover:underline">{t("vsBlock1")}</Link>
-                            <Link href="/login" className="hover:underline">{t("vsBlock2")}</Link>
+                            <span className="font-bold text-xl">{t("setTitle").toUpperCase()}</span>
+                            <Link href="/your-files/sets" className="hover:underline">{t("ssBlock1")}</Link>
+                            <Link href="/create-studoset" className="hover:underline">{t("ssBlock2")}</Link>
+                            <Link href="/your-files/sets" className="hover:underline">{t("vsBlock1")}</Link>
+                            <Link href="/create-visualset" className="hover:underline">{t("vsBlock2")}</Link>
                         </div>
+
                     </div>
 
                     <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-base px-6 sm:px-0">
