@@ -60,7 +60,7 @@ export default function SelectPage() {
                         </div>
 
                         <div className={`relative w-2/5 cursor-pointer hover:scale-102 transition-all duration-300 border shadow-2xl bg-linear-to-br from-gray-300/10 via-white/10 to-gray-400/10 backdrop-blur-2xl rounded-3xl
-                        border-blue-500 min-h-200 p-10 flex flex-col items-baseline gap-8`}>
+                        border-blue-500 min-h-150 p-10 flex flex-col items-baseline gap-8`}>
                             <span className={"dark:text-blue-500 font-semibold flex gap-2 items-center"}><RiVerifiedBadgeFill />{t("select")}</span>
                             <div className={"w-full flex gap-2 flex-row items-center dark:text-white"}>
                                 <h2 className={"text-3xl font-bold h-fit "}>€3.99</h2>

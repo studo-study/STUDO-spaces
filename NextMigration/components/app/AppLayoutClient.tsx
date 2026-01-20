@@ -42,7 +42,7 @@ export default function AppLayoutClient({ children }: { children: ReactNode }) {
                             toggleCreate={toggleCreate}
                         />
                     </div>
-                    <main className="flex-1 min-h-0 xl:w-9/10 5xl:w-1/2 h-full pl-30 pr-65 overflow-y-scroll scroll-hidden">
+                    <main className="flex-1 min-h-0 xl:w-9/10 5xl:w-1/2 h-full pl-13 pr-65 overflow-y-scroll scroll-hidden">
                         {children}
                     </main>
                 </div>

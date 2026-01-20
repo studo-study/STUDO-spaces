@@ -20,7 +20,7 @@ export default function SettingsPage() {
     }
 
     return(
-        <div className="w-full h-full py-15 flex flex-col dark:text-white text-studodarkblue gap-15 scroll-hidden">
+        <div className="w-full h-fit py-15 flex flex-col dark:text-white text-studodarkblue gap-15 scroll-hidden">
             <span className={"w-full h-10 font-bold text-3xl"}>{t("title")}:</span>
             <section className={"flex flex-col gap-5 w-full min-h-50"}>
                 <span className={"w-full text-base font-bold h-fit"}>{t("personal info")}</span>
@@ -63,8 +63,8 @@ export default function SettingsPage() {
             </section>
             <section className={"flex flex-col gap-5 w-full min-h-50"}>
                 <span className={"w-full text-base font-bold h-fit"}>{t("subscription")}</span>
-                <div className={"w-full min-h-40 h-fit rounded-3xl border border-studoborder"}>
-                    <div className={"w-full gap-4  px-10 py-8 flex flex-col"}>
+                <div className={"w-full h-fit rounded-3xl border border-studoborder"}>
+                    <div className={"w-full gap-4 px-10 py-8 flex flex-col"}>
                         <div className={"w-full flex flex-row justify-between items-center"}>
                             <span className={"w-full text-base font-bold h-fit"}>{t("free")}</span>
                             <Link href={"/select"}
@@ -82,7 +82,7 @@ export default function SettingsPage() {
                             <select
                                 name="sort sets"
                                 defaultValue="all"
-                                className="w-[40px]
+                                className="
                                 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
                                 border border-studogrey/30
                                 bg-white dark:bg-gray-700
@@ -90,7 +90,7 @@ export default function SettingsPage() {
                                 font-medium text-xs sm:text-sm
                                 shadow-sm hover:shadow-md
                                 transition-all duration-200
-                                cursor-pointer
+                                cursor-pointer w-30 text-center
                                 focus:outline-none focus:ring-2 focus:ring-studogrey/50
                                 appearance-none">
                                 <option value="all">{t("auto")}</option>
@@ -105,14 +105,15 @@ export default function SettingsPage() {
                             <select
                                 name="sort sets"
                                 defaultValue="all"
-                                className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
+                                className="
+                                px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
                                 border border-studogrey/30
                                 bg-white dark:bg-gray-700
                                 text-studodarkblue dark:text-white
                                 font-medium text-xs sm:text-sm
                                 shadow-sm hover:shadow-md
                                 transition-all duration-200
-                                cursor-pointer
+                                cursor-pointer w-30 text-center
                                 focus:outline-none focus:ring-2 focus:ring-studogrey/50
                                 appearance-none">
                                 <option value="all">English</option>

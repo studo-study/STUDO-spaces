@@ -38,10 +38,10 @@ export default function CreateFolder({ createOpen, setCreateOpen }: CreateFolder
     const close = () => setCreateOpen(false);
 
     return (
-        <div className={`fixed inset-0 flex items-center justify-center w-full h-full z-[9999] ${isOpen ? "" : "pointer-events-none"}`}>
+        <div className={`fixed inset-0 flex items-baseline justify-center pt-80 w-full bg-black/50 h-full z-[9999] ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}>
             <div
                 ref={popupRef}
-                className={`relative w-1/5 p-7 rounded-2xl bg-white/80 dark:bg-[#1e293b]/90 border border-white/50 dark:border-white/10 shadow-xl transition-all duration-300 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}`}
+                className={`relative w-1/5 p-7 rounded-2xl bg-white/80 dark:bg-[#1e293b] border border-white/50 dark:border-white/10 shadow-xl transition-all duration-300 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}`}
             >
                 <button onClick={close} className="absolute top-2 right-2 p-1 rounded-full hover:bg-studogrey transition-colors cursor-pointer">
                     <IoIosClose className="text-3xl text-studodarkblue dark:text-white" />
