@@ -1,5 +1,3 @@
-"use client";
-
 import { useMemo, memo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { IoIosArrowForward } from "react-icons/io";
@@ -10,11 +8,11 @@ import { mockStartPage, mockUser } from "@/data/mocks/startPageMock";
 import { Progress } from "@/components/marketing/progress/progress";
 import CourseIcons from "../../../../data/index";
 import { GoPlus } from "react-icons/go";
+import {Metadata} from "next";
 
 const user: User = mockUser;
 const data: StartPage = mockStartPage;
 
-// ✅ Constanten BUITEN component
 const COLORS = [
     "from-amber-500/5 to-amber-400/5",
     "from-purple-500/5 to-purple-400/5",
@@ -28,6 +26,10 @@ const STATS_CONFIG = [
     { color: "from-blue-500/20 to-blue-500/20", icon: "/icons/clock.svg", stat: 123, measurement: "min", label: "tmStd", extra: "week", delay: 100, invert: true },
     { color: "from-emerald-500/20 to-emerald-600/20", iconComponent: true, stat: 645, measurement: "cards", label: "mastered", extra: "", delay: 150 },
 ] as const;
+
+export const metadata:Metadata = {
+    title:"Home | Studo"
+}
 
 export default function HomePage() {
     const tTimed = useTranslations("timed");
@@ -43,7 +45,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="w-full h-full py-15 flex flex-col gap-10 scroll-hidden">
+        <div className="w-full h-full py-15 flex flex-col gap-10">
             {/* Welcome Section */}
             <section className="w-full h-fit">
                 <div className="w-full h-fit flex flex-col gap-2">
@@ -159,7 +161,7 @@ interface StatsProps {
 
 const Stats = memo(function Stats({ color, icon, iconComponent, label, stat, measurement, extra, invert, t }: StatsProps) {
     return (
-        <div className={`w-full h-35 border shadow-2xl backdrop-blur-2xl bg-linear-to-r ${color} 
+        <div className={`w-full h-35 border shadow-2xl bg-linear-to-r ${color} 
                         border-studoborder/30 rounded-3xl flex flex-col gap-3 p-3 px-5`}>
             <span className="w-full h-8 text-sm flex gap-2 text-studogrey items-center">
                 {iconComponent ? (

@@ -105,6 +105,7 @@ export default function LandingHeader() {
                 <nav className="hidden md:flex flex-row gap-10 items-center">
                     <TriggerMethods MethodsOpen={MethodsOpen} setMethodsOpen={setMethodsOpen} />
                     <TriggerTools ToolsOpen={ToolsOpen} setToolsOpen={setToolsOpen} />
+
                 </nav>
             </div>
 

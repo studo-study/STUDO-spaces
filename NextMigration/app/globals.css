@@ -151,12 +151,12 @@ body::-webkit-scrollbar {
 }
 
 .scroll-hidden {
-    overflow-y: scroll; /* of auto */
-    scrollbar-width: none; /* voor Firefox */
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 .scroll-hidden::-webkit-scrollbar {
-    display: none; /* voor Chrome, Safari en Edge */
+    display: none;
 }
 
 
