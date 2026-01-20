@@ -35,16 +35,19 @@ export default function AppLayoutClient({ children }: { children: ReactNode }) {
                 />
 
                 <div className="flex-1 min-h-0 w-full flex flex-row relative">
-                    <div className={"w-57 h-full"}>
+                    <div className={"min-w-57 h-full"}>
                         <MemoizedBurger
                             burgerOpen={burgerOpen}
                             toggleSearch={toggleSearch}
                             toggleCreate={toggleCreate}
                         />
                     </div>
-                    <main className="flex-1 min-h-0 xl:w-9/10 5xl:w-1/2 h-full pl-13 pr-65 overflow-y-scroll scroll-hidden">
-                        {children}
-                    </main>
+                    <div className={"w-full flex items-center justify-center h-full"}>
+                        <main className="flex-1 min-h-0 xl:w-9/10 3xl:w-1/3 h-full pl-5 pr-5 lg:pl-10 lg:pr-67  overflow-y-scroll scroll-hidden">
+                            {children}
+                        </main>
+                    </div>
+
                 </div>
             </div>
             <CreateFolder
