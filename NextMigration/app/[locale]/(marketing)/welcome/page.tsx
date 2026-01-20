@@ -1,6 +1,9 @@
 import Hero from "@/components/marketing/landing_welcome/hero";
 import Info from "@/components/marketing/landing_welcome/info";
 import Stats from "@/components/marketing/landing_welcome/stats";
+import {getLocale} from "next-intl/server";
+import {auth} from "@/auth";
+import {redirect} from "next/navigation";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -79,7 +82,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     };
 }
 
-export default function WelcomePage() {
+export default async function WelcomePage() {
+    const locale = await getLocale();
+    const session = await auth();
+
+    if (session) {
+        redirect(`/${locale}/home`);
+    }
+
     return(<div className={"flex flex-col gap-10"}>
             <Hero/>
             <Stats/>

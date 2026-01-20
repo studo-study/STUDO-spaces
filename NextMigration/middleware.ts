@@ -53,6 +53,9 @@ export default auth((request) => {
         "/terms-of-service",
         "/modes/visualsets",
         "/overview",
+        "/studo-select",
+        "/GDPR",
+        "/studo-for-education",
         "/"];
 
     // Check of huidige route public is
