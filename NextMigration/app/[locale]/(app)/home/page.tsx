@@ -1,5 +1,3 @@
-"use client";
-
 import { useMemo, memo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { IoIosArrowForward } from "react-icons/io";
@@ -10,11 +8,11 @@ import { mockStartPage, mockUser } from "@/data/mocks/startPageMock";
 import { Progress } from "@/components/marketing/progress/progress";
 import CourseIcons from "../../../../data/index";
 import { GoPlus } from "react-icons/go";
+import {Metadata} from "next";
 
 const user: User = mockUser;
 const data: StartPage = mockStartPage;
 
-// ✅ Constanten BUITEN component
 const COLORS = [
     "from-amber-500/5 to-amber-400/5",
     "from-purple-500/5 to-purple-400/5",
@@ -28,6 +26,10 @@ const STATS_CONFIG = [
     { color: "from-blue-500/20 to-blue-500/20", icon: "/icons/clock.svg", stat: 123, measurement: "min", label: "tmStd", extra: "week", delay: 100, invert: true },
     { color: "from-emerald-500/20 to-emerald-600/20", iconComponent: true, stat: 645, measurement: "cards", label: "mastered", extra: "", delay: 150 },
 ] as const;
+
+export const metadata:Metadata = {
+    title:"Home | Studo"
+}
 
 export default function HomePage() {
     const tTimed = useTranslations("timed");

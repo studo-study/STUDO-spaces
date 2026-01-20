@@ -153,7 +153,6 @@ body::-webkit-scrollbar {
 .scroll-hidden {
     overflow-y: auto;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* Voor iOS */
 }
 
 .scroll-hidden::-webkit-scrollbar {
