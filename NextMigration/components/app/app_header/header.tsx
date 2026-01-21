@@ -62,7 +62,7 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
     const [StreakOpen, setStreakOpen] = useState(false);
     const searchRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("header");
-
+    const premium = false
     const toggleBurger = () => {
         setBurgerOpen(!burgerOpen);
     };
@@ -94,7 +94,9 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
                     <Link href={"/home"} className={`font-akira text-2xl truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
                         STUDO
                     </Link>
-                    <Link href={"/select"} className={"hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-linear-to-r from-indigo-300 to-white backdrop-blur-2xl text-studodarkblue"}>upgrade to select</Link>
+                    {premium &&
+						<Link href={"/select"} className={"hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-linear-to-r from-indigo-300 to-white backdrop-blur-2xl text-studodarkblue"}>upgrade to select</Link>}
+
                 </div>
 
                 {/*center*/}
