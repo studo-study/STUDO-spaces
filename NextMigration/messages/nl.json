@@ -598,6 +598,9 @@
     "placeholder": "Fill in a name...",
     "button": "create"
   },
+  "createclassroom": {
+    "title": "Create Classroom"
+  },
   "notfound": {
     "return": "terug",
     "404": "404"
