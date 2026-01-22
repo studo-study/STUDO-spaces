@@ -46,7 +46,7 @@ export default function CreateClassroom({createOpen, setCreateOpen}: CreateClass
     return (
         <div className={`fixed inset-0 flex items-baseline justify-center pt-80 w-full bg-black/50 h-full z-[9999] ${createOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}>
 
-            <div ref={popupRef} className={`w-1/4 min-h-200
+            <div ref={popupRef} className={`w-1/4 min-h-110
                       z-[9999] p-2 truncate
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
@@ -65,7 +65,7 @@ export default function CreateClassroom({createOpen, setCreateOpen}: CreateClass
                         <IoIosClose  onClick={() => {setCreateOpen(false)}}/>
                     </div>
                 </div>
-                <div className={"w-full h-fit flex flex-col gap-5"}>
+                <div className={"w-full h-fit flex flex-col gap-7"}>
                     <div className="flex items-center justify-baseline text-lg px-2 dark:text-white text-studodarkblue">
 
                         <IoSchoolOutline />
@@ -76,16 +76,31 @@ export default function CreateClassroom({createOpen, setCreateOpen}: CreateClass
                     </div>
 
 
-                    <div className="flex flex-col w-full gap-2 items-center justify-between">
-                        <input
-                            ref={inputRef}
-                            placeholder={t("placeholder")}
-                            type="text"
-                            autoFocus={createOpen}
-                            className={"h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}/>
+                   <div className={"w-full h-fit flex flex-col gap-3"}>
+                       <span className={"dark:text-white text-studodarkblue"}>{t("subtitle_title")}</span>
+                       <div className="flex flex-col w-full gap-2 items-center justify-between">
+                           <input
+                               ref={inputRef}
+                               placeholder={t("placeholder")}
+                               type="text"
+                               autoFocus={createOpen}
+                               className={"h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}/>
+                       </div>
+                   </div>
+
+                    <div className={"w-full h-fit flex flex-col gap-3"}>
+                        <span className={"dark:text-white text-studodarkblue"}>{t("subtitle_title")}</span>
+                        <div className="flex flex-col w-full gap-2 items-center justify-between">
+                            <input
+                                ref={inputRef}
+                                placeholder={t("placeholder")}
+                                type="text"
+                                autoFocus={createOpen}
+                                className={"h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}/>
+                        </div>
                     </div>
                 </div>
-                <button type="submit" className="bg-gradient-to-br from-violet-400 to-purple-500 w-full cursor-pointer h-12 text-xl text-white border-studoborder border
+                <button type="submit" className="bg-gradient-to-br from-yellow-400 to-amber-500 w-full cursor-pointer h-12 text-xl text-white border-studoborder border
                     rounded-4xl font-bold active:scale-95 transition-all duration-300 shadow-3xl">
                     {t("button")}
                 </button>
