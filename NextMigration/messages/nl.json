@@ -803,6 +803,14 @@
     "role": "role",
     "phone": "phone number",
     "mail": "e-mail",
-    "settings": "edit account"
+    "settings": "edit account",
+    "subtitle_sets": "Your Sets",
+    "log_out": "Log Out",
+    "delete": "Delete Account",
+    "stats": {
+      "total_cards": "Total Cards",
+      "time_studied": "Time Studied",
+      "cards_mastered": "Cards Mastered"
+    }
   }
 }
