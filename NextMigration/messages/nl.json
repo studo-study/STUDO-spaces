@@ -701,7 +701,11 @@
     "title": "Your files",
     "sets": "Sets",
     "folders": "Folders",
-    "courses": "Courses"
+    "courses": "Courses",
+    "your_sets": {
+      "title": "Your Sets",
+      "sort": "Sort"
+    }
   },
   "select": {
     "pricing": "Pricing",
@@ -789,6 +793,16 @@
     "private_allsets": "Private all sets",
     "delete_title": "Delete account",
     "delete_info": "By deleting your account, all your personal data will be removed, this cannot be undone.",
-    "delete": "delete"
+    "delete": "delete",
+    "status": "Your status",
+    "inactive": "inactive",
+    "away": "away",
+    "active": "active"
+  },
+  "account": {
+    "role": "role",
+    "phone": "phone number",
+    "mail": "e-mail",
+    "settings": "edit account"
   }
 }

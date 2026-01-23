@@ -23,7 +23,6 @@ export default function CreateStudosetForm() {
         if (!cardsContainerRef.current) return;
 
         const sortable = new Sortable(cardsContainerRef.current, {
-            handle: "handle",
             animation: 300,
         });
 
