@@ -89,14 +89,15 @@ export default function CreateClassroom({createOpen, setCreateOpen}: CreateClass
                    </div>
 
                     <div className={"w-full h-fit flex flex-col gap-3"}>
-                        <span className={"dark:text-white text-studodarkblue"}>{t("subtitle_title")}</span>
+                        <span className={"dark:text-white text-studodarkblue"}>{t("subtitle_options")}</span>
                         <div className="flex flex-col w-full gap-2 items-center justify-between">
-                            <input
-                                ref={inputRef}
-                                placeholder={t("placeholder")}
-                                type="text"
-                                autoFocus={createOpen}
-                                className={"h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}/>
+                            <select className={"h-12 px-5 gap-5 text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}>
+                                <option value="">{t("class")}</option>
+                                <option value="">{t("course")}</option>
+                                <option value="">{t("study")}</option>
+                                <option value="">{t("personal")}</option>
+                                <option value="">{t("community")}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
