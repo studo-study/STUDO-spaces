@@ -599,7 +599,31 @@
     "button": "create"
   },
   "createclassroom": {
-    "title": "Create Classroom"
+    "title": "Create Classroom",
+    "button": "create",
+    "subtitle_title": "Classroom name:",
+    "placeholder": "Fill in a name...",
+    "subtitle_options": "Type classroom:",
+    "class": "Class Group",
+    "course": "Course Group",
+    "study": "Study Group",
+    "personal": "Classroom with friends",
+    "community": "Community"
+  },
+  "createstudoset": {
+    "title": "Create new Studoset",
+    "title_placeholder": "Fill in a title...",
+    "course_placeholder": "Fill in a course...",
+    "folder_placeholder": "Select a folder...",
+    "term_language": "Term language...",
+    "def_language": "Definition language...",
+    "import": "Import",
+    "create": "Create Set",
+    "add_card": "Add Card"
+  },
+  "card":{
+    "Definition": "Definition",
+    "Term": "Term"
   },
   "notfound": {
     "return": "terug",
