@@ -1,3 +1,14 @@
+import {Metadata} from "next";
+import CreateStudosetForm from "@/components/app/create-studoset/create-studoset";
+
+export const metadata:Metadata = {
+    title:"Create Studoset | Studo"
+}
+
+
 export default function CreateStudoset() {
-    return (<div></div>);
+
+    return (
+        <CreateStudosetForm/>
+    );
 }

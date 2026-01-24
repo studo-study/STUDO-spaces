@@ -543,6 +543,7 @@
     "Log In": "Log In",
     "log into account": "log into account",
     "or log in with": "or log in with",
+    "loading": "Loading...",
     "Google": "Google",
     "Microsoft": "Microsoft",
     "Smartschool": "Smartschool",
@@ -597,6 +598,33 @@
     "title": "create a folder",
     "placeholder": "Fill in a name...",
     "button": "create"
+  },
+  "createclassroom": {
+    "title": "Create Classroom",
+    "button": "create",
+    "subtitle_title": "Classroom name:",
+    "placeholder": "Fill in a name...",
+    "subtitle_options": "Type classroom:",
+    "class": "Class Group",
+    "course": "Course Group",
+    "study": "Study Group",
+    "personal": "Classroom with friends",
+    "community": "Community"
+  },
+  "createstudoset": {
+    "title": "Create new Studoset",
+    "title_placeholder": "Fill in a title...",
+    "course_placeholder": "Fill in a course...",
+    "folder_placeholder": "Select a folder...",
+    "term_language": "Term language...",
+    "def_language": "Definition language...",
+    "import": "Import",
+    "create": "Create Set",
+    "add_card": "Add Card"
+  },
+  "card":{
+    "Definition": "Definition",
+    "Term": "Term"
   },
   "notfound": {
     "return": "terug",
@@ -674,7 +702,11 @@
     "title": "Your files",
     "sets": "Sets",
     "folders": "Folders",
-    "courses": "Courses"
+    "courses": "Courses",
+    "your_sets": {
+      "title": "Your Sets",
+      "sort": "Sort"
+    }
   },
   "select": {
     "pricing": "Pricing",
@@ -762,6 +794,24 @@
     "private_allsets": "Private all sets",
     "delete_title": "Delete account",
     "delete_info": "By deleting your account, all your personal data will be removed, this cannot be undone.",
-    "delete": "delete"
+    "delete": "delete",
+    "status": "Your status",
+    "inactive": "inactive",
+    "away": "away",
+    "active": "active"
+  },
+  "account": {
+    "role": "role",
+    "phone": "phone number",
+    "mail": "e-mail",
+    "settings": "edit account",
+    "subtitle_sets": "Your Sets",
+    "log_out": "Log Out",
+    "delete": "Delete Account",
+    "stats": {
+      "total_cards": "Total Cards",
+      "time_studied": "Time Studied",
+      "cards_mastered": "Cards Mastered"
+    }
   }
 }
