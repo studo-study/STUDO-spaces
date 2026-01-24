@@ -55,13 +55,13 @@ export default function AccountGrid() {
 
         </div>
         <div className={"w-full h-fit gap-2 flex flex-col"}>
-            <div className={`flex-1 overflow-y-scroll scroll-hidden min-h-95 max-h-95
-        ${grid ? "grid grid-cols-4 gap-3 gap-y-3" : "flex flex-col gap-5"}`}
+            <div className={`flex-1 overflow-y-scroll scroll-hidden min-h-95 max-h-95 mb-10
+        ${grid ? "grid grid-cols-4 gap-5 gap-y-3" : "flex flex-col gap-5"}`}
             >
-                <div className={`${grid ? "h-45 w-full" : "min-h-20 w-full"} bg-rose-500`}/>
-                <div className={`${grid ? "h-45 w-full" : "min-h-20 w-full"} bg-rose-500`}/>
-                <div className={`${grid ? "h-45 w-full" : "min-h-20 w-full"} bg-rose-500`}/>
-                <div className={`${grid ? "h-45 w-full" : "min-h-20 w-full"} bg-rose-500`}/>
+              <SetItem grid={grid}/>
+              <SetItem grid={grid}/>
+              <SetItem grid={grid}/>
+              <SetItem grid={grid}/>
             </div>
         </div>
 
@@ -183,5 +183,20 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
                 ))}
             </div>
         </div>
+    );
+}
+
+interface SetItemProps {
+    grid: boolean;
+}
+
+function SetItem({ grid }: SetItemProps) {
+    return (
+        <div
+            className={`
+                w-full rounded-3xl bg-gray-700 border border-studoborder/50
+                ${grid ? "min-h-10 max-h-45" : "min-h-20"}
+            `}
+        />
     );
 }
