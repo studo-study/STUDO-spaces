@@ -705,7 +705,8 @@
     "courses": "Courses",
     "your_sets": {
       "title": "Your Sets",
-      "sort": "Sort"
+      "cards": "cards",
+      "studied": "studied"
     }
   },
   "select": {
@@ -809,6 +810,7 @@
     "log_out": "Log Out",
     "delete": "Delete Account",
     "stats": {
+      "subtitle_stats": "Your Stats",
       "total_cards": "Total Cards",
       "time_studied": "Time Studied",
       "cards_mastered": "Cards Mastered"
