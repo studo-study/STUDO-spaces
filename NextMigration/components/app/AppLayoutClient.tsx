@@ -6,6 +6,7 @@ import Burger from "@/components/app/app_header/burger";
 import { UserProvider } from "@/components/providers/UserProvider";
 import ConsoleEasterEgg from "@/components/overige/easteregg/console";
 import CreateFolder from "@/components/app/create-folder/create_folder";
+import AppLayoutContext from "./context/AppLayoutContext";
 
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(Burger);
@@ -23,6 +24,7 @@ export default function AppLayoutClient({ children }: { children: ReactNode }) {
     };
     return (
         <UserProvider>
+            <AppLayoutContext.Provider value={{ toggleCreate }}>
             <div className="h-screen w-screen flex flex-col overflow-hidden">
                 <MemoizedHeader
                     burgerOpen={burgerOpen}
@@ -55,6 +57,7 @@ export default function AppLayoutClient({ children }: { children: ReactNode }) {
                 setCreateOpen={setCreateOpen}
             />
             <ConsoleEasterEgg />
+            </AppLayoutContext.Provider>
         </UserProvider>
     );
 }
