@@ -81,15 +81,15 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
     }, [Search]);
 
     return (
-        <div className={"h-fit z-[9999] top-0 w-screen flex flex-col"}>
+        <div className={"h-fit z-[9999] top-0 w-screen flex flex-col dark:border-none border-b border-b-studoborder"}>
             <div className={"w-screen h-0.5"}></div>
-            <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-b border-studogrey/30 gap-5">
+            <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-b dark:border-studogrey/30 border-gray-300 gap-5">
                 {/* Left section */}
                 <div className="flex items-center gap-8 min-w-1/4">
                     <button
                         onClick={toggleBurger}
-                        className="flex items-center justify-center cursor-pointer text-2xl text-white min-w-10 min-h-10 rounded-full border border-studoborder/20 shadow-xl glass-rgb">
-                        {burgerOpen ? <TbLayoutSidebarLeftCollapse className={"opacity-30"}/> : <HiMenuAlt4 className={"opacity-30"}/>}
+                        className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb">
+                        {burgerOpen ? <TbLayoutSidebarLeftCollapse className={"dark:opacity-30"}/> : <HiMenuAlt4 className={"dark:opacity-30"}/>}
                     </button>
                     <Link href={"/home"} className={`font-akira text-2xl truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
                         STUDO
@@ -171,7 +171,7 @@ function Streak({ streak, StreakOpen, setStreakOpen }: StreakProps) {
             {config.glow && (
                 <div className="absolute z-0 flex justify-center min-w-20 min-h-8 max-h-8 blur-lg opacity-40 py-1 px-3 bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300 rounded-4xl" />
             )}
-            <div className={`${config.glow ? 'z-10 relative' : ''} min-w-fit flex justify-center py-1 px-3 ${config.bg} rounded-4xl gap-2 font-bold text-white items-center`}>
+            <div className={`${config.glow ? 'z-10 relative' : ''} min-w-fit flex justify-center py-1 px-3 ${config.bg} rounded-4xl gap-2 font-bold dark:text-white items-center`}>
                 <Image
                     src={config.icon}
                     alt=""
@@ -194,7 +194,7 @@ function Streak({ streak, StreakOpen, setStreakOpen }: StreakProps) {
 function getStreakConfig(streak: number) {
     if (streak === 0) {
         return {
-            bg: 'bg-studogrey/30',
+            bg: 'dark:bg-studogrey/30 bg-slate-200',
             icon: '/images/streak/streak-03.svg',
             saturation: 'saturate-0',
             textColor: '',
@@ -214,7 +214,7 @@ function getStreakConfig(streak: number) {
 
     if (streak <= 10) {
         return {
-            bg: 'bg-studogrey/30',
+            bg: 'dark:bg-studogrey/30 bg-slate-200',
             icon: '/images/streak/streak-03.svg',
             saturation: 'saturate-50',
             textColor: '',
@@ -224,7 +224,7 @@ function getStreakConfig(streak: number) {
 
     if (streak <= 49) {
         return {
-            bg: 'bg-studogrey/30',
+            bg: 'dark:bg-studogrey/30 bg-slate-200',
             icon: '/images/streak/streak-03.svg',
             saturation: 'saturate-100',
             textColor: '',
@@ -234,7 +234,7 @@ function getStreakConfig(streak: number) {
 
     if (streak <= 99) {
         return {
-            bg: 'bg-studogrey/30',
+            bg: 'dark:bg-studogrey/30 bg-slate-200',
             icon: '/images/streak/streak-02.svg',
             saturation: 'saturate-100',
             textColor: '',
