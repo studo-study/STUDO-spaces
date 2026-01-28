@@ -706,7 +706,11 @@
     "your_sets": {
       "title": "Your Sets",
       "cards": "cards",
-      "studied": "studied"
+      "studied": "studied",
+      "recent": "Recently Studied",
+      "full_studied": "Fully Studied",
+      "created": "Created By You",
+      "all": "All Sets"
     }
   },
   "select": {
