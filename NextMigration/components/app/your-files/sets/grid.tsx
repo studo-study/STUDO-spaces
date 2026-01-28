@@ -6,7 +6,7 @@ import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
 import {IoIosAdd} from "react-icons/io";
 import SetItem from "@/components/app/SetItem";
-import {StartPage, User} from "@/types/types";
+import {LastStudied, StartPage, User} from "@/types/types";
 import {mockStartPage, mockUser} from "@/data/mocks/startPageMock";
 
 const user: User = mockUser;
@@ -14,7 +14,9 @@ const data: StartPage = mockStartPage;
 
 export default function Grid() {
     const [grid, setGrid] = useState<boolean>(true);
+    const [filteredSets, setFilteredSets] = useState<LastStudied[]>(data.lastTen);
     const containerRef = useRef(null);
+    const selectionRef = useRef<HTMLSelectElement>(null);
     const [AddIsOpen, setAddIsOpen] = useState(false);
     const togglePopUp = () => {
         setAddIsOpen((prev) => !prev);
@@ -23,14 +25,48 @@ export default function Grid() {
     const toggleCreate = () => {
         setAddIsOpen((prev) => !prev);
     }
+
+        const filterSets = () => {
+            if (selectionRef.current) {
+                const value = selectionRef.current.value;
+                if (value === "all")  setFilteredSets(data.lastTen.filter((items) => items));
+                if (value === "recent")  setFilteredSets(data.lastTen.toSorted((a, b) => new Date(a.last_studied) - new Date(b.last_studied) ));
+                if (value === "studied")  setFilteredSets(data.lastTen.filter((items) => items.progress === 100));
+
+            }
+        }
+
     const t = useTranslations("y_f.your_sets");
     const locale = useLocale();
 
     return (
         <div className="w-full h-full flex flex-col gap-5 scroll-hidden">
-            <div className={"w-full h-20 z-20 bg-gray-800 py-8 flex flex-row items-center justify-end gap-3"}>
+            <div className={"w-full h-20 z-20 bg-gray-800 py-8 flex flex-row items-center justify-between gap-3"}>
+                <div className={"w-fit flex flex-row gap-5 items-center"}>
+                    <select
+                        name="sort sets"
+                        ref={selectionRef}
+                        defaultValue="all"
+                        onChange={filterSets}
+                        className="
+                                px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
+                                border border-studogrey/30
+                                bg-white dark:bg-gray-700
+                                text-studodarkblue dark:text-white
+                                font-medium text-xs sm:text-sm
+                                shadow-sm hover:shadow-md
+                                transition-all duration-200
+                                cursor-pointer w-45 text-center
+                                focus:outline-none focus:ring-2 focus:ring-studogrey/50
+                                appearance-none">
+                        <option value="all">{t("all")}</option>
+                        <option value="recent">{t("recent")}</option>
+                        <option value="studied">{t("full_studied")}</option>
+                        <option value="created">{t("created")}</option>
 
-                <div className={"w-fit fixed flex flex-row gap-5 items-center"}>
+                    </select>
+                </div>
+                <div className={"w-fit flex flex-row gap-5 items-center"}>
                     <button
                         onClick={() => setGrid(!grid)}
                         className={`${grid ? "border-white text-white bg-studogrey" : "border-studogrey text-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
@@ -65,12 +101,12 @@ export default function Grid() {
                 <div className={`flex-1 overflow-y-scroll scroll-hidden h-full mb-10 -z-10
         ${grid ? "grid grid-cols-4 gap-5" : "flex flex-col gap-5"}`}
                 >
-                    {data.lastTen.length === 0 ? (
+                    {filteredSets.length === 0 ? (
                         <div className="w-full h-full flex items-center justify-center">
                             {t("no_sets")}
                         </div>
                     ) : (
-                        data.lastTen.map((set, i) => (
+                        filteredSets.map((set, i) => (
                             <SetItem grid={grid} key={set.set_id} set={set} index={i} t={t} locale={locale} />
                         ))
                     )}
