@@ -1,33 +1,26 @@
 import {Metadata} from "next";
 import {useTranslations} from "next-intl";
+import CourseItem from "@/components/app/your-files/courses/courseItem";
+import {StartPage} from "@/types/types";
+import {mockStartPage} from "@/data/mocks/startPageMock";
 
-export const metadata:Metadata = {
-    title:"Courses | Studo"
-}
+
+
+const data: StartPage = mockStartPage;
+
 export default function Page() {
+    const courses: Set<string> = new Set<string>()
+    data.lastTen.forEach((item) => {courses.add(item.Course)})
+
     const t = useTranslations("y_f.courses")
     return (
-        <div className=" w-full flex flex-col gap-10 scroll-hidden">
-            <section className={"w-full h-fit flex items-center justify-end py-5"}>
-                <div
-                    className="
-                                px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
-                                border border-studogrey/30
-                                bg-white dark:bg-gray-700
-                                text-studodarkblue dark:text-white
-                                font-medium text-xs sm:text-sm
-                                shadow-sm hover:shadow-md
-                                transition-all duration-200 flex items-center justify-center flex-row gap-2
-                                cursor-pointer w-30 text-center
-                                focus:outline-none focus:ring-2 focus:ring-studogrey/50
-                                appearance-none">
-                    <select  className={"w-fit appearance-none"}>
-                        <option value="inactive">{t("inactive")}</option>
-                        <option value="away">{t("away")}</option>
-                        <option value="active" selected>{t("active")}</option>
-                    </select>
-                </div>
-            </section>
+        <div className=" w-full grid grid-cols-5 gap-5 scroll-hidden py-25">
+            {
+                [...courses].map((item) => (
+                    <CourseItem key={item} course={item} />
+                ))
+            }
+
         </div>
     );
 }
