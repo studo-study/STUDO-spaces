@@ -1,26 +1,26 @@
 "use client"
 import {IoSearch} from "react-icons/io5";
 import {useRef, useState} from "react";
-import {LastStudied} from "@/types/types";
+import {type Classroom, FullClassroom} from "@/types/types";
 import {useTranslations} from "next-intl";
 
-interface SetSearchProps {
-    sets: LastStudied[];
-    setFilteredSets: React.Dispatch<React.SetStateAction<LastStudied[]>>;
+interface ClassSearchProps {
+    classes: FullClassroom[];
+    setFilteredClasses: React.Dispatch<React.SetStateAction<Classroom[]>>;
 }
 
-export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
-    const t = useTranslations("y_f.your_sets");
+export default function ClassSearch({classes, setFilteredClasses}: ClassSearchProps) {
+    const t = useTranslations("classrooms");
     const [search, setSearch] = useState(false);
     const searchRef = useRef<HTMLInputElement>(null);
     const searching = () => {
         if (searchRef.current) {
             const query = searchRef.current.value.toLowerCase();
             if (query === "") {
-                setFilteredSets(sets); // Reset naar alle sets
+                setFilteredClasses(classes); // Reset naar alle sets
             } else {
-                setFilteredSets(sets.filter(item =>
-                    item.title.toLowerCase().includes(query)
+                setFilteredClasses(classes.filter(item =>
+                    item.name.toLowerCase().includes(query) || item.school.toLowerCase().includes(query) || item.owner_id.toLowerCase().includes(query)
                 ));
             }
         }

@@ -1,9 +1,12 @@
 import {Metadata} from "next";
+import Grid from "@/components/app/classrooms/grid";
 
 export const metadata:Metadata = {
     title:"Classrooms | Studo"
 }
 
 export default function ClassroomsPage() {
-    return (<div></div>)
+    return (<div className="w-full h-full">
+        <Grid/>
+    </div>);
 }
