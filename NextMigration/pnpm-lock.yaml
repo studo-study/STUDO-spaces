@@ -41,6 +41,9 @@ importers:
       feather-icons:
         specifier: ^4.29.2
         version: 4.29.2
+      glin-profanity:
+        specifier: ^3.1.5
+        version: 3.1.5(react@19.2.3)
       i18n:
         specifier: ^0.15.3
         version: 0.15.3
@@ -1846,6 +1849,20 @@ packages:
 
   get-tsconfig@4.13.0:
     resolution: {integrity: sha512-1VKTZJCwBrvbd+Wn3AOgQP/2Av+TfTCOlE4AcRJE72W1ksZXbAx8PPBR9RzgTeSPzlPMHrbANMH3LbltH73wxQ==}
+
+  glin-profanity@3.1.5:
+    resolution: {integrity: sha512-9KZJmxcnzHtDhYrNo1McmyQEZL8PiPyV0/OowfUG/Pl9fdKILwgeIeZZV5R+Zy3E2HQvOBQdVDTGnjNG7ZzLqg==}
+    peerDependencies:
+      '@tensorflow-models/toxicity': '>=1.2.0'
+      '@tensorflow/tfjs': '>=4.0.0'
+      react: '>=16.8.0'
+    peerDependenciesMeta:
+      '@tensorflow-models/toxicity':
+        optional: true
+      '@tensorflow/tfjs':
+        optional: true
+      react:
+        optional: true
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -4674,6 +4691,10 @@ snapshots:
   get-tsconfig@4.13.0:
     dependencies:
       resolve-pkg-maps: 1.0.0
+
+  glin-profanity@3.1.5(react@19.2.3):
+    optionalDependencies:
+      react: 19.2.3
 
   glob-parent@5.1.2:
     dependencies:
