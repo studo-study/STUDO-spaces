@@ -9,6 +9,8 @@ import SetItem from "@/components/app/SetItem";
 import {LastStudied, StartPage, User} from "@/types/types";
 import {mockStartPage, mockUser} from "@/data/mocks/startPageMock";
 import SetSearch from "@/components/app/your-files/sets/search";
+import GridItems from "@/components/app/your-files/sets/griditems";
+import ListItems from "@/components/app/your-files/sets/listitems";
 
 const user: User = mockUser;
 const data: StartPage = mockStartPage;
@@ -68,7 +70,7 @@ export default function Grid() {
                     </select>
                 </div>
                 <div className={"w-fit flex flex-row gap-5 items-center"}>
-                    <SetSearch/>
+                    <SetSearch sets={data.lastTen} setFilteredSets={setFilteredSets} />
                     <button
                         onClick={() => setGrid(!grid)}
                         className={`${grid ? "border-studogrey text-studogrey" : "border-white text-white bg-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
@@ -100,20 +102,13 @@ export default function Grid() {
 
             </div>
             <div className={"w-full h-fit gap-2 flex flex-col"}>
-                <div className={`flex-1 overflow-y-scroll scroll-hidden h-full mb-10 -z-10
-        ${grid ? "grid grid-cols-4 gap-5" : "flex flex-col gap-5"}`}
-                >
                     {filteredSets.length === 0 ? (
                         <div className="w-full h-full flex items-center justify-center">
                             {t("no_sets")}
                         </div>
-                    ) : (
-                        filteredSets.map((set, i) => (
-                            <SetItem grid={grid} key={set.set_id} set={set} index={i} t={t} locale={locale} />
-                        ))
-                    )}
+                    ) : grid ? <GridItems items={ filteredSets}/> : <ListItems items={ filteredSets}/>
+                    }
 
-                </div>
             </div>
     </div>);
 }
