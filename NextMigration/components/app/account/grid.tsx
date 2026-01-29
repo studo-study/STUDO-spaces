@@ -20,10 +20,10 @@ export default function AccountGrid() {
     }
 
     return (
-    <div className={"w-full h-fit flex flex-col gap-5"}>
+    <div className={"w-full h-fit flex flex-col gap-5 scroll-hidden"}>
         <div className={"w-full h-20 py-5 flex flex-row justify-between gap-3"}>
             <span className={"font-bold text-lg dark:text-white text-studodarkblue"}>{t("subtitle_sets")}:</span>
-            <div className={"w-fit flex flex-row gap-5"}>
+            <div className={"w-fit flex flex-row gap-5 items-center"}>
                 <button
                     onClick={() => setGrid(!grid)}
                     className={`${grid ? "border-white text-white bg-studogrey" : "border-studogrey text-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
@@ -55,8 +55,8 @@ export default function AccountGrid() {
 
         </div>
         <div className={"w-full h-fit gap-2 flex flex-col"}>
-            <div className={`flex-1 overflow-y-scroll scroll-hidden min-h-95 max-h-95 mb-10
-        ${grid ? "grid grid-cols-4 gap-5 gap-y-3" : "flex flex-col gap-5"}`}
+            <div className={`flex-1 overflow-y-scroll scroll-hidden min-h-45 max-h-95 mb-10
+        ${grid ? "grid grid-cols-4 gap-5" : "flex flex-col gap-5"}`}
             >
               <SetItem grid={grid}/>
               <SetItem grid={grid}/>

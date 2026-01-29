@@ -29,7 +29,6 @@ export default function ClassroomHeader() {
                 />
 
             </div>
-
                 <div className={"w-full z-10 bottom-0 h-0.5 bg-studogrey"}/>
             <CreateClassroom
                 createOpen={classroomIsOpen}
