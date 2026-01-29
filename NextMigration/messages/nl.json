@@ -605,11 +605,9 @@
     "subtitle_title": "Classroom name:",
     "placeholder": "Fill in a name...",
     "subtitle_options": "Type classroom:",
-    "class": "Class Group",
-    "course": "Course Group",
-    "study": "Study Group",
-    "personal": "Classroom with friends",
-    "community": "Community"
+    "class": "Class – official course classroom",
+    "study": "Study Group – collaborate with friends",
+    "community": "Community – open group for everyone"
   },
   "createstudoset": {
     "title": "Create new Studoset",
@@ -705,7 +703,13 @@
     "courses": "Courses",
     "your_sets": {
       "title": "Your Sets",
-      "sort": "Sort"
+      "cards": "cards",
+      "studied": "studied",
+      "recent": "Recently Studied",
+      "full_studied": "Fully Studied",
+      "created": "Created By You",
+      "all": "All Sets",
+      "search": "search set..."
     }
   },
   "select": {
@@ -769,7 +773,14 @@
     "d_s": "day streak"
   },
   "classrooms": {
-    "title": "Your Classrooms"
+    "title": "Your Classrooms",
+    "all": "All Classrooms",
+    "last": "Recently Joined",
+    "alphabetical": "Alphabetical Order",
+    "search": "Search Classrooms...",
+    "members": "members",
+    "member": "member",
+    "leave": "Leave"
   },
   "settings": {
     "title": "Settings",
@@ -809,6 +820,7 @@
     "log_out": "Log Out",
     "delete": "Delete Account",
     "stats": {
+      "subtitle_stats": "Your Stats",
       "total_cards": "Total Cards",
       "time_studied": "Time Studied",
       "cards_mastered": "Cards Mastered"

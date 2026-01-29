@@ -411,6 +411,8 @@ export interface Classroom {
     type: string;
     created_at: string;
     verified: boolean;
+    school: string;
+    public: boolean;
 }
 
 export interface ClassroomSet {

@@ -23,10 +23,10 @@ export default function UserPopup({ burgerOpen, isMod }: UserPopupProps) {
 
     const MenuItem = ({ item, showText }: { item: typeof menuItems.account, showText: boolean }) => (
         <div className="w-full h-10 flex flex-row items-center">
-            <div className="flex items-center min-w-10 justify-center text-2xl text-white">
+            <div className="flex items-center min-w-10 justify-center text-2xl dark:text-white">
                 {item.icon}
             </div>
-            <span className={`text-white whitespace-nowrap transition-all duration-200
+            <span className={`dark:text-white whitespace-nowrap transition-all duration-200
                 ${showText ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
                 <Link href={item.link} className="hover:underline">{t(item.label)}</Link>
             </span>
@@ -44,15 +44,15 @@ export default function UserPopup({ burgerOpen, isMod }: UserPopupProps) {
         <div className="w-full px-5 relative h-10 opacity-50">
             {burgerOpen ? (
                 <div className={`absolute bottom-0 left-5 right-5 transition-all duration-300 ease-out
-                    flex flex-col-reverse gap-2 rounded-4xl bg-studogrey/50 overflow-hidden px-5 py-2
+                    flex flex-col-reverse gap-2 rounded-4xl dark:bg-studogrey/50 bg-slate-200 overflow-hidden px-5 py-2
                     ${getHeight()}`}>
 
                     {/* Account - altijd onderaan */}
                     <div className="w-full flex flex-row items-center">
-                        <div className="flex items-center min-w-10 justify-center text-2xl text-white">
+                        <div className="flex items-center min-w-10 justify-center text-2xl dark:text-white">
                             {menuItems.account.icon}
                         </div>
-                        <div className="w-full flex flex-row justify-between text-white items-center">
+                        <div className="w-full flex flex-row justify-between dark:text-white items-center">
                             <span className={`whitespace-nowrap transition-all duration-200 delay-150
                                 ${burgerOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
                                 <Link href={menuItems.account.link} className="hover:underline">
@@ -75,8 +75,8 @@ export default function UserPopup({ burgerOpen, isMod }: UserPopupProps) {
                 </div>
             ) : (
                 <Link href={menuItems.account.link}
-                      className="flex items-center h-10 gap-5 rounded-4xl bg-studogrey/50 px-5 w-full">
-                    <div className="flex items-center min-w-10 justify-center text-2xl text-white">
+                      className="flex items-center h-10 gap-5 rounded-4xl dark:bg-studogrey/50 bg-slate-200 px-5 w-full">
+                    <div className="flex items-center min-w-10 justify-center text-2xl dark:text-white">
                         {menuItems.account.icon}
                     </div>
                 </Link>

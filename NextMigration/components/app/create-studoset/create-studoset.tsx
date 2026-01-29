@@ -4,6 +4,7 @@ import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import Importer from "@/components/app/create-studoset/importer";
 import Card from "@/components/app/create-studoset/card";
 import Sortable from "sortablejs";
+import ImportButton from "@/components/app/create-studoset/importButton";
 const LANGUAGES = [
     { code: "en", name: "English" },
     { code: "nl", name: "Dutch" },
@@ -111,14 +112,8 @@ export default function CreateStudosetForm() {
 
                     <div
                         className="w-full h-fit flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between items-stretch sm:items-end mt-4">
-                        <button
-                            type="button"
-                            onClick={() => setShowImporter(true)}
-                            className="px-10 w-fit flex flex-row items-center justify-center gap-2 h-12 rounded-full glass-rgb cursor-pointer shadow-2xl text-white font-bold border border-studoborder/30 active:scale-95 transition-transform"
-                            data-cy="import_button">
-                            <img src={"/icons/plus.svg"} className="h-4 sm:h-5 dark:brightness-0 dark:invert" alt="" />
-                            {t("import")}
-                        </button>
+                        <ImportButton
+                        setShowImporter={setShowImporter}/>
 
                         <button
                             type="submit"
