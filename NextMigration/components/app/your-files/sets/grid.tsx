@@ -8,12 +8,13 @@ import {IoIosAdd} from "react-icons/io";
 import SetItem from "@/components/app/SetItem";
 import {LastStudied, StartPage, User} from "@/types/types";
 import {mockStartPage, mockUser} from "@/data/mocks/startPageMock";
+import SetSearch from "@/components/app/your-files/sets/search";
 
 const user: User = mockUser;
 const data: StartPage = mockStartPage;
 
 export default function Grid() {
-    const [grid, setGrid] = useState<boolean>(true);
+    const [grid, setGrid] = useState<boolean>(false);
     const [filteredSets, setFilteredSets] = useState<LastStudied[]>(data.lastTen);
     const containerRef = useRef(null);
     const selectionRef = useRef<HTMLSelectElement>(null);
@@ -67,17 +68,18 @@ export default function Grid() {
                     </select>
                 </div>
                 <div className={"w-fit flex flex-row gap-5 items-center"}>
-                    <button
-                        onClick={() => setGrid(!grid)}
-                        className={`${grid ? "border-white text-white bg-studogrey" : "border-studogrey text-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
-                    >
-                        <BsGridFill />
-                    </button>
+                    <SetSearch/>
                     <button
                         onClick={() => setGrid(!grid)}
                         className={`${grid ? "border-studogrey text-studogrey" : "border-white text-white bg-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
                     >
                         <HiOutlineViewList />
+                    </button>
+                    <button
+                        onClick={() => setGrid(!grid)}
+                        className={`${grid ? "border-white text-white bg-studogrey" : "border-studogrey text-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
+                    >
+                        <BsGridFill />
                     </button>
                     <button
                         onClick={togglePopUp}
