@@ -1,9 +1,28 @@
 "use client"
 import {IoSearch} from "react-icons/io5";
-import {useState} from "react";
+import {useRef, useState} from "react";
+import {LastStudied} from "@/types/types";
 
-export default function SetSearch() {
+interface SetSearchProps {
+    sets: LastStudied[];
+    setFilteredSets: React.Dispatch<React.SetStateAction<LastStudied[]>>;
+}
+export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
     const [search, setSearch] = useState(false);
+    const searchRef = useRef<HTMLInputElement>(null);
+    const searching = () => {
+        if (searchRef.current) {
+            const query = searchRef.current.value.toLowerCase();
+            if (query === "") {
+                setFilteredSets(sets); // Reset naar alle sets
+            } else {
+                setFilteredSets(sets.filter(item =>
+                    item.title.toLowerCase().includes(query)
+                ));
+            }
+        }
+    }
+
     return (
         <div className={`h-10 gap-5 dark:text-white w-70 rounded-4xl glass-rgb transition-all duration-300 
         ${search ? "dark:border-white border-gray-500" : "dark:border-studoborder/30 border-gray-300"} 
@@ -12,6 +31,8 @@ export default function SetSearch() {
                 onClick={() => setSearch(true)}
                 onFocus={() => setSearch(true)}
                 onBlur={() => setSearch(false)}
+                onChange={searching}
+                ref={searchRef}
                 placeholder={"search set..."}
                 type="text"
                 className={" w-full h-full outline-none focus:ring-0"}/>
