@@ -45,14 +45,14 @@ export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
 
             <div className={`w-full px-7 flex flex-col sm:flex-row items-center gap-2`}>
                 <Progress length={set.length} progress={set.progress} />
-                <span className={`flex text-studogrey text-sm`}>
+                <span className={`flex text-white/30 text-sm`}>
             {set.progress}% {t("studied")}
         </span>
             </div>
 
             <div className={` w-full px-7 sm:w-auto"} flex flex-row justify-between sm:gap-6`}>
-                <span className={`text-studogrey text-sm`}>{date}</span>
-                <span className={"text-studogrey text-sm"}>
+                <span className={`text-white/30 text-sm`}>{date}</span>
+                <span className={"text-white/30 text-sm"}>
             {set.length} {set.type === "studyset" ? t("cards") : t("pins")}
         </span>
             </div>
@@ -64,8 +64,8 @@ export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
             <Link
                 href={`/set/${set.set_id}`}
                 className={`
-                     max-h-22 h-22 flex-col sm:flex-row px-5 py-4 sm:py-0 max-w-full min-w-full
-                 flex gap-3 shadow-2xl items-center w-full rounded-2xl bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
+                     max-h-22 h-22 flex-col sm:flex-row px-10 py-4 sm:py-0 max-w-full min-w-full
+                 flex gap-3 shadow-2xl items-center w-full rounded-full bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
             >
 
                 <div className={`flex flex-row gap-3 items-center "w-full sm:w-1/2 sm:flex-1`}>
@@ -83,8 +83,8 @@ export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
                 </div>
 
                 <div className={`min-w-40 w-full sm:w-auto flex flex-row justify-between sm:gap-6`}>
-                    <span className={`text-studogrey text-sm`}>{date}</span>
-                    <span className={"text-studogrey text-sm"}>
+                    <span className={`text-white/30 text-sm`}>{date}</span>
+                    <span className={"text-white/30 text-sm"}>
             {set.length} {set.type === "studyset" ? t("cards") : t("pins")}
         </span>
                 </div>
