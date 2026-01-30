@@ -4,10 +4,10 @@ import FolderItem from "@/components/app/your-files/folders/folderItem";
 import {useState} from "react";
 import Draggable from "@/components/app/your-files/folders/draggable";
 import Droppable from "@/components/app/your-files/folders/Droppable";
-
+import {mockFolders} from "@/data/mocks/startPageMock";
 
 export default function FolderGrid() {
-    const folders = ['A', 'B', 'C'];
+    const folders = mockFolders;
     const [parent, setParent] = useState(null);
     const draggableMarkup = (
         <Draggable id="draggable">Drag me</Draggable>
@@ -16,8 +16,8 @@ export default function FolderGrid() {
     return (
         <DndContext onDragEnd={handleDragEnd}>
             <div className={"w-full h-fit flex flex-col gap-5 py-5"}>
-                {folders.map((id) => (
-                    <FolderItem key={id} id={id}/>
+                {folders.map((item) => (
+                    <FolderItem key={item.id} folder={item}/>
 
 
                 ))}
