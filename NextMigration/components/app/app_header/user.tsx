@@ -5,21 +5,23 @@ import {useTranslations} from "next-intl";
 import {useState} from "react";
 import {FaAngleDown} from "react-icons/fa";
 import {IoSettingsOutline} from "react-icons/io5";
+import {useUser} from "@/components/providers/UserProvider";
 
 interface UserPopupProps {
     burgerOpen: boolean;
-    isMod: boolean;
 }
 
 const menuItems = {
     account: {icon: <MdAccountCircle />, link: "/account", label: "account"},
     settings: {icon: <IoSettingsOutline />, link: "/settings", label: "settings"},
-    moderator: {icon: <MdOutlineVerifiedUser />, link: "/admin", label: "ad"},
+    moderator: {icon: <MdOutlineVerifiedUser />, link: "/admin/stats", label: "ad"},
 };
 
-export default function UserPopup({ burgerOpen, isMod }: UserPopupProps) {
+export default function UserPopup({ burgerOpen }: UserPopupProps) {
     const t = useTranslations("header");
     const [isOpen, setIsOpen] = useState(false);
+    const { isModerator } = useUser();
+
 
     const MenuItem = ({ item, showText }: { item: typeof menuItems.account, showText: boolean }) => (
         <div className="w-full h-10 flex flex-row items-center">
@@ -36,8 +38,8 @@ export default function UserPopup({ burgerOpen, isMod }: UserPopupProps) {
     // Bereken hoogte: account (40px) + gap (20px) + items
     const getHeight = () => {
         if (!isOpen) return "h-10";
-        const items = isMod ? 2 : 1; // settings + eventueel mod
-        return isMod ? "h-[8.3rem]" : "h-[5.3rem]"; // 40px per item + 20px gaps
+        const items = isModerator ? 2 : 1; // settings + eventueel mod
+        return isModerator ? "h-[8.3rem]" : "h-[5.3rem]"; // 40px per item + 20px gaps
     };
 
     return (
@@ -70,7 +72,7 @@ export default function UserPopup({ burgerOpen, isMod }: UserPopupProps) {
                     <div className={`flex flex-col gap-2 transition-all duration-300 ease-out
                         ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
                         <MenuItem item={menuItems.settings} showText={burgerOpen && isOpen} />
-                        {isMod && <MenuItem item={menuItems.moderator} showText={burgerOpen && isOpen} />}
+                        {isModerator && <MenuItem item={menuItems.moderator} showText={burgerOpen && isOpen} />}
                     </div>
                 </div>
             ) : (

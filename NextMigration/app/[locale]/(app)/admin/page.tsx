@@ -1,9 +1,7 @@
-import {Metadata} from "next";
+import {useLocale} from "next-intl";
+import {redirect} from "next/navigation";
 
-export const metadata:Metadata = {
-    title:"Admin Dashboard | Studo"
-}
-
-export default function ModeratorPage() {
-    return(<div></div>);
+export default function Page() {
+    const locale = useLocale();
+    redirect(`/${locale}/admin/stats`);
 }

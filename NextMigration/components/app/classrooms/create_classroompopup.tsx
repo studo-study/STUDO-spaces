@@ -44,13 +44,11 @@ export default function CreateClassroom({createOpen, setCreateOpen}: CreateClass
     }, [createOpen]);
 
     return (
-        <div className={`fixed inset-0 flex items-baseline justify-center pt-80 w-full bg-black/50 h-full z-[9999] ${createOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+        <div className={`fixed inset-0 flex items-baseline justify-center pt-70 w-full bg-black/50 h-full z-[9999] ${createOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}>
 
-            <div ref={popupRef} className={`w-1/4 min-h-110
-                      z-[9999] p-2 truncate
-        rounded-2xl
-        bg-white/80 dark:bg-[#1e293b]/90
-        backdrop-blur-xl
+            <div ref={popupRef} className={`w-1/4 min-h-135
+                      z-[9999] p-2 truncate rounded-2xl
+        bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl
         border border-white/50 dark:border-white/10
         shadow-xl shadow-black/10 dark:shadow-black/30
       transition-all duration-300 ease-out origin-top px-7 py-10 flex flex-col gap-3 justify-between items-center
@@ -96,6 +94,17 @@ export default function CreateClassroom({createOpen, setCreateOpen}: CreateClass
                                 <option value="study_group">{t("study")}</option>
                                 <option value="community_group">{t("community")}</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div className={"w-full h-fit flex flex-col gap-3"}>
+                        <span className={"dark:text-white text-studodarkblue"}>{t("subtitle_school")}</span>
+                        <div className="flex flex-col w-full gap-2 items-center justify-between">
+                            <input
+                                ref={inputRef}
+                                placeholder={t("placeholder_school")}
+                                type="text"
+                                className={"h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}/>
                         </div>
                     </div>
                 </div>

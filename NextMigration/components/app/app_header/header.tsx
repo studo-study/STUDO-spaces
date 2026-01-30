@@ -1,3 +1,4 @@
+// components/app/app_header/header.tsx
 "use client"
 import {useLocale, useTranslations} from "next-intl";
 import {HiMenuAlt4} from "react-icons/hi";
@@ -10,11 +11,10 @@ import TriggerProfile from "@/components/app/app_header/profile_popup";
 import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
 import SearchBar from "@/components/app/app_header/search";
 import Image from "next/image";
-
-import {useUser} from "@/components/providers/UserProvider";
 import {Link} from "@/i18n/routing";
 
-interface user {
+// User type (je kunt dit ook exporteren vanuit UserProvider)
+interface User {
     displayName: string;
     email: string;
     id: string;
@@ -22,7 +22,7 @@ interface user {
     joinNumber: number;
     join_date: string;
     lastTen: studyset[];
-    publicRole:string;
+    publicRole: string;
     stats: {
         totalsets: number;
         timeLearned: number;
@@ -35,13 +35,13 @@ interface user {
 }
 
 interface studyset {
-    "set_id": string;
-    "last_studied": string;
-    "title": string;
-    "Course": string;
-    "type": string;
-    "progress": number;
-    "length": number
+    set_id: string;
+    last_studied: string;
+    title: string;
+    Course: string;
+    type: string;
+    progress: number;
+    length: number;
 }
 
 interface HeaderProps {
@@ -52,10 +52,12 @@ interface HeaderProps {
     createOpen: boolean;
     setCreateOpen: React.Dispatch<React.SetStateAction<boolean>>;
     toggleCreate: () => void;
+    user: User | null;      // <- nieuw
+    isLoading: boolean;     // <- nieuw
 }
 
-export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate}: HeaderProps) {
-    const { user, isLoading } = useUser();
+export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate, user, isLoading}: HeaderProps) {
+
     const [AddIsOpen, setAddIsOpen] = useState(false);
     const [NotifIsOpen, setNotifIsOpen] = useState(false);
     const [ProfileIsOpen, setProfileIsOpen] = useState(false);

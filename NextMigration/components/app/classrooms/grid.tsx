@@ -11,18 +11,53 @@ import SetItem from "@/components/app/SetItem";
 import ClassSearch from "@/components/app/classrooms/search";
 import {mockClassrooms, mockFullClassrooms} from "@/data/mocks/classroomsMock";
 import ClassroomOverviewItem from "@/components/app/classrooms/ClassroomOverviewItem";
+import {useUser} from "@/components/providers/UserProvider";
 const classrooms: FullClassroom[] = mockFullClassrooms
 
 export default function ClassroomGrid() {
+    const User = useUser().user;
     const selectionRef = useRef<HTMLSelectElement>(null);
     const t = useTranslations("classrooms");
     const [filteredClasses, setFilteredClasses] = useState<FullClassroom[]>(classrooms);
+
+    const filterClasses = () => {
+        if(selectionRef.current && User) {
+            const value = selectionRef.current.value;
+            if(value ==="all") setFilteredClasses(classrooms);
+            if(value === "alphabetical") setFilteredClasses(
+                classrooms.toSorted((a, b) =>
+                    a.name.localeCompare(b.name)
+                )
+            );
+            if (value === "last") {
+                setFilteredClasses(
+                    classrooms.toSorted((a, b) => {
+                        const userA = a.users.find(u => u.user_id === User.id);
+                        const userB = b.users.find(u => u.user_id === User.id);
+
+                        const timeA = userA?.joined_at
+                            ? new Date(userA.joined_at).getTime()
+                            : 0;
+
+                        const timeB = userB?.joined_at
+                            ? new Date(userB.joined_at).getTime()
+                            : 0;
+
+                        return timeB - timeA;
+                    })
+                );
+            }
+
+        }
+    }
+
     return (
         <div className="w-full h-full flex flex-col gap-5 scroll-hidden overflow-visible">
             <div className={"w-full h-20 z-20 bg-gray-800 py-8 flex flex-row items-center justify-between gap-3 overflow-visible"}>
                 <div className={"w-fit flex flex-row gap-5 items-center"}>
                     <select
                         name="sort sets"
+                        onChange={filterClasses}
                         ref={selectionRef}
                         defaultValue="all"
                         className="

@@ -2,18 +2,19 @@
 import {FaFolderOpen} from "react-icons/fa";
 import Link from "next/link";
 import {useDraggable, useDroppable} from "@dnd-kit/core";
+import {Folder} from "@/types/types";
 
 interface FolderProps {
-    id: string;
+    folder: Folder;
 }
 
-export default function FolderItem({id}: FolderProps) {
+export default function FolderItem({folder}: FolderProps) {
     const {isOver, setNodeRef: setDropRef} = useDroppable({
-        id: id,
+        id: folder.id,
     });
 
     const {attributes, listeners, setNodeRef: setDragRef, transform, isDragging} = useDraggable({
-        id: id,
+        id: folder.id,
     });
 
     function combineRefs(el: HTMLElement | null) {
@@ -35,7 +36,7 @@ export default function FolderItem({id}: FolderProps) {
 
     return (
         <Link
-            href={"/folder"}
+            href={"/your-files/folders/" + folder.id}
             ref={combineRefs}
             style={style}
             className={"w-full h-20 flex items-center justify-between gap-5 px-3 rounded-full bg-studogrey/10 border border-studoborder/30 shadow-xl pr-10"}
@@ -45,8 +46,8 @@ export default function FolderItem({id}: FolderProps) {
             </div>
 
             <span className={"w-full font-bold dark:text-white text-studodarkblue text-lg"}>
-        Charles' Folder
-    </span>
+               {folder.name}
+            </span>
 
             <div
                 className={"w-fit flex items-center cursor-pointer text-white/30 text-2xl"}
