@@ -1,17 +1,21 @@
 {
   "admin": {
     "title": "Admin Dashboard",
-    "subtitle_stats": "Quick Stats",
+    "subtitle_stats": "Quick Stats (this month)",
     "subtitle_overview": "Overview",
     "total_usr": "Registered users:",
-    "total_month": "Active this month",
+    "total_month": "MAU",
     "total_ss": "Total Studosets",
     "total_vs": "Total Visualsets",
     "or": "or",
     "stats": "Stats",
     "reports": "Reports",
     "users":"Users",
-    "search": "Search"
+    "search": "Search",
+    "recently_usrs": "Recently joined users",
+    "most_pp_set": "Most popular sets",
+    "graphs": "STUDO Graphs",
+    "activity": "Other user activity"
   },
   "landing": {
     "header": {
