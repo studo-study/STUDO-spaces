@@ -1,4 +1,22 @@
 {
+  "admin": {
+    "title": "Admin Dashboard",
+    "subtitle_stats": "Quick Stats (this month)",
+    "subtitle_overview": "Overview",
+    "total_usr": "Registered users:",
+    "total_month": "MAU",
+    "total_ss": "Total Studosets",
+    "total_vs": "Total Visualsets",
+    "or": "or",
+    "stats": "Stats",
+    "reports": "Reports",
+    "users":"Users",
+    "search": "Search",
+    "recently_usrs": "Recently joined users",
+    "most_pp_set": "Most popular sets",
+    "graphs": "STUDO Graphs",
+    "activity": "Other user activity"
+  },
   "landing": {
     "header": {
       "LogIn": "Log in",
@@ -607,7 +625,9 @@
     "subtitle_options": "Type classroom:",
     "class": "Class – official course classroom",
     "study": "Study Group – collaborate with friends",
-    "community": "Community – open group for everyone"
+    "community": "Community – open group for everyone",
+    "subtitle_school": "School name:",
+    "placeholder_school": "school name..."
   },
   "createstudoset": {
     "title": "Create new Studoset",

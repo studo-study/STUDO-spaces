@@ -646,7 +646,7 @@ interface RecentSet {
     length: number;
 }
 
-interface StudoUser {
+export interface StudoUser {
     id: string;
     email: string;
     displayName: string;

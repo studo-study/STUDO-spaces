@@ -39,8 +39,7 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerP
         const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, '');
         return pathWithoutLocale === link || pathWithoutLocale.startsWith(link + '/');
     };
-    const { user } = useUser();
-    const isMod = user?.verified ?? false;
+
 
     return (
         <div className={`h-full border-r select-none dark:border-studoborder/30 border-gray-300 
@@ -123,7 +122,7 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerP
             </div>
 
             <div className="w-full h-full flex flex-col gap-3 justify-end items-baseline">
-                <UserPopup isMod={isMod} burgerOpen={burgerOpen}/>
+                <UserPopup burgerOpen={burgerOpen}/>
             </div>
         </div>
     )

@@ -35,21 +35,27 @@ interface studyset {
 interface UserContextType {
     user: User | null;
     isLoading: boolean;
+    isModerator: boolean;
 }
 
-const UserContext = createContext<UserContextType>({ user: null, isLoading: true });
+const UserContext = createContext<UserContextType>({ user: null, isLoading: true, isModerator: false });
 
 export function UserProvider({ children }: { children: ReactNode }) {
     const { data: session, status } = useSession();
 
+    const user = session?.user ?? null;
+    const isModerator = user?.verified && ["owner", "moderator"].includes(user.publicRole) || false;
+
     return (
         <UserContext.Provider value={{
-            user: session?.user ?? null,
-            isLoading: status === "loading"
+            user,
+            isLoading: status === "loading",
+            isModerator
         }}>
             {children}
         </UserContext.Provider>
     );
 }
+
 
 export const useUser = () => useContext(UserContext);
