@@ -41,7 +41,7 @@ export default function PersonalInfo() {
                         >{t("edit")}</button>
                     </div>
                 </div>
-                <div className={"w-full gap-4  p-10 flex flex-col"}>
+                <div className={"w-full border-b gap-4 border-studoborder p-10 flex flex-col"}>
                     <span className={"w-full text-base font-bold h-fit"}>{t("role")}</span>
                     <div className={"w-full flex flex-row justify-between"}>
                         {editRole ? <select className={"w-4/5"} name="role" id="role">
@@ -51,6 +51,16 @@ export default function PersonalInfo() {
                         </select> : <span>student</span>}
                         <button
                             onClick={toggleEditRole}
+                            className={"font-bold text-blue-500 cursor-pointer"}
+                        >{t("edit")}</button>
+                    </div>
+                </div>
+                <div className={"w-full gap-4  p-10 flex flex-col"}>
+                    <span className={"w-full text-base font-bold h-fit"}>{t("password")}</span>
+                    <div className={"w-full flex flex-row justify-between"}>
+                        {editName ? <input value={"password"} autoFocus={editName} className={"w-3/5 outline-none"} type="text"/> : <span>password</span>}
+                        <button
+                            onClick={toggleEditName}
                             className={"font-bold text-blue-500 cursor-pointer"}
                         >{t("edit")}</button>
                     </div>
