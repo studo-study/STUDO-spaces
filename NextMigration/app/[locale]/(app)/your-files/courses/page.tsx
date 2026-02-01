@@ -5,6 +5,9 @@ import {StartPage} from "@/types/types";
 import {mockStartPage} from "@/data/mocks/startPageMock";
 
 
+export const metadata:Metadata = {
+    title:"Courses | Studo"
+}
 
 const data: StartPage = mockStartPage;
 

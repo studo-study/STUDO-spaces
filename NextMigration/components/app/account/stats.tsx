@@ -5,7 +5,7 @@ import {useUser} from "@/components/providers/UserProvider";
 
 export default function Stats() {
     const user = useUser().user;
-    const t = useTranslations("account.stats");
+    const t = useTranslations("account.sets");
     return(<div className={"w-full flex flex-col gap-5"}>
         <span className={"font-bold text-lg dark:text-white text-studodarkblue"}>{t("subtitle_stats")}:</span>
         <div className={"w-full flex flex-row gap-5"}>
