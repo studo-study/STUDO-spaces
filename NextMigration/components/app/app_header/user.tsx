@@ -14,7 +14,7 @@ interface UserPopupProps {
 const menuItems = {
     account: {icon: <MdAccountCircle />, link: "/account", label: "account"},
     settings: {icon: <IoSettingsOutline />, link: "/settings", label: "settings"},
-    moderator: {icon: <MdOutlineVerifiedUser />, link: "/admin/stats", label: "ad"},
+    moderator: {icon: <MdOutlineVerifiedUser />, link: "/admin/sets", label: "ad"},
 };
 
 export default function UserPopup({ burgerOpen }: UserPopupProps) {

@@ -16,7 +16,8 @@ import {
 } from './users.dto';
 import {
   ClassroomListResponseDto,
-  ClassroomResponseDto, ClassroomSetDto,
+  ClassroomResponseDto,
+  ClassroomSetDto,
   ClassroomUserResponseDto,
   FullClassroomResponseDto,
 } from '../classroom/classroom.dto';
@@ -38,7 +39,8 @@ import { and, eq, gte, inArray, ne, not } from 'drizzle-orm';
 import {
   cards,
   classroomactivities,
-  classrooms, classroomsets,
+  classrooms,
+  classroomsets,
   classroomusers,
   folders,
   images,
@@ -75,8 +77,7 @@ export class UserService {
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
     private readonly configService: ConfigService<ServerConfig>,
-  ) {
-  }
+  ) {}
 
   async existsById(user_id: string): Promise<boolean> {
     const result = await this.db
@@ -129,7 +130,7 @@ export class UserService {
 
   async getTotalStats(user_id: string): Promise<TotalStats> {
     //hier hoef ik geen controles en errors te werpe want de waarden mogen nul zijn
-    //stats ophalen
+    //sets ophalen
     const stats = await this.db.query.studysessions.findMany({
       where: eq(studysessions.user_id, user_id),
     });
@@ -347,13 +348,12 @@ export class UserService {
     });
 
     if (!session) {
-      throw new NotFoundException('Session doesn\'t exist');
+      throw new NotFoundException("Session doesn't exist");
     }
 
     const seshcards = await this.db.query.sessioncards.findMany({
       where: eq(sessioncards.session_id, session.id),
     });
-
 
     const sesh = { ...session, cards: seshcards, pins: null };
     return {
@@ -555,8 +555,10 @@ export class UserService {
     return userArray;
   }
 
-
-  async getCourse(user_id: string, course_id: string): Promise<AllsetsResponseDto> {
+  async getCourse(
+    user_id: string,
+    course_id: string,
+  ): Promise<AllsetsResponseDto> {
     //er kunnen ook geen sessies zijn
     const sessies: StudysessionDTO[] =
       await this.db.query.studysessions.findMany({

@@ -729,7 +729,9 @@
       "full_studied": "Fully Studied",
       "created": "Created By You",
       "all": "All Sets",
-      "search": "search set..."
+      "search": "search set...",
+      "no_sets": "no sets yet",
+      "no_results": "no result"
     }
   },
   "select": {
@@ -801,6 +803,12 @@
     "members": "members",
     "member": "member",
     "leave": "Leave"
+  },
+  "classroom": {
+    "overview": "Overview",
+    "sets": "Sets",
+    "users": "Users",
+    "challenges": "Challenges"
   },
   "settings": {
     "title": "Settings",
