@@ -103,10 +103,15 @@ export default function Grid() {
             </div>
             <div className={"w-full h-fit gap-2 flex flex-col"}>
                     {filteredSets.length === 0 ? (
-                        <div className="w-full h-full flex items-center justify-center">
-                            {t("no_sets")}
+                        <div className="w-full h-100 flex dark:text-white text-studodarkblue font-bold items-center justify-center">
+                            {t("no_results")}
                         </div>
-                    ) : grid ? <GridItems items={ filteredSets}/> : <ListItems items={ filteredSets}/>
+                    ) : data.lastTen.length === 0
+                        ?
+                        (<div className="w-full h-100 flex dark:text-white text-studodarkblue font-bold items-center justify-center">
+                                {t("no_sets")}
+                            </div>)
+                        : grid ? <GridItems items={ filteredSets}/> : <ListItems items={ filteredSets}/>
                     }
 
             </div>

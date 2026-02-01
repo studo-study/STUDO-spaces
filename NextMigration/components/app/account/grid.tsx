@@ -65,9 +65,8 @@ export default function AccountGrid() {
             </div>
         </div>
 
-        <div className={"w-full h-15 flex justify-between"}>
-            <button className={"w-fit px-5 py-2 h-10 rounded-full bg-blue-500 border border-studoborder/50 text-white"}>{t("log_out")}</button>
-            <button className={"w-fit px-5 py-2 h-10 rounded-full bg-rose-500 border border-studoborder/50 text-white"}>{t("delete")}</button>
+        <div className={"w-full h-15 flex justify-end"}>
+            <button className={"w-fit px-5 py-2 h-10 font-bold lowercase rounded-full bg-blue-500 border border-studoborder/50 text-white"}>{t("log_out")}</button>
         </div>
     </div>)
 }

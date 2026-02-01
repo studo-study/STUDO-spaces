@@ -12,7 +12,7 @@ const header = [
     {url: "/your-files/folders", label: "folders"}
 ]
 
-export default function ClassroomHeader() {
+export default function ClassroomsHeader() {
     const t = useTranslations("classrooms")
     const [classroomIsOpen, setClassroomIsOpen] = useState(false);
     const togglePopUp = () => {

@@ -13,19 +13,19 @@ export default function QuickStats({t}: QuickstatsProps) {
     const ActiveLastMonth = 22003;
 
     return (<div className={"w-full grid grid-rows-1 grid-cols-4 gap-5"}>
-        <div className={"w-full h-25 rounded-4xl dark:bg-studogrey/30 bg-studogrey border dark:border-studoborder border-studodarkblue/20 p-5 flex flex-col gap-1"}>
+        <div className={"w-full h-25 rounded-4xl dark:bg-studogrey/10 bg-studogrey border dark:border-studoborder/30 border-studodarkblue/20 p-5 flex flex-col gap-1"}>
             <span className={"w-full font-bold dark:text-white/50 text-studodarkblue/50 items-baseline flex gap-2 flex-row"}>{t("total_usr")} {perc(TotalthisMonth, TotallastMonth)}</span>
             <div>{checkTotalUsers(TotalthisMonth, TotallastMonth, t)}</div>
         </div>
-        <div className={"w-full h-25 rounded-4xl dark:bg-studogrey/30 bg-studogrey border dark:border-studoborder border-studodarkblue/20 p-5 flex flex-col gap-1"}>
+        <div className={"w-full h-25 rounded-4xl dark:bg-studogrey/10 bg-studogrey border dark:border-studoborder/30 border-studodarkblue/20 p-5 flex flex-col gap-1"}>
             <span className={"w-full font-bold dark:text-white/50 text-studodarkblue/50 items-baseline flex gap-2 flex-row"}>{t("total_month")}: {perc(ActiveMonth, ActiveLastMonth)}</span>
             <div>{checkActiveUsers(ActiveMonth, ActiveLastMonth, t)}</div>
         </div>
-        <div className={"w-full h-25 rounded-4xl dark:bg-studogrey/30 bg-studogrey border dark:border-studoborder border-studodarkblue/20 p-5 flex flex-col gap-1"}>
+        <div className={"w-full h-25 rounded-4xl dark:bg-studogrey/10 bg-studogrey border dark:border-studoborder/30 border-studodarkblue/20 p-5 flex flex-col gap-1"}>
             <span className={"w-full font-bold dark:text-white/50 text-studodarkblue/50"}>{t("total_ss")}:</span>
             <span className={"w-full font-bold dark:text-white text-studodarkblue text-2xl"}>{refactor(593939)}</span>
         </div>
-        <div className={"w-full h-25 rounded-4xl dark:bg-studogrey/30 bg-studogrey border dark:border-studoborder border-studodarkblue/20 p-5 flex flex-col gap-1"}>
+        <div className={"w-full h-25 rounded-4xl dark:bg-studogrey/10 bg-studogrey border dark:border-studoborder/30 border-studodarkblue/20 p-5 flex flex-col gap-1"}>
             <span className={"w-full font-bold dark:text-white/50 text-studodarkblue/50"}>{t("total_vs")}:</span>
             <span className={"w-full font-bold dark:text-white text-studodarkblue text-2xl"}>{refactor(258383)}</span>
         </div>

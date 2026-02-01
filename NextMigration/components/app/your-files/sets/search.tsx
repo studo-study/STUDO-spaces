@@ -21,6 +21,7 @@ export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
             } else {
                 setFilteredSets(sets.filter(item =>
                     item.title.toLowerCase().includes(query)
+                    || item.Course.toLowerCase().includes(query)
                 ));
             }
         }
