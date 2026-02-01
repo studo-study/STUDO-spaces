@@ -1,4 +1,4 @@
-// components/landing_welcome/stats.tsx
+// components/landing_welcome/sets.tsx
 import { FiTool } from "react-icons/fi";
 import { TbFreeRights } from "react-icons/tb";
 import { IoMdInfinite } from "react-icons/io";

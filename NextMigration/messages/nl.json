@@ -729,7 +729,9 @@
       "full_studied": "Fully Studied",
       "created": "Created By You",
       "all": "All Sets",
-      "search": "search set..."
+      "search": "search set...",
+      "no_sets": "no sets yet",
+      "no_results": "no result"
     }
   },
   "select": {
@@ -802,11 +804,18 @@
     "member": "member",
     "leave": "Leave"
   },
+  "classroom": {
+    "overview": "Overview",
+    "sets": "Sets",
+    "users": "Users",
+    "challenges": "Challenges"
+  },
   "settings": {
     "title": "Settings",
     "personal info": "Personal Info",
     "username": "Username",
     "email": "Email",
+    "password": "Password",
     "role": "Role",
     "edit": "edit",
     "subscription": "Current Plan",
@@ -815,9 +824,9 @@
     "student": "student",
     "teacher": "teacher",
     "professor": "professor",
-    "screen_mode": "Screenmode",
+    "accessibility": "Appearance & Accessibility",
     "language": "language",
-    "page_color": "Page color",
+    "page_color": "Theme",
     "auto": "auto",
     "dark": "dark",
     "light": "light",
@@ -829,7 +838,30 @@
     "status": "Your status",
     "inactive": "inactive",
     "away": "away",
-    "active": "active"
+    "active": "active",
+    "streak": "Streak Visible",
+    "learn_settings": "Learn Settings",
+    "class_settings": "Classroom Settings",
+    "limit_tracking": "Advanced Progress Tracking",
+    "request_verf": "Request Verification",
+    "request_subt": "Get verified by Studo",
+    "request": "request",
+    "healthy_learn_title": "20-20-2 rule studying",
+    "healthy_learn_exp": "20 min focus, 20 sec eye rest, 2 min movement",
+    "pomodoro": "Pomodoro timer",
+    "pomodoro_exp": "25 min focus, 5 min break",
+    "font_size": "Font Size / UI Scaling",
+    "xl": "XL",
+    "lg": "LG",
+    "xxl": "XXL",
+    "share_progress": "Share Progress",
+    "notifications": "Notifications",
+    "progress_notifications": "Progress Notifications",
+    "streak_notifications": "Streak Reminders",
+    "classroom_notifications": "Classrooom Notifications",
+    "classroom_invite": "Allow Classroom Invitations",
+    "auto_participate": "Automatically participate in competitions",
+    "experimental": "Allow Experimental Classroom Features"
   },
   "account": {
     "role": "role",
@@ -839,11 +871,15 @@
     "subtitle_sets": "Your Sets",
     "log_out": "Log Out",
     "delete": "Delete Account",
+    "student": "Student",
+    "teacher": "Teacher",
+    "professor": "Professor",
+    "owner": "Owner",
     "stats": {
       "subtitle_stats": "Your Stats",
       "total_cards": "Total Cards",
       "time_studied": "Time Studied",
-      "cards_mastered": "Cards Mastered"
+      "total_sets": "Total Sets"
     }
   }
 }

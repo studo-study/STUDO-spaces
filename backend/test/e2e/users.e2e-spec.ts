@@ -212,7 +212,7 @@ describe('Users', () => {
   });
 
   describe('GET /api/users/:user_id', () => {
-    it('moet 200 retourneren en gevraagde user met stats tonen', async () => {
+    it('moet 200 retourneren en gevraagde user met sets tonen', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${userId2}`)
         .auth(userAuthToken, { type: 'bearer' });
@@ -288,7 +288,7 @@ describe('Users', () => {
     );
   });
 
-  describe('GET /api/users/:user_id/stats', () => {
+  describe('GET /api/users/:user_id/sets', () => {
     it('moet 200 retourneren en user statistieken tonen', async () => {
       const response = await request(app.getHttpServer())
         .get(`${baseUrl}/${userId2}/stats`)
@@ -307,13 +307,13 @@ describe('Users', () => {
       const authService = app.get(AuthService);
       const newToken = await authService.register({
         displayName: 'Stats User',
-        email: 'stats.test@hogent.be',
+        email: 'sets.test@hogent.be',
         password: '12345678',
         role: 'student',
       });
 
       const newUser = await db.query.users.findFirst({
-        where: eq(users.email, 'stats.test@hogent.be'),
+        where: eq(users.email, 'sets.test@hogent.be'),
       });
 
       const response = await request(app.getHttpServer())

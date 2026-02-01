@@ -163,7 +163,7 @@ export class UserController {
   })
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER, Role.ADMIN)
-  @Get(':user_id/stats')
+  @Get(':user_id/sets')
   async getAllStats(
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,

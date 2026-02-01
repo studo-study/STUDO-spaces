@@ -2,6 +2,8 @@ import {LastStudied} from "@/types/types";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
 import {Progress} from "@/components/marketing/progress/progress";
+import Image from "next/image";
+import CourseIcons from "@/data";
 
 interface ListItemProps {
     items: LastStudied[];
@@ -9,7 +11,7 @@ interface ListItemProps {
 export default function ListItems({items}:ListItemProps) {
     const t = useTranslations("y_f.your_sets");
     const locale = useLocale();
-    return (<div className={`flex-1 overflow-y-scroll scroll-hidden h-full mb-10 -z-10 flex flex-col gap-5`}>
+    return (<div className={`flex-1 overflow-y-scroll scroll-hidden h-full mb-10 z-10 flex flex-col gap-5`}>
         {items.map((item, index) => (<ListItem set={item} key={index} index={index} t={t} locale={locale} />))}
     </div>)
 }
@@ -39,12 +41,15 @@ function ListItem({ set, index, t, locale }: SetItemProps) {
             <Link
                 href={`/set/${set.set_id}`}
                 className={`
-                     max-h-22 h-22 flex-col sm:flex-row px-10 py-4 sm:py-0 max-w-full min-w-full
+                     max-h-22 h-22 flex-col sm:flex-row px-10 pl-4 py-4 sm:py-0 max-w-full min-w-full cursor-pointer
                  flex gap-3 shadow-2xl items-center w-full rounded-full bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
             >
 
                 <div className={`flex flex-row gap-3 items-center "w-full sm:w-1/2 sm:flex-1`}>
-                    <img src={iconSrc} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
+                    <div className={"w-15 h-15 rounded-full bg-studogrey/30 flex items-center justify-center"}>
+                        <Image width={0} height={0} className={"w-8"} src={getCoverImage(set.Course)} alt={set.Course} />
+                    </div>
+                    <Image src={iconSrc} width={0} height={0} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
                     <span className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
             {set.title}
         </span>
@@ -65,3 +70,11 @@ function ListItem({ set, index, t, locale }: SetItemProps) {
                 </div>
             </Link>);
 };
+
+function getCoverImage(course: string): string {
+    const key = Object.keys(CourseIcons).find((k) =>
+        course.toLowerCase().includes(k)
+    ) as keyof typeof CourseIcons | undefined;
+
+    return key ? `/icons/courses/${CourseIcons[key]}` : "/icons/courses/default.svg";
+}
