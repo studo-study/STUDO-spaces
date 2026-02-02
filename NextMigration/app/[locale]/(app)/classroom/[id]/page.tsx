@@ -1,12 +1,11 @@
+"use client"
 import {Metadata} from "next";
-
-const classroom = {
-    id: "2a2 engels"
-}
-export const metadata:Metadata = {
-    title:`${classroom.id} | Studo`
-}
+import {useLocale} from "next-intl";
+import {redirect} from "next/navigation";
+import {usePathname} from "@/i18n/routing";
+import {getPagePath} from "next/dist/server/require";
 
 export default function Page() {
-    return (<div className={"w-full h-full"}></div>);
+    const path = usePathname();
+    redirect(`${path}/overview`);
 }
