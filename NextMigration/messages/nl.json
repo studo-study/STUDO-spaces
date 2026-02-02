@@ -561,7 +561,7 @@
     "Log In": "Log In",
     "log into account": "log into account",
     "or log in with": "or log in with",
-    "loading": "Loading...",
+    "Loading": "Loading...",
     "Google": "Google",
     "Microsoft": "Microsoft",
     "Smartschool": "Smartschool",
@@ -808,7 +808,9 @@
     "overview": "Overview",
     "sets": "Sets",
     "users": "Users",
-    "challenges": "Challenges"
+    "challenges": "Challenges",
+    "copy": "Copy link",
+    "invite": "Invite people"
   },
   "settings": {
     "title": "Settings",
