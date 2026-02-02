@@ -15,7 +15,7 @@ interface ClassroomOverviewItemProps {
 }
 export default function ClassroomOverviewItem({t, classroom}: ClassroomOverviewItemProps) {
     return(
-    <Link href={"/classroom/" + classroom.id} className={"group w-full h-20 shadow-2xl rounded-full flex flex-row items-center justify-between px-5 gap-5 bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40"}>
+    <Link href={"/classroom/" + classroom.id + "/overview"} className={"group w-full h-20 shadow-2xl rounded-full flex flex-row items-center justify-between px-5 gap-5 bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40"}>
         <div className={"w-full flex flex-row items-center gap-5 dark:text-white text-studodarkblue"}>
             <div className={"w-12 h-12 rounded-full bg-studogrey flex items-center justify-center dark:text-white text-studodarkblue "}>
                 {getClassroomType(classroom.type)}
