@@ -8,10 +8,10 @@ export default function ClassroomLayout({ children }: { children: ReactNode }) {
     const t = useTranslations("classroom")
 
     return (
-        <div className=" w-full h-full py-15 flex flex-col gap-10 scroll-hidden">
+        <div className=" w-full min-h-full h-full py-15 flex flex-col gap-10 scroll-hidden">
             <section className={"w-full h-fit"}>
                 <ClassroomHeader/>
-                <div>{children}</div>
+                <div className={"w-full min-h-full h-full"}>{children}</div>
             </section>
         </div>
     );
