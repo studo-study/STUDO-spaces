@@ -36,10 +36,10 @@ function ListItem({ set, index, t, locale }: SetItemProps) {
     const iconSrc = set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
     const colorClass = COLORS[index % COLORS.length];
 
-
+    const link = set.type === "studyset" ? "/studoset/" + set.set_id : "/visualset/" + set.set_id;
         return (
             <Link
-                href={`/set/${set.set_id}`}
+                href={link}
                 className={`
                      max-h-22 h-22 flex-col sm:flex-row px-10 pl-4 py-4 sm:py-0 max-w-full min-w-full cursor-pointer
                  flex gap-3 shadow-2xl items-center w-full rounded-full bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
