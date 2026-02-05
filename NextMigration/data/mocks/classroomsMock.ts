@@ -123,7 +123,7 @@ export const mockFullClassroomSets: FullClassroomSet[] = [
         title: 'Werkwoorden Onvoltooid Verleden Tijd',
         course: 'Nederlands',
         owner: 'Mevrouw de Vries',
-        created_at: '2024-09-10T11:00:00Z',
+        created_at: new Date().toISOString(),
     },
     {
         set_id: 'set_002',
@@ -133,7 +133,7 @@ export const mockFullClassroomSets: FullClassroomSet[] = [
         title: 'Spelling Moeilijke Woorden',
         course: 'Nederlands',
         owner: 'Mevrouw de Vries',
-        created_at: '2024-09-15T09:30:00Z',
+        created_at: new Date().toISOString(),
     },
     {
         set_id: 'set_003',
