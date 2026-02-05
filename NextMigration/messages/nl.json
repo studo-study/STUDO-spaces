@@ -811,9 +811,10 @@
     "challenges": "Challenges",
     "copy": "Copy link",
     "invite": "Invite people",
-    "recent_sets": "Recently added:",
+    "recent_sets": "Recently added",
     "members": "Members",
-    "friends": "Friends"
+    "friends": "Friends",
+    "more": "show more sets"
   },
   "settings": {
     "title": "Settings",
