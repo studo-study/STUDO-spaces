@@ -7,6 +7,6 @@ export default function ClassroomOverviewPage() {
     return (
         <div className="w-full h-full flex flex-row gap-5 py-10 overflow-y-auto">
             <RecentlyAdded items={items}/>
-            <Members/>
+            <Members items={items}/>
         </div>)
 }

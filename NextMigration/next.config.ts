@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
                 protocol: "https",
                 hostname: "studo.study",
             },
+            {
+                protocol: 'https',
+                hostname: 'api.dicebear.com',
+                pathname: '/**',
+            },
         ],
     },
     compiler: {
