@@ -81,7 +81,7 @@ export default function ClassroomGrid() {
 
                 </div>
             </div>
-            <div className={"w-full h-fit flex flex-col gap-5 overflow-visible"}>
+            <div className={"w-full h-fit flex flex-col gap-5 overflow-visible pb-15"}>
                 {filteredClasses.length > 0 && (filteredClasses.map((item, i) => (<ClassroomOverviewItem key={i} t={t} classroom={item} />)))}
             </div>
         </div>);
