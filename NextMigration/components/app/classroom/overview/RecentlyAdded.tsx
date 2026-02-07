@@ -19,10 +19,10 @@ export default function RecentlyAdded({items}: ListItemProps) {
     const pinned = []
     return(
         <div className={"w-2/3 min-h-full h-full flex flex-col p-7 rounded-4xl gap-3"}>
-            <span className={"font-bold text-studodarkblue dark:text-white"}>{t("pinned_sets")}:</span>
-            <div className={"w-full h-1/3 flex flex-col gap-5"}>
+            {pinned.length > 0 && (<><span className={"font-bold text-studodarkblue dark:text-white"}>{t("pinned_sets")}:</span>
+                <div className={"w-full h-1/3 flex flex-col gap-5"}>
                 {pinned.length === 0 && <span className={"w-full h-full text-studodarkblue dark:text-white flex items-center justify-center"}>{t("no_pinned")}</span>}
-            </div>
+            </div></>)}
             <span className={"font-bold text-studodarkblue dark:text-white"}>{t("recent_sets")}:</span>
             <div className={"w-full h-2/3 flex flex-col gap-5"}>
                 {/*sorry voor de spaghetti*/}
