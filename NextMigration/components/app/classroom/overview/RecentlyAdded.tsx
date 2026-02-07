@@ -16,11 +16,15 @@ export default function RecentlyAdded({items}: ListItemProps) {
     const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
     const thisWeek = items.sets.filter(item => new Date(item.created_at).getDate() >= ONE_WEEK_IN_MS);
     const lastWeek = items.sets.filter(item => new Date(item.created_at).getDate() << ONE_WEEK_IN_MS);
-
+    const pinned = []
     return(
         <div className={"w-2/3 min-h-full h-full flex flex-col p-7 rounded-4xl gap-3"}>
+            {pinned.length > 0 && (<><span className={"font-bold text-studodarkblue dark:text-white"}>{t("pinned_sets")}:</span>
+                <div className={"w-full h-1/3 flex flex-col gap-5"}>
+                {pinned.length === 0 && <span className={"w-full h-full text-studodarkblue dark:text-white flex items-center justify-center"}>{t("no_pinned")}</span>}
+            </div></>)}
             <span className={"font-bold text-studodarkblue dark:text-white"}>{t("recent_sets")}:</span>
-            <div className={"w-full h-full flex flex-col gap-5"}>
+            <div className={"w-full h-2/3 flex flex-col gap-5"}>
                 {/*sorry voor de spaghetti*/}
                 {thisWeek.length ?
                     (<div className={"w-full flex flex-col gap-10"}>
@@ -46,9 +50,17 @@ export default function RecentlyAdded({items}: ListItemProps) {
                     )
                 }
 
-
+                {items.sets.length != 0 &&
+                    <Link href={"/classroom/" + items.id + "/sets"}
+                          className={"w-full h-10 text-sm hover:underline " +
+                              "transition-all duration-300 text-studodarkblue flex " +
+                              "dark:text-white items-center justify-center"}>
+                        {t("more")}
+                    </Link>
+                }
+                {items.sets.length == 0 && <span className={"w-full h-full text-studodarkblue dark:text-white flex items-center justify-center"}>{t("no_sets")}</span>}
             </div>
-            <Link href={"/classroom/" + items.id + "/sets"} className={"w-full h-10 text-sm hover:underline transition-all duration-300 text-studodarkblue flex dark:text-white items-center justify-center"}>{t("more")}</Link>
+
         </div>
         )
 }
@@ -88,11 +100,17 @@ function ListItem({ set, index, t, locale }: SetItemProps) {
                 <div className={"w-15 h-15 rounded-full bg-studogrey/30 flex items-center justify-center"}>
                     <Image width={0} height={0} className={"w-8"} src={getCoverImage(set.course)} alt={set.course} />
                 </div>
-                <div className={"w-fit flex flex"}></div>
-                <Image src={iconSrc} width={0} height={0} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
-                <span className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
-            {set.title}
-        </span>
+                <div className={"w-fit flex flex-col pt-1"}>
+                    <div className={"w-fit flex flex-row gap-3"}>
+                        <Image src={iconSrc} width={0} height={0} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
+                        <span className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
+                        {set.title}
+                    </span>
+                    </div>
+                    <span className={"w-fit text-studodarkblue/30 dark:text-white/30 text-sm"}>{t("added_by")} {set.added_by}</span>
+                </div>
+
+
             </div>
 
 

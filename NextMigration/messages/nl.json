@@ -814,7 +814,13 @@
     "recent_sets": "Recently added",
     "members": "Members",
     "friends": "Friends",
-    "more": "show more sets"
+    "more": "show more sets",
+    "added_by": "added by",
+    "more_members": "show more members",
+    "no_sets": "no sets yet",
+    "pinned_sets": "Pinned",
+    "no_pinned": "no pinned sets yet",
+    "search_set": "search sets"
   },
   "settings": {
     "title": "Settings",

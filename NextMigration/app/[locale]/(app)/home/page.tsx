@@ -45,10 +45,10 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="w-full h-full py-15 flex flex-col gap-10">
+        <div className="w-full h-full py-15 flex flex-col gap-10 ">
             {/* Welcome Section */}
-            <section className="w-full h-fit">
-                <div className="w-full h-fit flex flex-col gap-2">
+            <section className="w-full h-fit ">
+                <div className="w-full h-fit flex flex-col gap-2 ">
                     <span className="font-sfpro font-bold dark:text-white text-studodarkblue text-3xl">
                         {welcome}
                     </span>

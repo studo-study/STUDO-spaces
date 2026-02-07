@@ -49,7 +49,9 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
                         />
                     </div>
                     <div className={"w-full flex items-center justify-center h-full"}>
-                        <main className="flex-1 min-h-0 xl:w-9/10 3xl:w-1/3 h-full pl-5 pr-5 lg:pl-10 lg:pr-77 overflow-y-scroll scroll-hidden">
+                        <main className="flex-1 min-h-0 xl:w-9/10 3xl:w-1/3 h-full pl-5 pr-5 lg:pl-10 lg:pr-77 overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden
+    [-ms-overflow-style:none]
+    [scrollbar-width:none]">
                             {children}
                         </main>
                     </div>

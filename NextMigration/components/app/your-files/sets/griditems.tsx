@@ -11,7 +11,7 @@ export default function GridItems({items}: GridItemProps) {
     const t = useTranslations("y_f.your_sets");
     const locale = useLocale();
 
-    return (<div className={`flex-1 overflow-y-scroll scroll-hidden h-full mb-10 z-10 grid grid-cols-4 gap-5`}>
+    return (<div className={`flex-1 overflow-y-scroll scroll-hidden h-full mb-10 z-10 grid grid-cols-4 gap-5 pb-15`}>
         {items.map((item, index) => (<GridItem set={item} key={index} index={index} t={t} locale={locale} />))}
     </div>)
 }
