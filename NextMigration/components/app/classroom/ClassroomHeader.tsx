@@ -11,6 +11,9 @@ import {LiaUniversitySolid} from "react-icons/lia";
 import {FaEllipsis} from "react-icons/fa6";
 import {IoIosAdd} from "react-icons/io";
 import {ImLink} from "react-icons/im";
+import TriggerClassroom from "@/components/app/classrooms/create_classroom";
+import {useState} from "react";
+import TriggerInvite from "@/components/app/classroom/header/triggerInvite";
 
 const classroom: Classroom = mockFullClassrooms[0];
 
@@ -24,6 +27,15 @@ export default function ClassroomHeader() {
         {link: `/classroom/${classroom.id}/challenges`, label:"challenges"}
     ]
 
+    const [invite, setInvite] = useState(false);
+    const togglePopUp = () => {
+        setInvite((prev) => !prev);
+    };
+    const copyText = "www.studo.study" + pathname;
+    const copy = () => {
+        navigator.clipboard.writeText(copyText);
+
+    }
 
     return (
         <div className={"w-full min-h-20 flex flex-col justify-between items-center max-h-100"}>
@@ -59,8 +71,12 @@ export default function ClassroomHeader() {
 
                 </div>
                 <div className={"w-full flex flex-row items-center justify-end gap-5"}>
-                    <button className={"w-fit px-7 py-2 rounded-full active:scale-95 transition-all duration-300 dark:bg-white cursor-pointer flex items-center gap-3 justify-center"}><IoPersonAdd />{t("invite")}</button>
-                    <button className={"w-fit px-7 py-2 rounded-full active:scale-95 transition-all duration-300 dark:bg-white cursor-pointer flex items-center gap-3 justify-center"}><ImLink />{t("copy")}</button>
+                    <TriggerInvite
+                        togglePopUp={togglePopUp}
+                    />
+                    <button
+                        onClick={copy}
+                        className={"w-fit px-7 py-2 rounded-full active:scale-95 transition-all duration-300 dark:bg-white cursor-pointer flex items-center gap-3 justify-center"}><ImLink />{t("copy")}</button>
                 </div>
             </div>
             <div className={"w-full z-10 bottom-0 h-0.5 bg-studogrey"}/>
