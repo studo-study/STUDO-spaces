@@ -32,8 +32,15 @@ export default function ClassroomHeader() {
 
     const [invite, setInvite] = useState(false);
     const [add, setAdd] = useState(false);
+    const [copied, setCopied] = useState(false);
     const [SettingsIsOpen, setSettingsIsOpen] = useState(false);
 
+
+    const toggleCopiedAnimation = () => {
+        setCopied(true);
+        console.log("animatie getriggered");
+        setTimeout(() => {setCopied(false)}, 750)
+    }
     const toggleInvitePopUp = () => {
         setInvite((prev) => !prev);
     };
@@ -94,8 +101,12 @@ export default function ClassroomHeader() {
                         togglePopUp={toggleInvitePopUp}
                     />
                     <button
-                        onClick={copy}
-                        className={"w-fit px-7 py-2 rounded-full active:scale-95 transition-all duration-300 dark:bg-white cursor-pointer flex items-center gap-3 justify-center"}><ImLink />{t("copy")}</button>
+                        onClick={() => {copy(); toggleCopiedAnimation()}}
+                        className={`w-fit px-7 py-2 rounded-full active:scale-95 transition-all duration-300 ${copied ? "bg-emerald-400" : "dark:bg-white"} cursor-pointer flex items-center gap-3 justify-center`}
+                    >
+                        <ImLink />
+                        {t("copy")}
+                    </button>
                 </div>
             </div>
             <div className={"w-full z-10 bottom-0 h-0.5 bg-studogrey"}/>
