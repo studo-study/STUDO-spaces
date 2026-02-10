@@ -14,6 +14,9 @@ import {ImLink} from "react-icons/im";
 import TriggerClassroom from "@/components/app/classrooms/create_classroom";
 import {useState} from "react";
 import TriggerInvite from "@/components/app/classroom/header/triggerInvite";
+import InvitePeople from "@/components/app/classroom/header/invitePeople";
+import AddSet from "@/components/app/classroom/header/addSet";
+import TriggerSettings from "@/components/app/classroom/header/settings";
 
 const classroom: Classroom = mockFullClassrooms[0];
 
@@ -28,9 +31,21 @@ export default function ClassroomHeader() {
     ]
 
     const [invite, setInvite] = useState(false);
-    const togglePopUp = () => {
+    const [add, setAdd] = useState(false);
+    const [SettingsIsOpen, setSettingsIsOpen] = useState(false);
+
+    const toggleInvitePopUp = () => {
         setInvite((prev) => !prev);
     };
+
+    const toggleAddPopUp = () => {
+        setAdd((prev) => !prev);
+    }
+
+    const toggleSettings = () => {
+        setSettingsIsOpen(prev => !prev);
+    }
+
     const copyText = "www.studo.study" + pathname;
     const copy = () => {
         navigator.clipboard.writeText(copyText);
@@ -47,16 +62,20 @@ export default function ClassroomHeader() {
                     </div>
                 <div className={"w-fit flex flex-row items-center text-xl justify-center gap-5"}>
                     <button
+                        onClick={toggleAddPopUp}
                         className="relative flex z-10 items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
+
                         <div className="absolute bg-amber-500/50 h-7 w-7 rounded-full blur-sm"/>
                         <div
                             className="relative z-10 shadow-2xl bg-amber-500 min-h-7 min-w-7 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
                             <IoIosAdd/>
                         </div>
                     </button>
-                    <div className={"min-h-7 min-w-7 dark:text-white active:scale-95 transition-all duration-300 cursor-pointer text-xl text-studodarkblue border border-studoborder flex items-center justify-center rounded-full"}>
-                        <FaEllipsis/>
-                    </div>
+                    <TriggerSettings
+                        SettingsIsOpen={SettingsIsOpen}
+                        setSettingsIsOpen={setSettingsIsOpen}
+                        toggleSettings={toggleSettings}
+                    />
 
                 </div>
             </div>
@@ -72,7 +91,7 @@ export default function ClassroomHeader() {
                 </div>
                 <div className={"w-full flex flex-row items-center justify-end gap-5"}>
                     <TriggerInvite
-                        togglePopUp={togglePopUp}
+                        togglePopUp={toggleInvitePopUp}
                     />
                     <button
                         onClick={copy}
@@ -80,6 +99,14 @@ export default function ClassroomHeader() {
                 </div>
             </div>
             <div className={"w-full z-10 bottom-0 h-0.5 bg-studogrey"}/>
+            <InvitePeople
+                inviteOpen={invite}
+                setInviteOpen={setInvite}
+            />
+            <AddSet
+                addOpen={add}
+                setAddOpen={setAdd}
+            />
         </div>)
 }
 
