@@ -98,7 +98,24 @@ function SettingsPopup({SettingsIsOpen, setSettingsIsOpen, containerRef, toggleS
             </span>
             {/* Menu Items */}
             <div className="relative flex flex-col gap-2">
-                <div
+                <button
+                    className={`group relative flex items-center px-4 py-3 rounded-xl
+              text-xs sm:text-sm font-medium text-white min-h-15
+              hover:bg-gradient-to-r hover:from-red-400 to-rose-500 hover:text-white
+              transition-all duration-200 ease-out gap-3 cursor-pointer
+              ${SettingsIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
+            `}>
+                    <div className={`flex items-center justify-center w-8 h-8 rounded-lg
+              bg-gradient-to-br from-red-500 to-rose-500
+              shadow-md shadow-black/10
+              group-hover:scale-110 group-hover:shadow-lg
+              transition-all duration-200`}
+                    >
+                        <IoIosNotificationsOff />
+                    </div>
+                    {t("mute")}
+                </button>
+                <button
                     onClick={() => { toggleSettings(); setSettingsIsOpen(false); }}
                     className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl
               text-studodarkblue dark:text-white min-h-15
@@ -124,35 +141,6 @@ function SettingsPopup({SettingsIsOpen, setSettingsIsOpen, containerRef, toggleS
                     <span className="font-medium text-sm">
               {t("leave")}
             </span>
-
-                    {/* Hover Arrow */}
-                    <svg
-                        className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                </div>
-
-
-                <button
-                    className={`group relative flex items-center px-4 py-3 rounded-xl
-              text-xs sm:text-sm font-medium text-white min-h-15
-              hover:bg-gradient-to-r hover:from-red-400 to-rose-500 hover:text-white
-              transition-all duration-200 ease-out gap-3 cursor-pointer
-              ${SettingsIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
-            `}>
-                    <div className={`flex items-center justify-center w-8 h-8 rounded-lg
-              bg-gradient-to-br from-red-500 to-rose-500
-              shadow-md shadow-black/10
-              group-hover:scale-110 group-hover:shadow-lg
-              transition-all duration-200`}
-                    >
-                        <IoIosNotificationsOff />
-                    </div>
-                    {t("mute")}
                 </button>
             </div>
         </div>
