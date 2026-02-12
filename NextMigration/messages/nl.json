@@ -832,6 +832,11 @@
       "title": "Settings",
       "leave": "Leave Classroom",
       "mute": "Mute Notifications"
+    },
+    "addset": {
+      "title": "Add Sets",
+      "button_m": "import sets",
+      "button_e": "import set"
     }
   },
   "settings": {

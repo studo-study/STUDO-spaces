@@ -66,7 +66,7 @@ export default function DesktopForm() {
     }, []);
 
     const loginMicrosoft = useCallback(() => {
-        window.location.href = "http://localhost:3000/api/sessions/microsoft";
+        signIn('microsoft-entra-id');
     }, []);
 
     const loginSmartschool = useCallback(() => {

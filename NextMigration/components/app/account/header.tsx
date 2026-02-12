@@ -35,7 +35,7 @@ export default  function AccountHeader() {
                 <div className={"w-full flex gap-10"}>
                     <div className={"w-fit flex flex-col"}>
                         <span className={"text-sm font-bold text-studogrey"}>{t("role")}</span>
-                        <span className={"w-full truncate overflow-hidden dark:text-white text-studodarkblue"}>{t(user?.publicRole)}</span>
+                        <span className={"w-full truncate overflow-hidden dark:text-white text-studodarkblue"}>{user?.publicRole ? t(user.publicRole) : ''}</span>
                     </div>
                     <div className={"w-fit flex flex-col"}>
                         <span className={"text-sm font-bold text-studogrey"}>{t("mail")}</span>

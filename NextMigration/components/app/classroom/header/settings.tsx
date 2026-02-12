@@ -92,13 +92,13 @@ function SettingsPopup({SettingsIsOpen, setSettingsIsOpen, containerRef, toggleS
         >
             {/* Arrow */}
 
-            <span className={"w-full h-fit py-2 text-base px-4 flex-col flex items-baseline gap-2 justify-center"}>
+            <span className={"w-full h-fit py-2 text-sm opacity-50 px-4 flex-col flex items-baseline gap-2 justify-center"}>
                 {t("title")}
-                <hr className={"w-full h-0.5 rounded-full"}/>
             </span>
             {/* Menu Items */}
             <div className="relative flex flex-col gap-2">
                 <button
+                    onClick={(e) => e.stopPropagation()}
                     className={`group relative flex items-center px-4 py-3 rounded-xl
               text-xs sm:text-sm font-medium text-white min-h-15
               hover:bg-gradient-to-r hover:from-red-400 to-rose-500 hover:text-white
@@ -116,7 +116,7 @@ function SettingsPopup({SettingsIsOpen, setSettingsIsOpen, containerRef, toggleS
                     {t("mute")}
                 </button>
                 <button
-                    onClick={() => { toggleSettings(); setSettingsIsOpen(false); }}
+                    onClick={(e) => e.stopPropagation()}
                     className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl
               text-studodarkblue dark:text-white min-h-15
               hover:bg-gradient-to-r hover:from-red-400 to-rose-500 hover:text-white

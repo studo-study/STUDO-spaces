@@ -2,17 +2,24 @@ import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
 import {IoIosClose} from "react-icons/io";
 import {HiUserGroup} from "react-icons/hi";
-import {IoSchoolOutline} from "react-icons/io5";
+import {IoAddCircleOutline, IoSchoolOutline} from "react-icons/io5";
+import {mockFullClassroomSets} from "@/data/mocks/classroomsMock";
+import {mockFullStudysets} from "@/data/mocks/startPageMock";
+import {useSelector} from "react-redux";
+import SetItem from "@/components/app/classroom/header/setItem";
 
 interface InvitePeopleProps {
     addOpen: boolean;
     setAddOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+const classroomSets = mockFullClassroomSets
+const userSets = mockFullStudysets
 
 export default function AddSet({addOpen, setAddOpen}: InvitePeopleProps) {
     const popupRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const t = useTranslations("createclassroom")
+    const t = useTranslations("classroom.addset")
+    const importedClassrooms = [];
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (
@@ -66,52 +73,22 @@ export default function AddSet({addOpen, setAddOpen}: InvitePeopleProps) {
                 <div className={"w-full h-fit flex flex-col gap-7"}>
                     <div className="flex items-center justify-baseline text-lg px-2 dark:text-white text-studodarkblue">
 
-                        <IoSchoolOutline />
+                        <IoAddCircleOutline />
                         <span className="w-full text-lg select-none sm:text-xl md:text-2xl px-2 sm:px-5 font-bold text-studodarkblue dark:text-white">
                             {t("title")}:
                         </span>
 
                     </div>
 
-
-                    <div className={"w-full h-fit flex flex-col gap-3"}>
-                        <span className={"dark:text-white text-studodarkblue"}>{t("subtitle_title")}</span>
-                        <div className="flex flex-col w-full gap-2 items-center justify-between">
-                            <input
-                                ref={inputRef}
-                                placeholder={t("placeholder")}
-                                type="text"
-                                autoFocus={addOpen}
-                                className={"h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}/>
-                        </div>
+                    <div className={"w-full h-80 flex flex-col gap-3 overflow-y-auto"}>
+                        {userSets.map((u, i) => <SetItem key={i}/>)}
                     </div>
 
-                    <div className={"w-full h-fit flex flex-col gap-3"}>
-                        <span className={"dark:text-white text-studodarkblue"}>{t("subtitle_options")}</span>
-                        <div className="flex flex-col w-full gap-2 items-center justify-between">
-                            <select className={"h-12 px-5 gap-5 text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}>
-                                <option value="class_group">{t("class")}</option>
-                                <option value="study_group">{t("study")}</option>
-                                <option value="community_group">{t("community")}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className={"w-full h-fit flex flex-col gap-3"}>
-                        <span className={"dark:text-white text-studodarkblue"}>{t("subtitle_school")}</span>
-                        <div className="flex flex-col w-full gap-2 items-center justify-between">
-                            <input
-                                ref={inputRef}
-                                placeholder={t("placeholder_school")}
-                                type="text"
-                                className={"h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}/>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" className="bg-gradient-to-br from-yellow-400 to-amber-500 w-full cursor-pointer h-12 text-xl text-white border-studoborder border
-                    rounded-4xl font-bold active:scale-95 transition-all duration-300 shadow-3xl">
-                    {t("button")}
+                <button type="submit" disabled={importedClassrooms.length === 0} className={`disabled:opacity-60 disabled:active:scale-100 disabled:cursor-not-allowed bg-gradient-to-br from-emerald-400 to-green-500 w-full cursor-pointer h-12 text-xl text-white border-studoborder border
+                    rounded-4xl font-bold active:scale-95 transition-all duration-300 shadow-3xl`}>
+                    {importedClassrooms.length === 1 ? t("button_e") : t("button_m")}
                 </button>
+            </div>
             </div>
         </div>
     );

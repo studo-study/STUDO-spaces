@@ -64,15 +64,15 @@ export default function DesktopForm() {
     };
 
     const loginGoogle = useCallback(() => {
-        window.location.href = "http://localhost:3001/api/sessions/google";
+        window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL + "/sessions/google";
     }, []);
 
     const loginMicrosoft = useCallback(() => {
-        window.location.href = "http://localhost:3001/api/sessions/microsoft";
+        signIn('microsoft-entra-id');
     }, []);
 
     const loginSmartschool = useCallback(() => {
-        window.location.href = "http://localhost:3001/api/sessions/smartschool";
+        window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL + "/sessions/smartschool";
     }, []);
 
 

@@ -1,3 +1,4 @@
+"use client"
 import {IoSearch} from "react-icons/io5";
 import {Ref, useEffect, useState} from "react";
 
@@ -8,7 +9,11 @@ interface SearchProps {
     setSearch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function SearchBar({searchRef, toggleSearch, setSearch, Search}: SearchProps) {
-   const searches = localStorage.getItem('searches');
+    const [searches, setSearches] = useState<string | null>(null);
+
+    useEffect(() => {
+        setSearches(localStorage.getItem('searches'));
+    }, []);
    // const searches = ["engelse set","luc vanderhelst","2a2 EDP"];
     return(
         <div className={`relative h-10 gap-5 dark:text-white w-1/3 rounded-4xl glass-rgb transition-all duration-300 ${Search ? "dark:border-white border-gray-500" : "dark:border-studoborder/30 border-gray-300"} border focus:border-white shadow-2xl flex justify-around`}>
