@@ -56,6 +56,7 @@ export default auth((request) => {
         "/studo-select",
         "/GDPR",
         "/studo-for-education",
+        "/auth/callback",
         "/"];
 
     // Check of huidige route public is
