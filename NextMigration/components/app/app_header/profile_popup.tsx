@@ -52,7 +52,7 @@ export default function TriggerProfile({ProfileIsOpen, setProfileIsOpen, user}: 
         setProfileIsOpen((prev) => !prev);
     };
     return(
-        <button
+        <div
             ref={containerRef}
             onClick={togglePopUp}
             className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
@@ -73,7 +73,7 @@ export default function TriggerProfile({ProfileIsOpen, setProfileIsOpen, user}: 
                 containerRef={containerRef}
                 user={user}
             />
-        </button>
+        </div>
     )
 }
 

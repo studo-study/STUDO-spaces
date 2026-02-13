@@ -26,7 +26,6 @@ import type { Response } from 'express';
 
 import { AuthGuard } from '@nestjs/passport';
 
-
 @ApiTags('sessions')
 @ApiBearerAuth()
 @Controller('sessions')
@@ -34,8 +33,7 @@ export class SessionController {
   constructor(
     private authService: AuthService,
     private configService: ConfigService, // 👈 Inject ConfigService
-  ) {
-  }
+  ) {}
 
   // inloggen met STUDO --------------------------------------------------
   @ApiOperation({ summary: 'De user inloggen.' })
@@ -76,8 +74,8 @@ export class SessionController {
 
     const token = await this.authService.validateGoogleUser(req.user);
 
-
-    const frontendUrl = this.configService.get<string>('url.url') || 'http://localhost:5173';
+    const frontendUrl =
+      this.configService.get<string>('url.url') || 'http://localhost:5173';
     const redirectUrl = `${frontendUrl}/auth/callback?token=${token}`;
 
     console.log('🔍 Full redirect URL:', redirectUrl);
@@ -107,12 +105,11 @@ export class SessionController {
     const token = await this.authService.validateMicrosoftUser(req.user);
 
     // 👇 Gebruik configService en correct pad
-    const frontendUrl = this.configService.get<string>('url.url') || 'http://localhost:5173/home';
+    const frontendUrl =
+      this.configService.get<string>('url.url') || 'http://localhost:5173/home';
 
     // 👇 Redirect naar frontend met token in URL
-    return res.redirect(
-      `${frontendUrl}/auth/callback?token=${token}`,
-    );
+    return res.redirect(`${frontendUrl}/auth/callback?token=${token}`);
   }
 
   // inloggen met FACEBOOK ---------------------------------------------
@@ -151,9 +148,25 @@ export class SessionController {
   @UseGuards(AuthGuard('smartschool'))
   async smartschoolLoginCallback(@Req() req: Request, @Res() res: Response) {
     const token = await this.authService.validateSmartschoolUser(req.user);
-    const frontendUrl = this.configService.get<string>('url.url') || 'http://localhost:5173/home';
-    return res.redirect(
-      `${frontendUrl}/auth/callback?token=${token}`,
-    );
+    const frontendUrl =
+      this.configService.get<string>('url.url') || 'http://localhost:5173/home';
+    return res.redirect(`${frontendUrl}/auth/callback?token=${token}`);
+  }
+
+  //inloggen met microsoft --------------------------------------------------
+  @Public()
+  @Post('social-login')
+  @HttpCode(HttpStatus.OK)
+  async socialLogin(
+    @Body()
+    body: {
+      email: string;
+      displayName: string;
+      provider: string;
+      providerId?: string;
+      img_url?: string;
+    },
+  ) {
+    return this.authService.validateSocialUser(body);
   }
 }

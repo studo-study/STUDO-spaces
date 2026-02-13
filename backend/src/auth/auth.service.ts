@@ -27,8 +27,7 @@ export class AuthService {
     private readonly db: DatabaseProvider,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService<ServerConfig>,
-  ) {
-  }
+  ) {}
 
   //ww hashen
   async hashPassword(password: string): Promise<string> {
@@ -302,11 +301,11 @@ export class AuthService {
   }
   //registreer functie
   async register({
-                   displayName,
-                   email,
-                   password,
-                   role,
-                 }: RegisterUserRequestDto): Promise<string> {
+    displayName,
+    email,
+    password,
+    role,
+  }: RegisterUserRequestDto): Promise<string> {
     const date = new Date();
     const uid = uuidv4(); // ✅ Functie uitvoeren
     const passwordHash = await this.hashPassword(password);
@@ -369,5 +368,71 @@ export class AuthService {
 
     // Return JWT
     return this.signJwt(user!);
+  }
+
+  async validateSocialUser(socialUser: {
+    email: string;
+    displayName: string;
+    provider: string;
+    providerId?: string;
+    img_url?: string;
+  }): Promise<{ token: string; user: any }> {
+    let user = await this.db.query.users.findFirst({
+      where: eq(users.email, socialUser.email),
+    });
+
+    if (!user) {
+      const date = new Date();
+      const uid = uuidv4();
+
+      const newUser = {
+        id: uid,
+        email: socialUser.email,
+        passwordHash: '',
+        displayName: socialUser.displayName,
+        img_url: socialUser.img_url || 'default',
+        join_date: date.toISOString(),
+        totalSets: 0,
+        streak_started: null,
+        streak_count: 0,
+        streak_last_update: null,
+        last_login: date.toISOString(),
+        roles: [Role.USER],
+        publicRole: 'student',
+        verified: false,
+      };
+
+      const newProfile = {
+        user_id: uid,
+        displayName: socialUser.displayName,
+        img_url: socialUser.img_url || '',
+        banner_url: '',
+        join_date: date.toISOString(),
+        streak: 0,
+        verified: true,
+      };
+
+      const rootFolder = {
+        id: uuidv4(),
+        name: `${socialUser.displayName}'s folder`,
+        owner_id: uid,
+      };
+
+      await this.db.insert(users).values(newUser);
+      await this.db.insert(profiles).values(newProfile);
+      await this.db.insert(folders).values(rootFolder);
+
+      user = await this.db.query.users.findFirst({
+        where: eq(users.id, uid),
+      });
+    } else {
+      await this.db
+        .update(users)
+        .set({ last_login: new Date().toISOString() })
+        .where(eq(users.id, user.id));
+    }
+
+    const token = this.signJwt(user!);
+    return { token, user: user! };
   }
 }
