@@ -48,6 +48,23 @@ export class RegisterUserRequestDto {
   role: string;
 }
 
+export class SocialLoginDto {
+  @ApiProperty({ example: 'charles@example.com' })
+  email: string;
+
+  @ApiProperty({ example: 'Charles Degraeuwe' })
+  displayName: string;
+
+  @ApiProperty({ example: 'microsoft' })
+  provider: string;
+
+  @ApiProperty({ example: '12345-abc', required: false })
+  providerId?: string;
+
+  @ApiProperty({ example: 'https://...', required: false })
+  img_url?: string;
+}
+
 export class UpdateUserDTO {
   @ApiProperty({
     example: 'newmail@example.com',
@@ -408,5 +425,3 @@ export class StartPagina {
   @Expose()
   class: ClassActivitiesDto[];
 }
-
-

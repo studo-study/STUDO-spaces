@@ -1,35 +1,24 @@
-// auth.ts (in project root, naast package.json)
-
+// auth.ts
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-
-// ============================================
-// NEXTAUTH CONFIGURATIE
-// ============================================
+import MicrosoftEntraID from 'next-auth/providers/microsoft-entra-id';
+import GoogleProvider from "next-auth/providers/google";
 
 export const {
-    handlers,  // API route handlers
-    signIn,    // Server-side login
-    signOut,   // Server-side logout
-    auth,      // Session ophalen
+    handlers,
+    signIn,
+    signOut,
+    auth,
 } = NextAuth({
 
-    // ==========================================
-    // PROVIDERS
-    // ==========================================
     providers: [
         Credentials({
             credentials: {
                 email: { label: 'Email', type: 'email' },
                 password: { label: 'Password', type: 'password' },
             },
-
-            // ========================================
-            // AUTHORIZE - Login logica
-            // ========================================
             authorize: async (credentials) => {
                 try {
-                    // STAP 1: Login bij Nest backend → krijg token
                     const loginResponse = await fetch(`${process.env.AUTH_API_URL}/sessions`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -39,32 +28,18 @@ export const {
                         }),
                     });
 
-                    if (!loginResponse.ok) {
-                        console.error('Login failed:', loginResponse.status);
-                        return null;
-                    }
+                    if (!loginResponse.ok) return null;
 
                     const { token } = await loginResponse.json();
 
-                    // STAP 2: Haal user data op via /users/me
                     const userResponse = await fetch(`${process.env.AUTH_API_URL}/users/me`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                        },
+                        headers: { 'Authorization': `Bearer ${token}` },
                     });
 
-                    if (!userResponse.ok) {
-                        console.error('Failed to fetch user:', userResponse.status);
-                        return null;
-                    }
+                    if (!userResponse.ok) return null;
 
                     const user = await userResponse.json();
-
-                    // STAP 3: Return user + token
-                    return {
-                        ...user,
-                        accessToken: token,
-                    };
+                    return { ...user, accessToken: token };
 
                 } catch (error) {
                     console.error('Auth error:', error);
@@ -72,34 +47,42 @@ export const {
                 }
             },
         }),
+
+        // ========================================
+        // MICROSOFT (nieuw)
+        // ========================================
+        MicrosoftEntraID({
+            clientId: process.env.MICROSOFT_CLIENT_ID!,
+            clientSecret: process.env.MICROSOFT_CLIENT_SECRET!,
+            issuer: `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID}/v2.0`,
+        }),
+
     ],
 
-    // ==========================================
-    // CUSTOM PAGES
-    // ==========================================
     pages: {
         signIn: '/login',
     },
 
-    // ==========================================
-    // SESSION CONFIG
-    // ==========================================
     session: {
         strategy: 'jwt',
-        maxAge: 7 * 24 * 60 * 60, // 7 dagen
+        maxAge: 7 * 24 * 60 * 60,
     },
 
-    // ==========================================
-    // CALLBACKS
-    // ==========================================
     callbacks: {
         // ========================================
         // JWT CALLBACK
-        // Wordt aangeroepen bij login en bij elke session check
         // ========================================
-        jwt: async ({ token, user }) => {
-            // Bij login: sla user data en token op
-            if (user) {
+        jwt: async ({ token, user, account, profile }) => {
+            console.log('🔍 JWT callback:', {
+                hasUser: !!user,
+                provider: account?.provider,
+                tokenEmail: token.email,
+                tokenName: token.name,
+                profile: profile,
+            });
+
+            // Bij CREDENTIALS login (bestaande flow)
+            if (user && account?.provider === 'credentials') {
                 token.accessToken = user.accessToken;
                 token.user = {
                     id: user.id!,
@@ -117,13 +100,63 @@ export const {
                     lastTen: user.lastTen,
                 };
             }
+
+            // Bij MICROSOFT login (nieuw)
+            if (account?.provider === 'microsoft-entra-id') {
+                try {
+                    // Roep je backend aan om user aan te maken/vinden
+                    const res = await fetch(`${process.env.AUTH_API_URL}/sessions/social-login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: token.email,
+                            displayName: token.name,
+                            provider: 'microsoft',
+                            providerId: profile?.sub,
+                            img_url: token.picture || "default",
+                        }),
+                    });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        token.accessToken = data.token;
+                        token.user = data.user;
+                    }
+                } catch (error) {
+                    console.error('Microsoft social login error:', error);
+                }
+            }
+
+            if (account?.provider === 'google-entra-id') {
+                try {
+                    // Roep je backend aan om user aan te maken/vinden
+                    const res = await fetch(`${process.env.AUTH_API_URL}/sessions/social-login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: token.email,
+                            displayName: token.name,
+                            provider: 'google',
+                            providerId: profile?.sub,
+                            img_url: token.picture || "default",
+                        }),
+                    });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        token.accessToken = data.token;
+                        token.user = data.user;
+                    }
+                } catch (error) {
+                    console.error('Microsoft social login error:', error);
+                }
+            }
+
+
+
             return token;
         },
 
-        // ========================================
-        // SESSION CALLBACK
-        // Bepaalt wat beschikbaar is via useSession() en auth()
-        // ========================================
         session: async ({ session, token }) => {
             return {
                 ...session,

@@ -820,7 +820,24 @@
     "no_sets": "no sets yet",
     "pinned_sets": "Pinned",
     "no_pinned": "no pinned sets yet",
-    "search_set": "search sets"
+    "search_set": "search sets",
+    "invitepeople": {
+      "title": "Invite People",
+      "button": "Send Invite",
+      "subtitle_title": "Search people to invite",
+      "placeholder": "search people...",
+      "subtitle_invited": "Invited"
+    },
+    "settings": {
+      "title": "Settings",
+      "leave": "Leave Classroom",
+      "mute": "Mute Notifications"
+    },
+    "addset": {
+      "title": "Add Sets",
+      "button_m": "import sets",
+      "button_e": "import set"
+    }
   },
   "settings": {
     "title": "Settings",
