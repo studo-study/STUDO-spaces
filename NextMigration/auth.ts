@@ -2,6 +2,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import MicrosoftEntraID from 'next-auth/providers/microsoft-entra-id';
+import GoogleProvider from "next-auth/providers/google";
 
 export const {
     handlers,
@@ -11,9 +12,6 @@ export const {
 } = NextAuth({
 
     providers: [
-        // ========================================
-        // CREDENTIALS (bestaande)
-        // ========================================
         Credentials({
             credentials: {
                 email: { label: 'Email', type: 'email' },
@@ -58,6 +56,7 @@ export const {
             clientSecret: process.env.MICROSOFT_CLIENT_SECRET!,
             issuer: `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID}/v2.0`,
         }),
+
     ],
 
     pages: {
@@ -83,7 +82,7 @@ export const {
             });
 
             // Bij CREDENTIALS login (bestaande flow)
-            if (user && !account?.provider) {
+            if (user && account?.provider === 'credentials') {
                 token.accessToken = user.accessToken;
                 token.user = {
                     id: user.id!,
@@ -128,13 +127,36 @@ export const {
                 }
             }
 
+            if (account?.provider === 'google-entra-id') {
+                try {
+                    // Roep je backend aan om user aan te maken/vinden
+                    const res = await fetch(`${process.env.AUTH_API_URL}/sessions/social-login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: token.email,
+                            displayName: token.name,
+                            provider: 'google',
+                            providerId: profile?.sub,
+                            img_url: token.picture || "default",
+                        }),
+                    });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        token.accessToken = data.token;
+                        token.user = data.user;
+                    }
+                } catch (error) {
+                    console.error('Microsoft social login error:', error);
+                }
+            }
+
+
 
             return token;
         },
 
-        // ========================================
-        // SESSION CALLBACK (ongewijzigd)
-        // ========================================
         session: async ({ session, token }) => {
             return {
                 ...session,

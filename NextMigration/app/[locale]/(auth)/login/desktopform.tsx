@@ -1,18 +1,10 @@
 "use client";
 import {useCallback, useState} from "react";
-import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
-import {error} from "next/dist/build/output/log";
-import Undici from "undici-types";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";
 import {signIn} from "next-auth/react";
-
-const validationRules = {
-    email: { required: "Email is required" },
-    password: { required: "Password is required" }
-};
-
+import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 
 export default function DesktopForm() {
     const [open, setOpen] = useState(false);
@@ -64,15 +56,15 @@ export default function DesktopForm() {
     };
 
     const loginGoogle = useCallback(() => {
-        signIn('google-entra-id');
+        window.location.href = "http://localhost:3001/api/sessions/google";
     }, []);
 
     const loginMicrosoft = useCallback(() => {
-        signIn('microsoft-entra-id');
+        window.location.href = "http://localhost:3001/api/sessions/microsoft";
     }, []);
 
     const loginSmartschool = useCallback(() => {
-        window.location.href = process.env.NEXT_PUBLIC_BACKEND_URL + "/sessions/smartschool";
+        window.location.href = "http://localhost:3001/api/sessions/smartschool";
     }, []);
 
 
