@@ -62,7 +62,7 @@ export default function DesktopForm() {
     };
 
     const loginGoogle = useCallback(() => {
-        window.location.href = "http://localhost:3000/api/sessions/google";
+        signIn('google-entra-id');
     }, []);
 
     const loginMicrosoft = useCallback(() => {
