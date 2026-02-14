@@ -265,7 +265,7 @@ function SpecialeDag() {
         newYear: "from-yellow-700 via-amber-500 to-yellow-400 dark:from-white dark:to-amber-200",
         threeKings: "from-amber-600 via-amber-500 to-yellow-500 dark:from-white dark:to-yellow-200",
         labour: "from-red-600 via-red-500 to-red-400 dark:from-white dark:to-red-200",
-        valentine: "from-pink-600 via-pink-500 to-pink-400 dark:from-white dark:to-pink-200",
+        valentine: "from-pink-600 via-pink-500 to-pink-400 dark:from-pink-300 dark:via-pink-300 dark:to-pink-400",
         halloween: "from-orange-600 via-orange-500 to-orange-400 dark:from-white dark:to-orange-200",
         easter: "from-violet-500 via-violet-400 to-purple-400 dark:from-white dark:to-violet-200",
         stPatricks: "from-green-600 via-green-500 to-green-400 dark:from-white dark:to-green-200",

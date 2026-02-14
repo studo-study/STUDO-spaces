@@ -25,7 +25,7 @@ export default function ClassroomHeader() {
     const pathname = usePathname();
     const items = [
         {link: `/classroom/${classroom.id}/overview`, label:"overview"},
-        {link: `/classroom/${classroom.id}/sets`, label:"sets"},
+        {link: `/classroom/${classroom.id}/sets`, label:"set_title"},
         {link: `/classroom/${classroom.id}/members`, label:"users"},
         {link: `/classroom/${classroom.id}/challenges`, label:"challenges"}
     ]

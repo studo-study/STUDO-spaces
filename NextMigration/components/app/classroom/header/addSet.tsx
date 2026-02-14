@@ -7,19 +7,20 @@ import {mockFullClassroomSets} from "@/data/mocks/classroomsMock";
 import {mockFullStudysets} from "@/data/mocks/startPageMock";
 import {useSelector} from "react-redux";
 import SetItem from "@/components/app/classroom/header/setItem";
+import {FullClassroom, FullClassroomSet, FullStudyset} from "@/types/types";
 
 interface InvitePeopleProps {
     addOpen: boolean;
     setAddOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const classroomSets = mockFullClassroomSets
-const userSets = mockFullStudysets
+const classroomSets: FullClassroomSet[] = mockFullClassroomSets
+const userSets: FullStudyset[] = mockFullStudysets
 
 export default function AddSet({addOpen, setAddOpen}: InvitePeopleProps) {
     const popupRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("classroom.addset")
-    const importedClassrooms = [];
+    const importedClassrooms: FullClassroomSet[] = [];
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (
@@ -81,7 +82,7 @@ export default function AddSet({addOpen, setAddOpen}: InvitePeopleProps) {
                     </div>
 
                     <div className={"w-full h-80 flex flex-col gap-3 overflow-y-auto"}>
-                        {userSets.map((u, i) => <SetItem key={i}/>)}
+                        {userSets.map((u, i) => <SetItem importedClassrooms={importedClassrooms} set={u} key={i}/>)}
                     </div>
 
                 <button type="submit" disabled={importedClassrooms.length === 0} className={`disabled:opacity-60 disabled:active:scale-100 disabled:cursor-not-allowed bg-gradient-to-br from-emerald-400 to-green-500 w-full cursor-pointer h-12 text-xl text-white border-studoborder border
