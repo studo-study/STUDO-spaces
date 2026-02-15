@@ -19,7 +19,7 @@ const organizationSchema = {
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer support",
-    "email": "support@studo.study"
+    "email": "support@studo.studygroup"
   }
 };
 

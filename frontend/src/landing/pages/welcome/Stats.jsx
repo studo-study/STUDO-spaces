@@ -29,13 +29,13 @@ export default function Stats() {
   const stats = [
     {
       icon: FiTool,
-      label: t("5 study tools"),
-      ariaLabel: t("Five different study tools available")
+      label: t("5 studygroup tools"),
+      ariaLabel: t("Five different studygroup tools available")
     },
     {
       icon: IoMdInfinite,
       label: t("endless sets"),
-      ariaLabel: t("Create unlimited study sets")
+      ariaLabel: t("Create unlimited studygroup sets")
     },
     {
       icon: TbFreeRights,

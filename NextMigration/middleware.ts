@@ -57,6 +57,9 @@ export default auth((request) => {
         "/GDPR",
         "/studo-for-education",
         "/auth/callback",
+        "/classes",
+        "/communities",
+        "/studygroups",
         "/"];
 
     // Check of huidige route public is

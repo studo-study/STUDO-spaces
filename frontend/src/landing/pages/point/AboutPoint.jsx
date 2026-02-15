@@ -19,7 +19,7 @@ export default function AboutPoint() {
   );
   const keywords = t(
     "seo.point.keywords",
-    "point mode, interactive learning, image quiz, visual study, click to learn, Studo point"
+    "point mode, interactive learning, image quiz, visual studygroup, click to learn, Studo point"
   );
 
   const breadcrumbs = [

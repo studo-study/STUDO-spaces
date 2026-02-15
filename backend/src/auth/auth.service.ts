@@ -428,10 +428,15 @@ export class AuthService {
     } else {
       await this.db
         .update(users)
-        .set({ last_login: new Date().toISOString() })
+        .set({
+          last_login: new Date().toISOString(),
+          img_url: socialUser.img_url || user.img_url, // update foto
+        })
         .where(eq(users.id, user.id));
+      user = await this.db.query.users.findFirst({
+        where: eq(users.id, user.id),
+      });
     }
-
     const token = this.signJwt(user!);
     return { token, user: user! };
   }

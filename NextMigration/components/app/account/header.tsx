@@ -7,6 +7,7 @@ import {useUser} from "@/components/providers/UserProvider";
 export default  function AccountHeader() {
     const t = useTranslations("account")
     const user = useUser().user;
+    console.log(user);
     return(<div className={"w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-50 bg-gray-700 rounded-3xl border border-studoborder/30"}>
         <div className={"w-full h-fit  items-center justify-baseline flex flex-row gap-10"}>
             <div className={"max-w-25 max-h-25 overflow-hidden min-w-25 min-h-25 rounded-full flex items-center justify-center bg-gray-500"}>
@@ -25,7 +26,7 @@ export default  function AccountHeader() {
 
                     <Link
                         href={"/settings"}
-                        className={'text-sm h-fit text-blue-500 flex gap-1 items-center '}
+                        className={'text-sm h-fit text-blue-500 flex gap-1 items-center hover:underline '}
                     >
                         <IoMdSettings />
                         {t("settings")}

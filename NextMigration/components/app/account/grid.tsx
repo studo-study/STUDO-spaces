@@ -5,6 +5,7 @@ import {BsGridFill} from "react-icons/bs";
 import {HiOutlineViewList} from "react-icons/hi";
 import {IoIosAdd} from "react-icons/io";
 import Link from "next/link";
+import { signOut } from 'next-auth/react';
 
 export default function AccountGrid() {
     const [grid, setGrid] = useState<boolean>(true);
@@ -18,6 +19,7 @@ export default function AccountGrid() {
     const toggleCreate = () => {
         setAddIsOpen((prev) => !prev);
     }
+
 
     return (
     <div className={"w-full h-fit flex flex-col gap-5 scroll-hidden"}>
@@ -66,7 +68,7 @@ export default function AccountGrid() {
         </div>
 
         <div className={"w-full h-15 flex justify-end"}>
-            <button className={"w-fit px-5 py-2 h-10 font-bold lowercase rounded-full bg-blue-500 border border-studoborder/50 text-white"}>{t("log_out")}</button>
+            <button onClick={() => signOut({ callbackUrl: '/' })} className={"w-fit px-5 py-2 h-10 cursor-pointer font-bold lowercase rounded-full bg-blue-500 border border-studoborder/50 text-white"}>{t("log_out")}</button>
         </div>
     </div>)
 }

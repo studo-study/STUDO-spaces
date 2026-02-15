@@ -14,7 +14,7 @@ const free = [
 const select = [
     { feature: "Study without distractions" },
     { feature: "Smart Revision Insights" },
-    { feature: "Print & study offline" },
+    { feature: "Print & studygroup offline" },
     { feature: "Customize your workflow" },
     { feature: "Everything unlocked" }
 ]
