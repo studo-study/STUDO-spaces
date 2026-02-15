@@ -62,7 +62,7 @@ export default function DesktopForm() {
     };
 
     const loginGoogle = useCallback(() => {
-        signIn('google-entra-id');
+        signIn('google');
     }, []);
 
     const loginMicrosoft = useCallback(() => {

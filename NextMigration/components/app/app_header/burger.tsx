@@ -45,7 +45,6 @@ export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerP
         <div className={`h-full border-r select-none dark:border-studoborder/30 border-gray-300 
             transition-[width] duration-300 flex flex-col gap-3 py-10 pb-20
             ${burgerOpen ? "w-57" : "w-30"}`}>
-
             {main.map((item, index) => (
                 <Link href={item.link} key={index} className={`w-full h-10 ${isActive(item.link) ? "opacity-75": "opacity-50"} px-5`}>
                     <div className={`transition-colors duration-200 flex gap-5 rounded-4xl dark:hover:bg-studogrey hover:bg-slate-200 ${isActive(item.link) ? "dark:bg-studogrey bg-slate-200" : ""} flex-row justify-baseline px-5 items-center w-full h-10`}>

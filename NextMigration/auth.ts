@@ -57,6 +57,11 @@ export const {
             issuer: `https://login.microsoftonline.com/${process.env.MICROSOFT_TENANT_ID}/v2.0`,
         }),
 
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        }),
+
     ],
 
     pages: {
@@ -104,7 +109,17 @@ export const {
             // Bij MICROSOFT login (nieuw)
             if (account?.provider === 'microsoft-entra-id') {
                 try {
-                    // Roep je backend aan om user aan te maken/vinden
+                    let imgUrl = "default";
+                    try {
+                        const photoRes = await fetch('https://graph.microsoft.com/v1.0/me/photo/$value', {
+                            headers: { 'Authorization': `Bearer ${account.access_token}` },
+                        });
+                        if (photoRes.ok) {
+                            const buffer = await photoRes.arrayBuffer();
+                            imgUrl = `data:image/jpeg;base64,${Buffer.from(buffer).toString('base64')}`;
+                        }
+                    } catch {}
+
                     const res = await fetch(`${process.env.AUTH_API_URL}/sessions/social-login`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -113,7 +128,7 @@ export const {
                             displayName: token.name,
                             provider: 'microsoft',
                             providerId: profile?.sub,
-                            img_url: token.picture || "default",
+                            img_url: imgUrl,
                         }),
                     });
 
@@ -127,9 +142,10 @@ export const {
                 }
             }
 
-            if (account?.provider === 'google-entra-id') {
+            if (account?.provider === 'google') {
+                console.log('🔍 Google profile:', JSON.stringify(profile));
+                console.log('🔍 Google token:', JSON.stringify(token));
                 try {
-                    // Roep je backend aan om user aan te maken/vinden
                     const res = await fetch(`${process.env.AUTH_API_URL}/sessions/social-login`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -138,7 +154,7 @@ export const {
                             displayName: token.name,
                             provider: 'google',
                             providerId: profile?.sub,
-                            img_url: token.picture || "default",
+                            img_url: profile?.picture || "default",
                         }),
                     });
 
@@ -148,7 +164,7 @@ export const {
                         token.user = data.user;
                     }
                 } catch (error) {
-                    console.error('Microsoft social login error:', error);
+                    console.error('Google social login error:', error);
                 }
             }
 

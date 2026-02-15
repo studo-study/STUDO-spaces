@@ -808,7 +808,7 @@
     "overview": "Overview",
     "set_title": "Sets",
     "users": "Users",
-    "challenges": "Challenges",
+    "challenges_title": "Challenges",
     "copy": "Copy link",
     "invite": "Invite people",
     "recent_sets": "Recently added",
@@ -845,6 +845,10 @@
       "title": "Add Sets",
       "button_m": "import sets",
       "button_e": "import set"
+    },
+    "challenges": {
+      "current_leaderboard": "Classroom leaderboard",
+      "running": "Running challenges"
     }
   },
   "settings": {

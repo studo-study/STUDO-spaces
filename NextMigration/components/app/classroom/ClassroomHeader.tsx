@@ -27,7 +27,7 @@ export default function ClassroomHeader() {
         {link: `/classroom/${classroom.id}/overview`, label:"overview"},
         {link: `/classroom/${classroom.id}/sets`, label:"set_title"},
         {link: `/classroom/${classroom.id}/members`, label:"users"},
-        {link: `/classroom/${classroom.id}/challenges`, label:"challenges"}
+        {link: `/classroom/${classroom.id}/challenges`, label:"challenges_title"}
     ]
 
     const [invite, setInvite] = useState(false);
