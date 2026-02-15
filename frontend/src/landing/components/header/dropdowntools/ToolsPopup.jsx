@@ -168,7 +168,7 @@ export default function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }) 
           ${MethodsOpen ? "opacity-100" : "opacity-0"}`}
 			>
 				<p className="text-[10px] text-center text-studodarkblue/30 dark:text-white/30">
-					{t("Select a study mode to begin")}
+					{t("Select a studygroup mode to begin")}
 				</p>
 			</div>
 		</div>

@@ -12,9 +12,9 @@ const free = [
 
 const select = [
     { feature: "Access premium Studosets" },
-    { feature: "Create study timelines" },
-    { feature: "Print study sets for offline use" },
-    { feature: "Deep study analytics" },
+    { feature: "Create studygroup timelines" },
+    { feature: "Print studygroup sets for offline use" },
+    { feature: "Deep studygroup analytics" },
     { feature: "Ad-free studying" },
     { feature: "Unlimited access to all features" }
 ]

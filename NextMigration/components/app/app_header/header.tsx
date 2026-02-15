@@ -2,7 +2,6 @@
 "use client"
 import {useLocale, useTranslations} from "next-intl";
 import {HiMenuAlt4} from "react-icons/hi";
-
 import TriggerAddPopup from "@/components/app/app_header/add_popup";
 import {useEffect, useRef, useState} from "react";
 import TriggerNotif from "@/components/app/app_header/notif_popup";
@@ -94,7 +93,7 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
                         {burgerOpen ? <TbLayoutSidebarLeftCollapse className={"dark:opacity-30"}/> : <HiMenuAlt4 className={"dark:opacity-30"}/>}
                     </button>
                     <Link href={"/home"} className={`font-akira text-2xl truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
-                        STUDO
+                       STUDO
                     </Link>
                     {premium &&
 						<Link href={"/select"} className={"hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-linear-to-r from-indigo-300 to-white backdrop-blur-2xl text-studodarkblue"}>upgrade to select</Link>}
@@ -271,7 +270,7 @@ function SpecialeDag() {
         stPatricks: "from-green-600 via-green-500 to-green-400 dark:from-white dark:to-green-200",
         mothersDay: "from-pink-500 via-pink-400 to-rose-400 dark:from-white dark:to-pink-200",
         fathersDay: "from-sky-600 via-sky-500 to-sky-400 dark:from-white dark:to-sky-200",
-        carnival: "from-fuchsia-600 via-fuchsia-500 to-fuchsia-400 dark:from-white dark:to-fuchsia-200",
+        carnival: "from-fuchsia-600 via-fuchsia-500 to-fuchsia-400 dark:from-white dark:via-fuchsia-200 dark:to-fuchsia-200",
         kingsDay: "from-orange-500 via-orange-400 to-amber-400 dark:from-white dark:to-orange-200",
         midsummer: "from-blue-400 via-green-300 to-amber-300 dark:from-white dark:to-sky-200",
         belgie: "from-zinc-900 via-amber-300 to-rose-700 dark:from-zinc-900 dark:via-amber-400 dark:to-rose-600",

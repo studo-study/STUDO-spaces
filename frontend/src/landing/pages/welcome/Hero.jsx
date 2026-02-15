@@ -28,7 +28,7 @@ export default function Hero() {
   }, []);
 
   const features = [
-    t("Create custom study sets"),
+    t("Create custom studygroup sets"),
     t("Text or visual learning"),
     t("Study anywhere, anytime")
   ];
@@ -82,7 +82,7 @@ export default function Hero() {
             transition-all duration-700 delay-300
             ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}
         >
-          {t("Free study tools for smarter and faster learning")}
+          {t("Free studygroup tools for smarter and faster learning")}
         </p>
 
         {/* Feature list */}
