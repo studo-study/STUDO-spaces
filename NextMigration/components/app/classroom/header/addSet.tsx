@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useTranslations} from "next-intl";
 import {IoIosClose} from "react-icons/io";
 import {HiUserGroup} from "react-icons/hi";
@@ -20,7 +20,7 @@ export default function AddSet({addOpen, setAddOpen}: InvitePeopleProps) {
     const popupRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("classroom.addset")
-    const importedClassrooms: FullClassroomSet[] = [];
+    const [importedClassrooms, setImportedClassrooms] = useState<FullClassroomSet[]>([]);
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (
@@ -82,7 +82,12 @@ export default function AddSet({addOpen, setAddOpen}: InvitePeopleProps) {
                     </div>
 
                     <div className={"w-full h-80 flex flex-col gap-3 overflow-y-auto"}>
-                        {userSets.map((u, i) => <SetItem importedClassrooms={importedClassrooms} set={u} key={i}/>)}
+                        {userSets.map((u, i) => <SetItem
+                            importedClassrooms={importedClassrooms}
+                            setImportedClassrooms={setImportedClassrooms}
+                            set={u}
+                            key={i}
+                        />)}
                     </div>
 
                 <button type="submit" disabled={importedClassrooms.length === 0} className={`disabled:opacity-60 disabled:active:scale-100 disabled:cursor-not-allowed bg-gradient-to-br from-emerald-400 to-green-500 w-full cursor-pointer h-12 text-xl text-white border-studoborder border

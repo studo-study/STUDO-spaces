@@ -2,14 +2,18 @@ import Image from "next/image";
 import {FullClassroom, FullClassroomSet, FullStudyset} from "@/types/types";
 import {usePathname} from "next/navigation";
 import {useUser} from "@/components/providers/UserProvider";
+import CourseIcons from "@/data";
+import {useState} from "react";
 
 interface setItemProps {
     set: FullStudyset;
     importedClassrooms: FullClassroomSet[];
+    setImportedClassrooms: React.Dispatch<React.SetStateAction< FullClassroomSet[]>>
 }
-export default function SetItem({set, importedClassrooms}: setItemProps) {
+export default function SetItem({set, importedClassrooms, setImportedClassrooms}: setItemProps) {
     const iconSrc = set.cards ? "/icons/studyset.svg" : "/icons/visualset.svg";
-    const path = usePathname();
+    const path = usePathname().split("/")[3];
+    const [checkClick, setCheckClick] = useState<boolean>(false);
     const currentUser = useUser().user?.id ?? "user";
     const currentSet = {
         title: set.title,
@@ -23,22 +27,31 @@ export default function SetItem({set, importedClassrooms}: setItemProps) {
     }
 
     const addToImported = () => {
-        if (importedClassrooms.includes(currentSet)) {
-            importedClassrooms.pop(currentSet)
+
+        const index = importedClassrooms.findIndex(item => item.set_id === currentSet.set_id);
+        if (index !== -1) {
+            setImportedClassrooms(prev => prev.filter(item => item.set_id !== currentSet.set_id));
+        } else {
+            setImportedClassrooms(prev => [...prev, currentSet]);
         }
-        else {
-            importedClassrooms.push(currentSet)
-        }
+        console.log(importedClassrooms)
     }
-    return(<div className={"w-full h-15 rounded-full bg-studogrey/30 flex flex-row items-center justify-between px-2.5 pr-5"}>
+    const toggleCheck = () => {
+        setCheckClick(!checkClick);
+        addToImported()
+    }
+
+    return(<div onClick={toggleCheck} className={"w-full h-15 cursor-pointer rounded-full bg-studogrey/30 flex flex-row items-center justify-between px-2.5 pr-5"}>
             <div className={"w-fit h-fit flex items-center gap-3"}>
-                <div className={"rounded-full h-10 w-10 bg-studogrey/30"}></div>
+                <div className={"rounded-full h-10 w-10 bg-studogrey/30 flex items-center justify-center"}>
+                    <Image src={getCoverImage(set.course)} alt={set.course} width={0} height={0} className={"w-6"}/>
+                </div>
                 <Image src={iconSrc} width={0} height={0} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
                 <span className={"dark:text-white text-studodarkblue w-3/5 truncate overflow-hidden"}>{set.title}</span>
             </div>
         <div className={"w-fit h-fit items-center flex"}>
             <input
-                onChange={addToImported}
+                checked={checkClick}
                 type="checkbox"
                 className="h-6 w-6 appearance-none rounded-full border-2 border-gray-300
     checked:bg-studoblue checked:border-studoblue
@@ -48,4 +61,12 @@ export default function SetItem({set, importedClassrooms}: setItemProps) {
             />
         </div>
     </div>)
+}
+
+function getCoverImage(course: string): string {
+    const key = Object.keys(CourseIcons).find((k) =>
+        course.toLowerCase().includes(k)
+    ) as keyof typeof CourseIcons | undefined;
+
+    return key ? `/icons/courses/${CourseIcons[key]}` : "/icons/courses/default.svg";
 }

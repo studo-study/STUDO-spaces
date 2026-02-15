@@ -12,19 +12,19 @@ export default function Stats() {
             <div className={"w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"}>
                 <img src="/icons/studyset.svg" alt="cards" className={"w-5 dark:invert dark:brightness-0"}/>
                 <span>{t("total_cards")}:</span>
-                {user?.stats.cardsLearned}
+                {user?.stats?.cardsLearned ?? 0}
             </div>
 
             <div className={"w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"}>
                 <img src="/icons/clock.svg" alt="cards" className={"w-5 dark:invert dark:brightness-0"}/>
                 <span>{t("time_studied")}:</span>
-                {user?.stats.timeLearned}
+                {user?.stats?.timeLearned ?? 0}
             </div>
 
             <div className={"w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"}>
                 <PiMedalLight size={20} className="dark:text-white text-studodarkblue" />
                 <span>{t("total_sets")}:</span>
-                {user?.stats.totalsets}
+                {user?.stats?.totalsets ?? 0}
             </div>
         </div>
     </div>)

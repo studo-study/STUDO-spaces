@@ -91,6 +91,6 @@ function getCoverImage(course: string): string {
 
 function inChallenge(t: ReturnType<typeof useTranslations>) {
     return (<div className={"w-fit px-5 pr-7 py-2 rounded-full bg-studoblue/30 hover:bg-studoblue/40 transition-all duration-300" +
-        " text-blue-200 flex items-center gap-2 font-bold border border-studoblue"}>
+        " text-blue-200 flex items-center gap-2 font-bold border-2 border-studoblue"}>
         <HiLightningBolt />{t("challenge")}</div>)
 }
