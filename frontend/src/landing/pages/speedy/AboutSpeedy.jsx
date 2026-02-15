@@ -19,7 +19,7 @@ export default function AboutSpeedy() {
   );
   const keywords = t(
     "seo.speedy.keywords",
-    "speed quiz, timed study, quick recall, fast learning, study game, Studo speedy"
+    "speed quiz, timed studygroup, quick recall, fast learning, studygroup game, Studo speedy"
   );
 
   const breadcrumbs = [

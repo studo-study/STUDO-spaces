@@ -86,7 +86,7 @@ async function seedStudo() {
     await db.insert(schema.users).values([
       {
         id: userId1,
-        email: 'admin@studo.study',
+        email: 'admin@studo.studygroup',
         passwordHash: await hashPassword('Wachtwoord'),
         displayName: 'Studo Admin',
         img_url: 'https://i.pravatar.cc/150?img=1',
@@ -634,7 +634,9 @@ async function seedStudo() {
     console.log('Seeding classroomsets...');
     await db.insert(schema.classroomsets).values([
       {
-        set_id: studySetId1, set_type: 'studyset', classroom_id: classroomId1,
+        set_id: studySetId1,
+        set_type: 'studyset',
+        classroom_id: classroomId1,
         added_by: userId2,
       },
       {

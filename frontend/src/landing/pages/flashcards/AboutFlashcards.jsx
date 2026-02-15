@@ -15,11 +15,11 @@ export default function AboutFlashcards() {
   const title = t("seo.flashcards.title", "Flashcards | Studo");
   const description = t(
     "seo.flashcards.description",
-    "Master any subject with Studo's interactive flashcards. Flip through cards, track your progress, and study smarter with our free flashcard tool."
+    "Master any subject with Studo's interactive flashcards. Flip through cards, track your progress, and studygroup smarter with our free flashcard tool."
   );
   const keywords = t(
     "seo.flashcards.keywords",
-    "flashcards, study cards, digital flashcards, free flashcards, online flashcards, Studo flashcards"
+    "flashcards, studygroup cards, digital flashcards, free flashcards, online flashcards, Studo flashcards"
   );
 
   const breadcrumbs = [
@@ -30,11 +30,11 @@ export default function AboutFlashcards() {
   const faqs = [
     {
       question: t("faq.flashcards.what.question", "What are flashcards?"),
-      answer: t("faq.flashcards.what.answer", "Flashcards are a study tool where you have a question or term on one side and the answer on the other. They help with memorization through active recall.")
+      answer: t("faq.flashcards.what.answer", "Flashcards are a studygroup tool where you have a question or term on one side and the answer on the other. They help with memorization through active recall.")
     },
     {
       question: t("faq.flashcards.free.question", "Are Studo flashcards free?"),
-      answer: t("faq.flashcards.free.answer", "Yes, Studo flashcards are 100% free. You can create unlimited flashcard sets and study them anytime.")
+      answer: t("faq.flashcards.free.answer", "Yes, Studo flashcards are 100% free. You can create unlimited flashcard sets and studygroup them anytime.")
     }
   ];
 
@@ -46,7 +46,7 @@ export default function AboutFlashcards() {
         keywords={keywords}
         path="/flashcards"
         image="/og/welcome.png"
-        imageAlt={t("seo.flashcards.imageAlt", "Studo Flashcards - Interactive study cards")}
+        imageAlt={t("seo.flashcards.imageAlt", "Studo Flashcards - Interactive studygroup cards")}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />

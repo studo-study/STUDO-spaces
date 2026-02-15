@@ -44,6 +44,7 @@ body::-webkit-scrollbar {
 
 @theme {
     --font-akira: akira, sans-serif;
+    --font-bodoni: Bodoni Std, serif;
     --font-sfpro: 'SF Pro Display', sans-serif;
     --font-sigurd: "sigurd-variable", sans-serif;
     --font-atrament: atrament-web, sans-serif;

@@ -1,7 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsBoolean } from 'nestjs-swagger-dto';
 import { IsNotPastDate } from '../validators/is-not-past-date.validator';
-import { ArrayMinSize, ArrayNotEmpty, IsArray, IsNotEmpty, IsUUID, ValidateNested } from 'class-validator';
+import {
+  ArrayMinSize,
+  ArrayNotEmpty,
+  IsArray,
+  IsNotEmpty,
+  IsUUID,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { UpdateCardDto } from '../studyset/card.dto';
 
@@ -68,7 +75,7 @@ export class UpdateClassroomDto {
 
   @ApiProperty({
     description: 'Nieuw type',
-    example: 'study-group',
+    example: 'studygroup-group',
     minLength: 1,
     maxLength: 20,
     required: false,
@@ -150,7 +157,6 @@ export class CreateClassroomSetsDto {
   sets: string[];
 }
 
-
 export class ClassroomSetDto {
   @ApiProperty({
     description: 'UUID van de set',
@@ -164,7 +170,6 @@ export class ClassroomSetDto {
     example: 'flashcard',
   })
   set_type: string;
-
 
   @ApiProperty({
     description: 'UUID van de classroom',
@@ -309,7 +314,6 @@ export class ClassroomListResponseDto {
   classrooms: ClassroomResponseDto[];
 }
 
-
 // Classroom user
 export class CreateClassroomUserDto {
   @ApiProperty({
@@ -392,8 +396,6 @@ export class CreateClassroomActivityDto {
     maxLength: 64,
   })
   classroom_id: string;
-
-
 }
 
 export class ClassroomUserResponseDto {

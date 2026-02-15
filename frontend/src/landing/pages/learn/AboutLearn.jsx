@@ -15,11 +15,11 @@ export default function AboutLearn() {
   const title = t("seo.learn.title", "Learn | Studo");
   const description = t(
     "seo.learn.description",
-    "Master your study material with Studo's Learn mode. Using spaced repetition and smart algorithms, we help you remember more in less time."
+    "Master your studygroup material with Studo's Learn mode. Using spaced repetition and smart algorithms, we help you remember more in less time."
   );
   const keywords = t(
     "seo.learn.keywords",
-    "spaced repetition, learn mode, smart studying, memorization, study technique, Studo learn"
+    "spaced repetition, learn mode, smart studying, memorization, studygroup technique, Studo learn"
   );
 
   const breadcrumbs = [
@@ -46,7 +46,7 @@ export default function AboutLearn() {
         keywords={keywords}
         path="/learn"
         image="/og/welcome.png"
-        imageAlt={t("seo.learn.imageAlt", "Studo Learn Mode - Spaced repetition study tool")}
+        imageAlt={t("seo.learn.imageAlt", "Studo Learn Mode - Spaced repetition studygroup tool")}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />

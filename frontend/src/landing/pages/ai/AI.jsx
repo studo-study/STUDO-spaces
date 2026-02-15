@@ -14,11 +14,11 @@ export default function AI() {
   const title = t("seo.ai.title", "AI Tools | Studo");
   const description = t(
     "seo.ai.description",
-    "Discover Studo's AI-powered study tools. Generate flashcards automatically, get smart study recommendations, and learn faster with artificial intelligence."
+    "Discover Studo's AI-powered studygroup tools. Generate flashcards automatically, get smart studygroup recommendations, and learn faster with artificial intelligence."
   );
   const keywords = t(
     "seo.ai.keywords",
-    "AI flashcards, AI study tool, automatic flashcards, smart learning, AI education, Studo AI"
+    "AI flashcards, AI studygroup tool, automatic flashcards, smart learning, AI education, Studo AI"
   );
 
   const breadcrumbs = [
@@ -34,7 +34,7 @@ export default function AI() {
         keywords={keywords}
         path="/about-ai"
         image="/og/welcome.png"
-        imageAlt={t("seo.ai.imageAlt", "Studo AI - Smart study tools")}
+        imageAlt={t("seo.ai.imageAlt", "Studo AI - Smart studygroup tools")}
         breadcrumbs={breadcrumbs}
       />
       <main
@@ -77,7 +77,7 @@ export default function AI() {
               transition-all duration-700 delay-400
               ${mounted ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={hero} alt={t("AI study tools illustration")} className="w-2/3" />
+            <img src={hero} alt={t("AI studygroup tools illustration")} className="w-2/3" />
           </div>
         </div>
       </main>

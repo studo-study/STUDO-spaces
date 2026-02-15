@@ -218,7 +218,7 @@ export class UserResponseDto {
 
   @ApiProperty({
     example: 3,
-    description: 'Total study sets',
+    description: 'Total studygroup sets',
   })
   @Expose()
   totalSets: number;
