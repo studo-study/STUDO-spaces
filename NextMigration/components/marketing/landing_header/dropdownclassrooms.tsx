@@ -1,72 +1,75 @@
 "use client"
-import { useEffect, useRef } from "react";
-import {Link} from "@/i18n/routing";
+import {useEffect, useRef} from "react";
+
 import {useTranslations} from "next-intl";
+import {Link} from "@/i18n/routing";
+import {IoHourglassOutline, IoSchoolOutline} from "react-icons/io5";
+import {FaUserFriends} from "react-icons/fa";
+import {TbWorld} from "react-icons/tb";
 import Image from "next/image";
-interface TriggerToolsProps {
-    ToolsOpen: boolean;
-    setToolsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+import {GiPodium, GiSwordsEmblem} from "react-icons/gi";
+
+interface TriggerClassroomProps {
+    ClassOpen: boolean,
+    setClassOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
+export default function TriggerClassrooms({ ClassOpen, setClassOpen }: TriggerClassroomProps) {
+    const containerRef = useRef(null);
 
-export default function TriggerTools({ ToolsOpen, setToolsOpen }: TriggerToolsProps) {
-        const t = useTranslations('landing.header');
-        const containerRef = useRef<HTMLDivElement>(null);
+    const togglePopUp = () => {
+        setClassOpen((prev) => !prev);
+    };
 
-        const togglePopUp = () => {
-            setToolsOpen((prev) => !prev);
-        };
+    const t = useTranslations('landing.header');
 
-        return (
-            <div
-                ref={containerRef}
-                className={"relative w-fit h-fit flex flex-row gap-3 cursor-pointer"}
-                onClick={togglePopUp}
-            >
-                <Image
-                    width={49}
-                    height={49}
-                    src={"/icons/down.svg"}
-                    className={`${ToolsOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
-                    alt="go down icon"
-                />
-                <span className={"dark:text-white text-studodarkblue truncate"}>{t("tools")}</span>
-                <ToolsPopup
-                    MethodsOpen={ToolsOpen}
-                    setMethodsOpen={setToolsOpen}
-                    triggerRef={containerRef}
-                />
-            </div>
-        );
+    return (
+        <div
+            ref={containerRef}
+            className={"relative w-fit h-fit flex flex-row gap-3 cursor-pointer"}
+            onClick={togglePopUp}
+        >
+            <img
+                src={"/icons/down.svg"}
+                className={`${ClassOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
+                alt=""
+            />
+            <span className={"dark:text-white text-studodarkblue truncate"}>{t("classrooms")}</span>
+            <ClassroomPopup
+                ClassOpen={ClassOpen}
+                setClassOpen={setClassOpen}
+                triggerRef={containerRef}
+            />
+        </div>
+    );
 }
-
 
 const toolCategories = [
     {
-        title: "ss",
+        title: "classrooms",
         color: "emerald",
         items: [
-            { to: "/tools/learn", icon: "/icons/pencil.svg", label: "learn", gradient: "from-emerald-400 to-emerald-500" },
-            { to: "/tools/speedy", icon: "/icons/clock.svg", label: "speedy", gradient: "from-amber-400 to-orange-500" },
-            { to: "/tools/flashcards", icon: "/icons/cards.svg", label: "flashcards", gradient: "from-blue-400 to-blue-500" },
+            { to: "/classes", icon: <IoSchoolOutline />, label: "class_group", gradient: "from-green-300 to-emerald-500" },
+            { to: "/studygroups", icon: <FaUserFriends />, label: "study_group", gradient: "from-cyan-300 to-sky-500" },
+            { to: "/communities", icon: <TbWorld />, label: "community_group", gradient: "from-indigo-300 to-violet-500" },
         ],
     },
     {
-        title: "vs",
+        title: "challenges",
         color: "violet",
         items: [
-            { to: "/tools/identify", icon: "/icons/pin-icon.svg", label: "identify", gradient: "from-rose-400 to-red-500" },
-            { to: "/tools/point", icon: "/icons/point.svg", label: "point", gradient: "from-violet-400 to-purple-500" },
+            { to: "/tools/identify", icon: <IoHourglassOutline />, label: "time", gradient: "from-fuchsia-300 to-pink-500" },
+            { to: "/tools/point", icon: <GiPodium />, label: "mastery", gradient: "from-red-300 to-orange-500" },
+            { to: "/tools/point", icon: <GiSwordsEmblem />, label: "duel", gradient: "from-amber-300 to-yellow-600" },
         ],
     },
 ];
 
-interface ToolsPopupProps {
-    MethodsOpen: boolean;
-    setMethodsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+interface MethodsPopUpProps {
+    ClassOpen: boolean;
+    setClassOpen: React.Dispatch<React.SetStateAction<boolean>>;
     triggerRef: React.RefObject<HTMLDivElement | null>;
 }
-
-function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps) {
+function ClassroomPopup({ ClassOpen, setClassOpen, triggerRef }: MethodsPopUpProps) {
     const t = useTranslations('landing.header');
     const popupRef = useRef<HTMLDivElement>(null);
 
@@ -78,11 +81,11 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps
                 triggerRef.current &&
                 !triggerRef.current.contains(e.target as Node)
             ) {
-                setMethodsOpen(false);
+                setClassOpen(false);
             }
         };
 
-        if (MethodsOpen) {
+        if (ClassOpen) {
             setTimeout(() => {
                 document.addEventListener("mousedown", handleClickOutside);
             }, 0);
@@ -91,7 +94,7 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [MethodsOpen, setMethodsOpen, triggerRef]);
+    }, [ClassOpen, setClassOpen, triggerRef]);
 
     let itemIndex = 0;
 
@@ -106,7 +109,7 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps
         border border-white/50 dark:border-white/10
         shadow-xl shadow-black/10 dark:shadow-black/30
         transition-all duration-300 ease-out origin-top
-        ${MethodsOpen
+        ${ClassOpen
                 ? "opacity-100 scale-100 translate-y-0 visible pointer-events-auto"
                 : "opacity-0 scale-95 -translate-y-2 invisible pointer-events-none"}
       `}
@@ -120,8 +123,8 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps
                         <div
                             className={`flex items-center gap-2 px-3 py-2
                 transition-all duration-300
-                ${MethodsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
-                            style={{ transitionDelay: MethodsOpen ? `${catIndex * 100}ms` : "0ms" }}
+                ${ClassOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
+                            style={{ transitionDelay: ClassOpen ? `${catIndex * 100}ms` : "0ms" }}
                         >
                             <div className={`w-1.5 h-1.5 rounded-full bg-${category.color}-400`} />
                             <span className="text-xs font-semibold uppercase tracking-wider text-studodarkblue/40 dark:text-white/40">
@@ -137,15 +140,15 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps
                                     <Link
                                         key={item.to}
                                         href={item.to}
-                                        onClick={() => setMethodsOpen(false)}
+                                        onClick={() => setClassOpen(false)}
                                         className={`group relative flex items-center gap-3 px-3 py-2.5 rounded-xl
                                       text-studodarkblue dark:text-white
                                       hover:bg-studodarkblue/5 dark:hover:bg-white/5
                                         transition-all duration-200 ease-out
-                                        ${MethodsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
+                                        ${ClassOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
                                         `}
                                         style={{
-                                            transitionDelay: MethodsOpen ? `${(currentIndex + 1) * 50 + catIndex * 50}ms` : "0ms",
+                                            transitionDelay: ClassOpen ? `${(currentIndex + 1) * 50 + catIndex * 50}ms` : "0ms",
                                         }}
                                     >
                                         {/* Icon Container */}
@@ -155,13 +158,7 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps
                       group-hover:scale-110 group-hover:shadow-lg group-hover:-rotate-3
                       transition-all duration-200`}
                                         >
-                                            <Image
-                                                src={item.icon}
-                                                alt={item.label + " icon"}
-                                                className="h-4 w-4 brightness-0 invert"
-                                                width={16}
-                                                height={16}
-                                            />
+                                            {item.icon}
                                         </div>
 
                                         {/* Label */}
@@ -200,10 +197,10 @@ function ToolsPopup({ MethodsOpen, setMethodsOpen, triggerRef }: ToolsPopupProps
             <div
                 className={`mt-2 pt-2 border-t border-studodarkblue/5 dark:border-white/5
           transition-all duration-300 delay-300
-          ${MethodsOpen ? "opacity-100" : "opacity-0"}`}
+          ${ClassOpen ? "opacity-100" : "opacity-0"}`}
             >
                 <p className="text-[10px] text-center text-studodarkblue/30 dark:text-white/30">
-                    {t("select")}
+                    {t("select_classrooms")}
                 </p>
             </div>
         </div>

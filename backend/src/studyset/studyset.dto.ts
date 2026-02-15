@@ -223,7 +223,7 @@ export class fullSetResponseDto extends StudysetResponseDto {
   likes: SetLikeResponseDto[];
 
   @ApiProperty({
-    description: 'Active study session for this studoset',
+    description: 'Active studygroup session for this studoset',
     type: StudysessionResponseDto,
     required: false,
   })
@@ -245,7 +245,6 @@ export class fullSetResponseDto extends StudysetResponseDto {
   })
   @Expose()
   folders: FolderResponseDto[] | undefined;
-  
 }
 
 export class StudysetListResponseDto {

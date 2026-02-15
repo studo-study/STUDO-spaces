@@ -19,7 +19,7 @@ export default function AboutPin() {
   );
   const keywords = t(
     "seo.identify.keywords",
-    "visual learning, identify mode, image study, anatomy learning, diagram study, Studo identify"
+    "visual learning, identify mode, image studygroup, anatomy learning, diagram studygroup, Studo identify"
   );
 
   const breadcrumbs = [

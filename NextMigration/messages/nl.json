@@ -33,7 +33,16 @@
       "point": "aanwijzen",
       "select": "Kies een mode en go",
       "lm": "Leermodes",
-      "st": "Tools"
+      "st": "Tools",
+      "classrooms": "Classrooms",
+      "challenges": "challenges",
+      "class_group": "class group",
+      "study_group": "study group",
+      "community_group": "communtiy group",
+      "duel": "duel",
+      "mastery": "mastery tournament",
+      "time": "time attack",
+      "select_classrooms": "Kies een challenge en go"
     },
     "footer": {
       "footerQuote": "Minder Zweten, Meer Weten!",
@@ -807,7 +816,7 @@
   "classroom": {
     "overview": "Overview",
     "set_title": "Sets",
-    "users": "Users",
+    "users": "Members",
     "challenges_title": "Challenges",
     "copy": "Copy link",
     "invite": "Invite people",
@@ -821,6 +830,9 @@
     "pinned_sets": "Pinned",
     "no_pinned": "no pinned sets yet",
     "search_set": "search sets",
+    "search_user": "search members",
+    "requests": "Join requests",
+    "w_l_t_j": "would like to join",
     "sets": {
       "added by": "added by",
       "cards": "cards",

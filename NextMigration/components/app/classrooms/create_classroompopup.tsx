@@ -91,7 +91,7 @@ export default function CreateClassroom({createOpen, setCreateOpen}: CreateClass
                         <div className="flex flex-col w-full gap-2 items-center justify-between">
                             <select className={"h-12 px-5 gap-5 text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}>
                                 <option value="class_group">{t("class")}</option>
-                                <option value="study_group">{t("study")}</option>
+                                <option value="study_group">{t("studygroup")}</option>
                                 <option value="community_group">{t("community")}</option>
                             </select>
                         </div>

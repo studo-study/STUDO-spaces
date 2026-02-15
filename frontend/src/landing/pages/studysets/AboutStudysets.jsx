@@ -15,11 +15,11 @@ export default function AboutStudysets() {
   const title = t("seo.studosets.title", "Studysets | Studo");
   const description = t(
     "seo.studosets.description",
-    "Create custom study sets with Studo. Add terms, definitions, and images to build the perfect study material. Share with classmates or keep private."
+    "Create custom studygroup sets with Studo. Add terms, definitions, and images to build the perfect studygroup material. Share with classmates or keep private."
   );
   const keywords = t(
     "seo.studosets.keywords",
-    "study sets, create flashcards, custom study material, share study sets, Studo study sets"
+    "studygroup sets, create flashcards, custom studygroup material, share studygroup sets, Studo studygroup sets"
   );
 
   const breadcrumbs = [
@@ -29,12 +29,12 @@ export default function AboutStudysets() {
 
   const faqs = [
     {
-      question: t("faq.studosets.what.question", "What are study sets?"),
-      answer: t("faq.studosets.what.answer", "Study sets are collections of flashcards with terms and definitions. You can create them for any subject and study them using various modes like Learn, Flashcards, or Speedy.")
+      question: t("faq.studosets.what.question", "What are studygroup sets?"),
+      answer: t("faq.studosets.what.answer", "Study sets are collections of flashcards with terms and definitions. You can create them for any subject and studygroup them using various modes like Learn, Flashcards, or Speedy.")
     },
     {
-      question: t("faq.studosets.share.question", "Can I share my study sets?"),
-      answer: t("faq.studosets.share.answer", "Yes! You can make your study sets public to share with classmates or the community, or keep them private for personal use.")
+      question: t("faq.studosets.share.question", "Can I share my studygroup sets?"),
+      answer: t("faq.studosets.share.answer", "Yes! You can make your studygroup sets public to share with classmates or the community, or keep them private for personal use.")
     }
   ];
 
@@ -101,7 +101,7 @@ export default function AboutStudysets() {
               transition-all duration-700 delay-400
               ${mounted ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={hero} alt={t("Create study sets illustration")} className="min-w-2/1" />
+            <img src={hero} alt={t("Create studygroup sets illustration")} className="min-w-2/1" />
           </div>
         </div>
       </main>

@@ -7,6 +7,8 @@ import { FiMenu, FiX } from "react-icons/fi";
 import TriggerTools from "@/components/marketing/landing_header/dropdowntools";
 import TriggerMethods from "@/components/marketing/landing_header/dropdownmethods";
 import Image from "next/image";
+import TriggerClassroom from "@/components/app/classrooms/create_classroom";
+import TriggerClassrooms from "@/components/marketing/landing_header/dropdownclassrooms";
 
 
 const menuItems = [
@@ -26,6 +28,7 @@ const toolCategories = [
 export default function LandingHeader() {
     const [MethodsOpen, setMethodsOpen] = useState<boolean>(false);
     const [ToolsOpen, setToolsOpen] = useState<boolean>(false);
+    const [ClassOpen, setClassOpen] = useState<boolean>(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [scrolled, setScrolled] = useState<boolean>(false);
     const locale = useLocale();
@@ -105,7 +108,7 @@ export default function LandingHeader() {
                 <nav className="hidden md:flex flex-row gap-10 items-center">
                     <TriggerMethods MethodsOpen={MethodsOpen} setMethodsOpen={setMethodsOpen} />
                     <TriggerTools ToolsOpen={ToolsOpen} setToolsOpen={setToolsOpen} />
-
+                    <TriggerClassrooms ClassOpen={ClassOpen} setClassOpen={setClassOpen}/>
                 </nav>
             </div>
 
@@ -298,7 +301,7 @@ function specialeDag() {
         stPatricks: "from-green-600 via-green-500 to-green-400 dark:from-white dark:to-green-200",
         mothersDay: "from-pink-500 via-pink-400 to-rose-400 dark:from-white dark:to-pink-200",
         fathersDay: "from-sky-600 via-sky-500 to-sky-400 dark:from-white dark:to-sky-200",
-        carnival: "from-fuchsia-600 via-fuchsia-500 to-fuchsia-400 dark:from-white dark:to-fuchsia-200",
+        carnival: "from-fuchsia-600 via-fuchsia-500 to-fuchsia-400 dark:from-white dark:via-fuchsia-200 dark:to-fuchsia-200",
         kingsDay: "from-orange-500 via-orange-400 to-amber-400 dark:from-white dark:to-orange-200",
         midsummer: "from-blue-400 via-green-300 to-amber-300 dark:from-white dark:to-sky-200",
         belgie: "from-zinc-900 via-amber-300 to-rose-700 dark:from-zinc-900 dark:via-amber-400 dark:to-rose-600",
