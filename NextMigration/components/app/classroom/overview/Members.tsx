@@ -37,9 +37,11 @@ function ClassroomUser({user}: UserProps) {
         >
             <div className={"w-fit flex flex-row gap-2 items-center justify-base"}>
                 <div className="relative min-w-10 min-h-10 rounded-full overflow-hidden bg-emerald-600 dark:bg-gray-800">
-                    <img
+                    <Image
                         src={user.img_url}
                         alt="pfp"
+                        width={0}
+                        height={0}
                         className="object-cover"
                     />
                 </div>
