@@ -11,7 +11,13 @@ export default function ChallengeGrid() {
                     <HiLightningBolt />
                     {t("running")}:
                 </span>
-                <div className={"w-full h-25 bg-studoblue"}></div>
+                <div className={"w-full h-25 grid grid-cols-5 gap-5 py-3"}>
+                    <ChallengeItem/>
+                    <ChallengeItem/>
+                    <ChallengeItem/>
+                    <ChallengeItem/>
+                    <ChallengeItem/>
+                </div>
             </div>
             <div className={"w-full h-full rounded-2xl bg-studogrey/30 border-studoborder/10 border row-start-2 col-start-1 row-end-6 col-end-3"}></div>
             <div className={"w-full h-full rounded-2xl bg-studogrey/30 border-studoborder/10 border row-start-2 col-start-3 row-end-6 col-end-5"}></div>
@@ -21,5 +27,11 @@ export default function ChallengeGrid() {
                 </span>
             </div>
         </div>
+    </div>)
+}
+
+function ChallengeItem() {
+    return (<div className={"w-full h-20 rounded-3xl bg-studogrey/10 flex items-center justify-center border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 shadow-2xl"}>
+        <span>challenge</span>
     </div>)
 }

@@ -12,12 +12,16 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "studo.studygroup",
+                hostname: "studo.study",
             },
             {
                 protocol: 'https',
                 hostname: 'api.dicebear.com',
                 pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'example.com',
             },
         ],
     },
