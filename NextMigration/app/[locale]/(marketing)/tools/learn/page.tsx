@@ -82,6 +82,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default function LearnPage() {
     const t = useTranslations("landing.learn")
+    const launched = false;
     return (
         <main
             className={`w-full dark:text-white text-studodarkblue
@@ -120,7 +121,7 @@ export default function LearnPage() {
                                 <li className="list-disc">{t("block4_learn")}</li>
                             </ul>
                         </AnimateOnMount>
-
+                        {launched &&
                         <AnimateOnMount delay={1000} className={"w-full"}>
                             <div className={`w-full flex items-center justify-baseline
                                 transition-all duration-700 delay-1000`}
@@ -132,7 +133,7 @@ export default function LearnPage() {
                                     {t("try it out")}
                                 </Link>
                             </div>
-                        </AnimateOnMount>
+                        </AnimateOnMount>}
 
                     </article>
                 </div>

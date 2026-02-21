@@ -37,14 +37,24 @@ const features: Feature[] = [
         showCTA: null,
     },
     {
+        titleKey: "classroomFeatureTitle",
+        descriptionKey: "classroomBlock",
+        image: "/icons/start/classroom-desk.svg",
+        imageAlt: "Classroom collaboration illustration",
+        color: "from-emerald-400 to-teal-500",
+        bgColor: "bg-gradient-to-br from-emerald-400 to-teal-50 dark:from-emerald-400 dark:to-teal-400",
+        direction: "normal",
+        showCTA: null,
+    },
+    {
         titleKey: "featureTitle3",
         descriptionKey: "block3",
         image: "/icons/start/ready.svg",
         imageAlt: "Ready for challenges illustration",
-        color: "from-emerald-400 to-teal-500",
-        bgColor: "bg-gradient-to-br from-emerald-400 to-teal-50 dark:from-emerald-400 dark:to-teal-400",
-        direction: "normal",
-        showCTA: true,
+        color: "from-purple-400 to-violet-500",
+        bgColor: "bg-gradient-to-br from-purple-400 to-violet-50 dark:from-purple-400 dark:to-violet-400",
+        direction: "reverse",
+        showCTA: null,
     },
 ];
 
