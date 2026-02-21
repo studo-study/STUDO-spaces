@@ -83,6 +83,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default function StudosetPage() {
     const t = useTranslations("landing.studosets")
+    const launched = false;
     return (
         <main
             className={`w-full dark:text-white text-studodarkblue
@@ -113,6 +114,7 @@ export default function StudosetPage() {
                             <li className="list-disc">{t("block4_studyset")}</li>
                         </ul>
                         </AnimateOnMount>
+                        {launched &&
                         <AnimateOnMount delay={1000} className={"w-full "}>
                         <div
                             className={`w-full flex items-center justify-baseline
@@ -125,7 +127,7 @@ export default function StudosetPage() {
                                 {t("create your own")}
                             </Link>
                         </div>
-                            </AnimateOnMount>
+                            </AnimateOnMount>}
                     </article>
                 </div>
                 <AnimateOnMount delay={400} className="hidden xl:flex h-screen xl:w-1/2 h-full">

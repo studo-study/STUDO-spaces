@@ -25,6 +25,15 @@ const toolCategories = [
     { to: "/point", icon: "/icons/point.svg", label: "point", gradient: "from-violet-400 to-purple-500" },
 ];
 
+const classroomTools = [
+            { to: "/classes", icon: "/icons/classroom.svg", label: "class_group", gradient: "from-green-400 to-emerald-500" },
+            { to: "/studygroups", icon: "/icons/studygroup.svg", label: "study_group", gradient: "from-cyan-400 to-sky-500" },
+            { to: "/communities", icon: "/icons/community.svg", label: "community_group", gradient: "from-indigo-400 to-violet-500" },
+            { to: "/challenges/time-attack", icon: "/icons/clock.svg", label: "time", gradient: "from-fuchsia-400 to-pink-500" },
+            { to: "/challenges/mastery-tournament", icon: "/icons/podium.svg", label: "mastery", gradient: "from-red-400 to-orange-500" },
+            { to: "/challenges/duel", icon: "/icons/duel.svg", label: "duel", gradient: "from-amber-400 to-yellow-500" },
+];
+
 export default function LandingHeader() {
     const [MethodsOpen, setMethodsOpen] = useState<boolean>(false);
     const [ToolsOpen, setToolsOpen] = useState<boolean>(false);
@@ -32,6 +41,7 @@ export default function LandingHeader() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [scrolled, setScrolled] = useState<boolean>(false);
     const locale = useLocale();
+    const launched = false;
 
 
 
@@ -113,7 +123,7 @@ export default function LandingHeader() {
             </div>
 
             <div className="flex items-center justify-end gap-4 md:gap-5 flex-1">
-                <div className="hidden md:flex items-center gap-5">
+                {launched ? ( <div className="hidden md:flex items-center gap-5">
                     <Link
                         href={"/login"}
                         className="inline-flex font-semibold text-white
@@ -132,7 +142,19 @@ export default function LandingHeader() {
                     >
                         {t("CreateAccount")}
                     </Link>
-                </div>
+                </div>) :
+                    <div
+                        className="inline-flex font-semibold text-white
+            flex-row gap-2 justify-center items-center p-2 xl:px-7 px-3 rounded-4xl cursor-pointer
+            active:scale-105 transition-transform z-[2] lg:text-base text-sm text-center
+            border-[0.5px] border-solid border-[#8181812f]
+            shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
+            dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
+            bg-emerald-400 dark:bg-white dark:text-studodarkblue"
+                    >
+                        {t("coming")}
+                    </div>
+                }
 
                 <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
