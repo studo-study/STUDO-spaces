@@ -36,7 +36,7 @@ function ClassroomUser({user}: UserProps) {
                  flex gap-3 shadow-2xl items-center w-full rounded-full bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
         >
             <div className={"w-fit flex flex-row gap-2 items-center justify-base"}>
-                <div className="relative min-w-10 min-h-10 rounded-full overflow-hidden bg-emerald-600 dark:bg-gray-800">
+                <div className="relative min-w-10 max-w-10 min-h-10 max-h-10 rounded-full overflow-hidden bg-emerald-600 dark:bg-gray-800">
                     <Image
                         src={user.img_url}
                         alt="pfp"

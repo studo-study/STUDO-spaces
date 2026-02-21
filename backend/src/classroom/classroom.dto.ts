@@ -6,6 +6,7 @@ import {
   ArrayNotEmpty,
   IsArray,
   IsNotEmpty,
+  IsNumber,
   IsUUID,
   ValidateNested,
 } from 'class-validator';
@@ -290,6 +291,12 @@ export class ClassroomUserDto {
     example: true,
   })
   verified: boolean;
+
+  @ApiProperty({
+    description: 'positie van gebruiker binnen classroom',
+    example: 1,
+  })
+  position: number;
 }
 
 export class FullClassroomResponseDto extends ClassroomResponseDto {
@@ -352,6 +359,14 @@ export class UpdateClassroomUsersDTO {
     minLength: 6,
   })
   role: string;
+
+  @ApiProperty({
+    description: 'Algemene Classroom leaderboard positie',
+    example: 10,
+    minLength: 1,
+  })
+  @IsNumber({})
+  position: number;
 }
 
 export class leaveClassroomDto {
@@ -424,4 +439,31 @@ export class ClassroomUserResponseDto {
     example: '2024-01-15T10:30:00.000Z',
   })
   joined_at: string;
+}
+
+export class CreateChallengeDTO {
+  challengeType: 'time attack' | 'mastery tournament' | 'duel';
+}
+
+export class ChallengeResponseDTO {
+  challenge_id: string;
+  challengeType: 'time attack' | 'mastery tournament' | 'duel';
+  start_date: string;
+  end_date: string;
+  running: boolean;
+  set_id: string;
+  title: string;
+  display_name: string;
+  creator_id: string;
+  classroom_id: string;
+}
+
+export class ChallengeMemberDTO {
+  challenge_id: string;
+  user_id: string;
+  display_name: string;
+  img_url: string;
+  classroom_id: string;
+  position: number;
+  winner: boolean;
 }

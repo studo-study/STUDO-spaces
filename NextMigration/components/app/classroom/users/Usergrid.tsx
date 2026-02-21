@@ -11,10 +11,26 @@ import Link from "next/link";
 
 const users = mockClassroomUsers;
 
+interface JoinRequest {
+    displayName: string;
+    date: string;
+    img_url: string;
+    id: string;
+}
+
+const MockRequests = [
+    {
+        displayName: "Charles Degraeuwe",
+        date: new Date().toISOString(),
+        img_url: "https://example.com",
+        id:"user19293"
+    }
+]
 export default function Usergrid(){
     const t = useTranslations("classroom");
     const [filteredSets, setFilteredSets] = useState<ClassroomUser[]>(users);
     const [search, setSearch] = useState(false);
+    const [joinRequests, setJoinRequests] = useState<JoinRequest[]>(MockRequests)
     const searchRef = useRef<HTMLInputElement>(null);
     const searching = () => {
         if (searchRef.current) {
@@ -26,6 +42,8 @@ export default function Usergrid(){
             }
         }
     }
+
+
 
     return(<div className={"w-full h-full flex flex-col"}>
         <div className={"w-full h-20  flex items-center justify-between gap-3 overflow-visible"}>
@@ -52,10 +70,20 @@ export default function Usergrid(){
 
             </div>
         </div>
-        <div className={"w-full h-fit flex flex-col gap-5 mb-10"}>
-            <span className={"font-bold text-lg dark:text-white text-studodarkblue"}>{t("requests")}:</span>
-            {joinRequest(t)}
-        </div>
+        {joinRequests.length != 0 &&
+			<div className={"w-full h-fit flex flex-col gap-5 mb-10"}>
+				<span className={"font-bold text-lg dark:text-white text-studodarkblue"}>{t("requests")}:</span>
+                {joinRequests.map((item, i) =>
+                    <JoinRequest
+                        key={i}
+                        t={t}
+                        request={item}
+                        joinRequests={joinRequests}
+                        setJoinRequests={setJoinRequests}
+                    />)}
+			</div>
+        }
+
 
         <div className="w-full flex flex-col gap-5">
     <span className="font-bold text-lg dark:text-white text-studodarkblue">
@@ -74,17 +102,37 @@ interface UserItemProps {
     t: any;
     user: ClassroomUser;
 }
-function joinRequest(t: any) {
+
+interface JoinRequestProps {
+    t: any;
+    request: JoinRequest;
+    joinRequests: JoinRequest[];
+    setJoinRequests: React.Dispatch<React.SetStateAction<JoinRequest[]>>;
+}
+function JoinRequest({t, request, joinRequests, setJoinRequests }: JoinRequestProps) {
+    const toggleRemove = () => {
+       const i = joinRequests.indexOf(request);
+       setJoinRequests(joinRequests.splice(i, 0));
+    }
+
     return (<div className={`max-h-15 h-15 px-3 max-w-full min-w-full cursor-pointer justify-between
                  flex gap-3 shadow-2xl items-center w-full rounded-full bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
     >
         <div className={"w-fit flex flex-row gap-5 items-center"}>
-            <div className={"w-10 h-10 bg-studoblue rounded-full"}/>
-            <span className={"dark:text-white text-studodarkblue"}> {"username"} {" "} {t("w_l_t_j")}</span>
+            <div className={"w-10 h-10 bg-studoblue rounded-full"}>
+                <Image
+                    src={request.img_url}
+                    alt="pfp_join"
+                    width={0}
+                    height={0}
+                    className="object-cover h-fit"
+                />
+            </div>
+            <Link href={"/profile/" + request.id} className={"dark:text-white hover:underline text-studodarkblue"}> {request.displayName} {" "} {t("w_l_t_j")}</Link>
         </div>
         <div className={"w-fit flex flex-row items-center gap-5 dark:text-white text-studodarkblue"}>
-            <button className={"cursor-pointer active:scale-95 transition-all duration-300 w-10 h-10 rounded-full bg-studogrey items-center justify-center flex"}><FaCheck size={18}/></button>
-            <button className={"cursor-pointer active:scale-95 transition-all duration-300 w-10 h-10 rounded-full bg-studogrey items-center justify-center flex"}><IoClose size={25}/></button>
+            <button onClick={toggleRemove} className={"cursor-pointer hover:bg-emerald-400 active:scale-95 transition-all duration-300 w-10 h-10 rounded-full bg-studogrey items-center justify-center flex"}><FaCheck size={18}/></button>
+            <button onClick={toggleRemove} className={"cursor-pointer hover:bg-rose-400  active:scale-95 transition-all duration-300 w-10 h-10 rounded-full bg-studogrey items-center justify-center flex"}><IoClose size={25}/></button>
         </div>
     </div>)
 }
