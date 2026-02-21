@@ -8,7 +8,7 @@ import type {
     FullClassroomSet,
     ClassroomUser,
     FullClassroom,
-    ClassroomListResponse,
+    ClassroomListResponse, ChallengeMemberDTO, ChallengeResponseDTO,
 } from '../../types/types'; // Adjust import path as needed
 
 // ============================================================
@@ -192,6 +192,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         displayName: 'Mevrouw de Vries',
         streak: 45,
         verified: true,
+        position: 1,
     },
     {
         user_id: 'usr_student_001',
@@ -201,6 +202,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         joined_at: '2024-09-02T09:00:00Z',
         displayName: 'Emma Bakker',
         streak: 23,
+        position: 2,
         verified: true,
     },
     {
@@ -211,6 +213,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         joined_at: '2024-09-02T09:15:00Z',
         displayName: 'Lucas van Dam',
         streak: 18,
+        position: 3,
         verified: false,
     },
     {
@@ -221,6 +224,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         joined_at: '2024-09-03T10:00:00Z',
         displayName: 'Sophie Meijer',
         streak: 31,
+        position: 4,
         verified: true,
     },
     {
@@ -232,6 +236,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         displayName: 'Daan Visser',
         streak: 7,
         verified: false,
+        position: 5,
     },
 
     // Wiskunde Gevorderden (cls_002)
@@ -244,6 +249,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         displayName: 'Meneer Jansen',
         streak: 67,
         verified: true,
+        position: 3,
     },
     {
         user_id: 'usr_student_005',
@@ -254,6 +260,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         displayName: 'Tim de Groot',
         streak: 42,
         verified: true,
+        position: 1,
     },
     {
         user_id: 'usr_student_006',
@@ -264,6 +271,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         displayName: 'Lisa Vermeer',
         streak: 55,
         verified: true,
+        position: 2,
     },
 
     // Geschiedenis Studiegroep (cls_003)
@@ -276,6 +284,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         displayName: 'Emma Bakker',
         streak: 23,
         verified: true,
+        position: 2,
     },
     {
         user_id: 'usr_student_007',
@@ -286,6 +295,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         displayName: 'Bram Hendriks',
         streak: 12,
         verified: false,
+        position: 3,
     },
     {
         user_id: 'usr_student_008',
@@ -296,6 +306,7 @@ export const mockClassroomUsers: ClassroomUser[] = [
         displayName: 'Fleur Smit',
         streak: 8,
         verified: true,
+        position: 1
     },
 ];
 
@@ -420,6 +431,164 @@ export const withDelay = <T>(data: T, delayMs: number = 500): Promise<T> => {
         setTimeout(() => resolve(data), delayMs);
     });
 };
+export const mockChallenges: ChallengeResponseDTO[] = [
+    {
+        challenge_id: 'chl_001',
+        challengeType: 'time attack',
+        start_date: '2024-11-01T08:00:00Z',
+        end_date: '2024-11-08T08:00:00Z',
+        running: false,
+        set_id: 'set_001',
+        title:"Werkwoorden Speedrun",
+        displayName: '',
+        creator_id: 'usr_teacher_001',
+        classroom_id: 'cls_001',
+    },
+    {
+        challenge_id: 'chl_002',
+        challengeType: 'mastery tournament',
+        start_date: '2024-11-10T09:00:00Z',
+        end_date: '2024-11-17T09:00:00Z',
+        running: false,
+        set_id: 'set_002',
+        title: "Spelling Kampioenschap",
+        displayName: '',
+        creator_id: 'usr_teacher_001',
+        classroom_id: 'cls_001',
+    },
+    {
+        challenge_id: 'chl_003',
+        challengeType: 'duel',
+        start_date: '2024-11-20T14:00:00Z',
+        end_date: '2024-11-21T14:00:00Z',
+        running: false,
+        set_id: 'set_001',
+        title:"Emma vs Lucas Duel",
+        displayName: '',
+        creator_id: 'usr_student_001',
+        classroom_id: 'cls_001',
+    },
+    {
+        challenge_id: 'chl_004',
+        challengeType: 'time attack',
+        start_date: '2024-11-15T10:00:00Z',
+        end_date: '2024-11-22T10:00:00Z',
+        running: false,
+        set_id: 'set_003',
+        title:"Kwadratische Vergelijkingen Sprint",
+        displayName: '',
+        creator_id: 'usr_teacher_002',
+        classroom_id: 'cls_002',
+    },
+    {
+        challenge_id: 'chl_005',
+        challengeType: 'mastery tournament',
+        start_date: '2024-12-01T09:00:00Z',
+        end_date: '2024-12-08T09:00:00Z',
+        running: false,
+        set_id: 'set_003',
+        title:"Wiskunde Eindejaarstornooi",
+        displayName: '',
+        creator_id: 'usr_teacher_002',
+        classroom_id: 'cls_002',
+    },
+    {
+        challenge_id: 'chl_006',
+        challengeType: 'duel',
+        start_date: '2024-12-05T11:00:00Z',
+        end_date: '2024-12-06T11:00:00Z',
+        running: false,
+        set_id: 'set_005',
+        title: "Geschiedenis Duel: WO2",
+        displayName: 'Geschiedenis Duel: WO2',
+        creator_id: 'usr_student_001',
+        classroom_id: 'cls_003',
+    },
+    {
+        challenge_id: 'chl_007',
+        challengeType: 'time attack',
+        start_date: '2024-12-10T08:00:00Z',
+        end_date: '2024-12-17T08:00:00Z',
+        running: false,
+        set_id: 'set_004',
+        title:"Business English Blitz",
+        displayName: '',
+        creator_id: 'usr_teacher_003',
+        classroom_id: 'cls_004',
+    },
+    {
+        challenge_id: 'chl_008',
+        challengeType: 'mastery tournament',
+        start_date: '2025-01-06T09:00:00Z',
+        end_date: '2025-01-13T09:00:00Z',
+        running: false,
+        set_id: 'set_006',
+        title: "Biologie Examentornooi",
+        displayName: '',
+        creator_id: 'usr_teacher_001',
+        classroom_id: 'cls_005',
+    },
+    {
+        challenge_id: 'chl_009',
+        challengeType: 'time attack',
+        start_date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+        end_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+        running: true,
+        set_id: 'set_001',
+        title: "November Speedchallenge",
+        displayName: '',
+        creator_id: 'usr_teacher_001',
+        classroom_id: 'cls_001',
+    },
+    {
+        challenge_id: 'chl_010',
+        challengeType: 'duel',
+        start_date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+        end_date: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+        running: true,
+        set_id: 'set_003',
+        title: "Tim vs Lisa: Wiskunde Showdown",
+        displayName: '',
+        creator_id: 'usr_student_005',
+        classroom_id: 'cls_002',
+    },
+];
+export const mockChallengeMembers: ChallengeMemberDTO[] = [
+    // chl_001 - time attack cls_001
+    { challenge_id: 'chl_001', user_id: 'usr_student_001', displayName: 'Emma Bakker', img_url: userImages[1], classroom_id: 'cls_001', position: 1, winner: true },
+    { challenge_id: 'chl_001', user_id: 'usr_student_003', displayName: 'Sophie Meijer', img_url: userImages[3], classroom_id: 'cls_001', position: 2, winner: false },
+    { challenge_id: 'chl_001', user_id: 'usr_student_002', displayName: 'Lucas van Dam', img_url: userImages[2], classroom_id: 'cls_001', position: 3, winner: false },
+    { challenge_id: 'chl_001', user_id: 'usr_student_004', displayName: 'Daan Visser', img_url: userImages[4], classroom_id: 'cls_001', position: 4, winner: false },
 
-// Usage example:
-// const classrooms = await withDelay(mockClassroomListResponse, 800);
+    // chl_002 - mastery tournament cls_001
+    { challenge_id: 'chl_002', user_id: 'usr_student_003', displayName: 'Sophie Meijer', img_url: userImages[3], classroom_id: 'cls_001', position: 1, winner: true },
+    { challenge_id: 'chl_002', user_id: 'usr_student_001', displayName: 'Emma Bakker', img_url: userImages[1], classroom_id: 'cls_001', position: 2, winner: false },
+    { challenge_id: 'chl_002', user_id: 'usr_student_004', displayName: 'Daan Visser', img_url: userImages[4], classroom_id: 'cls_001', position: 3, winner: false },
+    { challenge_id: 'chl_002', user_id: 'usr_student_002', displayName: 'Lucas van Dam', img_url: userImages[2], classroom_id: 'cls_001', position: 4, winner: false },
+
+    // chl_003 - duel cls_001
+    { challenge_id: 'chl_003', user_id: 'usr_student_001', displayName: 'Emma Bakker', img_url: userImages[1], classroom_id: 'cls_001', position: 1, winner: true },
+    { challenge_id: 'chl_003', user_id: 'usr_student_002', displayName: 'Lucas van Dam', img_url: userImages[2], classroom_id: 'cls_001', position: 2, winner: false },
+
+    // chl_004 - time attack cls_002
+    { challenge_id: 'chl_004', user_id: 'usr_student_006', displayName: 'Lisa Vermeer', img_url: userImages[7], classroom_id: 'cls_002', position: 1, winner: true },
+    { challenge_id: 'chl_004', user_id: 'usr_student_005', displayName: 'Tim de Groot', img_url: userImages[6], classroom_id: 'cls_002', position: 2, winner: false },
+
+    // chl_005 - mastery tournament cls_002
+    { challenge_id: 'chl_005', user_id: 'usr_student_005', displayName: 'Tim de Groot', img_url: userImages[6], classroom_id: 'cls_002', position: 1, winner: true },
+    { challenge_id: 'chl_005', user_id: 'usr_student_006', displayName: 'Lisa Vermeer', img_url: userImages[7], classroom_id: 'cls_002', position: 2, winner: false },
+
+    // chl_006 - duel cls_003
+    { challenge_id: 'chl_006', user_id: 'usr_student_007', displayName: 'Bram Hendriks', img_url: userImages[0], classroom_id: 'cls_003', position: 1, winner: true },
+    { challenge_id: 'chl_006', user_id: 'usr_student_001', displayName: 'Emma Bakker', img_url: userImages[1], classroom_id: 'cls_003', position: 2, winner: false },
+
+    // chl_009 - running, no winners yet
+    { challenge_id: 'chl_009', user_id: 'usr_student_001', displayName: 'Emma Bakker', img_url: userImages[1], classroom_id: 'cls_001', position: 1, winner: false },
+    { challenge_id: 'chl_009', user_id: 'usr_student_003', displayName: 'Sophie Meijer', img_url: userImages[3], classroom_id: 'cls_001', position: 2, winner: false },
+    { challenge_id: 'chl_009', user_id: 'usr_student_002', displayName: 'Lucas van Dam', img_url: userImages[2], classroom_id: 'cls_001', position: 3, winner: false },
+    { challenge_id: 'chl_009', user_id: 'usr_student_004', displayName: 'Daan Visser', img_url: userImages[4], classroom_id: 'cls_001', position: 4, winner: false },
+
+    // chl_010 - running duel, no winner yet
+    { challenge_id: 'chl_010', user_id: 'usr_student_005', displayName: 'Tim de Groot', img_url: userImages[6], classroom_id: 'cls_002', position: 1, winner: false },
+    { challenge_id: 'chl_010', user_id: 'usr_student_006', displayName: 'Lisa Vermeer', img_url: userImages[7], classroom_id: 'cls_002', position: 2, winner: false },
+];

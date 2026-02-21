@@ -438,6 +438,7 @@ export interface ClassroomUser {
     displayName: string;
     streak: number;
     verified: boolean;
+    position: number;
 }
 
 export interface FullClassroom extends Classroom {
@@ -662,3 +663,29 @@ export interface StudoUser {
     lastTen: RecentSet[];
 }
 
+// ============================================
+// CHALLENGES
+// ============================================
+
+export interface ChallengeResponseDTO {
+    challenge_id: string;
+    challengeType: 'time attack' | 'mastery tournament' | 'duel';
+    start_date: string;
+    end_date: string;
+    running: boolean;
+    title: string;
+    set_id: string;
+    displayName: string;
+    creator_id: string;
+    classroom_id: string;
+}
+
+export interface ChallengeMemberDTO {
+    challenge_id: string;
+    user_id: string;
+    displayName: string;
+    img_url: string;
+    classroom_id: string;
+    position: number;
+    winner: boolean;
+}
