@@ -1,3 +1,3 @@
 export default function GDPRPage() {
-    return (<div>s</div>)
+    return (<div></div>)
 }

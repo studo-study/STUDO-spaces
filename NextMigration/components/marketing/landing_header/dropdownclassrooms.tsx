@@ -25,7 +25,7 @@ export default function TriggerClassrooms({ ClassOpen, setClassOpen }: TriggerCl
     return (
         <div
             ref={containerRef}
-            className={"relative w-fit h-fit flex flex-row gap-3 cursor-pointer"}
+            className={"relative w-fit min-w-fit h-fit flex flex-row gap-3 cursor-pointer"}
             onClick={togglePopUp}
         >
             <img
@@ -57,9 +57,9 @@ const toolCategories = [
         title: "challenges",
         color: "violet",
         items: [
-            { to: "/tools/identify", icon: <IoHourglassOutline />, label: "time", gradient: "from-fuchsia-300 to-pink-500" },
-            { to: "/tools/point", icon: <GiPodium />, label: "mastery", gradient: "from-red-300 to-orange-500" },
-            { to: "/tools/point", icon: <GiSwordsEmblem />, label: "duel", gradient: "from-amber-300 to-yellow-600" },
+            { to: "/challenges/time-attack", icon: <IoHourglassOutline />, label: "time", gradient: "from-fuchsia-300 to-pink-500" },
+            { to: "/challenges/mastery-tournament", icon: <GiPodium />, label: "mastery", gradient: "from-red-300 to-orange-500" },
+            { to: "/challenges/duel", icon: <GiSwordsEmblem />, label: "duel", gradient: "from-amber-300 to-yellow-600" },
         ],
     },
 ];
@@ -103,7 +103,7 @@ function ClassroomPopup({ ClassOpen, setClassOpen, triggerRef }: MethodsPopUpPro
             ref={popupRef}
             className={`absolute top-full left-1/2 -translate-x-1/2 mt-4
         z-[9999] w-64 p-2
-        rounded-2xl
+        rounded-2xl text-white
         bg-white/80 dark:bg-[#1e293b]/90
         backdrop-blur-xl
         border border-white/50 dark:border-white/10
@@ -154,7 +154,7 @@ function ClassroomPopup({ ClassOpen, setClassOpen, triggerRef }: MethodsPopUpPro
                                         {/* Icon Container */}
                                         <div className={`flex items-center justify-center w-9 h-9 rounded-xl
                       bg-gradient-to-br ${item.gradient}
-                      shadow-md shadow-black/10
+                      shadow-md shadow-black/10 text-white
                       group-hover:scale-110 group-hover:shadow-lg group-hover:-rotate-3
                       transition-all duration-200`}
                                         >

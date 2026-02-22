@@ -7,13 +7,12 @@ import { FiMenu, FiX } from "react-icons/fi";
 import TriggerTools from "@/components/marketing/landing_header/dropdowntools";
 import TriggerMethods from "@/components/marketing/landing_header/dropdownmethods";
 import Image from "next/image";
-import TriggerClassroom from "@/components/app/classrooms/create_classroom";
 import TriggerClassrooms from "@/components/marketing/landing_header/dropdownclassrooms";
 
 
 const menuItems = [
     { to: "/about-studosets", icon: "/icons/studyset.svg", label: "ss", color: "from-emerald-400 to-teal-500" },
-    { to: "/about-visualsets", icon: "icons/visualset.svg", label: "vs", color: "from-blue-400 to-indigo-500" },
+    { to: "/about-visualsets", icon: "/icons/visualset.svg", label: "vs", color: "from-blue-400 to-indigo-500" },
     { to: "/about-ai", icon: "/icons/sparkle.svg", label: "ai", color: "from-violet-400 to-purple-500" },
 ];
 
@@ -25,6 +24,15 @@ const toolCategories = [
     { to: "/point", icon: "/icons/point.svg", label: "point", gradient: "from-violet-400 to-purple-500" },
 ];
 
+const classroomTools = [
+            { to: "/classes", icon: "/icons/classroom.svg", label: "class_group", gradient: "from-green-400 to-emerald-500" },
+            { to: "/studygroups", icon: "/icons/studygroup.svg", label: "study_group", gradient: "from-cyan-400 to-sky-500" },
+            { to: "/communities", icon: "/icons/community.svg", label: "community_group", gradient: "from-indigo-400 to-violet-500" },
+            { to: "/challenges/time-attack", icon: "/icons/clock.svg", label: "time", gradient: "from-fuchsia-400 to-pink-500" },
+            { to: "/challenges/mastery-tournament", icon: "/icons/podium.svg", label: "mastery", gradient: "from-red-400 to-orange-500" },
+            { to: "/challenges/duel", icon: "/icons/duel.svg", label: "duel", gradient: "from-amber-400 to-yellow-500" },
+];
+
 export default function LandingHeader() {
     const [MethodsOpen, setMethodsOpen] = useState<boolean>(false);
     const [ToolsOpen, setToolsOpen] = useState<boolean>(false);
@@ -32,6 +40,7 @@ export default function LandingHeader() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [scrolled, setScrolled] = useState<boolean>(false);
     const locale = useLocale();
+    const launched = false;
 
 
 
@@ -105,7 +114,7 @@ export default function LandingHeader() {
 
                 </Link>
 
-                <nav className="hidden md:flex flex-row gap-10 items-center">
+                <nav className="hidden md:flex w-full flex-row gap-10 items-center">
                     <TriggerMethods MethodsOpen={MethodsOpen} setMethodsOpen={setMethodsOpen} />
                     <TriggerTools ToolsOpen={ToolsOpen} setToolsOpen={setToolsOpen} />
                     <TriggerClassrooms ClassOpen={ClassOpen} setClassOpen={setClassOpen}/>
@@ -113,7 +122,7 @@ export default function LandingHeader() {
             </div>
 
             <div className="flex items-center justify-end gap-4 md:gap-5 flex-1">
-                <div className="hidden md:flex items-center gap-5">
+                {launched ? ( <div className="hidden md:flex items-center gap-5">
                     <Link
                         href={"/login"}
                         className="inline-flex font-semibold text-white
@@ -132,7 +141,19 @@ export default function LandingHeader() {
                     >
                         {t("CreateAccount")}
                     </Link>
-                </div>
+                </div>) :
+                    <Link  href={"/waitinglist"}
+                           className="inline-flex font-semibold text-white
+            flex-row gap-2 justify-center items-center p-2 xl:px-7 px-3 rounded-4xl cursor-pointer
+            active:scale-105 transition-transform z-[2] lg:text-base text-sm text-center
+            border-[0.5px] border-solid border-[#8181812f]
+            shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
+            dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
+            bg-emerald-400 dark:bg-white dark:text-studodarkblue"
+                    >
+                        {t("coming")}
+                    </Link>
+                }
 
                 <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
