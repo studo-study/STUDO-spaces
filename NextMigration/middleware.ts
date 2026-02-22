@@ -37,8 +37,6 @@ export default auth((request) => {
     // Routes die GEEN login vereisen
     const publicRoutes = [
         "/welcome",
-        "/login",
-        "/register",
         "/callback",
         "/logout",
         "/about-us",
