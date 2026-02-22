@@ -40,7 +40,7 @@ export default function LandingHeader() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [scrolled, setScrolled] = useState<boolean>(false);
     const locale = useLocale();
-    const launched = false;
+    const launched = true;
 
 
 
