@@ -20,7 +20,7 @@ export default function TriggerMethods({ MethodsOpen, setMethodsOpen }: TriggerM
     return (
         <div
             ref={containerRef}
-            className={"relative w-fit h-fit flex flex-row gap-3 cursor-pointer"}
+            className={"relative min-w-fit w-fit h-fit flex flex-row gap-3 cursor-pointer"}
             onClick={togglePopUp}
         >
             <img

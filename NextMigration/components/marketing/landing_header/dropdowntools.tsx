@@ -19,7 +19,7 @@ export default function TriggerTools({ ToolsOpen, setToolsOpen }: TriggerToolsPr
         return (
             <div
                 ref={containerRef}
-                className={"relative w-fit h-fit flex flex-row gap-3 cursor-pointer"}
+                className={"relative w-fit min-w-fit h-fit flex flex-row gap-3 cursor-pointer"}
                 onClick={togglePopUp}
             >
                 <Image
