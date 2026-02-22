@@ -55,6 +55,7 @@ export default auth((request) => {
         "/GDPR",
         "/login",
         "/register",
+        "/select",
         "/studo-for-education",
         "/auth/callback",
         "/classes",
