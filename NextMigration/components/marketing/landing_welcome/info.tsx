@@ -69,7 +69,7 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
 
     return (
         <AnimateOnScroll className={`transition-all duration-1000`}>
-            <article
+            <article id={"info"}
                 className="grid grid-cols-1 overflow-visible lg:grid-cols-2 gap-8 lg:gap-5 items-center"
                 aria-labelledby={`feature-title-${index}`}
             >
@@ -101,7 +101,7 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
                     {feature.showCTA && (
                         <div className="mt-4 overflow-visible">
                             <Link
-                                href={"/waitinglist"}
+                                href={"/register"}
                                 className="group overflow-visible inline-flex items-center gap-3 px-8 py-4 text-lg font-bold text-white rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 dark:from-studoblue dark:to-blue-400 shadow-xl shadow-emerald-500/25 dark:shadow-studoblue/25 hover:shadow-2xl hover:shadow-emerald-500/30 dark:hover:shadow-studoblue/30 hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
                             >
                                 {t("signupfree")}

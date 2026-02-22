@@ -53,6 +53,8 @@ export default auth((request) => {
         "/overview",
         "/studo-select",
         "/GDPR",
+        "/login",
+        "/register",
         "/studo-for-education",
         "/auth/callback",
         "/classes",

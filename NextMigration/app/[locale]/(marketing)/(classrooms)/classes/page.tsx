@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default function OfficialClassroomPage() {
     const t = useTranslations("landing.classrooms.official")
-    const launched = false;
+    const launched = true;
     return (
         <main className={`w-full dark:text-white text-studodarkblue
           max-h-screen min-h-[90vh] pt-25 p-10 md:p-20 xl:p-0 xl:pt-0 h-screen flex justify-center items-center
@@ -110,7 +110,7 @@ export default function OfficialClassroomPage() {
                         {launched &&
 							<AnimateOnMount delay={1000} className={"w-full"}>
 								<div className={`w-full flex items-center justify-baseline transition-all duration-700 delay-1000`}>
-									<Link href="/register" className="px-6 py-3 rounded-full flex items-center justify-center text-white bg-blue-400 font-bold">
+									<Link href="/register" className="px-6 py-3 rounded-full flex items-center justify-center text-white bg-emerald-400 font-bold">
                                         {t("cta")}
 									</Link>
 								</div>
