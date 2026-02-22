@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default function Page() {
     const t = useTranslations("landing.point")
-    const launched = false;
+    const launched = true;
     return (
         <main
             className={`w-full dark:text-white text-studodarkblue

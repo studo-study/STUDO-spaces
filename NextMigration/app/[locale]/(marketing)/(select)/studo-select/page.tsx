@@ -22,7 +22,7 @@ const select = [
 export default function SelectPage() {
     const t = useTranslations("select")
     return (
-        <div className="w-full h-fit pt-25 bg-radial from-blue-500/10 via-transparent to-transparent flex flex-col items-center gap-10 scroll-hidden">
+        <div className="pt-25 w-full h-fit bg-radial from-blue-500/10 via-transparent to-transparent flex flex-col items-center gap-10 scroll-hidden">
             <div className={"w-full min-h-screen flex items-center flex-col gap-10"}>
                 <div className={"w-full h-fit flex flex-col gap-5 items-center justify-center"}>
                     <AnimateOnMount delay={100}>
