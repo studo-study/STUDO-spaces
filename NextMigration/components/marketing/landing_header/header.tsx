@@ -7,13 +7,12 @@ import { FiMenu, FiX } from "react-icons/fi";
 import TriggerTools from "@/components/marketing/landing_header/dropdowntools";
 import TriggerMethods from "@/components/marketing/landing_header/dropdownmethods";
 import Image from "next/image";
-import TriggerClassroom from "@/components/app/classrooms/create_classroom";
 import TriggerClassrooms from "@/components/marketing/landing_header/dropdownclassrooms";
 
 
 const menuItems = [
     { to: "/about-studosets", icon: "/icons/studyset.svg", label: "ss", color: "from-emerald-400 to-teal-500" },
-    { to: "/about-visualsets", icon: "icons/visualset.svg", label: "vs", color: "from-blue-400 to-indigo-500" },
+    { to: "/about-visualsets", icon: "/icons/visualset.svg", label: "vs", color: "from-blue-400 to-indigo-500" },
     { to: "/about-ai", icon: "/icons/sparkle.svg", label: "ai", color: "from-violet-400 to-purple-500" },
 ];
 
