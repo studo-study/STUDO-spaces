@@ -46,8 +46,8 @@ export default function LandingFooter() {
 
                         <div className="flex flex-col gap-4">
                             <span className="font-bold text-xl">{t("selectTitle").toUpperCase()}</span>
-                            <Link href="/studo-select" className="hover:underline">{t("select")}</Link>
-                            <Link href="/studo-for-education" className="hover:underline">{t("edu")}</Link>
+                            <Link href="/welcome" className="hover:underline">{t("select")}</Link>
+                            <Link href="/welcome" className="hover:underline">{t("edu")}</Link>
                         </div>
 
                         <div className="flex flex-col gap-4">

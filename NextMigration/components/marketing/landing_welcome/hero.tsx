@@ -74,10 +74,10 @@ export default function Hero() {
 
                 <AnimateOnMount delay={500}>
                     <nav className="grid grid-cols-1 md:grid-cols-2 gap-4 md:mt-6 md:w-full max-w-150">
-                        <div className="px-8 py-4 text-lg flex items-center justify-center gap-2 font-bold text-white bg-emerald-400 dark:bg-studoblue rounded-full border-2 border-emerald-400 dark:border-studoblue hover:bg-emerald-500 dark:hover:bg-studoblue/50 transition-all duration-300">
+                        <Link href={"/waitinglist"} className="px-8 py-4 text-lg flex items-center justify-center gap-2 font-bold text-white bg-emerald-400 dark:bg-studoblue rounded-full border-2 border-emerald-400 dark:border-studoblue hover:bg-emerald-500 dark:hover:bg-studoblue/50 transition-all duration-300">
                             {t("SignUp")}
-                            {launched && <FaArrowRightLong aria-hidden="true" />}
-                        </div>
+                            <FaArrowRightLong aria-hidden="true" />
+                        </Link>
                         <Link href="/welcome#info" className="px-8 py-4 text-lg flex items-center justify-center gap-2 font-bold text-emerald-400 dark:text-studoblue rounded-full border-2 border-emerald-400 dark:border-studoblue bg-transparent hover:bg-emerald-400/10 dark:hover:bg-studoblue/10 transition-all duration-300 backdrop-blur-sm">
                             {t("LearnMore")}
                             <FaArrowDownLong aria-hidden="true" />

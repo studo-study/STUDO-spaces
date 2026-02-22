@@ -5,60 +5,47 @@ import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";
 import {signIn} from "next-auth/react";
 import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
+import {addDoc, collection, doc, getDocs, query, serverTimestamp, setDoc, where} from "firebase/firestore";
+import {db} from "@/lib/firebase/firebase";
 
 export default function DesktopForm() {
-    const [open, setOpen] = useState(false);
-    const language = useLocale();
     const t = useTranslations("waitinglist")
     const errors = false;
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
 
-
-    const router = useRouter();
     const locale = useLocale();
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl') || `/${locale}/home`;
-
+    const router= useRouter();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError('');
         setLoading(true);
 
-
         try {
-            const result = await signIn('credentials', {
+            await setDoc(doc(db, 'waitinglist', email), {
                 email,
-                password,
-                redirect: false,
+                locale,
+                createdAt: serverTimestamp(),
             });
 
-
-            if (result?.error) {
-                setError(t('invalidCredentials') || 'Ongeldige email of wachtwoord');
-                setLoading(false);
-                return;
-            }
-
-            console.log('✅ Login successful, redirecting to:', callbackUrl);
-            router.push(callbackUrl);
-            router.refresh();
+            router.push(`/${locale}/welcome`);
 
         } catch (err) {
-            setError(t('somethingWentWrong') || 'Er ging iets mis');
+            console.error('Firebase error details:', err);
+            setError(t('somethingWentWrong'));
+        } finally {
             setLoading(false);
         }
-    };
-
+    }
 
     return (
-        <div className="w-full h-fit 3xl:absolute 3xl:inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
+        <div className="w-full h-fit 3xl:absolute inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
                 <AnimateOnMount delay={100}>
                 <div className={`w-3/5 xl:w-full h-full flex flex-row overflow-hidden
-					rounded-4xl 3xl:h-fit 3xl:max-w-full< 
+					rounded-4xl 3xl:h-fit 3xl:max-w-full
 					shadow-2xl shadow-black/20
 					transition-all duration-700`}>
 
