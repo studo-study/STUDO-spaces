@@ -5,7 +5,7 @@ import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";
 import {signIn} from "next-auth/react";
 import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
-import {addDoc, collection, doc, getDocs, query, serverTimestamp, setDoc, where} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, where} from "firebase/firestore";
 import {db} from "@/lib/firebase/firebase";
 
 export default function DesktopForm() {
@@ -25,16 +25,29 @@ export default function DesktopForm() {
         setLoading(true);
 
         try {
-            await setDoc(doc(db, 'waitinglist', email), {
+            const docRef = doc(db, 'waitinglist', email);
+            const existing = await getDoc(docRef);
+
+            if (existing.exists()) {
+                setError(t('alreadyRegistered'));
+                return;
+            }
+
+            await setDoc(docRef, {
                 email,
                 locale,
                 createdAt: serverTimestamp(),
             });
 
-            router.push(`/${locale}/welcome`);
+            await fetch('/api/send-waitinglist-mail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, locale }),
+            });
+
+            //router.push(`/${locale}/welcome`);
 
         } catch (err) {
-            console.error('Firebase error details:', err);
             setError(t('somethingWentWrong'));
         } finally {
             setLoading(false);

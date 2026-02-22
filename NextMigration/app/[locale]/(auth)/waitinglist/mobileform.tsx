@@ -5,7 +5,7 @@ import {useRouter, useSearchParams} from "next/navigation";
 import {signIn} from "next-auth/react";
 import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import { db } from '@/lib/firebase/firebase';
-import {collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc} from 'firebase/firestore';
+import {collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc} from 'firebase/firestore';
 import {navigate} from "next/dist/client/components/segment-cache/navigation";
 import router from "next/router";
 
@@ -27,10 +27,24 @@ export default function MobileForm() {
         setLoading(true);
 
         try {
-            await setDoc(doc(db, 'waitinglist', email), {
+            const docRef = doc(db, 'waitinglist', email);
+            const existing = await getDoc(docRef);
+
+            if (existing.exists()) {
+                setError(t('alreadyRegistered'));
+                return;
+            }
+
+            await setDoc(docRef, {
                 email,
                 locale,
                 createdAt: serverTimestamp(),
+            });
+
+            await fetch('/api/send-waitinglist-mail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, locale }),
             });
 
             router.push(`/${locale}/welcome`);
