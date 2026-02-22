@@ -45,7 +45,7 @@ export default function DesktopForm() {
                 body: JSON.stringify({ email, locale }),
             });
 
-            //router.push(`/${locale}/welcome`);
+            router.push(`/${locale}/welcome`);
 
         } catch (err) {
             setError(t('somethingWentWrong'));
