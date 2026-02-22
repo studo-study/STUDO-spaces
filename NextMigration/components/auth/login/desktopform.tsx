@@ -1,8 +1,6 @@
 "use client";
 import {useCallback, useState} from "react";
 import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
-import {error} from "next/dist/build/output/log";
-import Undici from "undici-types";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";

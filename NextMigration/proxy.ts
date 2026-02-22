@@ -37,8 +37,6 @@ export default auth((request) => {
     // Routes die GEEN login vereisen
     const publicRoutes = [
         "/welcome",
-        "/login",
-        "/register",
         "/callback",
         "/logout",
         "/about-us",
@@ -60,6 +58,11 @@ export default auth((request) => {
         "/classes",
         "/communities",
         "/studygroups",
+        "/challenges/duel",
+        "/waitinglist",
+        "/challenges/mastery-tournament",
+        "/studo-education",
+        "/challenges/time-attack",
         "/"];
 
     // Check of huidige route public is
@@ -98,7 +101,8 @@ export default auth((request) => {
 
     // Niet ingelogd + NIET public route → redirect naar login
     if (!isPublicRoute && !isLoggedIn) {
-        const loginUrl = new URL(`/${locale}/login`, request.url);
+        //const loginUrl = new URL(`/${locale}/login`, request.url);
+        const loginUrl = new URL(`/${locale}/welcome`, request.url);
         loginUrl.searchParams.set('callbackUrl', pathname);
         return NextResponse.redirect(loginUrl);
     }
