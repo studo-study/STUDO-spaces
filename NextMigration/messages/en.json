@@ -2,205 +2,213 @@
   "landing": {
     "header": {
       "LogIn": "Log in",
-      "CreateAccount": "Create Account",
-      "modes": "Learn Modes",
-      "tools": "Study Tools",
+      "CreateAccount": "Create account",
+      "modes": "Study modes",
+      "tools": "Tools",
       "ss": "studosets",
       "vs": "visualsets",
       "ai": "ai",
       "learn": "learn",
-      "speedy": "speedy",
+      "speedy": "speed battle",
       "flashcards": "flashcards",
       "identify": "identify",
       "point": "point",
-      "select": "Select a study mode to begin",
-      "lm": "Learn Modes",
-      "st": "Study Tools"
+      "select": "Pick a mode and go",
+      "lm": "Study modes",
+      "st": "Tools",
+      "classrooms": "Classrooms",
+      "challenges": "challenges",
+      "class_group": "class group",
+      "study_group": "study group",
+      "community_group": "community group",
+      "duel": "duel",
+      "mastery": "mastery tournament",
+      "time": "time attack",
+      "select_classrooms": "Pick a challenge and go",
+      "coming": "join waitinglists"
     },
     "footer": {
-      "footerQuote": "Study Smart, Stay Ahead!",
+      "footerQuote": "Study Less, Know More!",
       "aboutTitle": "about studo",
+      "selectTitle": "Select",
+      "setTitle": "Sets",
       "ss": "studosets",
       "vs": "visualsets",
       "aboutBlock1": "About Us",
       "aboutBlock2": "Privacy",
-      "aboutBlock3": "Terms of Service",
+      "aboutBlock3": "Terms of Use",
       "ssBlock1": "Create Studoset",
       "ssBlock2": "Studosets",
       "vsBlock1": "Create Visualset",
       "vsBlock2": "Visualsets",
-      "loveGreen": "Built with \uD83D\uDC9A using React",
-      "loveBlue": "Built with \uD83D\uDC99 using React",
+      "loveGreen": "Built with 💚 with React",
+      "loveBlue": "Built with 💙 with React",
       "Version": "Version",
-      "rights": "STUDO inc. All Rights Reserved."
+      "rights": "STUDO inc. All Rights Reserved.",
+      "select": "Studo Select",
+      "edu": "Studo for Education",
+      "GDPR": "GDPR"
     },
     "welcome": {
-      "CreateCustom": "Create custom study sets",
-      "TextVisualLearning": "Text or visual learning",
-      "AnywhereAnytime": "Study anywhere, anytime",
+      "CreateCustom": "Create your own sets",
+      "TextVisualLearning": "Learn with text or visuals",
+      "AnywhereAnytime": "Study wherever and whenever you want",
       "HeroSection": "Hero section",
-      "NewStudyTool": "Your New Study Tool",
-      "Quote1": "Study Smart,",
-      "Quote2": "Stay Ahead",
-      "Subtitle":"Free study tools for smarter and faster learning",
-      "KeyFeatures": "Key features",
+      "NewStudyTool": "Your new study tool",
+      "Quote1": "Study Less,",
+      "Quote2": "Know More",
+      "Subtitle": "Free tools to study faster and smarter",
+      "KeyFeatures": "What you can do with it",
       "CTA": "Call to action",
-      "SignUp": "Sign Up For Free",
-      "LearnMore": "learn more",
+      "SignUp": "Join Waitinglists",
+      "LearnMore": "discover more",
       "Methods": "Study methods",
-      "LearnMoreAbout": "Learn more about {mode} study mode",
-      "Learn": "leren",
+      "LearnMoreAbout": "Discover the {mode} mode",
+      "Learn": "Learn",
       "Flashcards": "Flashcards",
-      "Speedy": "Speedy",
+      "Speedy": "Speed Battle",
       "Identify": "Identify",
       "Point": "Point",
-      "block1": "From lecture notes to messy doodles – turn anything into interactive flashcards, quick tests, and visual study sets. STUDO keeps it light, fast, and focused, so you spend less time organising and more time actually learning.",
-      "block2": "I'm Charles, a full-time student who got tired of apps that were either paywalled, bloated, or just slow. So I built STUDO: a tool where every feature has a purpose and nothing gets in the way of studying.",
-      "block3": "Whether it's vocab, formulas, or entire chapters, STUDO adapts to your study style. Personalised practice modes and revision sessions make it easier to remember what matters most. And soon, you'll be able to carry it all in your pocket with the upcoming iOS app.",
-      "why": "Why Studo?",
+      "block1": "From messy handwritten notes to quick sketches: turn them into interactive flashcards, quizzes, and visual study sets. STUDO keeps it simple and fast — less hassle, more learning.",
+      "block2": "Hey, I'm Charles. Full-time student and creator of STUDO. I was fed up: apps full of paywalls, unnecessary features, and slow interfaces. So I built something better. Every feature has a purpose, nothing gets in the way.",
+      "block3": "Whether it's vocab, formulas, or entire chapters — STUDO adapts to your way of learning. Smart practice modes and repetition make sure it sticks. And soon you can take everything with you in your pocket with our iOS app.",
+      "classroomFeatureTitle": "Learn together in\nyour own space",
+      "classroomBlock": "Whether you're in an official class, studying with friends, or sharing material with thousands of students — STUDO has a classroom for every situation. Share sets, track progress, and challenge each other. Learning together is just better.",
+      "classroomCTA": "Discover classrooms",
+      "why": "Why STUDO?",
       "subtitle1": "Everything you need to",
-      "subtitle2": "ace your studies",
+      "subtitle2": "crush your studies",
       "feature": "feature",
-      "featureTitle1": "Study the smart way",
-      "featureTitle2": "Created by students, for students",
-      "featureTitle3": "Ready for every challenge",
-      "signupfree": "Sign Up For Free",
+      "featureTitle1": "Study smarter",
+      "featureTitle2": "By students, for students",
+      "featureTitle3": "Ready for anything",
+      "signupfree": "Join Waitinglists",
       "stat1": "5 study tools",
-      "stat2": "endless sets",
+      "stat2": "unlimited set creation",
       "stat3": "100% free"
     },
     "studosets": {
-      "title_studyset": "Your Study\n Starts Here",
-      "block1_studyset": "A Studoset is the core of your learning experience: a collection of terms and definitions you can master through different modes",
-      "block2_studyset": "Each Studoset contains terms and their definitions",
-      "block3_studyset": "Create your own sets, import existing ones, or collaborate with others",
-      "block4_studyset": "Use the same set across all study modes",
-      "create your own": "create your own"
+      "title_studyset": "This is where\nyour study starts",
+      "block1_studyset": "A studoset is the foundation of your learning experience: a set of terms and definitions you can practice in different ways",
+      "block2_studyset": "Every studoset contains terms + definitions",
+      "block3_studyset": "Create them yourself, import them, or collaborate",
+      "block4_studyset": "Use the same set in every mode",
+      "create your own": "make one"
     },
     "visualsets": {
-      "title_visualset": "Visual Learning,\nPin by Pin",
-      "block1_visualset": "A Visualset lets you study by linking definitions to pins on an image — perfect for anatomy, maps, and diagrams",
-      "block2_visualset": "Instead of just text terms, you upload an image",
-      "block3_visualset": "Each identify on the image acts as the term",
-      "block4_visualset": "To every identify, you attach the correct definition",
-      "block5_visualset": "Use your Visualset in Identify or Point",
-      "create your own": "create your own"
+      "title_visualset": "Visual learning,\npin by pin",
+      "block1_visualset": "With visualsets you link definitions to points on an image — perfect for anatomy, maps, and diagrams",
+      "block2_visualset": "Upload an image instead of text",
+      "block3_visualset": "Every pin is a term",
+      "block4_visualset": "Link the right definition to each pin",
+      "block5_visualset": "Use your visualset in Identify or Point",
+      "create your own": "make one"
     },
     "ai": {
-      "title_ai": "AI That Builds Your Sets",
+      "title_ai": "AI builds your sets",
       "block1_ai": "* coming soon",
-      "block2_ai": "Upload a vocabulary list, glossary, or lecture notes and turn them into a Studoset",
-      "block3_ai": "Snap a photo of a textbook page or diagram and let AI detect the terms",
-      "block4_ai": "AI cleans up the data into ready-to-use pairs",
-      "block5_ai": "Generated sets work across all modes"
+      "block2_ai": "Upload a word list, glossary, or lecture notes and convert it into a studoset",
+      "block3_ai": "Take a photo of a page or diagram — AI detects the terms",
+      "block4_ai": "AI turns them into clean, ready-to-use pairs",
+      "block5_ai": "Your generated sets work in all modes"
     },
     "learn": {
-      "title_learn": "Write - \nRepeat - \nRemember",
-      "block1_learn": "An interactive study mode that quizzes you until every term is mastered.",
-      "block2_learn": "Type your answer - no multiple choice\n",
-      "block3_learn": "Master each term after two correct recalls\n",
-      "block4_learn": "Build long-term memory through active learning",
-      "try it out": "try it out"
+      "title_learn": "Type –\nRepeat –\nRemember",
+      "block1_learn": "An interactive mode that keeps testing you until everything sticks.",
+      "block2_learn": "Type your answer — no multiple choice",
+      "block3_learn": "Correct twice = term unlocked",
+      "block4_learn": "Train your memory through active learning",
+      "try it out": "try it"
     },
     "speedy": {
-      "title_speedy": "Speed Meets Knowledge",
-      "block1_speedy": "A timed quiz mode with rounds that push you to recall terms under pressure",
-      "block2_speedy": "Beat the timer in every round",
-      "block3_speedy": "Wrong answers move to the next round",
-      "block4_speedy": "Clear all terms to win the session",
-      "try it out": "try it out"
+      "title_speedy": "Speed meets knowledge",
+      "block1_speedy": "A race against the clock that keeps you sharp under pressure",
+      "block2_speedy": "Race against the timer",
+      "block3_speedy": "Wrong answers? They come back",
+      "block4_speedy": "Clear everything to win",
+      "try it out": "try it"
     },
     "flashcards": {
-      "title_flashcard": "Flip - \nLearn - \nRepeat",
-      "block1_flashcard": "Quickly review terms and definitions with interactive flashcards",
-      "block2_flashcard": "Swipe or flip to reveal answers",
+      "title_flashcard": "Flip –\nLearn –\nRepeat",
+      "block1_flashcard": "Quickly browse terms and definitions with interactive flashcards",
+      "block2_flashcard": "Swipe or flip for the answer",
       "block3_flashcard": "Learn at your own pace",
       "block4_flashcard": "Shuffle and repeat until you're confident",
-      "try it out": "try it out"
+      "try it out": "try it"
     },
     "identify": {
-      "title_identify": "Recognize the parts,\nUnderstand the whole",
-      "block1_identify": "Identify by typing the correct terms for each pin — ideal for anatomy, maps, diagrams, and more",
-      "block2_identify": "Go through pins one by one",
+      "title_identify": "Recognize the parts,\nunderstand the whole",
+      "block1_identify": "Type the correct term for each pin — ideal for anatomy, maps, diagrams, and more",
+      "block2_identify": "Go pin by pin",
       "block3_identify": "Type the corresponding definition",
-      "block4_identify": "Missed pins return later until you master them",
-      "block5_identify": "Only available with Visual Sets",
-      "try it out": "try it out"
+      "block4_identify": "Missed pins come back later",
+      "block5_identify": "Only available with visualsets",
+      "try it out": "try it"
     },
     "point": {
       "title_point": "Read –\nPoint –\nRemember",
-      "block1_point": "Indicate the correct pin on the image based on the given definition",
-      "block2_point": "You are given a definition as the task",
-      "block3_point": "Point to the correct location on the image",
-      "block4_point": "Incorrect choices will return until you master them",
-      "block5_point": "Only available with Visual Sets",
-      "try it out": "try it out"
+      "block1_point": "Point to the correct pin based on the given definition",
+      "block2_point": "You're shown a definition",
+      "block3_point": "Tap the right spot on the image",
+      "block4_point": "Wrong choices come back until you've nailed them",
+      "block5_point": "Only available with visualsets",
+      "try it out": "try it"
     },
     "about-us": {
-      "title": "About Us",
+      "title": "About us",
       "lastUpdated": "Last updated: January 7, 2026",
-
-      "intro1": "Hi! I'm Charles – a full-time student and the only engineer working on STUDO. This app started from my own frustration with existing study tools: too many useless features, too many paywalls, and too little focus on what actually helps you learn.",
-      "intro2": "I wanted something clean, fast, and distraction-free – so I decided to build it myself. What started as a personal project has grown into something I'm genuinely proud of, and I'm excited to share it with students everywhere.",
-      "intro3": "STUDO is designed to be exactly what you need to study smarter: no hidden costs, no unnecessary extras, just powerful, intuitive tools that actually make a difference. Every feature exists because it solves a real problem students face – nothing more, nothing less.",
-
-      "storyTitle": "The Story Behind STUDO",
-      "storyText1": "It all started during exam season. I was juggling multiple subjects, trying different study apps, and getting more frustrated by the day. Some apps were bloated with features I'd never use. Others locked basic functionality behind expensive subscriptions. And most of them felt like they were designed by people who hadn't been students in years.",
-      "storyText2": "So I opened my laptop and started coding. The first version was rough – just flashcards and a simple quiz mode. But it worked. And more importantly, it worked the way I needed it to. From there, STUDO kept growing, shaped by my own study needs and feedback from friends who started using it too.",
-
-      "differentTitle": "What Makes STUDO Different",
-      "differentText": "There are plenty of study apps out there. Here's why STUDO stands out:",
-      "different1": "Studosets – our unique approach to flashcards with multiple study modes built in",
-      "different2": "Visualsets – learn with images using pin-the-label and point-to-answer features",
-      "different3": "Speedy mode – race against the clock to test your knowledge under pressure",
-      "different4": "No ads, no distractions – just you and your study material",
-      "different5": "100% free core features – because learning shouldn't have a paywall",
-
-      "listenTitle": "We Listen to You",
-      "listenText1": "Because we're still small, your feedback has a direct impact on the app's future. If you have an idea, request, or even a complaint, I genuinely want to hear it. Every feature request gets read, and many of them make it into the app.",
-      "listenText2": "STUDO grows with its users – and every suggestion helps us make it better for everyone. This isn't just a product; it's a community of students helping each other study smarter.",
-
-      "goingTitle": "Where We're Going",
-      "goingText1": "Right now, STUDO is a small, independent project. But the goal is big: to become the go-to study app for students everywhere, without sacrificing simplicity or accessibility.",
-      "goingText2": "With your support, we can scale while keeping our core mission intact – making studying smarter, fairer, and stress-free. We're not trying to be everything to everyone. We're trying to be the best at helping you learn.",
-
-      "iosTitle": "Exciting News – iOS App Coming Soon",
-      "iosText1": "We're currently working on the first official STUDO iOS app! This will bring all the core features to your iPhone and iPad, with the same focus on speed, simplicity, and distraction-free studying.",
-      "iosText2": "Study on the bus, in the library, or right before an exam – wherever you are, STUDO will be there. Stay tuned for the release – it's closer than you think.",
-
-      "valuesTitle": "Our Values",
-      "valuesIntro": "Everything we build is guided by these core principles:",
+      "intro1": "Hey! I'm Charles — full-time student and the sole dev behind STUDO. This app was born out of pure frustration with existing study tools: too many useless features, too many paywalls, and too little focus on what actually works.",
+      "intro2": "I wanted something clean, fast, and distraction-free — so I built it myself. What started as a side project has grown into something I'm incredibly proud of, and I'm happy to share it with students everywhere.",
+      "intro3": "STUDO is exactly what you need to study smarter: no hidden costs, no unnecessary extras — just powerful, intuitive tools that make a real impact. Every feature solves a real problem. Period.",
+      "storyTitle": "The story behind STUDO",
+      "storyText1": "It all started during exam period. I was juggling multiple subjects, trying out all kinds of study apps, and getting more and more frustrated. Some apps were packed with features I never used. Others locked basics behind expensive subscriptions. And most felt like they were built by people who hadn't been students in years.",
+      "storyText2": "So I opened my laptop and started coding. The first version was basic — just flashcards and a simple quiz. But it worked. And more importantly: it worked the way I needed it to. From there STUDO grew, shaped by my own study needs and feedback from friends who started using it too.",
+      "differentTitle": "What makes STUDO different",
+      "differentText": "There are plenty of study apps. Here's what makes STUDO unique:",
+      "different1": "Studosets — our own twist on flashcards with multiple built-in study modes",
+      "different2": "Visualsets — learning with images via pins and point functions",
+      "different3": "Speedy mode — race against the clock and test your knowledge under pressure",
+      "different4": "No ads, no distractions — just you and your study material",
+      "different5": "100% free core features — because learning shouldn't have a paywall",
+      "listenTitle": "We listen",
+      "listenText1": "Because we're still small, your feedback has a direct impact on the future of the app. Idea, feature request, or complaint? I'd love to hear it. Every suggestion is read and many of them make it into the app.",
+      "listenText2": "STUDO grows with its users — every suggestion makes it better for everyone. This isn't just a product; it's a community of students helping each other study smarter.",
+      "goingTitle": "Where we're headed",
+      "goingText1": "Right now STUDO is a small, indie project. But the goal is big: to become the study app for students everywhere — without compromising on simplicity or accessibility.",
+      "goingText2": "With your support we can grow while holding on to our core mission: making studying smarter, fairer, and less stressful. We don't want to be everything for everyone. We just want to be the best at helping people learn.",
+      "iosTitle": "Exciting news — iOS app incoming",
+      "iosText1": "We're currently working on the first official STUDO iOS app! All core features are coming to your iPhone and iPad, with the same focus on speed, simplicity, and distraction-free studying.",
+      "iosText2": "Study on the bus, in the library, or right before an exam — wherever you are, STUDO is there. Stay tuned for the release — it's coming sooner than you think.",
+      "valuesTitle": "Our values",
+      "valuesIntro": "Everything we build is driven by these principles:",
       "value1Title": "Student-first design",
-      "value1Text": "every feature is built with real student needs in mind, not corporate metrics",
+      "value1Text": "every feature is built with real student needs in mind, not metrics",
       "value2Title": "No paywalls for essentials",
       "value2Text": "learning should be accessible to everyone, regardless of budget",
       "value3Title": "Feedback-driven development",
-      "value3Text": "your input directly shapes what we build next",
+      "value3Text": "your input directly determines what we build next",
       "value4Title": "Focus over features",
-      "value4Text": "we'd rather do five things brilliantly than fifty things poorly",
+      "value4Text": "five things done brilliantly beats fifty done mediocrely",
       "value5Title": "Privacy matters",
-      "value5Text": "your study data is yours – we don't sell it or use it for ads",
-
-      "teamTitle": "The Team",
-      "teamText1": "Right now, STUDO is a one-person operation. I handle the design, development, testing, and support – all while being a full-time student myself. It's a lot, but it means I truly understand what students need.",
-      "teamText2": "As STUDO grows, the team might too. But for now, when you reach out, you're talking directly to the person who built the app. That's something I'm proud of.",
-
-      "thanksTitle": "Thank You",
-      "thanksText": "To everyone who has used STUDO, shared it with friends, or sent feedback – thank you. You're the reason this project exists. Every time someone tells me STUDO helped them ace an exam or made studying less stressful, it reminds me why I started this in the first place.",
-
-      "contactTitle": "Get in Touch",
-      "contactText": "Have an idea, found a bug, or just want to say hi? I'd love to hear from you. Here's how you can reach me:"
+      "value5Text": "your data is yours — we don't sell it and don't use it for ads",
+      "teamTitle": "The team",
+      "teamText1": "Right now STUDO is a one-person show. I handle design, development, testing, and support — all while being a full-time student myself. It's a lot, but it means I truly understand what students need.",
+      "teamText2": "If STUDO grows, the team might grow with it. But for now, when you reach out you're talking directly to the person who built the app. I'm pretty proud of that.",
+      "thanksTitle": "Thanks",
+      "thanksText": "To everyone who uses STUDO, shares it with friends, or sends feedback — thank you. You're the reason this project exists. Every time someone says STUDO helped them pass an exam or made studying less stressful, I remember why I started this.",
+      "contactTitle": "Get in touch",
+      "contactText": "Got an idea, found a bug, or just want to say hi? Let's talk:"
     },
     "privacy": {
       "title": "Privacy Policy",
       "lastUpdated": "Last updated: January 7, 2026",
       "intro": {
-        "welcome": "Welcome to STUDO. Your privacy is important to us. This Privacy Policy explains how we collect, use, store, and protect your personal data when you use our platform. STUDO is operated from Belgium and complies with the General Data Protection Regulation (GDPR) and Belgian privacy laws.",
-        "agreement": "By using STUDO, you agree to the collection and use of information as described in this policy. If you do not agree, please do not use our services."
+        "welcome": "Welcome to STUDO. Your privacy is important to us. This policy explains how we collect, use, store, and protect your data when you use our platform. STUDO is operated from Belgium and complies with the GDPR and Belgian privacy legislation.",
+        "agreement": "By using STUDO, you agree to the collection and use of information as described here. Don't agree? Then please don't use our services."
       },
       "whoAreWe": {
-        "title": "1. Who Are We?",
-        "description": "STUDO is a digital learning platform designed to help students study more effectively. We are the data controller responsible for your personal data.",
+        "title": "1. Who are we?",
+        "description": "STUDO is a digital learning platform that helps students study more effectively. We are the data controller for your personal data.",
         "info": {
           "project": "Project:",
           "website": "Website:",
@@ -209,65 +217,65 @@
         }
       },
       "dataCollect": {
-        "title": "2. What Data Do We Collect?",
+        "title": "2. What data do we collect?",
         "provided": {
-          "title": "2.1 Data You Provide",
-          "description": "When you create an account or use STUDO, you may provide:",
+          "title": "2.1 Data you provide yourself",
+          "description": "When creating an account or using STUDO you may share:",
           "items": {
             "name": "Name or username",
             "email": "Email address",
-            "password": "Password (securely hashed, never stored in plain text)",
-            "profile": "Profile information (optional)",
+            "password": "Password (securely hashed, never plain text)",
+            "profile": "Profile info (optional)",
             "content": "Study content you create (studosets, visualsets, notes)",
             "feedback": "Feedback or support messages"
           }
         },
         "automatic": {
-          "title": "2.2 Data Collected Automatically",
-          "description": "When you use STUDO, we automatically collect:",
+          "title": "2.2 Automatically collected data",
+          "description": "While using STUDO we automatically collect:",
           "items": {
             "ip": "IP address",
             "browser": "Browser type and version",
-            "device": "Device information",
+            "device": "Device info",
             "pages": "Pages visited and features used",
             "time": "Time and date of access"
           }
         },
         "thirdParty": {
-          "title": "2.3 Data from Third Parties",
-          "description": "If you sign in using Google or Apple, we receive your name, email, and profile picture as permitted by your settings. We do not access any other data from these services."
+          "title": "2.3 Data from third parties",
+          "description": "Logging in via Google or Apple? Then we receive your name, email address, and profile picture as permitted by your settings. We do not have access to any other data from these services."
         }
       },
       "whyCollect": {
-        "title": "3. Why Do We Collect Your Data?",
-        "description": "We use your data for the following purposes:",
+        "title": "3. Why do we collect your data?",
+        "description": "We use your data for:",
         "table": {
           "purpose": "Purpose",
-          "legalBasis": "Legal Basis (GDPR)"
+          "legalBasis": "Legal basis (GDPR)"
         },
         "purposes": {
           "account": {
             "purpose": "Creating and managing your account",
-            "basis": "Contract performance"
+            "basis": "Performance of contract"
           },
           "features": {
-            "purpose": "Providing study features and saving your content",
-            "basis": "Contract performance"
+            "purpose": "Delivering features and storing your content",
+            "basis": "Performance of contract"
           },
           "improving": {
             "purpose": "Improving STUDO and fixing bugs",
             "basis": "Legitimate interest"
           },
           "responding": {
-            "purpose": "Responding to your questions or feedback",
-            "basis": "Contract performance"
+            "purpose": "Responding to questions or feedback",
+            "basis": "Performance of contract"
           },
           "updates": {
-            "purpose": "Sending important updates about the service",
+            "purpose": "Sending important updates",
             "basis": "Legitimate interest"
           },
           "marketing": {
-            "purpose": "Marketing emails (only with your consent)",
+            "purpose": "Marketing emails (only with consent)",
             "basis": "Consent"
           },
           "security": {
@@ -277,21 +285,21 @@
         }
       },
       "storage": {
-        "title": "4. How Do We Store Your Data?",
-        "description": "Your data is stored securely on servers located within the European Union. We use industry-standard security measures including:",
+        "title": "4. How do we store your data?",
+        "description": "Your data is securely stored on servers in the EU. We use standard security measures:",
         "measures": {
           "https": "HTTPS encryption for all data transfers",
-          "hashing": "Secure password hashing (never stored in plain text)",
+          "hashing": "Secure password hashing (never plain text)",
           "updates": "Regular security updates and monitoring",
-          "access": "Access controls limiting who can view your data"
+          "access": "Access controls determining who can view your data"
         },
-        "disclaimer": "While we take security seriously, no system is 100% secure. We encourage you to use a strong, unique password for your STUDO account."
+        "disclaimer": "We take security seriously, but no system is 100% watertight. Use a strong, unique password for your STUDO account."
       },
       "retention": {
-        "title": "5. How Long Do We Keep Your Data?",
+        "title": "5. How long do we retain your data?",
         "table": {
-          "dataType": "Data Type",
-          "period": "Retention Period"
+          "dataType": "Data type",
+          "period": "Retention period"
         },
         "types": {
           "account": {
@@ -311,222 +319,286 @@
             "period": "2 years after resolution"
           }
         },
-        "deletion": "When you delete your account, we remove your personal data within 30 days. Some anonymized data may be retained for analytics purposes."
+        "deletion": "Delete your account? We'll erase your personal data within 30 days. Some anonymised data may be retained for analytics."
       },
       "sharing": {
-        "title": "6. Do We Share Your Data?",
-        "description": "We do <bold>not</bold> sell your personal data. We may share data only in these situations:",
+        "title": "6. Do we share your data?",
+        "description": "We do <bold>not sell</bold> your data. We only share in these situations:",
         "situations": {
-          "providers": "<bold>Service providers:</bold> Trusted companies that help us run STUDO (hosting, email delivery), bound by strict data protection agreements",
-          "legal": "<bold>Legal requirements:</bold> If required by law, court order, or to protect our rights",
-          "consent": "<bold>With your consent:</bold> If you explicitly agree to share data with a third party"
+          "providers": "<bold>Service providers:</bold> Trusted partners who help us run STUDO (hosting, email), bound by strict data agreements",
+          "legal": "<bold>Legal obligations:</bold> If required by law or court order, or to protect our rights",
+          "consent": "<bold>With your consent:</bold> If you explicitly agree to sharing"
         },
-        "compliance": "All third-party processors we use are GDPR-compliant and based in the EU or in countries with adequate data protection."
+        "compliance": "All external processors we use are GDPR-compliant and located in the EU or countries with adequate protection."
       },
       "cookies": {
         "title": "7. Cookies",
-        "description": "STUDO uses cookies to keep you logged in and remember your preferences. We use:",
+        "description": "STUDO uses cookies to keep you logged in and remember preferences. We use:",
         "types": {
-          "essential": "<bold>Essential cookies:</bold> Required for the app to function (authentication, session)",
+          "essential": "<bold>Essential cookies:</bold> Required for operation (authentication, session)",
           "preference": "<bold>Preference cookies:</bold> Remember your settings (dark mode, language)",
-          "analytics": "<bold>Analytics cookies:</bold> Help us understand how STUDO is used (anonymized)"
+          "analytics": "<bold>Analytics cookies:</bold> Help us understand how STUDO is used (anonymised)"
         },
         "manage": "You can manage cookies in your browser settings. Blocking essential cookies may prevent STUDO from working properly."
       },
       "rights": {
-        "title": "8. Your Rights Under GDPR",
-        "description": "As a user in the EU, you have the following rights:",
+        "title": "8. Your rights under GDPR",
+        "description": "As an EU user you have these rights:",
         "list": {
-          "access": "<bold>Access:</bold> Request a copy of your personal data",
-          "rectification": "<bold>Rectification:</bold> Correct inaccurate data",
+          "access": "<bold>Access:</bold> Request a copy of your data",
+          "rectification": "<bold>Rectification:</bold> Have incorrect data corrected",
           "erasure": "<bold>Erasure:</bold> Request deletion of your data (\"right to be forgotten\")",
           "restriction": "<bold>Restriction:</bold> Limit how we process your data",
-          "portability": "<bold>Portability:</bold> Receive your data in a portable format",
-          "object": "<bold>Object:</bold> Object to certain processing (e.g., marketing)",
-          "withdraw": "<bold>Withdraw consent:</bold> Withdraw consent at any time where processing is based on consent"
+          "portability": "<bold>Portability:</bold> Receive your data in an exportable format",
+          "object": "<bold>Object:</bold> Object to certain processing (e.g. marketing)",
+          "withdraw": "<bold>Withdraw consent:</bold> Withdraw consent at any time"
         },
-        "contact": "To exercise these rights, contact us at <link>support@studo.study</link>. We will respond within 30 days."
+        "contact": "Want to exercise any of these rights? Email us at <link>support@studo.study</link>. We respond within 30 days."
       },
       "children": {
-        "title": "9. Children's Privacy",
-        "description": "STUDO is intended for users aged 16 and older. If you are under 16, you need permission from a parent or guardian to use STUDO. We do not knowingly collect data from children under 16 without parental consent.",
-        "discovery": "If we discover that we have collected data from a child under 16 without proper consent, we will delete it promptly. Parents can contact us at <link>support@studo.study</link>."
+        "title": "9. Children's privacy",
+        "description": "STUDO is intended for users aged 16+. Younger? Then you need permission from a parent or guardian. We do not knowingly collect data from children under 16 without parental consent.",
+        "discovery": "If we discover we have collected data from someone under 16 without proper consent, we will delete it immediately. Parents can contact us at <link>support@studo.study</link>."
       },
       "changes": {
-        "title": "10. Changes to This Policy",
-        "notify": "We may update this Privacy Policy from time to time. When we make significant changes, we will notify you by email or through a notice on the app. The \"Last updated\" date at the top of this page indicates when the policy was last revised.",
-        "acceptance": "Continued use of STUDO after changes are posted constitutes acceptance of the updated policy."
+        "title": "10. Changes to this policy",
+        "notify": "We may update this policy from time to time. For significant changes we'll let you know via email or an in-app notification. Check the \"Last updated\" date at the top.",
+        "acceptance": "Continuing to use STUDO after changes = agreement with the new policy."
       },
       "contact": {
-        "title": "11. Contact Us",
-        "description": "If you have questions about this Privacy Policy or want to exercise your rights, contact us:",
+        "title": "11. Contact",
+        "description": "Questions about this privacy policy or want to exercise your rights? Get in touch:",
         "email": "Email:",
-        "complaint": "If you believe we have not handled your data correctly, you have the right to lodge a complaint with the Belgian Data Protection Authority:",
+        "complaint": "Feel we haven't handled your data correctly? You can file a complaint with the Belgian Data Protection Authority:",
         "authority": {
-          "name": "Gegevensbeschermingsautoriteit (GBA)",
+          "name": "Data Protection Authority (GBA)",
           "address": "Drukpersstraat 35, 1000 Brussels"
         }
       }
     },
     "terms": {
-      "title": "Terms of Service",
+      "title": "Terms of Use",
       "lastUpdated": "Last updated: January 8, 2026",
       "intro": {
-        "welcome": "Welcome to STUDO! These Terms of Service (\"Terms\") govern your use of the STUDO platform, including our website, applications, and all related services (collectively, the \"Service\"). By accessing or using STUDO, you agree to be bound by these Terms.",
-        "readCarefully": "Please read these Terms carefully. If you do not agree to these Terms, you may not use the Service."
+        "welcome": "Welcome to STUDO! These Terms of Use (\"Terms\") govern your use of the STUDO platform, including our website, apps, and related services (collectively the \"Service\"). By using STUDO, you agree to these Terms.",
+        "readCarefully": "Please read these Terms carefully. Don't agree? Then you may not use the Service."
       },
       "about": {
         "title": "1. About STUDO",
-        "description": "STUDO is a digital study platform designed to help students learn more effectively. We provide tools like studosets (flashcards), visualsets (image-based learning), and various study modes to support your learning journey.",
-        "contact": "STUDO is operated from Belgium. For questions, contact us at <link>support@studo.study</link>."
+        "description": "STUDO is a digital study platform that helps students learn more effectively. We offer tools such as studosets (flashcards), visualsets (visual learning), and various study modes.",
+        "contact": "STUDO is operated from Belgium. Questions? Email <link>support@studo.study</link>."
       },
       "account": {
-        "title": "2. Account Registration",
-        "description": "To use certain features of STUDO, you must create an account. When you register, you agree to:",
+        "title": "2. Creating an account",
+        "description": "Certain features require an account. Upon registration you agree to:",
         "rules": {
           "accurate": "Provide accurate and complete information",
-          "secure": "Keep your login credentials secure and confidential",
-          "notify": "Notify us immediately if you suspect unauthorized access to your account",
-          "responsible": "Be responsible for all activity that occurs under your account"
+          "secure": "Keep your login credentials safe and confidential",
+          "notify": "Notify us immediately if you suspect unauthorised access",
+          "responsible": "Be responsible for all activity under your account"
         },
-        "ageRequirement": "You must be at least 16 years old to create an account. If you are under 16, you need permission from a parent or guardian."
+        "ageRequirement": "You must be at least 16 to create an account. Under 16? Then you need permission from a parent or guardian."
       },
       "acceptableUse": {
-        "title": "3. Acceptable Use",
-        "description": "You agree to use STUDO only for lawful purposes and in accordance with these Terms. You may <bold>not</bold>:",
+        "title": "3. Acceptable use",
+        "description": "You may only use STUDO for lawful purposes and in accordance with these Terms. You may <bold>not</bold>:",
         "rules": {
-          "illegal": "Use the Service for any illegal or unauthorized purpose",
-          "harmful": "Upload content that is harmful, offensive, abusive, or violates the rights of others",
-          "hack": "Attempt to hack, disrupt, or interfere with the Service or its servers",
-          "bots": "Use bots, scrapers, or automated tools to access the Service without permission",
-          "impersonate": "Impersonate another person or entity",
+          "illegal": "Use the Service for illegal or unauthorised purposes",
+          "harmful": "Upload harmful, offensive, or rights-infringing content",
+          "hack": "Attempt to hack, disrupt, or interfere with the Service or servers",
+          "bots": "Use bots, scrapers, or automated tools without permission",
+          "impersonate": "Impersonate someone else",
           "shareCredentials": "Share your account credentials with others",
-          "spam": "Use the Service to spam or send unsolicited messages",
+          "spam": "Use the Service for spam or unsolicited messages",
           "viruses": "Upload viruses, malware, or other harmful code",
-          "circumvent": "Circumvent any security measures or access restrictions"
+          "circumvent": "Circumvent security measures or access restrictions"
         },
-        "reserve": "We reserve the right to suspend or terminate accounts that violate these rules."
+        "reserve": "We may suspend or remove accounts that violate these rules."
       },
       "yourContent": {
-        "title": "4. Your Content",
-        "ownership": "You may create and upload content to STUDO, including studosets, visualsets, notes, and other study materials (\"Your Content\"). You retain ownership of Your Content.",
-        "license": "By uploading Your Content, you grant STUDO a non-exclusive, worldwide, royalty-free license to store, display, and process Your Content solely for the purpose of providing the Service to you. We will not sell or share Your Content with third parties for their own purposes.",
-        "responsible": "You are responsible for Your Content. You represent that:",
+        "title": "4. Your content",
+        "ownership": "You can create and upload content (studosets, visualsets, notes, etc. — \"Your Content\"). You remain the owner.",
+        "license": "By uploading you grant STUDO a non-exclusive, worldwide, royalty-free licence to store, display, and process Your Content — solely to provide the Service to you. We do not sell or share Your Content with third parties for their own purposes.",
+        "responsible": "You are responsible for Your Content. You warrant that:",
         "rules": {
           "own": "You own or have the right to use and share Your Content",
-          "infringe": "Your Content does not infringe on anyone else's intellectual property rights",
+          "infringe": "Your Content does not infringe the IP rights of others",
           "violate": "Your Content does not violate any laws or these Terms"
         },
-        "remove": "We may remove content that violates these Terms without prior notice."
+        "remove": "We may remove content that violates these Terms without notice."
       },
       "sharedContent": {
-        "title": "5. Shared & Public Content",
-        "description": "STUDO allows you to share study materials with others or make them public. When you share content:",
+        "title": "5. Shared & public content",
+        "description": "STUDO lets you share or make study material public. When sharing:",
         "rules": {
-          "grant": "You grant other users permission to view and study from your shared content",
+          "grant": "You grant other users permission to view and use your shared content",
           "owner": "You remain the owner of your content",
-          "change": "You can change sharing settings or delete your content at any time",
-          "copied": "Others may have already copied or saved your content before you remove it"
+          "change": "You can change sharing settings or remove content at any time",
+          "copied": "Others may have already copied your content before you remove it"
         },
-        "respect": "Respect the work of others. Do not claim someone else's shared content as your own."
+        "respect": "Respect others' work. Do not claim shared content from others as your own."
       },
       "intellectualProperty": {
-        "title": "6. Intellectual Property",
-        "ownership": "STUDO and its original content (excluding Your Content), features, and functionality are owned by STUDO and are protected by copyright, trademark, and other intellectual property laws.",
-        "restrictions": "You may not copy, modify, distribute, sell, or lease any part of our Service or included software, nor may you reverse engineer or attempt to extract the source code, unless laws prohibit these restrictions or you have our written permission.",
-        "trademarks": "The STUDO name, logo, and branding are trademarks of STUDO. You may not use them without our prior written consent."
+        "title": "6. Intellectual property",
+        "ownership": "STUDO and its original content (excluding Your Content), features, and functionality are owned by STUDO and protected by copyright and other IP laws.",
+        "restrictions": "You may not copy, modify, distribute, sell, or lease any part of our Service or software, nor reverse-engineer or attempt to extract source code — unless the law prohibits this or you have our written permission.",
+        "trademarks": "The name STUDO, logo, and branding are trademarks of STUDO. Do not use them without our prior written permission."
       },
       "premium": {
-        "title": "7. Free and Premium Services",
-        "description": "STUDO offers both free and premium features. Core study features are available for free. We may introduce paid subscriptions or one-time purchases for additional features in the future.",
-        "purchase": "If you purchase a premium subscription:",
+        "title": "7. Free and premium",
+        "description": "STUDO offers free and premium features. Core study features are free. In the future we may introduce paid subscriptions or one-time purchases for additional features.",
+        "purchase": "When purchasing a premium subscription:",
         "rules": {
-          "payments": "Payments are processed securely through our payment provider",
-          "renew": "Subscriptions automatically renew unless cancelled before the renewal date",
+          "payments": "Payments are securely processed via our payment provider",
+          "renew": "Subscriptions renew automatically unless you cancel before the end date",
           "cancel": "You can cancel at any time; access continues until the end of the billing period",
-          "refunds": "Refunds are handled according to applicable consumer protection laws"
+          "refunds": "Refunds are handled in accordance with applicable consumer laws"
         },
-        "pricing": "We reserve the right to change pricing with reasonable notice. Existing subscriptions will not be affected until renewal."
+        "pricing": "We may change prices with reasonable notice. Existing subscriptions remain unaffected until renewal."
       },
       "availability": {
-        "title": "8. Service Availability",
-        "description": "We strive to keep STUDO available 24/7, but we cannot guarantee uninterrupted access. The Service may be temporarily unavailable due to:",
+        "title": "8. Availability",
+        "description": "We aim for 24/7 availability but cannot guarantee it. The Service may be temporarily unavailable due to:",
         "reasons": {
-          "maintenance": "Scheduled maintenance (we'll try to notify you in advance)",
+          "maintenance": "Scheduled maintenance (we try to notify you in advance)",
           "technical": "Unexpected technical issues or bugs",
           "circumstances": "Circumstances beyond our control (server issues, internet outages)"
         },
-        "liability": "We are not liable for any loss or damage resulting from service interruptions."
+        "liability": "We are not liable for any loss or damage caused by interruptions."
       },
       "disclaimer": {
-        "title": "9. Disclaimer of Warranties",
-        "description": "STUDO is provided \"as is\" and \"as available\" without warranties of any kind, either express or implied. We do not guarantee that:",
+        "title": "9. Disclaimer",
+        "description": "STUDO is provided \"as is\" and \"as available\" without warranties. We do not guarantee that:",
         "noGuarantee": {
-          "requirements": "The Service will meet your specific requirements",
-          "errorFree": "The Service will be error-free or uninterrupted",
-          "accurate": "Any content on STUDO (including user-generated content) is accurate or reliable",
-          "success": "Using STUDO will guarantee academic success"
+          "requirements": "The Service meets your specific requirements",
+          "errorFree": "The Service is error-free or uninterrupted",
+          "accurate": "Content on STUDO (including user content) is accurate or reliable",
+          "success": "Using STUDO guarantees academic success"
         },
-        "studyTool": "STUDO is a study tool, not a replacement for attending classes, doing homework, or following your educational institution's requirements."
+        "studyTool": "STUDO is a study tool, not a substitute for attending classes, completing homework, or meeting your school's requirements."
       },
       "liability": {
-        "title": "10. Limitation of Liability",
-        "description": "To the maximum extent permitted by law, STUDO shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:",
+        "title": "10. Limitation of liability",
+        "description": "To the extent permitted by law, STUDO is not liable for indirect, incidental, special, or consequential damages, including:",
         "damages": {
           "data": "Loss of data or content",
-          "profits": "Loss of profits or revenue",
-          "academic": "Academic outcomes or exam results",
-          "interruptions": "Service interruptions or downtime"
+          "profits": "Loss of profit or revenue",
+          "academic": "Academic results or exam outcomes",
+          "interruptions": "Interruptions or downtime"
         },
-        "totalLiability": "In any case, our total liability to you for any claims arising from or related to the Service shall not exceed the amount you paid us (if any) in the 12 months prior to the claim.",
-        "jurisdictions": "Some jurisdictions do not allow limitations on implied warranties or liability, so some of the above may not apply to you. In such cases, our liability is limited to the fullest extent permitted by applicable law."
+        "totalLiability": "Our total liability is in any case limited to the amount you paid us (if applicable) in the 12 months prior to the claim.",
+        "jurisdictions": "Some jurisdictions do not allow certain limitations, so some of the above may not apply. In that case our liability is limited to the maximum permitted by law."
       },
       "indemnification": {
         "title": "11. Indemnification",
-        "description": "You agree to indemnify and hold harmless STUDO and its operator from any claims, damages, losses, or expenses (including legal fees) arising from:",
+        "description": "You indemnify STUDO and its operator against claims, damages, losses, or costs (including legal fees) arising from:",
         "claims": {
           "use": "Your use of the Service",
           "content": "Your Content",
           "violation": "Your violation of these Terms",
-          "rights": "Your violation of any rights of another party"
+          "rights": "Your violation of another party's rights"
         }
       },
       "termination": {
         "title": "12. Termination",
-        "userRight": "You may stop using STUDO and delete your account at any time through your account settings or by contacting us.",
-        "ourRight": "We may suspend or terminate your access to the Service immediately, without prior notice, if:",
+        "userRight": "You can stop using STUDO and delete your account at any time via your settings or by contacting us.",
+        "ourRight": "We may suspend or terminate your access immediately, without notice, if:",
         "reasons": {
-          "breach": "You breach these Terms",
+          "breach": "You violate these Terms",
           "harm": "Your conduct harms other users or the Service",
-          "law": "We are required to do so by law",
+          "law": "We are legally required to do so",
           "discontinue": "We discontinue the Service (with reasonable notice)"
         },
-        "effect": "Upon termination, your right to use the Service ceases immediately. Provisions that by their nature should survive termination (such as ownership, disclaimers, and limitations of liability) will continue to apply."
+        "effect": "Upon termination your right to use the Service ends immediately. Provisions that logically survive (such as ownership, disclaimers, and liability limitations) remain in effect."
       },
       "changes": {
-        "title": "13. Changes to These Terms",
-        "notify": "We may update these Terms from time to time. When we make significant changes, we will notify you by email or through a prominent notice on the Service before the changes take effect.",
-        "acceptance": "Your continued use of STUDO after changes are posted constitutes your acceptance of the revised Terms. If you do not agree to the new Terms, please stop using the Service."
+        "title": "13. Changes to these Terms",
+        "notify": "We may update these Terms from time to time. For significant changes we'll let you know via email or a clear notice before they take effect.",
+        "acceptance": "Continuing to use STUDO after changes = agreement with the new Terms. Don't agree? Stop using the Service."
       },
       "governingLaw": {
-        "title": "14. Governing Law & Disputes",
-        "belgium": "These Terms are governed by the laws of Belgium, without regard to its conflict of law provisions. The courts of Belgium shall have exclusive jurisdiction over any disputes arising from these Terms or your use of the Service.",
-        "eu": "If you are a consumer in the EU, you retain the protection of mandatory consumer laws of your country of residence. You may also use the EU Online Dispute Resolution platform at <link>ec.europa.eu/consumers/odr</link>."
+        "title": "14. Governing law & disputes",
+        "belgium": "These Terms are governed by Belgian law. Belgian courts have exclusive jurisdiction over disputes.",
+        "eu": "Are you a consumer in the EU? You retain the protection of the mandatory consumer laws of your country of residence. You may also use the EU online dispute resolution platform at <link>ec.europa.eu/consumers/odr</link>."
       },
       "miscellaneous": {
         "title": "15. Miscellaneous",
-        "entireAgreement": "<bold>Entire Agreement:</bold> These Terms, together with our Privacy Policy, constitute the entire agreement between you and STUDO.",
-        "severability": "<bold>Severability:</bold> If any provision of these Terms is found invalid or unenforceable, the remaining provisions will continue in effect.",
-        "noWaiver": "<bold>No Waiver:</bold> Our failure to enforce any right or provision does not constitute a waiver of that right.",
-        "assignment": "<bold>Assignment:</bold> You may not transfer your rights under these Terms. We may transfer our rights to another party."
+        "entireAgreement": "<bold>Entire agreement:</bold> These Terms, together with our privacy policy, constitute the entire agreement between you and STUDO.",
+        "severability": "<bold>Severability:</bold> If any provision is invalid or unenforceable, the rest remain in effect.",
+        "noWaiver": "<bold>No waiver:</bold> Failure to enforce a right does not mean we waive it.",
+        "assignment": "<bold>Assignment:</bold> You may not transfer your rights under these Terms. We may."
       },
       "contact": {
-        "title": "16. Contact Us",
-        "description": "If you have any questions about these Terms, please contact us:",
+        "title": "16. Contact",
+        "description": "Questions about these Terms? Get in touch:",
         "email": "Email:",
         "website": "Website:"
       }
+    },
+    "classrooms": {
+      "official": {
+        "title": "Your class,\ndigitally extended",
+        "subtitle": "Official class groups directly linked to your school or institution",
+        "block1": "Created by teachers or professors",
+        "block2": "Students join via invitation or code",
+        "block3": "Focused on subjects, courses, and exams",
+        "cta": "Create a classroom"
+      },
+      "studygroup": {
+        "title": "Study together,\nat your own pace",
+        "subtitle": "Private study groups for friends, classmates, or project teams",
+        "block1": "Created by students themselves",
+        "block2": "Invite friends or collaborate on a project",
+        "block3": "Flexible, informal, and fully customisable",
+        "cta": "Start a study group"
+      },
+      "community": {
+        "title": "Share knowledge\nwith everyone",
+        "subtitle": "Open learning spaces where anyone can find and contribute study material",
+        "block1": "Accessible to everyone, no invitation required",
+        "block2": "Ideal for popular subjects and admission exams",
+        "block3": "Discover sets from thousands of other students",
+        "cta": "Explore the community"
+      }
+    },
+    "challenges": {
+      "mastery": {
+        "title": "Prove you\nreally know it",
+        "subtitle": "No luck, no guessing — hit 100% and earn your badge",
+        "block1": "Not a single mistake in the last round",
+        "block2": "Or three perfect rounds in a row",
+        "block3": "Earn badges like 'Anatomy Master' or 'Chapter 3 Conqueror'",
+        "cta": "Take the challenge"
+      },
+      "duel": {
+        "title": "One on one,\nbest wins",
+        "subtitle": "Challenge a fellow student on the same set and see who comes out on top",
+        "block1": "Same questions, time limit per card — live or async",
+        "block2": "Winner determined by correctness and speed",
+        "block3": "You've never learned this fast together...",
+        "cta": "Challenge someone"
+      },
+      "speedrun": {
+        "title": "Who finishes\nfastest?",
+        "subtitle": "Competitive studying against the clock — race through the material and see who ends up on top",
+        "block1": "Ranked by fewest rounds, then fastest time",
+        "block2": "Live leaderboard for extra excitement",
+        "block3": "Set a deadline and challenge your group",
+        "cta": "Start a Speed Run"
+      }
     }
+  },
+  "waitinglist": {
+    "title": "Join Waitinglist",
+    "join_waitinglist": "sign up with your email",
+    "email": "email",
+    "join": "join",
+    "Loading": "loading...",
+    "rights": "STUDO inc. All Rights Reserved.",
+    "hook": "students already signed up",
+    "Version": "Version",
+    "somethingWentWrong": "Something went wrong, please try again",
+    "alreadyRegistered": "This email address is already on the list"
   },
   "login": {
     "hook": "students already studying",

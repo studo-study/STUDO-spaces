@@ -54,7 +54,7 @@ const features: Feature[] = [
         color: "from-purple-400 to-violet-500",
         bgColor: "bg-gradient-to-br from-purple-400 to-violet-50 dark:from-purple-400 dark:to-violet-400",
         direction: "reverse",
-        showCTA: null,
+        showCTA: true,
     },
 ];
 
@@ -101,7 +101,7 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
                     {feature.showCTA && (
                         <div className="mt-4 overflow-visible">
                             <Link
-                                href="/register"
+                                href={"/waitinglist"}
                                 className="group overflow-visible inline-flex items-center gap-3 px-8 py-4 text-lg font-bold text-white rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 dark:from-studoblue dark:to-blue-400 shadow-xl shadow-emerald-500/25 dark:shadow-studoblue/25 hover:shadow-2xl hover:shadow-emerald-500/30 dark:hover:shadow-studoblue/30 hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
                             >
                                 {t("signupfree")}

@@ -143,8 +143,8 @@ export default function LandingHeader() {
                         {t("CreateAccount")}
                     </Link>
                 </div>) :
-                    <div
-                        className="inline-flex font-semibold text-white
+                    <Link  href={"/waitinglist"}
+                           className="inline-flex font-semibold text-white
             flex-row gap-2 justify-center items-center p-2 xl:px-7 px-3 rounded-4xl cursor-pointer
             active:scale-105 transition-transform z-[2] lg:text-base text-sm text-center
             border-[0.5px] border-solid border-[#8181812f]
@@ -153,7 +153,7 @@ export default function LandingHeader() {
             bg-emerald-400 dark:bg-white dark:text-studodarkblue"
                     >
                         {t("coming")}
-                    </div>
+                    </Link>
                 }
 
                 <button
