@@ -55,7 +55,7 @@ export default function DesktopForm() {
     }
 
     return (
-        <div className="w-full h-fit 3xl:absolute inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
+        <div className="w-full h-fit 3xl:absolute 3xl:h-full inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
                 <AnimateOnMount delay={100}>
                 <div className={`w-3/5 xl:w-full h-full flex flex-row overflow-hidden
 					rounded-4xl 3xl:h-fit 3xl:max-w-full
