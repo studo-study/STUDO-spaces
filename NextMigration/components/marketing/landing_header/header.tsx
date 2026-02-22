@@ -115,7 +115,7 @@ export default function LandingHeader() {
 
                 </Link>
 
-                <nav className="hidden md:flex flex-row gap-10 items-center">
+                <nav className="hidden md:flex w-full flex-row gap-10 items-center">
                     <TriggerMethods MethodsOpen={MethodsOpen} setMethodsOpen={setMethodsOpen} />
                     <TriggerTools ToolsOpen={ToolsOpen} setToolsOpen={setToolsOpen} />
                     <TriggerClassrooms ClassOpen={ClassOpen} setClassOpen={setClassOpen}/>
