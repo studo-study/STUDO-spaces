@@ -33,7 +33,11 @@ export default function Grid() {
             if (selectionRef.current) {
                 const value = selectionRef.current.value;
                 if (value === "all")  setFilteredSets(data.lastTen.filter((items) => items));
-                if (value === "recent")  setFilteredSets(data.lastTen.toSorted((a, b) => new Date(a.last_studied) - new Date(b.last_studied) ));
+                if (value === "recent") setFilteredSets(
+                    data.lastTen.toSorted((a, b) =>
+                        new Date(a.last_studied).getTime() - new Date(b.last_studied).getTime()
+                    )
+                );
                 if (value === "studied")  setFilteredSets(data.lastTen.filter((items) => items.progress === 100));
 
             }

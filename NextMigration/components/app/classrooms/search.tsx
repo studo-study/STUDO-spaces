@@ -6,7 +6,7 @@ import {useTranslations} from "next-intl";
 
 interface ClassSearchProps {
     classes: FullClassroom[];
-    setFilteredClasses: React.Dispatch<React.SetStateAction<Classroom[]>>;
+    setFilteredClasses: React.Dispatch<React.SetStateAction<FullClassroom[]>>;
 }
 
 export default function ClassSearch({classes, setFilteredClasses}: ClassSearchProps) {
