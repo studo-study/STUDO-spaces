@@ -34,15 +34,16 @@
       "select": "Kies een mode en go",
       "lm": "Leermodes",
       "st": "Tools",
-      "classrooms": "Classrooms",
-      "challenges": "challenges",
-      "class_group": "class group",
-      "study_group": "study group",
-      "community_group": "communtiy group",
+      "classrooms": "Klassen",
+      "challenges": "uitdagingen",
+      "class_group": "klasgroepen",
+      "study_group": "studiegroepen",
+      "community_group": "communities",
       "duel": "duel",
-      "mastery": "mastery tournament",
-      "time": "time attack",
-      "select_classrooms": "Kies een challenge en go"
+      "mastery": "meesterstrijd",
+      "time": "tijdrace",
+      "select_classrooms": "Kies een challenge en go",
+      "coming": "schrijf in"
     },
     "footer": {
       "footerQuote": "Minder Zweten, Meer Weten!",
@@ -77,7 +78,7 @@
       "Subtitle": "Gratis tools om sneller en slimmer te studeren",
       "KeyFeatures": "Dit kan je ermee",
       "CTA": "Call to action",
-      "SignUp": "Gratis Aanmelden",
+      "SignUp": "Schrijf Je In",
       "LearnMore": "ontdek meer",
       "Methods": "Leermethodes",
       "LearnMoreAbout": "Ontdek de {mode}-mode",
@@ -89,6 +90,9 @@
       "block1": "Van slordig geschreven notities tot snelle schetsen: maak er interactieve flashcards, quizzes en visuele studysets van. STUDO houdt het simpel en snel — minder gedoe, meer leren.",
       "block2": "Hey, ik ben Charles. Voltijdstudent en creator van STUDO. Ik was het zat: apps vol paywalls, overbodige features en trage interfaces. Dus bouwde ik iets beters. Elke feature heeft een doel, niets zit in de weg.",
       "block3": "Of het nu vocab, formules of complete hoofdstukken zijn — STUDO past zich aan jouw manier van leren aan. Slimme oefenmodes en herhalingen zorgen dat het blijft hangen. En binnenkort neem je alles mee in je pocket met onze iOS-app.",
+      "classroomFeatureTitle": "Leer samen in\njouw eigen ruimte",
+      "classroomBlock": "Of je nu in een officiële klas zit, studeert met vrienden of materiaal deelt met duizenden studenten — STUDO heeft een classroom voor elke situatie. Deel sets, volg voortgang en daag elkaar uit. Samen leren gaat gewoon beter.",
+      "classroomCTA": "Ontdek classrooms",
       "why": "Waarom STUDO?",
       "subtitle1": "Alles wat je nodig hebt om",
       "subtitle2": "je studie te crushen",
@@ -96,7 +100,7 @@
       "featureTitle1": "Study smarter",
       "featureTitle2": "Door studenten, voor studenten",
       "featureTitle3": "Ready for anything",
-      "signupfree": "Gratis Aanmelden",
+      "signupfree": "Schrijf Je In",
       "stat1": "5 studytools",
       "stat2": "onbeperkt sets maken",
       "stat3": "100% gratis"
@@ -558,10 +562,74 @@
         "email": "E-mail:",
         "website": "Website:"
       }
+    },
+    "classrooms": {
+      "official": {
+        "title": "Jouw klas,\ndigitaal verlengd",
+        "subtitle": "Officiële klasgroepen rechtstreeks gekoppeld aan je school of instelling",
+        "block1": "Aangemaakt door leerkrachten of professoren",
+        "block2": "Studenten treden toe via uitnodiging of code",
+        "block3": "Gericht op vakken, cursussen en examens",
+        "cta": "Maak een classroom"
+      },
+      "studygroup": {
+        "title": "Samen studeren,\nop jouw tempo",
+        "subtitle": "Privé studeergroepen voor vrienden, studiegenoten of projectteams",
+        "block1": "Aangemaakt door studenten zelf",
+        "block2": "Nodig vrienden uit of werk samen aan een project",
+        "block3": "Flexibel, informeel en volledig op maat",
+        "cta": "Start een studiegroep"
+      },
+      "community": {
+        "title": "Kennis delen\nmet iedereen",
+        "subtitle": "Open leeromgevingen waar iedereen studiemateriaal kan vinden en bijdragen",
+        "block1": "Toegankelijk voor iedereen, zonder uitnodiging",
+        "block2": "Ideaal voor populaire vakken en toelatingsexamens",
+        "block3": "Ontdek sets van duizenden andere studenten",
+        "cta": "Verken de community"
+      }
+    },
+    "challenges": {
+      "mastery": {
+        "title": "Bewijs dat je\nhet écht kent",
+        "subtitle": "Geen geluk, geen gokken — behaal 100% en verdien je badge",
+        "block1": "Geen enkele fout in de laatste ronde",
+        "block2": "Of drie perfecte rondes op rij",
+        "block3": "Verdien badges zoals 'Anatomy Master' of 'Chapter 3 Conqueror'",
+        "cta": "Neem de uitdaging aan"
+      },
+      "duel": {
+        "title": "Eén tegen één,\nbeste wint",
+        "subtitle": "Daag een medestudent uit op dezelfde set en zie wie er bovenuit komt",
+        "block1": "Zelfde vragen, tijdslimiet per kaart — live of asynchroon",
+        "block2": "Winnaar bepaald op correctheid én snelheid",
+        "block3": "Leer nog nooit zo snel samen...",
+        "cta": "Daag iemand uit"
+      },
+      "speedrun": {
+        "title": "Wie is het\nsnelst klaar?",
+        "subtitle": "Competitief studeren tegen de klok — race door de leerstof en zie wie bovenaan eindigt",
+        "block1": "Ranking op minst aantal rondes, daarna snelste tijd",
+        "block2": "Live leaderboard voor extra spanning",
+        "block3": "Stel een deadline in en daag je groep uit",
+        "cta": "Start een Speed Run"
+      }
     }
   },
+  "waitinglist": {
+    "title": "Schrijf in",
+    "join_waitinglist": "Geef je email op voor de wachtlijst",
+    "email": "email",
+    "join": "schrijf in",
+    "Loading": "loading...",
+    "rights": "STUDO inc. All Rights Reserved.",
+    "hook": "studenten al ingeschreven",
+    "Version": "Versie",
+    "somethingWentWrong": "Er ging iets mis, probeer opnieuw",
+    "alreadyRegistered": "Dit e-mailadres staat al op de lijst"
+  },
   "login": {
-    "hook": "students already studying",
+    "hook": "studenten wachten al",
     "Version": "Versie",
     "rights": "STUDO inc. All Rights Reserved.",
     "Welcome back": "Welcome back",
@@ -750,8 +818,8 @@
     "select": "Studo Select",
     "month": "/month",
     "free_expl": "Core features with ads.",
-    "select_expl": "Full access, timelines, printable study sets, and no ads.",
-    "start_tdy": "start today",
+    "select_expl": "Full access, SVEN ai and no ads.",
+    "start_tdy": "schrijf in",
     "current": "current plan",
     "popular": "popular",
     "korting_school": "Studo offers discounts for schools, companies and families",
