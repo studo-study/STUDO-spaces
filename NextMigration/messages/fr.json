@@ -60,7 +60,7 @@
       "Subtitle": "Des outils gratuits pour étudier plus vite et plus intelligemment",
       "KeyFeatures": "Ce que tu peux faire avec",
       "CTA": "Appel à l'action",
-      "SignUp": "Rejoindre les listes d'attente",
+      "SignUp": "rejoindre",
       "LearnMore": "découvrir plus",
       "Methods": "Méthodes d'apprentissage",
       "LearnMoreAbout": "Découvre le mode {mode}",
@@ -82,7 +82,7 @@
       "featureTitle1": "Étudie plus intelligemment",
       "featureTitle2": "Par des étudiants, pour des étudiants",
       "featureTitle3": "Prêt pour tout",
-      "signupfree": "Rejoindre les listes d'attente",
+      "signupfree": "rejoindre",
       "stat1": "5 outils d'étude",
       "stat2": "création de sets illimitée",
       "stat3": "100% gratuit"
@@ -589,7 +589,7 @@
     }
   },
   "waitinglist": {
-    "title": "Rejoindre la liste d'attente",
+    "title": "Rejoindre les listes d'attente",
     "join_waitinglist": "inscris-toi avec ton e-mail",
     "email": "e-mail",
     "join": "rejoindre",
