@@ -25,7 +25,7 @@ export default function TriggerClassrooms({ ClassOpen, setClassOpen }: TriggerCl
     return (
         <div
             ref={containerRef}
-            className={"relative w-fit h-fit flex flex-row gap-3 cursor-pointer"}
+            className={"relative w-fit min-w-fit h-fit flex flex-row gap-3 cursor-pointer"}
             onClick={togglePopUp}
         >
             <img
