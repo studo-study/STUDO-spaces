@@ -82,6 +82,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default function VisualsetPage() {
     const t = useTranslations("landing.visualsets")
+    const launched = false;
     return (
         <main
             className={`w-full dark:text-white text-studodarkblue
@@ -111,6 +112,7 @@ export default function VisualsetPage() {
                                 <li className="list-disc">{t("block5_visualset")}</li>
                             </ul>
                         </AnimateOnMount>
+                        {launched &&
                         <AnimateOnMount delay={1000} className="w-full">
                             <div
                                 className={`w-full flex items-center justify-baseline
@@ -123,7 +125,7 @@ export default function VisualsetPage() {
                                     {t("create your own")}
                                 </Link>
                             </div>
-                        </AnimateOnMount>
+                        </AnimateOnMount>}
                     </article>
                 </div>
                 <AnimateOnMount delay={400} className="hidden xl:flex h-screen xl:w-1/2 h-full">
