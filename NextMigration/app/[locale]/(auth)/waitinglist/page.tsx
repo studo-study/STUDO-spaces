@@ -9,7 +9,7 @@ import DesktopForm from "@/app/[locale]/(auth)/waitinglist/desktopform";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const messages = (await import(`../../../../messages/seo/login/${locale}.json`)).default;
+    const messages = (await import(`../../../../messages/seo/waiting-list/${locale}.json`)).default;
 
     const baseUrl = 'https://studo.study';
     const localeUrl = `${baseUrl}/${locale}`;

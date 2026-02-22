@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const messages = (await import(`../../../../../../messages/seo/about-us/${locale}.json`)).default;
+    const messages = (await import(`../../../../../../messages/seo/mastery/${locale}.json`)).default;
 
     const baseUrl = 'https://studo.study';
     const localeUrl = `${baseUrl}/${locale}`;

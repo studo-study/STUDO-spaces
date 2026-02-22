@@ -6,6 +6,7 @@ import {useTranslations} from "next-intl";
 export default function LandingFooter() {
     const t = useTranslations("landing.footer");
     const CurrentYear = new Date().getFullYear();
+    const launched = false;
 
     return (
         <footer className="w-full flex flex-col text-white">
@@ -41,7 +42,7 @@ export default function LandingFooter() {
                             <Link href="/about-us" className="hover:underline">{t("aboutBlock1")}</Link>
                             <Link href="/privacy" className="hover:underline">{t("aboutBlock2")}</Link>
                             <Link href="/terms-of-service" className="hover:underline">{t("aboutBlock3")}</Link>
-                            <Link href="/GDPR" className="hover:underline">{t("GDPR")}</Link>
+                            {launched && <Link href="/GDPR" className="hover:underline">{t("GDPR")}</Link>}
                         </div>
 
                         <div className="flex flex-col gap-4">
