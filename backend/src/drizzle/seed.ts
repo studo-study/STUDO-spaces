@@ -596,36 +596,42 @@ async function seedStudo() {
         classroom_id: classroomId1,
         role: 'owner',
         joined_at: '2024-08-20T10:00:00.000Z',
+        position: 1,
       },
       {
         user_id: userId1,
         classroom_id: classroomId1,
         role: 'student',
         joined_at: '2024-08-22T10:00:00.000Z',
+        position: 2,
       },
       {
         user_id: userId2,
         classroom_id: classroomId1,
         role: 'student',
         joined_at: '2024-08-25T10:00:00.000Z',
+        position: 3,
       },
       {
         user_id: userId3,
         classroom_id: classroomId2,
         role: 'owner',
         joined_at: '2024-08-22T11:00:00.000Z',
+        position: 2,
       },
       {
         user_id: userId2,
         classroom_id: classroomId2,
         role: 'student',
         joined_at: '2024-08-25T10:00:00.000Z',
+        position: 1,
       },
       {
         user_id: userId1,
         classroom_id: classroomId2,
         role: 'student',
         joined_at: '2024-08-25T10:00:00.000Z',
+        position: 3,
       },
     ]);
     console.log('Classroomusers seeded\n');

@@ -222,8 +222,8 @@ export const sessioncards = pgTable('sessioncards', {
   mastered: boolean('mastered').notNull(),
   times_relearned: integer('times_relearned').notNull(),
   card_id: varchar('card_id', { length: 64 })
-    .references(() => cards.id, { onDelete: 'set null' })  // ✅ CHANGED: was 'restrict', nu 'set null'
-    .notNull(),  // ⚠️ Je moet dit naar .nullable() veranderen als je 'set null' gebruikt
+    .references(() => cards.id, { onDelete: 'set null' }) // ✅ CHANGED: was 'restrict', nu 'set null'
+    .notNull(), // ⚠️ Je moet dit naar .nullable() veranderen als je 'set null' gebruikt
   session_id: varchar('session_id', { length: 64 })
     .references(() => studysessions.id, { onDelete: 'cascade' })
     .notNull(),
@@ -241,7 +241,7 @@ export const sessionpins = pgTable('sessionpins', {
   mastered: boolean('mastered').notNull(),
   times_relearned: integer('times_relearned').notNull(),
   pin_id: varchar('pin_id', { length: 64 })
-    .references(() => pins.id, { onDelete: 'cascade' })  // ✅ CHANGED: consistent gedrag
+    .references(() => pins.id, { onDelete: 'cascade' }) // ✅ CHANGED: consistent gedrag
     .notNull(),
   session_id: varchar('session_id', { length: 64 })
     .references(() => studysessions.id, { onDelete: 'cascade' })
@@ -285,6 +285,7 @@ export const classroomusers = pgTable(
       .notNull(),
     role: varchar('role', { length: 7 }).notNull(),
     joined_at: varchar('joined_at', { length: 24 }).notNull(),
+    position: integer('position').notNull(),
   },
   (table) => [
     uniqueIndex('idx_user_classroom_unique').on(

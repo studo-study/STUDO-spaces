@@ -103,7 +103,15 @@
       "signupfree": "meld je gratis aan",
       "stat1": "5 studytools",
       "stat2": "onbeperkt sets maken",
+<<<<<<< Updated upstream
       "stat3": "100% gratis"
+=======
+      "stat3": "100% gratis",
+      "search_sets": "zoek studosets...",
+      "search_visuals": "zoek visualsets...",
+      "search_people": "zoek profielen...",
+      "search_classroom": "zoek classrooms..."
+>>>>>>> Stashed changes
     },
     "studosets": {
       "title_studyset": "Hier begint\nje studie",
@@ -629,40 +637,40 @@
     "alreadyRegistered": "Dit e-mailadres staat al op de lijst"
   },
   "login": {
-    "hook": "studenten wachten al",
+    "hook": "studenten studeren al",
     "Version": "Versie",
-    "rights": "STUDO inc. All Rights Reserved.",
-    "Welcome back": "Welcome back",
+    "rights": "STUDO inc. Alle rechten voorbehouden.",
+    "Welcome back": "Welkom terug",
     "email": "email",
-    "password": "password",
+    "password": "wachtwoord",
     "Log In": "Log In",
-    "log into account": "log into account",
-    "or log in with": "or log in with",
-    "Loading": "Loading...",
+    "log into account": "log in bij je account",
+    "or log in with": "of log in met",
+    "Loading": "Laden...",
     "Google": "Google",
     "Microsoft": "Microsoft",
     "Smartschool": "Smartschool",
-    "Don't have an account?": "Don't have an account?",
-    "sign up": "sign up"
+    "Don't have an account?": "Nog geen account?",
+    "sign up": "registreren"
   },
   "register": {
-    "Create account": "Create account",
-    "create_account": "Create a new account",
+    "Create account": "Creër account",
+    "create_account": "Creër een nieuwe account",
     "information": "Personal Information",
     "email": "email",
-    "name": "displayname",
-    "info_title": "Your personal info",
-    "password_title": "Your password",
-    "password": "password",
-    "repeat password": "repeat password",
-    "role_title": "You are a",
-    "teacher": "teacher",
+    "name": "naam",
+    "info_title": "Jouw persoonlijke info",
+    "password_title": "Jouw wachtwoord",
+    "password": "wachtwoord",
+    "repeat password": "herhaal wachtwoord",
+    "role_title": "U bent een",
+    "teacher": "leerkracht",
     "student": "student",
     "professor": "professor",
-    "Loading": "Registering...",
-    "Register": "Register",
-    "other_register": "or register with",
-    "Already": "Already have an account?",
+    "Loading": "Registeren...",
+    "Register": "Registeren",
+    "other_register": "of registreer met",
+    "Already": "Al geregistreerd?",
     "log in": "Log in"
   },
   "header": {
@@ -1003,5 +1011,9 @@
       "time_studied": "Time Studied",
       "total_sets": "Total Sets"
     }
+  },
+  "studoset": {
+    "created": "Gemaakt door",
+    "set_title": "untitled set"
   }
 }
