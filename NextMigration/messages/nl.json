@@ -103,7 +103,11 @@
       "signupfree": "meld je gratis aan",
       "stat1": "5 studytools",
       "stat2": "onbeperkt sets maken",
-      "stat3": "100% gratis"
+      "stat3": "100% gratis",
+      "search_sets": "zoek Studosets...",
+      "search_visuals": "zoek Visualsets...",
+      "search_people": "zoek profielen...",
+      "search_classroom": "zoek classrooms..."
     },
     "studosets": {
       "title_studyset": "Hier begint\nje studie",

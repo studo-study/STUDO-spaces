@@ -6,6 +6,7 @@ import Image from "next/image";
 import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import HeroBackground from "@/components/marketing/landing_welcome/hero_background";
 import {Link} from "@/i18n/routing";
+import SearchSets from "@/components/marketing/landing_welcome/search";
 
 const studyModes = [
     { to: "/tools/learn", label: "Learn", icon: "/icons/start/learn.svg", color: "from-emerald-500 to-emerald-400" },
@@ -23,7 +24,7 @@ export default function Hero() {
         t("TextVisualLearning"),
         t("AnywhereAnytime")
     ];
-    const launched = false;
+    const launched = true;
     return (
         <section className="relative w-full max-w-screen overflow-visible h-fit xxl:h-3/4 flex flex-col items-center justify-start pt-10 px-4">
 
@@ -72,8 +73,9 @@ export default function Hero() {
                     </ul>
                 </AnimateOnMount>
 
-                <AnimateOnMount delay={500}>
-                    <nav className="grid grid-cols-1 md:grid-cols-2 gap-4 md:mt-6 md:w-full max-w-150">
+                <AnimateOnMount delay={500} className={"w-full flex justify-center flex-col gap-5 items-center"}>
+                    <SearchSets/>
+                    <nav className="grid grid-cols-1 md:grid-cols-2 px-10 gap-4 md:mt-6 md:w-full max-w-150">
                         <Link href={"/register"} className="px-8 py-4 text-lg flex items-center justify-center gap-2 font-bold text-white bg-emerald-400 dark:bg-studoblue rounded-full border-2 border-emerald-400 dark:border-studoblue hover:bg-emerald-500 dark:hover:bg-studoblue/50 transition-all duration-300">
                             {t("SignUp")}
                             <FaArrowRightLong aria-hidden="true" />
