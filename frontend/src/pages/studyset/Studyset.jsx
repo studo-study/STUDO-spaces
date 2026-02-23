@@ -36,7 +36,7 @@ export default function Studyset() {
 
   const { trigger: triggerLike } = useSWRMutation(`studysets/${id}/likes`, save);
   const { trigger: triggerUpdateFolder } = useSWRMutation(`studysets/${id}/folder`, put);
-
+  console.log(set);
   const [saved, setSaved] = useState(false);
   const [popUpToggle, setPopUpToggle] = useState(false);
   const [loved, setLoved] = useState(false);

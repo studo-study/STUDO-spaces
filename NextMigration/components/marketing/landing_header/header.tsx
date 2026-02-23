@@ -8,6 +8,7 @@ import TriggerTools from "@/components/marketing/landing_header/dropdowntools";
 import TriggerMethods from "@/components/marketing/landing_header/dropdownmethods";
 import Image from "next/image";
 import TriggerClassrooms from "@/components/marketing/landing_header/dropdownclassrooms";
+import Searchbar from "@/components/marketing/landing_header/searchbar";
 
 
 const menuItems = [
@@ -120,8 +121,10 @@ export default function LandingHeader() {
                     <TriggerClassrooms ClassOpen={ClassOpen} setClassOpen={setClassOpen}/>
                 </nav>
             </div>
-
-            <div className="flex items-center justify-end gap-4 md:gap-5 flex-1">
+            <div className={"w-full flex items-center justify-end px-10"}>
+                <Searchbar/>
+            </div>
+            <div className="flex items-center justify-end min-w-fit gap-4 md:gap-5 flex-1">
                 {launched ? ( <div className="hidden md:flex items-center gap-5">
                     <Link
                         href={"/login"}

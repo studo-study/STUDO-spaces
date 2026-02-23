@@ -439,6 +439,12 @@ export class ClassroomUserResponseDto {
     example: '2024-01-15T10:30:00.000Z',
   })
   joined_at: string;
+
+  @ApiProperty({
+    description: 'Positie van de gebruiker',
+    example: 1,
+  })
+  position: number;
 }
 
 export class CreateChallengeDTO {

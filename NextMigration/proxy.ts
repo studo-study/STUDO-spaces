@@ -70,11 +70,13 @@ export default auth((request) => {
 
     // Check of huidige route public is
     const isPublicRoute = publicRoutes.some(route => {
-        if (route === '/') {
-            return pathWithoutLocale === '/' || pathWithoutLocale === '';
-        }
-        return pathWithoutLocale === route || pathWithoutLocale.startsWith(route + '/');
-    });
+            if (route === '/') {
+                return pathWithoutLocale === '/' || pathWithoutLocale === '';
+            }
+            return pathWithoutLocale === route || pathWithoutLocale.startsWith(route + '/');
+        })
+        || pathWithoutLocale.startsWith('/studoset/')
+        || pathWithoutLocale.startsWith('/visualset/');
 
     // Auth routes (login/register) - hier mag je NIET komen als je ingelogd bent
     const authRoutes = ['/login', '/register'];
@@ -105,7 +107,7 @@ export default auth((request) => {
     // Niet ingelogd + NIET public route → redirect naar login
     if (!isPublicRoute && !isLoggedIn) {
         //const loginUrl = new URL(`/${locale}/login`, request.url);
-        const loginUrl = new URL(`/${locale}/welcome`, request.url);
+        const loginUrl = new URL(`/${locale}/login`, request.url);
         loginUrl.searchParams.set('callbackUrl', pathname);
         return NextResponse.redirect(loginUrl);
     }
