@@ -85,15 +85,11 @@
       "signupfree": "Inscrivez-vous",
       "stat1": "5 outils d'étude",
       "stat2": "création de sets illimitée",
-<<<<<<< Updated upstream
-      "stat3": "100% gratuit"
-=======
       "stat3": "100% gratuit",
       "search_sets": "rechercher des studosets...",
       "search_visuals": "rechercher des visualsets...",
       "search_people": "rechercher des profils...",
       "search_classroom": "rechercher des salles de classe..."
->>>>>>> Stashed changes
     },
     "studosets": {
       "title_studyset": "C'est ici que\ncommence ton étude",
