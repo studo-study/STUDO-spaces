@@ -1,6 +1,6 @@
 "use client";
 import {useEffect, useRef, useState} from "react";
-import {Link} from "@/i18n/routing";
+import {Link, usePathname} from "@/i18n/routing";
 
 import {useLocale, useTranslations} from 'next-intl';
 import { FiMenu, FiX } from "react-icons/fi";
@@ -9,6 +9,8 @@ import TriggerMethods from "@/components/marketing/landing_header/dropdownmethod
 import Image from "next/image";
 import TriggerClassrooms from "@/components/marketing/landing_header/dropdownclassrooms";
 import Searchbar from "@/components/marketing/landing_header/searchbar";
+import {useParams} from "next/navigation";
+import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 
 
 const menuItems = [
@@ -40,9 +42,11 @@ export default function LandingHeader() {
     const [ClassOpen, setClassOpen] = useState<boolean>(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [scrolled, setScrolled] = useState<boolean>(false);
-    const locale = useLocale();
     const launched = true;
 
+    const url = usePathname();
+    console.log(url);
+    const homePage = url === "/welcome";
 
 
     const popupRef = useRef<HTMLDivElement>(null);
@@ -121,14 +125,15 @@ export default function LandingHeader() {
                     <TriggerClassrooms ClassOpen={ClassOpen} setClassOpen={setClassOpen}/>
                 </nav>
             </div>
-            <div className={"w-full flex items-center justify-end px-10"}>
-                <Searchbar/>
-            </div>
-            <div className="flex items-center justify-end min-w-fit gap-4 md:gap-5 flex-1">
+
+            <div className="flex items-center justify-end min-w-fit w-full gap-4 md:gap-5 flex-1">
+                {!homePage && <AnimateOnMount delay={300} className={"w-full flex items-center justify-end"}>
+					<Searchbar/>
+				</AnimateOnMount>}
                 {launched ? ( <div className="hidden md:flex items-center gap-5">
                     <Link
                         href={"/login"}
-                        className="inline-flex font-semibold text-white
+                        className="inline-flex font-semibold text-white truncate
             flex-row gap-2 justify-center items-center p-2 pl-7 pr-7 rounded-4xl cursor-pointer
             active:scale-105 transition-transform z-[2]
             border-[0.5px] border-solid border-[#8181812f]
@@ -140,7 +145,7 @@ export default function LandingHeader() {
                     </Link>
                     <Link
                         href={"/register"}
-                        className="font-semibold text-studodarkblue dark:text-white hover:underline"
+                        className="font-semibold text-studodarkblue truncate dark:text-white hover:underline"
                     >
                         {t("CreateAccount")}
                     </Link>

@@ -85,15 +85,11 @@
       "signupfree": "sign up for free",
       "stat1": "5 study tools",
       "stat2": "unlimited set creation",
-<<<<<<< Updated upstream
-      "stat3": "100% free"
-=======
       "stat3": "100% free",
       "search_sets": "search studosets...",
       "search_visuals": "search visualsets...",
       "search_people": "search profiles...",
       "search_classroom": "search classrooms..."
->>>>>>> Stashed changes
     },
     "studosets": {
       "title_studyset": "This is where\nyour study starts",

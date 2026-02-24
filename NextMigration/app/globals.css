@@ -152,14 +152,14 @@ body::-webkit-scrollbar {
 }
 
 .scroll-hidden {
-    overflow-y: auto;
     scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .scroll-hidden::-webkit-scrollbar {
     display: none;
 }
-
 
 .background-profile {
     background: linear-gradient(
