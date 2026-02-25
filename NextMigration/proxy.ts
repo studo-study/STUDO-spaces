@@ -89,27 +89,12 @@ export default auth((request) => {
         pathWithoutLocale === route || pathWithoutLocale.startsWith(route + '/')
     );
 
-    // ========================================
-    // AUTH LOGIC
-    // ========================================
     const isLoggedIn = !!request.auth;
 
-    console.log({
-        pathname,
-        pathWithoutLocale,
-        locale,
-        isLoggedIn,
-        isPublicRoute,
-        isAuthRoute,
-        checkingFor: publicRoutes.map(r => `/${locale}${r}`)
-    });
-
-    // Ingelogd + op login/register pagina → redirect naar home
     if (isAuthRoute && isLoggedIn) {
         return NextResponse.redirect(new URL(`/${locale}/home`, request.url));
     }
 
-    // Niet ingelogd + NIET public route → redirect naar login
     if (!isPublicRoute && !isLoggedIn) {
         //const loginUrl = new URL(`/${locale}/login`, request.url);
         const loginUrl = new URL(`/${locale}/login`, request.url);
@@ -117,9 +102,6 @@ export default auth((request) => {
         return NextResponse.redirect(loginUrl);
     }
 
-    // ========================================
-    // DOOR NAAR INTL MIDDLEWARE
-    // ========================================
     return intlMiddleware(request);
 });
 
