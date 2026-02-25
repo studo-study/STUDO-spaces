@@ -66,6 +66,11 @@ export default auth((request) => {
         "/challenges/mastery-tournament",
         "/studo-education",
         "/challenges/time-attack",
+        "/search-result",
+        "/search-result/all",
+        "/search-result/users",
+        "/search-result/sets",
+        "/search-result/classrooms",
         "/"];
 
     // Check of huidige route public is

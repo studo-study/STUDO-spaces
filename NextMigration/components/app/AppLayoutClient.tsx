@@ -16,7 +16,6 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
     const [burgerOpen, setBurgerOpen] = useState(false);
     const [Search, setSearch] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
-
     const toggleSearch = () => setSearch(true);
     const toggleCreate = () => {
         requestAnimationFrame(() => {

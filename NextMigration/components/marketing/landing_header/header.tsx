@@ -11,6 +11,7 @@ import TriggerClassrooms from "@/components/marketing/landing_header/dropdowncla
 import Searchbar from "@/components/marketing/landing_header/searchbar";
 import {useParams} from "next/navigation";
 import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
+import {useLoadingStore} from "@/store/loadingStore";
 
 
 const menuItems = [
@@ -102,78 +103,85 @@ export default function LandingHeader() {
         };
     }, [mobileMenuOpen, setMobileMenuOpen]);
 
+    const loading = useLoadingStore(s => s.loading)
+
     return (<>
-        <header
-            className={`w-screen h-20 md:h-20 fixed top-0 left-0 right-0 z-[999] border-b border-transparent transition-all duration-300
-      bg-transparent ${scrolled ? "backdrop-blur-2xl border-b border-studoborder" : null}
-      flex items-center justify-between px-4 sm:px-8 lg:px-20`}
-        >
-            <div className="flex items-center justify-start gap-6 md:gap-10 flex-1">
-                <Link
-                    href={`/welcome`}
-                    className="group relative font-akira text-3xl md:text-4xl whitespace-nowrap"
+            <header className={`w-full flex flex-col fixed top-0 left-0 border-b border-transparent right-0 z-[999] ${scrolled ? "backdrop-blur-2xl border-b border-studoborder" : null}`}>
+                <div className={"w-screen h-0.5 overflow-hidden"}>
+                    <div className={`w-screen h-0.5 ${loading ? "bg-studoblue searchAnimation": ""}`}/>
+                </div>
+                <div
+                    className={`w-screen h-20 md:h-20 transition-all duration-300
+              bg-transparent 
+              flex items-center justify-between px-4 sm:px-8 lg:px-20`}
                 >
-          <span className={`relative z-10 bg-gradient-to-r ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
-            STUDO
-          </span>
+                    <div className="flex items-center justify-start gap-4 lg:gap-10 min-w-0 flex-1">
+                        <Link
+                            href={`/welcome`}
+                            className="group relative font-akira text-3xl md:text-4xl whitespace-nowrap"
+                        >
+                  <span className={`relative z-10 bg-gradient-to-r ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
+                    STUDO
+                  </span>
 
-                </Link>
+                        </Link>
 
-                <nav className="hidden md:flex w-full flex-row gap-10 items-center">
-                    <TriggerMethods MethodsOpen={MethodsOpen} setMethodsOpen={setMethodsOpen} />
-                    <TriggerTools ToolsOpen={ToolsOpen} setToolsOpen={setToolsOpen} />
-                    <TriggerClassrooms ClassOpen={ClassOpen} setClassOpen={setClassOpen}/>
-                </nav>
-            </div>
+                        <nav className="hidden md:flex flex-row gap-4 lg:gap-10 items-center min-w-0">
+                            <TriggerMethods MethodsOpen={MethodsOpen} setMethodsOpen={setMethodsOpen} />
+                            <TriggerTools ToolsOpen={ToolsOpen} setToolsOpen={setToolsOpen} />
+                            <TriggerClassrooms ClassOpen={ClassOpen} setClassOpen={setClassOpen}/>
+                        </nav>
+                    </div>
 
-            <div className="flex items-center justify-end min-w-fit w-full gap-4 md:gap-5 flex-1">
-                {!homePage && <AnimateOnMount delay={300} className={"w-full flex items-center justify-end"}>
-					<Searchbar/>
-				</AnimateOnMount>}
-                {launched ? ( <div className="hidden md:flex items-center gap-5">
-                    <Link
-                        href={"/login"}
-                        className="inline-flex font-semibold text-white truncate
-            flex-row gap-2 justify-center items-center p-2 pl-7 pr-7 rounded-4xl cursor-pointer
-            active:scale-105 transition-transform z-[2]
-            border-[0.5px] border-solid border-[#8181812f]
-            shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
-            dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-            bg-emerald-400 dark:bg-white dark:text-studodarkblue"
-                    >
-                        {t("LogIn")}
-                    </Link>
-                    <Link
-                        href={"/register"}
-                        className="font-semibold text-studodarkblue truncate dark:text-white hover:underline"
-                    >
-                        {t("CreateAccount")}
-                    </Link>
-                </div>) :
-                    <Link  href={"/waitinglist"}
-                           className="inline-flex font-semibold text-white
-            flex-row gap-2 justify-center items-center p-2 xl:px-7 px-3 rounded-4xl cursor-pointer
-            active:scale-105 transition-transform z-[2] lg:text-base text-sm text-center
-            border-[0.5px] border-solid border-[#8181812f]
-            shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
-            dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-            bg-emerald-400 dark:bg-white dark:text-studodarkblue"
-                    >
-                        {t("coming")}
-                    </Link>
-                }
+                    <div className="flex items-center justify-end gap-3 lg:gap-5 flex-shrink-0">
+                        {!homePage && <AnimateOnMount delay={300} className={"w-full flex items-center justify-end"}>
+                            <Searchbar/>
+                        </AnimateOnMount>}
+                        {launched ? ( <div className="hidden md:flex items-center gap-5">
+                            <Link
+                                href={"/login"}
+                                className="inline-flex font-semibold text-white truncate
+                    flex-row gap-2 justify-center items-center p-2 pl-7 pr-7 rounded-4xl cursor-pointer
+                    active:scale-105 transition-transform z-[2]
+                    border-[0.5px] border-solid border-[#8181812f]
+                    shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
+                    dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
+                    bg-emerald-400 dark:bg-white dark:text-studodarkblue"
+                            >
+                                {t("LogIn")}
+                            </Link>
+                            <Link
+                                href={"/register"}
+                                className="font-semibold text-studodarkblue truncate dark:text-white hover:underline"
+                            >
+                                {t("CreateAccount")}
+                            </Link>
+                        </div>) :
+                            <Link  href={"/waitinglist"}
+                                   className="inline-flex font-semibold text-white
+                    flex-row gap-2 justify-center items-center p-2 xl:px-7 px-3 rounded-4xl cursor-pointer
+                    active:scale-105 transition-transform z-[2] lg:text-base text-sm text-center
+                    border-[0.5px] border-solid border-[#8181812f]
+                    shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
+                    dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
+                    bg-emerald-400 dark:bg-white dark:text-studodarkblue"
+                            >
+                                {t("coming")}
+                            </Link>
+                        }
 
-                <button
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="md:hidden text-studodarkblue dark:text-white p-2"
-                    aria-label="Toggle menu"
-                >
-                    {mobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-                </button>
-            </div>
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="md:hidden text-studodarkblue dark:text-white p-2"
+                            aria-label="Toggle menu"
+                        >
+                            {mobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+                        </button>
+                    </div>
 
 
-        </header>
+                </div>
+            </header>
         {(
             <div className={`fixed inset-0 z-[99999] flex flex-col justify-end md:hidden
 					bg-black/50 transition-opacity duration-300

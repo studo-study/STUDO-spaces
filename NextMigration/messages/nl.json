@@ -618,6 +618,13 @@
         "block3": "Stel een deadline in en daag je groep uit",
         "cta": "Start een Speed Run"
       }
+    },
+    "search_result": {
+      "title": "Resultaten voor",
+      "all": "Alle resultaten",
+      "users": "Gebruikers",
+      "classrooms": "Klassen",
+      "sets": "Sets"
     }
   },
   "waitinglist": {

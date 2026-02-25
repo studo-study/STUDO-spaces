@@ -81,6 +81,78 @@ export class SetResponse {
   type: string;
 }
 
+export class PublicSetResponse {
+  @ApiProperty({
+    example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
+    description: 'UUID van de set',
+  })
+  @Expose()
+  id: string;
+
+  @ApiProperty({
+    example: 'Heart Diagram',
+    description: 'Titel van de set',
+  })
+  @Expose()
+  title: string;
+
+  @ApiProperty({
+    example: 'Biology',
+    description: 'Onderwerp van de set',
+  })
+  @Expose()
+  subject: string;
+
+  @ApiProperty({
+    example: 'Emile Duyck',
+    description: 'Naam van de eigenaar',
+  })
+  @Expose()
+  owner: string;
+
+  @ApiProperty({
+    example: 'https://example.com/profile.jpg',
+    description: 'Profielfoto URL van de eigenaar',
+  })
+  @Expose()
+  img_url: string;
+
+  @ApiProperty({
+    example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
+    description: 'UUID van de eigenaar',
+  })
+  @Expose()
+  owner_id: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'Of de set geverifieerd is',
+  })
+  @Expose()
+  verified: boolean;
+
+  @ApiProperty({
+    example: 42,
+    description: 'Aantal likes',
+  })
+  @Expose()
+  likes: number;
+
+  @ApiProperty({
+    example: 25,
+    description: 'Aantal items in de set',
+  })
+  @Expose()
+  items: number;
+
+  @ApiProperty({
+    example: 'studyset',
+    description: 'Type van de set (studoset of ((visualset)))',
+  })
+  @Expose()
+  type: string;
+}
+
 export class ProfileResponse {
   @ApiProperty({
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
@@ -185,6 +257,22 @@ class SetResultData {
   data: SetResponse[];
 }
 
+class PublicSetResultData {
+  @ApiProperty({
+    example: 'set',
+    description: 'Type van de resultaten',
+  })
+  @Expose()
+  type: 'set';
+
+  @ApiProperty({
+    type: [SetResponse],
+    description: 'Array van set resultaten',
+  })
+  @Expose()
+  data: PublicSetResponse[];
+}
+
 class ProfileResultData {
   @ApiProperty({
     example: 'profile',
@@ -229,4 +317,18 @@ export class SearchResultsDto {
   })
   @Expose()
   data: [SetResultData, ProfileResultData, ClassroomResultData];
+}
+
+export class PublicSearchRsultsDto {
+  @ApiProperty({
+    type: 'array',
+    description: 'Zoekresultaten gegroepeerd per type voor publieke search',
+    example: [
+      { type: 'set', data: [] },
+      { type: 'profile', data: [] },
+      { type: 'classroom', data: [] },
+    ],
+  })
+  @Expose()
+  data: [PublicSetResultData, ProfileResultData, ClassroomResultData];
 }

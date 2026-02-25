@@ -1,11 +1,51 @@
 "use client"
 import {useParams} from "next/navigation";
 import {IoMdSearch} from "react-icons/io";
+import {useEffect, useRef, useState} from "react";
+import {useRouter} from "next/navigation";
+import {useLoadingStore} from "@/store/loadingStore";
+import {useLocale} from "next-intl";
 
 export default function Searchbar() {
-    const url = useParams()
-    return (<div className={` flex md:hidden lg:flex lg:min-w-1/10 lg:max-w-2/3 xl:min-w-1/2 xl:w-full  px-5 h-10 rounded-full bg-studogrey/30 dark:text-white text-studodarkblue border flex-row  items-center border-studoborder/30`}>
-        <input type="text" placeholder={"search..."} className={"w-full h-full text-base focus:border-none outline-none"}/>
-        <IoMdSearch className="text-2xl cursor-pointer active:scale-95 transition-all duration-200" />
-    </div>)
+    //variables
+    const [query, setQuery] = useState("");
+    const locale = useLocale();
+    const router = useRouter()
+    const inputFieldRef = useRef<HTMLInputElement>(null)
+    const setLoading = useLoadingStore(s => s.setLoading)
+
+    //toggles
+    const toggleSearch = () => {
+        if (inputFieldRef.current?.value) {
+            setQuery(inputFieldRef.current.value)
+        }
+        setLoading(true)
+    }
+
+    useEffect(() => {
+        if (!query) return
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/public/${query}`)
+            .then(r => r.json())
+            .then(() => {
+                setLoading(false)
+                router.push(`/${locale}/search-result?q=${query}`)
+            })
+    }, [query])
+
+    return (
+        <div className={`flex w-full min-w-24 max-w-60 lg:max-w-100 xl:max-w-150 shrink
+            px-4 h-10 rounded-full bg-studogrey/30 dark:text-white text-studodarkblue 
+            border flex-row items-center border-studoborder/30`}>
+            <input
+                type="text"
+                ref={inputFieldRef}
+                onKeyDown={(e) => {e.key == "Enter" && toggleSearch()}}
+                placeholder={"search..."}
+                className={"w-full h-full text-sm focus:border-none outline-none bg-transparent"}
+            />
+            <IoMdSearch
+                onClick={toggleSearch}
+                className="text-2xl shrink-0 cursor-pointer active:scale-95 transition-all duration-200" />
+        </div>
+    )
 }
