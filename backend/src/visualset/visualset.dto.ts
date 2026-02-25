@@ -4,8 +4,17 @@ import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { IsString, IsNumber } from 'nestjs-swagger-dto';
 import { Expose, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { ClassroomListResponseDto, ClassroomResponseDto } from '../classroom/classroom.dto';
-import { IsArray, IsBoolean, IsOptional, MaxLength, ValidateNested } from 'class-validator';
+import {
+  ClassroomListResponseDto,
+  ClassroomResponseDto,
+} from '../classroom/classroom.dto';
+import {
+  IsArray,
+  IsBoolean,
+  IsOptional,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
 
 export class VisualsetResponseDto {
   @ApiProperty({
@@ -77,6 +86,57 @@ export class VisualsetResponseDto {
   })
   @Expose()
   folder_id: string;
+}
+
+export class PublicVisualsetResponseDto {
+  @ApiProperty({
+    example: 'vs123',
+    description: 'ID of the ((visualset))',
+  })
+  @Expose()
+  id: string;
+
+  @ApiProperty({
+    example: 'The Human Body',
+    description: 'Title of the ((visualset))',
+  })
+  @Expose()
+  title: string;
+
+  @ApiProperty({
+    example: 'Biology',
+    description: 'Course name',
+  })
+  @Expose()
+  course: string;
+
+  @ApiProperty({
+    example: '2024-01-01T10:00:00.000Z',
+    description: 'Creation date',
+  })
+  @Expose()
+  created_at: string;
+
+  @ApiProperty({
+    example: '2024-01-10T10:00:00.000Z',
+    description: 'Last updated date',
+  })
+  @Expose()
+  last_updated: string;
+
+  @ApiProperty({
+    example: 'user123',
+    description: 'User ID of the creator',
+  })
+  @Expose()
+  user_id: string;
+
+  @ApiProperty({
+    example: 'Charles',
+    description: 'Display name of the creator',
+  })
+  @Expose()
+  displayName: string;
 }
 
 //images
@@ -302,7 +362,6 @@ export class FullVSResponseListDto extends VisualsetResponseDto {
   })
   @Expose()
   classrooms: ClassroomResponseDto[];
-
 }
 
 export class VisualsetResponseListDto {
