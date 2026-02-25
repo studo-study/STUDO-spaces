@@ -624,7 +624,12 @@
       "all": "Alle resultaten",
       "users": "Gebruikers",
       "classrooms": "Klassen",
-      "sets": "Sets"
+      "sets": "Sets",
+      "classroom": {
+        "classroom": "Klassen",
+        "more": "meer",
+        "not_found": "geen klassen"
+      }
     }
   },
   "waitinglist": {

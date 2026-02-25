@@ -3,6 +3,7 @@ import { useSearchParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import SearchHeader from "@/components/marketing/search/searchheader";
 import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
+import SearchResultClassroom from "@/components/marketing/search/classrooms/searchresult_classroom";
 
 interface SetResultProps {
     index: number;
@@ -49,20 +50,22 @@ export default function SearchResults() {
             <div className={"w-full flex flex-col gap-5"}>
                 <SearchHeader query={query} />
             </div>
+            <SearchResultClassroom result={result} />
+
             <div className={"w-full h-full flex flex-col gap-5"}>
-                <span>Sets</span>
-                <div className={"w-full min-h-30 grid grid-cols-4 gap-5"}>
+                <span>Users</span>
+                <div className={"w-full min-h-30 h-full grid grid-cols-4 gap-5"}>
                     {
-                        result && result.data[0].data.map((item, i) => (<SetResult key={i}/>))
+                        result && result.data[1].data.map((item, i) => (<SetResult key={i} index={i}/>))
                     }
                 </div>
             </div>
 
             <div className={"w-full h-full flex flex-col gap-5"}>
-                <span>Users</span>
-                <div className={"w-full h-full grid grid-cols-4 gap-5"}>
+                <span>Classrooms</span>
+                <div className={"w-full min-h-30 h-full grid grid-cols-4 gap-5"}>
                     {
-                        result && result.data[1].data.map((item, i) => (<SetResult key={i} index={i}/>))
+                        result && result.data[2].data.map((item, i) => (<SetResult key={i} index={i}/>))
                     }
                 </div>
             </div>
