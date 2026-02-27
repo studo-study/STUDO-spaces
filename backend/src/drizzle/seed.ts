@@ -86,7 +86,7 @@ async function seedStudo() {
     await db.insert(schema.users).values([
       {
         id: userId1,
-        email: 'admin@studo.studygroup',
+        email: 'support@studo.study',
         passwordHash: await hashPassword('Wachtwoord'),
         displayName: 'Studo Admin',
         img_url: 'https://i.pravatar.cc/150?img=1',

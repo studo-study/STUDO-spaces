@@ -624,11 +624,23 @@
       "all": "Alle resultaten",
       "users": "Gebruikers",
       "classrooms": "Klassen",
+      "results": "resultaten",
+      "result": "resultaat",
       "sets": "Sets",
       "classroom": {
         "classroom": "Klassen",
         "more": "meer",
         "not_found": "geen klassen"
+      },
+      "set": {
+        "sets": "Sets",
+        "more": "meer",
+        "not_found": "geen sets"
+      },
+      "user": {
+        "users": "Gebruikers",
+        "more": "meer",
+        "not_found": "geen gebruikers"
       }
     }
   },

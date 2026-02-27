@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import SearchHeader from "@/components/marketing/search/searchheader";
 import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import SearchResultClassroom from "@/components/marketing/search/classrooms/searchresult_classroom";
+import SearchResultSets from "@/components/marketing/search/sets/searchresult_sets";
+import SearchResultUsers from "@/components/marketing/search/users/searchresult_users";
 
 interface SetResultProps {
     index: number;
@@ -43,32 +45,17 @@ export default function SearchResults() {
                 setResult(data)  // niet data.json(), al geparsed
             })
     }, [query])  // dependency is query, niet searchParams
-
+    const size = result && result.data[0].data.length + result.data[1].data.length + result.data[2].data.length;
     console.log(result);
     return (
         <div className={"w-1/2 flex flex-col justify-center items-center gap-5"}>
             <div className={"w-full flex flex-col gap-5"}>
-                <SearchHeader query={query} />
+                <SearchHeader query={query} size={size}/>
             </div>
+
+            <SearchResultSets result={result} />
+            <SearchResultUsers result={result} />
             <SearchResultClassroom result={result} />
-
-            <div className={"w-full h-full flex flex-col gap-5"}>
-                <span>Users</span>
-                <div className={"w-full min-h-30 h-full grid grid-cols-4 gap-5"}>
-                    {
-                        result && result.data[1].data.map((item, i) => (<SetResult key={i} index={i}/>))
-                    }
-                </div>
-            </div>
-
-            <div className={"w-full h-full flex flex-col gap-5"}>
-                <span>Classrooms</span>
-                <div className={"w-full min-h-30 h-full grid grid-cols-4 gap-5"}>
-                    {
-                        result && result.data[2].data.map((item, i) => (<SetResult key={i} index={i}/>))
-                    }
-                </div>
-            </div>
         </div>
     )
 }

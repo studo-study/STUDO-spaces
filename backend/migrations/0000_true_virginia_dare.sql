@@ -41,7 +41,8 @@ CREATE TABLE "classroomusers" (
 	"user_id" varchar(64) NOT NULL,
 	"classroom_id" varchar(64) NOT NULL,
 	"role" varchar(7) NOT NULL,
-	"joined_at" varchar(24) NOT NULL
+	"joined_at" varchar(24) NOT NULL,
+	"position" integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "folders" (

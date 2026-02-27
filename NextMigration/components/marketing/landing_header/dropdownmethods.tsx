@@ -84,7 +84,7 @@ function MethodsPopUp({ MethodsOpen, setMethodsOpen, triggerRef }: MethodsPopUpP
         z-[9999] w-56 p-2 truncate
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
-        backdrop-blur-xl
+        glass-rgb
         border border-white/50 dark:border-white/10
         shadow-xl shadow-black/10 dark:shadow-black/30
         transition-all duration-300 ease-out origin-top

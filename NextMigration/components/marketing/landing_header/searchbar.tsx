@@ -34,8 +34,8 @@ export default function Searchbar() {
 
     return (
         <div className={`flex w-full min-w-24 max-w-60 lg:max-w-100 xl:max-w-150 shrink
-            px-4 h-10 rounded-full bg-studogrey/30 dark:text-white text-studodarkblue 
-            border flex-row items-center border-studoborder/30`}>
+            px-4 h-10 rounded-full bg-gray-300/30 dark:bg-gray-500/10 flex-row items-center 
+         dark:text-white text-studodarkblue border-2 border-gray-400/30 dark:border-studoborder/20`}>
             <input
                 type="text"
                 ref={inputFieldRef}

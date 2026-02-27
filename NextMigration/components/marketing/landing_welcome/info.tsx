@@ -77,7 +77,7 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
                 <div className={`flex overflow-visible flex-col w-full gap-6 ${isReverse ? "lg:order-2 items-end text-right" : "lg:order-1 items-start text-left"}`}>
                     <div className="inline-flex overflow-visible items-center gap-2">
                         <span
-                            className={`w-8 h-8 rounded-full backdrop-blur-sm bg-gradient-to-r ${feature.color} flex items-center justify-center text-white font-bold text-sm`}
+                            className={`w-8 h-8 rounded-full glass-rgb bg-gradient-to-r ${feature.color} flex items-center justify-center text-white font-bold text-sm`}
                             aria-hidden="true"
                         >
                             {index + 1}
@@ -122,7 +122,7 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
                 {/* Image column */}
                 <figure className={`${isReverse ? "lg:order-1" : "lg:order-2"}`}>
                     <div
-                        className={`rounded-3xl ${feature.bgColor} p-8 lg:p-12 overflow-hidden border border-white/50 dark:border-white/10 h-full w-full shadow-xl shadow-black/5 dark:shadow-black/20 backdrop-blur-sm group hover:scale-[1.02] transition-transform duration-500`}
+                        className={`rounded-3xl ${feature.bgColor} p-8 lg:p-12 overflow-hidden border border-white/50 dark:border-white/10 h-full w-full shadow-xl shadow-black/5 dark:shadow-black/20 group hover:scale-[1.02] transition-transform duration-500`}
                     >
                         <Image
                             src={feature.image}
