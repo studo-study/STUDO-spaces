@@ -50,6 +50,7 @@ async function seedStudo() {
     const userId1 = '1f0c076e-f30c-64b0-a0f3-d5a021c6a9cb';
     const userId2 = uuidv6();
     const userId3 = uuidv6();
+    const userId4 = uuidv6();
     const folderId1 = uuidv6();
     const folderId2 = uuidv6();
 
@@ -59,6 +60,9 @@ async function seedStudo() {
 
     const classroomId1 = uuidv6();
     const classroomId2 = uuidv6();
+    const classroomId3 = uuidv6();
+    const classroomId4 = uuidv6();
+    const classroomId5 = uuidv6();
 
     const imageId1 = uuidv6();
     const cardId1 = uuidv6();
@@ -146,6 +150,7 @@ async function seedStudo() {
         join_date: '2024-01-15T10:00:00.000Z',
         streak: 29,
         verified: false,
+        studoProfile: false,
       },
       {
         user_id: userId2,
@@ -155,6 +160,7 @@ async function seedStudo() {
         join_date: '2024-02-20T14:30:00.000Z',
         streak: 15,
         verified: false,
+        studoProfile: false,
       },
       {
         user_id: userId3,
@@ -164,6 +170,17 @@ async function seedStudo() {
         join_date: '2023-08-01T09:00:00.000Z',
         streak: 0,
         verified: false,
+        studoProfile: false,
+      },
+      {
+        user_id: userId4,
+        displayName: 'geneeskunde',
+        img_url: 'https://i.pravatar.cc/150?img=3',
+        banner_url: '',
+        join_date: '2023-08-01T09:00:00.000Z',
+        streak: 0,
+        verified: false,
+        studoProfile: false,
       },
     ]);
     console.log('Profiles seeded\n');
@@ -183,6 +200,7 @@ async function seedStudo() {
         id: studySetId1,
         title: 'Cell Biology Basics',
         course: 'Biology 101',
+        studoset: false,
         global_term_language: 'en',
         global_definition_language: 'en',
         created_at: '2024-09-01T10:00:00.000Z',
@@ -197,6 +215,7 @@ async function seedStudo() {
         id: studySetId2,
         title: 'Data Structures',
         course: 'CS 201',
+        studoset: false,
         global_term_language: 'en',
         global_definition_language: 'en',
         created_at: '2024-08-15T09:00:00.000Z',
@@ -217,11 +236,12 @@ async function seedStudo() {
         id: visualSetId1,
         title: 'Human Anatomy',
         course: 'Anatomy 101',
+        studoset: true,
         created_at: '2024-09-10T11:00:00.000Z',
         last_updated: '2024-09-10T11:00:00.000Z',
         public_set: true,
-        user_id: userId1,
-        displayName: 'Studo Admin',
+        user_id: userId4,
+        displayName: 'geneeskunde',
         img_url: 'https://i.pravatar.cc/150?img=1',
         folder_id: folderId1,
       },
@@ -573,17 +593,46 @@ async function seedStudo() {
         id: classroomId1,
         name: 'Biology 101 - Fall 2024',
         owner_id: userId3,
-        type: 'public',
+        type: 'class_group',
+        created_at: '2024-08-20T10:00:00.000Z',
+        verified: false,
+        school: `Erasmus De Pinte`,
+      },
+      {
+        id: classroomId3,
+        name: 'KU Leuven - rechten',
+        owner_id: userId3,
+        type: 'university',
         created_at: '2024-08-20T10:00:00.000Z',
         verified: true,
+        school: `KU Leuven`,
+      },
+      {
+        id: classroomId4,
+        name: 'UGent - informatica',
+        owner_id: userId3,
+        type: 'university',
+        created_at: '2024-08-20T10:00:00.000Z',
+        verified: true,
+        school: `UGent`,
+      },
+      {
+        id: classroomId5,
+        name: 'UGent - bio engineering',
+        owner_id: userId3,
+        type: 'university',
+        created_at: '2024-08-20T10:00:00.000Z',
+        verified: true,
+        school: `UGent`,
       },
       {
         id: classroomId2,
         name: 'Advanced Computer Science',
         owner_id: userId3,
-        type: 'private',
+        type: 'study_group',
         created_at: '2024-08-22T11:00:00.000Z',
         verified: false,
+        school: `Ugent`,
       },
     ]);
     console.log('Classrooms seeded\n');

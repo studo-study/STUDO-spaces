@@ -42,6 +42,7 @@ export const profiles = pgTable(
     displayName: varchar('displayname', { length: 100 }).notNull(),
     img_url: varchar('img_url', { length: 250 }).notNull(),
     banner_url: varchar('banner_url', { length: 250 }),
+    studoProfile: boolean('studo_profile').notNull(),
     join_date: varchar('join_date', { length: 24 }).notNull(),
     joinNumber: serial('join_number').notNull().unique(),
     streak: integer('streak').notNull(),
@@ -72,6 +73,7 @@ export const studysets = pgTable(
     id: varchar('id', { length: 64 }).primaryKey(),
     title: varchar('title', { length: 200 }).notNull(),
     course: varchar('course', { length: 100 }).notNull(),
+    studoset: boolean(`studoset`).notNull(),
     global_term_language: varchar('global_term_language', {
       length: 2,
     }).notNull(),
@@ -111,6 +113,7 @@ export const visualsets = pgTable(
     id: varchar('id', { length: 64 }).primaryKey(),
     title: varchar('title', { length: 200 }).notNull(),
     course: varchar('course', { length: 100 }).notNull(),
+    studoset: boolean(`studoset`).notNull(),
     created_at: varchar('created_at', { length: 24 }).notNull(),
     last_updated: varchar('last_updated', { length: 24 }).notNull(),
     public_set: boolean('publicSet').notNull(),
@@ -222,8 +225,8 @@ export const sessioncards = pgTable('sessioncards', {
   mastered: boolean('mastered').notNull(),
   times_relearned: integer('times_relearned').notNull(),
   card_id: varchar('card_id', { length: 64 })
-    .references(() => cards.id, { onDelete: 'set null' }) // ✅ CHANGED: was 'restrict', nu 'set null'
-    .notNull(), // ⚠️ Je moet dit naar .nullable() veranderen als je 'set null' gebruikt
+    .references(() => cards.id, { onDelete: 'set null' })
+    .notNull(),
   session_id: varchar('session_id', { length: 64 })
     .references(() => studysessions.id, { onDelete: 'cascade' })
     .notNull(),
@@ -259,9 +262,10 @@ export const classrooms = pgTable(
     owner_id: varchar('owner_id', { length: 64 })
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
-    type: varchar('type', { length: 10 }).notNull(),
+    type: varchar('type', { length: 40 }).notNull(),
     created_at: varchar('created_at', { length: 24 }).notNull(),
     verified: boolean('verified').notNull(),
+    school: varchar('school', { length: 50 }).notNull(),
   },
   (table) => [
     index('classrooms_search_index').using(

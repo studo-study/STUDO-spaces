@@ -244,7 +244,7 @@ export class SearchService {
         name: c.name,
         owner: ownerProfile.displayName,
         owner_id: c.owner_id,
-        type: 'classroom',
+        type: c.type,
         verified: c.verified,
       };
 

@@ -25,7 +25,7 @@ CREATE TABLE "classrooms" (
 	"id" varchar(64) PRIMARY KEY NOT NULL,
 	"name" varchar(64) NOT NULL,
 	"owner_id" varchar(64) NOT NULL,
-	"type" varchar(10) NOT NULL,
+	"type" varchar(40) NOT NULL,
 	"created_at" varchar(24) NOT NULL,
 	"verified" boolean NOT NULL
 );

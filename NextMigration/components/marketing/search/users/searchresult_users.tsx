@@ -1,7 +1,7 @@
 import {useTranslations} from "next-intl";
 import { FaAngleRight } from "react-icons/fa6";
-import Link from "next/link";
 import Image from "next/image";
+import {Link} from "@/i18n/routing";
 
 interface ResultUsersProps {
     result: any
@@ -20,7 +20,7 @@ export default function SearchResultUsers({result}: ResultUsersProps) {
         </div>
         <div className={"w-full min-h-30 h-fit grid grid-cols-4 gap-5"}>
             {
-                result && users.map((item: any, i: number) => (<SetResult key={i} item={item}/>))
+                result && users.map((item: any, i: number) => (<UserResult key={i} item={item}/>))
             }
         </div>
     </div>)
@@ -30,7 +30,7 @@ interface SetResultProps {
     item: any;
 }
 
-function SetResult({item}: SetResultProps) {
+function UserResult({item}: SetResultProps) {
     console.log("img_url:", JSON.stringify(item.img_url));
     return(<Link href={"/profile/" + item.id} className={`w-full min-h-40 rounded-2xl border border-studogrey/30 bg-studogrey/30 drop-shadow-3xl p-5 flex flex-col gap-5`}>
         <div className={"w-full h-fit flex items-center justify-baseline gap-3"}>
