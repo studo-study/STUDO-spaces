@@ -10,17 +10,21 @@ const header = [
 ]
 
 interface SearchHeaderProps {
-    query: string
+    query: string | null;
+    size: number | undefined;
 }
-export default function SearchHeader({query}: SearchHeaderProps) {
+export default function SearchHeader({query, size}: SearchHeaderProps) {
     const t = useTranslations("landing.search_result")
     const pathname = usePathname();
     const isActive = (link: string) => {
         return pathname === link || pathname.startsWith(link + '/');
     };
     return (
-        <div className={"w-full h-20 flex flex-col justify-between items-center "}>
-            <span className={"w-full font-bold dark:text-white text-xl"}>{t("title")} {" "}<span className={"font-normal"}>{query}</span></span>
+        <div className={"w-full h-30 flex flex-col justify-between items-center "}>
+            <div className={"w-full h-fit flex flex-col gap-2"}>
+                <span className={"w-full font-bold dark:text-white text-xl"}>{t("title")} {" "}<span className={"font-normal"}>{query}</span></span>
+                <span className={"opacity-50"}>{size} {size === 1 ? t("result") : t("results") }</span>
+            </div>
             <div className={"relative w-full max-h-10 flex flex-col"}>
                 <div className={"absolute z-20 bottom-0 w-full flex items-center justify-baseline gap-10 h-fit"}>
                     {header.map((item, i) => (

@@ -113,7 +113,7 @@ export class AuthService {
         email: googleUser.email,
         passwordHash: '',
         displayName: `${googleUser.firstName} ${googleUser.lastName}`,
-        img_url: googleUser.picture || 'default',
+        img_url: googleUser.picture || '',
         join_date: date.toISOString(),
         totalSets: 0,
         streak_started: null,

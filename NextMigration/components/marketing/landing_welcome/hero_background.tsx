@@ -24,9 +24,10 @@ const randomValues = floatingItems.map((item) => ({
 
 interface HeroBackgroundProps {
     color: string;
+    paused: boolean;
 }
 
-export default function HeroBackground({ color }: HeroBackgroundProps) {
+export default function HeroBackground({ paused, color }: HeroBackgroundProps) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -35,7 +36,7 @@ export default function HeroBackground({ color }: HeroBackgroundProps) {
 
     return (
         <section className="fixed max-w-screen w-full inset-0 overflow-hidden pointer-events-none">
-            <div className={`absolute max-w-screen w-full inset-0 bg-gradient-to-b from-transparent via-transparent ${color}`} />
+            <div className={`absolute max-w-screen w-full inset-0 bg-gradient-to-b from-transparent via-transparent ${paused ? 'animation-paused' : ''} ${color}`} />
 
             {randomValues.map((item, i) => (
                 <Image

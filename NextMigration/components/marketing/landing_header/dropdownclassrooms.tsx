@@ -30,7 +30,7 @@ export default function TriggerClassrooms({ ClassOpen, setClassOpen }: TriggerCl
         >
             <img
                 src={"/icons/down.svg"}
-                className={`${ClassOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
+                className={`${ClassOpen ? "rotate-180" : ""} transition-transform duration-300 dark:brightness-0 dark:invert h-7`}
                 alt=""
             />
             <span className={"dark:text-white text-studodarkblue truncate"}>{t("classrooms")}</span>
@@ -105,7 +105,7 @@ function ClassroomPopup({ ClassOpen, setClassOpen, triggerRef }: MethodsPopUpPro
         z-[9999] w-64 p-2
         rounded-2xl text-white
         bg-white/80 dark:bg-[#1e293b]/90
-        backdrop-blur-xl
+        glass-rgb
         border border-white/50 dark:border-white/10
         shadow-xl shadow-black/10 dark:shadow-black/30
         transition-all duration-300 ease-out origin-top

@@ -1,5 +1,5 @@
 {
-  "id": "263a8cf0-233b-46cd-ac59-220892a205c4",
+  "id": "85a21308-7eb9-4178-bc44-d5cf11a4332d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -363,6 +363,12 @@
         "joined_at": {
           "name": "joined_at",
           "type": "varchar(24)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         }
