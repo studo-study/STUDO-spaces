@@ -35,6 +35,7 @@ export default auth((request) => {
     // ========================================
 
     // Routes die GEEN login vereisen
+
     const publicRoutes = [
         "/welcome",
         "/callback",
@@ -71,6 +72,7 @@ export default auth((request) => {
         "/search-result/users",
         "/search-result/sets",
         "/search-result/classrooms",
+        "/profile",
         "/"];
 
     // Check of huidige route public is
@@ -81,7 +83,9 @@ export default auth((request) => {
             return pathWithoutLocale === route || pathWithoutLocale.startsWith(route + '/');
         })
         || pathWithoutLocale.startsWith('/studoset/')
-        || pathWithoutLocale.startsWith('/visualset/');
+        || pathWithoutLocale.startsWith('/visualset/')
+        || pathWithoutLocale.startsWith('/profile/')
+        || pathWithoutLocale.startsWith('/classroom/');
 
     // Auth routes (login/register) - hier mag je NIET komen als je ingelogd bent
     const authRoutes = ['/login', '/register'];
@@ -101,8 +105,9 @@ export default auth((request) => {
         loginUrl.searchParams.set('callbackUrl', pathname);
         return NextResponse.redirect(loginUrl);
     }
-
+    console.log('PATH:', pathname, 'WITHOUT LOCALE:', pathWithoutLocale, 'PUBLIC:', isPublicRoute, 'LOGGED IN:', isLoggedIn);
     return intlMiddleware(request);
+
 });
 
 export const config = {

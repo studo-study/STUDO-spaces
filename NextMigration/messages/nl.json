@@ -624,18 +624,30 @@
       "all": "Alle resultaten",
       "users": "Gebruikers",
       "classrooms": "Klassen",
+      "studo": "Studo",
       "results": "resultaten",
       "result": "resultaat",
       "sets": "Sets",
       "classroom": {
         "classroom": "Klassen",
+        "started_by": "started by",
         "more": "meer",
-        "not_found": "geen klassen"
+        "not_found": "geen klassen",
+        "classroom_type": "classroom",
+        "classroom_group": "classroom",
+        "studygroup": "studeergroep",
+        "community": "community",
+        "univeristy": "universiteit",
+        "hogeschool": "hogeschool"
       },
       "set": {
         "sets": "Sets",
         "more": "meer",
-        "not_found": "geen sets"
+        "not_found": "geen sets",
+        "cards": "kaarten",
+        "pins": "pinnen",
+        "like" : "like",
+        "likes": "likes"
       },
       "user": {
         "users": "Gebruikers",

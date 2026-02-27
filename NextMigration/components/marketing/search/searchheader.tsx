@@ -6,7 +6,8 @@ const header = [
     {url: "/search-result", label: "all"},
     {url: "/search-result/sets", label: "sets"},
     {url: "/search-result/classrooms", label: "classrooms"},
-    {url: "/search-result/users", label: "users"}
+    {url: "/search-result/users", label: "users"},
+    {url: "/search-result/users", label: "studo"}
 ]
 
 interface SearchHeaderProps {
