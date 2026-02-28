@@ -66,6 +66,7 @@ export class ClassroomService {
       role: 'owner',
       joined_at: date.toISOString(),
       position: 0,
+      school: await this.db.users.findMany({where: eq(users.)});
     };
 
     await this.db.insert(classrooms).values(Class);
