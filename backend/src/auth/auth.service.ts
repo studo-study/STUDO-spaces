@@ -133,7 +133,8 @@ export class AuthService {
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
-        verified: true,
+        verified: false,
+        studoProfile: false,
       };
 
       // Root folder
@@ -201,7 +202,8 @@ export class AuthService {
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
-        verified: true,
+        verified: false,
+        studoProfile: false,
       };
 
       // Root folder
@@ -269,7 +271,8 @@ export class AuthService {
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
-        verified: true,
+        verified: false,
+        studoProfile: false,
       };
 
       // Root folder
@@ -347,6 +350,7 @@ export class AuthService {
       join_date: date.toISOString(),
       streak: 0,
       verified: false,
+      studoProfile: false,
     };
 
     // Root folder
@@ -409,7 +413,8 @@ export class AuthService {
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
-        verified: true,
+        verified: false,
+        studoProfile: false,
       };
 
       const rootFolder = {

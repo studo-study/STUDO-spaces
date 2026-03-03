@@ -103,7 +103,7 @@ function ClassroomPopup({ ClassOpen, setClassOpen, triggerRef }: MethodsPopUpPro
             ref={popupRef}
             className={`absolute top-full left-1/2 -translate-x-1/2 mt-4
         z-[9999] w-64 p-2
-        rounded-2xl text-white
+        rounded-2xl text-white backdrop-blur-2xl
         bg-white/80 dark:bg-[#1e293b]/90
         glass-rgb
         border border-white/50 dark:border-white/10

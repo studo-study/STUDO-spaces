@@ -58,6 +58,7 @@ export class ClassroomService {
       type: classroom.type,
       created_at: date.toISOString(),
       verified: false,
+      school: classroom.school,
     };
 
     const owner: ClassroomUserResponseDto = {
@@ -66,7 +67,6 @@ export class ClassroomService {
       role: 'owner',
       joined_at: date.toISOString(),
       position: 0,
-      school: await this.db.users.findMany({where: eq(users.)});
     };
 
     await this.db.insert(classrooms).values(Class);
@@ -291,6 +291,7 @@ export class ClassroomService {
       owner_id: classroom.owner_id,
       type: classroom.type,
       created_at: classroom.created_at,
+      school: classroom.school,
       verified: classroom.verified,
       sets: await this.getSetsById(classroom.id),
       users: await this.getUsersById(classroom.id),

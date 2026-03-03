@@ -1,8 +1,6 @@
 import {
   BadRequestException,
   ForbiddenException,
-  HttpException,
-  HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -18,17 +16,18 @@ import {
 import { SwitchFolderDto } from '../folder/folder.dto';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { CardResponseDto, CreateCardDto, CreateCardListDto } from './card.dto';
-import { CreateSetLikeDto, SetLikeResponseDto } from './setlike.dto';
+import { SetLikeResponseDto } from './setlike.dto';
 import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import {
-  cards, classroomactivities,
-  classrooms, classroomsets,
+  cards,
+  classroomactivities,
+  classrooms,
+  classroomsets,
   classroomusers,
   folders,
-  profiles,
   sessioncards,
   setlikes,
   studysessions,
@@ -36,16 +35,13 @@ import {
   users,
 } from '../drizzle/schema';
 import { and, eq, sql } from 'drizzle-orm';
-import { StudysessionService } from '../studysession/studysession.service';
-import { ClassroomSetDto } from '../classroom/classroom.dto';
 
 @Injectable()
 export class StudysetService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
-  ) {
-  }
+  ) {}
 
   async create(
     user_id: string,
@@ -73,6 +69,7 @@ export class StudysetService {
       displayName: name.displayName,
       img_url: name.img_url,
       folder_id: data.folder_id,
+      studoset: false,
     };
 
     //sessie creeeren
@@ -165,7 +162,12 @@ export class StudysetService {
     //sets zoeken
     const setclasses = [];
     for (const c of classes) {
-      const class_set = await this.db.query.classroomsets.findFirst({ where: and(eq(classroomsets.set_id, set_id), eq(classroomsets.classroom_id, c.id)) });
+      const class_set = await this.db.query.classroomsets.findFirst({
+        where: and(
+          eq(classroomsets.set_id, set_id),
+          eq(classroomsets.classroom_id, c.id),
+        ),
+      });
       if (class_set) {
         setclasses.push(c);
       }
@@ -220,7 +222,6 @@ export class StudysetService {
         eq(studysessions.user_id, user_id),
       ),
     });
-
 
     if (!session) {
       session = await this.createSession(user_id, set_id);
@@ -320,29 +321,38 @@ export class StudysetService {
     }
 
     await this.db.transaction(async (tx) => {
-      await tx.delete(studysessions)
-        .where(and(
-          eq(studysessions.set_id, set_id),
-          eq(studysessions.set_type, 'studyset'),
-        ));
+      await tx
+        .delete(studysessions)
+        .where(
+          and(
+            eq(studysessions.set_id, set_id),
+            eq(studysessions.set_type, 'studyset'),
+          ),
+        );
 
-      await tx.delete(setlikes)
-        .where(and(
-          eq(setlikes.set_id, set_id),
-          eq(setlikes.set_type, 'studyset'),
-        ));
+      await tx
+        .delete(setlikes)
+        .where(
+          and(eq(setlikes.set_id, set_id), eq(setlikes.set_type, 'studyset')),
+        );
 
-      await tx.delete(classroomsets)
-        .where(and(
-          eq(classroomsets.set_id, set_id),
-          eq(classroomsets.set_type, 'studyset'),
-        ));
+      await tx
+        .delete(classroomsets)
+        .where(
+          and(
+            eq(classroomsets.set_id, set_id),
+            eq(classroomsets.set_type, 'studyset'),
+          ),
+        );
 
-      await tx.delete(classroomactivities)
-        .where(and(
-          eq(classroomactivities.set_id, set_id),
-          eq(classroomactivities.set_type, 'studyset'),
-        ));
+      await tx
+        .delete(classroomactivities)
+        .where(
+          and(
+            eq(classroomactivities.set_id, set_id),
+            eq(classroomactivities.set_type, 'studyset'),
+          ),
+        );
 
       const result = await tx
         .delete(studysets)

@@ -39,6 +39,19 @@ export class CreateClassroomDto {
     maxLength: 10,
   })
   type: string;
+
+  @ApiProperty({
+    description: 'school van de classroom',
+    example: 'school',
+    minLength: 1,
+    maxLength: 50,
+  })
+  @IsString({
+    name: 'school',
+    minLength: 1,
+    maxLength: 50,
+  })
+  school: string;
 }
 
 export class UpdateClassroomDto {
@@ -139,6 +152,12 @@ export class ClassroomResponseDto {
     example: true,
   })
   verified: boolean;
+
+  @ApiProperty({
+    description: 'School van de classroom',
+    example: 'school',
+  })
+  school: string;
 }
 
 export class CreateClassroomSetDto {
