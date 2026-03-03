@@ -39,6 +39,12 @@ export class VisualsetResponseDto {
   course: string;
 
   @ApiProperty({
+    description: 'tells if the set is created by studo',
+  })
+  @Expose()
+  studoset: boolean;
+
+  @ApiProperty({
     example: '2024-01-01T10:00:00.000Z',
     description: 'Creation date',
   })
