@@ -21,8 +21,10 @@ import {
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import {
-  classroomactivities, classrooms,
-  classroomsets, classroomusers,
+  classroomactivities,
+  classrooms,
+  classroomsets,
+  classroomusers,
   images,
   pins,
   sessionpins,
@@ -38,8 +40,7 @@ export class VisualsetService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
-  ) {
-  }
+  ) {}
 
   async create(
     user_id: string,
@@ -67,6 +68,7 @@ export class VisualsetService {
       displayName: name.displayName,
       img_url: name.img_url,
       folder_id: data.folder_id,
+      studoset: false,
     };
 
     //sessie creeeren
@@ -150,7 +152,6 @@ export class VisualsetService {
       } catch (error) {
         throw error;
       }
-
     }
 
     for (const pin of Pins) {
@@ -263,7 +264,12 @@ export class VisualsetService {
 
     const setclasses = [];
     for (const c of classes) {
-      const class_set = await this.db.query.classroomsets.findFirst({ where: and(eq(classroomsets.set_id, set_id), eq(classroomsets.classroom_id, c.id)) });
+      const class_set = await this.db.query.classroomsets.findFirst({
+        where: and(
+          eq(classroomsets.set_id, set_id),
+          eq(classroomsets.classroom_id, c.id),
+        ),
+      });
       if (class_set) {
         setclasses.push(c);
       }
@@ -381,29 +387,38 @@ export class VisualsetService {
 
     await this.db.transaction(async (tx) => {
       // Verwijder polymorphic references
-      await tx.delete(studysessions)
-        .where(and(
-          eq(studysessions.set_id, set_id),
-          eq(studysessions.set_type, 'visualset'),
-        ));
+      await tx
+        .delete(studysessions)
+        .where(
+          and(
+            eq(studysessions.set_id, set_id),
+            eq(studysessions.set_type, 'visualset'),
+          ),
+        );
 
-      await tx.delete(setlikes)
-        .where(and(
-          eq(setlikes.set_id, set_id),
-          eq(setlikes.set_type, 'visualset'),
-        ));
+      await tx
+        .delete(setlikes)
+        .where(
+          and(eq(setlikes.set_id, set_id), eq(setlikes.set_type, 'visualset')),
+        );
 
-      await tx.delete(classroomsets)
-        .where(and(
-          eq(classroomsets.set_id, set_id),
-          eq(classroomsets.set_type, 'visualset'),
-        ));
+      await tx
+        .delete(classroomsets)
+        .where(
+          and(
+            eq(classroomsets.set_id, set_id),
+            eq(classroomsets.set_type, 'visualset'),
+          ),
+        );
 
-      await tx.delete(classroomactivities)
-        .where(and(
-          eq(classroomactivities.set_id, set_id),
-          eq(classroomactivities.set_type, 'visualset'),
-        ));
+      await tx
+        .delete(classroomactivities)
+        .where(
+          and(
+            eq(classroomactivities.set_id, set_id),
+            eq(classroomactivities.set_type, 'visualset'),
+          ),
+        );
 
       const result = await tx
         .delete(visualsets)
