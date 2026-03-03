@@ -84,7 +84,7 @@ function MethodsPopUp({ MethodsOpen, setMethodsOpen, triggerRef }: MethodsPopUpP
         z-[9999] w-56 p-2 truncate
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
-        glass-rgb
+        glass-rgb backdrop-blur-2xl
         border border-white/50 dark:border-white/10
         shadow-xl shadow-black/10 dark:shadow-black/30
         transition-all duration-300 ease-out origin-top
@@ -94,11 +94,6 @@ function MethodsPopUp({ MethodsOpen, setMethodsOpen, triggerRef }: MethodsPopUpP
       `}
             onClick={(e) => e.stopPropagation()}
         >
-            {/* Arrow */}
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45
-        bg-white/80 dark:bg-[#1e293b]/90
-        border-l border-t border-white/50 dark:border-white/10"
-            />
 
             {/* Menu Items */}
             <div className="relative flex flex-col gap-1">
