@@ -73,6 +73,7 @@ export default auth((request) => {
         "/search-result/sets",
         "/search-result/classrooms",
         "/profile",
+        "/track",
         "/"];
 
     // Check of huidige route public is
@@ -85,7 +86,8 @@ export default auth((request) => {
         || pathWithoutLocale.startsWith('/studoset/')
         || pathWithoutLocale.startsWith('/visualset/')
         || pathWithoutLocale.startsWith('/profile/')
-        || pathWithoutLocale.startsWith('/classroom/');
+        || pathWithoutLocale.startsWith('/classroom/')
+        || pathWithoutLocale.startsWith('/track/');
 
     // Auth routes (login/register) - hier mag je NIET komen als je ingelogd bent
     const authRoutes = ['/login', '/register'];

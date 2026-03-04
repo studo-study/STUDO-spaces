@@ -184,13 +184,6 @@ export class ProfileResponse {
 
   @ApiProperty({
     example: 'student',
-    description: 'Type profiel (student, teacher, etc.)',
-  })
-  @Expose()
-  profileType: string;
-
-  @ApiProperty({
-    example: 'profile',
     description: 'Type van het zoekresultaat',
   })
   @Expose()
@@ -239,6 +232,36 @@ export class ClassroomResponse {
   })
   @Expose()
   verified: boolean;
+}
+
+export class StudoResponse {
+  @ApiProperty({
+    example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
+    description: 'UUID van het profiel',
+  })
+  @Expose()
+  id: string;
+
+  @ApiProperty({
+    example: 'Emile Duyck',
+    description: 'Weergavenaam van het profiel',
+  })
+  @Expose()
+  displayName: string;
+
+  @ApiProperty({
+    example: 'https://example.com/profile.jpg',
+    description: 'Profielfoto URL',
+  })
+  @Expose()
+  img_url: string;
+
+  @ApiProperty({
+    example: 'https://example.com/banner.jpg',
+    description: 'banner van het profile',
+  })
+  @Expose()
+  banner_url: string;
 }
 
 class SetResultData {
@@ -305,6 +328,15 @@ class ClassroomResultData {
   data: ClassroomResponse[];
 }
 
+class StudoResultData {
+  @ApiProperty({
+    type: [StudoResponse],
+    description: 'Array van studoprofielen resultaten',
+  })
+  @Expose()
+  data: StudoResponse[];
+}
+
 export class SearchResultsDto {
   @ApiProperty({
     type: 'array',
@@ -327,8 +359,14 @@ export class PublicSearchRsultsDto {
       { type: 'set', data: [] },
       { type: 'profile', data: [] },
       { type: 'classroom', data: [] },
+      { type: 'studo', data: [] },
     ],
   })
   @Expose()
-  data: [PublicSetResultData, ProfileResultData, ClassroomResultData];
+  data: [
+    PublicSetResultData,
+    ProfileResultData,
+    ClassroomResultData,
+    StudoResultData,
+  ];
 }

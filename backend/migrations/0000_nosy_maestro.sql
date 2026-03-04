@@ -27,7 +27,8 @@ CREATE TABLE "classrooms" (
 	"owner_id" varchar(64) NOT NULL,
 	"type" varchar(40) NOT NULL,
 	"created_at" varchar(24) NOT NULL,
-	"verified" boolean NOT NULL
+	"verified" boolean NOT NULL,
+	"school" varchar(50) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "classroomsets" (
@@ -80,6 +81,7 @@ CREATE TABLE "profiles" (
 	"displayname" varchar(100) NOT NULL,
 	"img_url" varchar(250) NOT NULL,
 	"banner_url" varchar(250),
+	"studo_profile" boolean NOT NULL,
 	"join_date" varchar(24) NOT NULL,
 	"join_number" serial NOT NULL,
 	"streak" integer NOT NULL,
@@ -141,6 +143,7 @@ CREATE TABLE "studysets" (
 	"id" varchar(64) PRIMARY KEY NOT NULL,
 	"title" varchar(200) NOT NULL,
 	"course" varchar(100) NOT NULL,
+	"studoset" boolean NOT NULL,
 	"global_term_language" varchar(2) NOT NULL,
 	"global_definition_language" varchar(2) NOT NULL,
 	"created_at" varchar(24) NOT NULL,
@@ -175,6 +178,7 @@ CREATE TABLE "visualsets" (
 	"id" varchar(64) PRIMARY KEY NOT NULL,
 	"title" varchar(200) NOT NULL,
 	"course" varchar(100) NOT NULL,
+	"studoset" boolean NOT NULL,
 	"created_at" varchar(24) NOT NULL,
 	"last_updated" varchar(24) NOT NULL,
 	"publicSet" boolean NOT NULL,
