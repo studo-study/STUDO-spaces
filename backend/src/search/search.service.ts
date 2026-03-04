@@ -3,13 +3,12 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { async } from 'rxjs';
 import {
   ClassroomResponse,
   ProfileResponse,
   PublicSetResponse,
-  SearchResultsDto,
   SetResponse,
+  StudoResponse,
 } from './search.dto';
 import {
   cards,
@@ -22,7 +21,6 @@ import {
   visualsets,
 } from '../drizzle/schema';
 import { and, eq, ilike } from 'drizzle-orm';
-import { ProfileResponseDto } from '../profile/profile.dto';
 import { StudysetService } from '../studyset/studyset.service';
 import { VisualsetService } from '../visualset/visualset.service';
 
@@ -62,21 +60,35 @@ export class SearchService {
     const ProfileArray: ProfileResponse[] = [];
     const SetArray: SetResponse[] = [];
     const ClassArray: ClassroomResponse[] = [];
+    const StudoArray: StudoResponse[] = [];
 
     //data verwerkken
     //profiel
-    profileResult.map((p) => {
-      const profiel = {
-        id: p.user_id,
-        displayName: p.displayName,
-        img_url: p.img_url,
-        studoProfile: p.verified,
-        role: 'student',
-        profileType: 'profile',
-        type: 'profile',
-      };
+    profileResult.forEach((p) => {
+      console.log(
+        p.displayName,
+        '→ studoProfile:',
+        p.studoProfile,
+        '| banner_url:',
+        p.banner_url,
+      );
 
-      ProfileArray.push(profiel);
+      if (p.studoProfile && p.banner_url) {
+        StudoArray.push({
+          id: p.user_id,
+          displayName: p.displayName,
+          img_url: p.img_url,
+          banner_url: p.banner_url,
+        });
+      } else {
+        ProfileArray.push({
+          id: p.user_id,
+          displayName: p.displayName,
+          img_url: p.img_url,
+          studoProfile: p.studoProfile,
+          type: 'profile',
+        });
+      }
     });
 
     for (const c of classroomResult) {
@@ -212,21 +224,35 @@ export class SearchService {
     const ProfileArray: ProfileResponse[] = [];
     const SetArray: PublicSetResponse[] = [];
     const ClassArray: ClassroomResponse[] = [];
+    const StudoArray: StudoResponse[] = [];
 
     //data verwerkken
     //profiel
-    profileResult.map((p) => {
-      const profiel = {
-        id: p.user_id,
-        displayName: p.displayName,
-        img_url: p.img_url,
-        studoProfile: p.verified,
-        role: 'student',
-        profileType: 'profile',
-        type: 'profile',
-      };
+    profileResult.forEach((p) => {
+      console.log(
+        p.displayName,
+        '→ studoProfile:',
+        p.studoProfile,
+        '| banner_url:',
+        p.banner_url,
+      );
 
-      ProfileArray.push(profiel);
+      if (p.studoProfile && p.banner_url) {
+        StudoArray.push({
+          id: p.user_id,
+          displayName: p.displayName,
+          img_url: p.img_url,
+          banner_url: p.banner_url,
+        });
+      } else {
+        ProfileArray.push({
+          id: p.user_id,
+          displayName: p.displayName,
+          img_url: p.img_url,
+          studoProfile: p.studoProfile,
+          type: 'profile',
+        });
+      }
     });
 
     for (const c of classroomResult) {
@@ -286,7 +312,6 @@ export class SearchService {
     }
 
     //owner zoeken ((visualset))
-    const VService = new VisualsetService(this.db);
     for (const vs of visualsetResult) {
       const ownerProfile = await this.db.query.profiles.findFirst({
         where: eq(profiles.user_id, vs.user_id),
@@ -318,12 +343,17 @@ export class SearchService {
 
       SetArray.push(set);
     }
+
+    //studoprofielen
+
     //return statement
+
     return {
       data: [
         { type: 'set', data: SetArray },
         { type: 'profile', data: ProfileArray },
         { type: 'classroom', data: ClassArray },
+        { type: 'studo', data: StudoArray },
       ],
     };
   }

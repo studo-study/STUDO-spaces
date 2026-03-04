@@ -136,6 +136,23 @@ async function seedStudo() {
         publicRole: 'teacher',
         verified: false,
       },
+
+      {
+        id: userId4,
+        email: 'geneeskunde@studo.study',
+        passwordHash: await hashPassword('123'),
+        displayName: 'geneeskunde',
+        img_url: 'https://i.pravatar.cc/150?img=3',
+        join_date: '2023-08-01T09:00:00.000Z',
+        totalSets: 0,
+        streak_started: null,
+        streak_count: null,
+        streak_last_update: '2024-10-30T08:00:00.000Z',
+        last_login: '2024-10-30T08:00:00.000Z',
+        roles: [Role.USER, Role.ADMIN, Role.VERIFIED],
+        publicRole: 'Studo Profile',
+        verified: true,
+      },
     ]);
     console.log('Users seeded\n');
 
@@ -175,12 +192,12 @@ async function seedStudo() {
       {
         user_id: userId4,
         displayName: 'geneeskunde',
-        img_url: 'https://i.pravatar.cc/150?img=3',
-        banner_url: '',
+        img_url: '',
+        banner_url: 'https://wallpaperaccess.com//full/1330480.jpg',
         join_date: '2023-08-01T09:00:00.000Z',
         streak: 0,
-        verified: false,
-        studoProfile: false,
+        verified: true,
+        studoProfile: true,
       },
     ]);
     console.log('Profiles seeded\n');

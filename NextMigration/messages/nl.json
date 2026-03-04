@@ -624,7 +624,7 @@
       "all": "Alle resultaten",
       "users": "Gebruikers",
       "classrooms": "Klassen",
-      "studo": "Studo",
+      "tracks": "Studo Tracks",
       "results": "resultaten",
       "result": "resultaat",
       "sets": "Sets",
@@ -653,6 +653,11 @@
         "users": "Gebruikers",
         "more": "meer",
         "not_found": "geen gebruikers"
+      },
+      "studo": {
+        "users": "Studo Tracks",
+        "more": "meer",
+        "not_found": "geen tracks gevonden"
       }
     }
   },

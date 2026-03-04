@@ -6,6 +6,7 @@ import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import SearchResultClassroom from "@/components/marketing/search/classrooms/searchresult_classroom";
 import SearchResultSets from "@/components/marketing/search/sets/searchresult_sets";
 import SearchResultUsers from "@/components/marketing/search/users/searchresult_users";
+import SearchResultStudo from "@/components/marketing/search/studo/searchresult_studo";
 
 interface SetResultProps {
     index: number;
@@ -29,9 +30,16 @@ interface SearchResults {
         {
             "type": "classroom",
             "data": []
-        }
+        },
+        {
+            "type": "studo",
+            "data": []
+        },
+
     ]
 }
+
+
 export default function SearchResults() {
     const searchParams = useSearchParams()
     const query = searchParams.get('q')  // query uit URL halen
@@ -45,8 +53,10 @@ export default function SearchResults() {
                 setResult(data)  // niet data.json(), al geparsed
             })
     }, [query])  // dependency is query, niet searchParams
-    const size = result && result.data[0].data.length + result.data[1].data.length + result.data[2].data.length;
+
+    const size = result && result.data[0].data.length + result.data[1].data.length + result.data[2].data.length + result.data[3].data.length;
     console.log(result);
+
     return (
         <div className={"w-1/2 flex flex-col justify-center items-center gap-5"}>
             <div className={"w-full flex flex-col gap-5"}>
@@ -56,6 +66,7 @@ export default function SearchResults() {
             <SearchResultSets result={result} />
             <SearchResultUsers result={result} />
             <SearchResultClassroom result={result} />
+            <SearchResultStudo result={result} />
         </div>
     )
 }
