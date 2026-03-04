@@ -135,6 +135,7 @@ export class AuthService {
         streak: 0,
         verified: false,
         studoProfile: false,
+        tags: [`${googleUser.firstName} ${googleUser.lastName}`],
       };
 
       // Root folder
@@ -204,6 +205,7 @@ export class AuthService {
         streak: 0,
         verified: false,
         studoProfile: false,
+        tags: [microsoftUser.displayName],
       };
 
       // Root folder
@@ -273,6 +275,7 @@ export class AuthService {
         streak: 0,
         verified: false,
         studoProfile: false,
+        tags: [smartschoolUser.displayName],
       };
 
       // Root folder
@@ -351,6 +354,7 @@ export class AuthService {
       streak: 0,
       verified: false,
       studoProfile: false,
+      tags: [displayName],
     };
 
     // Root folder
@@ -415,6 +419,7 @@ export class AuthService {
         streak: 0,
         verified: false,
         studoProfile: false,
+        tags: [socialUser.displayName],
       };
 
       const rootFolder = {

@@ -104,10 +104,11 @@
       "stat1": "5 studytools",
       "stat2": "onbeperkt sets maken",
       "stat3": "100% gratis",
-      "search_sets": "zoek studosets...",
-      "search_visuals": "zoek visualsets...",
-      "search_people": "zoek profielen...",
-      "search_classroom": "zoek classrooms..."
+      "search_static": "zoeken...",
+      "search_sets": "medische terminologie...",
+      "search_visuals": "anatomie spieren arm...",
+      "search_people": "biochemie blokgroep...",
+      "search_classroom": "chemie begrippenlijst..."
     },
     "studosets": {
       "title_studyset": "Hier begint\nje studie",

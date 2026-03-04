@@ -35,7 +35,7 @@ function UserResult({item}: SetResultProps) {
     return (
         <Link
             href={`/track/${item.id}`}
-            className="relative w-full h-40 rounded-2xl overflow-hidden border border-studogrey/30 drop-shadow-3xl"
+            className="relative w-full h-40 rounded-2xl hover:scale-102 transition-transform duration-500 overflow-hidden border border-studogrey/30 drop-shadow-3xl"
         >
             {/* Banner */}
             <Image
@@ -50,9 +50,9 @@ function UserResult({item}: SetResultProps) {
 
             {/* Profile info */}
             <div className="absolute inset-x-0 bottom-0 z-20 flex flex-row items-center gap-3 px-4 pb-3">
-                <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0 border border-white/20">
+                <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0">
                     <Image
-                        src="/icons/logo.png"
+                        src="/icons/icon2.png"
                         alt="pfp"
                         fill
                         className="object-cover"

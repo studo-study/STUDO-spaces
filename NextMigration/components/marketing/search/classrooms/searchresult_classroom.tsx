@@ -37,7 +37,7 @@ interface SetResultProps {
 function SetResult({item, t}: SetResultProps) {
     const isColOrUn = item.type === "university" || item.type === "college";
     return(<Link href={"/classroom/" + item.id}
-                 className={`w-full min-h-40 rounded-2xl border-2 border-studogrey dark:bg-transparent 
+                 className={`w-full min-h-40 rounded-2xl border-1  border-gray-300 dark:border-studogrey dark:bg-transparent 
                  bg-studogrey/30 drop-shadow-4xl drop-shadow-4xl drop-shadow-black p-5 flex flex-col gap-2`}>
         <div className={"w-full h-fit flex items-center justify-baseline gap-2"}>
             {getClassroomIcon(item.type)}
@@ -45,7 +45,7 @@ function SetResult({item, t}: SetResultProps) {
             {item.verified && <Image width={0} height={0} src={"/icons/verified.svg"} className={"w-4"} alt={""}/>}
         </div>
        <div className={"w-full h-full flex flex-row"}>
-           <span className={"px-3 py-1 flex items-center justify-center h-fit w-fit rounded-full bg-studoblue text-xs"}>
+           <span className={"px-3 py-1 flex items-center justify-center h-fit w-fit text-white dark:text-studodarkblue rounded-full bg-studoblue text-xs"}>
               {t(getClassroomType(item.type))}
            </span>
        </div>

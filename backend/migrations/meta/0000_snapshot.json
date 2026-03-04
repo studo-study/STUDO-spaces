@@ -1,5 +1,5 @@
 {
-  "id": "14394d7c-825d-4949-9594-29c1d4e8604a",
+  "id": "d934da9f-66fa-4c66-ae42-d0f607c9a70e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -724,6 +724,12 @@
         "verified": {
           "name": "verified",
           "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tags": {
+          "name": "tags",
+          "type": "varchar[]",
           "primaryKey": false,
           "notNull": true
         }
