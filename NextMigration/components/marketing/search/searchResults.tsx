@@ -7,6 +7,7 @@ import SearchResultClassroom from "@/components/marketing/search/classrooms/sear
 import SearchResultSets from "@/components/marketing/search/sets/searchresult_sets";
 import SearchResultUsers from "@/components/marketing/search/users/searchresult_users";
 import SearchResultStudo from "@/components/marketing/search/studo/searchresult_studo";
+import NoResult from "@/components/marketing/search/noresult";
 
 interface SetResultProps {
     index: number;
@@ -63,10 +64,12 @@ export default function SearchResults() {
                 <SearchHeader query={query} size={size}/>
             </div>
 
+            <SearchResultStudo result={result} />
             <SearchResultSets result={result} />
             <SearchResultUsers result={result} />
             <SearchResultClassroom result={result} />
-            <SearchResultStudo result={result} />
+            {size === 0 &&
+            <NoResult/>}
         </div>
     )
 }

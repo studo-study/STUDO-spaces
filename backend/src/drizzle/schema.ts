@@ -47,6 +47,7 @@ export const profiles = pgTable(
     joinNumber: serial('join_number').notNull().unique(),
     streak: integer('streak').notNull(),
     verified: boolean('verified').notNull(),
+    tags: varchar('tags').array().notNull(),
   },
   (table) => [
     index('profiles_search_index').using(

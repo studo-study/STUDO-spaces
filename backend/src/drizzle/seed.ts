@@ -168,6 +168,7 @@ async function seedStudo() {
         streak: 29,
         verified: false,
         studoProfile: false,
+        tags: ['Studo Admin'],
       },
       {
         user_id: userId2,
@@ -178,6 +179,7 @@ async function seedStudo() {
         streak: 15,
         verified: false,
         studoProfile: false,
+        tags: ['Paul Allan'],
       },
       {
         user_id: userId3,
@@ -188,6 +190,7 @@ async function seedStudo() {
         streak: 0,
         verified: false,
         studoProfile: false,
+        tags: ['Carol Williams'],
       },
       {
         user_id: userId4,
@@ -198,6 +201,20 @@ async function seedStudo() {
         streak: 0,
         verified: true,
         studoProfile: true,
+        tags: [
+          'geneeskunde',
+          'anatomie',
+          'ingangsexamen',
+          'ugent',
+          'kuleuven',
+          'Vlaanderen',
+          'toelatingsexamen arts',
+          'UGent',
+          'KU Leuven',
+          'UAntwerpen',
+          'UHasselt',
+          'VUB',
+        ],
       },
     ]);
     console.log('Profiles seeded\n');

@@ -86,6 +86,7 @@ CREATE TABLE "profiles" (
 	"join_number" serial NOT NULL,
 	"streak" integer NOT NULL,
 	"verified" boolean NOT NULL,
+	"tags" varchar[] NOT NULL,
 	CONSTRAINT "profiles_join_number_unique" UNIQUE("join_number")
 );
 --> statement-breakpoint
