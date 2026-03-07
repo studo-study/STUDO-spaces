@@ -10,6 +10,7 @@ const intlMiddleware = createMiddleware(routing);
 const locales = ['en', 'nl', 'fr']; // Pas aan naar jouw locales
 
 export default auth((request) => {
+    console.log('MIDDLEWARE HIT:', request.nextUrl.pathname);
     const { pathname } = request.nextUrl;
 
     // ========================================
@@ -74,6 +75,7 @@ export default auth((request) => {
         "/search-result/classrooms",
         "/profile",
         "/track",
+        "/classroom",
         "/"];
 
     // Check of huidige route public is
@@ -89,13 +91,20 @@ export default auth((request) => {
         || pathWithoutLocale.startsWith('/classroom/')
         || pathWithoutLocale.startsWith('/track/');
 
+    console.log({
+        pathname,
+        pathWithoutLocale,
+        isPublicRoute,
+    });
     // Auth routes (login/register) - hier mag je NIET komen als je ingelogd bent
     const authRoutes = ['/login', '/register'];
     const isAuthRoute = authRoutes.some(route =>
         pathWithoutLocale === route || pathWithoutLocale.startsWith(route + '/')
     );
 
+
     const isLoggedIn = !!request.auth;
+
 
     if (isAuthRoute && isLoggedIn) {
         return NextResponse.redirect(new URL(`/${locale}/home`, request.url));

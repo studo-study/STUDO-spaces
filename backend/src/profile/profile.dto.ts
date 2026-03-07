@@ -78,13 +78,6 @@ export class ProfileDto {
   })
   @IsBoolean()
   verified: boolean;
-
-  @ApiProperty({
-    description: 'Of het account van studo is',
-    example: true,
-  })
-  @IsBoolean()
-  studoProfile: boolean;
 }
 
 export class ProfileListResponseDto {
