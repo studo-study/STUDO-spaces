@@ -81,7 +81,7 @@ function TrackItem({track}: TrackItemProps) {
     }
 
     return (
-        <div className="w-full flex flex-col px-3 pl-5 py-3 min-h-15 rounded-4xl border border-gray-300 dark:border-studoborder transition-all duration-300">
+        <div className="w-full flex flex-col px-3 pl-5 py-3 min-h-15 rounded-4xl glass-rgb  transition-all duration-300">
             <div className="w-full flex items-center justify-between gap-2 min-h-10">
                 <div className="flex items-center gap-2">
                     <GoProjectRoadmap />
