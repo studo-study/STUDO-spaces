@@ -3,7 +3,7 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { and, eq, inArray } from 'drizzle-orm';
+import { eq, inArray } from 'drizzle-orm';
 import {
   classrooms,
   profiles,
@@ -11,14 +11,11 @@ import {
   studoprofiles,
   studotracks,
   studysets,
-  trackcommunities,
   trackset,
   visualsets,
 } from '../drizzle/schema';
-import { StudysetResponseDto } from '../studyset/studyset.dto';
-import { VisualsetResponseDto } from '../visualset/visualset.dto';
+
 import { CommunityDTO } from './studoprofile.dto';
-import { ClassroomResponse } from '../search/search.dto';
 
 @Injectable()
 export class StudoprofileService {
@@ -84,32 +81,42 @@ export class StudoprofileService {
       };
     });
 
-    // TODO: trackcommunities ophalen als je dat nodig hebt
     const profilecommunities =
       await this.db.query.studoprofilecommunities.findMany({
-        where: studoprofilecommunities.studoprofile_id,
-        id,
+        where: eq(studoprofilecommunities.studoprofile_id, id),
       });
 
-    const communityIds = profilecommunities.map((ts) => t.id);
+    const communityIds = profilecommunities.map((pc) => pc.classroom_id);
 
-    const studoclassrooms = await Promise.all([
-      communityIds.length
-        ? this.db.query.classrooms.findMany({
-            where: inArray(classrooms.id, communityIds),
-          })
-        : ([] as (typeof classrooms.$inferSelect)[]),
-    ]);
+    const studoclassrooms = communityIds.length
+      ? await this.db.query.classrooms.findMany({
+          where: inArray(classrooms.id, communityIds),
+        })
+      : ([] as (typeof classrooms.$inferSelect)[]);
 
-    const communities: CommunityDTO[] = [];
-    studoclassrooms.forEach((ts) => {
-      communities.push({});
+    const ownerIds = [...new Set(studoclassrooms.map((c) => c.owner_id))];
+    const owners = ownerIds.length
+      ? await this.db.query.profiles.findMany({
+          where: inArray(profiles.user_id, ownerIds),
+        })
+      : [];
+
+    const communities: CommunityDTO[] = studoclassrooms.map((c) => {
+      const owner = owners.find((o) => o.user_id === c.owner_id);
+      return {
+        id: c.id,
+        name: c.name,
+        owner: owner?.displayName ?? 'Unknown',
+        owner_id: c.owner_id,
+        type: c.type,
+        verified: c.verified,
+      };
     });
 
     return {
       profile: studoprofile,
       tracks: enrichedTracks,
-      communties: communities,
+      communities: communities,
     };
   }
 }
