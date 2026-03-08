@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 
-export default function Page({ params }: { params: { id: string, locale: string } }) {
-    redirect(`/${params.locale}/classroom/${params.id}/overview`);
+export default async function Page({ params }: { params: Promise<{ id: string, locale: string }> }) {
+    const { id, locale } = await params;
+    redirect(`/${locale}/classroom/${id}/overview`);
 }
