@@ -41,6 +41,10 @@ export class TrackDTO {
   @IsString()
   icon_name: string;
 
+  @ApiProperty()
+  @IsString()
+  grade: string;
+
   @ApiProperty({ type: [StudysetResponseDto] })
   @IsArray()
   @ValidateNested({ each: true })

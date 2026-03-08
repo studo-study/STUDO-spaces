@@ -1,6 +1,6 @@
 import { PiStudent } from "react-icons/pi";
 import {useTranslations} from "next-intl";
-import Flashcard from "@/components/sets/studosets/flashcard";
+import Flashcard from "@/components/public/sets/studosets/flashcard";
 import {Link} from "@/i18n/routing";
 import {FaRegBookmark} from "react-icons/fa";
 import {SiGoogleclassroom} from "react-icons/si";

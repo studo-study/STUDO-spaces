@@ -141,7 +141,8 @@ CREATE TABLE "studotracks" (
 	"id" varchar(64) PRIMARY KEY NOT NULL,
 	"studoprofile_id" varchar(64) NOT NULL,
 	"displayname" varchar(100) NOT NULL,
-	"icon_name" varchar(250) NOT NULL
+	"icon_name" varchar(50) NOT NULL,
+	"grade" varchar(50) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "studysessions" (
@@ -174,13 +175,6 @@ CREATE TABLE "studysets" (
 	"img_url" varchar(250) NOT NULL,
 	"user_id" varchar(64) NOT NULL,
 	"folder_id" varchar(64) NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE "trackset" (
-	"set_id" varchar(64) NOT NULL,
-	"set_type" varchar(20) NOT NULL,
-	"added_by" varchar(100) NOT NULL,
-	"track_id" varchar(64) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "tracksets" (
@@ -250,7 +244,6 @@ ALTER TABLE "studotracks" ADD CONSTRAINT "studotracks_studoprofile_id_studoprofi
 ALTER TABLE "studysessions" ADD CONSTRAINT "studysessions_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "studysets" ADD CONSTRAINT "studysets_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "studysets" ADD CONSTRAINT "studysets_folder_id_folders_id_fk" FOREIGN KEY ("folder_id") REFERENCES "public"."folders"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "trackset" ADD CONSTRAINT "trackset_track_id_studotracks_id_fk" FOREIGN KEY ("track_id") REFERENCES "public"."studotracks"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "tracksets" ADD CONSTRAINT "tracksets_track_id_studotracks_id_fk" FOREIGN KEY ("track_id") REFERENCES "public"."studotracks"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "visualsets" ADD CONSTRAINT "visualsets_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "visualsets" ADD CONSTRAINT "visualsets_folder_id_folders_id_fk" FOREIGN KEY ("folder_id") REFERENCES "public"."folders"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -281,7 +274,6 @@ CREATE INDEX "studysets_search_index" ON "studysets" USING gin (to_tsvector
       ||
       "course"
       ));--> statement-breakpoint
-CREATE UNIQUE INDEX "idx_set_trackset_unique" ON "trackset" USING btree ("set_id","track_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_set_tracksets_unique" ON "tracksets" USING btree ("set_id","track_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_user_email_unique" ON "users" USING btree ("email");--> statement-breakpoint
 CREATE INDEX "visualsets_search_index" ON "visualsets" USING gin (to_tsvector

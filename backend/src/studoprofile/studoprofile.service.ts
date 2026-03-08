@@ -11,7 +11,7 @@ import {
   studoprofiles,
   studotracks,
   studysets,
-  trackset,
+  tracksets,
   visualsets,
 } from '../drizzle/schema';
 
@@ -39,8 +39,8 @@ export class StudoprofileService {
 
     // Batch fetch alle tracksets voor alle tracks
     const allTracksets = trackIds.length
-      ? await this.db.query.trackset.findMany({
-          where: inArray(trackset.track_id, trackIds),
+      ? await this.db.query.tracksets.findMany({
+          where: inArray(tracksets.track_id, trackIds),
         })
       : [];
 
@@ -76,6 +76,7 @@ export class StudoprofileService {
         id: track.id,
         trackName: track.trackName,
         icon_name: track.icon_name,
+        grade: track.grade,
         studysets: allStudysets.filter((ss) => trackSetIds.includes(ss.id)),
         visualsets: allVisualsets.filter((vs) => trackSetIds.includes(vs.id)),
       };

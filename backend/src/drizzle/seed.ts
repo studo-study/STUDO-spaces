@@ -1,10 +1,9 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres, { Sql } from 'postgres';
 import * as schema from './schema';
-import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
+import { v6 as uuidv6 } from 'uuid';
 import * as argon2 from 'argon2';
 import { Role } from '../auth/roles';
-import { studoprofilecommunities } from './schema';
 
 const connection: Sql = postgres(process.env.DATABASE_URL as string, {
   max: 5,
@@ -39,7 +38,7 @@ async function resetDatabase() {
   await db.delete(schema.folders);
   await db.delete(schema.studoprofilecommunities);
   await db.delete(schema.tracksets);
-  await db.delete(schema.trackset);
+  await db.delete(schema.tracksets);
   await db.delete(schema.studotracks);
   await db.delete(schema.studoprofiles);
   await db.delete(schema.profiles);
@@ -201,6 +200,9 @@ async function seedStudo() {
     // === 3. Studoprofiles ===
     const trackId1 = uuidv6();
     const trackId2 = uuidv6();
+    const trackId3 = uuidv6();
+    const trackId4 = uuidv6();
+    const trackId5 = uuidv6();
 
     console.log('Seeding studoprofiles...');
     await db.insert(schema.studoprofiles).values([
@@ -218,23 +220,38 @@ async function seedStudo() {
       {
         id: trackId1,
         studoprofile_id: userId1,
-        trackName: 'Anatomie',
-        icon_name: 'anatomy-icon',
+        trackName: 'Biologie',
+        icon_name: 'biology',
+        grade: 'Ingangsexamen',
       },
       {
         id: trackId2,
         studoprofile_id: userId1,
+        trackName: 'Chemie',
+        icon_name: 'chemistry',
+        grade: 'Ingangsexamen',
+      },
+      {
+        id: trackId3,
+        studoprofile_id: userId1,
+        trackName: 'Fysica',
+        icon_name: 'physics',
+        grade: 'Ingangsexamen',
+      },
+      {
+        id: trackId4,
+        studoprofile_id: userId1,
+        trackName: 'Wiskunde',
+        icon_name: 'maths',
+        grade: 'Ingangsexamen',
+      },
+
+      {
+        id: trackId5,
+        studoprofile_id: userId1,
         trackName: 'Fysiologie',
         icon_name: 'physiology-icon',
-      },
-    ]);
-
-    console.log('Seeding tracksets...');
-    await db.insert(schema.tracksets).values([
-      {
-        set_id: visualSetId1,
-        set_type: 'visualset',
-        track_id: trackId1,
+        grade: 'eerste jaar',
       },
     ]);
 
@@ -420,6 +437,20 @@ async function seedStudo() {
       },
     ]);
     console.log('Setlikes seeded\n');
+
+    console.log('Seeding tracksets...');
+    await db.insert(schema.tracksets).values([
+      {
+        set_id: visualSetId1,
+        set_type: 'visualset',
+        track_id: trackId1,
+      },
+      {
+        set_id: studySetId1,
+        set_type: 'studyset',
+        track_id: trackId1,
+      },
+    ]);
 
     // === 10. Studysessions ===
     console.log('Seeding studysessions...');
