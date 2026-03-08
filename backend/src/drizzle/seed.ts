@@ -4,6 +4,7 @@ import * as schema from './schema';
 import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 import * as argon2 from 'argon2';
 import { Role } from '../auth/roles';
+import { studoprofilecommunities } from './schema';
 
 const connection: Sql = postgres(process.env.DATABASE_URL as string, {
   max: 5,
@@ -36,6 +37,11 @@ async function resetDatabase() {
   await db.delete(schema.visualsets);
   await db.delete(schema.studysets);
   await db.delete(schema.folders);
+  await db.delete(schema.studoprofilecommunities);
+  await db.delete(schema.tracksets);
+  await db.delete(schema.trackset);
+  await db.delete(schema.studotracks);
+  await db.delete(schema.studoprofiles);
   await db.delete(schema.profiles);
   await db.delete(schema.users);
 
@@ -167,7 +173,6 @@ async function seedStudo() {
         join_date: '2024-01-15T10:00:00.000Z',
         streak: 29,
         verified: false,
-        studoProfile: false,
         tags: ['Studo Admin'],
       },
       {
@@ -178,7 +183,6 @@ async function seedStudo() {
         join_date: '2024-02-20T14:30:00.000Z',
         streak: 15,
         verified: false,
-        studoProfile: false,
         tags: ['Paul Allan'],
       },
       {
@@ -189,37 +193,52 @@ async function seedStudo() {
         join_date: '2023-08-01T09:00:00.000Z',
         streak: 0,
         verified: false,
-        studoProfile: false,
         tags: ['Carol Williams'],
-      },
-      {
-        user_id: userId4,
-        displayName: 'geneeskunde',
-        img_url: '',
-        banner_url: 'https://wallpaperaccess.com//full/1330480.jpg',
-        join_date: '2023-08-01T09:00:00.000Z',
-        streak: 0,
-        verified: true,
-        studoProfile: true,
-        tags: [
-          'geneeskunde',
-          'anatomie',
-          'ingangsexamen',
-          'ugent',
-          'kuleuven',
-          'Vlaanderen',
-          'toelatingsexamen arts',
-          'UGent',
-          'KU Leuven',
-          'UAntwerpen',
-          'UHasselt',
-          'VUB',
-        ],
       },
     ]);
     console.log('Profiles seeded\n');
 
-    // === 3. Folders ===
+    // === 3. Studoprofiles ===
+    const trackId1 = uuidv6();
+    const trackId2 = uuidv6();
+
+    console.log('Seeding studoprofiles...');
+    await db.insert(schema.studoprofiles).values([
+      {
+        id: userId1,
+        displayName: 'Geneeskunde',
+        img_url: '',
+        banner_url: 'https://wallpaperaccess.com//full/1330480.jpg',
+        tags: ['geneeskunde', 'anatomie', 'ingangsexamen', 'ugent', 'kuleuven'],
+      },
+    ]);
+
+    console.log('Seeding studotracks...');
+    await db.insert(schema.studotracks).values([
+      {
+        id: trackId1,
+        studoprofile_id: userId1,
+        trackName: 'Anatomie',
+        icon_name: 'anatomy-icon',
+      },
+      {
+        id: trackId2,
+        studoprofile_id: userId1,
+        trackName: 'Fysiologie',
+        icon_name: 'physiology-icon',
+      },
+    ]);
+
+    console.log('Seeding tracksets...');
+    await db.insert(schema.tracksets).values([
+      {
+        set_id: visualSetId1,
+        set_type: 'visualset',
+        track_id: trackId1,
+      },
+    ]);
+
+    // === 4. Folders ===
     console.log('Seeding folders...');
     await db.insert(schema.folders).values([
       { id: folderId1, name: 'Biology Notes', owner_id: userId1 },

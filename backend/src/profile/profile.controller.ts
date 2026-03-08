@@ -18,13 +18,14 @@ import {
   ApiParam,
 } from '@nestjs/swagger';
 import { ParseUserIdPipe } from '../auth/pipes/parseUserId.pipe';
+import { Public } from '../auth/decorators/public.decorator';
+import { PublicSearchRsultsDto } from '../search/search.dto';
 
 @ApiTags('profile')
 @ApiBearerAuth()
 @Controller('profiles')
 export class ProfileController {
-  constructor(private profileService: ProfileService) {
-  }
+  constructor(private profileService: ProfileService) {}
 
   // GET ALL PROFILES -----------------------------------------------
 
@@ -54,6 +55,23 @@ export class ProfileController {
   @Roles(Role.USER)
   @Get(':profile_id')
   async getProfileById(
+    @Param('profile_id', ParseUUIDPipe) profile_id: string,
+  ): Promise<ProfileResponseDto> {
+    return this.profileService.getById(profile_id);
+  }
+
+  // PUBLIC GET PROFILE BY ID ----------------------------------------------
+  @Public()
+  @ApiOperation({ summary: 'Haal specifiek profiel op.' })
+  @ApiParam({ name: 'profile_id', type: 'uuid' })
+  @ApiResponse({
+    status: 200,
+    description: 'Profiel gevonden',
+    type: ProfileResponseDto,
+  })
+  //@UseGuards(CheckUserAccessGuard)
+  @Get('/public/:profile_id')
+  async getPublicProfileById(
     @Param('profile_id', ParseUUIDPipe) profile_id: string,
   ): Promise<ProfileResponseDto> {
     return this.profileService.getById(profile_id);

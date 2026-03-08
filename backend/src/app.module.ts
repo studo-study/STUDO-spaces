@@ -39,6 +39,7 @@ import { HealthController } from './health/health.controller';
     SearchModule,
     AuthModule,
     SessionModule,
+    SearchModule,
   ],
   controllers: [AppController, HealthController],
   providers: [
