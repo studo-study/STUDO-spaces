@@ -141,13 +141,16 @@ function TrackItem({track}: TrackItemProps) {
         return (
             <Link className={"w-full flex gap-3 flex-row items-center hover:bg-gray-200 dark:hover:bg-studogrey/30 group justify-between h-fit min-h-10 px-5 border border-b-gray-300 last:border-b-transparent border-transparent rounded-4xl"}
                 href={type === "ss" ? "/studoset/" + set.id : "/visualset/" + set.id}>
-                <div className={"w-full flex items-center gap-3"}>
-                    <Image src={type === "ss" ? "/icons/studyset.svg" : "/icons/visualset.svg"}
-                           width={15}
-                           height={15}
-                           alt={"item_icon"}
-                    className={"dark:invert dark:brightness-0"}/>
-                    <span className={"truncate"}>{set.title}</span>
+                <div className={"w-full flex flex-col justify-center gap-2"}>
+                    <div className={"w-full flex items-center gap-3"}>
+                        <Image src={type === "ss" ? "/icons/studyset.svg" : "/icons/visualset.svg"}
+                               width={15}
+                               height={15}
+                               alt={"item_icon"}
+                               className={"dark:invert dark:brightness-0"}/>
+                        <span className={"truncate"}>{set.title}</span>
+                        <span></span>
+                    </div>
                 </div>
 
                 <FaArrowRightLong

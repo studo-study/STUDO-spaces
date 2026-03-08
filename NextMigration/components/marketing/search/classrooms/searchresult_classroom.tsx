@@ -1,10 +1,10 @@
 import {useTranslations} from "next-intl";
 import { FaAngleRight } from "react-icons/fa6";
-import Link from "next/link";
 import Image from "next/image";
 import {IoSchoolOutline} from "react-icons/io5";
 import {FaUniversity, FaUserFriends} from "react-icons/fa";
 import {TbWorld} from "react-icons/tb";
+import { Link } from "@/i18n/routing";
 
 interface ResultClassroomProps {
     result: any

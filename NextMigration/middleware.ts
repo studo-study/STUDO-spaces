@@ -88,9 +88,16 @@ export default auth((request) => {
         || pathWithoutLocale.startsWith('/studoset/')
         || pathWithoutLocale.startsWith('/visualset/')
         || pathWithoutLocale.startsWith('/profile/')
-        || pathWithoutLocale.startsWith('/classroom/')
         || pathWithoutLocale.startsWith('/track/');
-
+    if (pathWithoutLocale.includes('classroom')) {
+        console.log('CLASSROOM DEBUG:', {
+            pathWithoutLocale,
+            exactMatch: pathWithoutLocale === '/classroom',
+            startsWithSlash: pathWithoutLocale.startsWith('/classroom/'),
+            segments,
+            locale
+        });
+    }
     console.log({
         pathname,
         pathWithoutLocale,
