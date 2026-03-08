@@ -409,10 +409,12 @@ export const tracksets = pgTable(
 export const studoprofilecommunities = pgTable(
   'studoprofilecommunities',
   {
-    classroom_id: varchar('classroom_id', { length: 64 }).notNull(),
+    classroom_id: varchar('classroom_id', { length: 64 })
+      .references(() => classrooms.id, { onDelete: 'cascade' }) // FK naar classrooms
+      .notNull(),
     class_type: varchar('class_type', { length: 20 }).notNull(),
     studoprofile_id: varchar('studoprofile_id', { length: 64 })
-      .references(() => classrooms.id, { onDelete: 'cascade' })
+      .references(() => studoprofiles.id, { onDelete: 'cascade' }) // FK naar studoprofiles
       .notNull(),
   },
   (table) => [

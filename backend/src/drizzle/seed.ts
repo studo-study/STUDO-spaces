@@ -246,7 +246,7 @@ async function seedStudo() {
     ]);
     console.log('Folders seeded\n');
 
-    // === 4. Studysets ===
+    // === 5. Studysets ===
     console.log('Seeding studosets...');
     await db.insert(schema.studysets).values([
       {
@@ -282,7 +282,7 @@ async function seedStudo() {
     ]);
     console.log('Studysets seeded\n');
 
-    // === 5. Visualsets ===
+    // === 6. Visualsets ===
     console.log('Seeding visualsets...');
     await db.insert(schema.visualsets).values([
       {
@@ -301,7 +301,7 @@ async function seedStudo() {
     ]);
     console.log('Visualsets seeded\n');
 
-    // === 6. Cards ===
+    // === 7. Cards ===
     console.log('Seeding cards...');
     await db.insert(schema.cards).values([
       {
@@ -349,7 +349,7 @@ async function seedStudo() {
     ]);
     console.log('Cards seeded\n');
 
-    // === 7. Images & Pins ===
+    // === 8. Images & Pins ===
     console.log('Seeding images...');
     await db.insert(schema.images).values([
       {
@@ -394,7 +394,7 @@ async function seedStudo() {
     ]);
     console.log('Pins seeded\n');
 
-    // === 8. Setlikes ===
+    // === 9. Setlikes ===
     console.log('Seeding setlikes...');
     await db.insert(schema.setlikes).values([
       {
@@ -421,7 +421,7 @@ async function seedStudo() {
     ]);
     console.log('Setlikes seeded\n');
 
-    // === 9. Studysessions ===
+    // === 10. Studysessions ===
     console.log('Seeding studysessions...');
     await db.insert(schema.studysessions).values([
       {
@@ -502,7 +502,7 @@ async function seedStudo() {
     ]);
     console.log('Studysessions seeded\n');
 
-    // === 10. SessionCards ===
+    // === 11. SessionCards ===
     console.log('Seeding sessioncards...');
     await db.insert(schema.sessioncards).values([
       // Session 1 (userId1, studySetId1)
@@ -583,7 +583,7 @@ async function seedStudo() {
     ]);
     console.log('SessionCards seeded\n');
 
-    // === 11. SessionPins ===
+    // === 12. SessionPins ===
     console.log('Seeding sessionpins...');
     await db.insert(schema.sessionpins).values([
       // Session 3 (userId1, visualSetId1)
@@ -639,7 +639,7 @@ async function seedStudo() {
     ]);
     console.log('SessionPins seeded\n');
 
-    // === 12. Classrooms ===
+    // === 13. Classrooms ===
     console.log('Seeding classrooms...');
     await db.insert(schema.classrooms).values([
       {
@@ -690,7 +690,7 @@ async function seedStudo() {
     ]);
     console.log('Classrooms seeded\n');
 
-    // === 13. Classroomusers ===
+    // === 14. Classroomusers ===
     console.log('Seeding classroomusers...');
     await db.insert(schema.classroomusers).values([
       {
@@ -738,7 +738,7 @@ async function seedStudo() {
     ]);
     console.log('Classroomusers seeded\n');
 
-    // === 14. Classroomsets ===
+    // === 15. Classroomsets ===
     console.log('Seeding classroomsets...');
     await db.insert(schema.classroomsets).values([
       {
@@ -756,7 +756,7 @@ async function seedStudo() {
     ]);
     console.log('Classroomsets seeded\n');
 
-    // === 15. Classroomactivities ===
+    // === 16. Classroomactivities ===
     console.log('Seeding classroomactivities...');
     await db.insert(schema.classroomactivities).values([
       {
@@ -772,6 +772,27 @@ async function seedStudo() {
       },
     ]);
     console.log('Classroomactivities seeded\n');
+
+    // === 17. Studoprofile Communities ===
+    console.log('Seeding studoprofilecommunities...');
+    await db.insert(schema.studoprofilecommunities).values([
+      {
+        classroom_id: classroomId3,
+        class_type: 'university',
+        studoprofile_id: userId1,
+      },
+      {
+        classroom_id: classroomId4,
+        class_type: 'university',
+        studoprofile_id: userId1,
+      },
+      {
+        classroom_id: classroomId5,
+        class_type: 'university',
+        studoprofile_id: userId1,
+      },
+    ]);
+    console.log('Studoprofilecommunities seeded\n');
 
     console.log('All data seeded successfully!');
   } catch (error) {

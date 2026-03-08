@@ -81,7 +81,6 @@ CREATE TABLE "profiles" (
 	"displayname" varchar(100) NOT NULL,
 	"img_url" varchar(250) NOT NULL,
 	"banner_url" varchar(250),
-	"studo_profile" boolean NOT NULL,
 	"join_date" varchar(24) NOT NULL,
 	"join_number" serial NOT NULL,
 	"streak" integer NOT NULL,
@@ -124,6 +123,27 @@ CREATE TABLE "setlikes" (
 	"created_at" varchar(24) NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "studoprofilecommunities" (
+	"classroom_id" varchar(64) NOT NULL,
+	"class_type" varchar(20) NOT NULL,
+	"studoprofile_id" varchar(64) NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "studoprofiles" (
+	"user_id" varchar(64) PRIMARY KEY NOT NULL,
+	"displayname" varchar(100) NOT NULL,
+	"img_url" varchar(250) NOT NULL,
+	"banner_url" varchar(250) NOT NULL,
+	"tags" varchar[] NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "studotracks" (
+	"id" varchar(64) PRIMARY KEY NOT NULL,
+	"studoprofile_id" varchar(64) NOT NULL,
+	"displayname" varchar(100) NOT NULL,
+	"icon_name" varchar(250) NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "studysessions" (
 	"id" varchar(64) PRIMARY KEY NOT NULL,
 	"user_id" varchar(64) NOT NULL,
@@ -154,6 +174,19 @@ CREATE TABLE "studysets" (
 	"img_url" varchar(250) NOT NULL,
 	"user_id" varchar(64) NOT NULL,
 	"folder_id" varchar(64) NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "trackset" (
+	"set_id" varchar(64) NOT NULL,
+	"set_type" varchar(20) NOT NULL,
+	"added_by" varchar(100) NOT NULL,
+	"track_id" varchar(64) NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "tracksets" (
+	"set_id" varchar(64) NOT NULL,
+	"set_type" varchar(20) NOT NULL,
+	"track_id" varchar(64) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
@@ -210,9 +243,15 @@ ALTER TABLE "sessionpins" ADD CONSTRAINT "sessionpins_pin_id_pins_id_fk" FOREIGN
 ALTER TABLE "sessionpins" ADD CONSTRAINT "sessionpins_session_id_studysessions_id_fk" FOREIGN KEY ("session_id") REFERENCES "public"."studysessions"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "sessionpins" ADD CONSTRAINT "sessionpins_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "setlikes" ADD CONSTRAINT "setlikes_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "studoprofilecommunities" ADD CONSTRAINT "studoprofilecommunities_classroom_id_classrooms_id_fk" FOREIGN KEY ("classroom_id") REFERENCES "public"."classrooms"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "studoprofilecommunities" ADD CONSTRAINT "studoprofilecommunities_studoprofile_id_studoprofiles_user_id_fk" FOREIGN KEY ("studoprofile_id") REFERENCES "public"."studoprofiles"("user_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "studoprofiles" ADD CONSTRAINT "studoprofiles_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "studotracks" ADD CONSTRAINT "studotracks_studoprofile_id_studoprofiles_user_id_fk" FOREIGN KEY ("studoprofile_id") REFERENCES "public"."studoprofiles"("user_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "studysessions" ADD CONSTRAINT "studysessions_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "studysets" ADD CONSTRAINT "studysets_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "studysets" ADD CONSTRAINT "studysets_folder_id_folders_id_fk" FOREIGN KEY ("folder_id") REFERENCES "public"."folders"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "trackset" ADD CONSTRAINT "trackset_track_id_studotracks_id_fk" FOREIGN KEY ("track_id") REFERENCES "public"."studotracks"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "tracksets" ADD CONSTRAINT "tracksets_track_id_studotracks_id_fk" FOREIGN KEY ("track_id") REFERENCES "public"."studotracks"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "visualsets" ADD CONSTRAINT "visualsets_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "visualsets" ADD CONSTRAINT "visualsets_folder_id_folders_id_fk" FOREIGN KEY ("folder_id") REFERENCES "public"."folders"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "classrooms_search_index" ON "classrooms" USING gin (to_tsvector
@@ -225,6 +264,15 @@ CREATE INDEX "profiles_search_index" ON "profiles" USING gin (to_tsvector
       ('simple',
       "displayname"
       ));--> statement-breakpoint
+CREATE UNIQUE INDEX "idx_set_trackcommunities_unique" ON "studoprofilecommunities" USING btree ("classroom_id","studoprofile_id");--> statement-breakpoint
+CREATE INDEX "studoprofiles_search_index" ON "studoprofiles" USING gin (to_tsvector
+      ('simple',
+      "displayname"
+      ));--> statement-breakpoint
+CREATE INDEX "studotracks_search_index" ON "studotracks" USING gin (to_tsvector
+      ('simple',
+      "displayname"
+      ));--> statement-breakpoint
 CREATE INDEX "studysets_search_index" ON "studysets" USING gin (to_tsvector
       ('simple',
       "title"
@@ -233,6 +281,8 @@ CREATE INDEX "studysets_search_index" ON "studysets" USING gin (to_tsvector
       ||
       "course"
       ));--> statement-breakpoint
+CREATE UNIQUE INDEX "idx_set_trackset_unique" ON "trackset" USING btree ("set_id","track_id");--> statement-breakpoint
+CREATE UNIQUE INDEX "idx_set_tracksets_unique" ON "tracksets" USING btree ("set_id","track_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_user_email_unique" ON "users" USING btree ("email");--> statement-breakpoint
 CREATE INDEX "visualsets_search_index" ON "visualsets" USING gin (to_tsvector
       ('simple',
