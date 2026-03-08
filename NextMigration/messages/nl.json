@@ -1053,5 +1053,12 @@
   "studoset": {
     "created": "Gemaakt door",
     "set_title": "untitled set"
+  },
+  "trackview": {
+    "tracks": "tracks",
+    "sets": "sets",
+    "communities": "communities"
+
+
   }
 }

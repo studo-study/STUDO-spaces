@@ -689,3 +689,23 @@ export interface ChallengeMemberDTO {
     position: number;
     winner: boolean;
 }
+
+
+
+export interface ProfileDto {
+    user_id: string;
+    displayName: string;
+    img_url: string;
+    banner_url: string | null;
+    join_date: string;
+    joinNumber: number;
+    streak: number;
+    verified: boolean;
+    studoProfile: boolean;
+}
+
+export interface ProfileResponseDto {
+    profile: ProfileDto;
+    studysets: Studyset[];
+    visualsets: Visualset[];
+}
