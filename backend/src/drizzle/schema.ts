@@ -90,7 +90,8 @@ export const studotracks = pgTable(
       .references(() => studoprofiles.id, { onDelete: 'cascade' })
       .notNull(),
     trackName: varchar('displayname', { length: 100 }).notNull(),
-    icon_name: varchar('icon_name', { length: 250 }).notNull(),
+    icon_name: varchar('icon_name', { length: 50 }).notNull(),
+    grade: varchar('grade', { length: 50 }).notNull(),
   },
   (table) => [
     index('studotracks_search_index').using(
@@ -100,21 +101,6 @@ export const studotracks = pgTable(
       ${table.trackName}
       )`,
     ),
-  ],
-);
-
-export const trackset = pgTable(
-  'trackset',
-  {
-    set_id: varchar('set_id', { length: 64 }).notNull(),
-    set_type: varchar('set_type', { length: 20 }).notNull(),
-    added_by: varchar('added_by', { length: 100 }).notNull(),
-    track_id: varchar('track_id', { length: 64 })
-      .references(() => studotracks.id, { onDelete: 'cascade' })
-      .notNull(),
-  },
-  (table) => [
-    uniqueIndex('idx_set_trackset_unique').on(table.set_id, table.track_id),
   ],
 );
 
