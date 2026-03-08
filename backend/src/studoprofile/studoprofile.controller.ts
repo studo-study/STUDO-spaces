@@ -10,15 +10,15 @@ import { StudoprofileService } from './studoprofile.service';
 import { StudoProfileResponseDTO } from './studoprofile.dto';
 import { Controller, Get, Param } from '@nestjs/common';
 
-@ApiTags('track')
+@ApiTags('studoprofiles')
 @ApiBearerAuth()
-@Controller('track')
+@Controller('studoprofiles')
 export class StudoprofileController {
   constructor(private readonly TrackService: StudoprofileService) {}
 
   @Public()
   @ApiOperation({
-    summary: 'Zoek naar sets, users of classrooms zonder ingelogd te zijn.',
+    summary: 'Zoek naar studoprofielen zonder ingelogd te zijn.',
   })
   @ApiParam({
     name: 'query',

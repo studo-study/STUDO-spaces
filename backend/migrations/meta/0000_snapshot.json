@@ -1,5 +1,5 @@
 {
-  "id": "0b60bcb8-9970-46e4-ab67-bb0b94123870",
+  "id": "e78cfb82-7724-4cdc-8623-8fad2540102a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1234,7 +1234,13 @@
         },
         "icon_name": {
           "name": "icon_name",
-          "type": "varchar(250)",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grade": {
+          "name": "grade",
+          "type": "varchar(50)",
           "primaryKey": false,
           "notNull": true
         }
@@ -1502,79 +1508,6 @@
           "tableTo": "folders",
           "columnsFrom": [
             "folder_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.trackset": {
-      "name": "trackset",
-      "schema": "",
-      "columns": {
-        "set_id": {
-          "name": "set_id",
-          "type": "varchar(64)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "set_type": {
-          "name": "set_type",
-          "type": "varchar(20)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "added_by": {
-          "name": "added_by",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "track_id": {
-          "name": "track_id",
-          "type": "varchar(64)",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {
-        "idx_set_trackset_unique": {
-          "name": "idx_set_trackset_unique",
-          "columns": [
-            {
-              "expression": "set_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "track_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "trackset_track_id_studotracks_id_fk": {
-          "name": "trackset_track_id_studotracks_id_fk",
-          "tableFrom": "trackset",
-          "tableTo": "studotracks",
-          "columnsFrom": [
-            "track_id"
           ],
           "columnsTo": [
             "id"

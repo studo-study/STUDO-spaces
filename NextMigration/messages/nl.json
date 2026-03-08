@@ -1055,9 +1055,14 @@
     "set_title": "untitled set"
   },
   "trackview": {
-    "tracks": "tracks",
-    "sets": "sets",
-    "communities": "communities"
+    "tracks": "Tracks",
+    "sets": "Sets",
+    "communities": "Communities",
+    "studosets":"Studosets",
+    "visualsets": "Visualsets",
+    "empty": "geen items",
+    "vak": "vak",
+    "vakken": "vakken"
 
 
   }
