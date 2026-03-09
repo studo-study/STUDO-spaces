@@ -20,7 +20,7 @@ import TriggerSettings from "@/components/app/classroom/header/settings";
 
 const classroom: Classroom = mockFullClassrooms[0];
 
-export default function ClassroomHeader() {
+export default function PublicClassroomHeader() {
     const t = useTranslations("classroom")
     const pathname = usePathname();
     const items = [
@@ -69,22 +69,6 @@ export default function ClassroomHeader() {
                     <span>{classroom.name}</span>
                     <div>{getClassroomType(classroom.type)}</div>
                 </div>
-                <div className="w-fit flex flex-row items-center text-xl justify-center gap-5">
-                    <button
-                        onClick={toggleAddPopUp}
-                        className="relative flex z-10 items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
-                    >
-                        <div className="absolute bg-amber-500/50 h-7 w-7 rounded-full blur-sm" />
-                        <div className="relative z-10 shadow-2xl bg-amber-500 min-h-7 min-w-7 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
-                            <IoIosAdd />
-                        </div>
-                    </button>
-                    <TriggerSettings
-                        SettingsIsOpen={SettingsIsOpen}
-                        setSettingsIsOpen={setSettingsIsOpen}
-                        toggleSettings={toggleSettings}
-                    />
-                </div>
             </div>
 
             {/* School name */}
@@ -95,52 +79,8 @@ export default function ClassroomHeader() {
 
             {/* Tab bar */}
             <div className="relative w-full mt-4">
-                <div className="relative z-20 w-full flex items-center justify-between">
-                    <div className="flex items-center gap-10">
-                        {items.map((item, i) => (
-                            <Link
-                                href={item.link}
-                                key={i}
-                                className={`dark:text-white font-bold py-4 transition-all duration-400 hover:border-blue-500/75 border-b-2 ${
-                                    isActive(item.link, pathname) ? "border-blue-500" : "border-transparent"
-                                }`}
-                            >
-                                {t(item.label)}
-                            </Link>
-                        ))}
-                        {classroom.type !== "communtiy" &&
-                            rest.map((item, i) => (
-                                <Link
-                                    href={item.link}
-                                    key={i}
-                                    className={`dark:text-white font-bold py-4 transition-all duration-400 hover:border-blue-500/75 border-b-2 ${
-                                        isActive(item.link, pathname) ? "border-blue-500" : "border-transparent"
-                                    }`}
-                                >
-                                    {t(item.label)}
-                                </Link>
-                            ))}
-                    </div>
-
-                    <div className="flex flex-row items-center gap-5 pb-3">
-                        <TriggerInvite togglePopUp={toggleInvitePopUp} />
-                        <button
-                            onClick={() => { copy(); toggleCopiedAnimation(); }}
-                            className={`w-fit px-7 py-2 rounded-full active:scale-95 transition-all duration-300 ${
-                                copied ? "bg-emerald-400" : "dark:bg-white"
-                            } cursor-pointer flex items-center gap-3 justify-center`}
-                        >
-                            <ImLink />
-                            {t("copy")}
-                        </button>
-                    </div>
-                </div>
                 <div className="absolute z-10 bottom-0 w-full h-0.5 bg-studogrey" />
             </div>
-
-            {/* Modals */}
-            <InvitePeople inviteOpen={invite} setInviteOpen={setInvite} />
-            <AddSet addOpen={add} setAddOpen={setAdd} />
         </div>
     );
 }
