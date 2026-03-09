@@ -1,7 +1,7 @@
 import {useTranslations} from "next-intl";
 import FileHeader from "@/components/app/your-files/header";
 import {ReactNode} from "react";
-import ClassroomHeader from "@/components/app/classroom/ClassroomHeader";
+import ClassroomHeader from "@/components/app/classroom/PrivateClassroomHeader";
 
 export default function Layout({ children }: { children: ReactNode }) {
     const t = useTranslations("classroom")

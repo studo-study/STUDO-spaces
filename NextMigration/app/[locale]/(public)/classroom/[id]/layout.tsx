@@ -2,8 +2,9 @@ import { auth } from '@/auth';
 import LandingHeader from '@/components/marketing/landing_header/header';
 import LandingFooter from '@/components/marketing/landing_footer/footer';
 import AppLayoutClient from '@/components/app/AppLayoutClient';
-import ClassroomHeader from '@/components/app/classroom/ClassroomHeader';
 import { ReactNode } from 'react';
+import PrivateClassroomHeader from "@/components/app/classroom/PrivateClassroomHeader";
+import PublicClassroomHeader from "@/components/app/classroom/PublicClassroomHeader";
 
 export default async function ClassroomLayout({ children }: { children: ReactNode }) {
     const session = await auth();
@@ -12,7 +13,7 @@ export default async function ClassroomLayout({ children }: { children: ReactNod
         return (
             <AppLayoutClient>
                 <div className="w-full h-full py-15 flex flex-col overflow-hidden">
-                    <ClassroomHeader />
+                    <PrivateClassroomHeader />
                     <div className="w-full flex-1 overflow-hidden">
                         {children}
                     </div>
@@ -24,9 +25,9 @@ export default async function ClassroomLayout({ children }: { children: ReactNod
     return (
         <div className="scroll-hidden">
             <LandingHeader />
-            <main>
-                <div className="w-full h-full py-15 flex flex-col overflow-hidden">
-                    <ClassroomHeader />
+            <main className={"w-screen h-screen flex items-center justify-center"}>
+                <div className="mt-30 w-1/2 h-full py-15 flex flex-col overflow-hidden">
+                    <PublicClassroomHeader />
                     <div className="w-full flex-1 overflow-hidden">
                         {children}
                     </div>
