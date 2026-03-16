@@ -28,7 +28,7 @@ export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
     }
 
     return (
-        <div className={`h-10 gap-5 dark:text-white w-70 rounded-4xl glass-rgb transition-all duration-300 
+        <div className={`h-10 gap-5 px-5 dark:text-white w-70 rounded-4xl glass-rgb transition-all duration-300 
         ${search ? "dark:border-white border-gray-500" : "dark:border-studoborder/30 border-gray-300"} 
         border focus:border-white shadow-2xl flex justify-around`}>
             <input

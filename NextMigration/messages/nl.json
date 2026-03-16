@@ -763,6 +763,17 @@
     "create": "Create Set",
     "add_card": "Add Card"
   },
+  "createvisualset": {
+    "title": "Create new Visualset",
+    "title_placeholder": "Fill in a title...",
+    "course_placeholder": "Fill in a course...",
+    "folder_placeholder": "Select a folder...",
+    "term_language": "Term language...",
+    "def_language": "Definition language...",
+    "import": "Import",
+    "create": "Create Set",
+    "add_card": "Add Card"
+  },
   "card":{
     "Definition": "Definition",
     "Term": "Term"
