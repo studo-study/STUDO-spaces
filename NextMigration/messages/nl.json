@@ -65,7 +65,11 @@
       "rights": "STUDO inc. Alle Rechten Voorbehouden.",
       "select": "Studo Select",
       "edu": "Studo for Education",
-      "GDPR": "AVG"
+      "GDPR": "AVG",
+      "gdpr": "GDPR",
+      "compliant": "compliant",
+      "privacy": "Privacy",
+      "first": "first"
     },
     "welcome": {
       "CreateCustom": "Maak je eigen sets",

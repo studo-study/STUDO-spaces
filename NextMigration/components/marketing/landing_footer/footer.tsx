@@ -3,6 +3,8 @@ import { FaYoutube } from "react-icons/fa6";
 
 import {Link} from "@/i18n/routing";
 import {useTranslations} from "next-intl";
+import {GiEuropeanFlag} from "react-icons/gi";
+import {MdOutlinePrivacyTip, MdPrivacyTip} from "react-icons/md";
 export default function LandingFooter() {
     const t = useTranslations("landing.footer");
     const CurrentYear = new Date().getFullYear();
@@ -16,8 +18,8 @@ export default function LandingFooter() {
         </span>
             </div>
 
-            <div className="w-full py-10 bg-emerald-400 dark:bg-[#182536] flex flex-col items-center">
-                <div className="w-full max-w-7xl px-6 sm:px-8 lg:px-20">
+            <div className="w-full bg-emerald-400 py-10 dark:bg-[#182536] flex flex-col items-center">
+                <div className="w-full  max-w-7xl px-6 sm:px-8 lg:px-20">
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-10 mb-12">
                         <div className="md:col-span-2 flex flex-col gap-8">
                             <span className="font-bold font-akira text-4xl lg:text-5xl text-white">STUDO</span>
@@ -62,9 +64,16 @@ export default function LandingFooter() {
                     </div>
 
                     <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-base px-6 sm:px-0">
-                        <p className="dark:hidden text-center sm:text-left">
-                            {t("loveGreen")}
-                        </p>
+                        <div className={"w-1/3 flex flex-row  items-center gap-4 h-20"}>
+                            <div className={"w-1/2 h-10 rounded-full flex items-center px-2 gap-2 glass-rgb glass-border"}>
+                                <GiEuropeanFlag size={25}/>
+                                <span><span className={"font-bold"}>{t("gdpr")}</span> {t("compliant")}</span>
+                            </div>
+                            <div className={"w-fit h-10 rounded-full flex items-center px-3 pr-6 gap-2 glass-rgb glass-border"}>
+                                <MdOutlinePrivacyTip size={20}/>
+                                <span><span className={"font-bold"}>{t("privacy")}</span> {t("first")}</span>
+                            </div>
+                        </div>
                         <p className="hidden dark:flex text-center sm:text-left">
                             {t("loveBlue")}
                         </p>
@@ -75,6 +84,7 @@ export default function LandingFooter() {
                             &copy; {CurrentYear} {t("rights")}
                         </p>
                     </div>
+
                 </div>
             </div>
         </footer>
