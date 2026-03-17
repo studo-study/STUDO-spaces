@@ -1,4 +1,4 @@
-import SetsGrid from "@/components/app/classroom/sets/grid";
+import SetsGrid from "@/components/app/classroom/sets/SetsGrid";
 
 export default function ClassroomSetsPage() {
     return (<div className={"w-full h-full"}>

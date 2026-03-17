@@ -5,7 +5,7 @@ import {IoIosAdd} from "react-icons/io";
 interface CardProps {
     index: number;
 }
-export default function Card({ index }: CardProps) {
+export default function CardItem({ index }: CardProps) {
     const t = useTranslations("card");
 
 

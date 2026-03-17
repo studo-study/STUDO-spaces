@@ -33,7 +33,7 @@ public_set
 +user_id
 +folder_id
 
-[Card]
+[CardItem]
 *id
 term
 definition
@@ -159,7 +159,7 @@ Studyset 1--* SetLike
 Visualset 1--* SetLike
 Studyset *--1 Folder
 Visualset *--1 Folder
-Studyset 1--* Card
+Studyset 1--* CardItem
 Visualset 1--* Image
 Image 1--* Identify
 User 1--* ClassroomUser
@@ -177,4 +177,4 @@ Visualset 1--* StudySession
 StudySession 1--* SessionPin
 StudySession 1--* SessionCard
 Identify 1--* SessionPin
-Card 1--* SessionCard
+CardItem 1--* SessionCard

@@ -2,13 +2,13 @@
 "use client"
 import {useLocale, useTranslations} from "next-intl";
 import {HiMenuAlt4} from "react-icons/hi";
-import TriggerAddPopup from "@/components/app/app_header/add_popup";
+import TriggerAddPopup from "@/components/app/app_header/popups/AddPopup";
 import {useEffect, useRef, useState} from "react";
-import TriggerNotif from "@/components/app/app_header/notif_popup";
-import StreakPopup from "@/components/app/app_header/streak_popup";
-import TriggerProfile from "@/components/app/app_header/profile_popup";
+import TriggerNotif from "@/components/app/app_header/popups/NotificationsPopup";
+import StreakPopup from "@/components/app/app_header/StreakPopup";
+import TriggerProfile from "@/components/app/app_header/popups/ProfilePopup";
 import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
-import SearchBar from "@/components/app/app_header/search";
+import SearchBar from "@/components/app/app_header/SearchContainer";
 import Image from "next/image";
 import {Link} from "@/i18n/routing";
 
@@ -92,11 +92,11 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
                         className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb">
                         {burgerOpen ? <TbLayoutSidebarLeftCollapse className={"dark:opacity-30"}/> : <HiMenuAlt4 className={"dark:opacity-30"}/>}
                     </button>
-                    <Link href={"/home"} className={`font-akira text-2xl truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
+                    <Link href={"/home"} title={SpecialeDagTitel()} className={`font-akira text-2xl truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
                        STUDO
                     </Link>
                     {premium &&
-						<Link href={"/select"} className={"hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-linear-to-r from-indigo-300 to-white backdrop-blur-2xl text-studodarkblue"}>upgrade to select</Link>}
+						<Link href={"/select"} className={"hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-white backdrop-blur-2xl text-studodarkblue"}>upgrade to select</Link>}
 
                 </div>
 
@@ -334,4 +334,48 @@ function berekenPasen(jaar: number) {
     const dag = ((h + l - 7 * m + 114) % 31) + 1;
 
     return { dag, maand };
+}
+
+function SpecialeDagTitel() {
+    const date: Date = new Date();
+    const dag = date.getDate();
+    const maand = date.getMonth();
+    const jaar = date.getFullYear();
+    const locale = useLocale();
+    const pasen = berekenPasen(jaar);
+    const pasenDatum = new Date(jaar, pasen.maand - 1, pasen.dag);
+
+    const carnaval = new Date(pasenDatum);
+    carnaval.setDate(carnaval.getDate() - 49);
+
+    if (dag === pasen.dag && maand === pasen.maand - 1) {
+        return "easters";
+    }
+    if (dag === carnaval.getDate() && maand === carnaval.getMonth()) {
+        return "Vrolijk Carnaval";
+    }
+
+    const key: string = `${dag}/${maand}`;
+    const vasteDagen: Record<string, string> = {
+        "1/0": "Happy New Year!",
+        "6/0": "Happy Three Kings' Day",
+        "14/1": "Happy Valentine's Day",
+        "17/2": "Happy St. Patrick's Day",
+        "1/4": "Happy Labour Day",
+        "21/5": "Happy Midsummer",
+        "31/9": "Happy Halloween",
+        "24/11": "Merry Christmas",
+        "25/11": "Merry Christmas",
+        "31/11": "Happy New Year's Eve"
+    };
+
+    if (locale === "nl" && key === "21/6") {
+        return "Nationale Feestdag";
+    }
+
+    if (locale === "nl" && key === "27/3") {
+        return "Koningsdag";
+    }
+
+    return vasteDagen[key] || "Holiday";
 }

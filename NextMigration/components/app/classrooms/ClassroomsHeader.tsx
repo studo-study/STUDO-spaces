@@ -2,9 +2,9 @@
 import {useTranslations} from "next-intl";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import TriggerClassroom from "@/components/app/classrooms/create_classroom";
+import TriggerClassroom from "@/components/app/classrooms/CreateClassroom";
 import {useCallback, useRef, useState} from "react";
-import CreateClassroom from "@/components/app/classrooms/create_classroompopup";
+import CreateClassroom from "@/components/app/classrooms/CreateClassroomPopup";
 
 const header = [
     {url: "/your-files/sets", label: "sets"},

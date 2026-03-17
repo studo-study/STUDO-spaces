@@ -9,7 +9,7 @@ import {HiLightningBolt} from "react-icons/hi";
 interface ListItemProps {
     items: FullStudyset[];
 }
-export default function ListItems({items}:ListItemProps) {
+export default function SetListItems({items}:ListItemProps) {
     const t = useTranslations("classroom.sets");
     const locale = useLocale();
     return (<div className={`flex-1 overflow-y-scroll scroll-hidden h-full mb-10 z-10 flex flex-col gap-5 pb-15`}>

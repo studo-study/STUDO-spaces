@@ -1,4 +1,4 @@
-import Members from "@/components/app/classroom/overview/Members";
+import ClassroomMembers from "@/components/app/classroom/overview/ClassroomMembers";
 import RecentlyAdded from "@/components/app/classroom/overview/RecentlyAdded";
 import {useTranslations} from "next-intl";
 import {mockFullClassrooms} from "@/data/mocks/classroomsMock";
@@ -7,6 +7,6 @@ export default function ClassroomOverviewPage() {
     return (
         <div className="w-full h-full flex flex-row gap-5 py-10 overflow-y-auto">
             <RecentlyAdded items={items}/>
-            <Members items={items}/>
+            <ClassroomMembers items={items}/>
         </div>)
 }

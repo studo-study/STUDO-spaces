@@ -4,7 +4,7 @@ interface importerProps {
     onClose: () => void,
 }
 
-export default function Importer({ onClose }: importerProps) {
+export default function SetImporter({ onClose }: importerProps) {
     const t = useTranslations("importer")
     return (
         <div className="fixed inset-0 w-full h-full flex justify-center items-center z-[9999]

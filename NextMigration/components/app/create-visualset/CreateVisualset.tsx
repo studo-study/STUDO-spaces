@@ -1,8 +1,8 @@
 "use client"
 import {useTranslations} from "next-intl";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import Importer from "@/components/app/create-studoset/importer";
-import Card from "@/components/app/create-studoset/card";
+import SetImporter from "@/components/app/create-studoset/SetImporter";
+import CardItem from "@/components/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
 const LANGUAGES = [
@@ -107,7 +107,7 @@ export default function CreateVisualSetForm() {
                 </div>
 
                 {showImporter && (
-                    <Importer
+                    <SetImporter
                         onClose={() => setShowImporter(false)}
                     />
                 )}

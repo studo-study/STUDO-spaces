@@ -12,12 +12,12 @@ export default function CourseItem({course}: CourseCardProps) {
     return (
         <Link
             href={`/course/${course}`}
-            className="group p-5 shadow-2xl rounded-2xl bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 text-center"
+            className="group p-5 shadow-2xl rounded-2xl bg-white/30 dark:bg-studogrey/10 border dark:border-studogrey/20 border-gray-200 hover:border-studogrey/40 transition-all duration-300 text-center"
         >
-            <div className="w-12 h-12 mx-auto mb-3 rounded-full shadow-2xl bg-gradient-to-br from-gray-200/10 to-white/20 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 mx-auto mb-3 rounded-full shadow-2xl flex items-center justify-center text-studodarkblue dark:text-white group-hover:scale-110 transition-transform duration-300">
                 <img src={coverImage} alt="" className="w-7 shadow-2xl" />
             </div>
-            <h3 className="font-medium text-white mb-1">{course}</h3>
+            <h3 className="font-medium dark:text-white text-studodarkblue mb-1">{course}</h3>
         </Link>
     );
 };

@@ -8,7 +8,7 @@ import {HiOutlineViewList} from "react-icons/hi";
 import {BsGridFill} from "react-icons/bs";
 import {IoIosAdd} from "react-icons/io";
 import SetItem from "@/components/app/SetItem";
-import ClassSearch from "@/components/app/classrooms/search";
+import ClassSearch from "@/components/app/classrooms/ClassroomSearchbar";
 import {mockClassrooms, mockFullClassrooms} from "@/data/mocks/classroomsMock";
 import ClassroomOverviewItem from "@/components/app/classrooms/ClassroomOverviewItem";
 import {useUser} from "@/components/providers/UserProvider";

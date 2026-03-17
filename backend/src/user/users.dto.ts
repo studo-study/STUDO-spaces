@@ -312,6 +312,10 @@ export class TotalStatsDto {
   @ApiProperty({ example: 300 })
   @Expose()
   cardsLearned: number;
+
+  @ApiProperty({ example: 300 })
+  @Expose()
+  totalCards: number;
 }
 
 // ---------------------------------------------------------
@@ -424,4 +428,11 @@ export class StartPagina {
   })
   @Expose()
   class: ClassActivitiesDto[];
+
+  @ApiProperty({
+    type: [TotalStatsDto],
+    description: 'stats',
+  })
+  @Expose()
+  stats: TotalStatsDto;
 }

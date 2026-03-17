@@ -539,12 +539,12 @@
             <text text-anchor="start" x="441.12" y="-677.86" font-family="Times,serif" font-size="14.00">0..N</text>
             <text text-anchor="start" x="333.34" y="-757.01" font-family="Times,serif" font-size="14.00">1</text>
         </g>
-        <!-- Card -->
+        <!-- CardItem -->
         <g id="node5" class="node">
-            <title>Card</title>
+            <title>CardItem</title>
             <polygon fill="none" stroke="black" points="758,-934 758,-963.5 846,-963.5 846,-934 758,-934"/>
             <text text-anchor="start" x="781" y="-944.3" font-family="Helvetica,sans-Serif" font-weight="bold"
-                  font-size="16.00">Card
+                  font-size="16.00">CardItem
             </text>
             <polygon fill="none" stroke="black" points="758,-906.75 758,-934 846,-934 846,-906.75 758,-906.75"/>
             <text text-anchor="start" x="763" y="-916.7" font-family="Helvetica,sans-Serif" text-decoration="underline"
@@ -573,9 +573,9 @@
                   font-size="14.00">set_id
             </text>
         </g>
-        <!-- Studyset&#45;&#45;Card -->
+        <!-- Studyset&#45;&#45;CardItem -->
         <g id="edge12" class="edge">
-            <title>Studyset&#45;&#45;Card</title>
+            <title>Studyset&#45;&#45;CardItem</title>
             <path fill="none" stroke="#7f7f7f" stroke-dasharray="5,2"
                   d="M634.16,-903.79C674.02,-891.74 717.68,-878.55 750.34,-868.68"/>
             <text text-anchor="start" x="720.34" y="-855.38" font-family="Times,serif" font-size="14.00">0..N</text>
@@ -701,9 +701,9 @@
                   font-size="14.00">session_id
             </text>
         </g>
-        <!-- Card&#45;&#45;SessionCard -->
+        <!-- CardItem&#45;&#45;SessionCard -->
         <g id="edge29" class="edge">
-            <title>Card&#45;&#45;SessionCard</title>
+            <title>CardItem&#45;&#45;SessionCard</title>
             <path fill="none" stroke="#7f7f7f" stroke-dasharray="5,2"
                   d="M853.82,-864.3C887.07,-871.45 931.31,-880.97 969.76,-889.23"/>
             <text text-anchor="start" x="939.76" y="-875.93" font-family="Times,serif" font-size="14.00">0..N</text>

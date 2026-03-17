@@ -11,12 +11,12 @@ import {LiaUniversitySolid} from "react-icons/lia";
 import {FaEllipsis} from "react-icons/fa6";
 import {IoIosAdd} from "react-icons/io";
 import {ImLink} from "react-icons/im";
-import TriggerClassroom from "@/components/app/classrooms/create_classroom";
+import TriggerClassroom from "@/components/app/classrooms/CreateClassroom";
 import {useState} from "react";
-import TriggerInvite from "@/components/app/classroom/header/triggerInvite";
-import InvitePeople from "@/components/app/classroom/header/invitePeople";
-import AddSet from "@/components/app/classroom/header/addSet";
-import TriggerSettings from "@/components/app/classroom/header/settings";
+import TriggerInvite from "@/components/app/classroom/header/TriggerInvite";
+import InvitePeople from "@/components/app/classroom/header/InvitePeople";
+import AddSet from "@/components/app/classroom/header/AddSet";
+import TriggerSettings from "@/components/app/classroom/header/Settings";
 
 const classroom: Classroom = mockFullClassrooms[0];
 

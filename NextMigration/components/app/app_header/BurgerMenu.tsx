@@ -9,7 +9,7 @@ import {useTranslations} from "next-intl";
 import {GoHome} from "react-icons/go";
 import {IoIosAdd} from "react-icons/io";
 import {usePathname} from "next/navigation";
-import UserPopup from "@/components/app/app_header/user";
+import UserPopup from "@/components/app/app_header/popups/BurgerPopup";
 import {useUser} from "@/components/providers/UserProvider";
 
 interface BurgerProps {
@@ -32,7 +32,7 @@ const classrooms = [
     {icon: <IoSchoolOutline />, link:"/classrooms", label:"classrooms"},
 ]
 
-export default function Burger({burgerOpen, toggleSearch, toggleCreate}: BurgerProps) {
+export default function BurgerMenu({burgerOpen, toggleSearch, toggleCreate}: BurgerProps) {
     const t = useTranslations("header")
     const pathname = usePathname();
     const isActive = (link: string) => {

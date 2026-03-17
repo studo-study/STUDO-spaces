@@ -9,9 +9,9 @@ import { Progress } from "@/components/marketing/progress/progress";
 import CourseIcons from "../../../../data/index";
 import { GoPlus } from "react-icons/go";
 import {Metadata} from "next";
+import {auth} from "@/auth";
+import { getTranslations, getLocale } from 'next-intl/server';
 
-const user: User = mockUser;
-const data: StartPage = mockStartPage;
 
 const COLORS = [
     "from-amber-500/5 to-amber-400/5",
@@ -20,29 +20,37 @@ const COLORS = [
     "from-emerald-500/5 to-emerald-400/5"
 ] as const;
 
-const STATS_CONFIG = [
-    { color: "dark:from-orange-500/20 dark:to-orange-600/20 from-orange-400 to-orange-500", icon: "/icons/streak.svg", stat: 10, measurement: "days", label: "Streak", extra: "", delay: 0 },
-    { color: "dark:from-purple-500/20 dark:to-purple-400 from-purple-500 to-purple-500 ", icon: "/icons/studyset.svg", stat: 830, measurement: "cards", label: "totCards", extra: "", delay: 50, invert: true },
-    { color: "dark:from-blue-500/20 dark:to-blue-500/20 from-blue-400 to-blue-500", icon: "/icons/clock.svg", stat: 123, measurement: "min", label: "tmStd", extra: "week", delay: 100, invert: true },
-    { color: "dark:from-emerald-500/20 dark:to-emerald-600/20 from-emerald-400 to-emerald-500", iconComponent: true, stat: 645, measurement: "cards", label: "mastered", extra: "", delay: 150 },
-] as const;
 
 export const metadata:Metadata = {
     title:"Home | Studo"
 }
 
-export default function HomePage() {
-    const tTimed = useTranslations("timed");
-    const t = useTranslations("home");
-    const locale = useLocale();
+export default async function HomePage() {
+    const t = await getTranslations('home');
+    const tTimed = await getTranslations('timed');
+    const locale = await getLocale();
 
-    // ✅ Memoize berekeningen
-    const welcome = useMemo(() => getWelcomeMsg(tTimed, user?.displayName ?? ""), [tTimed, user?.displayName]);
+    const session = await auth();
+    const token = session?.accessToken;
+    const data = await fetch(
+        `${process.env.AUTH_API_URL}/users/me/start`,
+        {
+            headers: { Authorization: `Bearer ${token}` },
+            next: { revalidate: 60 },
+        }
+    ).then(res => res.json());
 
-    const courses = useMemo(() => {
-        const courseSet = new Set(data.lastTen.map(set => set.Course));
-        return Array.from(courseSet);
-    }, []);
+    console.log(data);
+    const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? '');
+
+
+    const STATS_CONFIG = [
+        { color: "dark:from-orange-500/20 dark:to-orange-600/20 from-orange-400 to-orange-500", icon: "/icons/streak.svg", stat: session?.user.streak_count, measurement: "days", label: "Streak", extra: "", delay: 0 },
+        { color: "dark:from-purple-500/20 dark:to-purple-400/20 from-purple-500 to-purple-500 ", icon: "/icons/studyset.svg", stat: data?.stats.totalCards, measurement: "cards", label: "totCards", extra: "", delay: 50, invert: true },
+        { color: "dark:from-blue-500/20 dark:to-blue-500/20 from-blue-400 to-blue-500", icon: "/icons/clock.svg", stat: data?.stats.timeLearned, measurement: "min", label: "tmStd", extra: "week", delay: 100, invert: true },
+        { color: "dark:from-emerald-500/20 dark:to-emerald-600/20 from-emerald-400 to-emerald-500", iconComponent: true, stat: data?.stats.cardsLearned, measurement: "cards", label: "mastered", extra: "", delay: 150 },
+    ]
+
 
     return (
         <div className="w-full h-full py-15 flex flex-col gap-10 ">
@@ -82,7 +90,7 @@ export default function HomePage() {
                             {t("no_sets")}
                         </div>
                     ) : (
-                        data.lastTen.map((set, i) => (
+                        data?.lastTen.splice(0,3).map((set, i) => (
                             <SetItem key={set.set_id} set={set} index={i} t={t} locale={locale} />
                         ))
                     )}
@@ -98,7 +106,7 @@ export default function HomePage() {
                         href="/your-files/sets"
                     />
                     <div className="w-full grid grid-cols-4 gap-5 h-full">
-                        {courses.map((course, i) => (
+                        {data?.courses.map((course, i) => (
                             <CourseCard key={course} course={course} />
                         ))}
                     </div>
@@ -118,15 +126,12 @@ export default function HomePage() {
                 </section>
             </div>
 
-            {/* CTA Section */}
             <section className="w-full h-fit flex items-end justify-center">
                 <CTABlock t={t} />
             </section>
         </div>
     );
 }
-
-// ✅ Memoized sub-components - geen onnodige re-renders
 
 interface SectionHeaderProps {
     title: string;
@@ -166,7 +171,7 @@ const Stats = memo(function Stats({ color, icon, iconComponent, label, stat, mea
                 {iconComponent ? (
                     <PiMedalLight size={20} className="text-white dark:opacity-50" />
                 ) : (
-                    <img src={icon} className={`h-5 ${invert ? 'invert brightness-0 dark:opacity-30' : ''}`} alt="" />
+                    <img src={icon} className={`h-5 ${invert ? 'invert brightness-0 dark:opacity-30 ' : 'brightness-100'}`} alt="" />
                 )}
                 {t(label)}
             </span>
@@ -192,7 +197,7 @@ const SetItem = memo(function SetItem({ set, index, t, locale }: SetItemProps) {
     const date = new Date(set.last_studied).toLocaleDateString(locale);
     const iconSrc = set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
     const colorClass = COLORS[index % COLORS.length];
-
+    const perc = Math.min(100, Math.floor((set.progress / (set.length * 2)) * 100));
     return (
         <Link
             href={`/set/${set.set_id}`}
@@ -206,7 +211,7 @@ const SetItem = memo(function SetItem({ set, index, t, locale }: SetItemProps) {
                         <Progress length={set.length} progress={set.progress} />
                     </div>
                     <div className="w-full flex justify-center flex-row gap-3">
-                        <span className="w-fit dark:text-studogrey text-gray-400 text-sm">{set.progress}% {t("studied")}</span>
+                        <span className="w-fit dark:text-studogrey text-gray-400 text-sm">{perc}% {t("studied")}</span>
                     </div>
                 </div>
                 <div className="w-full flex flex-row gap-3 h-fit items-center">
@@ -257,12 +262,12 @@ const ActivityItem = memo(function ActivityItem({ activity }: ActivityItemProps)
     return (
         <Link
             href={`/set/${activity.set_id}/${activity.set_type}`}
-            className="flex items-center shadow-2xl gap-4 p-4 rounded-xl dark:bg-studogrey/10 border dark:border-studogrey/20 border-gray-200 bg-white/50 hover:border-studogrey/40 transition-all"
+            className="flex items-center shadow-2xl gap-4 px-3 py-2 pr-5 rounded-full dark:bg-studogrey/10 border dark:border-studogrey/20 border-gray-200 bg-white/50 hover:border-studogrey/40 transition-all"
         >
             <img
                 src={activity.img_url}
                 alt={activity.displayName}
-                className="w-10 h-10 rounded-full border border-studoborder object-cover"
+                className="min-w-10 min-h-10 h-10 w-10 max-h-10 max-w-10 rounded-full border border-studoborder object-cover"
             />
             <div className="flex-1 min-w-0">
                 <h3 className="font-medium dark:text-white text-studodarkblue truncate">{activity.displayName}</h3>
@@ -280,22 +285,22 @@ const ActivityItem = memo(function ActivityItem({ activity }: ActivityItemProps)
 
 const CTABlock = memo(function CTABlock({ t }: { t: ReturnType<typeof useTranslations> }) {
     return (
-        <div className="p-6 rounded-2xl shadow-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-400/10 border border-studoborder/30">
+        <div className="p-6 rounded-3xl shadow-2xl bg-gradient-to-br dark:from-emerald-500/10 dark:to-emerald-400/10 from-emerald-500/50 to-teal-500/50 border border-studoborder/30">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div>
                     <h3 className="text-lg font-semibold text-white mb-1">{t("ready")}</h3>
-                    <p className="text-studogrey text-sm">{t("create_block")}</p>
+                    <p className="dark:text-studogrey text-studodarkblue/40 text-sm">{t("create_block")}</p>
                 </div>
                 <div className="flex gap-3">
                     <Link
                         href="/create-studoset"
-                        className="px-5 py-2.5 min-w-30 rounded-xl text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:opacity-90 transition-opacity flex items-center gap-2"
+                        className="px-5 py-2.5 min-w-30 rounded-2xl text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:opacity-90 transition-opacity flex items-center gap-2"
                     >
                         <GoPlus /> {t("create_ss")}
                     </Link>
                     <Link
                         href="/create-visualset"
-                        className="px-5 py-2.5 min-w-30 text-sm flex flex-row items-center gap-2 rounded-xl bg-studogrey/20 text-white font-medium hover:bg-studogrey/30 transition-colors border border-studogrey/30"
+                        className="px-5 py-2.5 min-w-30 text-sm flex flex-row items-center gap-2 rounded-2xl dark:bg-studogrey/20 bg-white/40 text-studodarkblue dark:text-white font-medium dark:hover:bg-studogrey/30 hover:bg-white/50 transition-colors border border-studogrey/30"
                     >
                         <GoPlus /> {t("create_vs")}
                     </Link>
@@ -305,7 +310,7 @@ const CTABlock = memo(function CTABlock({ t }: { t: ReturnType<typeof useTransla
     );
 });
 
-// ✅ Helper functions BUITEN component
+
 function getWelcomeMsg(t: ReturnType<typeof useTranslations>, name: string): string {
     const time = new Date().getHours();
     const ranges = [

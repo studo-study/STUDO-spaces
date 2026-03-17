@@ -26,7 +26,7 @@ const MockRequests = [
         id:"user19293"
     }
 ]
-export default function Usergrid(){
+export default function ClassroomUserGrid(){
     const t = useTranslations("classroom");
     const [filteredSets, setFilteredSets] = useState<ClassroomUser[]>(users);
     const [search, setSearch] = useState(false);
