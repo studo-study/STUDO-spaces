@@ -17,7 +17,6 @@ import {
 import {
   ClassroomListResponseDto,
   ClassroomResponseDto,
-  ClassroomSetDto,
   ClassroomUserResponseDto,
   FullClassroomResponseDto,
 } from '../classroom/classroom.dto';
@@ -40,7 +39,6 @@ import {
   cards,
   classroomactivities,
   classrooms,
-  classroomsets,
   classroomusers,
   folders,
   images,
@@ -52,24 +50,14 @@ import {
   users,
   visualsets,
 } from '../drizzle/schema';
-import { CardResponseDto } from '../studyset/card.dto';
 import { ClassroomService } from '../classroom/classroom.service';
-import {
-  FullVSResponseListDto,
-  ImageResponseDto,
-  VisualsetResponseDto,
-} from '../visualset/visualset.dto';
-import { StudysetService } from '../studyset/studyset.service';
-import { VisualsetService } from '../visualset/visualset.service';
-import { PinResponseDto } from '../pin/pin.dto';
+import { VisualsetResponseDto } from '../visualset/visualset.dto';
 import { plainToInstance } from 'class-transformer';
 import { SessionCardResponseDTO } from '../studysession/sessioncard.dto';
-import { StudysessionService } from '../studysession/studysession.service';
 import { SessionPinResponseDTO } from '../studysession/sessionpin.dto';
 import { AuthConfig, ServerConfig } from '../config/configuration';
 import * as argon2 from 'argon2';
 import { ConfigService } from '@nestjs/config';
-import { User } from '../types/user';
 
 @Injectable()
 export class UserService {
@@ -159,6 +147,7 @@ export class UserService {
         (pv: number, sesh: StudysessionResponseDto) => pv + sesh.duration_min,
         0,
       ),
+      totalCards: cds.length,
       cardsLearned: cds
         .filter((card: SessionCardResponseDTO) => {
           if (!card) {
@@ -503,6 +492,7 @@ export class UserService {
       lastTen: await this.getLastTen(user_id),
       courses: await this.getCourses(user_id),
       class: await this.getClassmateActivity(user_id),
+      stats: await this.getTotalStats(user_id),
     };
   }
 

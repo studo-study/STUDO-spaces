@@ -77,13 +77,13 @@ export default function Grid() {
                     <SetSearch sets={data.lastTen} setFilteredSets={setFilteredSets} />
                     <button
                         onClick={() => setGrid(!grid)}
-                        className={`${grid ? "border-studoblue dark:border-studogrey text-studoblue dark:text-studogrey" : "border-studoblue dark:border-white text-studoblue dark:text-white bg-studoblue/20 dark:bg-studogrey"} cursor-pointer border w-8 h-8 rounded-lg text-lg flex items-center justify-center`}
+                        className={`${grid ? "border-studoblue dark:border-white text-studoblue dark:text-white" : "border-studoblue dark:border-white text-studoblue dark:text-white bg-studoblue/30 dark:bg-studogrey"} cursor-pointer border w-8 h-8 rounded-lg text-lg flex items-center justify-center`}
                     >
                         <HiOutlineViewList />
                     </button>
                     <button
                         onClick={() => setGrid(!grid)}
-                        className={`${grid ? "border-studoblue bg-studoblue/20 dark:bg-studogrey dark:border-studogrey text-studoblue dark:text-studogrey" : "border-studoblue dark:border-white text-studoblue dark:text-white"} cursor-pointer w-8 h-8 rounded-lg border text-lg flex items-center justify-center`}
+                        className={`${grid ? "border-studoblue bg-studoblue/30 dark:bg-studogrey dark:border-white text-studoblue dark:text-white" : "border-studoblue dark:border-white text-studoblue dark:text-white"} cursor-pointer w-8 h-8 rounded-lg border text-lg flex items-center justify-center`}
                     >
                         <BsGridFill />
                     </button>
@@ -217,7 +217,7 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
                         </div>
 
                         {/* Label */}
-                        <span className="font-medium text-sm">
+                        <span className="font-medium text-sm dark:text-white text-studodarkblue">
               {t(item.label)}
             </span>
 

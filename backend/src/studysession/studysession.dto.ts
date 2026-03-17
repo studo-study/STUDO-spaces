@@ -372,6 +372,12 @@ export class TotalStats {
     example: 300,
   })
   cardsLearned: number;
+
+  @ApiProperty({
+    description: 'Totaal aantal geleerde kaarten',
+    example: 300,
+  })
+  totalCards: number;
 }
 
 export class UserStats {

@@ -1,7 +1,7 @@
-import Usergrid from "@/components/app/classroom/users/Usergrid";
+import ClassroomUserGrid from "@/components/app/classroom/users/ClassroomUserGrid";
 
 export default function ClassroomMembersPage() {
     return (<div className={"w-full h-full"}>
-        <Usergrid/>
+        <ClassroomUserGrid/>
     </div>)
 }

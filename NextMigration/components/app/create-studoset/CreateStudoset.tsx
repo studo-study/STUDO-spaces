@@ -1,8 +1,8 @@
 "use client"
 import {useTranslations} from "next-intl";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import Importer from "@/components/app/create-studoset/importer";
-import Card from "@/components/app/create-studoset/card";
+import SetImporter from "@/components/app/create-studoset/SetImporter";
+import CardItem from "@/components/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
 const LANGUAGES = [
@@ -127,9 +127,9 @@ export default function CreateStudosetForm() {
                     <div ref={cardsContainerRef}
                          className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10"
                          data-cy="cards_container">
-                            <Card index={0}/>
-                            <Card index={1}/>
-                            <Card index={2}/>
+                            <CardItem index={0}/>
+                            <CardItem index={1}/>
+                            <CardItem index={2}/>
                     </div>
 
                     <div className="flex w-full mb-3 sm:mb-4 md:mb-5">
@@ -152,7 +152,7 @@ export default function CreateStudosetForm() {
                 </div>
 
                 {showImporter && (
-                    <Importer
+                    <SetImporter
                         onClose={() => setShowImporter(false)}
                     />
                 )}

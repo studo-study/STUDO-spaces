@@ -1,18 +1,18 @@
 // components/app/AppLayoutClient.tsx
 "use client"
 import { memo, ReactNode, useState } from "react";
-import AppHeader from "@/components/app/app_header/header";
-import Burger from "@/components/app/app_header/burger";
+import AppHeader from "@/components/app/app_header/AppHeader";
+import BurgerMenu from "@/components/app/app_header/BurgerMenu";
 import { UserProvider, useUser } from "@/components/providers/UserProvider";
 import ConsoleEasterEgg from "@/components/overige/easteregg/console";
-import CreateFolder from "@/components/app/create-folder/create_folder";
+import CreateFolder from "@/components/app/create-folder/CreateFolder";
 import AppLayoutContext from "./context/AppLayoutContext";
 
 const MemoizedHeader = memo(AppHeader);
-const MemoizedBurger = memo(Burger);
+const MemoizedBurger = memo(BurgerMenu);
 
 function AppLayoutInner({ children }: { children: ReactNode }) {
-    const { user, isLoading } = useUser(); // ✅ Nu BINNEN UserProvider
+    const { user, isLoading } = useUser();
     const [burgerOpen, setBurgerOpen] = useState(false);
     const [Search, setSearch] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);

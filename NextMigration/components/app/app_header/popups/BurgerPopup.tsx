@@ -35,7 +35,6 @@ export default function UserPopup({ burgerOpen }: UserPopupProps) {
         </div>
     );
 
-    // Bereken hoogte: account (40px) + gap (20px) + items
     const getHeight = () => {
         if (!isOpen) return "h-10";
         const items = isModerator ? 2 : 1; // settings + eventueel mod
@@ -68,7 +67,6 @@ export default function UserPopup({ burgerOpen }: UserPopupProps) {
                         </div>
                     </div>
 
-                    {/* Dropdown items */}
                     <div className={`flex flex-col gap-2 transition-all duration-300 ease-out
                         ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
                         <MenuItem item={menuItems.settings} showText={burgerOpen && isOpen} />

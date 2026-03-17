@@ -41,9 +41,9 @@ function GridItem({ set, index, t, locale }: SetItemProps) {
         return (
             <Link
                 href={`/set/${set.set_id}`}
-                className={` h-50 flex-col flex gap-3 shadow-2xl items-center w-full rounded-2xl bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
+                className={` h-50 flex-col flex gap-3 shadow-2xl items-center w-full rounded-2xl dark:bg-studogrey/10 bg-white/50 border dark:border-studogrey/20 border-gray-200 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
             >
-                <div className={`h-0.5 w-full mb-3 bg-linear-to-r ${colorClass}`} />
+                <div className={`h-0.5 w-full mb-3`} />
 
                 <div className={`flex flex-row gap-3 items-center w-full px-7`}>
                     <img src={iconSrc} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />

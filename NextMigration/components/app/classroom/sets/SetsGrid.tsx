@@ -4,7 +4,7 @@ import {useRef, useState} from "react";
 import {useTranslations} from "next-intl";
 import {FullStudyset} from "@/types/types";
 import {IoSearch} from "react-icons/io5";
-import ListItems from "@/components/app/classroom/sets/listitems";
+import SetListItems from "@/components/app/classroom/sets/SetListItems";
 import {mockFullStudysets, mockStudysets} from "@/data/mocks/startPageMock";
 
 
@@ -66,7 +66,7 @@ export default function SetsGrid() {
                 (<div className="w-full h-100 flex dark:text-white text-studodarkblue font-bold items-center justify-center">
                     {t("no_sets")}
                 </div>)
-                : <ListItems items={ filteredSets}/>
+                : <SetListItems items={ filteredSets}/>
             }
 
         </div>

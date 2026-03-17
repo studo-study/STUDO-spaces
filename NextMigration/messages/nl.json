@@ -784,45 +784,49 @@
   },
   "timed": {
     "2": [
-      "Welcome back nightowl",
-      "Up this late again? You're not the only one...",
-      "The night is still young.. and so are we 🎶"
+      "Welkom terug nachtuil",
+      "Nog zo laat op? Je bent niet de enige...",
+      "The night is still young.. and so are we 🎶",
+      "Aan 't studeermaxxen zo te zien"
     ],
     "4": [
-      "Stay focused at this hour!",
-      "Go to sleep, bruv",
-      "Still up... somehow!?",
-      "Are you Batman or sum?"
+      "Tfoe tis wel beetje laat eh bro",
+      "Ga slapen!",
+      "Nog altijd wakker... hoe!?",
+      "Echt niet fatoe bro, ga pitten",
+      "Masten, Douchen, Studo..",
+      "Ik wil wel bijna pitten eigenlijk"
     ],
     "7": [
-      "Good morning",
-      "You're actually up — that's already a win.",
-      "Coffee and Studo time?"
+      "Goedemorgen {name}",
+      "Je bent wakker, eerste kleine win van de dag",
+      "Koffie en Studo (geen betere combo)",
+      "You're finally awake"
     ],
     "11": [
-      "Welcome back, {name}",
+      "Welkom terug, {name}",
       "Halfway through the day and still at it? Solid.",
       "A few more hours of focus before the break... hang in there."
     ],
     "15": [
-      "Good evening, {name}",
-      "Evening shift activated — you can handle this.",
+      "Goedeavond {name}",
+      "Avond shift geactiveerd",
       "You got this!"
     ],
     "19": [
-      "Good evening, {name}",
-      "Welcome Back",
-      "Let's Go Champ"
+      "Goedeavond {name}",
+      "Welkom terug",
+      "Let's Go Champ!"
     ],
     "22": [
-      "Welcome back. The evening is advancing — good luck.",
-      "Late-night studying? Respect for keeping at it.",
-      "Everyone else is heading to bed... we're still reviewing notes."
+      "Welkom terug, de avond is nog jong, veel succes",
+      "Tot laat aan het werk, goed bezig!",
+      "Tijd voor een romatnische avonddate met je studiemateriaal"
     ],
     "0": [
-      "Midnight has passed. Rest if you can, otherwise keep going.",
-      "It's late... but the material isn't finished yet.",
-      "Midnight and that summary is finally complete? Proud of you."
+      "Middernacht is geweest en nog steeds aan het knallen!",
+      "Blijven gaan!",
+      "Middernacht en nog altijd goed bezig! (officieel een vampier btw)"
     ]
   },
   "home": {
@@ -885,9 +889,9 @@
 
   },
   "phrases": {
-    "Nice work": "Nice work",
-    "Well done": "Well done",
-    "Keep on going": "Keep on going",
+    "Nice work": "Lekker bezig",
+    "Well done": "Goed gedaan",
+    "Keep on going": "Blijven gaan!",
     "You got this": "You got this",
     "You're halfway there": "You're halfway there",
     "You're doing great": "You're doing great",
