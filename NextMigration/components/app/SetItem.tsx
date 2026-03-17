@@ -90,4 +90,6 @@ export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
                 </div>
             </Link>);
     }
+
+    return null;
 };
