@@ -1,4 +1,5 @@
 // components/landing_welcome/hero.tsx
+"use client"
 import { FaCheck } from "react-icons/fa";
 import { FaArrowDownLong, FaArrowRightLong } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
@@ -7,6 +8,7 @@ import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
 import HeroBackground from "@/components/marketing/landing_welcome/hero_background";
 import {Link} from "@/i18n/routing";
 import SearchSets from "@/components/marketing/landing_welcome/search";
+import {useEffect, useState} from "react";
 
 const studyModes = [
     { to: "/tools/learn", label: "Learn", icon: "/icons/start/learn.svg", color: "from-emerald-500 to-emerald-400" },
@@ -24,13 +26,24 @@ export default function Hero() {
         t("TextVisualLearning"),
         t("AnywhereAnytime")
     ];
+    const [heroPaused, setHeroPaused] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setHeroPaused(window.scrollY > window.innerHeight * 0.8);
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     const launched = true;
+
     return (
         <section className="relative w-full max-w-screen overflow-visible h-fit xxl:h-3/4 flex flex-col items-center justify-start pt-10 px-4">
 
             {/* Background - client component, decoratief */}
             <div className="absolute max-w-screen w-full inset-0 hidden dark:flex select-none pointer-events-none z-0" aria-hidden="true">
-                <HeroBackground color="to-white/10" />
+                <HeroBackground paused={heroPaused} color="to-white/10" />
             </div>
 
             <div className="relative z-10 flex flex-col 3xl:min-h-screen items-center text-center pt-15 sm:pt-15 lg:pt-20 3xl:pt-30 overflow-visible gap-8 3xl:w-2/3 max-w-screen">
@@ -73,14 +86,14 @@ export default function Hero() {
                     </ul>
                 </AnimateOnMount>
 
-                <AnimateOnMount delay={500} className={"w-full flex justify-center flex-col gap-5 items-center"}>
+                <AnimateOnMount delay={500} className={"w-full flex items-center flex-col gap-5"}>
                     <SearchSets/>
-                    <nav className="grid grid-cols-1 md:grid-cols-2 px-10 gap-4 md:mt-6 md:w-full max-w-150">
+                    <nav className="grid grid-cols-1 md:grid-cols-2 gap-4 md:mt-6 md:w-full max-w-150">
                         <Link href={"/register"} className="px-8 py-4 text-lg flex items-center justify-center gap-2 font-bold text-white bg-emerald-400 dark:bg-studoblue rounded-full border-2 border-emerald-400 dark:border-studoblue hover:bg-emerald-500 dark:hover:bg-studoblue/50 transition-all duration-300">
                             {t("SignUp")}
                             <FaArrowRightLong aria-hidden="true" />
                         </Link>
-                        <Link href="/welcome#info" className="px-8 py-4 text-lg flex items-center justify-center gap-2 font-bold text-emerald-400 dark:text-studoblue rounded-full border-2 border-emerald-400 dark:border-studoblue bg-transparent hover:bg-emerald-400/10 dark:hover:bg-studoblue/10 transition-all duration-300 backdrop-blur-sm">
+                        <Link href="/welcome#info" className="px-8 py-4 text-lg flex items-center justify-center gap-2 font-bold text-emerald-400 dark:text-studoblue rounded-full border-2 border-emerald-400 dark:border-studoblue bg-transparent hover:bg-emerald-400/10 dark:hover:bg-studoblue/10 transition-all duration-300 ">
                             {t("LearnMore")}
                             <FaArrowDownLong aria-hidden="true" />
                         </Link>

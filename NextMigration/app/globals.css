@@ -152,14 +152,14 @@ body::-webkit-scrollbar {
 }
 
 .scroll-hidden {
-    overflow-y: auto;
     scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .scroll-hidden::-webkit-scrollbar {
     display: none;
 }
-
 
 .background-profile {
     background: linear-gradient(
@@ -274,27 +274,11 @@ body::-webkit-scrollbar {
 }
 
 .glass-rgb {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-}
-
-.glass-rgb::before,
-.glass-rgb::after {
-    content: "";
-    inset: 0;
-    border-radius: inherit;
-    opacity: 0.3;
-    z-index: -1;
-}
-
-.glass-rgb::before {
-    box-shadow: 2px 0 8px red;
-}
-
-.glass-rgb::after {
-    box-shadow: -2px 0 8px cyan;
+    background: rgba(255, 255, 255, 0.12);
+    /* backdrop-filter verwijderd */
+    will-change: auto;
+    contain: layout style paint;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -417,74 +401,52 @@ body::-webkit-scrollbar {
     }
 }
 
+.floating-blob {
+    pointer-events: none;
+    transition: opacity 3s ease;
+    will-change: transform;
+    animation-timing-function: linear !important;
+    animation-fill-mode: forwards;
+    transform: translateZ(0);
+    /* blur via SVG filter is lichter, of gewoon weglaten */
+    opacity: 0;
+}
+
+.floating-blob.animate {
+    animation: superFloat var(--duration, 100s) linear infinite;
+    opacity: 0.15;
+}
+
+/* Hover: gebruik alleen opacity, GEEN filter */
+.floating-blob:hover {
+    opacity: 0.4 !important;
+    transition: opacity 0.3s ease;
+}
+
 @keyframes superFloat {
     0% {
         transform: translate(0px, 0px) rotate(0deg) scale(var(--scale-min));
     }
-
-    12.5% {
-        transform: translate(calc(var(--seed) * 25vw - 100px), -20vh) rotate(calc(var(--rotate) * 0.25)) scale(var(--scale-max));
-    }
-
     25% {
-        transform: translate(calc((var(--seed) + 3) * -20vw + 80px), 30vh) rotate(calc(var(--rotate) * 0.5)) scale(var(--scale-min));
+        transform: translate(calc(var(--seed) * 25vw - 100px), -25vh) rotate(calc(var(--rotate) * 0.5)) scale(var(--scale-max));
     }
-
-    37.5% {
-        transform: translate(calc(var(--seed) * 30vw - 150px), -35vh) rotate(calc(var(--rotate) * 0.7)) scale(var(--scale-max));
-    }
-
     50% {
-        transform: translate(calc((var(--seed) + 2) * 18vw - 60px), 25vh) rotate(var(--rotate)) scale(var(--scale-min));
+        transform: translate(calc((var(--seed) + 2) * -18vw + 60px), 25vh) rotate(var(--rotate)) scale(var(--scale-min));
     }
-
-    62.5% {
-        transform: translate(calc(var(--seed) * -28vw + 120px), -30vh) rotate(calc(var(--rotate) * 1.3)) scale(var(--scale-max));
-    }
-
     75% {
-        transform: translate(calc((var(--seed) + 4) * 22vw - 90px), 40vh) rotate(calc(var(--rotate) * 1.6)) scale(var(--scale-min));
+        transform: translate(calc(var(--seed) * -20vw + 80px), -20vh) rotate(calc(var(--rotate) * 1.5)) scale(var(--scale-max));
     }
-
-    87.5% {
-        transform: translate(calc(var(--seed) * -15vw + 50px), -15vh) rotate(calc(var(--rotate) * 1.9)) scale(var(--scale-max));
-    }
-
     100% {
         transform: translate(0px, 0px) rotate(calc(var(--rotate) * 2)) scale(var(--scale-min));
     }
 }
 
-.floating-blob {
-    pointer-events: none;
-    filter: blur(0.5px);
-    transition: opacity 3s ease;
-    /* will-change: transform; */
-    animation-timing-function: linear !important;
-    animation-fill-mode: forwards;
-    transform: translateZ(0);
-}
-
-.floating-blob.animate {
-    animation: superFloat var(--duration, 100s) linear infinite;
-    opacity: 0.2;
-}
-
-/* Hover effectje blijft leuk */
-.floating-blob:hover {
-    opacity: 0.5 !important;
-    filter: blur(3px);
-}
-
-/* Respecteer reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .floating-blob {
         animation: none !important;
-        opacity: 0.15 !important;
+        opacity: 0.1 !important;
     }
 }
-
-
 .custom-select {
     position: relative;
 }

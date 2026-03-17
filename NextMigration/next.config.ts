@@ -23,10 +23,23 @@ const nextConfig: NextConfig = {
                 protocol: 'https',
                 hostname: 'example.com',
             },
+            {
+                protocol: "https",
+                hostname: "i.pravatar.cc",
+            },
+            {
+                protocol: "https",
+                hostname: "lh3.googleusercontent.com",
+            },
+            {
+                protocol: "https",
+                hostname: "wallpaperaccess.com",
+            }
+
         ],
     },
     compiler: {
-        removeConsole: process.env.NODE_ENV === "production",
+        //removeConsole: process.env.NODE_ENV === "production",
     },
 };
 

@@ -1,7 +1,7 @@
 import {Metadata} from "next";
-import AccountHeader from "@/components/app/account/header";
-import Stats from "@/components/app/account/stats";
-import AccountGrid from "@/components/app/account/grid";
+import AccountHeader from "@/components/app/account/AccountHeader";
+import Stats from "@/components/app/account/AccountStats";
+import AccountGrid from "@/components/app/account/AccountGrid";
 
 
 export const metadata:Metadata = {

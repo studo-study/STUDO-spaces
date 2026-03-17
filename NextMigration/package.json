@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4000",
+    "dev": "NEXT_DISABLE_TURBOPACK=1 next dev -p 4000",
+    "quick": "next dev -p 4000 --no-turbo",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -39,7 +40,8 @@
     "resend": "^6.9.2",
     "sortablejs": "^1.15.6",
     "tailwind-merge": "^3.4.0",
-    "zod": "^4.3.5"
+    "zod": "^4.3.5",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.2",

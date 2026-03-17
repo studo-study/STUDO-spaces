@@ -20,6 +20,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { HealthController } from './health/health.controller';
+import { StudoprofileModule } from './studoprofile/studoprofile.module';
 
 @Module({
   imports: [
@@ -39,6 +40,8 @@ import { HealthController } from './health/health.controller';
     SearchModule,
     AuthModule,
     SessionModule,
+    SearchModule,
+    StudoprofileModule,
   ],
   controllers: [AppController, HealthController],
   providers: [

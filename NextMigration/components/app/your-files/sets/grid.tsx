@@ -47,9 +47,9 @@ export default function Grid() {
     const locale = useLocale();
 
     return (
-        <div className="w-full h-full flex flex-col gap-5 scroll-hidden">
-            <div className={"w-full h-20 z-20 bg-gray-800 py-8 flex flex-row items-center justify-between gap-3"}>
-                <div className={"w-fit flex flex-row gap-5 items-center"}>
+        <div className="w-full h-full flex flex-col gap-5 scroll-hidden overflow-x-visible">
+            <div className={"w-full h-20 z-20 dark:bg-gray-800 py-8 flex overflow-visible flex-row items-center justify-between gap-3 "}>
+                <div className={"w-fit flex flex-row gap-5 items-center "}>
                     <select
                         name="sort sets"
                         ref={selectionRef}
@@ -57,8 +57,8 @@ export default function Grid() {
                         onChange={filterSets}
                         className="
                                 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
-                                border border-studogrey/30
-                                bg-white dark:bg-gray-700
+                                border dark:border-studogrey/30 border-gray-200
+                                bg-white/50 dark:bg-gray-700
                                 text-studodarkblue dark:text-white
                                 font-medium text-xs sm:text-sm
                                 shadow-sm hover:shadow-md
@@ -77,13 +77,13 @@ export default function Grid() {
                     <SetSearch sets={data.lastTen} setFilteredSets={setFilteredSets} />
                     <button
                         onClick={() => setGrid(!grid)}
-                        className={`${grid ? "border-studogrey text-studogrey" : "border-white text-white bg-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
+                        className={`${grid ? "border-studoblue dark:border-white text-studoblue dark:text-white" : "border-studoblue dark:border-white text-studoblue dark:text-white bg-studoblue/30 dark:bg-studogrey"} cursor-pointer border w-8 h-8 rounded-lg text-lg flex items-center justify-center`}
                     >
                         <HiOutlineViewList />
                     </button>
                     <button
                         onClick={() => setGrid(!grid)}
-                        className={`${grid ? "border-white text-white bg-studogrey" : "border-studogrey text-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
+                        className={`${grid ? "border-studoblue bg-studoblue/30 dark:bg-studogrey dark:border-white text-studoblue dark:text-white" : "border-studoblue dark:border-white text-studoblue dark:text-white"} cursor-pointer w-8 h-8 rounded-lg border text-lg flex items-center justify-center`}
                     >
                         <BsGridFill />
                     </button>
@@ -217,7 +217,7 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
                         </div>
 
                         {/* Label */}
-                        <span className="font-medium text-sm">
+                        <span className="font-medium text-sm dark:text-white text-studodarkblue">
               {t(item.label)}
             </span>
 

@@ -113,7 +113,7 @@ export class AuthService {
         email: googleUser.email,
         passwordHash: '',
         displayName: `${googleUser.firstName} ${googleUser.lastName}`,
-        img_url: googleUser.picture || 'default',
+        img_url: googleUser.picture || '',
         join_date: date.toISOString(),
         totalSets: 0,
         streak_started: null,
@@ -133,7 +133,9 @@ export class AuthService {
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
-        verified: true,
+        verified: false,
+        studoProfile: false,
+        tags: [`${googleUser.firstName} ${googleUser.lastName}`],
       };
 
       // Root folder
@@ -201,7 +203,9 @@ export class AuthService {
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
-        verified: true,
+        verified: false,
+        studoProfile: false,
+        tags: [microsoftUser.displayName],
       };
 
       // Root folder
@@ -269,7 +273,9 @@ export class AuthService {
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
-        verified: true,
+        verified: false,
+        studoProfile: false,
+        tags: [smartschoolUser.displayName],
       };
 
       // Root folder
@@ -347,6 +353,8 @@ export class AuthService {
       join_date: date.toISOString(),
       streak: 0,
       verified: false,
+      studoProfile: false,
+      tags: [displayName],
     };
 
     // Root folder
@@ -409,7 +417,9 @@ export class AuthService {
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
-        verified: true,
+        verified: false,
+        studoProfile: false,
+        tags: [socialUser.displayName],
       };
 
       const rootFolder = {

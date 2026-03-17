@@ -1,5 +1,5 @@
 {
-  "id": "263a8cf0-233b-46cd-ac59-220892a205c4",
+  "id": "e78cfb82-7724-4cdc-8623-8fad2540102a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -210,7 +210,7 @@
         },
         "type": {
           "name": "type",
-          "type": "varchar(10)",
+          "type": "varchar(40)",
           "primaryKey": false,
           "notNull": true
         },
@@ -223,6 +223,12 @@
         "verified": {
           "name": "verified",
           "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "school": {
+          "name": "school",
+          "type": "varchar(50)",
           "primaryKey": false,
           "notNull": true
         }
@@ -363,6 +369,12 @@
         "joined_at": {
           "name": "joined_at",
           "type": "varchar(24)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         }
@@ -708,6 +720,12 @@
           "type": "boolean",
           "primaryKey": false,
           "notNull": true
+        },
+        "tags": {
+          "name": "tags",
+          "type": "varchar[]",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {
@@ -1039,6 +1057,232 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.studoprofilecommunities": {
+      "name": "studoprofilecommunities",
+      "schema": "",
+      "columns": {
+        "classroom_id": {
+          "name": "classroom_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "class_type": {
+          "name": "class_type",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "studoprofile_id": {
+          "name": "studoprofile_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_set_trackcommunities_unique": {
+          "name": "idx_set_trackcommunities_unique",
+          "columns": [
+            {
+              "expression": "classroom_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "studoprofile_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "studoprofilecommunities_classroom_id_classrooms_id_fk": {
+          "name": "studoprofilecommunities_classroom_id_classrooms_id_fk",
+          "tableFrom": "studoprofilecommunities",
+          "tableTo": "classrooms",
+          "columnsFrom": [
+            "classroom_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "studoprofilecommunities_studoprofile_id_studoprofiles_user_id_fk": {
+          "name": "studoprofilecommunities_studoprofile_id_studoprofiles_user_id_fk",
+          "tableFrom": "studoprofilecommunities",
+          "tableTo": "studoprofiles",
+          "columnsFrom": [
+            "studoprofile_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.studoprofiles": {
+      "name": "studoprofiles",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "displayname": {
+          "name": "displayname",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_url": {
+          "name": "img_url",
+          "type": "varchar(250)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "banner_url": {
+          "name": "banner_url",
+          "type": "varchar(250)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tags": {
+          "name": "tags",
+          "type": "varchar[]",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "studoprofiles_search_index": {
+          "name": "studoprofiles_search_index",
+          "columns": [
+            {
+              "expression": "to_tsvector\n      ('simple',\n      \"displayname\"\n      )",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "gin",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "studoprofiles_user_id_users_id_fk": {
+          "name": "studoprofiles_user_id_users_id_fk",
+          "tableFrom": "studoprofiles",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.studotracks": {
+      "name": "studotracks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "studoprofile_id": {
+          "name": "studoprofile_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "displayname": {
+          "name": "displayname",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "icon_name": {
+          "name": "icon_name",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grade": {
+          "name": "grade",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "studotracks_search_index": {
+          "name": "studotracks_search_index",
+          "columns": [
+            {
+              "expression": "to_tsvector\n      ('simple',\n      \"displayname\"\n      )",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "gin",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "studotracks_studoprofile_id_studoprofiles_user_id_fk": {
+          "name": "studotracks_studoprofile_id_studoprofiles_user_id_fk",
+          "tableFrom": "studotracks",
+          "tableTo": "studoprofiles",
+          "columnsFrom": [
+            "studoprofile_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.studysessions": {
       "name": "studysessions",
       "schema": "",
@@ -1166,6 +1410,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "studoset": {
+          "name": "studoset",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
         "global_term_language": {
           "name": "global_term_language",
           "type": "varchar(2)",
@@ -1258,6 +1508,73 @@
           "tableTo": "folders",
           "columnsFrom": [
             "folder_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tracksets": {
+      "name": "tracksets",
+      "schema": "",
+      "columns": {
+        "set_id": {
+          "name": "set_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "set_type": {
+          "name": "set_type",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "track_id": {
+          "name": "track_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_set_tracksets_unique": {
+          "name": "idx_set_tracksets_unique",
+          "columns": [
+            {
+              "expression": "set_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "track_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "tracksets_track_id_studotracks_id_fk": {
+          "name": "tracksets_track_id_studotracks_id_fk",
+          "tableFrom": "tracksets",
+          "tableTo": "studotracks",
+          "columnsFrom": [
+            "track_id"
           ],
           "columnsTo": [
             "id"
@@ -1418,6 +1735,12 @@
         "course": {
           "name": "course",
           "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "studoset": {
+          "name": "studoset",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": true
         },

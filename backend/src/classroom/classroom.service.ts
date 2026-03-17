@@ -10,11 +10,13 @@ import {
   ClassroomResponseDto,
   ClassroomSetDto,
   ClassroomUserDto,
-  ClassroomUserResponseDto, CreateClassroomActivityDto,
-  CreateClassroomDto, CreateClassroomSetsDto,
+  ClassroomUserResponseDto,
+  CreateClassroomActivityDto,
+  CreateClassroomDto,
+  CreateClassroomSetsDto,
   CreateClassroomUserDto,
-  FullClassroomResponseDto, FullClassroomSetDto,
-  leaveClassroomDto,
+  FullClassroomResponseDto,
+  FullClassroomSetDto,
   UpdateClassroomDto,
 } from './classroom.dto';
 
@@ -28,22 +30,19 @@ import {
   classroomsets,
   classroomusers,
   profiles,
-  studysets, users,
+  studysets,
+  users,
   visualsets,
 } from '../drizzle/schema';
 import { and, eq } from 'drizzle-orm';
-import { date } from 'drizzle-orm/pg-core';
 import { ClassActivitiesDto } from '../user/users.dto';
-import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
 
 @Injectable()
 export class ClassroomService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
-  ) {
-  }
+  ) {}
 
   async create(
     user_id: string,
@@ -59,6 +58,7 @@ export class ClassroomService {
       type: classroom.type,
       created_at: date.toISOString(),
       verified: false,
+      school: classroom.school,
     };
 
     const owner: ClassroomUserResponseDto = {
@@ -66,6 +66,7 @@ export class ClassroomService {
       classroom_id: uid,
       role: 'owner',
       joined_at: date.toISOString(),
+      position: 0,
     };
 
     await this.db.insert(classrooms).values(Class);
@@ -73,22 +74,28 @@ export class ClassroomService {
     return Class;
   }
 
-  async add(classroom_id: string, set_id: string, user_id: string): Promise<ClassroomSetDto> {
-    const studyset = await this.db.query.studysets.findFirst({ where: eq(studysets.id, set_id) });
-    const visualset = await this.db.query.visualsets.findFirst({ where: eq(visualsets.id, set_id) });
+  async add(
+    classroom_id: string,
+    set_id: string,
+    user_id: string,
+  ): Promise<ClassroomSetDto> {
+    const studyset = await this.db.query.studysets.findFirst({
+      where: eq(studysets.id, set_id),
+    });
+    const visualset = await this.db.query.visualsets.findFirst({
+      where: eq(visualsets.id, set_id),
+    });
 
     let set;
     let type;
     if (studyset) {
       set = studyset;
-      type = 'studyset'
-      ;
+      type = 'studyset';
     } else if (visualset) {
       set = visualset;
-      type = 'visualset'
-      ;
+      type = 'visualset';
     } else {
-      throw new NotFoundException('studoset doesn\'t exist');
+      throw new NotFoundException(`"studoset·doesn't·exist"`);
     }
 
     const cset: ClassroomSetDto = {
@@ -108,7 +115,11 @@ export class ClassroomService {
     return cset;
   }
 
-  async addSets(classroom_id: string, user_id: string, body: CreateClassroomSetsDto): Promise<ClassroomSetDto[]> {
+  async addSets(
+    classroom_id: string,
+    user_id: string,
+    body: CreateClassroomSetsDto,
+  ): Promise<ClassroomSetDto[]> {
     const sets: ClassroomSetDto[] = [];
     for (const s of body.sets) {
       const set = await this.add(classroom_id, s, user_id);
@@ -117,7 +128,11 @@ export class ClassroomService {
     return sets;
   }
 
-  async createActivity(user_id: string, classroom_id: string, activityDto: CreateClassroomActivityDto): Promise<ClassActivitiesDto> {
+  async createActivity(
+    user_id: string,
+    classroom_id: string,
+    activityDto: CreateClassroomActivityDto,
+  ): Promise<ClassActivitiesDto> {
     // Classroom check
     const classroom = await this.db.query.classrooms.findFirst({
       where: eq(classrooms.id, classroom_id),
@@ -135,12 +150,14 @@ export class ClassroomService {
     });
 
     if (oldActivity) {
-      await this.db.delete(classroomactivities).where(
-        and(
-          eq(classroomactivities.user_id, user_id),
-          eq(classroomactivities.classroom_id, classroom_id),
-        ),
-      );
+      await this.db
+        .delete(classroomactivities)
+        .where(
+          and(
+            eq(classroomactivities.user_id, user_id),
+            eq(classroomactivities.classroom_id, classroom_id),
+          ),
+        );
     }
 
     const date = new Date();
@@ -192,12 +209,15 @@ export class ClassroomService {
     await this.db.insert(classroomactivities).values(newActivity);
     return newActivity;
   }
-  ;
-
   async remove(classroom_id: string, set: string): Promise<void> {
     const result = await this.db
       .delete(classroomsets)
-      .where(and(eq(classroomsets.set_id, set), eq(classroomsets.classroom_id, classroom_id)))
+      .where(
+        and(
+          eq(classroomsets.set_id, set),
+          eq(classroomsets.classroom_id, classroom_id),
+        ),
+      )
       .returning();
 
     if (result.length === 0) {
@@ -215,6 +235,7 @@ export class ClassroomService {
       classroom_id: user.classroom_id,
       role: user.role,
       joined_at: date.toISOString(),
+      position: 0,
     };
 
     await this.db.insert(classroomusers).values(u);
@@ -270,6 +291,7 @@ export class ClassroomService {
       owner_id: classroom.owner_id,
       type: classroom.type,
       created_at: classroom.created_at,
+      school: classroom.school,
       verified: classroom.verified,
       sets: await this.getSetsById(classroom.id),
       users: await this.getUsersById(classroom.id),
@@ -290,7 +312,9 @@ export class ClassroomService {
       });
 
       if (!user) {
-        console.warn(`User ${classroomset.added_by} not found, skipping set ${classroomset.set_id}`);
+        console.warn(
+          `User ${classroomset.added_by} not found, skipping set ${classroomset.set_id}`,
+        );
         continue; // Skip deze set in plaats van error throwen
       }
 
@@ -362,6 +386,7 @@ export class ClassroomService {
           streak: u.streak,
           verified: u.verified,
           img_url: u.img_url,
+          position: 0,
         });
       }
     }
@@ -370,12 +395,17 @@ export class ClassroomService {
 
   async getActivity(id: string): Promise<ClassActivitiesDto[]> {
     //classroomcheck
-    const classroom = await this.db.query.classrooms.findFirst({ where: eq(classrooms.id, id) });
+    const classroom = await this.db.query.classrooms.findFirst({
+      where: eq(classrooms.id, id),
+    });
     if (!classroom) {
       throw new NotFoundException(`Classroom doesn't exist`);
     }
 
-    const activities: ClassActivitiesDto[] = await this.db.query.classroomactivities.findMany({ where: eq(classroomactivities.classroom_id, id) });
+    const activities: ClassActivitiesDto[] =
+      await this.db.query.classroomactivities.findMany({
+        where: eq(classroomactivities.classroom_id, id),
+      });
     return activities;
   }
 

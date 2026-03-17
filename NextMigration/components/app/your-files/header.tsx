@@ -25,7 +25,7 @@ export default function FileHeader() {
                     ))}
 
                 </div>
-                <div className={"absolute z-10 bottom-0 w-full h-0.5 bg-studogrey"}/>
+                <div className={"absolute z-10 bottom-0 w-full h-0.5 bg-gray-300 dark:bg-studogrey"}/>
             </div>
         </div>)
 }

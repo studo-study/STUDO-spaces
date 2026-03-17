@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres, { Sql } from 'postgres';
 import * as schema from './schema';
-import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
+import { v6 as uuidv6 } from 'uuid';
 import * as argon2 from 'argon2';
 import { Role } from '../auth/roles';
 
@@ -36,6 +36,11 @@ async function resetDatabase() {
   await db.delete(schema.visualsets);
   await db.delete(schema.studysets);
   await db.delete(schema.folders);
+  await db.delete(schema.studoprofilecommunities);
+  await db.delete(schema.tracksets);
+  await db.delete(schema.tracksets);
+  await db.delete(schema.studotracks);
+  await db.delete(schema.studoprofiles);
   await db.delete(schema.profiles);
   await db.delete(schema.users);
 
@@ -50,6 +55,7 @@ async function seedStudo() {
     const userId1 = '1f0c076e-f30c-64b0-a0f3-d5a021c6a9cb';
     const userId2 = uuidv6();
     const userId3 = uuidv6();
+    const userId4 = uuidv6();
     const folderId1 = uuidv6();
     const folderId2 = uuidv6();
 
@@ -59,6 +65,9 @@ async function seedStudo() {
 
     const classroomId1 = uuidv6();
     const classroomId2 = uuidv6();
+    const classroomId3 = uuidv6();
+    const classroomId4 = uuidv6();
+    const classroomId5 = uuidv6();
 
     const imageId1 = uuidv6();
     const cardId1 = uuidv6();
@@ -86,7 +95,7 @@ async function seedStudo() {
     await db.insert(schema.users).values([
       {
         id: userId1,
-        email: 'admin@studo.studygroup',
+        email: 'support@studo.study',
         passwordHash: await hashPassword('Wachtwoord'),
         displayName: 'Studo Admin',
         img_url: 'https://i.pravatar.cc/150?img=1',
@@ -132,6 +141,23 @@ async function seedStudo() {
         publicRole: 'teacher',
         verified: false,
       },
+
+      {
+        id: userId4,
+        email: 'geneeskunde@studo.study',
+        passwordHash: await hashPassword('123'),
+        displayName: 'geneeskunde',
+        img_url: 'https://i.pravatar.cc/150?img=3',
+        join_date: '2023-08-01T09:00:00.000Z',
+        totalSets: 0,
+        streak_started: null,
+        streak_count: null,
+        streak_last_update: '2024-10-30T08:00:00.000Z',
+        last_login: '2024-10-30T08:00:00.000Z',
+        roles: [Role.USER, Role.ADMIN, Role.VERIFIED],
+        publicRole: 'Studo Profile',
+        verified: true,
+      },
     ]);
     console.log('Users seeded\n');
 
@@ -146,6 +172,7 @@ async function seedStudo() {
         join_date: '2024-01-15T10:00:00.000Z',
         streak: 29,
         verified: false,
+        tags: ['Studo Admin'],
       },
       {
         user_id: userId2,
@@ -155,6 +182,7 @@ async function seedStudo() {
         join_date: '2024-02-20T14:30:00.000Z',
         streak: 15,
         verified: false,
+        tags: ['Paul Allan'],
       },
       {
         user_id: userId3,
@@ -164,11 +192,70 @@ async function seedStudo() {
         join_date: '2023-08-01T09:00:00.000Z',
         streak: 0,
         verified: false,
+        tags: ['Carol Williams'],
       },
     ]);
     console.log('Profiles seeded\n');
 
-    // === 3. Folders ===
+    // === 3. Studoprofiles ===
+    const trackId1 = uuidv6();
+    const trackId2 = uuidv6();
+    const trackId3 = uuidv6();
+    const trackId4 = uuidv6();
+    const trackId5 = uuidv6();
+
+    console.log('Seeding studoprofiles...');
+    await db.insert(schema.studoprofiles).values([
+      {
+        id: userId1,
+        displayName: 'Geneeskunde',
+        img_url: '',
+        banner_url: 'https://wallpaperaccess.com//full/1330480.jpg',
+        tags: ['geneeskunde', 'anatomie', 'ingangsexamen', 'ugent', 'kuleuven'],
+      },
+    ]);
+
+    console.log('Seeding studotracks...');
+    await db.insert(schema.studotracks).values([
+      {
+        id: trackId1,
+        studoprofile_id: userId1,
+        trackName: 'Biologie',
+        icon_name: 'biology',
+        grade: 'Ingangsexamen',
+      },
+      {
+        id: trackId2,
+        studoprofile_id: userId1,
+        trackName: 'Chemie',
+        icon_name: 'chemistry',
+        grade: 'Ingangsexamen',
+      },
+      {
+        id: trackId3,
+        studoprofile_id: userId1,
+        trackName: 'Fysica',
+        icon_name: 'physics',
+        grade: 'Ingangsexamen',
+      },
+      {
+        id: trackId4,
+        studoprofile_id: userId1,
+        trackName: 'Wiskunde',
+        icon_name: 'maths',
+        grade: 'Ingangsexamen',
+      },
+
+      {
+        id: trackId5,
+        studoprofile_id: userId1,
+        trackName: 'Fysiologie',
+        icon_name: 'physiology-icon',
+        grade: 'eerste jaar',
+      },
+    ]);
+
+    // === 4. Folders ===
     console.log('Seeding folders...');
     await db.insert(schema.folders).values([
       { id: folderId1, name: 'Biology Notes', owner_id: userId1 },
@@ -176,13 +263,14 @@ async function seedStudo() {
     ]);
     console.log('Folders seeded\n');
 
-    // === 4. Studysets ===
+    // === 5. Studysets ===
     console.log('Seeding studosets...');
     await db.insert(schema.studysets).values([
       {
         id: studySetId1,
         title: 'Cell Biology Basics',
         course: 'Biology 101',
+        studoset: false,
         global_term_language: 'en',
         global_definition_language: 'en',
         created_at: '2024-09-01T10:00:00.000Z',
@@ -197,6 +285,7 @@ async function seedStudo() {
         id: studySetId2,
         title: 'Data Structures',
         course: 'CS 201',
+        studoset: false,
         global_term_language: 'en',
         global_definition_language: 'en',
         created_at: '2024-08-15T09:00:00.000Z',
@@ -210,25 +299,26 @@ async function seedStudo() {
     ]);
     console.log('Studysets seeded\n');
 
-    // === 5. Visualsets ===
+    // === 6. Visualsets ===
     console.log('Seeding visualsets...');
     await db.insert(schema.visualsets).values([
       {
         id: visualSetId1,
         title: 'Human Anatomy',
         course: 'Anatomy 101',
+        studoset: true,
         created_at: '2024-09-10T11:00:00.000Z',
         last_updated: '2024-09-10T11:00:00.000Z',
         public_set: true,
-        user_id: userId1,
-        displayName: 'Studo Admin',
+        user_id: userId4,
+        displayName: 'geneeskunde',
         img_url: 'https://i.pravatar.cc/150?img=1',
         folder_id: folderId1,
       },
     ]);
     console.log('Visualsets seeded\n');
 
-    // === 6. Cards ===
+    // === 7. Cards ===
     console.log('Seeding cards...');
     await db.insert(schema.cards).values([
       {
@@ -276,7 +366,7 @@ async function seedStudo() {
     ]);
     console.log('Cards seeded\n');
 
-    // === 7. Images & Pins ===
+    // === 8. Images & Pins ===
     console.log('Seeding images...');
     await db.insert(schema.images).values([
       {
@@ -321,7 +411,7 @@ async function seedStudo() {
     ]);
     console.log('Pins seeded\n');
 
-    // === 8. Setlikes ===
+    // === 9. Setlikes ===
     console.log('Seeding setlikes...');
     await db.insert(schema.setlikes).values([
       {
@@ -348,7 +438,21 @@ async function seedStudo() {
     ]);
     console.log('Setlikes seeded\n');
 
-    // === 9. Studysessions ===
+    console.log('Seeding tracksets...');
+    await db.insert(schema.tracksets).values([
+      {
+        set_id: visualSetId1,
+        set_type: 'visualset',
+        track_id: trackId1,
+      },
+      {
+        set_id: studySetId1,
+        set_type: 'studyset',
+        track_id: trackId1,
+      },
+    ]);
+
+    // === 10. Studysessions ===
     console.log('Seeding studysessions...');
     await db.insert(schema.studysessions).values([
       {
@@ -429,7 +533,7 @@ async function seedStudo() {
     ]);
     console.log('Studysessions seeded\n');
 
-    // === 10. SessionCards ===
+    // === 11. SessionCards ===
     console.log('Seeding sessioncards...');
     await db.insert(schema.sessioncards).values([
       // Session 1 (userId1, studySetId1)
@@ -510,7 +614,7 @@ async function seedStudo() {
     ]);
     console.log('SessionCards seeded\n');
 
-    // === 11. SessionPins ===
+    // === 12. SessionPins ===
     console.log('Seeding sessionpins...');
     await db.insert(schema.sessionpins).values([
       // Session 3 (userId1, visualSetId1)
@@ -566,29 +670,58 @@ async function seedStudo() {
     ]);
     console.log('SessionPins seeded\n');
 
-    // === 12. Classrooms ===
+    // === 13. Classrooms ===
     console.log('Seeding classrooms...');
     await db.insert(schema.classrooms).values([
       {
         id: classroomId1,
         name: 'Biology 101 - Fall 2024',
         owner_id: userId3,
-        type: 'public',
+        type: 'class_group',
+        created_at: '2024-08-20T10:00:00.000Z',
+        verified: false,
+        school: `Erasmus De Pinte`,
+      },
+      {
+        id: classroomId3,
+        name: 'KU Leuven - rechten',
+        owner_id: userId3,
+        type: 'university',
         created_at: '2024-08-20T10:00:00.000Z',
         verified: true,
+        school: `KU Leuven`,
+      },
+      {
+        id: classroomId4,
+        name: 'UGent - informatica',
+        owner_id: userId3,
+        type: 'university',
+        created_at: '2024-08-20T10:00:00.000Z',
+        verified: true,
+        school: `UGent`,
+      },
+      {
+        id: classroomId5,
+        name: 'UGent - bio engineering',
+        owner_id: userId3,
+        type: 'university',
+        created_at: '2024-08-20T10:00:00.000Z',
+        verified: true,
+        school: `UGent`,
       },
       {
         id: classroomId2,
         name: 'Advanced Computer Science',
         owner_id: userId3,
-        type: 'private',
+        type: 'study_group',
         created_at: '2024-08-22T11:00:00.000Z',
         verified: false,
+        school: `Ugent`,
       },
     ]);
     console.log('Classrooms seeded\n');
 
-    // === 13. Classroomusers ===
+    // === 14. Classroomusers ===
     console.log('Seeding classroomusers...');
     await db.insert(schema.classroomusers).values([
       {
@@ -596,41 +729,47 @@ async function seedStudo() {
         classroom_id: classroomId1,
         role: 'owner',
         joined_at: '2024-08-20T10:00:00.000Z',
+        position: 1,
       },
       {
         user_id: userId1,
         classroom_id: classroomId1,
         role: 'student',
         joined_at: '2024-08-22T10:00:00.000Z',
+        position: 2,
       },
       {
         user_id: userId2,
         classroom_id: classroomId1,
         role: 'student',
         joined_at: '2024-08-25T10:00:00.000Z',
+        position: 3,
       },
       {
         user_id: userId3,
         classroom_id: classroomId2,
         role: 'owner',
         joined_at: '2024-08-22T11:00:00.000Z',
+        position: 2,
       },
       {
         user_id: userId2,
         classroom_id: classroomId2,
         role: 'student',
         joined_at: '2024-08-25T10:00:00.000Z',
+        position: 1,
       },
       {
         user_id: userId1,
         classroom_id: classroomId2,
         role: 'student',
         joined_at: '2024-08-25T10:00:00.000Z',
+        position: 3,
       },
     ]);
     console.log('Classroomusers seeded\n');
 
-    // === 14. Classroomsets ===
+    // === 15. Classroomsets ===
     console.log('Seeding classroomsets...');
     await db.insert(schema.classroomsets).values([
       {
@@ -648,7 +787,7 @@ async function seedStudo() {
     ]);
     console.log('Classroomsets seeded\n');
 
-    // === 15. Classroomactivities ===
+    // === 16. Classroomactivities ===
     console.log('Seeding classroomactivities...');
     await db.insert(schema.classroomactivities).values([
       {
@@ -664,6 +803,27 @@ async function seedStudo() {
       },
     ]);
     console.log('Classroomactivities seeded\n');
+
+    // === 17. Studoprofile Communities ===
+    console.log('Seeding studoprofilecommunities...');
+    await db.insert(schema.studoprofilecommunities).values([
+      {
+        classroom_id: classroomId3,
+        class_type: 'university',
+        studoprofile_id: userId1,
+      },
+      {
+        classroom_id: classroomId4,
+        class_type: 'university',
+        studoprofile_id: userId1,
+      },
+      {
+        classroom_id: classroomId5,
+        class_type: 'university',
+        studoprofile_id: userId1,
+      },
+    ]);
+    console.log('Studoprofilecommunities seeded\n');
 
     console.log('All data seeded successfully!');
   } catch (error) {

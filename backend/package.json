@@ -22,7 +22,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:drop": "drizzle-kit drop",
     "db:reset": "env-cmd tsx src/drizzle/reset.ts",
-    "db:seed": "env-cmd tsx src/drizzle/seed.ts"
+    "db:seed": "env-cmd tsx src/drizzle/seed.ts",
+    "db:init": "env-cmd tsx src/drizzle/init.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.948.0",

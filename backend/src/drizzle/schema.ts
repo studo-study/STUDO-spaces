@@ -46,6 +46,7 @@ export const profiles = pgTable(
     joinNumber: serial('join_number').notNull().unique(),
     streak: integer('streak').notNull(),
     verified: boolean('verified').notNull(),
+    tags: varchar('tags').array().notNull(),
   },
   (table) => [
     index('profiles_search_index').using(
@@ -53,6 +54,51 @@ export const profiles = pgTable(
       sql`to_tsvector
       ('simple',
       ${table.displayName}
+      )`,
+    ),
+  ],
+);
+
+export const studoprofiles = pgTable(
+  'studoprofiles',
+  {
+    id: varchar('user_id', { length: 64 })
+      .references(() => users.id, { onDelete: 'cascade' })
+      .notNull()
+      .primaryKey(),
+    displayName: varchar('displayname', { length: 100 }).notNull(),
+    img_url: varchar('img_url', { length: 250 }).notNull(),
+    banner_url: varchar('banner_url', { length: 250 }).notNull(),
+    tags: varchar('tags').array().notNull(),
+  },
+  (table) => [
+    index('studoprofiles_search_index').using(
+      'gin',
+      sql`to_tsvector
+      ('simple',
+      ${table.displayName}
+      )`,
+    ),
+  ],
+);
+
+export const studotracks = pgTable(
+  'studotracks',
+  {
+    id: varchar('id', { length: 64 }).notNull().primaryKey(),
+    studoprofile_id: varchar('studoprofile_id', { length: 64 })
+      .references(() => studoprofiles.id, { onDelete: 'cascade' })
+      .notNull(),
+    trackName: varchar('displayname', { length: 100 }).notNull(),
+    icon_name: varchar('icon_name', { length: 50 }).notNull(),
+    grade: varchar('grade', { length: 50 }).notNull(),
+  },
+  (table) => [
+    index('studotracks_search_index').using(
+      'gin',
+      sql`to_tsvector
+      ('simple',
+      ${table.trackName}
       )`,
     ),
   ],
@@ -72,6 +118,7 @@ export const studysets = pgTable(
     id: varchar('id', { length: 64 }).primaryKey(),
     title: varchar('title', { length: 200 }).notNull(),
     course: varchar('course', { length: 100 }).notNull(),
+    studoset: boolean(`studoset`).notNull(),
     global_term_language: varchar('global_term_language', {
       length: 2,
     }).notNull(),
@@ -111,6 +158,7 @@ export const visualsets = pgTable(
     id: varchar('id', { length: 64 }).primaryKey(),
     title: varchar('title', { length: 200 }).notNull(),
     course: varchar('course', { length: 100 }).notNull(),
+    studoset: boolean(`studoset`).notNull(),
     created_at: varchar('created_at', { length: 24 }).notNull(),
     last_updated: varchar('last_updated', { length: 24 }).notNull(),
     public_set: boolean('publicSet').notNull(),
@@ -222,8 +270,8 @@ export const sessioncards = pgTable('sessioncards', {
   mastered: boolean('mastered').notNull(),
   times_relearned: integer('times_relearned').notNull(),
   card_id: varchar('card_id', { length: 64 })
-    .references(() => cards.id, { onDelete: 'set null' })  // ✅ CHANGED: was 'restrict', nu 'set null'
-    .notNull(),  // ⚠️ Je moet dit naar .nullable() veranderen als je 'set null' gebruikt
+    .references(() => cards.id, { onDelete: 'set null' })
+    .notNull(),
   session_id: varchar('session_id', { length: 64 })
     .references(() => studysessions.id, { onDelete: 'cascade' })
     .notNull(),
@@ -241,7 +289,7 @@ export const sessionpins = pgTable('sessionpins', {
   mastered: boolean('mastered').notNull(),
   times_relearned: integer('times_relearned').notNull(),
   pin_id: varchar('pin_id', { length: 64 })
-    .references(() => pins.id, { onDelete: 'cascade' })  // ✅ CHANGED: consistent gedrag
+    .references(() => pins.id, { onDelete: 'cascade' }) // ✅ CHANGED: consistent gedrag
     .notNull(),
   session_id: varchar('session_id', { length: 64 })
     .references(() => studysessions.id, { onDelete: 'cascade' })
@@ -259,9 +307,10 @@ export const classrooms = pgTable(
     owner_id: varchar('owner_id', { length: 64 })
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
-    type: varchar('type', { length: 10 }).notNull(),
+    type: varchar('type', { length: 40 }).notNull(),
     created_at: varchar('created_at', { length: 24 }).notNull(),
     verified: boolean('verified').notNull(),
+    school: varchar('school', { length: 50 }).notNull(),
   },
   (table) => [
     index('classrooms_search_index').using(
@@ -285,6 +334,7 @@ export const classroomusers = pgTable(
       .notNull(),
     role: varchar('role', { length: 7 }).notNull(),
     joined_at: varchar('joined_at', { length: 24 }).notNull(),
+    position: integer('position').notNull(),
   },
   (table) => [
     uniqueIndex('idx_user_classroom_unique').on(
@@ -327,6 +377,39 @@ export const classroomactivities = pgTable('classroomactivity', {
   set_type: varchar('set_type', { length: 24 }).notNull(),
   title: varchar('title', { length: 64 }).notNull(),
 });
+
+export const tracksets = pgTable(
+  'tracksets',
+  {
+    set_id: varchar('set_id', { length: 64 }).notNull(),
+    set_type: varchar('set_type', { length: 20 }).notNull(),
+    track_id: varchar('track_id', { length: 64 })
+      .references(() => studotracks.id, { onDelete: 'cascade' })
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex('idx_set_tracksets_unique').on(table.set_id, table.track_id),
+  ],
+);
+
+export const studoprofilecommunities = pgTable(
+  'studoprofilecommunities',
+  {
+    classroom_id: varchar('classroom_id', { length: 64 })
+      .references(() => classrooms.id, { onDelete: 'cascade' }) // FK naar classrooms
+      .notNull(),
+    class_type: varchar('class_type', { length: 20 }).notNull(),
+    studoprofile_id: varchar('studoprofile_id', { length: 64 })
+      .references(() => studoprofiles.id, { onDelete: 'cascade' }) // FK naar studoprofiles
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex('idx_set_trackcommunities_unique').on(
+      table.classroom_id,
+      table.studoprofile_id,
+    ),
+  ],
+);
 
 // ============================================================
 // RELATIONS
@@ -518,6 +601,28 @@ export const classroomactivitiesRelations = relations(
     classroom: one(classrooms, {
       fields: [classroomactivities.classroom_id],
       references: [classrooms.id],
+    }),
+  }),
+);
+
+export const studoprofilesRelations = relations(studoprofiles, ({ many }) => ({
+  tracks: many(studotracks),
+  studoprofilecommunities: many(studoprofilecommunities),
+}));
+
+export const studotracksRelations = relations(studotracks, ({ one }) => ({
+  profile: one(studoprofiles, {
+    fields: [studotracks.studoprofile_id],
+    references: [studoprofiles.id],
+  }),
+}));
+
+export const studocommunitiesRelations = relations(
+  studoprofilecommunities,
+  ({ one }) => ({
+    profile: one(studoprofiles, {
+      fields: [studoprofilecommunities.studoprofile_id],
+      references: [studoprofiles.id],
     }),
   }),
 );
