@@ -3,13 +3,17 @@ import { auth } from '@/auth'
 import AuthLayout from "@/app/[locale]/(app)/layout";
 import StudosetView from "@/app/[locale]/(public)/(set)/studoset/[id]/studosetview";
 import MarketingLayout from "@/app/[locale]/(marketing)/layout";
-import {ProfileView} from "@/app/[locale]/(public)/profile/[id]/ProfileView";
+import ProfileView from "@/app/[locale]/(public)/profile/[id]/ProfileView";
 
-export default async function ProfilePage() {
+export default async function ProfilePage({ params }) {
+    const { locale, id } = await params;
     const session = await auth()
 
     if (session) {
-        return <AuthLayout><ProfileView /></AuthLayout>
+        return <AuthLayout>
+            <ProfileView id={id} />
+        </AuthLayout>;
     }
-    return <MarketingLayout><ProfileView /></MarketingLayout>
+
+    return <MarketingLayout> <ProfileView id={id} /></MarketingLayout>
 }
