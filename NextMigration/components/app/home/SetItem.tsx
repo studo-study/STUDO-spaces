@@ -25,7 +25,7 @@ export default function SetItem({ set, index, t, locale }: SetItemProps) {
     const perc = Math.min(100, Math.floor((set.progress / (set.length * 2)) * 100));
     return (
         <Link
-            href={`/set/${set.set_id}`}
+            href={`/${set.type === "studyset" ? "studoset" : "visualset"}/${set.set_id}`}
             className={`flex flex-col gap-3 shadow-2xl  justify-baseline items-baseline w-full h-50 rounded-2xl bg-white/50
             dark:bg-studogrey/10 border dark:border-studogrey/20 border-gray-200 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
         >

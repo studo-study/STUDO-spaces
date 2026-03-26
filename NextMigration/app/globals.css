@@ -59,7 +59,17 @@ body::-webkit-scrollbar {
     --color-studoborder: rgba(255, 255, 255, 0.3);
     --color-inputcolor: rgba(255, 255, 255, 0.175);
     --breakpoint-3xl: 1800px;
+    --font-montserrat: "Montserrat", sans-serif;
 }
+
+
+
+.montserrat-black {
+                 font-family: "Montserrat", sans-serif;
+                 font-optical-sizing: auto;
+                 font-weight: 900;
+                 font-style: normal;
+             }
 
 .nav {
     width: 50px;

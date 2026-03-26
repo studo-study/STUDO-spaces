@@ -1071,8 +1071,13 @@
   },
   "studoset": {
     "created": "Gemaakt door",
-    "set_title": "untitled set"
+    "set_title": "untitled set",
+    "learn": "leren",
+    "speedy": "tijdsstrijd",
+    "flashcards": "flashcards",
+    "progress_title": "Jouw vooruitgang"
   },
+
   "trackview": {
     "tracks": "Tracks",
     "sets": "Sets",

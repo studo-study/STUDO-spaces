@@ -80,7 +80,6 @@ async function seedStudo() {
     const setLike1 = uuidv6();
     const setLike2 = uuidv6();
     const setLike3 = uuidv6();
-
     const classAct1 = uuidv6();
 
     // Study session IDs

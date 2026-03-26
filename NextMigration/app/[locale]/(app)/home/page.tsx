@@ -35,10 +35,10 @@ export default async function HomePage() {
 
 
     const STATS_CONFIG = [
-        { color: "dark:from-orange-500/20 dark:to-orange-600/20 from-orange-400 to-orange-500", icon: "/icons/streak.svg", stat: session?.user.streak_count, measurement: "days", label: "Streak", extra: "", delay: 0 },
-        { color: "dark:from-purple-500/20 dark:to-purple-400/20 from-purple-500 to-purple-500 ", icon: "/icons/studyset.svg", stat: data?.stats.totalCards, measurement: "cards", label: "totCards", extra: "", delay: 50, invert: true },
-        { color: "dark:from-blue-500/20 dark:to-blue-500/20 from-blue-400 to-blue-500", icon: "/icons/clock.svg", stat: data?.stats.timeLearned, measurement: "min", label: "tmStd", extra: "week", delay: 100, invert: true },
-        { color: "dark:from-emerald-500/20 dark:to-emerald-600/20 from-emerald-400 to-emerald-500", iconComponent: true, stat: data?.stats.cardsLearned, measurement: "cards", label: "mastered", extra: "", delay: 150 },
+        { color: "dark:from-orange-500/20 dark:to-orange-600/20 from-orange-400 to-orange-500", icon: "/icons/streak.svg", stat: session?.user?.streak_count, measurement: "days", label: "Streak", extra: "", delay: 0 },
+        { color: "dark:from-purple-500/20 dark:to-purple-400/20 from-purple-500 to-purple-500 ", icon: "/icons/studyset.svg", stat: data?.stats?.totalCards, measurement: "cards", label: "totCards", extra: "", delay: 50, invert: true },
+        { color: "dark:from-blue-500/20 dark:to-blue-500/20 from-blue-400 to-blue-500", icon: "/icons/clock.svg", stat: data?.stats?.timeLearned, measurement: "min", label: "tmStd", extra: "week", delay: 100, invert: true },
+        { color: "dark:from-emerald-500/20 dark:to-emerald-600/20 from-emerald-400 to-emerald-500", iconComponent: true, stat: data?.stats?.cardsLearned, measurement: "cards", label: "mastered", extra: "", delay: 150 },
     ]
 
 
@@ -75,12 +75,12 @@ export default async function HomePage() {
                     href="/your-files/sets"
                 />
                 <div className="w-full grid h-50 grid-cols-4 gap-5 grid-rows-1">
-                    {data.lastTen.length === 0 ? (
+                    {data?.lastTen?.length === 0 ? (
                         <div className="w-full h-full flex items-center justify-center">
                             {t("no_sets")}
                         </div>
                     ) : (
-                        data?.lastTen.splice(0,3).map((set, i) => (
+                        data?.lastTen?.splice(0,3).map((set, i) => (
                             <SetItem key={set.set_id} set={set} index={i} t={t} locale={locale} />
                         ))
                     )}
@@ -96,7 +96,7 @@ export default async function HomePage() {
                         href="/your-files/sets"
                     />
                     <div className="w-full grid grid-cols-4 gap-5 h-full">
-                        {data?.courses.map((course, i) => (
+                        {data?.courses?.map((course, i) => (
                             <CourseCard key={course} course={course} />
                         ))}
                     </div>
@@ -109,7 +109,7 @@ export default async function HomePage() {
                         href="/your-files/sets"
                     />
                     <div className="w-full h-fit grid grid-cols-1 gap-5 grid-rows-4">
-                        {data.class.map((item, i) => (
+                        {data?.class?.map((item, i) => (
                             <ActivityItem key={item.set_id} activity={item} />
                         ))}
                     </div>
