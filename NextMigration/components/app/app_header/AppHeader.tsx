@@ -11,6 +11,7 @@ import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
 import SearchBar from "@/components/app/app_header/SearchContainer";
 import Image from "next/image";
 import {Link} from "@/i18n/routing";
+import {FaArrowRight} from "react-icons/fa";
 
 // User type (je kunt dit ook exporteren vanuit UserProvider)
 interface User {
@@ -61,6 +62,7 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
     const [NotifIsOpen, setNotifIsOpen] = useState(false);
     const [ProfileIsOpen, setProfileIsOpen] = useState(false);
     const [StreakOpen, setStreakOpen] = useState(false);
+    const openbrein = process.env.NEXT_PUBLIC_OPENBREIN;
     const searchRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("header");
     const premium = false
@@ -84,6 +86,9 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
     return (
         <div className={"h-fit z-[9999] top-0 w-screen flex flex-col dark:border-none border-b border-b-studoborder"}>
             <div className={"w-screen h-0.5"}></div>
+            {openbrein && <div className={"w-screen h-7 bg-white  flex items-center justify-center "}>
+                <span className={'w-full flex flex-row items-center justify-center gap-1'}>try <Link target={'_blank'} href={'https://openbrein.org/'} className={"font-montserrat hover:opacity-75 underline font-black"}>OPENBREIN</Link> for free <FaArrowRight size={12} /></span>
+            </div>}
             <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-b dark:border-studogrey/30 border-gray-300 gap-5">
                 {/* Left section */}
                 <div className="flex items-center gap-8 min-w-1/4">

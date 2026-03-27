@@ -43,17 +43,17 @@ interface SearchResults {
 
 export default function SearchResults() {
     const searchParams = useSearchParams()
-    const query = searchParams.get('q')  // query uit URL halen
-    const [result, setResult] = useState<SearchResults>()  // [] ipv null, anders crasht .map()
+    const query = searchParams.get('q')
+    const [result, setResult] = useState<SearchResults>()
 
     useEffect(() => {
         if (!query) return
         fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/public/${query}`)
             .then(r => r.json())
             .then((data) => {
-                setResult(data)  // niet data.json(), al geparsed
+                setResult(data)
             })
-    }, [query])  // dependency is query, niet searchParams
+    }, [query])
 
     const size = result && result.data[0].data.length + result.data[1].data.length + result.data[2].data.length + result.data[3].data.length;
     console.log(result);

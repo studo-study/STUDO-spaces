@@ -65,7 +65,11 @@
       "rights": "STUDO inc. Alle Rechten Voorbehouden.",
       "select": "Studo Select",
       "edu": "Studo for Education",
-      "GDPR": "AVG"
+      "GDPR": "AVG",
+      "gdpr": "GDPR",
+      "compliant": "compliant",
+      "privacy": "Privacy",
+      "first": "first"
     },
     "welcome": {
       "CreateCustom": "Maak je eigen sets",
@@ -1067,8 +1071,21 @@
   },
   "studoset": {
     "created": "Gemaakt door",
-    "set_title": "untitled set"
+    "set_title": "untitled set",
+    "learn": "leren",
+    "speedy": "tijdsstrijd",
+    "flashcards": "flashcards",
+    "progress_title": "Jouw vooruitgang",
+    "cards_title": "Kaarten",
+    "not_learned": "Niet geleerd",
+    "reviewed": "Overlopen",
+    "studied": "Gestudeerd",
+    "likes": "likes",
+    "like": "like",
+    "saved_in": "Opgeslagen in",
+    "added_to": "Toegevoegd aan"
   },
+
   "trackview": {
     "tracks": "Tracks",
     "sets": "Sets",
