@@ -94,10 +94,10 @@ export interface Stats {
 }
 
 export interface LastStudied {
-    set_id: string;
+    id: string;
     last_studied: string;
     title: string;
-    Course: string;
+    course: string;
     type: string;
     progress: number;
     length: number;
@@ -641,7 +641,7 @@ interface RecentSet {
     set_id: string;
     last_studied: string;
     title: string;
-    Course: string;
+    course: string;
     type: 'studyset' | 'visualset';
     progress: number;
     length: number;

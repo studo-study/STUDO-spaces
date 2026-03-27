@@ -1,12 +1,12 @@
 "use client"
 import {IoSearch} from "react-icons/io5";
 import {useRef, useState} from "react";
-import {LastStudied} from "@/types/types";
 import {useTranslations} from "next-intl";
+import {StudySetItem} from "@/components/app/your-files/sets/grid";
 
 interface SetSearchProps {
-    sets: LastStudied[];
-    setFilteredSets: React.Dispatch<React.SetStateAction<LastStudied[]>>;
+    sets: StudySetItem[];
+    setFilteredSets: React.Dispatch<React.SetStateAction<StudySetItem[]>>;
 }
 
 export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
@@ -17,11 +17,11 @@ export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
         if (searchRef.current) {
             const query = searchRef.current.value.toLowerCase();
             if (query === "") {
-                setFilteredSets(sets); // Reset naar alle sets
+                setFilteredSets(sets);
             } else {
                 setFilteredSets(sets.filter(item =>
                     item.title.toLowerCase().includes(query)
-                    || item.Course.toLowerCase().includes(query)
+                    || item.course.toLowerCase().includes(query)
                 ));
             }
         }
@@ -39,11 +39,10 @@ export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
                 ref={searchRef}
                 placeholder={t("search")}
                 type="text"
-                className={" w-full h-full outline-none focus:ring-0"}/>
-            <button className={"w-fit cursor-pointer"}>
+                className="w-full h-full outline-none focus:ring-0"/>
+            <button className="w-fit cursor-pointer">
                 <IoSearch />
             </button>
-
         </div>
     )
 }
