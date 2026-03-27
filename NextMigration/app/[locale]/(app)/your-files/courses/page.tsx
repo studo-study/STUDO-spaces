@@ -1,29 +1,36 @@
 import {Metadata} from "next";
-import {useTranslations} from "next-intl";
+import {getTranslations} from "next-intl/server";
 import CourseItem from "@/components/app/your-files/courses/courseItem";
-import {StartPage} from "@/types/types";
-import {mockStartPage} from "@/data/mocks/startPageMock";
+import {auth} from "@/auth";
 
-
-export const metadata:Metadata = {
-    title:"Courses | Studo"
+export const metadata: Metadata = {
+    title: "Courses | Studo"
 }
 
-const data: StartPage = mockStartPage;
+export default async function Page({params}: {
+    params: Promise<{ locale: string; id: string }>
+}) {
+    const session = await auth();
+    const token = session?.accessToken;
+    const data = await fetch(
+        `${process.env.AUTH_API_URL}/users/me/studosets`,
+        {
+            headers: {Authorization: `Bearer ${token}`},
+            next: {revalidate: 60},
+        }
+    ).then(res => res.json());
 
-export default function Page() {
-    const courses: Set<string> = new Set<string>()
-    data.lastTen.forEach((item) => {courses.add(item.Course)})
+    const courses = new Set<string>();
+    data.studysets?.forEach((item: any) => courses.add(item.course));
+    data.visualsets?.forEach((item: any) => courses.add(item.course));
 
-    const t = useTranslations("y_f.courses")
+    const t = await getTranslations("y_f.courses");
+
     return (
-        <div className=" w-full grid grid-cols-5 gap-5 scroll-hidden py-25">
-            {
-                [...courses].map((item) => (
-                    <CourseItem key={item} course={item} />
-                ))
-            }
-
+        <div className="w-full grid grid-cols-5 gap-5 scroll-hidden py-25">
+            {[...courses].map((item) => (
+                <CourseItem key={item} course={item}/>
+            ))}
         </div>
     );
 }

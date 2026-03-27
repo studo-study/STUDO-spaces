@@ -34,7 +34,7 @@ const classrooms = [
 
 export default function BurgerMenu({burgerOpen, toggleSearch, toggleCreate}: BurgerProps) {
     const t = useTranslations("header")
-    const openBren = process.env.NEXT_PUBLIC_OPENBREIN;
+    const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === 'true';
     const pathname = usePathname();
     const isActive = (link: string) => {
         const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, '');
@@ -108,17 +108,20 @@ export default function BurgerMenu({burgerOpen, toggleSearch, toggleCreate}: Bur
                     </div>
                 </Link>
             ))}
-            <Link target={'_blank'} href={'https://openbrein.org/'} className={`w-full h-10 opacity-50 px-5`}>
-                <div className={`transition-colors duration-200 flex gap-5 select-none rounded-4xl dark:hover:bg-studogrey hover:bg-slate-200 flex-row justify-baseline px-5 items-center w-full h-10`}>
-                    <div className="flex items-center min-w-10 montserrat-black font-black justify-center cursor-pointer text-2xl dark:text-white">
-                        O
-                    </div>
-                    <span className={`dark:text-white text-sm whitespace-nowrap select-none montserrat-black transition-[opacity,transform] duration-200
+            {openbrein &&
+				<Link target={'_blank'} href={'https://openbrein.org/'} className={`w-full h-10 opacity-50 px-5`}>
+					<div className={`transition-colors duration-200 flex gap-5 select-none rounded-4xl dark:hover:bg-studogrey hover:bg-slate-200 flex-row justify-baseline px-5 items-center w-full h-10`}>
+						<div className="flex items-center min-w-10 montserrat-black font-black justify-center cursor-pointer text-2xl dark:text-white">
+							O
+						</div>
+						<span className={`dark:text-white text-sm whitespace-nowrap select-none montserrat-black transition-[opacity,transform] duration-200
                             ${burgerOpen ? "opacity-100 translate-x-0 delay-100" : "opacity-0 -translate-x-4 pointer-events-none"}`}>
                         OPENBREIN
                         </span>
-                </div>
-            </Link>
+					</div>
+				</Link>
+            }
+
 
             <div onClick={toggleSearch} className="w-full h-10 aria-selected:opacity-100 px-5 opacity-50 cursor-pointer">
                 <div className="transition-colors duration-200 flex gap-5 select-none rounded-4xl dark:hover:bg-studogrey hover:bg-slate-200 flex-row justify-baseline px-5 items-center w-full h-10">

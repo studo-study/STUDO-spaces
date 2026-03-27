@@ -866,6 +866,7 @@
     "your_sets": {
       "title": "Your Sets",
       "cards": "cards",
+      "pins": "pins",
       "studied": "studied",
       "recent": "Recently Studied",
       "full_studied": "Fully Studied",
@@ -1083,7 +1084,9 @@
     "likes": "likes",
     "like": "like",
     "saved_in": "Opgeslagen in",
-    "added_to": "Toegevoegd aan"
+    "added_to": "Toegevoegd aan",
+    "rights": "Alle rechten voorbehouden.",
+    "edit": "bewerken"
   },
 
   "trackview": {
