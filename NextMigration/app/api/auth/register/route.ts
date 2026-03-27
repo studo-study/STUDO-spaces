@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { registerSchemaBase } from '@/lib/validations/auth';  // ← Base schema
+import { registerSchemaBase } from '@/lib/validations/auth';
 import { ZodError } from 'zod';
 
 export async function POST(request: NextRequest) {
@@ -7,10 +7,8 @@ export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
 
-        // Haal confirmPassword eruit
         const { confirmPassword, ...dataForBackend } = body;
 
-        // Valideer met base schema (zonder refinement)
         const validatedData = registerSchemaBase.parse(dataForBackend);
 
         const response = await fetch(`${process.env.AUTH_API_URL}/users`, {

@@ -62,7 +62,7 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
     const [NotifIsOpen, setNotifIsOpen] = useState(false);
     const [ProfileIsOpen, setProfileIsOpen] = useState(false);
     const [StreakOpen, setStreakOpen] = useState(false);
-    const openbrein = false;
+    const openbrein = process.env.NEXT_PUBLIC_OPENBREIN;
     const searchRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("header");
     const premium = false

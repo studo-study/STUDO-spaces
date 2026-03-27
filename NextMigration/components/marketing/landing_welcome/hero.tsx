@@ -41,14 +41,12 @@ export default function Hero() {
     return (
         <section className="relative w-full max-w-screen overflow-visible h-fit xxl:h-3/4 flex flex-col items-center justify-start pt-10 px-4">
 
-            {/* Background - client component, decoratief */}
             <div className="absolute max-w-screen w-full inset-0 hidden dark:flex select-none pointer-events-none z-0" aria-hidden="true">
                 <HeroBackground paused={heroPaused} color="to-white/10" />
             </div>
 
             <div className="relative z-10 flex flex-col 3xl:min-h-screen items-center text-center pt-15 sm:pt-15 lg:pt-20 3xl:pt-30 overflow-visible gap-8 3xl:w-2/3 max-w-screen">
 
-                {/* Badge - SSR content, client animatie */}
                 <AnimateOnMount delay={100}>
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-400/20 dark:bg-studoblue/20 border border-emerald-400 dark:border-studoblue/30">
                         <span className="text-sm font-medium text-emerald-400 dark:text-studoblue">
@@ -57,7 +55,6 @@ export default function Hero() {
                     </div>
                 </AnimateOnMount>
 
-                {/* Heading - SSR content, client animatie */}
                 <AnimateOnMount delay={200}>
                     <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
                         <span className="block text-studodarkblue dark:text-white">
@@ -100,7 +97,6 @@ export default function Hero() {
                     </nav>
                 </AnimateOnMount>
 
-                {/* Study modes */}
                 <nav
                     className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap justify-center gap-5 mt-12 w-full sm:px-3 md:px-0 transition-all duration-700"
                     aria-label={t("Methods")}

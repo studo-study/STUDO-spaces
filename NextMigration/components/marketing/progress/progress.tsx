@@ -5,7 +5,7 @@ interface ProgressProps {
 export function Progress({length, progress}: ProgressProps) {
     const radius = 42;
     const circumference = 2 * Math.PI * radius;
-    const prog: number = Math.min(100, Math.floor((progress / (length * 2)) * 100));
+    const prog: number = Math.min(100, Math.floor((progress / (length)) * 100));
     const offset: number = circumference - (prog / 100) * circumference;
 
     return (

@@ -34,6 +34,7 @@ const classrooms = [
 
 export default function BurgerMenu({burgerOpen, toggleSearch, toggleCreate}: BurgerProps) {
     const t = useTranslations("header")
+    const openBren = process.env.NEXT_PUBLIC_OPENBREIN;
     const pathname = usePathname();
     const isActive = (link: string) => {
         const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, '');
