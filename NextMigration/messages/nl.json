@@ -1075,7 +1075,15 @@
     "learn": "leren",
     "speedy": "tijdsstrijd",
     "flashcards": "flashcards",
-    "progress_title": "Jouw vooruitgang"
+    "progress_title": "Jouw vooruitgang",
+    "cards_title": "Kaarten",
+    "not_learned": "Niet geleerd",
+    "reviewed": "Overlopen",
+    "studied": "Gestudeerd",
+    "likes": "likes",
+    "like": "like",
+    "saved_in": "Opgeslagen in",
+    "added_to": "Toegevoegd aan"
   },
 
   "trackview": {

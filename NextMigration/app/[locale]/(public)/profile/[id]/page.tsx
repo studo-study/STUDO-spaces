@@ -5,7 +5,7 @@ import StudosetView from "@/app/[locale]/(public)/(set)/studoset/[id]/studosetvi
 import MarketingLayout from "@/app/[locale]/(marketing)/layout";
 import ProfileView from "@/app/[locale]/(public)/profile/[id]/ProfileView";
 
-export default async function ProfilePage({ params }) {
+export default async function ProfilePage({ params}) {
     const { locale, id } = await params;
     const session = await auth()
 
