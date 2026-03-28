@@ -5,9 +5,12 @@ import {useState} from "react";
 import Draggable from "@/components/app/your-files/folders/draggable";
 import Droppable from "@/components/app/your-files/folders/Droppable";
 import {mockFolders} from "@/data/mocks/startPageMock";
+import {Folder} from "@/types/types";
 
-export default function FolderGrid() {
-    const folders = mockFolders;
+interface FolderProps {
+    folders: Folder[];
+}
+export default function FolderGrid({folders}: FolderProps) {
     const [parent, setParent] = useState(null);
     const draggableMarkup = (
         <Draggable id="draggable">Drag me</Draggable>

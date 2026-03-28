@@ -1,5 +1,5 @@
 {
-  "id": "92388472-3cd3-4274-84c5-f8809c0dc115",
+  "id": "1c28e01f-fb00-457f-9ccb-b0000ec7997e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1468,7 +1468,7 @@
           "name": "folder_id",
           "type": "varchar(64)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {

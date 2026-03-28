@@ -13,6 +13,7 @@ import {
   Request,
   BadRequestException,
   ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import {
   CreateStudysetDto,
@@ -51,8 +52,7 @@ interface AuthenticatedRequest extends ExpressRequest {
 @ApiBearerAuth()
 @Controller('studysets')
 export class StudysetsController {
-  constructor(private readonly studysetService: StudysetService) {
-  }
+  constructor(private readonly studysetService: StudysetService) {}
 
   //GET alle studosets -----------------------------------------------------
 
@@ -172,7 +172,9 @@ export class StudysetsController {
 
   // POST studysessie ----------------------------------------------------------
 
-  @ApiOperation({ summary: 'Start een nieuwe studysession voor deze studoset.' })
+  @ApiOperation({
+    summary: 'Start een nieuwe studysession voor deze studoset.',
+  })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 201,

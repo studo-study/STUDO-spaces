@@ -4,7 +4,9 @@ import AuthLayout from "@/app/[locale]/(app)/layout";
 import StudosetView from "@/app/[locale]/(public)/(set)/studoset/[id]/studosetview";
 import MarketingLayout from "@/app/[locale]/(marketing)/layout";
 
-export default async function StudosetPage({ params }) {
+export default async function StudosetPage({params}: {
+    params: Promise<{ locale: string; id: string }>
+}) {
     const { locale, id } = await params;
     const session = await auth()
 

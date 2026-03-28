@@ -10,6 +10,10 @@ import {Progress} from "@/components/marketing/progress/progress";
 import {IoFilter, IoFolderOpenOutline} from "react-icons/io5";
 import {FaRegHeart} from "react-icons/fa";
 import {LuFolderOpen} from "react-icons/lu";
+import SavedPopup from "@/components/public/sets/studosets/savedpopup";
+import ClassroomPopup from "@/components/public/sets/studosets/classroompopup";
+import SharePopup from "@/components/public/sets/studosets/sharepopup";
+import SettingsPopup from "@/components/public/sets/studosets/settingspopup";
 
 
 interface viewProps {
@@ -18,7 +22,6 @@ interface viewProps {
 export default async function StudosetView({ id }: viewProps) {
     const t = await getTranslations("studoset");
     const session = await auth();
-    console.log(id);
     const token = session?.accessToken;
     const data = await fetch(
         `${process.env.AUTH_API_URL}/studysets/${id}`,
@@ -40,6 +43,7 @@ export default async function StudosetView({ id }: viewProps) {
         return card.card_viewcount > 1 ? sum + 1 : sum;
     }, 0);
 
+    const year = new Date().getFullYear();
     console.log(data)
 
     return (<>
@@ -62,38 +66,10 @@ export default async function StudosetView({ id }: viewProps) {
               </span>
                     <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
 
-                        <div className="inline-flex flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
-                    font-atrament font-normal text-[#2a3a42] justify-center
-                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
-                    dark:text-white"
-                        >
-                            <img src={"/icons/save.svg"}  className="h-4 sm:h-5 dark:invert dark:brightness-0" />
-                        </div>
-
-
-                        <div className="inline-flex flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
-                    font-atrament font-normal text-[#2a3a42] justify-center
-                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
-                    dark:text-white"
-                        >
-                            <img src={"/icons/classroom.svg"}  className="h-4 sm:h-5 dark:invert dark:brightness-0" />
-                        </div>
-
-                        <div className="inline-flex flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
-                    font-atrament font-normal text-[#2a3a42] justify-center
-                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
-                    dark:text-white"
-                        >
-                            <img src={"/icons/share.svg"}  className="h-4 sm:h-5 dark:invert dark:brightness-0" />
-                        </div>
-
-                        <div className="inline-flex flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
-                    font-atrament font-normal text-[#2a3a42] justify-center
-                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
-                    dark:text-white"
-                        >
-                            <img src={"/icons/settings.svg"}  className="h-4 sm:h-5 dark:invert dark:brightness-0" />
-                        </div>
+                        <SavedPopup/>
+                        <ClassroomPopup/>
+                        <SharePopup/>
+                        <SettingsPopup/>
                     </div>
                 </div>
                 <div className={"w-full h-20 flex flex-col gap-2 opacity-40"}>
@@ -112,7 +88,7 @@ export default async function StudosetView({ id }: viewProps) {
                 </div>
                 <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center items-center">
                     <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
-                        <Link href={`/learn/`} className="w-full">
+                        <Link href={`/learn/` + id} className="w-full">
                             <div className="inline-flex flex-row items-center gap-2 sm:gap-3 min-h-10 sm:min-h-12 w-full
                      text-studodarkblue justify-center rounded-full cursor-pointer bg-studogrey/30 uppercase
                      shadow-2xl border border-studoborder/30 font-semibold text-xs dark:text-white px-4 sm:px-8 sm:text-base md:text-base">
@@ -120,7 +96,7 @@ export default async function StudosetView({ id }: viewProps) {
                                 <span className="truncate">{t("learn")}</span>
                             </div>
                         </Link>
-                        <Link href={`/speedy/`} className="w-full">
+                        <Link href={`/speedy/`+ id} className="w-full">
                             <div className="inline-flex flex-row items-center gap-2 sm:gap-3 min-h-10 sm:min-h-12 w-full
                      text-studodarkblue justify-center rounded-full cursor-pointer bg-studogrey/30 uppercase
                      shadow-2xl border border-studoborder/30 font-semibold text-xs dark:text-white px-4 sm:px-8 sm:text-base md:text-base">
@@ -128,7 +104,7 @@ export default async function StudosetView({ id }: viewProps) {
                                 <span className="truncate">{t("speedy")}</span>
                             </div>
                         </Link>
-                        <Link href={`/flashcards/`} className="w-full">
+                        <Link href={`/flashcards/` + id} className="w-full">
                             <div className="inline-flex flex-row items-center gap-2 sm:gap-3 min-h-10 sm:min-h-12 w-full
                      text-studodarkblue justify-center rounded-full cursor-pointer bg-studogrey/30 uppercase
                      shadow-2xl border border-studoborder/30 font-semibold text-xs dark:text-white px-4 sm:px-8 sm:text-base md:text-base">
@@ -167,6 +143,12 @@ export default async function StudosetView({ id }: viewProps) {
                     <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 mb-8 sm:mb-10">
                         {data?.cards.map((card: Card, i: number) =>  <CardItem key={i} index={i} card={card}/>)}
                     </div>
+                    <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5">
+                        <Link href={"/studoset/" + id + "/edit"} className={'w-full h-14 rounded-full flex items-center justify-center dark:bg-studoblue cursor-pointer bg-emerald-400 text-white font-bold border-studoborder border'} >{t("edit")}</Link>
+                    </div>
+                    <span className={'w-full h-20 opacity-50 text-sm flex items-center justify-center'}>
+                        © 2026 - {year}. Studo inc. - {t('rights')}
+                    </span>
                 </div>
         </>
     );

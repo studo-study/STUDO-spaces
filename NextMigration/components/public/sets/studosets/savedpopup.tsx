@@ -2,6 +2,12 @@ interface SavedpopupProps {
     toggled: boolean;
     setPopUpToggle:React.Dispatch<React.SetStateAction<boolean>>;
 }
-export default function SavedPopup({toggled, saved, setPopUpToggle}: SavedpopupProps) {
-    return(<div></div>)
+export default function SavedPopup() {
+    return(<div className="inline-flex cursor-pointer active:scale-95 transition-[scale] duration-300 flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
+                    font-atrament font-normal text-[#2a3a42] justify-center
+                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
+                    dark:text-white"
+    >
+        <img src={"/icons/save.svg"}  className="h-4 sm:h-5 dark:invert dark:brightness-0" />
+    </div>)
 }
