@@ -1,4 +1,9 @@
-import { CardResponseDto, CreateCardListDto, UpdateCardDto } from './card.dto';
+import {
+  CardResponseDto,
+  CreateCardDto,
+  CreateCardListDto,
+  UpdateCardDto,
+} from './card.dto';
 import { VisualsetResponseDto } from '../visualset/visualset.dto';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { ClassroomResponseDto } from '../classroom/classroom.dto';
@@ -52,15 +57,11 @@ export class CreateStudysetDto {
   @IsString({ name: 'folder_id', maxLength: 64 })
   folder_id: string;
 
-  @ApiProperty({
-    description: 'List of cards in the studoset',
-    type: [CreateCardListDto],
-  })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CreateCardListDto)
+  @Type(() => CreateCardDto)
   @ArrayMinSize(1)
-  cardlist: CreateCardListDto[];
+  cardlist: CreateCardDto[];
 }
 
 export class UpdateStudysetDto {
