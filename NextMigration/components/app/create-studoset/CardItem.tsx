@@ -8,16 +8,16 @@ interface CardProps {
     id: string;
     deleteCard: (id: string) => void
     updateCard: (id: string, term: string, definitie: string) => void
+    isDouble: boolean;
 }
-export default function CardItem({ index, id, deleteCard, updateCard }: CardProps) {
+export default function CardItem({ index, id, deleteCard, isDouble, updateCard }: CardProps) {
     const t = useTranslations("card");
     const termRef = useRef<HTMLInputElement>(null);
     const defRef = useRef<HTMLInputElement>(null);
 
-
     return (
         <div
-            className="flex flex-col justify-around items-baseline relative h-fit w-full gap-3 sm:gap-4 md:gap-5 border border-studoborder/30 rounded-2xl sm:rounded-4xl mb-6 sm:mb-8 md:mb-10">
+            className={`flex flex-col justify-around items-baseline relative h-fit overflow-hidden w-full gap-3 sm:gap-4 md:gap-5 border  ${isDouble ? 'border-emerald-400 dark:border-studoblue' : 'border-studoborder/30'} rounded-2xl sm:rounded-4xl mb-6 sm:mb-8 md:mb-10`}>
 
             {/* Header */}
             <div
@@ -43,7 +43,7 @@ export default function CardItem({ index, id, deleteCard, updateCard }: CardProp
                     <input
                         ref={termRef}
                         type="text"
-                        onInput={(e) => termRef.current && updateCard(id, "term", termRef.current.value)}
+                        onInput={(e) => updateCard(id, "term", e.target.value)}
                         className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
                         autoComplete="off"
                         placeholder={t("Term")}
@@ -54,7 +54,7 @@ export default function CardItem({ index, id, deleteCard, updateCard }: CardProp
                     <input
                         ref={defRef}
                         type="text"
-                        onInput={(e) => defRef.current && updateCard(id, "definition", defRef.current.value)}
+                        onInput={(e) => updateCard(id, "definition", e.target.value)}
                         className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
                         autoComplete="off"
                         placeholder={t("Definition")}
