@@ -62,7 +62,7 @@ export class SvenService {
   async uploadImage(
     file: Express.Multer.File,
   ): Promise<ImageImportResponseDTO[]> {
-    const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = this.genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const imagePart = {
       inlineData: {
