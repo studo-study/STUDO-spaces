@@ -136,7 +136,6 @@ export class StudysetsController {
     description: 'Studyset succesvol aangemaakt',
     type: StudysetResponseDto,
   })
-  @UsePipes(new ValidationPipe({ transform: true }))
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER, Role.ADMIN)
   @Post()
