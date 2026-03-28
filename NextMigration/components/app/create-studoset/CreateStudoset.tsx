@@ -22,12 +22,14 @@ interface CardData {
     term: string;
     definition: string;
     image: string;
+    isDouble: boolean;
 }
 export default function CreateStudosetForm() {
     const t = useTranslations("createstudoset");
     const [showImporter, setShowImporter] = useState(false);
     const router = useRouter();
-    //header values
+
+    //ref values
     const titleRef = useRef<HTMLInputElement>(null);
     const courseRef = useRef<HTMLInputElement>(null);
     const folderRef = useRef<HTMLSelectElement>(null);
@@ -41,10 +43,14 @@ export default function CreateStudosetForm() {
         index: 0,
         term: '',
         definition: '',
-        image: ''
+        image: '',
+        isDouble: false
     }
     const [cardArray, setCardArray] = useState<Array<CardData>>([firstCard]);
+
     const [folders, setFolders] = useState<Array<any>>([]);
+
+    //handlers
     const handleForm =  async (e) => {
         e.preventDefault();
         const body = {
@@ -80,6 +86,7 @@ export default function CreateStudosetForm() {
                 term: '',
                 definition: '',
                 image: '',
+                isDouble: false
             }]);
     }
 
@@ -98,11 +105,23 @@ export default function CreateStudosetForm() {
         ));
     }
 
+    const getDuplicateIds = () => {
+        return cardArray.filter((card, i) =>
+            cardArray.some((other, j) =>
+                i !== j && (card.term === other.term && card.definition === other.definition && card.term != '')
+            )
+        ).map(card => card.id);
+    }
+
+    const duplicates = getDuplicateIds();
+
+    //useEffects
     useEffect(() => {
         if (!cardsContainerRef.current) return;
 
         const sortable = new Sortable(cardsContainerRef.current, {
             animation: 300,
+            handle: ".handle",
             onEnd: event => {
                 setCardArray(prev => {
                     const newArr = [...prev];
@@ -126,7 +145,8 @@ export default function CreateStudosetForm() {
         fetchFolders();
     }, []);
 
-    console.log("folders", folders);
+    //console.log("folders", folders);
+
 
     return (
         <>
@@ -231,7 +251,7 @@ export default function CreateStudosetForm() {
                     <div ref={cardsContainerRef}
                          className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10"
                          data-cy="cards_container">
-                        {cardArray.map((card) => (<CardItem key={card.id} index={card.index} id={card.id} deleteCard={deleteCard} updateCard={updateCard}/>))}
+                        {cardArray.map((card) => (<CardItem  isDouble={duplicates.includes(card.id)} key={card.id} index={card.index} id={card.id} deleteCard={deleteCard} updateCard={updateCard}/>))}
                     </div>
 
                     <div className="flex w-full mb-3 sm:mb-4 md:mb-5">
@@ -277,3 +297,4 @@ interface CreateStudosetBody {
         image: string;
     }];
 }
+
