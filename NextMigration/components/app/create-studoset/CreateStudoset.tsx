@@ -7,6 +7,7 @@ import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
 import {navigate} from "next/dist/client/components/segment-cache/navigation";
 import {useRouter} from "@/i18n/routing";
+import {CardData} from "@/types/types";
 
 const LANGUAGES = [
     { code: "en", name: "English" },
@@ -16,18 +17,14 @@ const LANGUAGES = [
     { code: "es", name: "Spanish" }
 ];
 
-interface CardData {
-    id: string;
-    index: number;
-    term: string;
-    definition: string;
-    image: string;
-    isDouble: boolean;
-}
+
 export default function CreateStudosetForm() {
     const t = useTranslations("createstudoset");
     const [showImporter, setShowImporter] = useState(false);
     const router = useRouter();
+    const [error, setError] = useState<boolean>(false);
+    const [errors, setErrors] = useState<Record<string, string>>({});
+    const [folders, setFolders] = useState<Array<any>>([]);
 
     //ref values
     const titleRef = useRef<HTMLInputElement>(null);
@@ -48,9 +45,27 @@ export default function CreateStudosetForm() {
     }
     const [cardArray, setCardArray] = useState<Array<CardData>>([firstCard]);
 
-    const [folders, setFolders] = useState<Array<any>>([]);
-
     //handlers
+
+    const validate = (body: any) => {
+        const newErrors: Record<string, string> = {};
+
+        if (!body.title) newErrors.title = "title_error";
+        if (!body.course) newErrors.course = "course_error";
+        if (!body.folder_id) newErrors.folder = "folder_error";
+        if (!body.global_term_language) newErrors.term_lang = "term_lang_error";
+        if (!body.global_definition_language) newErrors.def_lang = "def_lang_error";
+
+        body.cardlist.forEach((card) => {
+            if (!card.term || !card.definition) {
+                newErrors.cards = "card_error";
+            }
+        });
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
+
     const handleForm =  async (e) => {
         e.preventDefault();
         const body = {
@@ -68,6 +83,8 @@ export default function CreateStudosetForm() {
         }
 
         console.log(body);
+
+        if (!validate(body)) return;
         const res = await fetch("/api/studysets", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -78,6 +95,7 @@ export default function CreateStudosetForm() {
 
         router.push(`/studoset/${data.id}`);
     };
+
 
     const addCard = () => {
             setCardArray(prev => [...prev, {
@@ -170,6 +188,7 @@ export default function CreateStudosetForm() {
                                 data-cy="title_input"
                             />
                             <div className="h-5">
+                                <span className={`w-full h-fit text-rose-500 px-5 ${error ? 'flex' : 'hidden pointer-events-none'}`}>{errors.title && t(errors.title)}</span>
                             </div>
                         </div>
 
@@ -184,6 +203,7 @@ export default function CreateStudosetForm() {
                                     data-cy="course_input"
                                 />
                                 <div className="h-5">
+                                    <span className={`w-full h-fit text-rose-500 px-5 ${error ? 'flex' : 'hidden pointer-events-none'}`}>{errors.course && t(errors.course)}</span>
                                 </div>
                             </div>
 
@@ -199,6 +219,7 @@ export default function CreateStudosetForm() {
                                     </select>
 
                                 <div className="h-5">
+                                    <span className={`w-full h-fit text-rose-500 px-5 ${error ? 'flex' : 'hidden pointer-events-none'}`}>{errors.folder && t(errors.folder)}</span>
                                 </div>
                             </div>
                         </div>
@@ -215,6 +236,7 @@ export default function CreateStudosetForm() {
                                         ))}
                                     </select>
                                 <div className="h-5">
+                                    <span className={`w-full h-fit text-rose-500 px-5 ${error ? 'flex' : 'hidden pointer-events-none'}`}>{errors.term_lang && t(errors.term_lang)}</span>
                                 </div>
                             </div>
 
@@ -229,6 +251,7 @@ export default function CreateStudosetForm() {
                                         ))}
                                     </select>
                                 <div className="h-5">
+                                    <span className={`w-full h-fit text-rose-500 px-5 ${error ? 'flex' : 'hidden pointer-events-none'}`}>{errors.def_lang && t(errors.def_lang)}</span>
                                 </div>
                             </div>
                         </div>
@@ -246,12 +269,26 @@ export default function CreateStudosetForm() {
                             {isMutating ? t("saving..."): t("create")}
                         </button>
                     </div>
-
+                    <div className="h-5">
+                        <span className={`w-full h-fit text-rose-500 px-5 ${error ? 'flex' : 'hidden pointer-events-none'}`}>{errors.cards && t(errors.cards)}</span>
+                    </div>
 
                     <div ref={cardsContainerRef}
                          className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10"
                          data-cy="cards_container">
-                        {cardArray.map((card) => (<CardItem  isDouble={duplicates.includes(card.id)} key={card.id} index={card.index} id={card.id} deleteCard={deleteCard} updateCard={updateCard}/>))}
+                        {cardArray.map((card) => (
+                            <CardItem
+                                key={card.id}
+                                id={card.id}
+                                index={card.index}
+                                term={card.term}
+                                definition={card.definition}
+                                isDouble={duplicates.includes(card.id)}
+                                deleteCard={deleteCard}
+                                updateCard={updateCard}
+                                length={cardArray.length}
+                            />
+                        ))}
                     </div>
 
                     <div className="flex w-full mb-3 sm:mb-4 md:mb-5">
@@ -276,6 +313,8 @@ export default function CreateStudosetForm() {
 
                 {showImporter && (
                     <SetImporter
+                        cardArray={cardArray}
+                        setCardArray={setCardArray}
                         onClose={() => setShowImporter(false)}
                     />
                 )}
