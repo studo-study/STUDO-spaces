@@ -9,8 +9,12 @@ interface CardProps {
     deleteCard: (id: string) => void
     updateCard: (id: string, term: string, definitie: string) => void
     isDouble: boolean;
+    length: number;
+    term: string;
+    definition: string;
+
 }
-export default function CardItem({ index, id, deleteCard, isDouble, updateCard }: CardProps) {
+export default function CardItem({ index, id, deleteCard, isDouble, updateCard, length, term, definition }: CardProps) {
     const t = useTranslations("card");
     const termRef = useRef<HTMLInputElement>(null);
     const defRef = useRef<HTMLInputElement>(null);
@@ -24,12 +28,13 @@ export default function CardItem({ index, id, deleteCard, isDouble, updateCard }
                 className="w-full h-10 sm:h-[52px] rounded-t-3xl bg-gray-700/50 flex justify-between items-center p-2 px-4 sm:p-3 sm:px-6 md:px-8 overflow-hidden">
                 <span className="text-sm sm:text-base text-studodarkblue dark:text-white">{index + 1}</span>
                 <div className="flex gap-2 sm:gap-3">
-                    <img
+                    {length != 1 &&
+                        <img
                         onClick={() => {deleteCard(id)}}
                         src="/icons/delete.svg"
                         alt="delete"
-                        className="cursor-pointer h-4 sm:h-5 dark:invert dark:brightness-0"
-                    />
+                        className={`cursor-pointer h-4 sm:h-5 dark:invert dark:brightness-0`}
+                    />}
                     <img
                         src="/icons/grab.svg"
                         alt="grab"
@@ -41,19 +46,21 @@ export default function CardItem({ index, id, deleteCard, isDouble, updateCard }
             <div className="flex flex-col lg:flex-row w-full gap-3 px-5 pb-4 sm:pb-6">
                 <div className="flex flex-col p-3 w-full gap-3 justify-between">
                     <input
-                        ref={termRef}
                         type="text"
+                        value={term}
                         onInput={(e) => updateCard(id, "term", e.target.value)}
                         className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
                         autoComplete="off"
                         placeholder={t("Term")}
                     />
+
                 </div>
 
                 <div className="flex flex-col p-3 w-full gap-3 justify-between">
                     <input
                         ref={defRef}
                         type="text"
+                        value={definition}
                         onInput={(e) => updateCard(id, "definition", e.target.value)}
                         className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
                         autoComplete="off"

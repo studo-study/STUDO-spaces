@@ -709,3 +709,12 @@ export interface ProfileResponseDto {
     studysets: Studyset[];
     visualsets: Visualset[];
 }
+
+export interface CardData {
+    id: string;
+    index: number;
+    term: string;
+    definition: string;
+    image: string;
+    isDouble: boolean;
+}
