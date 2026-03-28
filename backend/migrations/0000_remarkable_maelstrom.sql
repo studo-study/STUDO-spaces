@@ -174,7 +174,7 @@ CREATE TABLE "studysets" (
 	"displayname" varchar(100) NOT NULL,
 	"img_url" varchar(250) NOT NULL,
 	"user_id" varchar(64) NOT NULL,
-	"folder_id" varchar(64) NOT NULL
+	"folder_id" varchar(64)
 );
 --> statement-breakpoint
 CREATE TABLE "tracksets" (

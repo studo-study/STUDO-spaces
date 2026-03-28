@@ -5,6 +5,7 @@ import SetImporter from "@/components/app/create-studoset/SetImporter";
 import CardItem from "@/components/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
+
 const LANGUAGES = [
     { code: "en", name: "English" },
     { code: "nl", name: "Dutch" },
@@ -13,28 +14,118 @@ const LANGUAGES = [
     { code: "es", name: "Spanish" }
 ];
 
+interface CardData {
+    id: string;
+    index: number;
+    term: string;
+    definition: string;
+    image: string;
+}
 export default function CreateStudosetForm() {
     const t = useTranslations("createstudoset");
     const [showImporter, setShowImporter] = useState(false);
+    //header values
+    const titleRef = useRef<HTMLInputElement>(null);
+    const courseRef = useRef<HTMLInputElement>(null);
+    const folderRef = useRef<HTMLSelectElement>(null);
+    const termLangRef = useRef<HTMLSelectElement>(null);
+    const defLangRef = useRef<HTMLSelectElement>(null);
     const cardsContainerRef = useRef<HTMLDivElement>(null);
     const isMutating = false;
 
+    const firstCard = {
+        id: crypto.randomUUID(),
+        index: 0,
+        term: '',
+        definition: '',
+        image: ''
+    }
+    const [cardArray, setCardArray] = useState<Array<CardData>>([firstCard]);
+    const [folders, setFolders] = useState<Array<any>>([]);
+    const handleForm =  async (e) => {
+        e.preventDefault();
+        const body = {
+            title: titleRef.current && titleRef.current.value,
+            course: courseRef.current && courseRef.current.value,
+            global_term_language: termLangRef.current && termLangRef.current.value,
+            global_definition_language: defLangRef.current && defLangRef.current.value,
+            folder_id: folderRef.current && folderRef.current.value,
+            cardlist: cardArray.map((card: CardData) => ({
+                term: card.term,
+                definition: card.definition,
+                number: card.index,
+                image: card.image,
+            }))
+        }
+
+        console.log(body);
+        const res = await fetch("/api/studysets", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+        });
+
+        return res;
+    };
+
+    const addCard = () => {
+            setCardArray(prev => [...prev, {
+                id: crypto.randomUUID(),
+                index: prev.length,
+                term: '',
+                definition: '',
+                image: '',
+            }]);
+    }
+
+    const deleteCard = (id: string) => {
+        setCardArray(prev => prev.filter(card => card.id != id));
+        updateIndex()
+    }
+
+    const updateIndex = () => {
+        setCardArray(prev => prev.map((card, index) => ({ ...card, index })))
+    }
+
+    const updateCard = (id: string, field: string, value: string) => {
+        setCardArray(prev => prev.map(card =>
+            card.id === id ? { ...card, [field]: value } : card
+        ));
+    }
 
     useEffect(() => {
         if (!cardsContainerRef.current) return;
 
         const sortable = new Sortable(cardsContainerRef.current, {
             animation: 300,
+            onEnd: event => {
+                setCardArray(prev => {
+                    const newArr = [...prev];
+                    const [moved] = newArr.splice(event.oldIndex, 1);
+                    newArr.splice(event.newIndex, 0, moved);
+                    return newArr.map((card, index) => ({ ...card, index }));
+                });
+            }
         });
+
 
         return () => sortable.destroy();
     }, [cardsContainerRef]);
 
+    useEffect(() => {
+        const fetchFolders = async () => {
+            const res = await fetch("/api/folders");
+            const data = await res.json();
+            setFolders(data);
+        };
+        fetchFolders();
+    }, []);
 
+    console.log("folders", folders);
 
     return (
         <>
-            <form
+            <form onSubmit={handleForm}
                 className="w-full scroll-hidden h-fit mt-10 md:mt-0 flex text-sm sm:text-base flex-col items-center justify-baseline pt-20 px-10"
                 data-cy="studyset_form">
                 <div className="flex w-full flex-col items-center justify-center gap-3">
@@ -46,6 +137,7 @@ export default function CreateStudosetForm() {
                     <div className="w-full gap-3 sm:gap-4 md:gap-5 flex-col flex">
                         <div className="flex flex-col gap-1">
                             <input
+                                ref={titleRef}
                                 type="text"
                                 className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
                                 autoComplete="off"
@@ -59,6 +151,7 @@ export default function CreateStudosetForm() {
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
                             <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
                                 <input
+                                    ref={courseRef}
                                     type="text"
                                     autoComplete="off"
                                     placeholder={t("course_placeholder")}
@@ -71,9 +164,13 @@ export default function CreateStudosetForm() {
 
                             <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
                                     <select
+                                        ref={folderRef}
                                         className={"h-12 px-5 gap-5 text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}
                                         data-cy="folder_select">
                                         <option value="">{t("folder_placeholder")}</option>
+                                        {folders?.folders?.map((item, index) => (
+                                            <option value={item.id} key={item.id}>{item.name}</option>
+                                        ))}
                                     </select>
 
                                 <div className="h-5">
@@ -84,6 +181,7 @@ export default function CreateStudosetForm() {
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
                             <div className="w-full sm:w-1/2 gap-1 flex flex-col">
                                     <select
+                                        ref={termLangRef}
                                         className={"h-12 px-5 gap-5 text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}
                                         data-cy="term_language_select">
                                         <option value="">{t("term_language")}</option>
@@ -97,6 +195,7 @@ export default function CreateStudosetForm() {
 
                             <div className="w-full sm:w-1/2 gap-1 flex flex-col">
                                     <select
+                                        ref={defLangRef}
                                         className={"h-12 px-5 gap-5 text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}
                                         data-cy="definition_language_select">
                                         <option value="">{t("def_language")}</option>
@@ -127,13 +226,12 @@ export default function CreateStudosetForm() {
                     <div ref={cardsContainerRef}
                          className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10"
                          data-cy="cards_container">
-                            <CardItem index={0}/>
-                            <CardItem index={1}/>
-                            <CardItem index={2}/>
+                        {cardArray.map((card) => (<CardItem key={card.id} index={card.index} id={card.id} deleteCard={deleteCard} updateCard={updateCard}/>))}
                     </div>
 
                     <div className="flex w-full mb-3 sm:mb-4 md:mb-5">
                         <button
+                            onClick={addCard}
                             type="button"
                             className="w-full h-12 rounded-full bg-gradient-to-br cursor-pointer shaodw-2xl from-emerald-400 to-emerald-500 text-white font-bold border border-studoborder active:scale-98 transition-transform"
                             data-cy="add_card_button">
@@ -159,4 +257,18 @@ export default function CreateStudosetForm() {
             </form>
         </>
     )
+}
+
+interface CreateStudosetBody {
+    title: string | null;
+    course: string | null;
+    global_term_language: string | null;
+    global_definition_language: string | null;
+    folder_id: string | null;
+    cardlist: [{
+        term:string;
+        definition: string;
+        number: number;
+        image: string;
+    }];
 }

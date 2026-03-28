@@ -94,26 +94,24 @@ export class StudysetService {
 
     //kaarten creeeren
     const CARDS: CardResponseDto[] = [];
-    data.cardlist.forEach((cardList: CreateCardListDto) => {
-      cardList.cards.forEach((c: CreateCardDto) => {
-        const card = {
-          id: uuidv6(),
-          term: c.term,
-          definition: c.definition,
-          image: c.image ?? null,
-          number: c.number,
-          created_at: date.toISOString(),
-          updated_at: '',
-          card_viewcount: 0,
-          card_total_viewcount: 0,
-          inQueue: false,
-          mastered: false,
-          times_relearned: 0,
-          set_id: setId,
-          owner_id: user_id,
-        };
-        CARDS.push(card);
-      });
+    data.cardlist.forEach((c: CreateCardDto) => {
+      const card = {
+        id: uuidv6(),
+        term: c.term,
+        definition: c.definition,
+        image: c.image ?? null,
+        number: c.number,
+        created_at: date.toISOString(),
+        updated_at: '',
+        card_viewcount: 0,
+        card_total_viewcount: 0,
+        inQueue: false,
+        mastered: false,
+        times_relearned: 0,
+        set_id: setId,
+        owner_id: user_id,
+      };
+      CARDS.push(card);
     });
 
     await this.db.insert(studysets).values(set);

@@ -1,12 +1,18 @@
 import { useFormContext } from "react-hook-form";
 import {useTranslations} from "next-intl";
 import {IoIosAdd} from "react-icons/io";
+import {useRef} from "react";
 
 interface CardProps {
     index: number;
+    id: string;
+    deleteCard: (id: string) => void
+    updateCard: (id: string, term: string, definitie: string) => void
 }
-export default function CardItem({ index }: CardProps) {
+export default function CardItem({ index, id, deleteCard, updateCard }: CardProps) {
     const t = useTranslations("card");
+    const termRef = useRef<HTMLInputElement>(null);
+    const defRef = useRef<HTMLInputElement>(null);
 
 
     return (
@@ -19,6 +25,7 @@ export default function CardItem({ index }: CardProps) {
                 <span className="text-sm sm:text-base text-studodarkblue dark:text-white">{index + 1}</span>
                 <div className="flex gap-2 sm:gap-3">
                     <img
+                        onClick={() => {deleteCard(id)}}
                         src="/icons/delete.svg"
                         alt="delete"
                         className="cursor-pointer h-4 sm:h-5 dark:invert dark:brightness-0"
@@ -34,7 +41,9 @@ export default function CardItem({ index }: CardProps) {
             <div className="flex flex-col lg:flex-row w-full gap-3 px-5 pb-4 sm:pb-6">
                 <div className="flex flex-col p-3 w-full gap-3 justify-between">
                     <input
+                        ref={termRef}
                         type="text"
+                        onInput={(e) => termRef.current && updateCard(id, "term", termRef.current.value)}
                         className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
                         autoComplete="off"
                         placeholder={t("Term")}
@@ -43,7 +52,9 @@ export default function CardItem({ index }: CardProps) {
 
                 <div className="flex flex-col p-3 w-full gap-3 justify-between">
                     <input
+                        ref={defRef}
                         type="text"
+                        onInput={(e) => defRef.current && updateCard(id, "definition", defRef.current.value)}
                         className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
                         autoComplete="off"
                         placeholder={t("Definition")}
