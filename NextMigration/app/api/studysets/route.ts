@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import {NextRequest, NextResponse} from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     const session = await auth();
@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    console.log("API route body:", body);
+    console.log("Request body:", body);
 
     const response = await fetch(`${process.env.AUTH_API_URL}/studysets`, {
         method: "POST",
@@ -21,5 +21,7 @@ export async function POST(request: NextRequest) {
     });
 
     const data = await response.json();
+    console.log("Server response data:", data);
+
     return NextResponse.json(data, { status: response.status });
 }

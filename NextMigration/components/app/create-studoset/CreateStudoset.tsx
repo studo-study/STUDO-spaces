@@ -5,6 +5,8 @@ import SetImporter from "@/components/app/create-studoset/SetImporter";
 import CardItem from "@/components/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
+import {navigate} from "next/dist/client/components/segment-cache/navigation";
+import {useRouter} from "@/i18n/routing";
 
 const LANGUAGES = [
     { code: "en", name: "English" },
@@ -24,6 +26,7 @@ interface CardData {
 export default function CreateStudosetForm() {
     const t = useTranslations("createstudoset");
     const [showImporter, setShowImporter] = useState(false);
+    const router = useRouter();
     //header values
     const titleRef = useRef<HTMLInputElement>(null);
     const courseRef = useRef<HTMLInputElement>(null);
@@ -64,8 +67,10 @@ export default function CreateStudosetForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
         });
+        const data = await res.json();
+        console.log(data);
 
-        return res;
+        router.push(`/studoset/${data.id}`);
     };
 
     const addCard = () => {
