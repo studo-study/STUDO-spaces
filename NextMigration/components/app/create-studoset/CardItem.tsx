@@ -9,8 +9,9 @@ interface CardProps {
     deleteCard: (id: string) => void
     updateCard: (id: string, term: string, definitie: string) => void
     isDouble: boolean;
+    length: number;
 }
-export default function CardItem({ index, id, deleteCard, isDouble, updateCard }: CardProps) {
+export default function CardItem({ index, id, deleteCard, isDouble, updateCard, length }: CardProps) {
     const t = useTranslations("card");
     const termRef = useRef<HTMLInputElement>(null);
     const defRef = useRef<HTMLInputElement>(null);
@@ -24,12 +25,13 @@ export default function CardItem({ index, id, deleteCard, isDouble, updateCard }
                 className="w-full h-10 sm:h-[52px] rounded-t-3xl bg-gray-700/50 flex justify-between items-center p-2 px-4 sm:p-3 sm:px-6 md:px-8 overflow-hidden">
                 <span className="text-sm sm:text-base text-studodarkblue dark:text-white">{index + 1}</span>
                 <div className="flex gap-2 sm:gap-3">
-                    <img
+                    {length != 1 &&
+                        <img
                         onClick={() => {deleteCard(id)}}
                         src="/icons/delete.svg"
                         alt="delete"
-                        className="cursor-pointer h-4 sm:h-5 dark:invert dark:brightness-0"
-                    />
+                        className={`cursor-pointer h-4 sm:h-5 dark:invert dark:brightness-0`}
+                    />}
                     <img
                         src="/icons/grab.svg"
                         alt="grab"
