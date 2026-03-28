@@ -18,7 +18,6 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { StudysetService } from '../studyset/studyset.service';
 import { SvenService } from './sven.service';
 import {
   CreateStudysetDto,
@@ -63,7 +62,7 @@ export class SvenController {
         fileSize: 10 * 1024 * 1024, // 10MB per file
       },
       fileFilter: (req, file, cb) => {
-        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|webpipe|pdf)$/)) {
+        if (!file.mimetype.match(/\/(jpg|jpeg|heic|png|gif|webpipe|pdf)$/)) {
           return cb(new Error('This file is not allowed!'), false);
         }
         cb(null, true);
