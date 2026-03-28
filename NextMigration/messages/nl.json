@@ -757,15 +757,21 @@
     "placeholder_school": "school name..."
   },
   "createstudoset": {
-    "title": "Create new Studoset",
-    "title_placeholder": "Fill in a title...",
-    "course_placeholder": "Fill in a course...",
-    "folder_placeholder": "Select a folder...",
-    "term_language": "Term language...",
-    "def_language": "Definition language...",
-    "import": "Import",
-    "create": "Create Set",
-    "add_card": "Add Card"
+    "title": "Creëer nieuwe Studoset",
+    "title_placeholder": "Vul een titel in...",
+    "course_placeholder": "Vul een vak in...",
+    "folder_placeholder": "Selecteer een map...",
+    "term_language": "Taal term...",
+    "def_language": "Taal definitie...",
+    "import": "Importeer",
+    "create": "Creëer Set",
+    "add_card": "Voeg kaart toe",
+    "title_error": "titel is verplicht",
+    "course_error": "vak is verplicht",
+    "folder_error": "selecteer een map",
+    "term_lang_error" : "selecteer een taal",
+    "def_lang_error" : "selecteer een taal",
+    "card_error" : "er zijn lege kaarten"
   },
   "createvisualset": {
     "title": "Create new Visualset",
@@ -779,7 +785,7 @@
     "add_card": "Add Card"
   },
   "card":{
-    "Definition": "Definition",
+    "Definition": "Definitie",
     "Term": "Term"
   },
   "notfound": {
