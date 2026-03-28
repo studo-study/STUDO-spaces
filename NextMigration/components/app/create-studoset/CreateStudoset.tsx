@@ -7,6 +7,7 @@ import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
 import {navigate} from "next/dist/client/components/segment-cache/navigation";
 import {useRouter} from "@/i18n/routing";
+import {CardData} from "@/types/types";
 
 const LANGUAGES = [
     { code: "en", name: "English" },
@@ -15,15 +16,6 @@ const LANGUAGES = [
     { code: "de", name: "German" },
     { code: "es", name: "Spanish" }
 ];
-
-interface CardData {
-    id: string;
-    index: number;
-    term: string;
-    definition: string;
-    image: string;
-    isDouble: boolean;
-}
 
 
 export default function CreateStudosetForm() {
@@ -284,7 +276,19 @@ export default function CreateStudosetForm() {
                     <div ref={cardsContainerRef}
                          className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10"
                          data-cy="cards_container">
-                        {cardArray.map((card) => (<CardItem  length={cardArray.length} isDouble={duplicates.includes(card.id)} key={card.id} index={card.index} id={card.id} deleteCard={deleteCard} updateCard={updateCard}/>))}
+                        {cardArray.map((card) => (
+                            <CardItem
+                                key={card.id}
+                                id={card.id}
+                                index={card.index}
+                                term={card.term}
+                                definition={card.definition}
+                                isDouble={duplicates.includes(card.id)}
+                                deleteCard={deleteCard}
+                                updateCard={updateCard}
+                                length={cardArray.length}
+                            />
+                        ))}
                     </div>
 
                     <div className="flex w-full mb-3 sm:mb-4 md:mb-5">
@@ -309,6 +313,8 @@ export default function CreateStudosetForm() {
 
                 {showImporter && (
                     <SetImporter
+                        cardArray={cardArray}
+                        setCardArray={setCardArray}
                         onClose={() => setShowImporter(false)}
                     />
                 )}

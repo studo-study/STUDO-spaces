@@ -1106,5 +1106,10 @@
     "vakken": "vakken"
 
 
+  },
+  "import" : {
+    "excel" : "Excel import",
+    "sven" : "SVEN import",
+    "import": "importeer"
   }
 }
