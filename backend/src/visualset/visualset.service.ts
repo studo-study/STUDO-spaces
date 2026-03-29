@@ -132,11 +132,7 @@ export class VisualsetService {
         });
     });
 
-    try {
-      await this.db.insert(visualsets).values(visualset);
-    } catch (error) {
-      throw error;
-    }
+    await this.db.insert(visualsets).values(visualset);
     await this.db.insert(studysessions).values(session);
     await this.db
       .update(users)
@@ -147,11 +143,7 @@ export class VisualsetService {
       .where(eq(users.id, user_id));
 
     for (const Image of IMAGES) {
-      try {
-        await this.db.insert(images).values(Image);
-      } catch (error) {
-        throw error;
-      }
+      await this.db.insert(images).values(Image);
     }
 
     for (const pin of Pins) {

@@ -231,7 +231,7 @@ export interface Studyset {
 export interface FullStudyset extends Studyset {
     cards: Card[];
     likes: SetLike[];
-    session?: StudySession;
+    session: StudySession;
     classrooms?: Classroom[];
     folders?: Folder[];
 }
@@ -491,6 +491,7 @@ export interface StudySession {
     user_id: string;
     set_id: string;
     set_type: 'studyset' | 'visualset';
+    cards: SessionCard[];
 }
 
 export interface SessionCard {
