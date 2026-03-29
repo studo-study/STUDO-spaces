@@ -25,7 +25,7 @@ export default async function SetsPage({params}: {
 
     console.log(data);
     return(
-        <div className="w-full h-full">
+        <div className="w-full h-full ">
             <Grid data={data}/>
         </div>);
 }
