@@ -1,29 +1,25 @@
 "use client"
 import {IoIosSettings} from "react-icons/io";
 import {useEffect, useRef, useState} from "react";
-import {useTranslations} from "next-intl";
 
-interface SettingsTriggerProps {
-    settingsOpen: boolean,
-    setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    toggleSettings: () => void,
-}
-
-export default function SettingsTrigger(props: SettingsTriggerProps) {
-    const {settingsOpen, setSettingsOpen, toggleSettings} = props;
-
+export default function SettingsTrigger() {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const containerRef = useRef(null);
 
-    const toggleOpen = () => setSettingsOpen(prev => !prev);
+    const toggleOpen = () => setIsOpen(prev => !prev);
 
     return(
         <div className={"w-full h-fit relative"}>
             <div className={"relative w-full h-20 flex items-center justify-end flex-row"}>
-                <div onClick={toggleOpen} className={'min-w-12 h-12 dark:text-white cursor-pointer border border-transparent transition-all rounded-full shadow-xl bg-studogrey/30 flex  items-center justify-center hover:border-studogrey'}>
+                <div ref={containerRef} onClick={toggleOpen} className={'min-w-12 h-12 dark:text-white cursor-pointer border border-transparent transition-all rounded-full shadow-xl bg-studogrey/30 flex  items-center justify-center hover:border-studogrey'}>
                     <IoIosSettings size={25} className={'active:rotate-180 duration-300 transition-all'}/>
                 </div>
             </div>
-
+            <SettingsPopup
+                containerRef={containerRef}
+                settingsOpen={isOpen}
+                setSettingsOpen={setIsOpen}
+            />
         </div>
     )
 }
@@ -32,11 +28,10 @@ interface SettingsPopupProps {
     settingsOpen: boolean,
     setSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     containerRef: React.RefObject<HTMLDivElement | null>,
-    toggleSettings: () => void,
 }
 
 function SettingsPopup(props: SettingsPopupProps) {
-    const {settingsOpen, setSettingsOpen, containerRef, toggleSettings} = props
+    const {settingsOpen, setSettingsOpen, containerRef} = props
     const popupRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -64,7 +59,7 @@ function SettingsPopup(props: SettingsPopupProps) {
 
     return (   <div
         ref={popupRef}
-        className={`absolute top-full right-0 mt-4
+        className={`absolute top-full right-0 mt-2
         z-[9999] w-56 p-2 truncate
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
@@ -77,5 +72,12 @@ function SettingsPopup(props: SettingsPopupProps) {
             : "opacity-0 scale-95 -translate-y-2 invisible pointer-events-none"}
       `}
         onClick={(e) => e.stopPropagation()}
-    ></div>)
+    >
+        <div>
+            <div className="checkbox-wrapper-7">
+                <input className="tgl tgl-ios" id="cb2-7" type="checkbox"/>
+                <label className="tgl-btn" htmlFor="cb2-7"></label>
+            </div>
+        </div>
+    </div>)
 }

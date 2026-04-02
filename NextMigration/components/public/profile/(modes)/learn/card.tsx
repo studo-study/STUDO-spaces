@@ -18,6 +18,7 @@ interface LearnCardProps {
     correct: boolean;
     incorrect: boolean;
     inputRef: React.RefObject<HTMLInputElement>;
+    disabled: boolean;
 }
 
 const LANGUAGES = [
@@ -28,16 +29,14 @@ const LANGUAGES = [
     { code: "es", name: "Spanish" }
 ];
 
-export default function LearnCard({currentCard, correct, incorrect, inputRef, queueMode, termMode, termLang, defLang, check}: LearnCardProps) {
+export default function LearnCard({currentCard, correct, incorrect, inputRef, disabled, termMode, termLang, defLang, check}: LearnCardProps) {
     console.log(termLang)
     const currentValue = termMode ? currentCard.card.term : currentCard.card.definition;
     const term = getTalen(termLang, defLang, "term");
     const def = getTalen(defLang, termLang, "definition");
     const checkInput = () => {
         if(inputRef.current) {
-            const input = inputRef.current.value;
-            inputRef.current.disabled = true;
-            check(input);
+            check(inputRef.current.value);
         }
     }
     return(<div className={"w-full h-130 rounded-4xl border border-gray-300 dark:border-studoborder/30 bg-studogrey/30 shadow-xl p-5 gap-5 flex flex-col justify-between items-center"}>
@@ -73,9 +72,13 @@ export default function LearnCard({currentCard, correct, incorrect, inputRef, qu
             }`}>
                 <input
                     ref={inputRef}
+                    disabled={disabled}  // ← React beheert dit nu
                     autoFocus={true}
-                    onKeyDown={e => e.key === "Enter" && checkInput()}
-                 type="text" placeholder={termMode ? `typ definitie` : `typ term`} className={"w-full group h-full outline-none"}/>
+                    onKeyDown={e => e.key === "Enter" && !disabled && checkInput()}
+                    type="text"
+                    placeholder={termMode ? `typ definitie` : `typ term`}
+                    className={"w-full group h-full outline-none"}
+                />
             </div>
         </div>
     </div>

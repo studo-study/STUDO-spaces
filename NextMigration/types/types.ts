@@ -482,7 +482,7 @@ export interface StudySession {
     started_at: string;
     duration_min: number;
     ended_at?: string;
-    set_index: number;
+    index: number;
     accuracy: number;
     average_response_time: number;
     longest_focus_streak: number;
