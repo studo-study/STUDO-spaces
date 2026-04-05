@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-/.pnp
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -8,11 +8,18 @@ node_modules/
 !.yarn/releases
 !.yarn/versions
 
-# Build output
+# Build outputs
 dist/
-/.next/
-/out/
-/build
+build/
+out/
+
+# Next.js
+.next/
+.next-dev/          # soms gebruikt Turbopack
+out/
+
+# Turborepo
+.turbo/
 
 # Logs
 logs/
@@ -23,48 +30,71 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Runtime / env
+.env
+.env*.local
+.env.test
+.env.development
+.env.production
+
 # Testing
 /coverage
 /.nyc_output
+test-results/
+playwright-report/
+vitest.config.*.timestamp-*.js
 
 # OS
 .DS_Store
+Thumbs.db
 
-# IDEs
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# IDE
+.idea/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.sublime-workspace
 
-# Environment variables
-.env
-.env*.local
-.env.test
-
-# Temp / runtime
-.temp
-.tmp
-pids/
+# Temporary files
+.temp/
+.tmp/
 *.pid
 *.seed
 *.pid.lock
+pids/
 
 # Misc
 *.pem
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 .vercel
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
 
-# Turbo
-.turbo
+# Old migration folders (belangrijk in jouw geval!)
+NextMigration/
+frontend/
+backend/            # alleen als alles al in apps/backend zit
+
+# Duplicate / backup files
+*" 2".json
+*" 2".yaml
+*" 2".js
+*" 2".ts
+*" 2".tsx
+*copy*.*
+*.bak
+
+# Package manager lockfiles in wrong places
+apps/*/pnpm-lock.yaml
+apps/*/package-lock.json
+apps/*/yarn.lock
+
+# Local caches
+.drizzle/
+.cache/
+.eslintcache
+.stylelintcache
