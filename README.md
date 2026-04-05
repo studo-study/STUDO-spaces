@@ -1,191 +1,143 @@
-# STUDO-Mobile
+# Studo
 
-STUDO is een platform dat studenten helpt om zo efficiënt en snel mogelijk te studeren. De applicatie speelt in op specifieke niches, zoals anatomie en vocabulaire, waar gerichte leermethoden een grote meerwaarde bieden.
+**Building the studytools of tomorrow**
+
+Studo is een all-in-one studieplatform voor studenten hoger onderwijs. Het combineert bewezen leermethodes zoals spaced repetition, visueel leren en actieve recall in één geïntegreerd platform dat zich aanpast aan de student.
+
+---
+
+## Waarom Studo?
+
+Studenten gebruiken gemiddeld 3 tot 5 losse tools om te studeren: Quizlet voor vocabulaire, Anki voor herhaling, Notion voor notities, losse PDF's voor schema's. Geen van deze tools is gebouwd voor de complexiteit van hoger onderwijs — denk aan anatomie, STEM-vakken of medische opleidingen.
+
+Studo lost dit op met:
+
+- **Studosets** — Term-definitie paren met spaced repetition, tijdstrijd en flashcard modi. Ondersteuning voor LaTeX, afbeeldingen en import uit Word/Excel.
+- **Visualsets** — Upload afbeeldingen, plaats pins met definities. Ideaal voor anatomie, aardrijkskunde en schema's. Leer via *Spotten* (typ de definitie) of *Aanwijzen* (duid de juiste pin aan).
+- **Classrooms** — Officiële klasgroepen, informele studygroups en open communities. Deel sets, volg voortgang en daag elkaar uit.
+- **Studo Select** *(coming soon)* — AI-laag met SVEN: automatische set-generatie uit PDF's, course linking en semantic search.
+
+---
 
 ## Tech Stack
 
-**Frontend:** Next Js, Tailwind CSS, Animate.css  
-**Backend:** NestJS, Drizzle ORM, PostgreSQL  
-**Testing:** Cypress (frontend), Vitest (backend)  
-**Infrastructure:** Docker, Scaleway (object storage)
+| Layer | Technologie |
+|-------|------------|
+| Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS 4 |
+| Backend | NestJS 11, TypeScript, Drizzle ORM |
+| Database | PostgreSQL |
+| Storage | Scaleway S3 |
+| Auth | NextAuth (OAuth + JWT via Passport) |
+| AI | OpenAI API *(fase 3-4)* |
+| Infra | Docker, Railway |
 
-## Vereisten
+---
 
-- [Node.js](https://nodejs.org) v20+
-- [pnpm](https://pnpm.io)
-- [Docker](https://www.docker.com/)
-- [PostgreSQL](https://www.postgresql.org/)
+## Monorepo Structuur
 
-## Installatie
-
-```bash
-git clone https://github.com/studo-study/STUDO.git
-cd STUDO
-
-# Frontend dependencies
-cd frontend && pnpm install
-
-# Backend dependencies
-cd ../backend && pnpm install
+```
+studo-web/
+├── apps/
+│   ├── backend/          # NestJS API
+│   │   ├── src/
+│   │   ├── migrations/
+│   │   ├── test/
+│   │   └── drizzle.config.ts
+│   └── web/              # Next.js frontend
+│       ├── app/
+│       ├── components/
+│       ├── store/
+│       ├── lib/
+│       ├── i18n/
+│       └── types/
+├── packages/             # Shared packages (types, utils)
+├── turbo.json
+├── pnpm-workspace.yaml
+└── package.json
 ```
 
-## Configuratie
+Gemanaged met **pnpm workspaces** en **Turborepo**.
 
-### Frontend `.env`
+---
+
+## Getting Started
+
+### Vereisten
+
+- Node.js ≥ 20
+- pnpm ≥ 10
+- PostgreSQL
+- Docker *(optioneel, voor database)*
+
+### Installatie
 
 ```bash
-VITE_API_URL=http://localhost:3000/api
+# Clone de repo
+git clone https://github.com/studo-study/STUDO-web.git
+cd STUDO-web
+
+# Installeer dependencies
+pnpm install
+
+# Kopieer environment files
+cp apps/backend/.env.example apps/backend/.env
+cp apps/web/.env.example apps/web/.env
 ```
 
-### Backend `.env`
+### Development
 
 ```bash
-NODE_ENV=development
-PORT=3000
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/studo
-
-# JWT & authenticatie instellingen:
-AUTH_JWT_SECRET=...
-AUTH_JWT_AUDIENCE=studo-(api)
-AUTH_JWT_ISSUER=studo-(api)
-
-# Password hashing (Argon2)
-AUTH_HASH_LENGTH=32
-AUTH_HASH_TIME_COST=6
-AUTH_HASH_MEMORY_COST=65536
-AUTH_MAX_DELAY=2000
-
-# CORS
-CORS_ORIGINS=["http://localhost:5173"]
-CORS_MAX_AGE=10800
-
-# OAuth (optioneel)
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-GOOGLE_CALLBACK_URL=http://localhost:3000/api/sessions/google/callback
-
-MICROSOFT_CLIENT_ID=
-MICROSOFT_CLIENT_SECRET=
-MICROSOFT_CALLBACK_URL=http://localhost:3000/api/sessions/microsoft/callback
-
-FACEBOOK_CLIENT_ID=
-FACEBOOK_CLIENT_SECRET=
-FACEBOOK_CALLBACK_URL=http://localhost:3000/api/sessions/facebook/callback
-
-# Object storage om afbeeldingen in weg te schrijven
-SCALEWAY_ACCESS_KEY=...
-SCALEWAY_SECRET_KEY=...
-SCW_DEFAULT_ORGANIZATION_ID=...
-SCW_DEFAULT_PROJECT_ID=...
-SCALEWAY_BUCKET_NAME=visualsets-images
-SCALEWAY_REGION=fr-par
-
-FRONTEND_URL=http://localhost:5173
-```
-
-## Development
-
-### Frontend
-
-```bash
-cd frontend
+# Start alles (backend + frontend)
 pnpm dev
+
+# Of individueel
+pnpm dev:web          # Next.js op :4000
+pnpm dev:api          # NestJS op :3000
+
+# Build
+pnpm build
 ```
 
-### Backend
+### Database
 
 ```bash
-cd backend
+# Migraties genereren
+pnpm --filter @studo/backend db:generate
 
+# Migraties uitvoeren
+pnpm --filter @studo/backend db:migrate
+
+# Database seeden
+pnpm --filter @studo/backend db:seed
 ```
 
-### Development:
-
-Controleer ook zeker of de `.env` voor de back-end klopt met diegene die hierboven beschreven staat, naast die `.env`
-voor
-development moet je ook een `.env.test` creëeren die puur bedoeld is voor testing, deze moet het volgende bevatten:
-
-```bash
-# Algemene configuratie
-NODE_ENV=testing
-PORT=...
-
-# CORS configuratie
-CORS_ORIGINS=["http://localhost:5173"]
-CORS_MAX_AGE=...
-
-# Auth configuratie
-AUTH_JWT_SECRET=...
-AUTH_JWT_AUDIENCE=studo-(api)
-AUTH_JWT_ISSUER=studo-(api)
-AUTH_HASH_LENGTH=XX
-AUTH_HASH_TIME_COST=X
-AUTH_HASH_MEMORY_COST=XXXXX
-AUTH_MAX_DELAY=XXXX
-
-# Logging configuratie
-LOG_DISABLED=true
-```
-
-Creëer daarna ook de databank die beschreven staat in de `.env.test`. Dit gaat via volgend commando:
-
-```bash
-pnpm db:generate
-```
-
-Migreer daarna de database:
-
-```bash
-pnpm db:migrate
-pnpm db:seed
-
-# Start server
-pnpm start:dev
-```
-
-## Productie (Docker)
-
-```bash
-# Frontend
-cd frontend
-docker compose up
-
-# Backend
-cd backend
-docker compose -f docker-compose-backend.yml up
-pnpm db:seed  # eenmalig
-```
-
-## Testing
-
-### Frontend (Cypress)
-
-```bash
-cd frontend
-pnpm dev          # start eerst de dev server
-pnpm test         # open Cypress UI
-pnpm test:headless  # headless voor CI
-```
-
-### Backend (Vitest)
-
-```bash
-cd backend
-pnpm test:e2e
-```
-
-> De testdatabase wordt automatisch aangemaakt en opgeruimd per test-run.
+---
 
 ## Scripts
 
-| Script | Beschrijving |
-|--------|--------------|
-| `pnpm start:dev` | Development server met hot reload |
-| `pnpm build` | Build voor productie |
-| `pnpm lint` | Lint code |
-| `pnpm format` | Format code met Prettier |
-| `pnpm db:migrate` | Migreer database |
-| `pnpm db:seed` | Seed database |
-| `pnpm db:reset` | Reset database |
+| Command | Beschrijving |
+|---------|-------------|
+| `pnpm dev` | Start alle apps via Turborepo |
+| `pnpm build` | Build alle apps |
+| `pnpm lint` | Lint alle apps |
+| `pnpm dev:web` | Start alleen de frontend |
+| `pnpm dev:api` | Start alleen de backend |
 
-**succes**
+---
+
+## Roadmap
+
+- [x] Studosets met spaced repetition & leermodi
+- [x] Visualsets met pin-based learning
+- [x] Classrooms, Study Groups & Communities
+- [x] Zoekfunctie & ecosysteem
+- [ ] Statistieken dashboard
+- [ ] Studo Courses & Verified Sets
+- [ ] Studo Select (AI-laag met SVEN)
+- [ ] B2B schoollicenties
+
+---
+
+## Licentie
+
+Proprietary — alle rechten voorbehouden.
