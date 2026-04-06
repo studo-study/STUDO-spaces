@@ -79,9 +79,31 @@ cd STUDO-web
 # Installeer dependencies
 pnpm install
 
-# Kopieer environment files
+# Binnen de repo staat een .env.example
+# Gebruik deze om zelf de .env's aan te maken
 cp apps/backend/.env.example apps/backend/.env
 cp apps/web/.env.example apps/web/.env
+```
+
+### Docker
+
+```bash
+# Docker databank container starten in de root
+docker compose up
+```
+
+
+### Database
+
+```bash
+# Migraties genereren
+pnpm --filter @studo/backend db:generate
+
+# Migraties uitvoeren
+pnpm --filter @studo/backend db:migrate
+
+# Database seeden
+pnpm --filter @studo/backend db:seed
 ```
 
 ### Development
@@ -98,18 +120,6 @@ pnpm dev:api          # NestJS op :3000
 pnpm build
 ```
 
-### Database
-
-```bash
-# Migraties genereren
-pnpm --filter @studo/backend db:generate
-
-# Migraties uitvoeren
-pnpm --filter @studo/backend db:migrate
-
-# Database seeden
-pnpm --filter @studo/backend db:seed
-```
 
 ---
 
