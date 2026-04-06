@@ -1,11 +1,10 @@
 "use client"
 import {useTranslations} from "next-intl";
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import SetImporter from "@/components/app/create-studoset/SetImporter";
 import CardItem from "@/components/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
-import {navigate} from "next/dist/client/components/segment-cache/navigation";
 import {useRouter} from "@/i18n/routing";
 import {CardData} from "@/types/types";
 

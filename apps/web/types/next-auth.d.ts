@@ -1,5 +1,5 @@
 // types/next-auth.d.ts
-import "@/types/next-auth";
+import "next-auth";
 import "next-auth/jwt";
 
 type PublicRole = "user" | "owner" | "admin";
@@ -24,7 +24,7 @@ interface StudoUser {
     lastTen: any[];
 }
 
-declare module "@/types/next-auth" {
+declare module "next-auth" {
     interface Session {
         user: StudoUser;
         accessToken: string;

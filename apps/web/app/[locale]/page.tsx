@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
-import { auth } from "../../auth";
+import { auth } from "./../../auth";
 
 export default async function LocalePage() {
     const locale = await getLocale();

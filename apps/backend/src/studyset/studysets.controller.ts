@@ -71,7 +71,7 @@ export class StudysetsController {
 
   //GET specfieke studosets's session ----------------------------------------
 
-  @ApiOperation({ summary: 'Haal alle studysessions op van een studoset.' })
+  @ApiOperation({ summary: 'Haal studysession op van een studoset.' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
   @ApiResponse({
     status: 200,

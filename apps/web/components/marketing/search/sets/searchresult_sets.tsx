@@ -45,7 +45,7 @@ function SetResult({item, t}: SetResultProps) {
             <span>{item.items} {" "} {item.type === "visualset" ? t("pins") : t("cards")}</span>
             <span>{item.likes} {" "} {item.likes === 1 ? t("like") : t("likes")}</span>
         </div>
-        <Link href={"/profile" + item.owner_id} className={"w-full h-fit group flex flex-row gap-2 items-center"}>
+        <Link href={"/profile/" + item.owner_id} className={"w-full h-fit group flex flex-row gap-2 items-center"}>
             <Image src={item.img_url} width={0} height={0} alt={"pfp"} className={"w-5 h-5 rounded-full bg-gray-400/30 overflow-hidden"}/>
             <span className={"group-hover:underline"}>{item.owner}</span>
         </Link>

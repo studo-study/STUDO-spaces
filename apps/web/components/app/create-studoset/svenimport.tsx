@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import MockGemini from "@/data/mockgemini";
 import {CardData} from "@/types/types";
+import {IoSparklesSharp} from "react-icons/io5";
 
 const MAX_FILES = 3;
 const ACCEPTED = ["image/png", "image/jpeg", "image/webp", "image/heic", "application/pdf"];
@@ -96,7 +97,6 @@ export default function SvenImport({onClose, cardArray, setCardArray}: importerP
                     className="hidden"
                 />
 
-                {/* Icon */}
                 <div className={`
           w-16 h-16 rounded-2xl flex items-center justify-center
           transition-all duration-300
@@ -170,26 +170,33 @@ export default function SvenImport({onClose, cardArray, setCardArray}: importerP
                     disabled={files.length === 0 || isUploading}
                     type="button"
                     className={`
-            w-full py-3.5 rounded-full font-bold text-lg
+                    relative  overflow-hidden
+            w-full rounded-full font-bold text-lg
             transition-all duration-300 cursor-pointer select-none
-            border border-studoborder/30
+           h-full justify-center p-[3px] bg-gray-700
             ${files.length === 0 || isUploading
-                        ? "bg-studogrey/30 text-white/20 cursor-not-allowed"
+                        ? "bg-gray-700 text-white/20 cursor-not-allowed"
                         : "bg-gradient-to-br from-blue-400 to-blue-500 text-white active:scale-[0.98] shadow-xl"
                     }
           `}
                 >
-                    {isUploading ? (
-                        <span className="flex items-center justify-center gap-2">
+                    <div className={`absolute inset-0 z-0 w-full h-full  aiBorderAnimation transition-all duration-300 ${files.length === 0 || isUploading ? "opacity-0" : "opacity-100"}`}/>
+                    <div className={`relative bg-w-full z-10 h-12 flex rounded-full items-center justify-center  ${files.length === 0 || isUploading
+                        ? "bg-gray-700 text-white/20 cursor-not-allowed"
+                        : "bg-gradient-to-br from-gray-700 to-gray-600 text-white active:scale-[0.98] shadow-xl"
+                    }`}>
+                        {isUploading ? (
+                            <span className="flex items-center justify-center gap-2">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
               SVEN ANALYSEERT...
             </span>
-                    ) : (
-                        `IMPORTEER ${files.length > 0 ? `(${files.length})` : ""}`
-                    )}
+                        ) : (
+                            `IMPORTEER ${files.length > 0 ? `(${files.length})` : ""}`
+                        )}
+                    </div>
                 </button>
             </div>
         </div>

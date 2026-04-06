@@ -96,7 +96,8 @@ export default async function HomePage() {
                         href="/your-files/sets"
                     />
                     <div className="w-full grid grid-cols-4 gap-5 h-full">
-                        {data?.courses?.map((course, i) => (
+                        {data?.courses?.splice(0, 4).map((course, i) => (
+
                             <CourseCard key={course} course={course} />
                         ))}
                     </div>

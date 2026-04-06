@@ -61,7 +61,7 @@ function ListItem({ set, index, t, locale }: SetItemProps) {
                             <span>
                             {t("added by")}
                         </span>
-                            <Link href={"/profile" + set.user_id} className={"hover:underline"}>{set.displayName}</Link>
+                            <Link href={"/profile/" + set.user_id} className={"hover:underline"}>{set.displayName}</Link>
                         </div>
 
                     </div>

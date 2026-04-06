@@ -185,10 +185,13 @@ export class StudysetService {
 
     let sesh = null;
     if (!session) {
-      await this.createSession(user_id, set_id);
-      sesh = await this.getBySetId(user_id, set_id);
+      sesh = await this.createSession(user_id, set_id);
     } else {
       sesh = await this.getBySetId(user_id, set_id);
+      if (sesh.cards && sesh.cards.length === 0) {
+        await this.db.delete(studysessions).where(eq(studysessions.id, sesh.id));
+        sesh = await this.createSession(user_id, set_id);
+      }
     }
 
     // Get cards
@@ -228,6 +231,8 @@ export class StudysetService {
     const seshcards = await this.db.query.sessioncards.findMany({
       where: eq(sessioncards.session_id, session.id),
     });
+    console.log('session id:', session.id);
+    console.log('seshcards:', seshcards);
 
     return {
       ...session,

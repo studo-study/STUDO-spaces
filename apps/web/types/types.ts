@@ -5,7 +5,7 @@
 // NEXTAUTH TYPE EXTENSIONS
 // ============================================
 
-declare module '@/types/next-auth' {
+declare module 'next-auth' {
     interface Session extends DefaultSession {
         user: StudoUser;
         accessToken: string;
@@ -231,7 +231,7 @@ export interface Studyset {
 export interface FullStudyset extends Studyset {
     cards: Card[];
     likes: SetLike[];
-    session?: StudySession;
+    session: StudySession;
     classrooms?: Classroom[];
     folders?: Folder[];
 }
@@ -482,7 +482,7 @@ export interface StudySession {
     started_at: string;
     duration_min: number;
     ended_at?: string;
-    set_index: number;
+    index: number;
     accuracy: number;
     average_response_time: number;
     longest_focus_streak: number;
@@ -491,6 +491,7 @@ export interface StudySession {
     user_id: string;
     set_id: string;
     set_type: 'studyset' | 'visualset';
+    cards: SessionCard[];
 }
 
 export interface SessionCard {
@@ -624,7 +625,7 @@ export interface SetIdentifier {
 
 // types/next-auth.d.ts
 
-import { DefaultSession } from '@/types/next-auth';
+import { DefaultSession } from 'next-auth';
 import { DefaultJWT } from 'next-auth/jwt';
 
 // ============================================

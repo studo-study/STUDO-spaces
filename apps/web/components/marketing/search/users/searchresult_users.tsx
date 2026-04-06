@@ -32,7 +32,7 @@ interface SetResultProps {
 
 function UserResult({item}: SetResultProps) {
     console.log("img_url:", JSON.stringify(item.img_url));
-    return(<Link href={"/profile" + item.id} className={`w-full min-h-40 rounded-2xl border border-studogrey/30 bg-studogrey/30 drop-shadow-3xl flex flex-col gap-5`}>
+    return(<Link href={"/profile/" + item.id} className={`w-full min-h-40 rounded-2xl border border-studogrey/30 bg-studogrey/30 drop-shadow-3xl flex flex-col gap-5`}>
         <div className={"w-full h-fit flex items-center justify-baseline gap-3 overflow-hidden"}>
             <div className="relative w-10 h-10 rounded-full bg-studogrey overflow-hidden flex items-center justify-center">
                 <Image

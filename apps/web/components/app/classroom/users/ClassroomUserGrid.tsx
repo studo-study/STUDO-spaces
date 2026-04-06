@@ -128,7 +128,7 @@ function JoinRequest({t, request, joinRequests, setJoinRequests }: JoinRequestPr
                     className="object-cover h-fit"
                 />
             </div>
-            <Link href={"/profile" + request.id} className={"dark:text-white hover:underline text-studodarkblue"}> {request.displayName} {" "} {t("w_l_t_j")}</Link>
+            <Link href={"/profile/" + request.id} className={"dark:text-white hover:underline text-studodarkblue"}> {request.displayName} {" "} {t("w_l_t_j")}</Link>
         </div>
         <div className={"w-fit flex flex-row items-center gap-5 dark:text-white text-studodarkblue"}>
             <button onClick={toggleRemove} className={"cursor-pointer hover:bg-emerald-400 active:scale-95 transition-all duration-300 w-10 h-10 rounded-full bg-studogrey items-center justify-center flex"}><FaCheck size={18}/></button>
@@ -137,7 +137,7 @@ function JoinRequest({t, request, joinRequests, setJoinRequests }: JoinRequestPr
     </div>)
 }
 function UserItem({t, user}: UserItemProps) {
-    return (<Link href={"/profile" + user.user_id} className={`max-h-22 min-h-22 flex-col sm:flex-row px-6 pl-4 py-4 sm:py-0 max-w-full min-w-full cursor-pointer
+    return (<Link href={"/profile/" + user.user_id}  className={`max-h-22 min-h-22 flex-col sm:flex-row px-6 pl-4 py-4 sm:py-0 max-w-full min-w-full cursor-pointer
                  flex gap-3 shadow-2xl items-center w-full rounded-full bg-studogrey/10 border border-studogrey/20 
                  hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}>
         <div className={"min-w-15 min-h-15 rounded-full bg-studogrey"}>

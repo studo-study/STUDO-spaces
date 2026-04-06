@@ -30,7 +30,7 @@ interface UserProps {
 function ClassroomUser({user}: UserProps) {
     return (
         <Link
-            href={"/profile" + user.user_id}
+            href={"/profile/" + user.user_id}
             className={`
                      max-h-15 h-15 min-h-15  flex-row px-3 py-4 pr-5 sm:py-0 max-w-full min-w-full cursor-pointer justify-between dark:text-white text-studodarkblue
                  flex gap-3 shadow-2xl items-center w-full rounded-full bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}

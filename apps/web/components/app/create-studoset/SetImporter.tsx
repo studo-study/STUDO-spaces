@@ -4,6 +4,7 @@ import {useState} from "react";
 import SvenImport from "@/components/app/create-studoset/svenimport";
 import ExcelImport from "@/components/app/create-studoset/excelimport";
 import {CardData} from "@/types/types";
+import {RiFileExcel2Fill} from "react-icons/ri";
 interface importerProps {
     onClose: () => void,
     cardArray: CardData[];
@@ -28,7 +29,10 @@ export default function SetImporter({ onClose, cardArray, setCardArray }: import
                     />
                 </div>
                 <div className={'w-1/4 rounded-full h-14 border border-studoborder/30 bg-studogrey/30 shadow-2xl text-studodarkblue dark:text-white flex items-center justify-center gap-2 p-2 px-2'}>
-                    <span onClick={toggleSven} className={`w-1/2 cursor-pointer rounded-full bg-gray-700 font-bold border border-gray-700 hover:border-studoborder transition-all duration-300  ${!sven && 'border-studoborder'}  shadow-2xl h-full flex items-center justify-center`}>{t('excel')}</span>
+                    <div onClick={toggleSven} className={`w-1/2 cursor-pointer gap-2 rounded-full bg-gray-700 font-bold border border-gray-700 hover:border-studoborder transition-all duration-300  ${!sven && 'border-studoborder'}  shadow-2xl h-full flex items-center justify-center`}>
+                        <RiFileExcel2Fill />
+                        <span>{t('excel')}</span>
+                    </div>
                     <div onClick={toggleSven} className="w-1/2 relative group rounded-full cursor-pointer bg-gray-700  flex items-center h-full justify-center p-[1px] ">
 
                         <div className={`absolute inset-0 w-full opacity-0 h-full group-hover:opacity-100 ${sven && 'opacity-100'} transition-opacity duration-300 aiBorderAnimation rounded-full`} />
@@ -40,7 +44,7 @@ export default function SetImporter({ onClose, cardArray, setCardArray }: import
                     </div>
                 </div>
             </div>
-            <div className={'w-full h-full'}>
+            <div className={'w-3/4 h-full'}>
                 {sven ? <SvenImport onClose={onClose} cardArray={cardArray} setCardArray={setCardArray}/> : <ExcelImport/>}
             </div>
         </div>)
