@@ -98,3 +98,4 @@ apps/*/yarn.lock
 .cache/
 .eslintcache
 .stylelintcache
+.DS_Store
