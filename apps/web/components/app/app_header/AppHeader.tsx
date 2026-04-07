@@ -12,27 +12,7 @@ import SearchBar from "@/components/app/app_header/SearchContainer";
 import Image from "next/image";
 import {Link} from "@/i18n/routing";
 import {FaArrowRight} from "react-icons/fa";
-
-// User type (je kunt dit ook exporteren vanuit UserProvider)
-interface User {
-    displayName: string;
-    email: string;
-    id: string;
-    img_url: string;
-    joinNumber: number;
-    join_date: string;
-    lastTen: studyset[];
-    publicRole: string;
-    stats: {
-        totalsets: number;
-        timeLearned: number;
-        cardsLearned: number;
-    };
-    streak_count: number;
-    streak_last_update: string;
-    totalSets: number;
-    verified: boolean;
-}
+import {StudoUser} from "@/types/types";
 
 interface studyset {
     set_id: string;
@@ -52,7 +32,7 @@ interface HeaderProps {
     createOpen: boolean;
     setCreateOpen: React.Dispatch<React.SetStateAction<boolean>>;
     toggleCreate: () => void;
-    user: User | null;      // <- nieuw
+    user: StudoUser | null;      // <- nieuw
     isLoading: boolean;     // <- nieuw
 }
 

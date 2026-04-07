@@ -1,6 +1,7 @@
 "use client"
 import { createContext, useContext, ReactNode } from "react";
 import { useSession } from "next-auth/react";
+import {StudoUser} from "@/types/types";
 
 interface User {
     displayName: string;
@@ -33,7 +34,7 @@ interface studyset {
 }
 
 interface UserContextType {
-    user: User | null;
+    user: StudoUser | null;
     isLoading: boolean;
     isModerator: boolean;
 }

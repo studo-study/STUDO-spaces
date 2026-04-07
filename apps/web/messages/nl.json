@@ -736,7 +736,8 @@
     "account": "Account",
     "search": "Search",
     "nonotif": "no notifications",
-    "allup": "you're up-to-date"
+    "allup": "you're up-to-date",
+    "search": "zoeken..."
 
   },
   "createfolder": {
@@ -1055,7 +1056,8 @@
     "classroom_notifications": "Classrooom Notifications",
     "classroom_invite": "Allow Classroom Invitations",
     "auto_participate": "Automatically participate in competitions",
-    "experimental": "Allow Experimental Classroom Features"
+    "experimental": "Allow Experimental Classroom Features",
+    "shortcuts": "Shortcuts"
   },
   "account": {
     "role": "role",

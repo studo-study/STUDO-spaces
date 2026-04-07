@@ -8,30 +8,12 @@ import {MdOutlinePrivacyTip, MdOutlineVerifiedUser} from "react-icons/md";
 import {LuLogOut, LuSettings} from "react-icons/lu";
 import {mockUser} from "@/data/mocks/startPageMock";
 import { signOut } from 'next-auth/react';
+import {StudoUser} from "@/types/types";
+import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 interface ProfileTriggerPopupProps{
     ProfileIsOpen: boolean,
     setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    user: user | null,
-}
-
-interface user {
-    displayName: string;
-    email: string;
-    id: string;
-    img_url: string;
-    joinNumber: number;
-    join_date: string;
-    lastTen: studyset[];
-    publicRole:string;
-    stats: {
-        totalsets: number;
-        timeLearned: number;
-        cardsLearned: number;
-    };
-    streak_count: number;
-    streak_last_update: string;
-    totalSets: number;
-    verified: boolean;
+    user: StudoUser | null,
 }
 
 interface studyset {
@@ -81,7 +63,7 @@ interface ProfilePopupProps {
     ProfileIsOpen: boolean,
     setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     containerRef: React.RefObject<HTMLDivElement | null>,
-    user: user | null,
+    user: StudoUser | null,
 }
 
 

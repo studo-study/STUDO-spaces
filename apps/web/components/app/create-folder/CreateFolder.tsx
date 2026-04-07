@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { IoIosClose } from "react-icons/io";
+import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 
 interface CreateFolderProps {
     createOpen: boolean;
@@ -12,6 +13,10 @@ export default function CreateFolder({ createOpen, setCreateOpen }: CreateFolder
     const inputRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("createfolder");
     const [mounted, setMounted] = useState(false);
+    useKeyboardShortcut("Escape", () => {
+        setCreateOpen(false);
+        if(inputRef.current) inputRef.current.value = "";
+    }, {always: true});
 
     useEffect(() => {
         setMounted(true);
@@ -33,6 +38,7 @@ export default function CreateFolder({ createOpen, setCreateOpen }: CreateFolder
     useEffect(() => {
         createOpen ? inputRef.current?.focus() : inputRef.current?.blur();
     }, [createOpen]);
+
 
     const isOpen = mounted && createOpen;
     const close = () => setCreateOpen(false);

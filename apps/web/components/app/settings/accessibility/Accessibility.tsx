@@ -7,8 +7,8 @@ export default function Accessibility() {
     const t = useTranslations("settings")
     return(<section className={"flex flex-col gap-5 w-full min-h-50"}>
         <span className={"w-full text-base font-bold h-fit"}>{t("accessibility")}</span>
-        <div className={"w-full min-h-40 h-fit rounded-3xl border border-studoborder"}>
-            <div className={"w-full border-b gap-4 border-studoborder px-10 py-8 flex flex-col"}>
+        <div className={"w-full min-h-40 h-fit rounded-3xl border dark:border-studoborder border-zinc-300"}>
+            <div className={"w-full border-b gap-4 dark:border-studoborder border-zinc-300 px-10 py-8 flex flex-col"}>
                 <div className={"w-full flex flex-row justify-between items-center"}>
                     <span className={"w-full text-base font-bold h-fit"}>{t("page_color")}</span>
                     <select
@@ -31,7 +31,7 @@ export default function Accessibility() {
                     </select>
                 </div>
             </div>
-            <div className={"w-full border-b gap-4 border-studoborder px-10 py-8 flex flex-col"}>
+            <div className={"w-full border-b gap-4 dark:border-studoborder border-zinc-300 px-10 py-8 flex flex-col"}>
                 <div className={"w-full flex flex-row justify-between items-center"}>
                     <span className={"w-full text-base font-bold h-fit"}>{t("font_size")}</span>
                     <select

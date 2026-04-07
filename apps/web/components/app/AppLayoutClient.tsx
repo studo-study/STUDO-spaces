@@ -1,31 +1,46 @@
 // components/app/AppLayoutClient.tsx
 "use client"
-import { memo, ReactNode, useState } from "react";
+import {memo, ReactNode, useState} from "react";
 import AppHeader from "@/components/app/app_header/AppHeader";
 import BurgerMenu from "@/components/app/app_header/BurgerMenu";
-import { UserProvider, useUser } from "@/components/providers/UserProvider";
+import {UserProvider, useUser} from "@/components/providers/UserProvider";
 import ConsoleEasterEgg from "@/components/overige/easteregg/console";
 import CreateFolder from "@/components/app/create-folder/CreateFolder";
 import AppLayoutContext from "./context/AppLayoutContext";
+import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
+import {useRouter} from "next/navigation";
 
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
 
-function AppLayoutInner({ children }: { children: ReactNode }) {
-    const { user, isLoading } = useUser();
+function AppLayoutInner({children}: { children: ReactNode }) {
+    const {user, isLoading} = useUser();
     const [burgerOpen, setBurgerOpen] = useState(false);
     const [Search, setSearch] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
+    const router = useRouter()
     const toggleSearch = () => setSearch(true);
     const toggleCreate = () => {
         requestAnimationFrame(() => {
             setCreateOpen(true);
         });
     };
+    const newStudoset = () => {
+        router.push("/create-studoset");
+    }
+
+    const newVisualset = () => {
+        router.push("/create-visualset");
+    }
+
+    useKeyboardShortcut("f", () => toggleCreate());
+    useKeyboardShortcut("s", () => newStudoset());
+    useKeyboardShortcut("v", () => newVisualset());
+    useKeyboardShortcut("m", () => toggleSearch(), {ctrl:true, always: true});
 
 
     return (
-        <AppLayoutContext.Provider value={{ toggleCreate }}>
+        <AppLayoutContext.Provider value={{toggleCreate}}>
             <div className="h-screen min-w-screen h-fit flex flex-col overflow-hidden">
                 <MemoizedHeader
                     burgerOpen={burgerOpen}
@@ -48,9 +63,14 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
                         />
                     </div>
                     <div className={"w-full flex items-center justify-center h-full"}>
-                        <main className="flex-1 min-h-0 xl:w-9/10 3xl:w-1/3 h-full pl-5 pr-5 lg:pl-10 lg:pr-77 overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden
-    [-ms-overflow-style:none]
-    [scrollbar-width:none]">
+                        <main
+                            className={`flex-1 min-h-0 xl:w-9/10 3xl:w-1/3 
+                                        h-full pl-5 pr-5 lg:pl-10 lg:pr-77 
+                                        overflow-y-scroll scroll-hidden 
+                                        [&::-webkit-scrollbar]:hidden
+                                        [-ms-overflow-style:none]
+                                        [scrollbar-width:none]`}
+                        >
                             {children}
                         </main>
                     </div>
@@ -60,12 +80,12 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
                 createOpen={createOpen}
                 setCreateOpen={setCreateOpen}
             />
-            <ConsoleEasterEgg />
+            <ConsoleEasterEgg/>
         </AppLayoutContext.Provider>
     );
 }
 
-export default function AppLayoutClient({ children }: { children: ReactNode }) {
+export default function AppLayoutClient({children}: { children: ReactNode }) {
     return (
         <UserProvider>
             <AppLayoutInner>{children}</AppLayoutInner>

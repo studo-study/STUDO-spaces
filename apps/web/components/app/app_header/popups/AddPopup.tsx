@@ -9,29 +9,30 @@ interface TriggerAddProps {
     setAddIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     toggleCreate: () => void,
 }
+
 export default function TriggerAddPopup({AddIsOpen, setAddIsOpen, toggleCreate}: TriggerAddProps) {
     const containerRef = useRef(null);
     const togglePopUp = () => {
         setAddIsOpen((prev) => !prev);
     };
 
-   return(
-       <button
-           onClick={togglePopUp}
-           ref={containerRef}
-           className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
-           <div className="absolute bg-blue-500/50 h-10 w-10 rounded-full blur-sm"/>
-           <div
-               className="relative z-10 shadow-2xl bg-blue-500 h-10 min-w-10 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
-               <IoIosAdd/>
-           </div>
-           <AddPopUp
-           AddIsOpen={AddIsOpen}
-           setAddIsOpen={setAddIsOpen}
-           containerRef={containerRef}
-           toggleCreate={toggleCreate}/>
-       </button>
-   )
+    return (
+        <button
+            onClick={togglePopUp}
+            ref={containerRef}
+            className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
+            <div className="absolute bg-blue-500/50 h-10 w-10 rounded-full blur-sm"/>
+            <div
+                className="relative z-10 shadow-2xl bg-blue-500 h-10 min-w-10 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
+                <IoIosAdd/>
+            </div>
+            <AddPopUp
+                AddIsOpen={AddIsOpen}
+                setAddIsOpen={setAddIsOpen}
+                containerRef={containerRef}
+                toggleCreate={toggleCreate}/>
+        </button>
+    )
 }
 
 interface AddPopupProps {
@@ -42,8 +43,8 @@ interface AddPopupProps {
 }
 
 const menuItems = [
-    { to: "/create-studoset", icon: "/icons/studyset.svg", label: "create_ss", color: "from-emerald-400 to-teal-500" },
-    { to: "/create-visualset", icon: "/icons/visualset.svg", label: "create_vs", color: "from-blue-400 to-indigo-500" },
+    {to: "/create-studoset", icon: "/icons/studyset.svg", label: "create_ss", color: "from-emerald-400 to-teal-500", key: "s"},
+    {to: "/create-visualset", icon: "/icons/visualset.svg", label: "create_vs", color: "from-blue-400 to-indigo-500", key: "v"},
 ];
 
 function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopupProps) {
@@ -77,7 +78,7 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
         <div
             ref={popupRef}
             className={`absolute top-full right-0 mt-4
-        z-[9999] w-56 p-2 truncate
+        z-[9999] w-60 p-2 truncate
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
         backdrop-blur-xl
@@ -90,11 +91,6 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
       `}
             onClick={(e) => e.stopPropagation()}
         >
-            {/* Arrow */}
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45
-        bg-white/80 dark:bg-[#1e293b]/90  backdrop-blur-xl
-        border-l border-t border-white/50 dark:border-white/10"
-            />
 
             {/* Menu Items */}
             <div className="relative flex flex-col gap-1">
@@ -113,38 +109,33 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
                             transitionDelay: AddIsOpen ? `${index * 50}ms` : "0ms",
                         }}
                     >
-                        {/* Icon Container */}
                         <div className={`flex items-center justify-center w-8 h-8 rounded-lg
-              bg-gradient-to-br ${item.color}
-              shadow-md shadow-black/10
-              group-hover:scale-110 group-hover:shadow-lg
-              transition-all duration-200`}
-                        >
-                            <img
-                                src={item.icon}
-                                alt=""
-                                className="h-4 w-4 brightness-0 invert"
-                            />
+                                          bg-gradient-to-br ${item.color}
+                                          shadow-md shadow-black/10
+                                          group-hover:scale-110 group-hover:shadow-lg
+                                          transition-all duration-200`}>
+                            <img src={item.icon} alt="" className="h-4 w-4 brightness-0 invert"/>
                         </div>
 
-                        {/* Label */}
-                        <span className="font-medium text-sm">
-              {t(item.label)}
-            </span>
+                        <div className="font-medium text-sm flex flex-row items-center justify-between w-full">
+                            <span>{t(item.label)}</span>
+                        </div>
 
-                        {/* Hover Arrow */}
                         <svg
                             className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
                         >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
                         </svg>
                     </Link>
                 ))}
                 <div
-                    onClick={() => { toggleCreate(); setAddIsOpen(false); }}
+                    onClick={() => {
+                        toggleCreate();
+                        setAddIsOpen(false);
+                    }}
                     className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl
               text-studodarkblue dark:text-white
               hover:bg-gradient-to-r hover:from-violet-400 to-purple-500 hover:text-white
@@ -181,7 +172,7 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
                     </svg>
                 </div>
             </div>

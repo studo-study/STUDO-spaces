@@ -56,12 +56,22 @@ body::-webkit-scrollbar {
     --color-studodark: rgba(224, 224, 224, 0.19);
     --color-studogrey: rgba(200, 210, 210, 0.19);
     --color-studowhite: rgba(224, 224, 224, 0.19);
-    --color-studoborder: rgba(255, 255, 255, 0.3);
     --color-inputcolor: rgba(255, 255, 255, 0.175);
+    --color-studoborder: rgb(212 212 216);
     --breakpoint-3xl: 1800px;
     --font-montserrat: "Montserrat", sans-serif;
+
 }
 
+@media (prefers-color-scheme: dark) {
+    @theme {
+        --color-studoborder: rgba(255, 255, 255, 0.3);
+    }
+}
+
+.dark {
+    --color-studoborder: rgba(255, 255, 255, 0.3);
+}
 
 
 .montserrat-black {

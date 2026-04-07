@@ -7,6 +7,8 @@ import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
 import {useRouter} from "@/i18n/routing";
 import {CardData} from "@/types/types";
+import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
+import {FiCommand} from "react-icons/fi";
 
 const LANGUAGES = [
     { code: "en", name: "English" },
@@ -24,6 +26,7 @@ export default function CreateStudosetForm() {
     const [error, setError] = useState<boolean>(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [folders, setFolders] = useState<Array<any>>([]);
+    const [isMac, setIsMac] = useState(false);
 
     //ref values
     const titleRef = useRef<HTMLInputElement>(null);
@@ -64,6 +67,7 @@ export default function CreateStudosetForm() {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     }
+
 
     const handleForm =  async (e) => {
         e.preventDefault();
@@ -162,9 +166,13 @@ export default function CreateStudosetForm() {
         fetchFolders();
     }, []);
 
+    useEffect(() => {
+        setIsMac(navigator.platform.includes("Mac"));
+    }, []);
     //console.log("folders", folders);
 
 
+    useKeyboardShortcut("i", () => setShowImporter(true), {ctrl:true, always: true});
     return (
         <>
             <form onSubmit={handleForm}
@@ -290,7 +298,7 @@ export default function CreateStudosetForm() {
                         ))}
                     </div>
 
-                    <div className="flex w-full mb-3 sm:mb-4 md:mb-5">
+                    <div className="flex w-full mb-3 sm:mb-4 md:mb-5 group relative">
                         <button
                             onClick={addCard}
                             type="button"

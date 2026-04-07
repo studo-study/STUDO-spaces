@@ -1,6 +1,7 @@
 "use client"
 import {IoSearch} from "react-icons/io5";
 import {Ref, useEffect, useState} from "react";
+import {useTranslations} from "next-intl";
 
 interface SearchProps {
     searchRef: Ref<HTMLInputElement>;
@@ -10,7 +11,7 @@ interface SearchProps {
 }
 export default function SearchBar({searchRef, toggleSearch, setSearch, Search}: SearchProps) {
     const [searches, setSearches] = useState<string | null>(null);
-
+    const t = useTranslations("header");
     useEffect(() => {
         setSearches(localStorage.getItem('searches'));
     }, []);
@@ -20,7 +21,7 @@ export default function SearchBar({searchRef, toggleSearch, setSearch, Search}: 
             <input
                 ref={searchRef}
                 onClick={toggleSearch}
-                placeholder={"search..."}
+                placeholder={t("search")}
                 onFocus={() => setSearch(true)}
                 onBlur={() => setSearch(false)}
                 type="text"

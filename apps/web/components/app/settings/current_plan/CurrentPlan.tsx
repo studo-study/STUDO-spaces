@@ -8,7 +8,7 @@ export default function CurrentPlan() {
     const t = useTranslations("settings")
     return( <section className={"flex flex-col gap-5 w-full h-fit"}>
         <span className={"w-full text-base font-bold h-fit"}>{t("subscription")}</span>
-        <div className={"w-full h-fit rounded-3xl border border-studoborder"}>
+        <div className={"w-full h-fit rounded-3xl border dark:border-studoborder border-zinc-300"}>
             <div className={"w-full gap-4 px-10 py-8 flex flex-col"}>
                 <div className={"w-full flex flex-row justify-between items-center"}>
                     <span className={"w-full text-base font-bold h-fit"}>{t("free")}</span>

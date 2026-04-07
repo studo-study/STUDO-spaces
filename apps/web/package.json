@@ -1,5 +1,5 @@
 {
-  "name": "nextmigration",
+  "name": "@studo/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {

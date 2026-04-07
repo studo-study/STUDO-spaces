@@ -20,8 +20,8 @@ export default function PersonalInfo() {
     }
     return(<section className={"flex flex-col gap-5 w-full min-h-50"}>
             <span className={"w-full text-base font-bold h-fit"}>{t("personal info")}</span>
-            <div className={"w-full min-h-40 h-fit rounded-3xl border border-studoborder"}>
-                <div className={"w-full border-b gap-4 border-studoborder p-10 flex flex-col"}>
+            <div className={"w-full min-h-40 h-fit rounded-3xl border border-studoborder "}>
+                <div className={"w-full border-b gap-4 border-studoborder  p-10 flex flex-col"}>
                     <span className={"w-full text-base font-bold h-fit"}>{t("username")}</span>
                     <div className={"w-full flex flex-row justify-between"}>
                         {editName ? <input value={"username"} autoFocus={editName} className={"w-3/5 outline-none"} type="text"/> : <span>username</span>}
