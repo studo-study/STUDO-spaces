@@ -44,12 +44,13 @@ studo-web/
 │   │   ├── test/
 │   │   └── drizzle.config.ts
 │   └── web/              # Next.js frontend
-│       ├── app/
-│       ├── components/
-│       ├── store/
-│       ├── lib/
-│       ├── i18n/
-│       └── types/
+│   │   ├── app/
+│   │   ├── components/
+│   │   ├── store/
+│   │   ├── lib/
+│   │   ├── i18n/
+│   │   └── types/
+│   └── mobile/           # Expo.js frontend
 ├── packages/             # Shared packages (types, utils)
 ├── turbo.json
 ├── pnpm-workspace.yaml

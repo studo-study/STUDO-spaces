@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import AdminHeader from "@/components/dashboard/adminheader";
+import AdminHeader from "@/components/pages/dashboard/adminheader";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     return (

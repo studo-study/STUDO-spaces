@@ -1,7 +1,7 @@
 import {useLocale} from "next-intl";
 import {redirect} from "next/navigation";
-import SearchHeader from "@/components/marketing/search/searchheader";
-import SearchResults from "@/components/marketing/search/searchResults";
+import SearchHeader from "@/components/pages/marketing/search/searchheader";
+import SearchResults from "@/components/pages/marketing/search/searchResults";
 
 export default function Page() {
     return(<main className={`w-full dark:text-white text-studodarkblue

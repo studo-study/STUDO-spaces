@@ -1,4 +1,4 @@
-import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/pages/overige/ui/AnimateOnMount";
 import {useTranslations} from "next-intl";
 import {Link} from "@/i18n/routing";
 import Image from "next/image";

@@ -1,10 +1,10 @@
 'use client'
 
 import { useReducer, useEffect, useRef, useMemo } from "react";
-import ProgressBar from "@/components/public/profile/(modes)/learn/progressbar";
-import LearnCard from "@/components/public/profile/(modes)/learn/card";
-import SettingsTrigger from "@/components/public/profile/(modes)/learn/settings";
-import ProgressScreen from "@/components/public/profile/(modes)/learn/progressscreen";
+import ProgressBar from "@/components/pages/public/profile/(modes)/learn/progressbar";
+import LearnCard from "@/components/pages/public/profile/(modes)/learn/card";
+import SettingsTrigger from "@/components/pages/public/profile/(modes)/learn/settings";
+import ProgressScreen from "@/components/pages/public/profile/(modes)/learn/progressscreen";
 import { Card, FullStudyset, SessionCard } from "@/types/types";
 
 interface LearnProps {
@@ -114,7 +114,6 @@ export default function LearnController({ data }: LearnProps) {
     const inputRef = useRef<HTMLInputElement>(null!);
     const startIndex = data.session.index;
 
-    // Initialiseer correctCounts vanuit bestaande sessiedata
     const initialCounts: Record<string, number> = {};
     sessionCards.forEach(sc => {
         if (sc.mastered) initialCounts[sc.card_id] = 2;
@@ -201,7 +200,7 @@ export default function LearnController({ data }: LearnProps) {
         <section className="w-full max-w-200 h-full py-20 gap-5 flex items-center justify-baseline flex-col">
             <SettingsTrigger />
 
-            <div className="w-full h-full flex items-center py-20 justify-baseline flex-col">
+            <div className="w-full h-full flex flex-col items-center justify-baseline gap-5">
                 <ProgressBar
                     cardIndex={state.index}
                     queueMode={state.queueMode}

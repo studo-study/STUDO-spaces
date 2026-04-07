@@ -1,5 +1,5 @@
-import ClassroomMembers from "@/components/app/classroom/overview/ClassroomMembers";
-import RecentlyAdded from "@/components/app/classroom/overview/RecentlyAdded";
+import ClassroomMembers from "@/components/pages/app/classroom/overview/ClassroomMembers";
+import RecentlyAdded from "@/components/pages/app/classroom/overview/RecentlyAdded";
 import {useTranslations} from "next-intl";
 import {mockFullClassrooms} from "@/data/mocks/classroomsMock";
 const items = mockFullClassrooms[0]

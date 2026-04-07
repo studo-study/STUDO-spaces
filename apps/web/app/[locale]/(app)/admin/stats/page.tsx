@@ -1,10 +1,10 @@
 import {Metadata} from "next";
 import {useTranslations} from "next-intl";
-import QuickStats from "@/components/dashboard/stats/quick_stats/quickstats";
+import QuickStats from "@/components/pages/dashboard/stats/quick_stats/quickstats";
 import {SlGraph} from "react-icons/sl";
 import {VscGraphLine} from "react-icons/vsc";
 import {MdOutlineQueryStats} from "react-icons/md";
-import Overview from "@/components/dashboard/stats/overview/overview";
+import Overview from "@/components/pages/dashboard/stats/overview/overview";
 
 export const metadata:Metadata = {
     title:"Admin Dashboard | Studo"
