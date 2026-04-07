@@ -6,7 +6,7 @@ import CardItem from "@/components/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
 import ImportButton from "@/components/app/create-studoset/importButton";
 import {useRouter} from "@/i18n/routing";
-import {CardData} from "@/types/types";
+import {CardData, Folder} from "@/types/types";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 import {FiCommand} from "react-icons/fi";
 
@@ -25,8 +25,7 @@ export default function CreateStudosetForm() {
     const router = useRouter();
     const [error, setError] = useState<boolean>(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [folders, setFolders] = useState<Array<any>>([]);
-    const [isMac, setIsMac] = useState(false);
+    const [folders, setFolders] = useState<{ folders: Folder[] }>({ folders: [] });
 
     //ref values
     const titleRef = useRef<HTMLInputElement>(null);
@@ -46,10 +45,10 @@ export default function CreateStudosetForm() {
         isDouble: false
     }
     const [cardArray, setCardArray] = useState<Array<CardData>>([firstCard]);
-
+    console.log()
     //handlers
 
-    const validate = (body: any) => {
+    const validate = (body: CreateStudosetBody) => {
         const newErrors: Record<string, string> = {};
 
         if (!body.title) newErrors.title = "title_error";
@@ -69,8 +68,8 @@ export default function CreateStudosetForm() {
     }
 
 
-    const handleForm =  async (e) => {
-        e.preventDefault();
+    const handleForm =  async (e?: React.FormEvent) => {
+        e?.preventDefault();
         const body = {
             title: titleRef.current && titleRef.current.value,
             course: courseRef.current && courseRef.current.value,
@@ -116,6 +115,17 @@ export default function CreateStudosetForm() {
         updateIndex()
     }
 
+    const deleteLatestCard = () => {
+        if(cardArray.length === 1) return;
+        const id = cardArray[cardArray.length - 1].id
+        setCardArray(prev => prev.filter(card => card.id != id));
+        updateIndex()
+    }
+
+    const toggleImporter = () => {
+        setShowImporter(prev => !prev);
+    }
+
     const updateIndex = () => {
         setCardArray(prev => prev.map((card, index) => ({ ...card, index })))
     }
@@ -144,10 +154,11 @@ export default function CreateStudosetForm() {
             animation: 300,
             handle: ".handle",
             onEnd: event => {
+                if (event.oldIndex == null || event.newIndex == null) return;
                 setCardArray(prev => {
                     const newArr = [...prev];
-                    const [moved] = newArr.splice(event.oldIndex, 1);
-                    newArr.splice(event.newIndex, 0, moved);
+                    const [moved] = newArr.splice(event.oldIndex!, 1);
+                    newArr.splice(event.newIndex!, 0, moved);
                     return newArr.map((card, index) => ({ ...card, index }));
                 });
             }
@@ -162,17 +173,16 @@ export default function CreateStudosetForm() {
             const res = await fetch("/api/folders");
             const data = await res.json();
             setFolders(data);
+            console.log(data);
         };
         fetchFolders();
     }, []);
 
-    useEffect(() => {
-        setIsMac(navigator.platform.includes("Mac"));
-    }, []);
-    //console.log("folders", folders);
 
-
-    useKeyboardShortcut("i", () => setShowImporter(true), {ctrl:true, always: true});
+    useKeyboardShortcut("i", () => toggleImporter(), {ctrl:true, always: true});
+    useKeyboardShortcut("a", () => addCard(), {ctrl:true, always: true});
+    useKeyboardShortcut("s", () => handleForm(), {ctrl:true, always: true});
+    useKeyboardShortcut("backspace", () => deleteLatestCard(), {ctrl:true, always: true});
     return (
         <>
             <form onSubmit={handleForm}
@@ -336,11 +346,11 @@ interface CreateStudosetBody {
     global_term_language: string | null;
     global_definition_language: string | null;
     folder_id: string | null;
-    cardlist: [{
-        term:string;
+    cardlist: {
+        term: string;
         definition: string;
         number: number;
         image: string;
-    }];
+    }[];
 }
 

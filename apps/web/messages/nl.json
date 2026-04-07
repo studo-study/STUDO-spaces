@@ -1057,7 +1057,18 @@
     "classroom_invite": "Allow Classroom Invitations",
     "auto_participate": "Automatically participate in competitions",
     "experimental": "Allow Experimental Classroom Features",
-    "shortcuts": "Shortcuts"
+    "shortcuts": "Shortcuts",
+    "shortcut_titles": {
+      "create_ss": "Creëer nieuwe Studoset",
+      "create_vs": "Creëer nieuwe Visualset",
+      "create_f": "Creëer nieuwe map",
+      "toggle_s": "Trigger zoeken",
+      "add_c": "Voeg kaart toe",
+      "save_s": "Creëer Set",
+      "del_c": "Verwijder laatste kaart",
+      "sven_i": "Gebruik SVEN import"
+
+    }
   },
   "account": {
     "role": "role",

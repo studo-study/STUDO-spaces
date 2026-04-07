@@ -7,7 +7,7 @@ import {Metadata} from "next";
 import LearnSettings from "@/components/app/settings/learn_modes/LearnSettings";
 import ClassroomSettings from "@/components/app/settings/classroom_settings/ClassroomSettings";
 import Notifications from "@/components/app/settings/notifications/Notifications";
-import Shortcuts from "@/components/app/settings/shortcuts/Shortcuts"
+import {Shortcuts} from "@/components/app/settings/shortcuts/Shortcuts"
 export const metadata:Metadata = {
     title:"Settings | Studo"
 }
