@@ -1,19 +1,19 @@
 import { PiStudent } from "react-icons/pi";
-import Flashcard from "@/components/public/sets/studosets/flashcard";
+import Flashcard from "@/components/pages/public/sets/studosets/flashcard";
 import {Link, usePathname} from "@/i18n/routing";
 import {auth} from "@/auth";
 import {getTranslations} from "next-intl/server";
 import Image from "next/image";
 import {Card} from "@/types/types";
-import CardItem from "@/components/public/sets/studosets/carditem";
-import {Progress} from "@/components/marketing/progress/progress";
+import CardItem from "@/components/pages/public/sets/studosets/carditem";
+import {Progress} from "@/components/pages/marketing/progress/progress";
 import {IoFilter, IoFolderOpenOutline} from "react-icons/io5";
 import {FaRegHeart} from "react-icons/fa";
 import {LuFolderOpen} from "react-icons/lu";
-import SavedPopup from "@/components/public/sets/studosets/savedpopup";
-import ClassroomPopup from "@/components/public/sets/studosets/classroompopup";
-import SharePopup from "@/components/public/sets/studosets/sharepopup";
-import SettingsPopup from "@/components/public/sets/studosets/settingspopup";
+import SavedPopup from "@/components/pages/public/sets/studosets/savedpopup";
+import ClassroomPopup from "@/components/pages/public/sets/studosets/classroompopup";
+import SharePopup from "@/components/pages/public/sets/studosets/sharepopup";
+import SettingsPopup from "@/components/pages/public/sets/studosets/settingspopup";
 
 
 interface viewProps {

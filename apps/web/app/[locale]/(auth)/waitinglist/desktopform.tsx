@@ -4,7 +4,7 @@ import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";
 import {signIn} from "next-auth/react";
-import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/pages/overige/ui/AnimateOnMount";
 import {addDoc, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, where} from "firebase/firestore";
 import {db} from "@/lib/firebase/firebase";
 

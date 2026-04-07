@@ -1,12 +1,12 @@
 import {useTranslations} from "next-intl";
-import CurrentPlan from "@/components/app/settings/current_plan/CurrentPlan";
-import Accessibility from "@/components/app/settings/accessibility/Accessibility";
-import PersonalInfo from "@/components/app/settings/personal_info/PersonalInfo";
-import AccountPrivacy from "@/components/app/settings/account_privacy/AccountPrivacy";
+import CurrentPlan from "@/components/pages/app/settings/current_plan/CurrentPlan";
+import Accessibility from "@/components/pages/app/settings/accessibility/Accessibility";
+import PersonalInfo from "@/components/pages/app/settings/personal_info/PersonalInfo";
+import AccountPrivacy from "@/components/pages/app/settings/account_privacy/AccountPrivacy";
 import {Metadata} from "next";
-import LearnSettings from "@/components/app/settings/learn_modes/LearnSettings";
-import ClassroomSettings from "@/components/app/settings/classroom_settings/ClassroomSettings";
-import Notifications from "@/components/app/settings/notifications/Notifications";
+import LearnSettings from "@/components/pages/app/settings/learn_modes/LearnSettings";
+import ClassroomSettings from "@/components/pages/app/settings/classroom_settings/ClassroomSettings";
+import Notifications from "@/components/pages/app/settings/notifications/Notifications";
 
 export const metadata:Metadata = {
     title:"Settings | Studo"

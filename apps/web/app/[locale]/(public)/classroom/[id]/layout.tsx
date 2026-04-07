@@ -1,10 +1,10 @@
 import { auth } from '@/auth';
-import LandingHeader from '@/components/marketing/landing_header/header';
-import LandingFooter from '@/components/marketing/landing_footer/footer';
-import AppLayoutClient from '@/components/app/AppLayoutClient';
+import LandingHeader from '@/components/pages/marketing/landing_header/header';
+import LandingFooter from '@/components/pages/marketing/landing_footer/footer';
+import AppLayoutClient from '@/components/pages/app/AppLayoutClient';
 import { ReactNode } from 'react';
-import PrivateClassroomHeader from "@/components/app/classroom/PrivateClassroomHeader";
-import PublicClassroomHeader from "@/components/app/classroom/PublicClassroomHeader";
+import PrivateClassroomHeader from "@/components/pages/app/classroom/PrivateClassroomHeader";
+import PublicClassroomHeader from "@/components/pages/app/classroom/PublicClassroomHeader";
 
 export default async function ClassroomLayout({ children }: { children: ReactNode }) {
     const session = await auth();

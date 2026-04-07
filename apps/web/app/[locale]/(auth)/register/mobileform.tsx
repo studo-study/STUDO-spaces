@@ -2,7 +2,7 @@
 import {useCallback, useState} from "react";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
-import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/pages/overige/ui/AnimateOnMount";
 
 
 export default function MobileForm() {
