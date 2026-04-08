@@ -1,14 +1,13 @@
 {
   "name": "@studo/types",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/studo-study/STUDO-spaces.git"
-  },
-  "private": true
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  }
 }

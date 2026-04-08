@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2023",
+    "declaration": true,
+    "outDir": "./dist",
+    "skipLibCheck": true
+  },
+  "include": ["./*.ts"]
+}
