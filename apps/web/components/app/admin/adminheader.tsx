@@ -11,7 +11,7 @@ export default function AdminHeader() {
         return pathWithoutLocale === link || pathWithoutLocale.startsWith(link + '/');
     };
     const items = [
-        {link: "/admin/sets", label:"stats"},
+        {link: "/admin/stats", label:"stats"},
         {link: "/admin/reports", label:"reports"},
         {link: "/admin/users", label:"users"},
         {link: "/admin/search", label:"search"}

@@ -266,6 +266,12 @@ export class UserResponseDto {
   })
   @Expose()
   verified: boolean;
+
+  @ApiProperty({
+    example: true,
+  })
+  @Expose()
+  banned: boolean;
 }
 
 // ---------------------------------------------------------
@@ -407,7 +413,7 @@ export class ClassActivitiesDto {
   last_seen: string;
 }
 
-export class StartPagina {
+export class StartPaginaDto {
   @ApiProperty({
     type: [LastStudiedDto],
     description: 'Recently studied sets',

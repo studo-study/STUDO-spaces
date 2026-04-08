@@ -43,7 +43,7 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true, // verwijdert de properties die niet in de DTO staan
       forbidNonWhitelisted: true, // gooit fout als er foute properties binnenkomen
-      forbidUnknownValues: true, // gooit fout bij onbekende types/waarden
+      forbidUnknownValues: true, // gooit fout bij onbekende shared-types/waarden
       transform: true,
 
       exceptionFactory: (errors: ValidationError[] = []) => {

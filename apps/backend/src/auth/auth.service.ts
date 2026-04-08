@@ -6,7 +6,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { LoginRequestDto } from '../session/session.dto';
+import { LoginRequest, RegisterUserRequest } from '@studo/types';
 import { folders, profiles, users } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,7 +17,6 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtPayload } from '../types/auth';
-import { RegisterUserRequestDto } from '../user/users.dto';
 import { Role } from './roles';
 
 @Injectable()
@@ -31,7 +30,7 @@ export class AuthService {
 
   //ww hashen
   async hashPassword(password: string): Promise<string> {
-    const authConfig = this.configService.get<AuthConfig>('auth')!; // 👈 2
+    const authConfig = this.configService.get<AuthConfig>('auth')!;
     // 👇 3
     return argon2.hash(password, {
       type: argon2.argon2id,
@@ -67,7 +66,7 @@ export class AuthService {
   }
 
   //login functie
-  async login({ email, password }: LoginRequestDto): Promise<string> {
+  async login({ email, password }: LoginRequest): Promise<string> {
     // 👇 1
     const user = await this.db.query.users.findFirst({
       where: eq(users.email, email),
@@ -123,6 +122,7 @@ export class AuthService {
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
+        banned: false,
       };
 
       // Profile
@@ -193,6 +193,7 @@ export class AuthService {
         roles: [Role.USER],
         publicRole: 'student',
         verified: true, // Microsoft users zijn al geverifieerd
+        banned: false,
       };
 
       // Profile
@@ -263,6 +264,7 @@ export class AuthService {
         roles: [Role.USER],
         publicRole: 'student',
         verified: true, // Microsoft users zijn al geverifieerd
+        banned: false,
       };
 
       // Profile
@@ -311,7 +313,7 @@ export class AuthService {
     email,
     password,
     role,
-  }: RegisterUserRequestDto): Promise<string> {
+  }: RegisterUserRequest): Promise<string> {
     const date = new Date();
     const uid = uuidv4(); // ✅ Functie uitvoeren
     const passwordHash = await this.hashPassword(password);
@@ -342,6 +344,7 @@ export class AuthService {
       roles: [Role.USER],
       publicRole: role,
       verified: false,
+      banned: false,
     };
 
     // Profile
@@ -408,6 +411,7 @@ export class AuthService {
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
+        banned: false,
       };
 
       const newProfile = {

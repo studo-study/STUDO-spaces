@@ -14,18 +14,7 @@ import {
   UseInterceptors,
   UploadedFiles,
 } from '@nestjs/common';
-import { CreateSetLikeDto, SetLikeResponseDto } from '../studyset/setlike.dto';
-import { SwitchFolderDto } from '../folder/folder.dto';
 import { VisualsetService } from './visualset.service';
-import {
-  CreateImageDto,
-  CreateVisualsetDto,
-  FullVSResponseListDto,
-  UpdateVisualsetDto,
-  VisualsetResponseDto,
-  VisualsetResponseListDto,
-} from './visualset.dto';
-import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
 import { CheckUserAccessGuard } from '../auth/guards/userAccess.guard';
@@ -39,14 +28,19 @@ import {
   ApiConsumes,
 } from '@nestjs/swagger';
 import { Request as ExpressRequest } from 'express';
-import { fullSetResponseDto } from '../studyset/studyset.dto';
 import { ScalewayStorageService } from '../scaleway/scaleway-storage.service';
-import {
-  CreateVisualsetWithFilesDto,
-  ImageMetadata,
-} from './createvisualset.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { CreatePinDto } from '../pin/pin.dto';
+import {
+  FullVSResponseListDto,
+  UpdateVisualsetDto,
+  VisualsetResponseDto,
+  VisualsetResponseListDto,
+} from './visualset.dto';
+import * as types from '@studo/types';
+import { SetLikeResponseDto } from '../studyset/setlike.dto';
+import { SwitchFolderDto } from '../folder/folder.dto';
+import * as types_1 from '@studo/types';
+import { StudysessionResponseDto } from '../studysession/studysession.dto';
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {
@@ -63,8 +57,7 @@ export class VisualsetController {
   constructor(
     private readonly VsService: VisualsetService,
     private readonly storageService: ScalewayStorageService,
-  ) {
-  }
+  ) {}
 
   // GET ALL VISUALSETS ---------------------------------------------
 
@@ -77,7 +70,7 @@ export class VisualsetController {
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.ADMIN)
   @Get()
-  async getAllVisualsets(): Promise<VisualsetResponseListDto> {
+  async getAllVisualsets(): Promise<types.VisualsetResponseList> {
     return this.VsService.getAll();
   }
 
@@ -108,15 +101,14 @@ export class VisualsetController {
   @ApiResponse({
     status: 200,
     description: 'Visualset gevonden',
-    type: fullSetResponseDto,
+    type: FullVSResponseListDto,
   })
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER, Role.ADMIN)
   @Get(':set_id/likes')
   async getAllSetLikes(
     @Param('set_id', ParseUUIDPipe) set_id: string,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<SetLikeResponseDto[]> {
+  ): Promise<types.SetLikeResponse[]> {
     return this.VsService.getAllLikes(set_id);
   }
 
@@ -170,16 +162,17 @@ export class VisualsetController {
       },
     }),
   )
-
   async createVisualset(
     @UploadedFiles() files: Express.Multer.File[],
-    @Body() body: CreateVisualsetWithFilesDto,
+    @Body() body: types.CreateVisualsetWithFiles,
     @Request() req: AuthenticatedRequest,
-  ): Promise<VisualsetResponseDto> {
+  ): Promise<types.VisualsetResponse> {
     const userId = req.user.id;
 
-    const imagesMetadata: ImageMetadata[] = JSON.parse(body.images_metadata);
-    const pinsData: Omit<CreatePinDto, 'img_url'>[] = JSON.parse(
+    const imagesMetadata: types.ImageMetadata[] = JSON.parse(
+      body.images_metadata,
+    );
+    const pinsData: Omit<types.CreatePin, 'img_url'>[] = JSON.parse(
       body.pins_data,
     );
 
@@ -188,20 +181,20 @@ export class VisualsetController {
       userId,
     );
 
-    const imagesWithUrls: CreateImageDto[] = imagesMetadata.map(
+    const imagesWithUrls: types.CreateImage[] = imagesMetadata.map(
       (meta, index) => ({
         ...meta,
         url: uploadedUrls[index],
       }),
     );
 
-    const pinsWithUrls: CreatePinDto[] = pinsData.map((pin, index) => ({
+    const pinsWithUrls: types.CreatePin[] = pinsData.map((pin, index) => ({
       ...pin,
       img_url:
         uploadedUrls[Math.floor(index / (pinsData.length / files.length))], // Simplified mapping
     }));
 
-    const createDto: CreateVisualsetDto = {
+    const createDto: types.CreateVisualset = {
       title: body.title,
       subject: body.subject,
       folder_id: body.folder_id,
@@ -216,7 +209,6 @@ export class VisualsetController {
 
   @ApiOperation({ summary: 'Like een ((visualset)).' })
   @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiBody({ type: CreateSetLikeDto })
   @ApiResponse({
     status: 201,
     description: 'Visualset geliket',
@@ -227,7 +219,7 @@ export class VisualsetController {
   @Post(':set_id/likes')
   @HttpCode(HttpStatus.CREATED)
   async likeStudyset(
-    @Body() body: CreateSetLikeDto,
+    @Body() body: types.CreateSetLike,
     @Request() req: AuthenticatedRequest,
   ): Promise<SetLikeResponseDto> {
     const user_id = req.user.id;
@@ -251,7 +243,7 @@ export class VisualsetController {
     @Param('set_id', ParseUUIDPipe) id: string,
     @Body() update: UpdateVisualsetDto,
     @Request() req: AuthenticatedRequest,
-  ): Promise<FullVSResponseListDto> {
+  ): Promise<types_1.FullVisualsetResponse> {
     const user_id = req.user.id;
     return this.VsService.updateById(user_id, id, update);
   }
@@ -336,7 +328,7 @@ export class VisualsetController {
   async createSession(
     @Param('set_id', ParseUUIDPipe) set_id: string,
     @Request() req: AuthenticatedRequest,
-  ): Promise<StudysessionResponseDto> {
+  ): Promise<types_1.StudysessionResponse> {
     const user_id = req.user.id;
     return this.VsService.createSession(user_id, set_id);
   }

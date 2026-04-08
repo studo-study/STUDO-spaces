@@ -1,21 +1,23 @@
 {
   "admin": {
     "title": "Admin Dashboard",
-    "subtitle_stats": "Quick Stats (this month)",
-    "subtitle_overview": "Overview",
-    "total_usr": "Registered users:",
+    "subtitle_stats": "Snelle statistieken (deze maand)",
+    "subtitle_overview": "Overzicht",
+    "total_usr": "Totale users:",
     "total_month": "MAU",
-    "total_ss": "Total Studosets",
-    "total_vs": "Total Visualsets",
-    "or": "or",
+    "total_ss": "Totale Studosets",
+    "total_vs": "Totale Visualsets",
+    "or": "of",
     "stats": "Stats",
-    "reports": "Reports",
+    "reports": "Rapporten",
     "users":"Users",
-    "search": "Search",
-    "recently_usrs": "Recently joined users",
-    "most_pp_set": "Most popular sets",
-    "graphs": "STUDO Graphs",
-    "activity": "Other user activity"
+    "search": "Zoeken",
+    "recently_usrs": "Recent geregistreerde users",
+    "most_pp_set": "Meest populaire sets",
+    "graphs": "STUDO Grafieken",
+    "activity": "Andere user-activity",
+    "search_a": "vindt alles...",
+    "not_searched": "Geef een zoekterm in"
   },
   "landing": {
     "header": {

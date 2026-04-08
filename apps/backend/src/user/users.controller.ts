@@ -11,22 +11,12 @@ import {
   Put,
   UseGuards,
   Request,
-  BadRequestException,
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
 import { UserService } from './users.service';
-import {
-  HeaderResposneDto,
-  RegisterUserRequestDto,
-  StartPagina,
-  UpdateUserDTO,
-  UserListResponseDto,
-  UserResponseDto,
-  UserResponseStatsDto,
-} from './users.dto';
+import * as types from '@studo/types';
 import { AuthService } from '../auth/auth.service';
-import { LoginResponseDto } from '../session/session.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
@@ -40,14 +30,22 @@ import {
   ApiBody,
   ApiParam,
 } from '@nestjs/swagger';
-import { AllsetsResponseDto } from '../studyset/studyset.dto';
-import { TotalStats } from '../studysession/studysession.dto';
+import { Request as ExpressRequest } from 'express';
 import {
   ClassroomListResponseDto,
   FullClassroomResponseDto,
 } from '../classroom/classroom.dto';
-import { Request as ExpressRequest } from 'express';
-import { DeleteUserGuard } from '../auth/guards/delete.guard';
+import {
+  HeaderResposneDto,
+  RegisterUserRequestDto,
+  StartPaginaDto,
+  TotalStatsDto,
+  UpdateUserDTO,
+  UserListResponseDto,
+  UserResponseDto,
+  UserResponseStatsDto,
+} from './users.dto';
+import { LoginResponseDto } from '../session/session.dto';
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {
@@ -78,8 +76,8 @@ export class UserController {
   @Public()
   @Post()
   async registerUser(
-    @Body() registerDto: RegisterUserRequestDto,
-  ): Promise<LoginResponseDto> {
+    @Body() registerDto: types.RegisterUserRequest,
+  ): Promise<types.LoginResponse> {
     const token = await this.authService.register(registerDto);
     return { token };
   }
@@ -95,7 +93,7 @@ export class UserController {
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.ADMIN)
   @Get()
-  async getAllUsers(): Promise<UserListResponseDto> {
+  async getAllUsers(): Promise<types.UserListResponse> {
     return this.userService.getAll();
   }
 
@@ -114,7 +112,7 @@ export class UserController {
   async getUserById(
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,
-  ): Promise<UserResponseStatsDto> {
+  ): Promise<types.UserResponseStats> {
     // Check if user exists first (before authorization)
     const userExists = await this.userService.existsById(user_id);
     if (!userExists) {
@@ -145,7 +143,7 @@ export class UserController {
   async getAllSetsById(
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,
-  ): Promise<AllsetsResponseDto> {
+  ): Promise<types.AllsetsResponse> {
     if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
       throw new ForbiddenException('You are not allow to see this');
     }
@@ -159,7 +157,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Statistieken opgehaald',
-    type: TotalStats,
+    type: TotalStatsDto,
   })
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER, Role.ADMIN)
@@ -167,7 +165,7 @@ export class UserController {
   async getAllStats(
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,
-  ): Promise<TotalStats> {
+  ): Promise<types.TotalStats> {
     if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
       throw new ForbiddenException('You are not allow to see this');
     }
@@ -188,7 +186,7 @@ export class UserController {
   @Get(':user_id/classrooms')
   async getAllUserClassroomsById(
     @Param('user_id', ParseUserIdPipe) userId: string,
-  ): Promise<ClassroomListResponseDto> {
+  ): Promise<types.ClassroomListResponse> {
     return this.userService.getAllClassroomsByUserId(userId);
   }
 
@@ -206,7 +204,7 @@ export class UserController {
   async getClassroomByUserId(
     @Param('user_id', ParseUserIdPipe) userId: string,
     @Param('classroom_id', ParseUUIDPipe) classroom_id: string,
-  ): Promise<FullClassroomResponseDto> {
+  ): Promise<types.FullClassroomResponse> {
     return this.userService.getClassroomByUserId(userId, classroom_id);
   }
 
@@ -217,7 +215,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Startpagina data',
-    type: StartPagina,
+    type: StartPaginaDto,
   })
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER)
@@ -225,7 +223,7 @@ export class UserController {
   async getStart(
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,
-  ): Promise<StartPagina> {
+  ): Promise<types.StartPagina> {
     if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
       throw new ForbiddenException('You are not allow to see this');
     }
@@ -247,9 +245,9 @@ export class UserController {
   @Put(':user_id')
   async updateById(
     @Param('user_id', ParseUserIdPipe) userId: string,
-    @Body() body: UpdateUserDTO,
+    @Body() body: types.UpdateUser,
     @Request() req: AuthenticatedRequest,
-  ): Promise<UserResponseDto> {
+  ): Promise<types.UserResponse> {
     // Check if user exists first (before authorization)
     const userExists = await this.userService.existsById(userId);
     if (!userExists) {
@@ -310,7 +308,7 @@ export class UserController {
   async getHeader(
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,
-  ): Promise<HeaderResposneDto> {
+  ): Promise<types.HeaderResponse> {
     // Check if user exists first
     const userExists = await this.userService.existsById(user_id);
     if (!userExists) {
@@ -341,7 +339,7 @@ export class UserController {
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Param('course_id', ParseUserIdPipe) course_id: string,
     @Request() req: AuthenticatedRequest,
-  ): Promise<AllsetsResponseDto> {
+  ): Promise<types.AllsetsResponse> {
     if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
       throw new NotFoundException('Course not found');
     }
