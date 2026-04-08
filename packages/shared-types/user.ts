@@ -40,6 +40,7 @@ export interface UserResponse {
   roles: string[];
   publicRole: string;
   verified: boolean;
+  banned: boolean;
 }
 
 export interface LastStudied {

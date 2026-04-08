@@ -7,6 +7,8 @@ import {
   serial,
   index,
   jsonb,
+  timestamp,
+  text,
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
@@ -28,6 +30,7 @@ export const users = pgTable(
     roles: jsonb('roles').notNull(),
     publicRole: varchar('public_role', { length: 24 }).notNull(),
     verified: boolean('verified').notNull(),
+    banned: boolean('banned').notNull(),
   },
   (table) => [uniqueIndex('idx_user_email_unique').on(table.email)],
 );
@@ -410,6 +413,27 @@ export const studoprofilecommunities = pgTable(
     ),
   ],
 );
+
+export const popular_sets = pgTable('popular_sets', {
+  set_id: varchar('set_id').notNull(),
+  rank: integer('rank').notNull(),
+  snapshot_id: integer('snapshot_id').notNull(),
+});
+
+export const reports = pgTable('reports', {
+  report_id: varchar('report_id').primaryKey(),
+  filled_by: integer('filled_by').notNull(),
+  report_type: varchar('report_type', { length: 50 }).notNull(),
+  description: text('description'),
+  target_id: varchar('target_id').notNull(),
+  target_type: varchar('target_type', { length: 20 }).notNull(),
+  reported_user_id: integer('reported_user_id'),
+  status: varchar('status', { length: 20 }).default('pending').notNull(),
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  resolved_at: timestamp('resolved_at'),
+  reviewed_by: integer('reviewed_by'),
+  moderator_note: text('moderator_note'),
+});
 
 // ============================================================
 // RELATIONS

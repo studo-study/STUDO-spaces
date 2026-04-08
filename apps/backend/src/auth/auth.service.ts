@@ -122,6 +122,7 @@ export class AuthService {
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
+        banned: false,
       };
 
       // Profile
@@ -192,6 +193,7 @@ export class AuthService {
         roles: [Role.USER],
         publicRole: 'student',
         verified: true, // Microsoft users zijn al geverifieerd
+        banned: false,
       };
 
       // Profile
@@ -262,6 +264,7 @@ export class AuthService {
         roles: [Role.USER],
         publicRole: 'student',
         verified: true, // Microsoft users zijn al geverifieerd
+        banned: false,
       };
 
       // Profile
@@ -341,6 +344,7 @@ export class AuthService {
       roles: [Role.USER],
       publicRole: role,
       verified: false,
+      banned: false,
     };
 
     // Profile
@@ -407,6 +411,7 @@ export class AuthService {
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
+        banned: false,
       };
 
       const newProfile = {

@@ -266,6 +266,12 @@ export class UserResponseDto {
   })
   @Expose()
   verified: boolean;
+
+  @ApiProperty({
+    example: true,
+  })
+  @Expose()
+  banned: boolean;
 }
 
 // ---------------------------------------------------------

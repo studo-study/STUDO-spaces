@@ -107,6 +107,7 @@ async function seedStudo() {
         roles: [Role.USER, Role.ADMIN],
         publicRole: 'owner',
         verified: true,
+        banned: false,
       },
       {
         id: userId2,
@@ -123,6 +124,7 @@ async function seedStudo() {
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
+        banned: false,
       },
       {
         id: userId3,
@@ -139,6 +141,7 @@ async function seedStudo() {
         roles: [Role.USER],
         publicRole: 'teacher',
         verified: false,
+        banned: false,
       },
 
       {
@@ -156,6 +159,7 @@ async function seedStudo() {
         roles: [Role.USER, Role.ADMIN, Role.VERIFIED],
         publicRole: 'Studo Profile',
         verified: true,
+        banned: false,
       },
     ]);
     console.log('Users seeded\n');
