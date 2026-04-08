@@ -1,4 +1,4 @@
-// lib/api/types.ts
+// lib/api/shared-types.ts
 // Auto-generated from NestJS DTOs - Keep in sync!
 
 // ============================================
@@ -623,7 +623,7 @@ export interface SetIdentifier {
 }
 
 
-// types/next-auth.d.ts
+// shared-types/next-auth.d.ts
 
 import { DefaultSession } from 'next-auth';
 import { DefaultJWT } from 'next-auth/jwt';

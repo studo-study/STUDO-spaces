@@ -5,36 +5,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import {
-  ClassActivitiesDto,
-  HeaderResposneDto,
-  LastStudiedDto,
-  StartPagina,
-  UpdateUserDTO,
-  UserListResponseDto,
-  UserResponseDto,
-  UserResponseStatsDto,
-} from './users.dto';
-import {
-  ClassroomListResponseDto,
-  ClassroomResponseDto,
-  ClassroomUserResponseDto,
-  FullClassroomResponseDto,
-} from '../classroom/classroom.dto';
-import {
-  AllsetsResponseDto,
-  fullSetResponseDto,
-  StudysetResponseDto,
-} from '../studyset/studyset.dto';
-import {
-  StudysessionDTO,
-  StudysessionResponseDto,
-  TotalStats,
-} from '../studysession/studysession.dto';
-import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { and, eq, gte, inArray, ne, not } from 'drizzle-orm';
+import { and, eq, gte, inArray, ne } from 'drizzle-orm';
 import {
   cards,
   classroomactivities,
@@ -51,13 +25,33 @@ import {
   visualsets,
 } from '../drizzle/schema';
 import { ClassroomService } from '../classroom/classroom.service';
-import { VisualsetResponseDto } from '../visualset/visualset.dto';
 import { plainToInstance } from 'class-transformer';
-import { SessionCardResponseDTO } from '../studysession/sessioncard.dto';
-import { SessionPinResponseDTO } from '../studysession/sessionpin.dto';
 import { AuthConfig, ServerConfig } from '../config/configuration';
 import * as argon2 from 'argon2';
 import { ConfigService } from '@nestjs/config';
+import {
+  AllsetsResponse,
+  LastStudied,
+  SessionCardResponse,
+  SessionPinResponse,
+  Studysession,
+  StudysessionResponse,
+  StudysetResponse,
+  TotalStats,
+  UserListResponse,
+  UserResponseStats,
+  VisualsetResponse,
+  FullStudysetResponse,
+  ClassroomListResponse,
+  ClassroomUserResponse,
+  ClassroomResponse,
+  FullClassroomResponse,
+  UpdateUser,
+  HeaderResponse,
+  StartPagina,
+  ClassActivities,
+} from '@studo/types';
+import { UserResponseDto, UserResponseStatsDto } from './users.dto';
 
 @Injectable()
 export class UserService {
@@ -88,7 +82,7 @@ export class UserService {
     });
   }
 
-  async getAll(): Promise<UserListResponseDto> {
+  async getAll(): Promise<UserListResponse> {
     const dbUsers = await this.db.query.users.findMany();
 
     return {
@@ -98,7 +92,7 @@ export class UserService {
     };
   }
 
-  async getById(user_id: string): Promise<UserResponseStatsDto> {
+  async getById(user_id: string): Promise<UserResponseStats> {
     const User = await this.db.query.users.findFirst({
       where: eq(users.id, user_id),
     });
@@ -144,18 +138,18 @@ export class UserService {
     return {
       totalsets: sets.length,
       timeLearned: stats.reduce(
-        (pv: number, sesh: StudysessionResponseDto) => pv + sesh.duration_min,
+        (pv: number, sesh: StudysessionResponse) => pv + sesh.duration_min,
         0,
       ),
       totalCards: cds.length,
       cardsLearned: cds
-        .filter((card: SessionCardResponseDTO) => {
+        .filter((card: SessionCardResponse) => {
           if (!card) {
             throw new Error('card not found');
           }
           return card.owner_id === user_id;
         })
-        .reduce((pv: number, card: SessionCardResponseDTO) => {
+        .reduce((pv: number, card: SessionCardResponse) => {
           if (card.card_viewcount >= 2) {
             return (pv += 1);
           } else {
@@ -169,7 +163,7 @@ export class UserService {
     };
   }
 
-  async getLastTen(user_id: string): Promise<LastStudiedDto[]> {
+  async getLastTen(user_id: string): Promise<LastStudied[]> {
     // Haal sessions op, gesorteerd op last_studied
     const seshes = await this.db.query.studysessions.findMany({
       where: eq(studysessions.user_id, user_id),
@@ -185,7 +179,7 @@ export class UserService {
       )
       .slice(0, 10);
 
-    const last: LastStudiedDto[] = [];
+    const last: LastStudied[] = [];
 
     for (const sesh of sortedSeshes) {
       if (sesh.set_type === 'studyset') {
@@ -210,7 +204,7 @@ export class UserService {
           Course: studyset.course,
           type: sesh.set_type,
           progress: seshCards.reduce(
-            (pv: number, card: SessionCardResponseDTO) =>
+            (pv: number, card: SessionCardResponse) =>
               pv + (card.card_viewcount || 0),
             0,
           ),
@@ -240,7 +234,7 @@ export class UserService {
           Course: vs.course,
           type: sesh.set_type,
           progress: seshPins.reduce(
-            (pv: number, pin: SessionPinResponseDTO) =>
+            (pv: number, pin: SessionPinResponse) =>
               pv + (pin.pin_viewcount || 0),
             0,
           ),
@@ -252,13 +246,12 @@ export class UserService {
     return last;
   }
 
-  async getAllSetsById(user_id: string): Promise<AllsetsResponseDto> {
+  async getAllSetsById(user_id: string): Promise<AllsetsResponse> {
     // Haal alle sessies op
     //er kunnen ook geen sessies zijn
-    const sessies: StudysessionDTO[] =
-      await this.db.query.studysessions.findMany({
-        where: eq(studysessions.user_id, user_id),
-      });
+    const sessies: Studysession[] = await this.db.query.studysessions.findMany({
+      where: eq(studysessions.user_id, user_id),
+    });
 
     // Gebruik Set om duplicaten te voorkomen
     const ssids = [
@@ -278,8 +271,8 @@ export class UserService {
     ];
 
     // Gebruik inArray() om alle sets in één query op te halen
-    let ss: StudysetResponseDto[] = [];
-    let vs: VisualsetResponseDto[] = [];
+    let ss: StudysetResponse[] = [];
+    let vs: VisualsetResponse[] = [];
 
     if (ssids.length > 0) {
       ss = await this.db.query.studysets.findMany({
@@ -302,7 +295,7 @@ export class UserService {
   async getSetById(
     user_id: string,
     set_id: string,
-  ): Promise<fullSetResponseDto> {
+  ): Promise<FullStudysetResponse> {
     const set = await this.db.query.studysets.findFirst({
       where: eq(studysets.id, set_id),
     });
@@ -362,18 +355,18 @@ export class UserService {
 
   async getAllClassroomsByUserId(
     user_id: string,
-  ): Promise<ClassroomListResponseDto> {
+  ): Promise<ClassroomListResponse> {
     //user kan ook geen classrooms gejoined zijn
-    const classroomUsers: ClassroomUserResponseDto[] =
+    const classroomUsers: ClassroomUserResponse[] =
       await this.db.query.classroomusers.findMany({
         where: eq(classroomusers.user_id, user_id),
       });
 
     const classIds: string[] = classroomUsers.map(
-      (u: ClassroomUserResponseDto) => u.classroom_id,
+      (u: ClassroomUserResponse) => u.classroom_id,
     );
 
-    const Clsrms: ClassroomResponseDto[] = [];
+    const Clsrms: ClassroomResponse[] = [];
 
     for (const id of classIds) {
       const clsrm = await this.db.query.classrooms.findFirst({
@@ -392,7 +385,7 @@ export class UserService {
   async getClassroomByUserId(
     user_id: string,
     classroom_id: string,
-  ): Promise<FullClassroomResponseDto> {
+  ): Promise<FullClassroomResponse> {
     const userconfirm = await this.db.query.classroomusers.findFirst({
       where: and(
         eq(classroomusers.user_id, user_id),
@@ -411,8 +404,8 @@ export class UserService {
 
   async updateById(
     user_id: string,
-    body: UpdateUserDTO,
-  ): Promise<UserResponseDto> {
+    body: UpdateUser,
+  ): Promise<UserResponseStats> {
     const user = await this.db.query.users.findFirst({
       where: eq(users.id, user_id),
     });
@@ -436,7 +429,7 @@ export class UserService {
     if (body.password) {
       passwordhash = await this.hashPassword(body.password);
     }
-    const updated = await this.db
+    await this.db
       .update(users)
       .set({
         email: body.email ?? user.email,
@@ -450,7 +443,6 @@ export class UserService {
         roles: body.role ?? user.roles,
       })
       .where(eq(users.id, user_id));
-
     return this.getById(user_id);
   }
 
@@ -471,7 +463,7 @@ export class UserService {
     throw new Error('not yet implemented');
   }
 
-  async headerInfo(user_id: string): Promise<HeaderResposneDto> {
+  async headerInfo(user_id: string): Promise<HeaderResponse> {
     const usr = await this.db.query.users.findFirst({
       where: eq(users.id, user_id),
     });
@@ -504,13 +496,13 @@ export class UserService {
       return [];
     }
 
-    sets.visualsets.forEach((set: VisualsetResponseDto) => {
+    sets.visualsets.forEach((set: VisualsetResponse) => {
       if (set?.course && set.course.trim() !== '') {
         courseSet.add(set.course);
       }
     });
 
-    sets.studysets.forEach((set: StudysetResponseDto) => {
+    sets.studysets.forEach((set: StudysetResponse) => {
       if (set?.course && set.course.trim() !== '') {
         courseSet.add(set.course);
       }
@@ -519,7 +511,7 @@ export class UserService {
     return Array.from(courseSet);
   }
 
-  async getClassmateActivity(user_id: string): Promise<ClassActivitiesDto[]> {
+  async getClassmateActivity(user_id: string): Promise<ClassActivities[]> {
     const userClassrooms = await this.db.query.classroomusers.findMany({
       where: eq(classroomusers.user_id, user_id),
     });
@@ -528,9 +520,9 @@ export class UserService {
     const twoDaysAgo = new Date();
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
-    const userArray: ClassActivitiesDto[] = [];
+    const userArray: ClassActivities[] = [];
     for (const c of userClassrooms) {
-      const activities: ClassActivitiesDto[] =
+      const activities: ClassActivities[] =
         await this.db.query.classroomactivities.findMany({
           where: and(
             eq(classroomactivities.classroom_id, c.classroom_id),
@@ -548,12 +540,11 @@ export class UserService {
   async getCourse(
     user_id: string,
     course_id: string,
-  ): Promise<AllsetsResponseDto> {
+  ): Promise<AllsetsResponse> {
     //er kunnen ook geen sessies zijn
-    const sessies: StudysessionDTO[] =
-      await this.db.query.studysessions.findMany({
-        where: eq(studysessions.user_id, user_id),
-      });
+    const sessies: Studysession[] = await this.db.query.studysessions.findMany({
+      where: eq(studysessions.user_id, user_id),
+    });
 
     // Gebruik Set om duplicaten te voorkomen
     const ssids = [
@@ -573,8 +564,8 @@ export class UserService {
     ];
 
     // Gebruik inArray() om alle sets in één query op te halen
-    let ss: StudysetResponseDto[] = [];
-    let vs: VisualsetResponseDto[] = [];
+    let ss: StudysetResponse[] = [];
+    let vs: VisualsetResponse[] = [];
 
     if (ssids.length > 0) {
       ss = await this.db.query.studysets.findMany({

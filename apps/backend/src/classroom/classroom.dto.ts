@@ -1,17 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsBoolean } from 'nestjs-swagger-dto';
-import { IsNotPastDate } from '../validators/is-not-past-date.validator';
 import {
-  ArrayMinSize,
   ArrayNotEmpty,
   IsArray,
   IsNotEmpty,
   IsNumber,
   IsUUID,
-  ValidateNested,
 } from 'class-validator';
-import { Type } from 'class-transformer';
-import { UpdateCardDto } from '../studyset/card.dto';
 
 export class CreateClassroomDto {
   @ApiProperty({

@@ -243,20 +243,20 @@ export default function PrivacyPage() {
                                 </thead>
                                 <tbody>
                                 <tr className="border-b border-studodarkblue/10 dark:border-white/10">
-                                    <td className="py-3 pr-4">{t("retention.types.account.type")}</td>
-                                    <td className="py-3 pr-4">{t("retention.types.account.period")}</td>
+                                    <td className="py-3 pr-4">{t("retention.shared-types.account.type")}</td>
+                                    <td className="py-3 pr-4">{t("retention.shared-types.account.period")}</td>
                                 </tr>
                                 <tr className="border-b border-studodarkblue/10 dark:border-white/10">
-                                    <td className="py-3 pr-4">{t("retention.types.content.type")}</td>
-                                    <td className="py-3 pr-4">{t("retention.types.content.period")}</td>
+                                    <td className="py-3 pr-4">{t("retention.shared-types.content.type")}</td>
+                                    <td className="py-3 pr-4">{t("retention.shared-types.content.period")}</td>
                                 </tr>
                                 <tr className="border-b border-studodarkblue/10 dark:border-white/10">
-                                    <td className="py-3 pr-4">{t("retention.types.logs.type")}</td>
-                                    <td className="py-3 pr-4">{t("retention.types.logs.period")}</td>
+                                    <td className="py-3 pr-4">{t("retention.shared-types.logs.type")}</td>
+                                    <td className="py-3 pr-4">{t("retention.shared-types.logs.period")}</td>
                                 </tr>
                                 <tr>
-                                    <td className="py-3 pr-4">{t("retention.types.support.type")}</td>
-                                    <td className="py-3 pr-4">{t("retention.types.support.period")}</td>
+                                    <td className="py-3 pr-4">{t("retention.shared-types.support.type")}</td>
+                                    <td className="py-3 pr-4">{t("retention.shared-types.support.period")}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -301,13 +301,13 @@ export default function PrivacyPage() {
                             {t("cookies.description")}
                         </p>
                         <ul className="flex flex-col gap-2 pl-5">
-                            <li className="list-disc">{t.rich("cookies.types.essential", {
+                            <li className="list-disc">{t.rich("cookies.shared-types.essential", {
                                 bold: (chunks) => <span className="font-bold">{chunks}</span>
                             })}</li>
-                            <li className="list-disc">{t.rich("cookies.types.preference", {
+                            <li className="list-disc">{t.rich("cookies.shared-types.preference", {
                                 bold: (chunks) => <span className="font-bold">{chunks}</span>
                             })}</li>
-                            <li className="list-disc">{t.rich("cookies.types.analytics", {
+                            <li className="list-disc">{t.rich("cookies.shared-types.analytics", {
                                 bold: (chunks) => <span className="font-bold">{chunks}</span>
                             })}</li>
                         </ul>

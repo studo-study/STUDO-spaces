@@ -103,11 +103,20 @@ export default auth((request) => {
         pathWithoutLocale,
         isPublicRoute,
     });
-    // Auth routes (login/register) - hier mag je NIET komen als je ingelogd bent
     const authRoutes = ['/login', '/register'];
     const isAuthRoute = authRoutes.some(route =>
         pathWithoutLocale === route || pathWithoutLocale.startsWith(route + '/')
     );
+
+    const isAdminRoute = pathWithoutLocale.startsWith('/admin');
+
+    if (isAdminRoute) {
+        const isModerator = request.auth?.user?.publicRole === 'admin' || request.auth?.user?.publicRole === 'owner';
+
+        if (!isModerator) {
+            return NextResponse.redirect(new URL(`/${locale}/home`, request.url));
+        }
+    }
 
 
     const isLoggedIn = !!request.auth;
