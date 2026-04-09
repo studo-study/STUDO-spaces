@@ -1,15 +1,19 @@
 import GridHeader from "@/components/app/admin/reports/GridHeader";
 import {FaPlus} from "react-icons/fa";
+import {Issue} from "@/types/types";
+import IssueItem from "@/components/app/admin/reports/Issue";
+
 
 interface ReportColumnProps {
     title: string,
     icon: React.ReactNode,
     count: number,
     description: string,
+    items: Issue[],
 
 }
 
-export default function ReportColumn({title, icon, count, description}: ReportColumnProps) {
+export default function ReportColumn({title, icon, count, description, items}: ReportColumnProps) {
     return (<div
             className={"w-full h-full flex flex-col gap-5 border border-studoborder/30 bg-studogrey/10 rounded-3xl p-5"}>
             <GridHeader
@@ -18,6 +22,7 @@ export default function ReportColumn({title, icon, count, description}: ReportCo
                 count={count}
                 description={description}/>
             <div className={"w-full h-full group flex flex-col gap-3"}>
+                {items.map((item: Issue, i: number) => (<IssueItem key={i} item={item}/>))}
                 <AddIssue/>
             </div>
         </div>

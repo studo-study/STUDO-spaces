@@ -719,3 +719,23 @@ export interface CardData {
     image: string;
     isDouble: boolean;
 }
+
+export interface Issue {
+    report_id: string;
+    filled_by: number;
+    title: string;
+    report_type: string;
+    description: string;
+    target_id: string;
+    target_type: string;
+    reported_user_id: number;
+    status: string;
+    priority: string | null;
+    created_at: string | null;
+    resolved_at: string | null;
+    reviewed_by: number | null;
+    moderator_note: string | null;
+    assignee_id: string | null;
+    assignee_displayName: string | null;
+    number: number;
+}
