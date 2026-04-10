@@ -1,1 +1,0 @@
-ALTER TABLE "studysets" ALTER COLUMN "folder_id" SET NOT NULL;
