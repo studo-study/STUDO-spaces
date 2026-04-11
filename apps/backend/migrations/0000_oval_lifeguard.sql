@@ -76,6 +76,12 @@ CREATE TABLE "pins" (
 	"owner_id" varchar(64) NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "popular_sets" (
+	"set_id" varchar NOT NULL,
+	"rank" integer NOT NULL,
+	"snapshot_id" integer NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "profiles" (
 	"user_id" varchar(64) PRIMARY KEY NOT NULL,
 	"displayname" varchar(100) NOT NULL,
@@ -87,6 +93,25 @@ CREATE TABLE "profiles" (
 	"verified" boolean NOT NULL,
 	"tags" varchar[] NOT NULL,
 	CONSTRAINT "profiles_join_number_unique" UNIQUE("join_number")
+);
+--> statement-breakpoint
+CREATE TABLE "reports" (
+	"report_id" varchar PRIMARY KEY NOT NULL,
+	"filled_by" integer NOT NULL,
+	"report_type" varchar(50) NOT NULL,
+	"description" text,
+	"target_id" varchar NOT NULL,
+	"target_type" varchar(20) NOT NULL,
+	"reported_user_id" integer,
+	"status" varchar(20) DEFAULT 'to_do' NOT NULL,
+	"priority" varchar DEFAULT 'no_priority' NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"resolved_at" timestamp,
+	"reviewed_by" integer,
+	"moderator_note" text,
+	"assignee_id" varchar,
+	"assignee_displayName" varchar,
+	"number" integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "sessioncards" (
@@ -174,7 +199,7 @@ CREATE TABLE "studysets" (
 	"displayname" varchar(100) NOT NULL,
 	"img_url" varchar(250) NOT NULL,
 	"user_id" varchar(64) NOT NULL,
-	"folder_id" varchar(64)
+	"folder_id" varchar(64) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "tracksets" (
@@ -199,6 +224,7 @@ CREATE TABLE "users" (
 	"roles" jsonb NOT NULL,
 	"public_role" varchar(24) NOT NULL,
 	"verified" boolean NOT NULL,
+	"banned" boolean NOT NULL,
 	CONSTRAINT "users_join_number_unique" UNIQUE("join_number")
 );
 --> statement-breakpoint

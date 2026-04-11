@@ -428,11 +428,15 @@ export const reports = pgTable('reports', {
   target_id: varchar('target_id').notNull(),
   target_type: varchar('target_type', { length: 20 }).notNull(),
   reported_user_id: integer('reported_user_id'),
-  status: varchar('status', { length: 20 }).default('pending').notNull(),
+  status: varchar('status', { length: 20 }).default('to_do').notNull(),
+  priority: varchar('priority').default('no_priority').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull(),
   resolved_at: timestamp('resolved_at'),
   reviewed_by: integer('reviewed_by'),
   moderator_note: text('moderator_note'),
+  assignee_id: varchar('assignee_id'),
+  assignee_displayName: varchar('assignee_displayName'),
+  number: integer('number').notNull(),
 });
 
 // ============================================================
