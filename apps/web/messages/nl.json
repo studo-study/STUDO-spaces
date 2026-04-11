@@ -732,6 +732,8 @@
     "home": "Home",
     "sets": "Sets",
     "courses": "Courses",
+    "planner": "Planner",
+    "flow": "Flow",
     "folders": "Folders",
     "create": "Create",
     "classrooms": "Classrooms",
@@ -1126,5 +1128,20 @@
     "excel" : "Excel import",
     "sven" : "SVEN import",
     "import": "importeer"
+  },
+
+  "flow": {
+    "title": "Your Flow Boards",
+    "created_by": "Created by",
+    "you" : "(you)",
+    "create_title": "Create new Flow Board",
+    "add_title": "Board name",
+    "description": "Add a short summary...",
+    "create_btn": "Create Board",
+    "cancel_btn": "cancel"
+  },
+
+  "colorPicker": {
+    "search_ph": "search..."
   }
 }

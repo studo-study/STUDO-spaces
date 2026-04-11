@@ -9,6 +9,7 @@ import {
   jsonb,
   timestamp,
   text,
+  pgEnum,
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
@@ -415,7 +416,9 @@ export const studoprofilecommunities = pgTable(
 );
 
 export const popular_sets = pgTable('popular_sets', {
-  set_id: varchar('set_id').notNull(),
+  id: varchar('id', { length: 64 }).primaryKey().notNull(),
+  studyset_id: varchar('studyset_id').references(() => studysets.id),
+  visualset_id: varchar('visualset_id').references(() => visualsets.id),
   rank: integer('rank').notNull(),
   snapshot_id: integer('snapshot_id').notNull(),
 });
@@ -437,6 +440,58 @@ export const reports = pgTable('reports', {
   assignee_id: varchar('assignee_id'),
   assignee_displayName: varchar('assignee_displayName'),
   number: integer('number').notNull(),
+});
+
+export const flowboards = pgTable('flowboards', {
+  id: varchar('board_id').primaryKey(),
+  owner_id: varchar('owner_id')
+    .references(() => users.id)
+    .notNull(),
+  title: varchar('title').notNull(),
+  icon: varchar('icon').default('flowboard_icon').notNull(),
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  updated_at: timestamp('updated_at').defaultNow().notNull(),
+  year: varchar('year').notNull(),
+  semester: varchar('semester'),
+  school_name: varchar('school_name'),
+  school_id: varchar('school_id'),
+});
+
+export const flowcourses = pgTable('flowcourses', {
+  id: varchar('flowcourse_id').primaryKey(),
+  board_id: varchar('board_id')
+    .references(() => flowboards.id)
+    .notNull(),
+  added_by: varchar('added_by')
+    .references(() => users.id)
+    .notNull(),
+  title: varchar('title').notNull(),
+  icon: varchar('icon').default('flowcourse_icon').notNull(),
+  description: text('description'),
+});
+
+export const statusEnum = pgEnum('status', ['to_do', 'in_progress', 'done']);
+export const priorityEnum = pgEnum('priority', [
+  'no_priority',
+  'low',
+  'medium',
+  'high',
+]);
+
+export const flowrows = pgTable('flowrows', {
+  id: varchar('flowrow_id').primaryKey(),
+  flowcourse_id: varchar('flowcourse_id')
+    .references(() => flowcourses.id)
+    .notNull(),
+  title: varchar('title').notNull(),
+  description: text('description'),
+  priority: varchar('priority').default('no_priority'),
+  course_link: varchar('link'),
+  summary_link: varchar('summary'),
+  status: statusEnum('status').default('to_do').notNull(),
+  due_date: timestamp('due_date'),
+  studoset: varchar('studoset').references(() => studysets.id),
+  visualset: varchar('visualset').references(() => visualsets.id),
 });
 
 // ============================================================
@@ -654,3 +709,35 @@ export const studocommunitiesRelations = relations(
     }),
   }),
 );
+
+export const flowboardsRelations = relations(flowboards, ({ one, many }) => ({
+  owner: one(users, { fields: [flowboards.owner_id], references: [users.id] }),
+  courses: many(flowcourses),
+}));
+
+export const flowcoursesRelations = relations(flowcourses, ({ one, many }) => ({
+  board: one(flowboards, {
+    fields: [flowcourses.board_id],
+    references: [flowboards.id],
+  }),
+  addedBy: one(users, {
+    fields: [flowcourses.added_by],
+    references: [users.id],
+  }),
+  rows: many(flowrows),
+}));
+
+export const flowrowsRelations = relations(flowrows, ({ one }) => ({
+  course: one(flowcourses, {
+    fields: [flowrows.flowcourse_id],
+    references: [flowcourses.id],
+  }),
+  studyset: one(studysets, {
+    fields: [flowrows.studoset],
+    references: [studysets.id],
+  }),
+  visualset: one(visualsets, {
+    fields: [flowrows.visualset],
+    references: [visualsets.id],
+  }),
+}));
