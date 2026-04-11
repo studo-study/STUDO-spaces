@@ -721,6 +721,7 @@ export interface CardData {
 }
 
 export interface Issue {
+    id: string;
     report_id: string;
     filled_by: number;
     title: string;

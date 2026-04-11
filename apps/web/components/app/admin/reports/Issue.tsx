@@ -1,3 +1,4 @@
+"use client"
 import {Issue} from "@/types/types";
 import {Link} from "@/i18n/routing";
 import {LuCircleUserRound} from "react-icons/lu";
@@ -6,8 +7,12 @@ import {PiCellSignalHighFill, PiCellSignalLowFill, PiCellSignalMediumFill, PiDot
 import {CgDanger} from "react-icons/cg";
 import {MdOutlineBrightness1} from "react-icons/md";
 import {RiProgress4Line, RiProgress8Line} from "react-icons/ri";
+import {ReactNode, useState} from "react";
+import PopupBackdrop from "@/components/design_system/PopupBackdrop";
+import IssueDetails from "@/components/app/admin/reports/IssueDetails";
 interface IssueProps {
     item: Issue
+    status: string
 }
 
 interface vb {
@@ -30,8 +35,14 @@ interface vb {
     number: number | null;
 }
 
-export default function IssueItem({item}: IssueProps) {
-    return(<div className={"w-full min-h-fit flex cursor-grab active:cursor-grabbing flex-col gap-2 border border-studoborder/30 bg-studogrey/30 rounded-2xl p-3"}>
+
+export default function IssueItem({item, status}: IssueProps) {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const toggleOpen = () => {
+        setIsOpen(!isOpen);
+    }
+    return(<div onClick={toggleOpen}
+        className={"relative w-full handle min-h-fit flex cursor-pointer active:cursor-grabbing flex-col gap-2 border border-studoborder/30 bg-studogrey/30 rounded-2xl p-3"}>
         <div className={"w-full min-h-fit flex text-white flex-row gap-3 justify-between "}>
             <span className={"w-fit h-fit text-sm text-zinc-400"}>#{item?.number}</span>
             <div>
@@ -45,7 +56,7 @@ export default function IssueItem({item}: IssueProps) {
             </div>
         </div>
         <div className={"w-full flex flex-row gap-2 items-center"}>
-            {getProgress(item.status)}
+            {getProgress(status)}
             <span className={"truncate text-sm"}>{item.title}</span>
         </div>
         <div className={"w-full flex flex-row gap-2 items-center"}>
@@ -56,6 +67,11 @@ export default function IssueItem({item}: IssueProps) {
                 {item.report_type.split("_").join(" ")}
             </div>
         </div>
+        <PopupBackdrop
+        isOpen={isOpen}
+        setIsOpen={toggleOpen}>
+           <IssueDetails/>
+        </PopupBackdrop>
     </div>)
 }
 

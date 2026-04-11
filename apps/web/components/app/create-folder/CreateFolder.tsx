@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { IoIosClose } from "react-icons/io";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
+import PopupBackdrop from "@/components/design_system/PopupBackdrop";
 
 interface CreateFolderProps {
     createOpen: boolean;
@@ -44,7 +45,9 @@ export default function CreateFolder({ createOpen, setCreateOpen }: CreateFolder
     const close = () => setCreateOpen(false);
 
     return (
-        <div className={`fixed inset-0 flex items-baseline justify-center pt-80 w-full bg-black/50 h-full z-[9999] ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+        <PopupBackdrop
+        isOpen={isOpen}
+        setIsOpen={setCreateOpen}>
             <div
                 ref={popupRef}
                 className={`relative w-1/5 p-7 rounded-2xl bg-white/80 dark:bg-[#1e293b] border border-white/50 dark:border-white/10 shadow-xl transition-all duration-300 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}`}
@@ -68,6 +71,6 @@ export default function CreateFolder({ createOpen, setCreateOpen }: CreateFolder
                     {t("button")}
                 </button>
             </div>
-        </div>
+        </PopupBackdrop>
     );
 }
