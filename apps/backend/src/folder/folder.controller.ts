@@ -6,11 +6,18 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseUUIDPipe, Post, Request,
+  ParseUUIDPipe,
+  Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { FolderService } from './folder.service';
-import { FolderResponseDto, FolderListResponseDto, FullFolderResponseDto, CreateFolderDto } from './folder.dto';
+import {
+  FolderResponseDto,
+  FolderListResponseDto,
+  FullFolderResponseDto,
+  CreateFolderDto,
+} from './folder.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
 import { CheckUserAccessGuard } from '../auth/guards/userAccess.guard';
@@ -37,8 +44,7 @@ interface AuthenticatedRequest extends ExpressRequest {
 @ApiBearerAuth()
 @Controller('folders')
 export class FolderController {
-  constructor(private readonly foldersService: FolderService) {
-  }
+  constructor(private readonly foldersService: FolderService) {}
 
   // GET ALL FOLDERS ------------------------------------------------
   @ApiOperation({ summary: 'Haal alle folders op (admin).' })

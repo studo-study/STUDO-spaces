@@ -10,7 +10,8 @@ import {GoHome} from "react-icons/go";
 import {IoIosAdd} from "react-icons/io";
 import {usePathname} from "next/navigation";
 import UserPopup from "@/components/app/app_header/popups/BurgerPopup";
-import {useUser} from "@/components/providers/UserProvider";
+import {BsFileEarmarkCheck} from "react-icons/bs";
+import {LuClipboardList} from "react-icons/lu";
 
 interface BurgerProps {
     burgerOpen: boolean,
@@ -30,6 +31,7 @@ const folders = [
 
 const classrooms = [
     {icon: <IoSchoolOutline />, link:"/classrooms", label:"classrooms"},
+    {icon: <LuClipboardList size={20}/>, link:"/flow", label:"flow"},
 ]
 
 export default function BurgerMenu({burgerOpen, toggleSearch, toggleCreate}: BurgerProps) {

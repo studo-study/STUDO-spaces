@@ -827,7 +827,101 @@ async function seedStudo() {
       },
     ]);
     console.log('Studoprofilecommunities seeded\n');
+    // === 18. Flowboards ===
+    console.log('Seeding flowboards...');
 
+    const flowboardId1 = uuidv6();
+    const flowcourseId1 = uuidv6();
+
+    await db.insert(schema.flowboards).values([
+      {
+        id: flowboardId1,
+        owner_id: userId1,
+        title: 'Heilige Excel',
+        icon: 'flowboard_icon',
+        year: '2025-2026',
+        semester: 'Semester 2',
+        school_name: 'HOGENT',
+        school_id: null,
+      },
+    ]);
+    console.log('Flowboards seeded\n');
+
+    // === 19. Flowcourses ===
+    console.log('Seeding flowcourses...');
+    await db.insert(schema.flowcourses).values([
+      {
+        id: flowcourseId1,
+        board_id: flowboardId1,
+        added_by: userId1,
+        title: 'Data Science',
+        icon: 'flowcourse_icon',
+        description: null,
+      },
+    ]);
+    console.log('Flowcourses seeded\n');
+
+    // === 20. Flowrows ===
+    console.log('Seeding flowrows...');
+    await db.insert(schema.flowrows).values([
+      {
+        id: uuidv6(),
+        flowcourse_id: flowcourseId1,
+        title: 'Basisbegrippen, steekproefonderzoek',
+        course_link:
+          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235478',
+        status: 'done',
+      },
+      {
+        id: uuidv6(),
+        flowcourse_id: flowcourseId1,
+        title: 'Analyse van 1 variabele',
+        course_link:
+          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235483',
+        status: 'done',
+      },
+      {
+        id: uuidv6(),
+        flowcourse_id: flowcourseId1,
+        title: 'Kansrekening, de centrale limietstelling, statistische toetsen',
+        course_link:
+          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235487',
+        status: 'to_do',
+      },
+      {
+        id: uuidv6(),
+        flowcourse_id: flowcourseId1,
+        title: 'Analyse van 2 kwalitatieve variabelen',
+        course_link:
+          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235492',
+        status: 'to_do',
+      },
+      {
+        id: uuidv6(),
+        flowcourse_id: flowcourseId1,
+        title: 'Analyse van 2 variabelen kwalitatief vs kwantitatief',
+        course_link:
+          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235497',
+        status: 'to_do',
+      },
+      {
+        id: uuidv6(),
+        flowcourse_id: flowcourseId1,
+        title: 'Analyse van 2 kwantitatieve variabelen',
+        course_link:
+          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235501',
+        status: 'to_do',
+      },
+      {
+        id: uuidv6(),
+        flowcourse_id: flowcourseId1,
+        title: 'Tijdserie analyse',
+        course_link:
+          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235505',
+        status: 'to_do',
+      },
+    ]);
+    console.log('Flowrows seeded\n');
     console.log('All data seeded successfully!');
   } catch (error) {
     console.error('Error seeding database:', error);

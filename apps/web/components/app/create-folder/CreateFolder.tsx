@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { IoIosClose } from "react-icons/io";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
-import PopupBackdrop from "@/components/design_system/PopupBackdrop";
+import PopupBackdrop from "@/components/design_system/popup/PopupBackdrop";
 
 interface CreateFolderProps {
     createOpen: boolean;
