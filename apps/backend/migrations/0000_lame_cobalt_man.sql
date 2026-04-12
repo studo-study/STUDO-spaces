@@ -115,7 +115,9 @@ CREATE TABLE "pins" (
 );
 --> statement-breakpoint
 CREATE TABLE "popular_sets" (
-	"set_id" varchar NOT NULL,
+	"id" varchar(64) PRIMARY KEY NOT NULL,
+	"studyset_id" varchar,
+	"visualset_id" varchar,
 	"rank" integer NOT NULL,
 	"snapshot_id" integer NOT NULL
 );
@@ -288,10 +290,10 @@ ALTER TABLE "classrooms" ADD CONSTRAINT "classrooms_owner_id_users_id_fk" FOREIG
 ALTER TABLE "classroomsets" ADD CONSTRAINT "classroomsets_classroom_id_classrooms_id_fk" FOREIGN KEY ("classroom_id") REFERENCES "public"."classrooms"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "classroomusers" ADD CONSTRAINT "classroomusers_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "classroomusers" ADD CONSTRAINT "classroomusers_classroom_id_classrooms_id_fk" FOREIGN KEY ("classroom_id") REFERENCES "public"."classrooms"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "flowboards" ADD CONSTRAINT "flowboards_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "flowcourses" ADD CONSTRAINT "flowcourses_board_id_flowboards_board_id_fk" FOREIGN KEY ("board_id") REFERENCES "public"."flowboards"("board_id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "flowcourses" ADD CONSTRAINT "flowcourses_added_by_users_id_fk" FOREIGN KEY ("added_by") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "flowrows" ADD CONSTRAINT "flowrows_flowcourse_id_flowcourses_flowcourse_id_fk" FOREIGN KEY ("flowcourse_id") REFERENCES "public"."flowcourses"("flowcourse_id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "flowboards" ADD CONSTRAINT "flowboards_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "flowcourses" ADD CONSTRAINT "flowcourses_board_id_flowboards_board_id_fk" FOREIGN KEY ("board_id") REFERENCES "public"."flowboards"("board_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "flowcourses" ADD CONSTRAINT "flowcourses_added_by_users_id_fk" FOREIGN KEY ("added_by") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "flowrows" ADD CONSTRAINT "flowrows_flowcourse_id_flowcourses_flowcourse_id_fk" FOREIGN KEY ("flowcourse_id") REFERENCES "public"."flowcourses"("flowcourse_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "flowrows" ADD CONSTRAINT "flowrows_studoset_studysets_id_fk" FOREIGN KEY ("studoset") REFERENCES "public"."studysets"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "flowrows" ADD CONSTRAINT "flowrows_visualset_visualsets_id_fk" FOREIGN KEY ("visualset") REFERENCES "public"."visualsets"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "folders" ADD CONSTRAINT "folders_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -299,6 +301,8 @@ ALTER TABLE "images" ADD CONSTRAINT "images_set_id_visualsets_id_fk" FOREIGN KEY
 ALTER TABLE "pins" ADD CONSTRAINT "pins_image_id_images_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."images"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "pins" ADD CONSTRAINT "pins_set_id_visualsets_id_fk" FOREIGN KEY ("set_id") REFERENCES "public"."visualsets"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "pins" ADD CONSTRAINT "pins_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "popular_sets" ADD CONSTRAINT "popular_sets_studyset_id_studysets_id_fk" FOREIGN KEY ("studyset_id") REFERENCES "public"."studysets"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "popular_sets" ADD CONSTRAINT "popular_sets_visualset_id_visualsets_id_fk" FOREIGN KEY ("visualset_id") REFERENCES "public"."visualsets"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "profiles" ADD CONSTRAINT "profiles_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "sessioncards" ADD CONSTRAINT "sessioncards_card_id_cards_id_fk" FOREIGN KEY ("card_id") REFERENCES "public"."cards"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "sessioncards" ADD CONSTRAINT "sessioncards_session_id_studysessions_id_fk" FOREIGN KEY ("session_id") REFERENCES "public"."studysessions"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint

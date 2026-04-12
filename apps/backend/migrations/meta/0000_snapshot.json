@@ -1,5 +1,5 @@
 {
-  "id": "007370d0-4861-4105-9641-a9bcdb944bf8",
+  "id": "3d563a73-a0ce-4e06-b538-606733748fc6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -516,7 +516,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -580,7 +580,7 @@
           "columnsTo": [
             "board_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "flowcourses_added_by_users_id_fk": {
@@ -593,7 +593,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -689,7 +689,7 @@
           "columnsTo": [
             "flowcourse_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "flowrows_studoset_studysets_id_fk": {
@@ -962,11 +962,23 @@
       "name": "popular_sets",
       "schema": "",
       "columns": {
-        "set_id": {
-          "name": "set_id",
+        "id": {
+          "name": "id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "studyset_id": {
+          "name": "studyset_id",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "visualset_id": {
+          "name": "visualset_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "rank": {
           "name": "rank",
@@ -982,7 +994,34 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "popular_sets_studyset_id_studysets_id_fk": {
+          "name": "popular_sets_studyset_id_studysets_id_fk",
+          "tableFrom": "popular_sets",
+          "tableTo": "studysets",
+          "columnsFrom": [
+            "studyset_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "popular_sets_visualset_id_visualsets_id_fk": {
+          "name": "popular_sets_visualset_id_visualsets_id_fk",
+          "tableFrom": "popular_sets",
+          "tableTo": "visualsets",
+          "columnsFrom": [
+            "visualset_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

@@ -445,7 +445,7 @@ export const reports = pgTable('reports', {
 export const flowboards = pgTable('flowboards', {
   id: varchar('board_id').primaryKey(),
   owner_id: varchar('owner_id')
-    .references(() => users.id)
+    .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   title: varchar('title').notNull(),
   icon: varchar('icon').default('flowboard_icon').notNull(),
@@ -460,10 +460,10 @@ export const flowboards = pgTable('flowboards', {
 export const flowcourses = pgTable('flowcourses', {
   id: varchar('flowcourse_id').primaryKey(),
   board_id: varchar('board_id')
-    .references(() => flowboards.id)
+    .references(() => flowboards.id, { onDelete: 'cascade' })
     .notNull(),
   added_by: varchar('added_by')
-    .references(() => users.id)
+    .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   title: varchar('title').notNull(),
   icon: varchar('icon').default('flowcourse_icon').notNull(),
@@ -481,7 +481,7 @@ export const priorityEnum = pgEnum('priority', [
 export const flowrows = pgTable('flowrows', {
   id: varchar('flowrow_id').primaryKey(),
   flowcourse_id: varchar('flowcourse_id')
-    .references(() => flowcourses.id)
+    .references(() => flowcourses.id, { onDelete: 'cascade' })
     .notNull(),
   title: varchar('title').notNull(),
   description: text('description'),

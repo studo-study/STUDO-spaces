@@ -3,8 +3,12 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { FlowBoardResponse, FlowBoardOverview } from '@studo/types';
-import { eq } from 'drizzle-orm';
+import {
+  FlowBoardResponse,
+  FlowBoardOverview,
+  CreateFlowBoard,
+} from '@studo/types';
+import { eq, sql } from 'drizzle-orm';
 import { flowboards, flowcourses, flowrows, users } from '../drizzle/schema';
 
 @Injectable()
@@ -131,5 +135,59 @@ export class FlowService {
       school: board.school_name ?? '',
       school_id: board.school_id ?? '',
     }));
+  }
+
+  async createFlowboard(
+    user_id: string,
+    body: CreateFlowBoard,
+  ): Promise<FlowBoardOverview> {
+    const id = crypto.randomUUID();
+
+    await this.db.insert(flowboards).values({
+      id,
+      owner_id: user_id,
+      title: body.title,
+      icon: body.icon,
+      year: body.year,
+      semester: body.semester ?? null,
+      school_name: body.school ?? null,
+      school_id: body.school_id ?? null,
+    });
+
+    const owner = await this.db.query.users.findFirst({
+      where: eq(users.id, user_id),
+    });
+
+    return {
+      id,
+      owner_id: user_id,
+      owner_name: owner?.displayName ?? '',
+      owner_pfp: owner?.img_url ?? '',
+      title: body.title,
+      icon: body.icon,
+      creator_id: user_id,
+      year: body.year,
+      semester: body.semester ?? '',
+      school: body.school ?? '',
+      school_id: body.school_id ?? '',
+    };
+  }
+
+  async deleteFlowboard(flowId: string): Promise<void> {
+    const board = await this.db.query.flowboards.findFirst({
+      where: eq(flowboards.id, flowId),
+    });
+    if (!board) throw new NotFoundException();
+
+    await this.db.delete(flowboards).where(eq(flowboards.id, flowId));
+  }
+
+  async deleteFlowrow(rowId: string): Promise<void> {
+    const row = await this.db.query.flowrows.findFirst({
+      where: eq(flowrows.id, rowId),
+    });
+    if (!row) throw new NotFoundException();
+
+    await this.db.delete(flowrows).where(eq(flowrows.id, rowId));
   }
 }
