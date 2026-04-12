@@ -2,7 +2,7 @@
 import { useFlowStore } from "@/store/flowStore";
 import { useEffect, useState } from "react";
 import { FlowBoardOverview } from "@studo/types";
-import FlowGridItem from "@/components/app/flow/FlowGridItem";
+import FlowGridItem from "@/components/app/flow/overview/FlowGridItem";
 
 interface FlowGridProps {
     initialBoards: FlowBoardOverview[];

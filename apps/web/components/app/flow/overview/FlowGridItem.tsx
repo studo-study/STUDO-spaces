@@ -28,8 +28,8 @@ export default function FlowGridItem(props:FlowGridItemProps ) {
     console.log(id);
     return(
         <div
-            onClick={() => router.push(`/flow/${item.id}`)}
-            className={"relative w-full flex flex-col hover:border-studoborder transition-all h-50 p-5 rounded-3xl text-studodarkblue dark:text-white border border-studoborder/30 bg-studogrey/30"}>
+            onClick={() => router.push(`/flow/${item.id}/overview`)}
+            className={"relative w-full flex flex-col cursor-pointer hover:border-studoborder transition-all h-50 p-5 rounded-3xl text-studodarkblue dark:text-white border border-studoborder/30 bg-studogrey/30"}>
             <div className={"flex h-fit flex-row gap-5 items-center"}>
                 <div className={`bg-${color}-400/20 text-${color}-500 w-10 h-10 rounded-2xl flex items-center justify-center`}>
                     <Icon size={20} />

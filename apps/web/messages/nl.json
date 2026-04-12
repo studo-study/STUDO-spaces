@@ -759,7 +759,8 @@
     "study": "Study Group – collaborate with friends",
     "community": "Community – open group for everyone",
     "subtitle_school": "School name:",
-    "placeholder_school": "school name..."
+    "placeholder_school": "school name...",
+    "studygroup": "Study Group – collaborate with friends"
   },
   "createstudoset": {
     "title": "Creëer nieuwe Studoset",
@@ -1140,7 +1141,11 @@
     "create_btn": "Create Board",
     "cancel_btn": "cancel",
     "semester": "semester",
-    "error_year_required": "Year required"
+    "error_year_required": "Year required",
+    "add_metadata": "Add Metadata",
+    "add_later": "Hide Metadata",
+    "set_title": "board title...",
+    "overview": "Overview"
 
   },
 

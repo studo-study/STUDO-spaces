@@ -451,7 +451,7 @@ export const flowboards = pgTable('flowboards', {
   icon: varchar('icon').default('flowboard_icon').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull(),
   updated_at: timestamp('updated_at').defaultNow().notNull(),
-  year: varchar('year').notNull(),
+  year: varchar('year'),
   semester: varchar('semester'),
   school_name: varchar('school_name'),
   school_id: varchar('school_id'),
@@ -468,14 +468,25 @@ export const flowcourses = pgTable('flowcourses', {
   title: varchar('title').notNull(),
   icon: varchar('icon').default('flowcourse_icon').notNull(),
   description: text('description'),
+  examdate: varchar('examdate'),
 });
 
-export const statusEnum = pgEnum('status', ['to_do', 'in_progress', 'done']);
+export const statusEnum = pgEnum('status', ['not_started', 'doing', 'done']);
+
 export const priorityEnum = pgEnum('priority', [
   'no_priority',
   'low',
   'medium',
   'high',
+]);
+
+export const rowTypeEnum = pgEnum('rowType', [
+  'lesson',
+  'practice',
+  'study',
+  'exam',
+  'summary',
+  'task',
 ]);
 
 export const flowrows = pgTable('flowrows', {
@@ -484,14 +495,36 @@ export const flowrows = pgTable('flowrows', {
     .references(() => flowcourses.id, { onDelete: 'cascade' })
     .notNull(),
   title: varchar('title').notNull(),
+  order_index: integer('order_index'),
   description: text('description'),
-  priority: varchar('priority').default('no_priority'),
-  course_link: varchar('link'),
-  summary_link: varchar('summary'),
-  status: statusEnum('status').default('to_do').notNull(),
+  type: rowTypeEnum('type').default('task'),
+  priority: priorityEnum('priority').default('no_priority'),
+  status: statusEnum('status').default('not_started').notNull(),
+  estimated_time: integer('estimated_time'),
+  difficulty: integer('difficulty'),
+  is_required: boolean('is_required').default(true),
   due_date: timestamp('due_date'),
   studoset: varchar('studoset').references(() => studysets.id),
   visualset: varchar('visualset').references(() => visualsets.id),
+});
+
+export const resourceTypeEnum = pgEnum('resourceType', [
+  'course',
+  'notes',
+  'summary',
+  'abstract',
+  'sample_exam',
+  'task',
+]);
+
+export const flowresources = pgTable('flowresources', {
+  flowresource_id: varchar('flowresource_id').primaryKey(),
+  row_id: varchar('row_id')
+    .references(() => flowrows.id, { onDelete: 'cascade' })
+    .notNull(),
+  title: varchar('title').notNull(),
+  link: varchar('link').notNull(),
+  resource_type: resourceTypeEnum('resource_type').default('task').notNull(),
 });
 
 // ============================================================

@@ -2,7 +2,7 @@
 
 /**
  * This script is used to reset the project to a blank state.
- * It deletes or moves the /app, /components, /hooks, /scripts, and /constants directories to /app-example based on user input and creates a new /app directory with an page.tsx and _layout.tsx file.
+ * It deletes or moves the /app, /components, /hooks, /scripts, and /constants directories to /app-example based on user input and creates a new /app directory with an layout.tsx and _layout.tsx file.
  * You can remove the `reset-project` script from package.json and safely delete this file after running it.
  */
 
@@ -75,10 +75,10 @@ const moveDirectories = async (userInput) => {
     await fs.promises.mkdir(newAppDirPath, { recursive: true });
     console.log("\n📁 New /app directory created.");
 
-    // Create page.tsx
-    const indexPath = path.join(newAppDirPath, "page.tsx");
+    // Create layout.tsx
+    const indexPath = path.join(newAppDirPath, "layout.tsx");
     await fs.promises.writeFile(indexPath, indexContent);
-    console.log("📄 app/page.tsx created.");
+    console.log("📄 app/layout.tsx created.");
 
     // Create _layout.tsx
     const layoutPath = path.join(newAppDirPath, "_layout.tsx");

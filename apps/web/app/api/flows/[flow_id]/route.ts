@@ -26,3 +26,28 @@ export async function DELETE(
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });
 }
+
+export async function POST(request: NextRequest) {
+    const session = await auth();
+
+    if (!session?.accessToken) {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+    console.log("Request body:", body);
+
+    const response = await fetch(`${process.env.AUTH_API_URL}/flows/-`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${session.accessToken}`,
+        },
+        body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    console.log("Server response data:", data);
+
+    return NextResponse.json(data, { status: response.status });
+}

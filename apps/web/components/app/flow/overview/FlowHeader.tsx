@@ -1,8 +1,8 @@
 "use client"
 import {useTranslations} from "next-intl";
-import TriggerFlow from "@/components/app/flow/TriggerFlow";
+import TriggerFlow from "@/components/app/flow/overview/TriggerFlow";
 import {useState} from "react";
-import CreateFlowBoard from "@/components/app/flow/CreateFlowBoard";
+import CreateFlowBoard from "@/components/app/flow/overview/CreateFlowBoard";
 
 
 const FlowHeader = () => {

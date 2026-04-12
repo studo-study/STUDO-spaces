@@ -1,5 +1,4 @@
 "use client"
-import {IoIosAdd, IoMdNotificationsOutline} from "react-icons/io";
 import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
