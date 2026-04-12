@@ -1,15 +1,36 @@
-import { FiStar, FiFolder, FiBriefcase, FiBook, FiCode } from 'react-icons/fi';
-import { IconType } from 'react-icons';
-import {CiViewTable} from "react-icons/ci";
+import {
+    FiBook, FiCode, FiStar, FiFolder, FiBriefcase,
+    FiCpu, FiGlobe, FiHeart, FiMusic, FiCamera,
+    FiFeather, FiAward, FiZap, FiSun, FiMoon,
+    FiCompass, FiAnchor, FiTarget, FiTrendingUp, FiLayers,
+    FiPenTool, FiTerminal, FiDatabase, FiGrid, FiPackage,
+    FiClipboard, FiBookOpen, FiEdit3, FiFlag, FiGitBranch,
+    FiActivity, FiSmile, FiCoffee, FiDroplet, FiWind,
+} from "react-icons/fi";
+import { IconType } from "react-icons";
+import { CiViewTable } from "react-icons/ci";
 
 const ICON_MAP: Record<string, IconType> = {
-    star: FiStar,
-    folder: FiFolder,
-    briefcase: FiBriefcase,
-    book: FiBook,
-    code: FiCode,
+    book: FiBook, code: FiCode, star: FiStar, folder: FiFolder,
+    briefcase: FiBriefcase, cpu: FiCpu, globe: FiGlobe, heart: FiHeart,
+    music: FiMusic, camera: FiCamera, feather: FiFeather, award: FiAward,
+    zap: FiZap, sun: FiSun, moon: FiMoon, compass: FiCompass,
+    anchor: FiAnchor, target: FiTarget, trending: FiTrendingUp, layers: FiLayers,
+    pen: FiPenTool, terminal: FiTerminal, database: FiDatabase, grid: FiGrid,
+    package: FiPackage, clipboard: FiClipboard, bookopen: FiBookOpen,
+    edit: FiEdit3, flag: FiFlag, git: FiGitBranch, activity: FiActivity,
+    smile: FiSmile, coffee: FiCoffee, droplet: FiDroplet, wind: FiWind,
 };
 
-export function getFlowIcon(iconName: string): IconType {
-    return ICON_MAP[iconName] ?? CiViewTable; // fallback
+export function getFlowIcon(value: string): { Icon: IconType; color: string } {
+    const { color, icon } = parseFlowIcon(value);
+    return {
+        Icon: ICON_MAP[icon] ?? CiViewTable,
+        color,
+    };
+}
+
+function parseFlowIcon(value: string): { color: string; icon: string } {
+    const [color, icon] = value.split(":");
+    return { color: color ?? "emerald", icon: icon ?? "book" };
 }

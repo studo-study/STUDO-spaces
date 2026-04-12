@@ -1138,10 +1138,17 @@
     "add_title": "Board name",
     "description": "Add a short summary...",
     "create_btn": "Create Board",
-    "cancel_btn": "cancel"
+    "cancel_btn": "cancel",
+    "semester": "semester",
+    "error_year_required": "Year required"
+
   },
 
   "colorPicker": {
     "search_ph": "search..."
+  },
+
+  "iconPicker": {
+    "no_icons_found": "No icons found"
   }
 }

@@ -1,30 +1,47 @@
+"use client"
 import {FlowBoardOverview} from "@studo/types";
 import {Link} from "@/i18n/routing";
 import {getFlowIcon} from "@/components/design_system/icons/iconRegistry";
-import {useTranslations} from "next-intl";
-import {auth} from "@/auth";
 import Image from "next/image";
-import {getTranslations} from "next-intl/server";
+import ItemOptions from "@/components/design_system/item_options/ItemOptions";
+import {useTranslations} from "next-intl";
+import {useUser} from "@/components/providers/UserProvider";
+import {FiTrash2} from "react-icons/fi";
+import {useRouter} from "next/navigation";
+import {useFlowStore} from "@/store/flowStore";
 
 interface FlowGridItemProps {
     item: FlowBoardOverview;
 }
-export default async function FlowGridItem(props:FlowGridItemProps ) {
+export default function FlowGridItem(props:FlowGridItemProps ) {
     const {item} = props;
-    const t = await getTranslations('flow')
-    const Icon = getFlowIcon(item.icon);
-    const session = await auth();
-    const id = session?.user?.id
+    const t = useTranslations('flow')
+    const { Icon, color } = getFlowIcon(item.icon);
+    const id = useUser().user?.id;
+    const router = useRouter();
+    const { removeBoard } = useFlowStore();
+    //methods
+    const handleDelete = async () => {
+        removeBoard(item.id);
+        await fetch(`/api/flows/${item.id}`, {method: "DELETE"});
+    }
     console.log(id);
-    return(<Link href={"/flow/" + item.id}>
-        <div className={"relative w-full flex flex-col hover:border-studoborder transition-all h-50 p-5 rounded-3xl text-studodarkblue dark:text-white border border-studoborder/30 bg-studogrey/30"}>
+    return(
+        <div
+            onClick={() => router.push(`/flow/${item.id}`)}
+            className={"relative w-full flex flex-col hover:border-studoborder transition-all h-50 p-5 rounded-3xl text-studodarkblue dark:text-white border border-studoborder/30 bg-studogrey/30"}>
             <div className={"flex h-fit flex-row gap-5 items-center"}>
-                <div className={'w-13 h-13 rounded-xl bg-emerald-400/30 text-emerald-500 flex items-center justify-center'}>
-                    <Icon size={25} />
+                <div className={`bg-${color}-400/20 text-${color}-500 w-10 h-10 rounded-2xl flex items-center justify-center`}>
+                    <Icon size={20} />
                 </div>
                 <div className={"flex flex-col gap-1"}>
                     <span className={"font-bold text-xl"}>{item.title}</span>
-                    <span className={"text-xs text-studodarkblue/40 dark:text-white/40"}>{item.year} {item.semester && "• " + item.semester}</span>
+                    <span className={"text-xs text-studodarkblue/40 dark:text-white/40"}>{item.year} {item.semester && "• " + t("semester") + " " + item.semester}</span>
+                </div>
+                <div className={"absolute top-5 right-5"}>
+                    <ItemOptions options={[
+                        { label: "Verwijderen", icon: <FiTrash2 size={14} />, onClick: () => handleDelete(), danger: true },
+                    ]} />
                 </div>
             </div>
             <div>
@@ -42,8 +59,6 @@ export default async function FlowGridItem(props:FlowGridItemProps ) {
                     </div>
                 </div>
             </div>
-        </div>
-
-    </Link>)
+    </div>)
 }
 

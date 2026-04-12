@@ -1,3 +1,4 @@
+"use client"
 import { useState, useRef, useEffect } from "react";
 import {
     FiBook, FiCode, FiStar, FiFolder, FiBriefcase,
@@ -9,9 +10,11 @@ import {
     FiActivity, FiSmile, FiCoffee, FiDroplet, FiWind,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
+import {CiViewTable} from "react-icons/ci";
+import {useTranslations} from "next-intl";
 
 const ICONS: Record<string, IconType> = {
-    book: FiBook, code: FiCode, star: FiStar, folder: FiFolder,
+    default: CiViewTable, book: FiBook, code: FiCode, star: FiStar, folder: FiFolder,
     briefcase: FiBriefcase, cpu: FiCpu, globe: FiGlobe, heart: FiHeart,
     music: FiMusic, camera: FiCamera, feather: FiFeather, award: FiAward,
     zap: FiZap, sun: FiSun, moon: FiMoon, compass: FiCompass,
@@ -43,10 +46,12 @@ const COLORS: FlowColor[] = [
 
 interface IconPickerProps {
     value?: string;
+    setValue?: (value: string) => void;
     onChange?: (value: string) => void;
 }
 
-const IconPicker = ({ value = "emerald:book", onChange }: IconPickerProps) => {
+const IconPicker = ({ value = "emerald:default", onChange }: IconPickerProps) => {
+    const t = useTranslations("iconPicker")
     const { color: selectedColor, icon: selectedIcon } = parseFlowIcon(value);
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState("");
@@ -54,7 +59,7 @@ const IconPicker = ({ value = "emerald:book", onChange }: IconPickerProps) => {
     const searchRef = useRef<HTMLInputElement>(null);
 
     const color = COLORS.find((c) => c.name === selectedColor) ?? COLORS[0];
-    const CurrentIcon = ICONS[selectedIcon] ?? FiBook;
+    const CurrentIcon = ICONS[selectedIcon] ?? CiViewTable;
 
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
@@ -159,7 +164,7 @@ const IconPicker = ({ value = "emerald:book", onChange }: IconPickerProps) => {
                         </div>
                     ) : (
                         <p className="text-center text-sm text-neutral-400 py-6">
-                            Geen iconen gevonden
+                            {t("no_icons_found")}
                         </p>
                     )}
                 </div>
