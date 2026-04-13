@@ -125,6 +125,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
             title: title,
             icon: selectedIcon,
             description: description,
+            exam_date: examDate,
             board_id: board_id,
             resource: link,
             lesson_days: days.join('-')

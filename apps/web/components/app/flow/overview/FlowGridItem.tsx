@@ -35,12 +35,12 @@ export default function FlowGridItem(props:FlowGridItemProps ) {
                     <Icon size={20} />
                 </div>
                 <div className={"flex flex-col gap-1"}>
-                    <span className={"font-bold text-xl"}>{item.title}</span>
+                    <span className={"font-bold text-xl overflow-hidden truncate max-w-7/8"}>{item.title}</span>
                     <span className={"text-xs text-studodarkblue/40 dark:text-white/40"}>{item.year} {item.semester && "• " + t("semester") + " " + item.semester}</span>
                 </div>
                 <div className={"absolute top-5 right-5"}>
                     <ItemOptions options={[
-                        { label: "Verwijderen", icon: <FiTrash2 size={14} />, onClick: () => handleDelete(), danger: true },
+                        { label: t("delete"), icon: <FiTrash2 size={14} />, onClick: () => handleDelete(), danger: true },
                     ]} />
                 </div>
             </div>

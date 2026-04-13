@@ -24,7 +24,7 @@ const FlowBoardHeader = (props: FlowBoardHeaderProps) => {
 
     const {open, toggleFlowBoard} = useFlowBoard();
 
-    return (
+    return (<div className="flex flex-col w-full gap-5">
         <div className={"w-full flex gap-3 justify-between items-center"}>
             <Link href={"/flow"}
                   className={`bg-${color}-400/20 text-${color}-500 min-w-12 min-h-12 rounded-xl flex items-center justify-center`}>
@@ -58,13 +58,14 @@ const FlowBoardHeader = (props: FlowBoardHeaderProps) => {
                         initialValue={sem}
                         textSize={"sm"}
                     />
+                    <span>•</span>
+                    <span className={"h-fit items-center flex text-sm"}>{data.courses.length} {t("courses")}</span>
                 </div>
-
             </div>
-
-            <div></div>
             <CreateFlowCourse createOpen={open} setCreateOpen={toggleFlowBoard} board_title={data.title} board_id={data.id}/>
-        </div>)
+        </div>
+        <hr className="w-full border-0.5 border-studoborder/30" />
+    </div>)
 }
 
 FlowBoardHeader.displayName = "FlowBoardHeader"

@@ -4,6 +4,7 @@ import {ReactNode} from "react";
 import FlowBoardHeader from "@/components/app/flow/page/layout/FlowBoardHeader";
 import {auth} from "@/auth";
 import FlowBoardProvider from "@/components/providers/FlowBoardProvider";
+import {usePathname, useRouter} from "@/i18n/routing";
 
 export default async function FlowOverviewLayout({ params, children }: {
     params: Promise<{ id: string }>;
@@ -27,9 +28,8 @@ export default async function FlowOverviewLayout({ params, children }: {
         console.error("Response body:", text.slice(0, 200));
         throw new Error(`Failed to fetch flowboard: ${res.status}`);
     }
-
     const data = await res.json();
-
+    console.log("data: ", data)
     return (
         <FlowBoardProvider>
             <PageContainer>

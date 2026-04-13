@@ -1147,8 +1147,12 @@
     "set_title": "board title...",
     "set_year": "board year...",
     "set_semester": "board semester...",
+    "delete": "Delete",
+    "delete_course": "Delete course",
     "overview": "Overview",
     "add_course": "Add a course",
+    "your_courses": "Your Courses",
+    "external": "Open in new tab",
     "course": {
       "create_title": "New Course",
       "add_title": "Create new course",
