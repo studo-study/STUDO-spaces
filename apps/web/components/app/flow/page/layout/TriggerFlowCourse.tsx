@@ -11,7 +11,7 @@ const TriggerFlowCourse = (props: TriggerFlowProps) => {
     return (<button
         type={"button"}
         onClick={togglePopUp}
-        className={`hover:bg-studogrey/30 transition-all cursor-pointer duration-300 rounded-3xl px-3 flex items-center justify-center text-studodarkblue dark:text-white`}>
+        className={`hover:bg-studogrey/30 border border-transparent hover:border-studoborder/30 transition-all cursor-pointer duration-300 rounded-full flex items-center justify-center p-1 text-studodarkblue dark:text-white`}>
         <IoIosAdd size={20}/>
     </button>);
 

@@ -1,7 +1,7 @@
 import PageContainer from "@/components/design_system/page/PageContainer";
-import FlowRowSelector from "@/components/app/flow/page/FlowRowSelector";
+import FlowRowSelector from "@/components/app/flow/page/layout/FlowRowSelector";
 import {ReactNode} from "react";
-import FlowBoardHeader from "@/components/app/flow/page/FlowBoardHeader";
+import FlowBoardHeader from "@/components/app/flow/page/layout/FlowBoardHeader";
 import {auth} from "@/auth";
 
 export default async function FlowOverviewLayout({
@@ -29,7 +29,9 @@ export default async function FlowOverviewLayout({
     return (
         <PageContainer>
             <FlowBoardHeader data={data}/>
-            {children}
+            <div className={"w-full min-h-full"}>
+                {children}
+            </div>
             <FlowRowSelector id={id} />
         </PageContainer>
     );
