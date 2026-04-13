@@ -38,7 +38,7 @@ export default function AddPopUp({ isOpen, onClose }) {
         onClick={onClose}
       />
 
-      {/* Popup - slides up from bottom on mobile, stays top-right on desktop */}
+      {/* popup - slides up from bottom on mobile, stays top-right on desktop */}
       <div
         ref={popupRef}
         className={`fixed z-[9999] flex flex-col items-center

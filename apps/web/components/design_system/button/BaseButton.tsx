@@ -1,0 +1,22 @@
+interface BaseButtonProps extends React.HTMLProps<HTMLButtonElement> {
+    iconLeft?: React.ReactNode;
+    iconRight?: React.ReactNode;
+    label: string;
+    onSubmit?: () => void;
+    isDisabled?: boolean;
+    isLoading?: boolean;
+    type?: "button" | "submit" | "reset";
+    bg?:string;
+}
+
+const BaseButton = (props: BaseButtonProps) => {
+    const {label, iconLeft, iconRight, onSubmit, isDisabled, isLoading, bg} = props;
+    return (<button
+        className={`rounded-full border active:scale-95 transition-all duration-300 hover:border-studoborder border-studoborder/30 ${bg && bg} font-bold text-white flex flex-row gap-2 items-center justify-center px-5 py-2 cursor-pointer`}
+        type={"button"} onClick={onSubmit} {...props}>
+        {label}
+    </button>)
+}
+
+BaseButton.displayName = "BaseButton";
+export default BaseButton;

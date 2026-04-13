@@ -1,21 +1,23 @@
 {
   "admin": {
     "title": "Admin Dashboard",
-    "subtitle_stats": "Quick Stats (this month)",
-    "subtitle_overview": "Overview",
-    "total_usr": "Registered users:",
+    "subtitle_stats": "Snelle statistieken (deze maand)",
+    "subtitle_overview": "Overzicht",
+    "total_usr": "Totale users:",
     "total_month": "MAU",
-    "total_ss": "Total Studosets",
-    "total_vs": "Total Visualsets",
-    "or": "or",
+    "total_ss": "Totale Studosets",
+    "total_vs": "Totale Visualsets",
+    "or": "of",
     "stats": "Stats",
-    "reports": "Reports",
+    "reports": "Rapporten",
     "users":"Users",
-    "search": "Search",
-    "recently_usrs": "Recently joined users",
-    "most_pp_set": "Most popular sets",
-    "graphs": "STUDO Graphs",
-    "activity": "Other user activity"
+    "search": "Zoeken",
+    "recently_usrs": "Recent geregistreerde users",
+    "most_pp_set": "Meest populaire sets",
+    "graphs": "STUDO Grafieken",
+    "activity": "Andere user-activity",
+    "search_a": "vindt alles...",
+    "not_searched": "Geef een zoekterm in"
   },
   "landing": {
     "header": {
@@ -730,6 +732,8 @@
     "home": "Home",
     "sets": "Sets",
     "courses": "Courses",
+    "planner": "Planner",
+    "flow": "Flow",
     "folders": "Folders",
     "create": "Create",
     "classrooms": "Classrooms",
@@ -755,7 +759,8 @@
     "study": "Study Group – collaborate with friends",
     "community": "Community – open group for everyone",
     "subtitle_school": "School name:",
-    "placeholder_school": "school name..."
+    "placeholder_school": "school name...",
+    "studygroup": "Study Group – collaborate with friends"
   },
   "createstudoset": {
     "title": "Creëer nieuwe Studoset",
@@ -1124,5 +1129,32 @@
     "excel" : "Excel import",
     "sven" : "SVEN import",
     "import": "importeer"
+  },
+
+  "flow": {
+    "title": "Your Flow Boards",
+    "created_by": "Created by",
+    "you" : "(you)",
+    "create_title": "Create new Flow Board",
+    "add_title": "Board name",
+    "description": "Add a short summary...",
+    "create_btn": "Create Board",
+    "cancel_btn": "cancel",
+    "semester": "semester",
+    "error_year_required": "Year required",
+    "add_metadata": "Add Metadata",
+    "add_later": "Hide Metadata",
+    "set_title": "board title...",
+    "overview": "Overview",
+    "add_course": "Add a course"
+
+  },
+
+  "colorPicker": {
+    "search_ph": "search..."
+  },
+
+  "iconPicker": {
+    "no_icons_found": "No icons found"
   }
 }

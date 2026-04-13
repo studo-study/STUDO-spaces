@@ -26,6 +26,7 @@
     "db:init": "env-cmd tsx src/drizzle/init.ts"
   },
   "dependencies": {
+    "@studo/types": "workspace:*",
     "@aws-sdk/client-s3": "^3.948.0",
     "@aws-sdk/s3-request-presigner": "^3.948.0",
     "@google/generative-ai": "^0.24.1",

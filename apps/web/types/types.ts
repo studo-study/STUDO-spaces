@@ -1,4 +1,4 @@
-// lib/api/types.ts
+// lib/api/shared-types.ts
 // Auto-generated from NestJS DTOs - Keep in sync!
 
 // ============================================
@@ -623,7 +623,7 @@ export interface SetIdentifier {
 }
 
 
-// types/next-auth.d.ts
+// shared-types/next-auth.d.ts
 
 import { DefaultSession } from 'next-auth';
 import { DefaultJWT } from 'next-auth/jwt';
@@ -718,4 +718,25 @@ export interface CardData {
     definition: string;
     image: string;
     isDouble: boolean;
+}
+
+export interface Issue {
+    id: string;
+    report_id: string;
+    filled_by: number;
+    title: string;
+    report_type: string;
+    description: string;
+    target_id: string;
+    target_type: string;
+    reported_user_id: number;
+    status: string;
+    priority: string | null;
+    created_at: string | null;
+    resolved_at: string | null;
+    reviewed_by: number | null;
+    moderator_note: string | null;
+    assignee_id: string | null;
+    assignee_displayName: string | null;
+    number: number;
 }

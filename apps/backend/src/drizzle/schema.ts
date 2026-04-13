@@ -7,6 +7,9 @@ import {
   serial,
   index,
   jsonb,
+  timestamp,
+  text,
+  pgEnum,
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
@@ -28,6 +31,7 @@ export const users = pgTable(
     roles: jsonb('roles').notNull(),
     publicRole: varchar('public_role', { length: 24 }).notNull(),
     verified: boolean('verified').notNull(),
+    banned: boolean('banned').notNull(),
   },
   (table) => [uniqueIndex('idx_user_email_unique').on(table.email)],
 );
@@ -411,6 +415,118 @@ export const studoprofilecommunities = pgTable(
   ],
 );
 
+export const popular_sets = pgTable('popular_sets', {
+  id: varchar('id', { length: 64 }).primaryKey().notNull(),
+  studyset_id: varchar('studyset_id').references(() => studysets.id),
+  visualset_id: varchar('visualset_id').references(() => visualsets.id),
+  rank: integer('rank').notNull(),
+  snapshot_id: integer('snapshot_id').notNull(),
+});
+
+export const reports = pgTable('reports', {
+  report_id: varchar('report_id').primaryKey(),
+  filled_by: integer('filled_by').notNull(),
+  report_type: varchar('report_type', { length: 50 }).notNull(),
+  description: text('description'),
+  target_id: varchar('target_id').notNull(),
+  target_type: varchar('target_type', { length: 20 }).notNull(),
+  reported_user_id: integer('reported_user_id'),
+  status: varchar('status', { length: 20 }).default('to_do').notNull(),
+  priority: varchar('priority').default('no_priority').notNull(),
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  resolved_at: timestamp('resolved_at'),
+  reviewed_by: integer('reviewed_by'),
+  moderator_note: text('moderator_note'),
+  assignee_id: varchar('assignee_id'),
+  assignee_displayName: varchar('assignee_displayName'),
+  number: integer('number').notNull(),
+});
+
+export const flowboards = pgTable('flowboards', {
+  id: varchar('board_id').primaryKey(),
+  owner_id: varchar('owner_id')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
+  title: varchar('title').notNull(),
+  icon: varchar('icon').default('flowboard_icon').notNull(),
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  updated_at: timestamp('updated_at').defaultNow().notNull(),
+  year: varchar('year'),
+  semester: varchar('semester'),
+  school_name: varchar('school_name'),
+  school_id: varchar('school_id'),
+});
+
+export const flowcourses = pgTable('flowcourses', {
+  id: varchar('flowcourse_id').primaryKey(),
+  board_id: varchar('board_id')
+    .references(() => flowboards.id, { onDelete: 'cascade' })
+    .notNull(),
+  added_by: varchar('added_by')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
+  title: varchar('title').notNull(),
+  icon: varchar('icon').default('flowcourse_icon').notNull(),
+  description: text('description'),
+  examdate: varchar('examdate'),
+});
+
+export const statusEnum = pgEnum('status', ['not_started', 'doing', 'done']);
+
+export const priorityEnum = pgEnum('priority', [
+  'no_priority',
+  'low',
+  'medium',
+  'high',
+]);
+
+export const rowTypeEnum = pgEnum('rowType', [
+  'lesson',
+  'practice',
+  'study',
+  'exam',
+  'summary',
+  'task',
+]);
+
+export const flowrows = pgTable('flowrows', {
+  id: varchar('flowrow_id').primaryKey(),
+  flowcourse_id: varchar('flowcourse_id')
+    .references(() => flowcourses.id, { onDelete: 'cascade' })
+    .notNull(),
+  title: varchar('title').notNull(),
+  order_index: integer('order_index'),
+  description: text('description'),
+  type: rowTypeEnum('type').default('task'),
+  priority: priorityEnum('priority').default('no_priority'),
+  status: statusEnum('status').default('not_started').notNull(),
+  estimated_time: integer('estimated_time'),
+  difficulty: integer('difficulty'),
+  is_required: boolean('is_required').default(true),
+  due_date: timestamp('due_date'),
+  studoset: varchar('studoset').references(() => studysets.id),
+  visualset: varchar('visualset').references(() => visualsets.id),
+});
+
+export const resourceTypeEnum = pgEnum('resourceType', [
+  'course',
+  'notes',
+  'summary',
+  'abstract',
+  'sample_exam',
+  'task',
+]);
+
+export const flowresources = pgTable('flowresources', {
+  flowresource_id: varchar('flowresource_id').primaryKey(),
+  row_id: varchar('row_id')
+    .references(() => flowrows.id, { onDelete: 'cascade' })
+    .notNull(),
+  title: varchar('title').notNull(),
+  link: varchar('link').notNull(),
+  resource_type: resourceTypeEnum('resource_type').default('task').notNull(),
+});
+
 // ============================================================
 // RELATIONS
 // ============================================================
@@ -626,3 +742,35 @@ export const studocommunitiesRelations = relations(
     }),
   }),
 );
+
+export const flowboardsRelations = relations(flowboards, ({ one, many }) => ({
+  owner: one(users, { fields: [flowboards.owner_id], references: [users.id] }),
+  courses: many(flowcourses),
+}));
+
+export const flowcoursesRelations = relations(flowcourses, ({ one, many }) => ({
+  board: one(flowboards, {
+    fields: [flowcourses.board_id],
+    references: [flowboards.id],
+  }),
+  addedBy: one(users, {
+    fields: [flowcourses.added_by],
+    references: [users.id],
+  }),
+  rows: many(flowrows),
+}));
+
+export const flowrowsRelations = relations(flowrows, ({ one }) => ({
+  course: one(flowcourses, {
+    fields: [flowrows.flowcourse_id],
+    references: [flowcourses.id],
+  }),
+  studyset: one(studysets, {
+    fields: [flowrows.studoset],
+    references: [studysets.id],
+  }),
+  visualset: one(visualsets, {
+    fields: [flowrows.visualset],
+    references: [visualsets.id],
+  }),
+}));

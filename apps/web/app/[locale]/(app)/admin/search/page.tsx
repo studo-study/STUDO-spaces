@@ -1,8 +1,6 @@
 import {Metadata} from "next";
 import {useTranslations} from "next-intl";
-import QuickStats from "@/components/dashboard/stats/quick_stats/quickstats";
-import {SlGraph} from "react-icons/sl";
-import {VscGraphLine} from "react-icons/vsc";
+import AdminSearch from "@/components/app/admin/search/AdminSearch";
 
 export const metadata:Metadata = {
     title:"Admin Dashboard | Studo"
@@ -11,6 +9,11 @@ export const metadata:Metadata = {
 export default function SearchPage() {
     const t = useTranslations("admin")
     return(<div className={"w-full h-full flex flex-col gap-5"}>
-
+            <div className={"w-full flex items-center justify-center"}>
+                <AdminSearch/>
+            </div>
+            <div className={"w-full h-full flex items-center justify-center"}>
+                <span className={"dark:text-white/30 font-bold"}>{t("not_searched")}</span>
+            </div>
     </div>);
 }

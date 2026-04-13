@@ -1,5 +1,4 @@
 "use client"
-import {IoIosAdd, IoMdNotificationsOutline} from "react-icons/io";
 import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
@@ -76,7 +75,7 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
     ]
     const logout =  {link:"/logout", label:"logout", icon: <LuLogOut />, color:"from-cyan-500 to-cyan-600", gradient:"to-cyan-500"};
 
-   const mod = {link:"/admin/sets", label:"ad", icon: <MdOutlineVerifiedUser />, color:"from-violet-500 to-purple-600", gradient:"to-violet-500"};
+   const mod = {link:"/admin/stats", label:"ad", icon: <MdOutlineVerifiedUser />, color:"from-violet-500 to-purple-600", gradient:"to-violet-500"};
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (
@@ -127,7 +126,7 @@ function ProfilePopup({ProfileIsOpen, setProfileIsOpen, containerRef, user}: Pro
 
                     </Link>
 
-                    {user?.verified ?
+                    {user?.publicRole === "admin" || user?.publicRole === "owner" ?
                         <Link href={mod.link}  className={`group p-2 flex w-full items-center h-18
                                     transition-all duration-200 ease-out
                          ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}

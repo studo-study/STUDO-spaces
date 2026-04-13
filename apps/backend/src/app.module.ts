@@ -22,6 +22,8 @@ import { RolesGuard } from './auth/guards/roles.guard';
 import { HealthController } from './health/health.controller';
 import { StudoprofileModule } from './studoprofile/studoprofile.module';
 import { SvenModule } from './sven/sven.module';
+import { AdminModule } from './admin/admin.module';
+import { FlowModule } from './flow/flow.module';
 
 @Module({
   imports: [
@@ -44,6 +46,8 @@ import { SvenModule } from './sven/sven.module';
     SearchModule,
     StudoprofileModule,
     SvenModule,
+    AdminModule,
+    FlowModule,
   ],
   controllers: [AppController, HealthController],
   providers: [

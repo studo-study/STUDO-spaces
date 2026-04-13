@@ -1,7 +1,6 @@
 import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
 import {IoIosClose} from "react-icons/io";
-import {HiUserGroup} from "react-icons/hi";
 import {IoSchoolOutline} from "react-icons/io5";
 
 interface CreateClassroomProps {
