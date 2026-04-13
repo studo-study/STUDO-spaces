@@ -3,15 +3,13 @@ import FlowRowSelector from "@/components/app/flow/page/layout/FlowRowSelector";
 import {ReactNode} from "react";
 import FlowBoardHeader from "@/components/app/flow/page/layout/FlowBoardHeader";
 import {auth} from "@/auth";
+import FlowBoardProvider from "@/components/providers/FlowBoardProvider";
 
-export default async function FlowOverviewLayout({
-                                             params,
-                                             children,
-                                         }: {
+export default async function FlowOverviewLayout({ params, children }: {
     params: Promise<{ id: string }>;
     children: ReactNode;
 }) {
-    const {id} = await params;
+    const { id } = await params;
     const session = await auth();
     const token = session?.accessToken;
     const res = await fetch(
@@ -23,16 +21,24 @@ export default async function FlowOverviewLayout({
         }
     );
 
+    if (!res.ok) {
+        console.error(`Flow fetch failed: ${res.status} ${res.statusText}`);
+        const text = await res.text();
+        console.error("Response body:", text.slice(0, 200));
+        throw new Error(`Failed to fetch flowboard: ${res.status}`);
+    }
+
     const data = await res.json();
-    console.log(data);
 
     return (
-        <PageContainer>
-            <FlowBoardHeader data={data}/>
-            <div className={"w-full min-h-full"}>
-                {children}
-            </div>
-            <FlowRowSelector id={id} />
-        </PageContainer>
+        <FlowBoardProvider>
+            <PageContainer>
+                <FlowBoardHeader data={data} />
+                <div className="w-full min-h-full">
+                    {children}
+                </div>
+                <FlowRowSelector id={id} data={data} />
+            </PageContainer>
+        </FlowBoardProvider>
     );
 }

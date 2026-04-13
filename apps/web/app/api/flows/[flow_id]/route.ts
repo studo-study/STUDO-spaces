@@ -12,7 +12,7 @@ export async function DELETE(
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const response = await fetch(`${process.env.AUTH_API_URL}/flows/${flow_id}`, {
+    const response = await fetch(`${process.env.AUTH_API_URL}/flows/board/${flow_id}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${session.accessToken}`,
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log("Request body:", body);
 
-    const response = await fetch(`${process.env.AUTH_API_URL}/flows/-`, {
+    const response = await fetch(`${process.env.AUTH_API_URL}/flows`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

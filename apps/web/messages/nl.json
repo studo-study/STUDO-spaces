@@ -1142,11 +1142,23 @@
     "cancel_btn": "cancel",
     "semester": "semester",
     "error_year_required": "Year required",
-    "add_metadata": "Add Metadata",
-    "add_later": "Hide Metadata",
+    "add_metadata": "add details",
+    "add_later": "hide details",
     "set_title": "board title...",
+    "set_year": "board year...",
+    "set_semester": "board semester...",
     "overview": "Overview",
-    "add_course": "Add a course"
+    "add_course": "Add a course",
+    "course": {
+      "create_title": "New Course",
+      "add_title": "Create new course",
+      "description": "Add a short summary...",
+      "create_btn": "Create Course",
+      "cancel_btn": "cancel",
+      "add_metadata": "add details",
+      "add_later": "hide details",
+      "semester": "semester"
+    }
 
   },
 

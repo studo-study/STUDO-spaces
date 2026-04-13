@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, ReactNode } from "react";
+import {useState, useRef, useEffect, ReactNode} from "react";
 
 interface TagOption {
     value: string;
@@ -7,26 +7,73 @@ interface TagOption {
     dot?: string;
 }
 
-interface TagSelectorProps {
+interface TagSelectorBaseProps {
     label: string;
     icon?: ReactNode;
     options?: TagOption[];
-    value: string;
-    onChange: (value: string) => void;
     dot?: string;
     freeInput?: boolean;
+    datePicker?: boolean;
     placeholder?: string;
     error?: string;
+    link?: boolean;
 }
 
-const TagSelector = ({ label, icon, options, value, onChange, dot, freeInput = false, placeholder, error }: TagSelectorProps) => {
+interface SingleSelectProps extends TagSelectorBaseProps {
+    multiple?: false;
+    value: string;
+    onChange: (value: string) => void;
+}
+
+interface MultiSelectProps extends TagSelectorBaseProps {
+    multiple: true;
+    value: string[];
+    onChange: (value: string[]) => void;
+}
+
+type TagSelectorProps = SingleSelectProps | MultiSelectProps;
+
+const TagSelector = ({
+                         label,
+                         icon,
+                         options,
+                         value,
+                         onChange,
+                         dot,
+                         freeInput = false,
+                         datePicker = false,
+                         multiple = false,
+                         placeholder,
+                         error,
+                         link
+                     }: TagSelectorProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const ref = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const dateRef = useRef<HTMLInputElement>(null);
 
-    const selected = options?.find((o) => o.value === value);
-    const displayLabel = value || label;
+    const selectedValues = multiple ? (Array.isArray(value) ? value : [value].filter(Boolean)) : [];
+    const selected = !multiple ? options?.find((o) => o.value === value) : null;
+
+    const getDisplayLabel = () => {
+        if (datePicker && value) {
+            return new Date(value as string).toLocaleDateString();
+        }
+        if (multiple) {
+            if (selectedValues.length === 0) return label;
+            const selectedLabels = selectedValues
+                .map((v) => options?.find((o) => o.value === v)?.label)
+                .filter(Boolean);
+            return selectedLabels.join(", ");
+        }
+
+        if(link) {
+            return label;
+        }
+        return (selected?.label ?? (value as string)) || label;
+    };
+
     const displayIcon = selected?.icon ?? icon;
     const displayDot = selected?.dot ?? dot;
 
@@ -42,21 +89,63 @@ const TagSelector = ({ label, icon, options, value, onChange, dot, freeInput = f
 
     useEffect(() => {
         if (isOpen && freeInput && inputRef.current) {
-            setInputValue(value);
+            setInputValue(value as string);
             inputRef.current.focus();
         }
     }, [isOpen]);
 
     const handleSubmit = () => {
         if (inputValue.trim()) {
-            onChange(inputValue.trim());
+            (onChange as (value: string) => void)(inputValue.trim());
         }
         setIsOpen(false);
     };
 
+    const handleMultiToggle = (optionValue: string) => {
+        const cb = onChange as (value: string[]) => void;
+        if (selectedValues.includes(optionValue)) {
+            cb(selectedValues.filter((v) => v !== optionValue));
+        } else {
+            cb([...selectedValues, optionValue]);
+        }
+    };
+
+    if (datePicker) {
+        return (
+            <div ref={ref} className="relative inline-block">
+                <button
+                    type="button"
+                    onClick={() => dateRef.current?.showPicker?.()}
+                    className={`
+                        ${error ? "border-rose-500" : "border-white/10 dark:border-white/10"}
+                        flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
+                        border bg-white/5 dark:bg-white/5
+                        text-neutral-700 dark:text-neutral-200
+                        hover:bg-white/10 dark:hover:bg-white/10
+                        transition-all cursor-pointer select-none
+                    `}
+                >
+                    {displayIcon && (
+                        <span className="text-neutral-400 dark:text-neutral-400 shrink-0">
+                            {displayIcon}
+                        </span>
+                    )}
+                    <span className="truncate">{getDisplayLabel()}</span>
+                </button>
+                <input
+                    ref={dateRef}
+                    type="date"
+                    value={value as string}
+                    onChange={(e) => (onChange as (value: string) => void)(e.target.value)}
+                    className="sr-only"
+                    tabIndex={-1}
+                />
+            </div>
+        );
+    }
+
     return (
         <div ref={ref} className="relative inline-block">
-            {/* Pill trigger */}
             <button
                 type="button"
                 onClick={(e) => {
@@ -64,27 +153,25 @@ const TagSelector = ({ label, icon, options, value, onChange, dot, freeInput = f
                     setIsOpen(!isOpen);
                 }}
                 className={`
-                ${error ? "border-rose-500" : "border-white/10 dark:border-white/10"}
+                    ${error ? "border-rose-500" : "border-white/10 dark:border-white/10"}
                     flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
-                    border 
-                    bg-white/5 dark:bg-white/5
+                    border bg-white/5 dark:bg-white/5
                     text-neutral-700 dark:text-neutral-200
                     hover:bg-white/10 dark:hover:bg-white/10
                     transition-all cursor-pointer select-none
                 `}
             >
                 {displayDot && (
-                    <span className={`w-2.5 h-2.5 rounded-full ${displayDot} shrink-0`} />
+                    <span className={`w-2.5 h-2.5 rounded-full ${displayDot} shrink-0`}/>
                 )}
                 {displayIcon && (
                     <span className="text-neutral-400 dark:text-neutral-400 shrink-0">
                         {displayIcon}
                     </span>
                 )}
-                <span className="truncate">{selected?.label ?? displayLabel}</span>
+                <span className="truncate">{getDisplayLabel()}</span>
             </button>
 
-            {/* Dropdown */}
             <div
                 onClick={(e) => e.stopPropagation()}
                 className={`
@@ -120,33 +207,67 @@ const TagSelector = ({ label, icon, options, value, onChange, dot, freeInput = f
                     </div>
                 ) : (
                     <div className="py-1.5">
-                        {options?.map((option) => (
-                            <button
-                                key={option.value}
-                                type="button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onChange(option.value);
-                                    setIsOpen(false);
-                                }}
-                                className={`
-                                    w-full flex items-center gap-2 px-3 py-2 text-sm
-                                    transition-colors cursor-pointer
-                                    ${option.value === value
-                                    ? "bg-white/20 dark:bg-white/10 text-neutral-900 dark:text-white"
-                                    : "text-neutral-600 dark:text-neutral-300 hover:bg-white/10 dark:hover:bg-white/5"
-                                }
-                                `}
-                            >
-                                {option.dot && (
-                                    <span className={`w-2.5 h-2.5 rounded-full ${option.dot} shrink-0`} />
-                                )}
-                                {option.icon && (
-                                    <span className="shrink-0">{option.icon}</span>
-                                )}
-                                <span className="truncate">{option.label}</span>
-                            </button>
-                        ))}
+                        {options?.map((option) => {
+                            const isSelected = multiple
+                                ? selectedValues.includes(option.value)
+                                : option.value === value;
+
+                            return (
+                                <button
+                                    key={option.value}
+                                    type="button"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        if (multiple) {
+                                            handleMultiToggle(option.value);
+                                        } else {
+                                            (onChange as (value: string) => void)(option.value);
+                                            setIsOpen(false);
+                                        }
+                                    }}
+                                    className={`
+                                        w-full flex items-center gap-2 px-3 py-2 text-sm
+                                        transition-colors cursor-pointer
+                                        ${isSelected
+                                        ? "bg-white/20 dark:bg-white/10 text-neutral-900 dark:text-white"
+                                        : "text-neutral-600 dark:text-neutral-300 hover:bg-white/10 dark:hover:bg-white/5"
+                                    }
+                                    `}
+                                >
+                                    {multiple && (
+                                        <span
+                                            className={`
+                                                w-4 h-4 rounded border flex items-center justify-center shrink-0
+                                                transition-colors
+                                                ${isSelected
+                                                ? "bg-blue-500 border-blue-500"
+                                                : "border-neutral-400 dark:border-neutral-500"
+                                            }
+                                            `}
+                                        >
+                                            {isSelected && (
+                                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                                                    <path
+                                                        d="M2 5L4 7L8 3"
+                                                        stroke="white"
+                                                        strokeWidth="1.5"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                            )}
+                                        </span>
+                                    )}
+                                    {option.dot && (
+                                        <span className={`w-2.5 h-2.5 rounded-full ${option.dot} shrink-0`}/>
+                                    )}
+                                    {option.icon && (
+                                        <span className="shrink-0">{option.icon}</span>
+                                    )}
+                                    <span className="truncate">{option.label}</span>
+                                </button>
+                            );
+                        })}
                     </div>
                 )}
             </div>

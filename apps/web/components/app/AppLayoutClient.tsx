@@ -6,7 +6,7 @@ import BurgerMenu from "@/components/app/app_header/BurgerMenu";
 import {UserProvider, useUser} from "@/components/providers/UserProvider";
 import ConsoleEasterEgg from "@/components/overige/easteregg/console";
 import CreateFolder from "@/components/app/create-folder/CreateFolder";
-import AppLayoutContext from "./context/AppLayoutContext";
+import AppLayoutContext from "@/components/context/AppLayoutContext";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 import {useRouter} from "next/navigation";
 
