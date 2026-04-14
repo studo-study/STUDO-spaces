@@ -8,7 +8,7 @@ export default async function FlowPage() {
     const token = session?.accessToken;
 
     const res = await fetch(
-        `${process.env.AUTH_API_URL}/flows/me`,
+        `${process.env.AUTH_API_URL}/flows/user/me`,
         {
             headers: { Authorization: `Bearer ${token}` },
             method: "GET",

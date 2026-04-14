@@ -468,7 +468,9 @@ export const flowcourses = pgTable('flowcourses', {
   title: varchar('title').notNull(),
   icon: varchar('icon').default('flowcourse_icon').notNull(),
   description: text('description'),
-  examdate: varchar('examdate'),
+  resource: varchar('resource'),
+  exam_date: varchar('exam_date'),
+  lesson_days: varchar('lesson_days'),
 });
 
 export const statusEnum = pgEnum('status', ['not_started', 'doing', 'done']);
@@ -524,7 +526,8 @@ export const flowresources = pgTable('flowresources', {
     .notNull(),
   title: varchar('title').notNull(),
   link: varchar('link').notNull(),
-  resource_type: resourceTypeEnum('resource_type').default('task').notNull(),
+  link_type: varchar('link_type'),
+  resource_type: resourceTypeEnum('resource_type').default('task'),
 });
 
 // ============================================================

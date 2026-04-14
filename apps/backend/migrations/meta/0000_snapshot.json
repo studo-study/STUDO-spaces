@@ -1,5 +1,5 @@
 {
-  "id": "3d563a73-a0ce-4e06-b538-606733748fc6",
+  "id": "df00529b-57f2-468b-b05a-5c4bb1f07042",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -483,7 +483,7 @@
           "name": "year",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "semester": {
           "name": "semester",
@@ -566,6 +566,24 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "resource": {
+          "name": "resource",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exam_date": {
+          "name": "exam_date",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lesson_days": {
+          "name": "lesson_days",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -603,6 +621,71 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.flowresources": {
+      "name": "flowresources",
+      "schema": "",
+      "columns": {
+        "flowresource_id": {
+          "name": "flowresource_id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "row_id": {
+          "name": "row_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "link": {
+          "name": "link",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "link_type": {
+          "name": "link_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "resource_type": {
+          "name": "resource_type",
+          "type": "resourceType",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'task'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "flowresources_row_id_flowrows_flowrow_id_fk": {
+          "name": "flowresources_row_id_flowrows_flowrow_id_fk",
+          "tableFrom": "flowresources",
+          "tableTo": "flowrows",
+          "columnsFrom": [
+            "row_id"
+          ],
+          "columnsTo": [
+            "flowrow_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.flowrows": {
       "name": "flowrows",
       "schema": "",
@@ -625,30 +708,33 @@
           "primaryKey": false,
           "notNull": true
         },
+        "order_index": {
+          "name": "order_index",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "description": {
           "name": "description",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
+        "type": {
+          "name": "type",
+          "type": "rowType",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'task'"
+        },
         "priority": {
           "name": "priority",
-          "type": "varchar",
+          "type": "priority",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
           "default": "'no_priority'"
-        },
-        "link": {
-          "name": "link",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "summary": {
-          "name": "summary",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
         },
         "status": {
           "name": "status",
@@ -656,7 +742,26 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'to_do'"
+          "default": "'not_started'"
+        },
+        "estimated_time": {
+          "name": "estimated_time",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_required": {
+          "name": "is_required",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
         },
         "due_date": {
           "name": "due_date",
@@ -2327,12 +2432,36 @@
         "high"
       ]
     },
+    "public.resourceType": {
+      "name": "resourceType",
+      "schema": "public",
+      "values": [
+        "course",
+        "notes",
+        "summary",
+        "abstract",
+        "sample_exam",
+        "task"
+      ]
+    },
+    "public.rowType": {
+      "name": "rowType",
+      "schema": "public",
+      "values": [
+        "lesson",
+        "practice",
+        "study",
+        "exam",
+        "summary",
+        "task"
+      ]
+    },
     "public.status": {
       "name": "status",
       "schema": "public",
       "values": [
-        "to_do",
-        "in_progress",
+        "not_started",
+        "doing",
         "done"
       ]
     }

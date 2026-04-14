@@ -1,5 +1,7 @@
 CREATE TYPE "public"."priority" AS ENUM('no_priority', 'low', 'medium', 'high');--> statement-breakpoint
-CREATE TYPE "public"."status" AS ENUM('to_do', 'in_progress', 'done');--> statement-breakpoint
+CREATE TYPE "public"."resourceType" AS ENUM('course', 'notes', 'summary', 'abstract', 'sample_exam', 'task');--> statement-breakpoint
+CREATE TYPE "public"."rowType" AS ENUM('lesson', 'practice', 'study', 'exam', 'summary', 'task');--> statement-breakpoint
+CREATE TYPE "public"."status" AS ENUM('not_started', 'doing', 'done');--> statement-breakpoint
 CREATE TABLE "cards" (
 	"id" varchar(64) PRIMARY KEY NOT NULL,
 	"term" varchar(128) NOT NULL,
@@ -55,7 +57,7 @@ CREATE TABLE "flowboards" (
 	"icon" varchar DEFAULT 'flowboard_icon' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	"year" varchar NOT NULL,
+	"year" varchar,
 	"semester" varchar,
 	"school_name" varchar,
 	"school_id" varchar
@@ -67,18 +69,33 @@ CREATE TABLE "flowcourses" (
 	"added_by" varchar NOT NULL,
 	"title" varchar NOT NULL,
 	"icon" varchar DEFAULT 'flowcourse_icon' NOT NULL,
-	"description" text
+	"description" text,
+	"resource" varchar,
+	"exam_date" varchar,
+	"lesson_days" varchar
+);
+--> statement-breakpoint
+CREATE TABLE "flowresources" (
+	"flowresource_id" varchar PRIMARY KEY NOT NULL,
+	"row_id" varchar NOT NULL,
+	"title" varchar NOT NULL,
+	"link" varchar NOT NULL,
+	"link_type" varchar,
+	"resource_type" "resourceType" DEFAULT 'task'
 );
 --> statement-breakpoint
 CREATE TABLE "flowrows" (
 	"flowrow_id" varchar PRIMARY KEY NOT NULL,
 	"flowcourse_id" varchar NOT NULL,
 	"title" varchar NOT NULL,
+	"order_index" integer,
 	"description" text,
-	"priority" varchar DEFAULT 'no_priority',
-	"link" varchar,
-	"summary" varchar,
-	"status" "status" DEFAULT 'to_do' NOT NULL,
+	"type" "rowType" DEFAULT 'task',
+	"priority" "priority" DEFAULT 'no_priority',
+	"status" "status" DEFAULT 'not_started' NOT NULL,
+	"estimated_time" integer,
+	"difficulty" integer,
+	"is_required" boolean DEFAULT true,
 	"due_date" timestamp,
 	"studoset" varchar,
 	"visualset" varchar
@@ -293,6 +310,7 @@ ALTER TABLE "classroomusers" ADD CONSTRAINT "classroomusers_classroom_id_classro
 ALTER TABLE "flowboards" ADD CONSTRAINT "flowboards_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "flowcourses" ADD CONSTRAINT "flowcourses_board_id_flowboards_board_id_fk" FOREIGN KEY ("board_id") REFERENCES "public"."flowboards"("board_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "flowcourses" ADD CONSTRAINT "flowcourses_added_by_users_id_fk" FOREIGN KEY ("added_by") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "flowresources" ADD CONSTRAINT "flowresources_row_id_flowrows_flowrow_id_fk" FOREIGN KEY ("row_id") REFERENCES "public"."flowrows"("flowrow_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "flowrows" ADD CONSTRAINT "flowrows_flowcourse_id_flowcourses_flowcourse_id_fk" FOREIGN KEY ("flowcourse_id") REFERENCES "public"."flowcourses"("flowcourse_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "flowrows" ADD CONSTRAINT "flowrows_studoset_studysets_id_fk" FOREIGN KEY ("studoset") REFERENCES "public"."studysets"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "flowrows" ADD CONSTRAINT "flowrows_visualset_visualsets_id_fk" FOREIGN KEY ("visualset") REFERENCES "public"."visualsets"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

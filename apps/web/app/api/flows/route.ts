@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log("Request body:", body);
 
-    const response = await fetch(`${process.env.AUTH_API_URL}/flows`, {
+    const response = await fetch(`${process.env.AUTH_API_URL}/flows/board`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
