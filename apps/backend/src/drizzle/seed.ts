@@ -22,6 +22,10 @@ async function hashPassword(password: string): Promise<string> {
 async function resetDatabase() {
   console.log('🗑️ Resetting database...');
 
+  await db.delete(schema.flowresources);
+  await db.delete(schema.flowrows);
+  await db.delete(schema.flowcourses);
+  await db.delete(schema.flowboards);
   await db.delete(schema.classroomactivities);
   await db.delete(schema.classroomsets);
   await db.delete(schema.classroomusers);
@@ -143,7 +147,6 @@ async function seedStudo() {
         verified: false,
         banned: false,
       },
-
       {
         id: userId4,
         email: 'geneeskunde@studo.study',
@@ -248,7 +251,6 @@ async function seedStudo() {
         icon_name: 'maths',
         grade: 'Ingangsexamen',
       },
-
       {
         id: trackId5,
         studoprofile_id: userId1,
@@ -539,7 +541,6 @@ async function seedStudo() {
     // === 11. SessionCards ===
     console.log('Seeding sessioncards...');
     await db.insert(schema.sessioncards).values([
-      // Session 1 (userId1, studySetId1)
       {
         id: uuidv6(),
         number: 1,
@@ -564,7 +565,6 @@ async function seedStudo() {
         session_id: sessionId1,
         owner_id: userId1,
       },
-      // Session 2 (userId1, studySetId2)
       {
         id: uuidv6(),
         number: 1,
@@ -589,7 +589,6 @@ async function seedStudo() {
         session_id: sessionId2,
         owner_id: userId1,
       },
-      // Session 5 (userId2, studySetId2)
       {
         id: uuidv6(),
         number: 1,
@@ -620,7 +619,6 @@ async function seedStudo() {
     // === 12. SessionPins ===
     console.log('Seeding sessionpins...');
     await db.insert(schema.sessionpins).values([
-      // Session 3 (userId1, visualSetId1)
       {
         id: uuidv6(),
         number: 1,
@@ -645,7 +643,6 @@ async function seedStudo() {
         session_id: sessionId3,
         owner_id: userId1,
       },
-      // Session 4 (userId2, visualSetId1)
       {
         id: uuidv6(),
         number: 1,
@@ -827,6 +824,7 @@ async function seedStudo() {
       },
     ]);
     console.log('Studoprofilecommunities seeded\n');
+
     // === 18. Flowboards ===
     console.log('Seeding flowboards...');
 
@@ -857,71 +855,146 @@ async function seedStudo() {
         title: 'Data Science',
         icon: 'flowcourse_icon',
         description: null,
+        resource: null,
+        exam_date: '2026-06-15',
+        lesson_days: 'Ma, Wo',
       },
     ]);
     console.log('Flowcourses seeded\n');
 
     // === 20. Flowrows ===
     console.log('Seeding flowrows...');
+
+    const flowrowId1 = uuidv6();
+    const flowrowId2 = uuidv6();
+    const flowrowId3 = uuidv6();
+    const flowrowId4 = uuidv6();
+    const flowrowId5 = uuidv6();
+    const flowrowId6 = uuidv6();
+    const flowrowId7 = uuidv6();
+
     await db.insert(schema.flowrows).values([
       {
-        id: uuidv6(),
+        id: flowrowId1,
         flowcourse_id: flowcourseId1,
         title: 'Basisbegrippen, steekproefonderzoek',
-        course_link:
-          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235478',
+        order_index: 1,
+        type: 'lesson',
         status: 'done',
       },
       {
-        id: uuidv6(),
+        id: flowrowId2,
         flowcourse_id: flowcourseId1,
         title: 'Analyse van 1 variabele',
-        course_link:
-          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235483',
+        order_index: 2,
+        type: 'lesson',
         status: 'done',
       },
       {
-        id: uuidv6(),
+        id: flowrowId3,
         flowcourse_id: flowcourseId1,
         title: 'Kansrekening, de centrale limietstelling, statistische toetsen',
-        course_link:
-          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235487',
-        status: 'to_do',
+        order_index: 3,
+        type: 'lesson',
+        status: 'not_started',
       },
       {
-        id: uuidv6(),
+        id: flowrowId4,
         flowcourse_id: flowcourseId1,
         title: 'Analyse van 2 kwalitatieve variabelen',
-        course_link:
-          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235492',
-        status: 'to_do',
+        order_index: 4,
+        type: 'lesson',
+        status: 'not_started',
       },
       {
-        id: uuidv6(),
+        id: flowrowId5,
         flowcourse_id: flowcourseId1,
         title: 'Analyse van 2 variabelen kwalitatief vs kwantitatief',
-        course_link:
-          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235497',
-        status: 'to_do',
+        order_index: 5,
+        type: 'lesson',
+        status: 'not_started',
       },
       {
-        id: uuidv6(),
+        id: flowrowId6,
         flowcourse_id: flowcourseId1,
         title: 'Analyse van 2 kwantitatieve variabelen',
-        course_link:
-          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235501',
-        status: 'to_do',
+        order_index: 6,
+        type: 'lesson',
+        status: 'not_started',
       },
       {
-        id: uuidv6(),
+        id: flowrowId7,
         flowcourse_id: flowcourseId1,
         title: 'Tijdserie analyse',
-        course_link:
-          'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235505',
-        status: 'to_do',
+        order_index: 7,
+        type: 'lesson',
+        status: 'not_started',
       },
     ]);
     console.log('Flowrows seeded\n');
+
+    // === 21. Flowresources ===
+    console.log('Seeding flowresources...');
+    await db.insert(schema.flowresources).values([
+      {
+        flowresource_id: uuidv6(),
+        row_id: flowrowId1,
+        title: 'Chamilo - H1',
+        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235478',
+        link_type: 'chamilo',
+        resource_type: 'course',
+      },
+      {
+        flowresource_id: uuidv6(),
+        row_id: flowrowId2,
+        title: 'Chamilo - H2',
+        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235483',
+        link_type: 'chamilo',
+        resource_type: 'course',
+      },
+      {
+        flowresource_id: uuidv6(),
+        row_id: flowrowId3,
+        title: 'Chamilo - H3',
+        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235487',
+        link_type: 'chamilo',
+        resource_type: 'course',
+      },
+      {
+        flowresource_id: uuidv6(),
+        row_id: flowrowId4,
+        title: 'Chamilo - H4',
+        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235492',
+        link_type: 'chamilo',
+        resource_type: 'course',
+      },
+      {
+        flowresource_id: uuidv6(),
+        row_id: flowrowId5,
+        title: 'Chamilo - H5',
+        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235497',
+        link_type: 'chamilo',
+        resource_type: 'course',
+      },
+      {
+        flowresource_id: uuidv6(),
+        row_id: flowrowId6,
+        title: 'Chamilo - H6',
+        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235501',
+        link_type: 'chamilo',
+        resource_type: 'course',
+      },
+      {
+        flowresource_id: uuidv6(),
+        row_id: flowrowId7,
+        title: 'Chamilo - H7',
+        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235505',
+        link_type: 'chamilo',
+        resource_type: 'course',
+      },
+    ]);
+    console.log('Flowresources seeded\n');
+
     console.log('All data seeded successfully!');
   } catch (error) {
     console.error('Error seeding database:', error);

@@ -3,19 +3,20 @@ import {stopPropagation} from "@dnd-kit/core/dist/sensors/events";
 interface BasePopupProps extends React.HTMLProps<HTMLDivElement> {
     popupRef: React.RefObject<HTMLDivElement | null>;
     isOpen: boolean;
-    width: string;
+    width?: string;
     className?: string;
 }
 
 const BasePopup = (props: BasePopupProps) => {
     const {popupRef, isOpen, children, width, height, className} = props;
     return (<div ref={popupRef}
+                 style={{height: height}}
                  onClick={event => event.stopPropagation()}
                  className={`
                  
                       z-[9999] truncate rounded-2xl 
                       ${width ? `w-${width}` : "w-1/4"}
-                      ${height ? `h-${height}` : "min-h-135"}
+                      ${!height && "min-h-135"}
                       ${className && className}
                       
         bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl

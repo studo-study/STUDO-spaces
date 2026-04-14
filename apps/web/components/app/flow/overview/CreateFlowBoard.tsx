@@ -13,6 +13,11 @@ import {HiCalendarDays} from "react-icons/hi2";
 import {useRouter} from "next/navigation";
 import {useFlowStore} from "@/store/flowStore";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
+import IconButton from "@/components/design_system/button/IconButton";
+import {CgArrowsExpandRight} from "react-icons/cg";
+import {IoClose} from "react-icons/io5";
+import {IoIosAdd} from "react-icons/io";
+import {FiMinus} from "react-icons/fi";
 
 
 interface CreateFlowBoardProps {
@@ -146,7 +151,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
     useKeyboardShortcut("n", () => setCreateOpen(true));
     useKeyboardShortcut("Escape", () => {
         setCreateOpen(false);
-        if(inputRef.current) inputRef.current.value = "";
+        if (inputRef.current) inputRef.current.value = "";
     }, {always: true});
     return (<PopupBackdrop
         isOpen={createOpen}
@@ -159,8 +164,18 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
             popupRef={popupRef}
             className={"p-0"}
         >
+
             <span
-                className={"text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 absolute top-2 left-2 font-bold text-studodarkblue dark:text-white"}>{t("create_title")}</span>
+                className={"text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 absolute top-2 left-2 font-bold text-studodarkblue dark:text-white"}>
+                {t("create_title")}
+            </span>
+            <div className={"w-fit absolute top-2 right-2 flex flex-row gap-2"}>
+                <IconButton
+                    onSubmit={onClose}
+                    bg={"hover:bg-studogrey/20"}
+                    icon={ <IoClose size={15}/>}
+                />
+            </div>
             <div className={"w-full flex flex-col gap-2 pt-12 px-7"}>
                 <IconPicker
                     value={selectedIcon}
@@ -174,13 +189,13 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
                     textSize={"lg"}
                     error={!title ? errors.title : undefined}
                 />
+                <InputField
+                    placeholder={t("description")}
+                    textSize={"sm"}
+                    value={description}
+                    setValue={setDescription}
+                />
                 {showMetadata && <div>
-                    <InputField
-                        placeholder={t("description")}
-                        textSize={"sm"}
-                        value={description}
-                        setValue={setDescription}
-                    />
                     <div className={"w-full flex flex-row gap-2 pt-5 scroll-hidden"}>
                         <TagSelector
                             label="School"
@@ -223,22 +238,17 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
                 </div>}
             </div>
             <hr className={"mt-5 w-full border border-transparent  border-b-studoborder/30"}/>
-            <div className={"w-full flex flex-row justify-between px-3 py-3"}>
-                <BaseButton
-                    onSubmit={onClose}
-                    bg={"bg-studogrey/20"}
-                    label={t("cancel_btn")}/>
-                <div className={"w-fit flex flex-row gap-5 items-center"}>
+            <div className={"w-full flex flex-row justify-end gap-2 px-3 py-3"}>
                     <BaseButton
+                        iconLeft={showMetadata ? <FiMinus />:  <IoIosAdd size={20} /> }
                         onSubmit={onShowMetadata}
-                        bg={"bg-emerald-500"}
+                        bg={"bg-transparent border-transparent"}
                         label={showMetadata ? t("add_later") : t("add_metadata")}/>
 
                     <BaseButton
                         onSubmit={onSubmit}
                         bg={"bg-blue-500"}
                         label={t("create_btn")}/>
-                </div>
             </div>
         </BasePopup>
 

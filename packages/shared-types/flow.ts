@@ -26,10 +26,13 @@ export interface FlowBoardResponse {
     title: string;
     icon: string;
     creator_id: string;
-    year: string;
-    semester: string;
-    school: string;
-    school_id: string;
+    year: string | null;
+    semester: string | null;
+    school: string | null;
+    school_id: string | null;
+    total_done: number;
+    total_in_progress: number;
+    total_length: number;
     courses:FlowCourseResponse[],
 }
 
@@ -41,10 +44,12 @@ export interface FlowBoardOverview {
     title: string;
     icon: string;
     creator_id: string;
-    year: string;
-    semester: string;
-    school: string;
-    school_id: string;
+    year: string | null;
+    semester: string | null;
+    school: string | null;
+    school_id: string | null;
+    progress: number;
+    total_length: number;
 }
 
 export interface CreateFlowCourse {
@@ -52,13 +57,17 @@ export interface CreateFlowCourse {
     title: string;
     icon: string;
     description?: string;
-    added_by: string;
+    resource?: string;
+    exam_date?: string;
+    lesson_days?: string;
 }
 
 export interface UpdateFlowCourse {
     title?: string;
     icon?: string;
     description?: string;
+    exam_date?: string;
+    lesson_days?: string;
 }
 
 export interface FlowCourseResponse {
@@ -69,6 +78,15 @@ export interface FlowCourseResponse {
     title: string;
     icon: string;
     description: string;
+    total_done: number;
+    total_in_progress: number;
+    total_length: number;
+    resource: string;
+    exam_date: string;
+    lesson_days: string;
+}
+
+export interface FullFlowCourseResponse extends FlowCourseResponse {
     rows: FlowRowResponse[];
 }
 
@@ -76,23 +94,20 @@ export interface CreateFlowRow {
     course_id: string;
     title: string;
     description?: string;
-    priority?: string;
-    course_link?: string;
-    summary_link?: string;
-    status: string;
+    priority?: Priority;
+    status: Status;
     due_date?: string;
     studoset_id?: string;
     visualset_id?: string;
-
+    resources?: CreateFlowResource[];
 }
+
 
 export interface UpdateFlowRow {
     title?: string;
     description?: string;
-    priority?: string;
-    course_link?: string;
-    summary_link?: string;
-    status?: string;
+    priority?: Priority;
+    status?: Status;
     due_date?: string;
     studoset_id?: string;
     visualset_id?: string;
@@ -110,4 +125,31 @@ export interface FlowRowResponse {
     due_date: string;
     studoset_id: string;
     visualset_id: string;
+    resources: FlowResourceResponse[];
 }
+
+export interface CreateFlowResource {
+    title: string;
+    link: string;
+    link_type?: string;
+    resource_type?: ResourceType;
+}
+
+export interface UpdateFlowResource {
+    title?: string;
+    link?: string;
+    link_type?: string;
+    resource_type?: ResourceType;
+}
+
+export interface FlowResourceResponse {
+    id: string;
+    title: string;
+    link: string;
+    link_type?: string;
+    resource_type?: ResourceType;
+}
+
+export type ResourceType = 'course' | 'notes' | 'summary' | 'abstract' | 'sample_exam' | 'task';
+export type Priority = 'no_priority' | 'low' | 'medium' | 'high';
+export type Status = 'not_started' | 'doing' | 'done';

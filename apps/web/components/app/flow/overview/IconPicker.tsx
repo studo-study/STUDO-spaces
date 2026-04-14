@@ -7,7 +7,9 @@ import {
     FiCompass, FiAnchor, FiTarget, FiTrendingUp, FiLayers,
     FiPenTool, FiTerminal, FiDatabase, FiGrid, FiPackage,
     FiClipboard, FiBookOpen, FiEdit3, FiFlag, FiGitBranch,
-    FiActivity, FiSmile, FiCoffee, FiDroplet, FiWind,
+    FiActivity, FiSmile, FiCoffee, FiDroplet, FiWind, FiPercent, FiBarChart2, FiPieChart, FiThermometer, FiScissors,
+    FiEyeOff, FiEye, FiMessageCircle, FiType, FiShield, FiLock, FiSliders, FiUsers, FiSettings, FiImage, FiFilm,
+    FiHeadphones, FiMap, FiTruck,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import {CiViewTable} from "react-icons/ci";
@@ -23,6 +25,30 @@ const ICONS: Record<string, IconType> = {
     package: FiPackage, clipboard: FiClipboard, bookopen: FiBookOpen,
     edit: FiEdit3, flag: FiFlag, git: FiGitBranch, activity: FiActivity,
     smile: FiSmile, coffee: FiCoffee, droplet: FiDroplet, wind: FiWind,
+};
+
+const COURSES: Record<string, IconType> = {
+    ...ICONS,
+    // extra course-specifieke iconen
+    percent: FiPercent,
+    barchart: FiBarChart2,
+    piechart: FiPieChart,
+    thermometer: FiThermometer,
+    scissors: FiScissors,
+    eyeoff: FiEyeOff,
+    eye: FiEye,
+    messagecircle: FiMessageCircle,
+    type: FiType,
+    shield: FiShield,
+    lock: FiLock,
+    scale: FiSliders,
+    users: FiUsers,
+    settings: FiSettings,
+    image: FiImage,
+    film: FiFilm,
+    headphones: FiHeadphones,
+    map: FiMap,
+    truck: FiTruck,
 };
 
 interface FlowColor {
@@ -48,18 +74,20 @@ interface IconPickerProps {
     value?: string;
     setValue?: (value: string) => void;
     onChange?: (value: string) => void;
+    course?: boolean;
 }
 
-const IconPicker = ({ value = "emerald:default", onChange }: IconPickerProps) => {
+const IconPicker = ({ value, onChange, course }: IconPickerProps) => {
+    const resolvedValue = value ?? (course ? "blue:bookopen" : "emerald:default");
     const t = useTranslations("iconPicker")
-    const { color: selectedColor, icon: selectedIcon } = parseFlowIcon(value);
+    const { color: selectedColor, icon: selectedIcon } = parseFlowIcon(resolvedValue);
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState("");
     const popupRef = useRef<HTMLDivElement>(null);
     const searchRef = useRef<HTMLInputElement>(null);
 
     const color = COLORS.find((c) => c.name === selectedColor) ?? COLORS[0];
-    const CurrentIcon = ICONS[selectedIcon] ?? CiViewTable;
+    const CurrentIcon = course ? COURSES[selectedIcon] : ICONS[selectedIcon] ?? CiViewTable;
 
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
@@ -75,7 +103,9 @@ const IconPicker = ({ value = "emerald:default", onChange }: IconPickerProps) =>
         if (isOpen && searchRef.current) searchRef.current.focus();
     }, [isOpen]);
 
-    const filtered = Object.entries(ICONS).filter(([name]) =>
+    const filtered = course ? Object.entries(COURSES).filter(([name]) =>
+            name.toLowerCase().includes(search.toLowerCase()))
+        : Object.entries(ICONS).filter(([name]) =>
         name.toLowerCase().includes(search.toLowerCase())
     );
 
