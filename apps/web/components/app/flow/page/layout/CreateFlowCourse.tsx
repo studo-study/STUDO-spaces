@@ -38,7 +38,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
 
 
     //states
-    const [selectedIcon, setSelectedIcon] = useState<string>("emerald:default");
+    const [selectedIcon, setSelectedIcon] = useState<string>("blue:bookopen");
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [examDate, setExamDate] = useState<string>("");
@@ -99,6 +99,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
         }
     }, [createOpen]);
 
+    useEffect(() => {console.log(days.join('-'))}, [days])
     //validate data
     const validate = (): boolean => {
         const newErrors: Record<string, string> = {};
@@ -141,7 +142,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
 
         if (res.ok) {
             const data = await res.json();
-            addBoard(data);
+            router.push("/flow/" + board_id + "/" + data.id);
             onClose();
         }
     };
@@ -178,6 +179,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
             </div>
             <div className={"w-full flex flex-col gap-2 pt-12 px-7"}>
                 <IconPicker
+                    course
                     value={selectedIcon}
                     onChange={(val) => setSelectedIcon(val)}
                 />

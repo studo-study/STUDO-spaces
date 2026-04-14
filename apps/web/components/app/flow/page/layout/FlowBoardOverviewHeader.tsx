@@ -14,15 +14,13 @@ interface FlowBoardHeaderProps {
     data: FlowBoardResponse;
 }
 
-const FlowBoardHeader = (props: FlowBoardHeaderProps) => {
+const FlowBoardOverviewHeader = (props: FlowBoardHeaderProps) => {
     const t = useTranslations("flow")
     const {data} = props;
     const [pageTitle, setPageTitle] = useState<string>(data.title);
     const [date, setDate] = useState<string>(data.year!);
     const [sem, setSem] = useState<string>(data.semester!);
     const {Icon, color} = getFlowIcon(data.icon);
-
-    const {open, toggleFlowBoard} = useFlowBoard();
 
     return (<div className="flex flex-col w-full gap-5">
         <div className={"w-full flex gap-3 justify-between items-center"}>
@@ -59,14 +57,15 @@ const FlowBoardHeader = (props: FlowBoardHeaderProps) => {
                         textSize={"sm"}
                     />
                     <span>•</span>
-                    <span className={"h-fit items-center flex text-sm"}>{data.courses.length} {t("courses")}</span>
+                    <span className={" w-fit p-0 items-center flex text-sm justify-center"}>
+                       {data.courses.length} {data.courses.length === 1 ? t("course_1") : t("courses")}
+                    </span>
                 </div>
             </div>
-            <CreateFlowCourse createOpen={open} setCreateOpen={toggleFlowBoard} board_title={data.title} board_id={data.id}/>
         </div>
         <hr className="w-full border-0.5 border-studoborder/30" />
     </div>)
 }
 
-FlowBoardHeader.displayName = "FlowBoardHeader"
-export default FlowBoardHeader;
+FlowBoardOverviewHeader.displayName = "FlowBoardOverviewHeader"
+export default FlowBoardOverviewHeader;

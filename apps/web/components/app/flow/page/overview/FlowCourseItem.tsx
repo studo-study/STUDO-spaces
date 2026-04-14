@@ -8,6 +8,8 @@ import {FiTrash2} from "react-icons/fi";
 import {useTranslations} from "next-intl";
 import {RxDragHandleDots2} from "react-icons/rx";
 import {HiOutlineExternalLink} from "react-icons/hi";
+import {CgDanger} from "react-icons/cg";
+import {BsExclamationTriangle} from "react-icons/bs";
 
 interface CourseItemProps {
     data: FlowCourseResponse;
@@ -52,7 +54,7 @@ const FlowCourseItem = (props: CourseItemProps) => {
             <div className={"w-full flex cursor-pointer flex-row gap-1 truncate align-center justify-between"}>
                 <span
                     className={"bg-studogrey opacity-30 text-xs rounded-3xl px-2"}>{data.total_done} / {data.total_length} done</span>
-                {ExamDetails(data.exam_date)}
+                {ExamChip({examDate: data.exam_date, totalItems: data.total_length, doneItems: data.total_done})}
             </div>
         </div>
     </div>)
@@ -61,69 +63,69 @@ const FlowCourseItem = (props: CourseItemProps) => {
 FlowCourseItem.displayName = "FlowCourseItem";
 export default FlowCourseItem;
 
+function ExamChip({ examDate, totalItems, doneItems }: {
+    examDate: string | null;
+    totalItems: number;
+    doneItems: number;
+}) {
+    if (!examDate) return null;
 
-function ExamDetails(examdate: string) {
-    if (!examdate) return null;
-
-    const exam = new Date(examdate);
     const now = new Date();
+    const exam = new Date(examDate);
+    const diffDays = (exam.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
 
-    const diffTime = exam.getTime() - now.getTime();
-    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    // examen is voorbij
+    if (diffDays < 0) return null;
 
-    let bgColor = "bg-studogrey";
-    let message = examdate;
-    const icon = null;
+    // behind status check
+    if (totalItems > 0) {
+        const remainingItems = totalItems - doneItems;
+        const itemsPerDay = diffDays > 0 ? remainingItems / diffDays : Infinity;
+
+        if (itemsPerDay > 5) {
+            return (
+                <div className="bg-rose-500 text-xs rounded-3xl px-2 flex items-center gap-1 text-white">
+                    <BsExclamationTriangle size={10} />
+                    behind
+                </div>
+            );
+        }
+        if (itemsPerDay > 3) {
+            return (
+                <div className="bg-orange-500 text-xs rounded-3xl px-2 flex items-center gap-1 text-white">
+                    <CgDanger size={10} />
+                    slightly behind
+                </div>
+            );
+        }
+    }
+
+    // exam countdown
+    let bgColor = "";
+    let message = "";
 
     if (diffDays <= 1) {
         bgColor = "bg-rose-500";
         message = "Exam tomorrow";
-    } else if (diffDays <= 3) {
-        bgColor = "bg-rose-300";
+    } else if (diffDays <= 2) {
+        bgColor = "bg-rose-400";
         message = "Exam in 2 days";
     } else if (diffDays <= 3) {
-        bgColor = "bg-rose-300";
+        bgColor = "bg-rose-300 text-studodarkblue";
         message = "Exam in 3 days";
     } else if (diffDays <= 7) {
-        bgColor = "bg-orange-400";
-        message = "Exam in 1 weeks";
+        bgColor = "bg-orange-400 text-studodarkblue";
+        message = `Exam in ${Math.ceil(diffDays)} days`;
     } else if (diffDays <= 14) {
-        bgColor = "bg-yellow-400";
-        message = "Exam in two weeks";
-    }
-
-    if (diffDays >14) {
+        bgColor = "bg-yellow-400 text-studodarkblue";
+        message = "Exam in 2 weeks";
+    } else {
         return null;
     }
 
     return (
-        <div className={`${bgColor} text-xs rounded-3xl px-2 text-studodarkblue`}>
-            {icon}
+        <div className={`${bgColor} text-xs rounded-3xl px-2 `}>
             {message}
         </div>
     );
 }
-
-
-const getBehindStatus = (
-    totalItems: number,
-    doneItems: number,
-    examDate: string | null
-) => {
-    if (!examDate || totalItems === 0) return null;
-
-    const now = new Date();
-    const exam = new Date(examDate);
-    const daysLeft = Math.max(
-        (exam.getTime() - now.getTime()) / (1000 * 60 * 60 * 24), 0
-    );
-
-    if (daysLeft === 0) return doneItems < totalItems ? "behind" : null;
-
-    const remainingItems = totalItems - doneItems;
-    const itemsPerDay = remainingItems / daysLeft;
-
-    if (itemsPerDay > 5) return "behind";
-    if (itemsPerDay > 3) return "slightly";
-    return null;
-};

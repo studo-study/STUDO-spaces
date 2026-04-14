@@ -5,10 +5,12 @@ import {
     FiCompass, FiAnchor, FiTarget, FiTrendingUp, FiLayers,
     FiPenTool, FiTerminal, FiDatabase, FiGrid, FiPackage,
     FiClipboard, FiBookOpen, FiEdit3, FiFlag, FiGitBranch,
-    FiActivity, FiSmile, FiCoffee, FiDroplet, FiWind,
+    FiActivity, FiSmile, FiCoffee, FiDroplet, FiWind, FiPercent, FiBarChart2, FiPieChart, FiThermometer, FiScissors,
+    FiEyeOff, FiEye, FiMessageCircle, FiType, FiShield, FiLock, FiSliders, FiUsers, FiSettings, FiImage, FiFilm,
+    FiHeadphones, FiMap, FiTruck,
 } from "react-icons/fi";
-import { IconType } from "react-icons";
-import { CiViewTable } from "react-icons/ci";
+import {IconType} from "react-icons";
+import {CiViewTable} from "react-icons/ci";
 
 const ICON_MAP: Record<string, IconType> = {
     book: FiBook, code: FiCode, star: FiStar, folder: FiFolder,
@@ -20,10 +22,16 @@ const ICON_MAP: Record<string, IconType> = {
     package: FiPackage, clipboard: FiClipboard, bookopen: FiBookOpen,
     edit: FiEdit3, flag: FiFlag, git: FiGitBranch, activity: FiActivity,
     smile: FiSmile, coffee: FiCoffee, droplet: FiDroplet, wind: FiWind,
+    percent: FiPercent, barchart: FiBarChart2, piechart: FiPieChart,
+    thermometer: FiThermometer, scissors: FiScissors, eyeoff: FiEyeOff,
+    eye: FiEye, messagecircle: FiMessageCircle, type: FiType, shield: FiShield,
+    lock: FiLock, scale: FiSliders, users: FiUsers, settings: FiSettings,
+    image: FiImage, film: FiFilm, headphones: FiHeadphones, map: FiMap,
+    truck: FiTruck,
 };
 
 export function getFlowIcon(value: string): { Icon: IconType; color: string } {
-    const { color, icon } = parseFlowIcon(value);
+    const {color, icon} = parseFlowIcon(value);
     return {
         Icon: ICON_MAP[icon] ?? CiViewTable,
         color,
@@ -32,5 +40,5 @@ export function getFlowIcon(value: string): { Icon: IconType; color: string } {
 
 function parseFlowIcon(value: string): { color: string; icon: string } {
     const [color, icon] = value.split(":");
-    return { color: color ?? "emerald", icon: icon ?? "book" };
+    return {color: color ?? "emerald", icon: icon ?? "book"};
 }

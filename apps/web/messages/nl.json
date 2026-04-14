@@ -1153,6 +1153,8 @@
     "add_course": "Add a course",
     "your_courses": "Your Courses",
     "external": "Open in new tab",
+    "courses": "courses",
+    "course_1": "course",
     "course": {
       "create_title": "New Course",
       "add_title": "Create new course",
