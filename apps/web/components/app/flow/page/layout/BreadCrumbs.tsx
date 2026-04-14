@@ -4,8 +4,8 @@ import {Link} from "@/i18n/routing";
 interface BreadCrumbsProps {
     board_title: string;
     board_id: string;
-    course_title?: string | undefined;
-    course_id: string;
+    course_title?: string;
+    course_id: string | undefined;
 }
 const BreadCrumbs = (props: BreadCrumbsProps) => {
     const {board_title, board_id, course_title,course_id} = props;
