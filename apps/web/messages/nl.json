@@ -1166,7 +1166,11 @@
       "semester": "semester",
       "exam_date": "Exam date",
       "exam_status": "Exam status",
-      "link": "Resource link"
+      "link": "Resource link",
+      "row": {
+        "done": "done",
+        "in_prog": "in progress"
+      }
     }
 
   },

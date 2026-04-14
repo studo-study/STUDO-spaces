@@ -1,6 +1,11 @@
 import CoursePageHeader from "@/components/app/flow/page/CoursePage/CoursePageHeader";
 import {getTranslations} from "next-intl/server";
 import {auth} from "@/auth";
+import CourseTable from "@/components/app/flow/page/CoursePage/CourseTable";
+import {FlowCourseResponse} from "@studo/types";
+import CourseItemProgress from "@/components/app/flow/page/overview/CourseItemProgress";
+import StateProvider from "@/components/app/flow/page/CoursePage/StateProvider";
+
 
 export default async function Page({params,}: { params: Promise<{ id: string, course_id: string }>; }) {
     const {course_id} = await params;
@@ -19,7 +24,5 @@ export default async function Page({params,}: { params: Promise<{ id: string, co
 
     const data = await res.json();
     console.log(data);
-    return (<div  className={"pt-12 px-2"}>
-        <CoursePageHeader data={data}/>
-    </div>)
+    return (<StateProvider data={data}/>)
 }

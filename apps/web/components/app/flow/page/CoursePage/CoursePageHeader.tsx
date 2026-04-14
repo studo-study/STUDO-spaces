@@ -20,13 +20,17 @@ const CoursePageHeader = (props: CoursePageHeaderProps) => {
     const {Icon, color} = getFlowIcon(data.icon);
     const {name, icon} = Linkparser(data.resource)
     const date = new Date(data.exam_date);
-    return (<div className={"w-full h-20 flex flex-col gap-3"}>
-        <div className={"w-full flex flex-row items-center gap-2"}>
-            <Link href={"/flow/" + data.board_id + "/overview"}
-                  className={`bg-${color}-400/20 text-${color}-500 min-w-8 min-h-8 w-8 h-8 rounded-xl flex items-center justify-center`}>
-                <Icon size={15}/>
-            </Link>
-            <span className={"font-bold dark:text-white text-studodarkblue text-xl"}>{data.title}</span>
+    return (<div className={"w-full h-fit flex flex-col gap-3"}>
+        <div className={"flex flex-row justify-between"}>
+            <div className={"w-full flex flex-row items-center gap-2"}>
+                <Link href={"/flow/" + data.board_id + "/overview"} className={`bg-${color}-400/20 text-${color}-500 min-w-8 min-h-8 w-8 h-8 rounded-xl flex items-center justify-center`}>
+                    <Icon size={15}/>
+                </Link>
+                <span className={"font-bold dark:text-white text-studodarkblue text-xl"}>{data.title}</span>
+            </div>
+            <div>
+
+            </div>
         </div>
         <div className={"w-full flex flex-row items-center gap-2"}>
 
