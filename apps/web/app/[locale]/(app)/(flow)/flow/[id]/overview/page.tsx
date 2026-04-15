@@ -19,6 +19,7 @@ export default async function Page({params,}: { params: Promise<{ id: string }>;
         }
     );
     const data = await res.json();
+
     return (<div className={"w-full h-full pt-5  flex flex-col gap-2"}>
         <span className={"text-2x dark:text-white text-studodarkblue font-bold"}>{t("your_courses")}:</span>
         <div className={"flex flex-col gap-5"}>
