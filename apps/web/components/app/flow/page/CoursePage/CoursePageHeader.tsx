@@ -46,16 +46,21 @@ const CoursePageHeader = (props: CoursePageHeaderProps) => {
                     <Link href={"/flow/" + data.board_id + "/overview"} className={`bg-${color}-400/20 text-${color}-500 min-w-8 min-h-8 w-8 h-8 rounded-xl flex items-center justify-center`}>
                         <Icon size={15}/>
                     </Link>
-                    <span className={"font-bold  text-xl"}>{data.title}</span>
+                    <span className={"font-bold select-none text-xl"}>{data.title}</span>
                     <HiChevronUpDown />
                 </div>
                 {isOpen && (
-                    <div className="absolute top-full left-0 mt-2 z-[9999] min-w-[220px] rounded-xl
-        bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl
-        border border-white/50 dark:border-white/10
-        shadow-xl shadow-black/10 dark:shadow-black/30
-        py-1.5"
-                    >
+                    <div className={`
+                    absolute top-full left-0 mt-2 z-[9999] min-w-[180px] rounded-xl
+                    bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl
+                    border border-white/50 dark:border-white/10
+                    shadow-xl shadow-black/10 dark:shadow-black/30
+                    transition-all duration-200 ease-out origin-top
+                    ${isOpen
+                        ? "opacity-100 translate-y-0 pointer-events-auto"
+                        : "opacity-0 -translate-y-2 pointer-events-none"
+                    }
+                `} >
                         {boardData?.courses.map((course) => {
                             const {Icon, color} = getFlowIcon(course.icon);
                             const isActive = course.id === data.id;

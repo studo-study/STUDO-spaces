@@ -1167,10 +1167,15 @@
       "exam_date": "Exam date",
       "exam_status": "Exam status",
       "link": "Resource link",
+      "add_link": "add a resource link...",
       "row": {
         "done": "done",
         "in_prog": "in progress",
-        "cta_add_t": "add a task..."
+        "cta_add_t": "add a task...",
+        "add_resources": "Resources",
+        "add_details": "Details",
+        "add_set": "Linked sets",
+        "due_date": "Due date"
       }
     }
 

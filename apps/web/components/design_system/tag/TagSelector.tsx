@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect, ReactNode} from "react";
+import { useState, useRef, useEffect, ReactNode } from "react";
 
 interface TagOption {
     value: string;
@@ -17,6 +17,7 @@ interface TagSelectorBaseProps {
     placeholder?: string;
     error?: string;
     link?: boolean;
+    subtle?: boolean;
 }
 
 interface SingleSelectProps extends TagSelectorBaseProps {
@@ -40,6 +41,7 @@ const TagSelector = ({
                          value,
                          onChange,
                          dot,
+                         subtle = false,
                          freeInput = false,
                          datePicker = false,
                          multiple = false,
@@ -49,6 +51,7 @@ const TagSelector = ({
                      }: TagSelectorProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
+
     const ref = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const dateRef = useRef<HTMLInputElement>(null);
@@ -60,6 +63,7 @@ const TagSelector = ({
         if (datePicker && value) {
             return new Date(value as string).toLocaleDateString();
         }
+
         if (multiple) {
             if (selectedValues.length === 0) return label;
             const selectedLabels = selectedValues
@@ -68,9 +72,8 @@ const TagSelector = ({
             return selectedLabels.join(", ");
         }
 
-        if(link) {
-            return label;
-        }
+        if (link) return label;
+
         return (selected?.label ?? (value as string)) || label;
     };
 
@@ -103,6 +106,7 @@ const TagSelector = ({
 
     const handleMultiToggle = (optionValue: string) => {
         const cb = onChange as (value: string[]) => void;
+
         if (selectedValues.includes(optionValue)) {
             cb(selectedValues.filter((v) => v !== optionValue));
         } else {
@@ -110,28 +114,49 @@ const TagSelector = ({
         }
     };
 
+    const triggerClass = `
+        flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
+        transition-all cursor-pointer select-none
+        ${error ? "border-rose-500" : "border-white/10 dark:border-white/10"}
+        ${subtle
+        ? `
+                bg-transparent border-transparent
+                text-neutral-600 dark:text-neutral-300
+                hover:bg-white/10 dark:hover:bg-white/5
+            `
+        : `
+                bg-white/5 dark:bg-white/5
+                text-neutral-700 dark:text-neutral-200
+                border
+                hover:bg-white/10 dark:hover:bg-white/10
+            `
+    }
+    `;
+
+    const dropdownClass = `
+        absolute top-full left-0 mt-2 z-[9999] min-w-[180px] rounded-xl
+        bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl
+        border border-white/50 dark:border-white/10
+        shadow-xl shadow-black/10 dark:shadow-black/30
+        transition-all duration-200 ease-out origin-top
+        ${isOpen
+        ? "opacity-100 translate-y-0 pointer-events-auto"
+        : "opacity-0 -translate-y-2 pointer-events-none"
+    }
+    `;
+
     if (datePicker) {
         return (
             <div ref={ref} className="relative inline-block">
                 <button
                     type="button"
                     onClick={() => dateRef.current?.showPicker?.()}
-                    className={`
-                        ${error ? "border-rose-500" : "border-white/10 dark:border-white/10"}
-                        flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
-                        border bg-white/5 dark:bg-white/5
-                        text-neutral-700 dark:text-neutral-200
-                        hover:bg-white/10 dark:hover:bg-white/10
-                        transition-all cursor-pointer select-none
-                    `}
+                    className={triggerClass}
                 >
-                    {displayIcon && (
-                        <span className="text-neutral-400 dark:text-neutral-400 shrink-0">
-                            {displayIcon}
-                        </span>
-                    )}
+                    {displayIcon && <span className="text-neutral-400">{displayIcon}</span>}
                     <span className="truncate">{getDisplayLabel()}</span>
                 </button>
+
                 <input
                     ref={dateRef}
                     type="date"
@@ -152,39 +177,24 @@ const TagSelector = ({
                     e.stopPropagation();
                     setIsOpen(!isOpen);
                 }}
-                className={`
-                    ${error ? "border-rose-500" : "border-white/10 dark:border-white/10"}
-                    flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
-                    border bg-white/5 dark:bg-white/5
-                    text-neutral-700 dark:text-neutral-200
-                    hover:bg-white/10 dark:hover:bg-white/10
-                    transition-all cursor-pointer select-none
-                `}
+                className={triggerClass}
             >
                 {displayDot && (
-                    <span className={`w-2.5 h-2.5 rounded-full ${displayDot} shrink-0`}/>
+                    <span className={`w-2.5 h-2.5 rounded-full ${displayDot} shrink-0`} />
                 )}
+
                 {displayIcon && (
-                    <span className="text-neutral-400 dark:text-neutral-400 shrink-0">
+                    <span className="text-neutral-400 shrink-0">
                         {displayIcon}
                     </span>
                 )}
+
                 <span className="truncate">{getDisplayLabel()}</span>
             </button>
 
             <div
                 onClick={(e) => e.stopPropagation()}
-                className={`
-                    absolute top-full left-0 mt-2 z-[9999] min-w-[180px] rounded-xl
-                    bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl
-                    border border-white/50 dark:border-white/10
-                    shadow-xl shadow-black/10 dark:shadow-black/30
-                    transition-all duration-200 ease-out origin-top
-                    ${isOpen
-                    ? "opacity-100 translate-y-0 pointer-events-auto"
-                    : "opacity-0 -translate-y-2 pointer-events-none"
-                }
-                `}
+                className={dropdownClass}
             >
                 {freeInput ? (
                     <div className="p-2">
@@ -218,6 +228,7 @@ const TagSelector = ({
                                     type="button"
                                     onClick={(e) => {
                                         e.stopPropagation();
+
                                         if (multiple) {
                                             handleMultiToggle(option.value);
                                         } else {
@@ -258,12 +269,15 @@ const TagSelector = ({
                                             )}
                                         </span>
                                     )}
+
                                     {option.dot && (
-                                        <span className={`w-2.5 h-2.5 rounded-full ${option.dot} shrink-0`}/>
+                                        <span className={`w-2.5 h-2.5 rounded-full ${option.dot} shrink-0`} />
                                     )}
+
                                     {option.icon && (
                                         <span className="shrink-0">{option.icon}</span>
                                     )}
+
                                     <span className="truncate">{option.label}</span>
                                 </button>
                             );

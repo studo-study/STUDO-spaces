@@ -18,8 +18,8 @@ export default function AdminHeader() {
     ]
     return (
         <div className={"w-full h-fit flex flex-col gap-3"}>
-            <span className={"w-full h-fit flex items-center text-studodarkblue dark:text-white font-bold text-3xl mb-5"}>{t("title")}</span>
-            <div className={"w-full flex flex-row items-center gap-5"}>
+            <span className={"w-full h-fit flex items-center text-studodarkblue dark:text-white font-bold text-2xl mb-3"}>{t("title")}</span>
+            <div className={"w-full flex text-sm flex-row items-center gap-5"}>
                 {items.map((item, i) =>
                     <Link key={i} className={`w-fit min-w-20 text-center ${isActive(item.link) ? "font-bold" : null} dark:text-white text-studodarkblue`} href={item.link}>{t(item.label)}</Link>)}
 

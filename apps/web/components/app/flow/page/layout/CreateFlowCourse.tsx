@@ -206,7 +206,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
                             onChange={setLink}
                             freeInput
                             link
-                            placeholder="Typ je school..."
+                            placeholder={t("add_link")}
                         />
 
                         <TagSelector

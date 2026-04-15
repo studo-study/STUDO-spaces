@@ -21,7 +21,7 @@ const CourseItemProgress = (props: FlowProgressProps) => {
         <div className="relative w-full h-2 rounded-full bg-studogrey/30 border border-studoborder/30 flex flex-row">
             <div
                 style={{width: `${progPercent + donePercent}%`}}
-                className={`absolute z-30 h-full cursor-pointer transition-[width] duration-300 ease-in-out bg-linear-90 from-blue-600 to-cyan-400 rounded-3xl`}/>
+                className={`absolute z-30 h-full cursor-pointer transition-[width] duration-300 ease-in-out bg-linear-90 from-amber-600 to-amber-400 rounded-3xl`}/>
             <div
                 style={{width: `${donePercent}%`}}
                 className={`absolute z-100 h-full cursor-pointer transition-[width] duration-300 border border-studoborder/30 ease-in-out bg-linear-90 from-emerald-500 to-emerald-400 rounded-3xl`}/>

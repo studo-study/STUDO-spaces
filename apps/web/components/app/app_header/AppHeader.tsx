@@ -64,12 +64,12 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
     }, [Search]);
 
     return (
-        <div className={"h-fit z-[9999] top-0 w-screen flex flex-col dark:border-none border-b border-b-studoborder"}>
+        <div className={"h-fit z-[9999] top-0 w-screen flex flex-col dark:border-none border-b border-b-studoborder/30"}>
             <div className={"w-screen h-0.5"}></div>
             {openbrein && <div className={"w-screen h-7 bg-white  flex items-center justify-center "}>
                 <span className={'w-full flex flex-row items-center justify-center gap-1'}>try <Link target={'_blank'} href={'https://openbrein.org/'} className={"font-montserrat hover:opacity-75 underline font-black"}>OPENBREIN</Link> for free <FaArrowRight size={12} /></span>
             </div>}
-            <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-b dark:border-studogrey/30 border-gray-300 gap-5">
+            <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-gray-300 gap-5">
                 {/* Left section */}
                 <div className="flex items-center gap-8 min-w-1/4">
                     <button

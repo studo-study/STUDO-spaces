@@ -105,16 +105,16 @@ function ExamChip({ examDate, totalItems, doneItems }: {
     let message = "";
 
     if (diffDays <= 1) {
-        bgColor = "bg-rose-600";
+        bgColor = "bg-rose-600 text-white";
         message = "Exam tomorrow";
     } else if (diffDays <= 2) {
-        bgColor = "bg-rose-500";
+        bgColor = "bg-rose-500 text-white";
         message = "Exam in 2 days";
     } else if (diffDays <= 3) {
         bgColor = "bg-rose-400 text-studodarkblue";
         message = "Exam in 3 days";
     } else if (diffDays <= 7) {
-        bgColor = "bg-orange-400 text-studodarkblue";
+        bgColor = "bg-orange-400 text-studodarkblue ";
         message = `Exam in ${Math.ceil(diffDays)} days`;
     } else if (diffDays <= 14) {
         bgColor = "bg-yellow-400 text-studodarkblue";

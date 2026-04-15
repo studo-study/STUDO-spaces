@@ -35,7 +35,7 @@ export default function FlowGridItem(props:FlowGridItemProps ) {
                     <Icon size={20} />
                 </div>
                 <div className={"flex flex-col gap-1"}>
-                    <span className={"font-bold text-xl overflow-hidden truncate max-w-7/8"}>{item.title}</span>
+                    <span className={"font-bold text-lg overflow-hidden truncate max-w-7/8"}>{item.title}</span>
                     <span className={"text-xs text-studodarkblue/40 dark:text-white/40"}>{item.year} {item.semester && "• " + t("semester") + " " + item.semester}</span>
                 </div>
                 <div className={"absolute top-5 right-5"}>

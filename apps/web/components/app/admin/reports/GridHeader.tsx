@@ -15,7 +15,7 @@ export default function GridHeader({title, icon, count, description}: GridHeader
         <div className={"w-full h-fit flex flex-row gap-3 justify-between "}>
             <div className={"w-fit h-fit flex flex-row items-center gap-2 "}>
                 {icon}
-                <div className={"font-bold text-lg flex flex-row items-center gap-1"}>
+                <div className={"font-bold flex flex-row items-center gap-1"}>
                     <span>{title}</span>
                     <span className={"bg-studogrey/30 text-sm rounded-3xl px-2 py-0.5"}>{count}</span>
                 </div>
