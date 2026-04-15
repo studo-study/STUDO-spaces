@@ -1169,7 +1169,8 @@
       "link": "Resource link",
       "row": {
         "done": "done",
-        "in_prog": "in progress"
+        "in_prog": "in progress",
+        "cta_add_t": "add a task..."
       }
     }
 
