@@ -14,6 +14,8 @@ const BoardHeader = (props: BoardHeaderProps) => {
     const {data} = props;
     const pathName = usePathname()
     const isActive = pathName.endsWith("/overview")
+    const courseId = pathName.split("/").at(-1);
+    const course = data.courses.find(i => i.id === courseId);
     const {open, toggleFlowBoard} = useFlowBoard();
 
     if (isActive) {
@@ -27,9 +29,8 @@ const BoardHeader = (props: BoardHeaderProps) => {
         <BreadCrumbs
             board_id={data.id}
             board_title={data.title}
-            course_id={pathName.split("/")[pathName.split("/").length - 1]}
-            course_title={data.courses.find(i => i.id === pathName.split("/")[pathName.split("/").length - 1]).title}
-
+            course_id={courseId}
+            course_title={course?.title ?? ""}
         />
         <CreateFlowCourse createOpen={open} setCreateOpen={toggleFlowBoard} board_title={data.title} board_id={data.id}/>
     </div>

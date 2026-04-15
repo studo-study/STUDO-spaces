@@ -1163,7 +1163,15 @@
       "cancel_btn": "cancel",
       "add_metadata": "add details",
       "add_later": "hide details",
-      "semester": "semester"
+      "semester": "semester",
+      "exam_date": "Exam date",
+      "exam_status": "Exam status",
+      "link": "Resource link",
+      "row": {
+        "done": "done",
+        "in_prog": "in progress",
+        "cta_add_t": "add a task..."
+      }
     }
 
   },

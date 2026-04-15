@@ -105,13 +105,13 @@ function ExamChip({ examDate, totalItems, doneItems }: {
     let message = "";
 
     if (diffDays <= 1) {
-        bgColor = "bg-rose-500";
+        bgColor = "bg-rose-600";
         message = "Exam tomorrow";
     } else if (diffDays <= 2) {
-        bgColor = "bg-rose-400";
+        bgColor = "bg-rose-500";
         message = "Exam in 2 days";
     } else if (diffDays <= 3) {
-        bgColor = "bg-rose-300 text-studodarkblue";
+        bgColor = "bg-rose-400 text-studodarkblue";
         message = "Exam in 3 days";
     } else if (diffDays <= 7) {
         bgColor = "bg-orange-400 text-studodarkblue";
@@ -124,7 +124,7 @@ function ExamChip({ examDate, totalItems, doneItems }: {
     }
 
     return (
-        <div className={`${bgColor} text-xs rounded-3xl px-2 `}>
+        <div className={`${bgColor} text-xs rounded-3xl px-2 py-0.5 `}>
             {message}
         </div>
     );

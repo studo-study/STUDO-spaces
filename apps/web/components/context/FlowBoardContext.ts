@@ -1,10 +1,12 @@
 "use client";
 
 import { createContext, useContext } from "react";
+import {FlowBoardResponse} from "@studo/types";
 
 type FlowBoardContextProps = {
     toggleFlowBoard: () => void;
     open: boolean;
+    boardData: FlowBoardResponse | null;
 };
 
 const FlowBoardContext = createContext<FlowBoardContextProps | null>(null);

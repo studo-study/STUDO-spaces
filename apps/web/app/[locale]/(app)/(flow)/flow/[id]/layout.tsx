@@ -1,11 +1,7 @@
 import PageContainer from "@/components/design_system/page/PageContainer";
-import FlowRowSelector from "@/components/app/flow/page/layout/FlowRowSelector";
 import {ReactNode} from "react";
-import FlowBoardOverviewHeader from "@/components/app/flow/page/layout/FlowBoardOverviewHeader";
 import {auth} from "@/auth";
 import FlowBoardProvider from "@/components/providers/FlowBoardProvider";
-import {usePathname, useRouter} from "@/i18n/routing";
-import BreadCrumbs from "@/components/app/flow/page/layout/BreadCrumbs";
 import BoardHeader from "@/components/app/flow/page/layout/BoardHeader";
 
 export default async function FlowOverviewLayout({ params, children }: {
@@ -33,13 +29,13 @@ export default async function FlowOverviewLayout({ params, children }: {
     const data = await res.json();
     console.log("data: ", data)
     return (
-        <FlowBoardProvider>
+        <FlowBoardProvider data={data}>
             <PageContainer>
               <BoardHeader data={data}/>
                 <div className="w-full min-h-full">
                     {children}
                 </div>
-                <FlowRowSelector id={id} data={data} />
+
             </PageContainer>
         </FlowBoardProvider>
     );
