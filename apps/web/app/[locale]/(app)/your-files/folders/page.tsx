@@ -1,6 +1,6 @@
 import {Metadata} from "next";
-import FolderTopBar from "@/components/app/your-files/folders/top-bar";
-import FolderGrid from "@/components/app/your-files/folders/foldergrid";
+import FolderTopBar from "@/components/ui/app/your-files/folders/top-bar";
+import FolderGrid from "@/components/ui/app/your-files/folders/foldergrid";
 import {auth} from "@/auth";
 
 export const metadata:Metadata = {

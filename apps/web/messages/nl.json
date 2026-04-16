@@ -1175,7 +1175,10 @@
         "add_resources": "Resources",
         "add_details": "Details",
         "add_set": "Linked sets",
-        "due_date": "Due date"
+        "due_date": "Due date",
+        "not_started": "to do",
+        "doing": "doing",
+        "done": "done"
       }
     }
 

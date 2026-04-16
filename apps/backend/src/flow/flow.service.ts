@@ -67,6 +67,7 @@ export class FlowService {
       id: row.id,
       course_id: row.flowcourse_id,
       title: row.title,
+      order_index: row.order_index ?? 0,
       description: row.description ?? '',
       priority: row.priority ?? 'no_priority',
       status: row.status ?? 'not_started',
@@ -117,7 +118,10 @@ export class FlowService {
 
     if (!includeRows) return base;
 
-    const mappedRows = await Promise.all(rows.map((r) => this.mapRow(r)));
+    const sortedRows = [...rows].sort(
+      (a, b) => (a.order_index ?? 0) - (b.order_index ?? 0),
+    );
+    const mappedRows = await Promise.all(sortedRows.map((r) => this.mapRow(r)));
     return { ...base, rows: mappedRows } satisfies FullFlowCourseResponse;
   }
 
@@ -397,10 +401,20 @@ export class FlowService {
 
     const id = crypto.randomUUID();
 
+    // Auto-calculate order_index if not provided
+    let orderIndex = body.order_index;
+    if (orderIndex === undefined) {
+      const existingRows = await this.db.query.flowrows.findMany({
+        where: eq(flowrows.flowcourse_id, body.course_id),
+      });
+      orderIndex = existingRows.length;
+    }
+
     await this.db.insert(flowrows).values({
       id,
       flowcourse_id: body.course_id,
       title: body.title,
+      order_index: orderIndex,
       description: body.description ?? null,
       priority: (body.priority ??
         'no_priority') as (typeof priorityEnum.enumValues)[number],
@@ -448,6 +462,9 @@ export class FlowService {
       .update(flowrows)
       .set({
         ...(body.title !== undefined && { title: body.title }),
+        ...(body.order_index !== undefined && {
+          order_index: body.order_index,
+        }),
         ...(body.description !== undefined && {
           description: body.description,
         }),

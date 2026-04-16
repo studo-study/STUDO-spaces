@@ -1,6 +1,6 @@
 import {Metadata} from "next";
 import {getTranslations} from "next-intl/server";
-import CourseItem from "@/components/app/your-files/courses/courseItem";
+import CourseItem from "@/components/ui/app/your-files/courses/courseItem";
 import {auth} from "@/auth";
 
 export const metadata: Metadata = {

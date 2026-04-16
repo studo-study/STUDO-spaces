@@ -1,6 +1,6 @@
 import {getTranslations} from "next-intl/server";
 import {auth} from "@/auth";
-import ProfileHeader from "@/components/public/profile/ProfileHeader";
+import ProfileHeader from "@/components/ui/public/profile/ProfileHeader";
 
 interface viewProps {
     id: string;
