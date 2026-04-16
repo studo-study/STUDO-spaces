@@ -1,6 +1,6 @@
 import {Metadata} from "next";
-import VsHeader from "@/components/app/create-visualset/Vsheader";
-import CreateVisualSetForm from "@/components/app/create-visualset/CreateVisualset";
+import VsHeader from "@/components/ui/app/create-visualset/Vsheader";
+import CreateVisualSetForm from "@/components/ui/app/create-visualset/CreateVisualset";
 
 export const metadata:Metadata = {
     title:"Create Visualset | Studo"

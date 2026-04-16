@@ -1,6 +1,7 @@
-import FlowHeader from "@/components/app/flow/overview/FlowHeader";
-import PageContainer from "@/components/design_system/page/PageContainer";
-import FlowGrid from "@/components/app/flow/overview/FlowGrid";
+import FlowHeader from "@/components/ui/app/flow/overview/FlowHeader";
+import PageContainer from "@/components/ui/design_system/page/PageContainer";
+import FlowGrid from "@/components/ui/app/flow/overview/FlowGrid";
+import FlowStoreInitializer from "@/components/providers/FlowStoreInitializer";
 import {auth} from "@/auth";
 
 export default async function FlowPage() {
@@ -20,8 +21,9 @@ export default async function FlowPage() {
 
     return (
         <PageContainer>
+            <FlowStoreInitializer boards={data} />
             <FlowHeader />
-            <FlowGrid initialBoards={data} />
+            <FlowGrid />
         </PageContainer>
     );
 }

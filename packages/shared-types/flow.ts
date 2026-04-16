@@ -93,6 +93,7 @@ export interface FullFlowCourseResponse extends FlowCourseResponse {
 export interface CreateFlowRow {
     course_id: string;
     title: string;
+    order_index?: number;
     description?: string;
     priority?: Priority;
     status: Status;
@@ -105,6 +106,7 @@ export interface CreateFlowRow {
 
 export interface UpdateFlowRow {
     title?: string;
+    order_index?: number;
     description?: string;
     priority?: Priority;
     status?: Status;
@@ -117,6 +119,7 @@ export interface FlowRowResponse {
     id: string;
     course_id: string;
     title: string;
+    order_index: number;
     description: string;
     priority: string;
     course_link?: string;
