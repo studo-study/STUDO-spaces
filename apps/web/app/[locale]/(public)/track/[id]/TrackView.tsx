@@ -4,8 +4,8 @@ import {useParams} from "next/navigation";
 import {useEffect, useState} from "react";
 import {ProfileResponseDto} from "@/types/types";
 import {useTranslations} from "next-intl";
-import Tracks from "@/components/public/track/Tracks";
-import Communities from "@/components/public/track/Communities";
+import Tracks from "@/components/ui/public/track/Tracks";
+import Communities from "@/components/ui/public/track/Communities";
 
 
 export default function TrackView() {

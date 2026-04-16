@@ -1,5 +1,5 @@
 import {Metadata} from "next";
-import Grid from "@/components/app/classrooms/ClassroomsGrid";
+import Grid from "@/components/ui/app/classrooms/ClassroomsGrid";
 
 export const metadata: Metadata = {
     title: "Classrooms | Studo"

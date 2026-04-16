@@ -2,7 +2,7 @@
 import {Metadata} from "next";
 import {BsGridFill} from "react-icons/bs";
 import {HiOutlineViewList} from "react-icons/hi";
-import Grid from "@/components/app/your-files/sets/grid";
+import Grid from "@/components/ui/app/your-files/sets/grid";
 import {auth} from "@/auth";
 
 export const metadata:Metadata = {

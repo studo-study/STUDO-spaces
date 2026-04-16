@@ -1,16 +1,9 @@
-import CoursePageHeader from "@/components/app/flow/page/CoursePage/CoursePageHeader";
-import {getTranslations} from "next-intl/server";
 import {auth} from "@/auth";
-import CourseTable from "@/components/app/flow/page/CoursePage/overview_types/table/CourseTable";
-import {FlowCourseResponse} from "@studo/types";
-import CourseItemProgress from "@/components/app/flow/page/overview/CourseItemProgress";
-import StateProvider from "@/components/app/flow/page/CoursePage/StateProvider";
+import FlowStoreInitializer from "@/components/providers/FlowStoreInitializer";
+import CoursePageContent from "@/components/ui/app/flow/page/CoursePage/CoursePageContent";
 
-
-export default async function Page({params,}: { params: Promise<{ id: string, course_id: string }>; }) {
+export default async function Page({params}: { params: Promise<{ id: string, course_id: string }>; }) {
     const {course_id} = await params;
-    console.log(course_id);
-    const t = await getTranslations("flow");
     const session = await auth();
     const token = session?.accessToken;
     const res = await fetch(
@@ -18,11 +11,13 @@ export default async function Page({params,}: { params: Promise<{ id: string, co
         {
             headers: {Authorization: `Bearer ${token}`},
             method: "GET",
-            next: {revalidate: 60},
         }
     );
 
     const data = await res.json();
-    console.log(data);
-    return (<StateProvider data={data}/>)
+
+    return (<>
+        <FlowStoreInitializer course={data}/>
+        <CoursePageContent/>
+    </>)
 }

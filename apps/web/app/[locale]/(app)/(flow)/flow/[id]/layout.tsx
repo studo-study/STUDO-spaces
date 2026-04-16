@@ -1,8 +1,8 @@
-import PageContainer from "@/components/design_system/page/PageContainer";
+import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import {ReactNode} from "react";
 import {auth} from "@/auth";
-import FlowBoardProvider from "@/components/providers/FlowBoardProvider";
-import BoardHeader from "@/components/app/flow/page/layout/BoardHeader";
+import FlowStoreInitializer from "@/components/providers/FlowStoreInitializer";
+import BoardHeader from "@/components/ui/app/flow/page/layout/BoardHeader";
 
 export default async function FlowOverviewLayout({ params, children }: {
     params: Promise<{ id: string }>;
@@ -27,16 +27,16 @@ export default async function FlowOverviewLayout({ params, children }: {
         throw new Error(`Failed to fetch flowboard: ${res.status}`);
     }
     const data = await res.json();
-    console.log("data: ", data)
+
     return (
-        <FlowBoardProvider data={data}>
+        <>
+            <FlowStoreInitializer board={data} />
             <PageContainer>
-              <BoardHeader data={data}/>
+                <BoardHeader />
                 <div className="w-full min-h-full">
                     {children}
                 </div>
-
             </PageContainer>
-        </FlowBoardProvider>
+        </>
     );
 }

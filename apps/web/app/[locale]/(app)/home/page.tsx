@@ -2,12 +2,12 @@ import { useLocale, useTranslations } from "next-intl";
 import {Metadata} from "next";
 import {auth} from "@/auth";
 import { getTranslations, getLocale } from 'next-intl/server';
-import SectionHeader from "@/components/app/home/SectionHeader";
-import Stats from "@/components/app/home/StatItem";
-import SetItem from "@/components/app/home/SetItem";
-import CourseCard from "@/components/app/home/CourseCard";
-import ActivityItem from "@/components/app/home/ActivityItem";
-import CTABlock from "@/components/app/home/CTABlock";
+import SectionHeader from "@/components/ui/app/home/SectionHeader";
+import Stats from "@/components/ui/app/home/StatItem";
+import SetItem from "@/components/ui/app/home/SetItem";
+import CourseCard from "@/components/ui/app/home/CourseCard";
+import ActivityItem from "@/components/ui/app/home/ActivityItem";
+import CTABlock from "@/components/ui/app/home/CTABlock";
 
 
 

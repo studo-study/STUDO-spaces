@@ -3,7 +3,7 @@ import {useState} from "react";
 import {useLocale, useTranslations} from "next-intl";
 import {useRouter, useSearchParams} from "next/navigation";
 import {signIn} from "next-auth/react";
-import AnimateOnMount from "@/components/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import { db } from '@/lib/firebase/firebase';
 import {collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc} from 'firebase/firestore';
 import {navigate} from "next/dist/client/components/segment-cache/navigation";

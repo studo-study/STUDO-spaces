@@ -1,6 +1,6 @@
 import {Metadata} from "next";
 import {useTranslations} from "next-intl";
-import AdminSearch from "@/components/app/admin/search/AdminSearch";
+import AdminSearch from "@/components/ui/app/admin/search/AdminSearch";
 
 export const metadata:Metadata = {
     title:"Admin Dashboard | Studo"
