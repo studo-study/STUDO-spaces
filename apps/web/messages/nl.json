@@ -846,6 +846,8 @@
     ]
   },
   "home": {
+    "jump-back-in_title" : "Jump back in",
+    "pinned_title" : "Pinned",
     "stats": "Statistics",
     "Streak": "Streak",
     "days": "days",

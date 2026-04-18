@@ -1,10 +1,15 @@
-type PageContainerProps = React.HTMLProps<HTMLDivElement>
+interface PageContainerProps extends React.HTMLProps<HTMLDivElement> {
+    gap?: number;
+}
+
 const PageContainer = (props: PageContainerProps) => {
 
-    const {children} = props;
-    return (<div className=" relative w-full min-h-full h-full py-15 flex flex-col gap-10 scroll-hidden">
-        <section className={"w-full h-fit"}>{children}
-        </section>
+    const {gap, children} = props;
+    return (<div className={'w-full h-full flex flex-col items-center justify-center  py-15 scroll-hidden'}>
+        <div className={` relative w-full max-w-4xl min-h-full h-full ${gap ? "gap-" + gap : "gap-5"} flex items-center flex-col scroll-hidden`}>
+            {children}
+
+        </div>
     </div>)
 
 }
