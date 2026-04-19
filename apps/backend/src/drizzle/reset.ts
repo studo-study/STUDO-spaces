@@ -30,7 +30,13 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error('Reset failed:', err);
-  process.exit(1);
-});
+main()
+  .then(async () => {
+    console.log('Reset complete.');
+    await sql.end();
+  })
+  .catch(async (err) => {
+    console.error('Reset failed:', err);
+    await sql.end();
+    process.exit(1);
+  });

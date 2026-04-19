@@ -109,7 +109,7 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
                             transitionDelay: AddIsOpen ? `${index * 50}ms` : "0ms",
                         }}
                     >
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-lg
+                        <div className={`flex items-center justify-center min-w-8 h-8 rounded-lg
                                           bg-gradient-to-br ${item.color}
                                           shadow-md shadow-black/10
                                           group-hover:scale-110 group-hover:shadow-lg

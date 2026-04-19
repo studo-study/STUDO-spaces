@@ -1,4 +1,6 @@
 @import url('https://use.typekit.net/fmn3jvz.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 @import "tailwindcss";
 body {
     background-color: rgb(239, 246, 255); /* light mode: bg-blue-50 */
@@ -48,6 +50,8 @@ body::-webkit-scrollbar {
     --font-sfpro: 'SF Pro Display', sans-serif;
     --font-sigurd: "sigurd-variable", sans-serif;
     --font-atrament: atrament-web, sans-serif;
+    --font-roboto: "Roboto Mono", monospace;
+    --font-georgia: "georgia", sans-serif;
     --color-studogreen: #8bcca3;
     --color-studoblue: #4f83ff;
     --color-studodarkblue: #2a3a42;

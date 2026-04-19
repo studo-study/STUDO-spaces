@@ -77,8 +77,8 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
                         className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb">
                         {burgerOpen ? <TbLayoutSidebarLeftCollapse className={"dark:opacity-30"}/> : <HiMenuAlt4 className={"dark:opacity-30"}/>}
                     </button>
-                    <Link href={"/home"} title={SpecialeDagTitel()} className={`font-akira text-2xl truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
-                       STUDO
+                    <Link href={"/home"} title={SpecialeDagTitel()} className={`font-georgia text-3xl font-bold truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
+                       Studo
                     </Link>
                     {premium &&
 						<Link href={"/select"} className={"hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-white backdrop-blur-2xl text-studodarkblue"}>upgrade to select</Link>}

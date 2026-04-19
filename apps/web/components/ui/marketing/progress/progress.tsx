@@ -1,15 +1,20 @@
 interface ProgressProps {
     length: number;
     progress: number;
+    height?: number;
 }
-export function Progress({length, progress}: ProgressProps) {
+
+export function Progress({length, progress, height = 56}: ProgressProps) {
     const radius = 42;
     const circumference = 2 * Math.PI * radius;
-    const prog: number = Math.min(100, Math.floor((progress / (length)) * 100));
+    const prog: number = Math.min(100, Math.floor((progress / length) * 100));
     const offset: number = circumference - (prog / 100) * circumference;
 
     return (
-        <div className="h-14 w-14 rounded-full flex justify-center items-center relative overflow-hidden">
+        <div
+            className="rounded-full flex justify-center items-center relative overflow-hidden"
+            style={{height, width: height}}
+        >
             <svg
                 className="absolute inset-0 w-full h-full"
                 viewBox="0 0 110 110"
@@ -41,9 +46,12 @@ export function Progress({length, progress}: ProgressProps) {
                 />
             </svg>
 
-            <span className="relative z-10 text-xs font-bold text-gray-700 dark:text-gray-200">
-        {prog}%
-      </span>
+            <span
+                className="relative z-10 font-bold text-gray-700 dark:text-gray-200"
+                style={{fontSize: height * 0.22}}
+            >
+                {prog}%
+            </span>
         </div>
     );
 }
@@ -51,6 +59,7 @@ export function Progress({length, progress}: ProgressProps) {
 interface strokeProps {
     prog: number;
 }
+
 function getStrokeColor({prog}: strokeProps) {
     if (prog === 100) return 'stroke-emerald-500';
     if (prog >= 95) return 'stroke-green-500';

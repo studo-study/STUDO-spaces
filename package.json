@@ -9,7 +9,11 @@
     "dev:web": "pnpm --filter @studo/web dev",
     "dev:api": "pnpm --filter @studo/backend start:dev",
     "build:web": "pnpm --filter @studo/web build",
-    "build:api": "pnpm --filter @studo/backend build"
+    "build:api": "pnpm --filter @studo/backend build",
+    "db:generate": "pnpm --filter @studo/backend db:generate",
+    "db:migrate": "pnpm --filter @studo/backend db:migrate",
+    "db:seed": "pnpm --filter @studo/backend db:seed",
+    "db:reset": "pnpm --filter @studo/backend db:reset"
   },
   "devDependencies": {
     "turbo": "^2.5.0"
