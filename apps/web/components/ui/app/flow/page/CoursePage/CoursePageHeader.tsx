@@ -103,6 +103,7 @@ const CoursePageHeader = () => {
             >
                 <Chip
                     label={name}
+                    onPress={() => {data.resource ? window.open(data.resource) : ""}}
                     iconLeft={icon}
                 />
             </BaseTooltip>}
