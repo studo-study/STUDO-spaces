@@ -94,6 +94,7 @@ export interface Stats {
 }
 
 export interface LastStudied {
+    set_id: string;
     id: string;
     last_studied: string;
     title: string;

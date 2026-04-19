@@ -43,6 +43,15 @@ body::-webkit-scrollbar {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'georgia';
+    src: url('../public/fonts/georgia/georgia.woff') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
 
 @theme {
     --font-akira: akira, sans-serif;

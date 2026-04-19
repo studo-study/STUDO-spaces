@@ -5,6 +5,7 @@ import {useTranslations} from "next-intl";
 import {FaArrowRight} from "react-icons/fa";
 import Image from "next/image";
 import {Progress} from "@/components/ui/marketing/progress/progress";
+import {useCallback} from "react";
 
 interface LastTenItemProps {
     data: LastStudied;
@@ -12,6 +13,7 @@ interface LastTenItemProps {
 
 const LastTenItem = (props: LastTenItemProps) => {
     const {data} = props;
+    const navigateTO = () => {}
     const t = useTranslations("home")
     return ( <Container className="min-w-110 w-110 px-10 justify-center" >
         <div className="absolute -z-10 w-full h-full bg-linear-0 from-blue-400/5 to-transparent  left-0"/>

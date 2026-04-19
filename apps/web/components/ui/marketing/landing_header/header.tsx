@@ -134,7 +134,7 @@ export default function LandingHeader() {
                             <Image src={"/logo/hat.svg"} alt={"hat"} height={0} width={0} className={"dark:block hidden w-13"}/>
                             <Image src={"/logo/hat_light.svg"} alt={"hat"} height={0} width={0} className={"dark:hidden w-13"}/>
                             <span
-                                className={`relative z-10 bg-gradient-to-r ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
+                                className={`relative z-10 bg-gradient-to-r font-bold ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
                             Studo
                           </span>
 
