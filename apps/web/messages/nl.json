@@ -1033,13 +1033,14 @@
       "A few more hours of focus before the break... hang in there."
     ],
     "15": [
-      "Goedeavond {name}",
-      "Avond shift geactiveerd",
+      "Goedemiddag {name}",
+      "Goed bezig, blijven volhouden",
       "You got this!"
     ],
     "19": [
       "Goedeavond {name}",
       "Welkom terug",
+      "Avond shift geactiveerd",
       "Let's Go Champ!"
     ],
     "22": [
@@ -1050,11 +1051,12 @@
     "0": [
       "Middernacht is geweest en nog steeds aan het knallen!",
       "Blijven gaan!",
-      "Middernacht en nog altijd goed bezig! (officieel een vampier btw)"
+      "Middernacht en nog altijd goed bezig!"
     ]
   },
   "home": {
     "jump-back-in_title": "Jump back in",
+    "courses_overview_title": "Your Courses",
     "pinned_title": "Pinned",
     "stats": "Statistics",
     "Streak": "Streak",
@@ -1072,7 +1074,6 @@
     "Continue": "Sets",
     "checkAll": "all sets",
     "studied": "studied",
-    "courses": "Courses",
     "checkCourse": "all courses",
     "act": "Friends",
     "CheckAct": "all activity",
@@ -1091,7 +1092,13 @@
     "set_studied": "set created",
     "sets_studied": "sets created",
     "lets_go": "Let's start here",
-    "set_overview_title": "Your Sets"
+    "set_overview_title": "Your Sets",
+    "all_courses": "All courses",
+    "all_sets": "All sets",
+    "fallback": {
+      "nothing_title": "No sets yet",
+      "nothing_paragraph": "You haven't created any sets"
+    }
   },
   "y_f": {
     "title": "Your files",

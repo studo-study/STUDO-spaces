@@ -109,7 +109,7 @@ export default function RegisterPage() {
         <div className={"w-full h-full"}>
             <div className="flex relative min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 sm:px-6">
                 <div className="absolute inset-0 hidden md:flex select-none pointer-events-none z-0">
-                    <HeroBackground color="to-emerald-400/10" />
+                    <HeroBackground color="to-emerald-400/10" paused={false} />
                 </div>
 
                 <Link href={"/welcome"}

@@ -8,6 +8,8 @@ import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import JumpBackIn from "@/components/ui/app/home/jump-back-in/JumpBackIn";
 import QuickStats from "@/components/ui/app/home/quick_stats/QuickStats";
 import YourSets from "@/components/ui/app/home/YourSets/YourSets";
+import Courses from "@/components/ui/app/home/Courses/Courses";
+import EmptyFallback from "@/components/ui/app/home/EmptyFallback/EmptyFallback";
 
 
 export const metadata: Metadata = {
@@ -31,7 +33,7 @@ export default async function HomePage() {
 
     console.log(data);
     const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? '');
-
+    const split = data?.lastTen.toSpliced(3)
 
 
 
@@ -45,22 +47,23 @@ export default async function HomePage() {
                     <span className="dark:text-studogrey text-gray-400">{t("ready")}</span>
                 </div>
             </section>
-            <div className={"w-full grid grid-cols-1 gap-10"}>
+            <div className={"w-full grid grid-cols-1 gap-10 pb-40"}>
                 <QuickStats stats={data?.stats}/>
-                <JumpBackIn items={data?.lastTen.splice(0, 2) ?? []} />
-                <YourSets/>
+
+                {data?.lastTen && <JumpBackIn items={split ?? []} />}
+                {data?.lastTen.length > 0 && <YourSets items={data?.lastTen} />}
+                {data?.courses.length > 0 && <Courses items={data?.courses}/>}
+                {data?.courses.length === 0 && data?.lastTen.length === 0  && <EmptyFallback/>}
             </div>
 
-
-            {/* Courses + Activity */}
-
-
-            <div className="fixed bottom-10 w-full h-fit flex items-end justify-center">
+            {data?.courses.length === 0 && data?.lastTen.length === 0  &&
+            <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
                 <AnimateOnMount delay={2000}>
                     <CTABlock t={t}/>
                 </AnimateOnMount>
 
-            </div>
+            </div>}
+           <div className={"fixed z-10 bottom-0 h-25 w-2/3 bg-linear-0 dark:from-bg-dark from-bg-white to-transparent"}/>
         </PageContainer>
     );
 }
