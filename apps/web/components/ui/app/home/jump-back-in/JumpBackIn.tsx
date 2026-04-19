@@ -1,5 +1,4 @@
 "use client"
-
 import SectionHeader from "@/components/ui/design_system/section/SectionHeader"
 import { useTranslations } from "next-intl"
 import { MdReplay } from "react-icons/md"

@@ -8,8 +8,8 @@ export default function CTABlock({ t }: { t: ReturnType<typeof useTranslations> 
         <div className="p-6 rounded-3xl shadow-2xl bg-gradient-to-br dark:from-emerald-500/10 dark:to-emerald-400/10 from-emerald-500/50 to-teal-500/50 border border-studoborder/30">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">{t("ready")}</h3>
-                    <p className="dark:text-studogrey font-mono text-xs text-studodarkblue/40">{t("create_block")}</p>
+                    <h3 className="text-lg font-semibold text-white mb-1">{t("lets_go")}</h3>
+                    <p className="dark:text-studogrey text-sm text-studodarkblue/40">{t("create_block")}</p>
                 </div>
                 <div className="flex gap-3">
                     <Link

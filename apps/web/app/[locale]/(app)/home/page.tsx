@@ -7,6 +7,7 @@ import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import JumpBackIn from "@/components/ui/app/home/jump-back-in/JumpBackIn";
 import QuickStats from "@/components/ui/app/home/quick_stats/QuickStats";
+import YourSets from "@/components/ui/app/home/YourSets/YourSets";
 
 
 export const metadata: Metadata = {
@@ -32,46 +33,6 @@ export default async function HomePage() {
     const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? '');
 
 
-    const STATS_CONFIG = [
-        {
-            color: "dark:from-orange-500/20 dark:to-orange-600/20 from-orange-400 to-orange-500",
-            icon: "/icons/streak.svg",
-            stat: session?.user?.streak_count,
-            measurement: "days",
-            label: "Streak",
-            extra: "",
-            delay: 0
-        },
-        {
-            color: "dark:from-purple-500/20 dark:to-purple-400/20 from-purple-500 to-purple-500 ",
-            icon: "/icons/studyset.svg",
-            stat: data?.stats?.totalCards,
-            measurement: "cards",
-            label: "totCards",
-            extra: "",
-            delay: 50,
-            invert: true
-        },
-        {
-            color: "dark:from-blue-500/20 dark:to-blue-500/20 from-blue-400 to-blue-500",
-            icon: "/icons/clock.svg",
-            stat: data?.stats?.timeLearned,
-            measurement: "min",
-            label: "tmStd",
-            extra: "week",
-            delay: 100,
-            invert: true
-        },
-        {
-            color: "dark:from-emerald-500/20 dark:to-emerald-600/20 from-emerald-400 to-emerald-500",
-            iconComponent: true,
-            stat: data?.stats?.cardsLearned,
-            measurement: "cards",
-            label: "mastered",
-            extra: "",
-            delay: 150
-        },
-    ]
 
 
     return (
@@ -81,12 +42,13 @@ export default async function HomePage() {
                     <span className="font-georgia font-bold dark:text-white text-studodarkblue text-2xl">
                         {welcome}
                     </span>
-                    <span className="dark:text-studogrey font-mono text-gray-400">{t("ready")}</span>
+                    <span className="dark:text-studogrey text-gray-400">{t("ready")}</span>
                 </div>
             </section>
-            <div className={"w-full grid grid-cols-1 gap-7"}>
+            <div className={"w-full grid grid-cols-1 gap-10"}>
                 <QuickStats stats={data?.stats}/>
                 <JumpBackIn items={data?.lastTen.splice(0, 2) ?? []} />
+                <YourSets/>
             </div>
 
 

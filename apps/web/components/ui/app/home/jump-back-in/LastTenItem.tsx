@@ -21,7 +21,7 @@ const LastTenItem = (props: LastTenItemProps) => {
                     <Image alt="settype" src={data.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg"} width={5} height={5} className={"w-5 dark:invert dark:brightness-0"}/>
                     <span className={"text-xl font-bold dark:text-white truncate overflow-hidden text-studodarkblue"}>{data.title}</span>
                 </div>
-                <div className={"flex flex-row gap-2 pb-4 text-xs font-mono dark:text-white opacity-50"}>
+                <div className={"flex flex-row gap-2 pb-4 text-xs dark:text-white opacity-50"}>
                     <span>{t("last_studied")} - {new Date(data.last_studied).toLocaleDateString()}</span>
                 </div>
                 <BaseButton label={t("continue")} bg={"bg-studoblue"} iconRight={<FaArrowRight />}/>

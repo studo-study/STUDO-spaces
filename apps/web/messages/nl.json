@@ -881,7 +881,9 @@
     "minutes": "minutes",
     "card": "card seen",
     "set_studied": "set created",
-    "sets_studied": "sets created"
+    "sets_studied": "sets created",
+    "lets_go": "Let's start here",
+    "set_overview_title": "Your Sets"
   },
   "y_f" : {
     "title": "Your files",
