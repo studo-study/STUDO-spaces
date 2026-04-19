@@ -1,7 +1,6 @@
 "use client"
 
 import SectionHeader from "@/components/ui/design_system/section/SectionHeader"
-import Container from "@/components/ui/design_system/container/Container"
 import { useTranslations } from "next-intl"
 import { MdReplay } from "react-icons/md"
 import { IoChevronBack, IoChevronForward } from "react-icons/io5"
@@ -73,7 +72,7 @@ const JumpBackIn = ({ items }: JumpBackInProps) => {
         <section className="flex flex-col gap-5 overflow-visible">
             <SectionHeader sectionIcon={<MdReplay />} title={t("jump-back-in_title")} />
 
-            <div className="relative w-full h-70 flex flex-row gap-2 overflow-visible">
+            <div className="relative w-full h-50 flex flex-row gap-2 overflow-visible">
                 {!isAtStart && (
                     <>
                         <div className={`${FADE_BASE} left-0 bg-linear-90`} />

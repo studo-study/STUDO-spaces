@@ -6,6 +6,7 @@ import CTABlock from "@/components/ui/app/home/CTABlock";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import JumpBackIn from "@/components/ui/app/home/jump-back-in/JumpBackIn";
+import QuickStats from "@/components/ui/app/home/quick_stats/QuickStats";
 
 
 export const metadata: Metadata = {
@@ -75,7 +76,7 @@ export default async function HomePage() {
 
     return (
         <PageContainer>
-            <section className="w-full h-fit ">
+            <section className="w-full h-fit mb-3">
                 <div className="w-full h-fit flex flex-col gap-2 ">
                     <span className="font-georgia font-bold dark:text-white text-studodarkblue text-2xl">
                         {welcome}
@@ -83,7 +84,8 @@ export default async function HomePage() {
                     <span className="dark:text-studogrey font-mono text-gray-400">{t("ready")}</span>
                 </div>
             </section>
-            <div className={"w-full grid grid-cols-1 gap-5"}>
+            <div className={"w-full grid grid-cols-1 gap-7"}>
+                <QuickStats stats={data?.stats}/>
                 <JumpBackIn items={data?.lastTen.splice(0, 2) ?? []} />
             </div>
 

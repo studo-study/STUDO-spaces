@@ -9,18 +9,18 @@ export default function CTABlock({ t }: { t: ReturnType<typeof useTranslations> 
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div>
                     <h3 className="text-lg font-semibold text-white mb-1">{t("ready")}</h3>
-                    <p className="dark:text-studogrey text-studodarkblue/40 text-sm">{t("create_block")}</p>
+                    <p className="dark:text-studogrey font-mono text-xs text-studodarkblue/40">{t("create_block")}</p>
                 </div>
                 <div className="flex gap-3">
                     <Link
                         href="/create-studoset"
-                        className="px-5 py-2.5 min-w-30 rounded-2xl text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium hover:opacity-90 transition-opacity flex items-center gap-2"
+                        className="px-5 py-2.5 min-w-30 rounded-full text-sm font-bold bg-emerald-400 text-white hover:opacity-90 transition-opacity flex items-center gap-2"
                     >
                         <GoPlus /> {t("create_ss")}
                     </Link>
                     <Link
                         href="/create-visualset"
-                        className="px-5 py-2.5 min-w-30 text-sm flex flex-row items-center gap-2 rounded-2xl dark:bg-studogrey/20 bg-white/40 text-studodarkblue dark:text-white font-medium dark:hover:bg-studogrey/30 hover:bg-white/50 transition-colors border border-studogrey/30"
+                        className="px-5 py-2.5 min-w-30 rounded-full text-sm bg-blue-500 font-bold  text-white hover:opacity-90 transition-opacity flex items-center gap-2"
                     >
                         <GoPlus /> {t("create_vs")}
                     </Link>
