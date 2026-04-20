@@ -4,7 +4,7 @@ import CourseItem from "@/components/ui/app/your-files/courses/courseItem";
 import {auth} from "@/auth";
 
 export const metadata: Metadata = {
-    title: "Courses | Studo"
+    title: "courses | Studo"
 }
 
 export default async function Page({params}: {

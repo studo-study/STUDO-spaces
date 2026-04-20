@@ -19,8 +19,8 @@ const FlowBoardOverviewHeader = () => {
 
     const {Icon, color} = getFlowIcon(data.icon);
 
-    return (<div className="flex flex-col w-full gap-5">
-        <div className={"w-full flex gap-3 justify-between items-center"}>
+    return (<div className="flex flex-col min-w-full gap-5">
+        <div className={"min-w-full flex gap-3 justify-between items-center"}>
             <Link href={"/flow"}
                   className={`bg-${color}-400/20 text-${color}-500 min-w-12 min-h-12 rounded-xl flex items-center justify-center`}>
                 <Icon size={25}/>

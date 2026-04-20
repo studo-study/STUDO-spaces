@@ -33,7 +33,7 @@ const CoursePageHeader = () => {
         setIsOpen(prev => !prev);
     }
 
-    return (<div className={"w-full h-25 flex flex-col gap-3"}>
+    return (<div className={"min-w-full h-25 flex flex-col gap-3"}>
         <div className={"flex flex-row justify-between"}>
             <div className={"relative"}>
                 <div onClick={openDropDown}

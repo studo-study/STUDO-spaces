@@ -6,6 +6,7 @@ import {FaArrowRight} from "react-icons/fa";
 import Image from "next/image";
 import {Progress} from "@/components/ui/marketing/progress/progress";
 import {useCallback} from "react";
+import Link from "next/link";
 
 interface LastTenItemProps {
     data: LastStudied;
@@ -26,7 +27,9 @@ const LastTenItem = (props: LastTenItemProps) => {
                 <div className={"flex flex-row gap-2 pb-4 text-xs dark:text-white opacity-50"}>
                     <span>{t("last_studied")} - {new Date(data.last_studied).toLocaleDateString()}</span>
                 </div>
+                <Link href={data.type === "studyset" ? "/studoset/" + data.set_id : "/visualset/" + data.set_id} >
                 <BaseButton label={t("continue")} bg={"bg-studoblue"} iconRight={<FaArrowRight />}/>
+                </Link>
             </div>
             <div className={"w-1/3 flex flex-col gap-2 items-center justify-center"}>
                 <Progress height={80} length={data.length} progress={data.progress}/>
