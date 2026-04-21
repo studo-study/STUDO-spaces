@@ -21,9 +21,9 @@ export default function ClassroomsHeader() {
 
 
     return (
-        <div className={"w-full h-20 flex flex-col justify-between items-center max-h-100"}>
+        <div className={"w-full h-15 flex flex-col justify-between items-center max-h-100"}>
             <div className={"w-full h-fit flex items-center justify-between"}>
-                <span className={"w-full font-bold dark:text-white text-3xl"}>{t("title")}</span>
+                <span className={"w-full font-bold dark:text-white text-2xl font-georgia"}>{t("title")}</span>
                 <TriggerClassroom
                     togglePopUp={togglePopUp}
                 />

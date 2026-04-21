@@ -1109,6 +1109,7 @@
   },
   "y_f": {
     "title": "Your files",
+    "subtitle": "Manage & organize your materials",
     "sets": "Sets",
     "folders": "Folders",
     "courses": "Courses",

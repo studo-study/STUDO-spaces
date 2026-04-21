@@ -48,7 +48,7 @@ const CoursePageHeader = () => {
                     <div className={`
                     absolute top-full left-0 mt-2 z-[9999] min-w-[180px] rounded-xl
                     bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl
-                    border border-white/50 dark:border-white/10
+                    border border-white/50 dark:border-white/10 overflow-hidden
                     shadow-xl shadow-black/10 dark:shadow-black/30
                     transition-all duration-200 ease-out origin-top
                     ${isOpen
