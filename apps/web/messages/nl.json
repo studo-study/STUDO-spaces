@@ -10,7 +10,7 @@
     "or": "of",
     "stats": "Stats",
     "reports": "Rapporten",
-    "users":"Users",
+    "users": "Users",
     "search": "Zoeken",
     "recently_usrs": "Recent geregistreerde users",
     "most_pp_set": "Meest populaire sets",
@@ -50,13 +50,16 @@
     "footer": {
       "footerQuote": "Minder Zweten, Meer Weten!",
       "aboutTitle": "over studo",
-      "selectTitle": "Select",
+      "selectTitle": "Products",
       "setTitle": "Sets",
+      "supportTitle": "Support",
       "ss": "studosets",
       "vs": "visualsets",
       "aboutBlock1": "Over Ons",
       "aboutBlock2": "Privacy",
       "aboutBlock3": "Gebruiksvoorwaarden",
+      "aboutBlock4": "Contact",
+      "aboutBlog": "Blog",
       "ssBlock1": "Creëer Studoset",
       "ssBlock2": "Studosets",
       "vsBlock1": "Creëer Visualset",
@@ -65,13 +68,18 @@
       "loveBlue": "Gebouwd met \uD83D\uDC99 met React",
       "Version": "Versie",
       "rights": "STUDO inc. Alle Rechten Voorbehouden.",
-      "select": "Studo Select",
-      "edu": "Studo for Education",
+      "select": "STUDO select",
+      "pricing": "Pricing",
+      "edu": "STUDO for Education",
+      "supportFaq": "FAQ",
+      "supportCenter": "Support",
+      "supportContact": "Contact",
       "GDPR": "AVG",
       "gdpr": "GDPR",
       "compliant": "compliant",
       "privacy": "Privacy",
-      "first": "first"
+      "first": "first",
+      "made_in_ghent": "Gemaakt in Gent"
     },
     "welcome": {
       "CreateCustom": "Maak je eigen sets",
@@ -93,11 +101,11 @@
       "Speedy": "Tijdstrijd",
       "Identify": "Spotten",
       "Point": "Aanwijzen",
-      "block1": "Van slordig geschreven notities tot snelle schetsen: maak er interactieve flashcards, quizzes en visuele studysets van. STUDO houdt het simpel en snel — minder gedoe, meer leren.",
+      "block1": "Van slordig geschreven notities tot snelle schetsen: maak er interactieve flashcards, quizzes en visuele studysets van. STUDO houdt het simpel en snel, minder gedoe, meer leren.",
       "block2": "Hey, ik ben Charles. Voltijdstudent en creator van STUDO. Ik was het zat: apps vol paywalls, overbodige features en trage interfaces. Dus bouwde ik iets beters. Elke feature heeft een doel, niets zit in de weg.",
-      "block3": "Of het nu vocab, formules of complete hoofdstukken zijn — STUDO past zich aan jouw manier van leren aan. Slimme oefenmodes en herhalingen zorgen dat het blijft hangen. En binnenkort neem je alles mee in je pocket met onze iOS-app.",
+      "block3": "Of het nu vocab, formules of complete hoofdstukken zijn, STUDO past zich aan jouw manier van leren aan. Slimme oefenmodes en herhalingen zorgen dat het blijft hangen. En binnenkort neem je alles mee in je pocket met onze iOS-app.",
       "classroomFeatureTitle": "Leer samen in\njouw eigen ruimte",
-      "classroomBlock": "Of je nu in een officiële klas zit, studeert met vrienden of materiaal deelt met duizenden studenten — STUDO heeft een classroom voor elke situatie. Deel sets, volg voortgang en daag elkaar uit. Samen leren gaat gewoon beter.",
+      "classroomBlock": "Of je nu in een officiële klas zit, studeert met vrienden of materiaal deelt met duizenden studenten, STUDO heeft een classroom voor elke situatie. Deel sets, volg voortgang en daag elkaar uit. Samen leren gaat gewoon beter.",
       "classroomCTA": "Ontdek classrooms",
       "why": "Waarom STUDO?",
       "subtitle1": "Alles wat je nodig hebt om",
@@ -126,7 +134,7 @@
     },
     "visualsets": {
       "title_visualset": "Visueel leren,\npin voor pin",
-      "block1_visualset": "Met visualsets koppel je definities aan punten op een afbeelding — perfect voor anatomie, kaarten en diagrammen",
+      "block1_visualset": "Met visualsets koppel je definities aan punten op een afbeelding, perfect voor anatomie, kaarten en diagrammen",
       "block2_visualset": "Upload een afbeelding in plaats van tekst",
       "block3_visualset": "Elke pin is een term",
       "block4_visualset": "Koppel de juiste definitie aan elke pin",
@@ -137,14 +145,14 @@
       "title_ai": "AI bouwt je sets",
       "block1_ai": "* coming soon",
       "block2_ai": "Upload een woordenlijst, glossary of collegenotities en zet het om in een studoset",
-      "block3_ai": "Maak een foto van een pagina of diagram — AI detecteert de termen",
+      "block3_ai": "Maak een foto van een pagina of diagram, AI detecteert de termen",
       "block4_ai": "AI maakt er nette, direct bruikbare paren van",
       "block5_ai": "Je gegenereerde sets werken in alle modes"
     },
     "learn": {
       "title_learn": "Typ –\nHerhaal –\nOnthoud",
       "block1_learn": "Een interactieve mode die je blijft testen tot alles zit.",
-      "block2_learn": "Typ je antwoord — geen multiple choice",
+      "block2_learn": "Typ je antwoord, geen multiple choice",
       "block3_learn": "Twee keer goed = term unlocked",
       "block4_learn": "Train je geheugen door actief te leren",
       "try it out": "probeer het"
@@ -167,7 +175,7 @@
     },
     "identify": {
       "title_identify": "Herken de delen,\nsnap het geheel",
-      "block1_identify": "Typ de juiste term bij elke pin — ideaal voor anatomie, kaarten, diagrammen en meer",
+      "block1_identify": "Typ de juiste term bij elke pin, ideaal voor anatomie, kaarten, diagrammen en meer",
       "block2_identify": "Ga pin voor pin door",
       "block3_identify": "Typ de bijbehorende definitie",
       "block4_identify": "Gemiste pins komen later terug",
@@ -186,35 +194,28 @@
     "about-us": {
       "title": "Over ons",
       "lastUpdated": "Laatst geüpdatet: 24 februari 2026",
-
-      "intro1": "Hey. Wij zijn de developers achter STUDO — ook studenten. De app ontstond uit frustratie met bestaande studeertools: te veel onnodige features, te veel paywalls, en te weinig focus op wat effectief werkt.",
+      "intro1": "Hey. Wij zijn de developers achter STUDO, ook studenten. De app ontstond uit frustratie met bestaande studeertools: te veel onnodige features, te veel paywalls, en te weinig focus op wat effectief werkt.",
       "intro2": "We wilden iets clean, snel en zonder afleiding, dus bouwden we het zelf. Wat begon als een side project is uitgegroeid tot iets waar we trots op zijn.",
       "intro3": "STUDO is precies wat je nodig hebt om slimmer te studeren: geen verborgen kosten, geen overbodige extra's, gewoon krachtige tools die werken. Elke feature lost een echt probleem op.",
-
       "storyTitle": "Het verhaal achter STUDO",
       "storyText1": "Het begon tijdens een drukke examenperiode. We combineerden meerdere vakken, probeerden allerlei study apps en werden telkens teleurgesteld. Sommige zaten vol features die niemand gebruikt. Andere sloten basisfunctionaliteit af achter dure abonnementen. En de meeste voelden alsof ze niet gemaakt waren door mensen die nog student zijn.",
-      "storyText2": "Dus openden we onze laptops en begonnen te coderen. De eerste versie was simpel — alleen flashcards en een quiz. Maar het werkte. Vanaf daar groeide STUDO verder, gestuurd door eigen studiebehoeften en feedback van vrienden die het gingen gebruiken.",
-
+      "storyText2": "Dus openden we onze laptops en begonnen te coderen. De eerste versie was simpel, alleen flashcards en een quiz. Maar het werkte. Vanaf daar groeide STUDO verder, gestuurd door eigen studiebehoeften en feedback van vrienden die het gingen gebruiken.",
       "differentTitle": "Wat STUDO anders maakt",
       "differentText": "Er zijn genoeg study apps. Dit maakt STUDO anders:",
       "different1": "Studosets: onze eigen aanpak van flashcards met meerdere ingebouwde leermodes",
       "different2": "Visualsets: leren met afbeeldingen via pins en point-functies",
       "different3": "Speedy mode: test je kennis onder tijdsdruk",
-      "different4": "Geen ads, geen afleiding — alleen jij en je studiemateriaal",
-      "different5": "100% gratis core features — leren hoort geen paywall te hebben",
-
+      "different4": "Geen ads, geen afleiding, alleen jij en je studiemateriaal",
+      "different5": "100% gratis core features, leren hoort geen paywall te hebben",
       "listenTitle": "We luisteren",
       "listenText1": "Omdat we nog klein zijn, heeft jouw feedback directe impact op de toekomst van de app. Idee, feature request of bug? Stuur het door. Elke suggestie wordt gelezen en veel ervan haalt de app.",
-      "listenText2": "STUDO groeit met zijn gebruikers — elke suggestie maakt het beter voor iedereen.",
-
+      "listenText2": "STUDO groeit met zijn gebruikers, elke suggestie maakt het beter voor iedereen.",
       "goingTitle": "Waar we naartoe gaan",
       "goingText1": "STUDO is momenteel een klein, indie project. Maar het doel is duidelijk: dé study app worden voor studenten zonder in te leveren op eenvoud of toegankelijkheid.",
       "goingText2": "Met jouw support kunnen we groeien terwijl we onze core missie vasthouden: studeren slimmer en minder stressvol maken. We willen niet alles voor iedereen zijn. We willen gewoon goed zijn in helpen leren.",
-
       "iosTitle": "iOS app - coming soon",
       "iosText1": "We werken aan de eerste officiële STUDO iOS-app. Alle core features komen naar iPhone en iPad, met dezelfde focus op snelheid en eenvoud.",
-      "iosText2": "Studeer in de bus, in de bib of vlak voor een examen — STUDO is er. Release volgt binnenkort.",
-
+      "iosText2": "Studeer in de bus, in de bib of vlak voor een examen, STUDO is er. Release volgt binnenkort.",
       "valuesTitle": "Onze waarden",
       "valuesIntro": "Alles wat we bouwen is gestuurd door deze principes:",
       "value1Title": "Student-first design",
@@ -227,14 +228,11 @@
       "value4Text": "liever vijf dingen goed dan vijftig middelmatig",
       "value5Title": "Privacy",
       "value5Text": "jouw data is van jou, we verkopen het niet en gebruiken het niet voor ads",
-
       "teamTitle": "Het team",
-      "teamText1": "Op dit moment is STUDO een klein team van studenten. We doen design, development, testing en support — allemaal naast een fulltime studentenleven. Dat betekent wel dat we precies snappen wat studenten nodig hebben.",
+      "teamText1": "Op dit moment is STUDO een klein team van studenten. We doen design, development, testing en support, allemaal naast een fulltime studentenleven. Dat betekent wel dat we precies snappen wat studenten nodig hebben.",
       "teamText2": "Als STUDO groeit, groeit het team mee. Maar voor nu praat je bij contact rechtstreeks met de mensen die de app bouwden.",
-
       "thanksTitle": "Bedankt",
       "thanksText": "Aan iedereen die STUDO gebruikt, deelt met vrienden of feedback stuurt, bedankt.",
-
       "contactTitle": "Get in touch",
       "contactText": "Bug gevonden, idee of gewoon een vraag? Neem gerust contact op:"
     },
@@ -653,7 +651,7 @@
         "not_found": "geen sets",
         "cards": "kaarten",
         "pins": "pinnen",
-        "like" : "like",
+        "like": "like",
         "likes": "likes"
       },
       "user": {
@@ -666,19 +664,230 @@
         "more": "meer",
         "not_found": "geen tracks gevonden"
       }
+    },
+    "contact": {
+      "title": "Contact",
+      "lastUpdated": "Laatst geüpdatet: 19 april 2026",
+      "intro1": "We horen graag van je. Of je nu een vraag hebt, feedback wilt delen, een bug bent tegengekomen, of wil samenwerken, de deur staat open.",
+      "intro2": "Hieronder vind je de beste manier om ons te bereiken, afhankelijk van waar je mee bezig bent. We doen ons best om binnen 24 uur te reageren tijdens weekdagen.",
+      "supportTitle": "Algemene support",
+      "supportText": "Heb je een vraag over je account, hulp nodig met een functie, of loopt er iets niet zoals verwacht? Stuur ons een mailtje en we helpen je zo snel mogelijk verder.",
+      "businessTitle": "Business & partnerships",
+      "businessText": "Vertegenwoordig je een school, organisatie of bedrijf en denk je dat we iets voor elkaar kunnen betekenen? Laat het ons weten. We staan open voor samenwerkingen die écht waarde toevoegen voor studenten.",
+      "pressTitle": "Pers & media",
+      "pressText": "Ben je journalist, blogger of content creator en wil je een verhaal schrijven over Studo? We delen graag onze ervaringen, stats en visie. Neem contact op via het pers-adres hieronder.",
+      "feedbackTitle": "Feedback",
+      "feedbackText1": "Feedback is goud waard voor ons. Studo is gebouwd door te luisteren naar studenten, en dat blijven we doen. Of het nu een klein detail is dat beter kan, of een groot idee voor een nieuwe functie, we lezen alles.",
+      "feedbackText2": "Je hoeft je niet formeel op te stellen. Schrijf gewoon zoals je zou schrijven naar een vriend die aan een app werkt. Eerlijk en direct mag altijd.",
+      "bugTitle": "Bug reports",
+      "bugText": "Is er iets kapot? Meld het ons en we pakken het aan. Hoe meer info je kunt meegeven, hoe sneller we het kunnen oplossen. Handig om te vermelden:",
+      "bug1": "Wat je precies deed toen het fout ging",
+      "bug2": "Welk device en browser je gebruikt",
+      "bug3": "Eventueel een screenshot of screen recording",
+      "bug4": "Of het elke keer opnieuw gebeurt of maar eenmalig",
+      "socialTitle": "Volg ons",
+      "socialText": "Voor updates, tips, behind-the-scenes en af en toe een meme, volg ons op social. We posten regelmatig en lezen al je reacties en DM's.",
+      "responseTitle": "Reactietijd",
+      "responseText1": "We proberen binnen 24 uur te antwoorden op weekdagen. In het weekend kan het iets langer duren, maar je krijgt sowieso antwoord, we laten geen bericht liggen.",
+      "responseText2": "Tijdens blokperiodes en examens is het drukker dan normaal. Bedankt voor je geduld als het dan eens een dag langer duurt."
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "lastUpdated": "Laatst geüpdatet: 19 april 2026",
+      "intro1": "Welkom bij onze FAQ. Hier vind je antwoorden op de vragen die we het vaakst krijgen van studenten die Studo gebruiken of overwegen te gebruiken.",
+      "intro2": "Staat jouw vraag er niet tussen? Geen probleem, onderaan deze pagina vind je hoe je ons kunt bereiken. We antwoorden meestal binnen 24 uur.",
+      "categories": {
+        "general": {
+          "title": "Algemeen",
+          "q1": {
+            "question": "Wat is Studo precies?",
+            "answer": "Studo is een all-in-one studieplatform voor studenten. In plaats van te moeten schakelen tussen flashcard-apps, notitie-apps, planners en zoekmachines, vind je alles op één plek: Studosets en Visualsets om actief te studeren, Classrooms om samen te werken, Flow om je vakken op te volgen, en SVEN, onze AI-coach, om je te helpen waar nodig."
+          },
+          "q2": {
+            "question": "Voor wie is Studo bedoeld?",
+            "answer": "In de eerste plaats voor Vlaamse studenten in het hoger onderwijs, maar iedereen die wil leren is welkom. Van middelbaar tot universiteit, van geneeskunde tot rechten tot informatica, Studo is gebouwd om te werken met elk vak en elke studiestijl."
+          },
+          "q3": {
+            "question": "Wat is het verschil tussen Studo en andere flashcard-apps?",
+            "answer": "Flashcards zijn maar één onderdeel van Studo. Bij ons krijg je ook Visualsets (ideaal voor anatomie of aardrijkskunde), een volwaardig opvolgingssysteem via Flow, gedeelde leeromgevingen via Classrooms, en AI-ondersteuning via SVEN. Het is geen losse tool, maar een ecosysteem dat meegroeit met je studie."
+          },
+          "q4": {
+            "question": "In welke talen is Studo beschikbaar?",
+            "answer": "Momenteel ondersteunen we Nederlands, Engels, Frans en Spaans. We werken aan meer talen en luisteren actief naar welke onze community het meest nodig heeft."
+          },
+          "q5": {
+            "question": "Is er een mobiele app?",
+            "answer": "Ja, we hebben een iOS-app zodat je onderweg kunt studeren. Een Android-versie staat op onze roadmap."
+          }
+        },
+        "studosets": {
+          "title": "Studosets & Visualsets",
+          "q1": {
+            "question": "Wat zijn Studosets?",
+            "answer": "Studosets zijn term-definitie paren die je op verschillende manieren kunt instuderen. Je kunt ze gebruiken via Leren (spaced repetition die je blijft testen tot je alles kent), Tijdstrijd (snelheidsmodus met rondes), of klassieke Flashcards. Elke modus past zich aan jouw niveau aan."
+          },
+          "q2": {
+            "question": "Wat maakt Visualsets uniek?",
+            "answer": "Visualsets zijn ontworpen voor visuele vakken zoals anatomie, biologie en aardrijkskunde. Je uploadt een afbeelding, plaatst pins met definities erop, en studeert via twee modi: Spotten (jij typt wat de pin voorstelt) of Aanwijzen (het systeem geeft een definitie en jij duidt de juiste pin aan). Perfect om structuren en locaties in te stampen."
+          },
+          "q3": {
+            "question": "Hoe maak ik snel een Studoset aan?",
+            "answer": "Je hebt verschillende opties. Termen één voor één manueel invoeren, importeren uit een Word-document of Excel-bestand, of gewoon via copy-paste. Voor wiskundige vakken is er Math Mode die LaTeX-formules correct weergeeft. Je kunt ook afbeeldingen toevoegen aan je termen."
+          },
+          "q4": {
+            "question": "Wat is de Health Mode tijdens het leren?",
+            "answer": "Health Mode herinnert je elke 20 minuten om 2 minuten recht te staan en even naar buiten te kijken, de 20-20-2 regel. Klein detail, groot verschil voor je ogen en rug tijdens lange studeersessies. Er is ook een ingebouwde pomodoro-timer voor wie in intervallen werkt."
+          },
+          "q5": {
+            "question": "Kan ik mijn sets openbaar of privé maken?",
+            "answer": "Je kiest zelf. Openbare sets zijn vindbaar via onze zoekfunctie, wat handig is als je wilt delen met medestudenten of zelf wilt bijdragen aan de community. Privé sets zijn enkel zichtbaar voor jou of de mensen die jij uitnodigt."
+          }
+        },
+        "classrooms": {
+          "title": "Classrooms & samen studeren",
+          "q1": {
+            "question": "Wat zijn Classrooms?",
+            "answer": "Classrooms zijn gedeelde leeromgevingen waar je samen met anderen kunt studeren, oefenen en materiaal delen. Er zijn drie types: Official Classrooms (gekoppeld aan een school of leerkracht), Study Groups (privé-groepen met vrienden of projectgenoten), en Communities (open publieke groepen rond een vak of onderwerp)."
+          },
+          "q2": {
+            "question": "Hoe treed ik toe tot een Classroom?",
+            "answer": "Voor Official Classrooms en Study Groups krijg je meestal een uitnodiging of een code van de organisator. Communities zijn open, die vind je via de zoekfunctie en je kunt direct toetreden."
+          },
+          "q3": {
+            "question": "Kan ik zien hoe anderen vorderen in een Classroom?",
+            "answer": "In Classrooms en Study Groups kun je optioneel elkaars voortgang en statistieken zien, wat motiverend werkt om samen te studeren. Je kunt dit altijd volledig uitschakelen via je privacy-instellingen, jij bepaalt wat je deelt."
+          },
+          "q4": {
+            "question": "Wat zijn competities en challenges?",
+            "answer": "Binnen Classrooms en Study Groups kan iemand een leerwedstrijd opstarten waar anderen aan kunnen deelnemen. Ideaal om samen iets in te stampen voor een examen met een vleugje competitie erbij."
+          },
+          "q5": {
+            "question": "Als mijn leerkracht een Classroom aanmaakt, ziet die dan mijn prestaties?",
+            "answer": "In een Official Classroom kan je leerkracht of professor je voortgang opvolgen om gerichte feedback te geven. Dit wordt transparant gecommuniceerd en is gekoppeld aan de Classroom zelf, buiten die context blijven je statistieken van jou."
+          }
+        },
+        "flow": {
+          "title": "Studo Flow",
+          "q1": {
+            "question": "Wat is Studo Flow?",
+            "answer": "Flow is ons opvolgingssysteem om je leerproces visueel te beheren. Georganiseerd per academiejaar, per vak en per leeractiviteit. Denk aan een slimme, visuele versie van het Excel-bestand dat veel studenten gebruiken om bij te houden wat ze al verwerkt hebben, maar dan met directe koppelingen naar je studosets en visualsets."
+          },
+          "q2": {
+            "question": "Hoe werkt Flow in de praktijk?",
+            "answer": "Flow is opgebouwd uit drie lagen: Flowboards (je studiejaar of semester), Flowcourses (elk vak) en Flowrows (concrete leeractiviteiten zoals een les of oefening). Tijdens de les typ je snel een titel en drukt op Enter, klaar. Thuis kun je structureren: status aanpassen, prioriteit instellen, resources linken."
+          },
+          "q3": {
+            "question": "Is Flow geschikt als ik geen planner-type ben?",
+            "answer": "Absoluut. Flow is bewust ontworpen voor zowel power users als studenten die minimale planning doen. Een titel invoeren is voldoende om te beginnen. Alle extra velden zoals prioriteit, type of deadline zijn optioneel. Je kunt het zo simpel of zo uitgebreid maken als je zelf wilt."
+          },
+          "q4": {
+            "question": "Hoe zie ik mijn voortgang?",
+            "answer": "Op twee niveaus. Per vak zie je bovenaan de tabelweergave een progress bar met hoeveel items je hebt afgewerkt. Op het overzicht van je Flowboard zie je elke Flowcourse als een kaart met een compacte progress bar, één oogopslag en je weet waar je staat voor elk vak."
+          }
+        },
+        "ai": {
+          "title": "SVEN & Studo Select",
+          "q1": {
+            "question": "Wat is SVEN?",
+            "answer": "SVEN is onze AI-coach en zit in Studo Select, de premium versie van het platform. SVEN helpt je om sneller van cursusmateriaal naar studeerbare content te komen, denk aan automatisch Studosets genereren uit documenten, of snel iets opzoeken in je cursus."
+          },
+          "q2": {
+            "question": "Kan SVEN automatisch sets maken uit mijn cursus?",
+            "answer": "Ja. Je upload een PDF of Word-document en SVEN genereert een Studoset met termen en definities. Jij hebt altijd de controle, je kunt de AI-output beoordelen, aanpassen en finaal goedkeuren voordat de set definitief wordt. We publiceren nooit iets automatisch."
+          },
+          "q3": {
+            "question": "Wat is course linking?",
+            "answer": "Wanneer je een cursus linkt aan een Studoset, verschijnt er bij elke term een 'Check cursus' knop die je direct naar de relevante sectie brengt. Geen gezoek meer door honderden pagina's. Je kunt ook semantisch zoeken in je geüploade cursussen op trefwoorden of zinnen."
+          },
+          "q4": {
+            "question": "Is de AI-content altijd correct?",
+            "answer": "AI maakt soms fouten, daarom zie je altijd een disclaimer om de output te controleren. We werken met menselijke review-stappen en een feedback-loop waarbij jij elke AI-output kunt beoordelen. Controleer altijd belangrijke content zelf voordat je ermee studeert."
+          }
+        },
+        "courses": {
+          "title": "Courses & Verified Sets",
+          "q1": {
+            "question": "Wat zijn Studo Courses?",
+            "answer": "Studo Courses zijn voorgebouwde leertrajecten samengesteld door het Studo-team zelf om kwaliteit te garanderen. Een Course (bijvoorbeeld Geneeskunde) bestaat uit meerdere Tracks, modules rond een specifiek onderwerp of examen, die elk gekoppeld zijn aan relevante vakken en geverifieerde sets."
+          },
+          "q2": {
+            "question": "Wat betekent het Verified-badge?",
+            "answer": "Sets met een Verified-badge zijn aangemaakt of gecontroleerd door het Studo-team, hebben een bewezen 95%+ accuracy op examens, of zijn goedgekeurd door een docent. Verified sets krijgen prioriteit in zoekresultaten en worden featured op vakpagina's."
+          },
+          "q3": {
+            "question": "Kan ik zelf Verified creator worden?",
+            "answer": "Ja. Als jouw sets voldoen aan de criteria, krijg je een Verified creator status. Voordelen: Studo Select gratis, plek op het leaderboard van beste creators, en in latere fases revenue share voor populaire sets."
+          }
+        },
+        "account": {
+          "title": "Account & privacy",
+          "q1": {
+            "question": "Hoe maak ik een account aan?",
+            "answer": "Je kunt je registreren met je e-mailadres, Google-account of Microsoft-account. Het duurt minder dan een minuut en je hebt direct toegang tot het platform."
+          },
+          "q2": {
+            "question": "Kan ik mijn account verwijderen?",
+            "answer": "Natuurlijk. In je accountinstellingen vind je de optie om je account permanent te verwijderen. Al je data wordt dan verwijderd volgens onze privacy policy."
+          },
+          "q3": {
+            "question": "Hoe zit het met privacy in Classrooms?",
+            "answer": "Jij bepaalt wat je deelt. Voortgang vergelijken en statistieken delen zijn optioneel en volledig uit te schakelen via je instellingen. Je kunt ook per Classroom aparte privacy-voorkeuren instellen."
+          },
+          "q4": {
+            "question": "Ik ben mijn wachtwoord vergeten, wat nu?",
+            "answer": "Klik op 'Wachtwoord vergeten' op de login-pagina, voer je e-mailadres in en je ontvangt een reset-link. Check ook je spam-folder als de mail niet meteen binnenkomt."
+          }
+        },
+        "pricing": {
+          "title": "Prijzen",
+          "q1": {
+            "question": "Is Studo gratis?",
+            "answer": "De kernfunctionaliteiten van Studo zijn gratis: Studosets, Visualsets, Classrooms, Flow en zoekfunctie. De AI-features zitten in Studo Select, onze premium tier."
+          },
+          "q2": {
+            "question": "Wat krijg ik met Studo Select?",
+            "answer": "Met Studo Select krijg je toegang tot SVEN, onze AI-coach. Concreet: tot 8 GB aan file uploads, automatische set-generatie uit documenten, course linking, semantic search binnen je cursussen, en 100 set credits voor SVEN set generation."
+          },
+          "q3": {
+            "question": "Kan ik Studo Select op elk moment opzeggen?",
+            "answer": "Absoluut. Je kunt op elk moment opzeggen in je accountinstellingen. Je behoudt toegang tot de premium features tot het einde van de betaalperiode."
+          }
+        },
+        "technical": {
+          "title": "Technisch",
+          "q1": {
+            "question": "Welke browsers worden ondersteund?",
+            "answer": "Studo werkt op alle moderne browsers: Chrome, Firefox, Safari en Edge. We raden aan om je browser up-to-date te houden voor de beste ervaring."
+          },
+          "q2": {
+            "question": "Werkt Studo ook offline?",
+            "answer": "Sommige features zoals het bekijken van gedownloade Studosets werken offline in de iOS-app. De webversie vereist een internetverbinding voor de meeste functies."
+          },
+          "q3": {
+            "question": "Hoe veilig is mijn data?",
+            "answer": "We nemen privacy serieus. Al je data wordt versleuteld opgeslagen en we verkopen nooit je gegevens aan derden. Lees onze privacy policy voor alle details."
+          }
+        }
+      },
+      "stillTitle": "Nog steeds vragen?",
+      "stillText": "Vind je het antwoord op jouw vraag hier niet? Geen probleem, stuur ons gerust een berichtje. We antwoorden meestal binnen 24 uur."
+    },
+    "waitinglist": {
+      "title": "Schrijf in",
+      "join_waitinglist": "Geef je email op voor de wachtlijst",
+      "email": "email",
+      "join": "schrijf in",
+      "Loading": "loading...",
+      "rights": "STUDO inc. All Rights Reserved.",
+      "hook": "studenten al ingeschreven",
+      "Version": "Versie",
+      "somethingWentWrong": "Er ging iets mis, probeer opnieuw",
+      "alreadyRegistered": "Dit e-mailadres staat al op de lijst"
+    },
+    "blog": {
+      "title": "Blog",
+      "lastUpdated": "Laatst geüpdatet:"
     }
-  },
-  "waitinglist": {
-    "title": "Schrijf in",
-    "join_waitinglist": "Geef je email op voor de wachtlijst",
-    "email": "email",
-    "join": "schrijf in",
-    "Loading": "loading...",
-    "rights": "STUDO inc. All Rights Reserved.",
-    "hook": "studenten al ingeschreven",
-    "Version": "Versie",
-    "somethingWentWrong": "Er ging iets mis, probeer opnieuw",
-    "alreadyRegistered": "Dit e-mailadres staat al op de lijst"
   },
   "login": {
     "hook": "studenten studeren al",
@@ -742,7 +951,6 @@
     "nonotif": "no notifications",
     "allup": "you're up-to-date",
     "search": "zoeken..."
-
   },
   "createfolder": {
     "title": "create a folder",
@@ -775,9 +983,9 @@
     "title_error": "titel is verplicht",
     "course_error": "vak is verplicht",
     "folder_error": "selecteer een map",
-    "term_lang_error" : "selecteer een taal",
-    "def_lang_error" : "selecteer een taal",
-    "card_error" : "er zijn lege kaarten"
+    "term_lang_error": "selecteer een taal",
+    "def_lang_error": "selecteer een taal",
+    "card_error": "er zijn lege kaarten"
   },
   "createvisualset": {
     "title": "Create new Visualset",
@@ -790,7 +998,7 @@
     "create": "Create Set",
     "add_card": "Add Card"
   },
-  "card":{
+  "card": {
     "Definition": "Definitie",
     "Term": "Term"
   },
@@ -825,13 +1033,14 @@
       "A few more hours of focus before the break... hang in there."
     ],
     "15": [
-      "Goedeavond {name}",
-      "Avond shift geactiveerd",
+      "Goedemiddag {name}",
+      "Goed bezig, blijven volhouden",
       "You got this!"
     ],
     "19": [
       "Goedeavond {name}",
       "Welkom terug",
+      "Avond shift geactiveerd",
       "Let's Go Champ!"
     ],
     "22": [
@@ -842,15 +1051,18 @@
     "0": [
       "Middernacht is geweest en nog steeds aan het knallen!",
       "Blijven gaan!",
-      "Middernacht en nog altijd goed bezig! (officieel een vampier btw)"
+      "Middernacht en nog altijd goed bezig!"
     ]
   },
   "home": {
-    "jump-back-in_title" : "Jump back in",
-    "pinned_title" : "Pinned",
+    "jump-back-in_title": "Jump back in",
+    "courses_overview_title": "Your Courses",
+    "flow_overview_title": "Your Boards",
+    "pinned_title": "Pinned",
     "stats": "Statistics",
     "Streak": "Streak",
     "days": "days",
+    "all_boards": "All boards",
     "ready": "Ready to study?",
     "totCards": "Total Cards",
     "tmStd": "Time Studied",
@@ -864,7 +1076,6 @@
     "Continue": "Sets",
     "checkAll": "all sets",
     "studied": "studied",
-    "courses": "Courses",
     "checkCourse": "all courses",
     "act": "Friends",
     "CheckAct": "all activity",
@@ -883,10 +1094,22 @@
     "set_studied": "set created",
     "sets_studied": "sets created",
     "lets_go": "Let's start here",
-    "set_overview_title": "Your Sets"
+    "set_overview_title": "Your Sets",
+    "all_courses": "All courses",
+    "all_sets": "All sets",
+    "flows_overview_title": "Your Flowboards",
+    "fallback": {
+      "nothing_title": "No sets yet",
+      "nothing_paragraph": "You haven't created any sets"
+    },
+    "flow": {
+      "course": "course",
+      "courses": "courses"
+    }
   },
-  "y_f" : {
+  "y_f": {
     "title": "Your files",
+    "subtitle": "Manage & organize your materials",
     "sets": "Sets",
     "folders": "Folders",
     "courses": "Courses",
@@ -918,7 +1141,6 @@
     "korting_school": "Studo offers discounts for schools, companies and families",
     "try_edu": "Try Studo for Education",
     "group": "Want to place an order for a bigger group?"
-
   },
   "phrases": {
     "Nice work": "Lekker bezig",
@@ -940,7 +1162,6 @@
     "You're stronger than you think": "You're stronger than you think",
     "Every step counts": "Every step counts",
     "Believe in yourself": "Believe in yourself",
-
     "Go Kylie, Go": "Go Kylie, Go",
     "Look at you go": "Look at you go",
     "You're doing amazing, sweetie": "You're doing amazing, sweetie",
@@ -959,7 +1180,7 @@
     "Congratulations, now get back to work": "Congratulations, now get back to work",
     "yes, we can - Yoda": "yes, we can - Yoda"
   },
-  "streak" : {
+  "streak": {
     "phrase_1": "You have studied ",
     "phrase_2": " day in a row",
     "d_s": "day streak"
@@ -1087,7 +1308,6 @@
       "save_s": "Creëer Set",
       "del_c": "Verwijder laatste kaart",
       "sven_i": "Gebruik SVEN import"
-
     }
   },
   "account": {
@@ -1127,29 +1347,25 @@
     "rights": "Alle rechten voorbehouden.",
     "edit": "bewerken"
   },
-
   "trackview": {
     "tracks": "Tracks",
     "sets": "Sets",
     "communities": "Communities",
-    "studosets":"Studosets",
+    "studosets": "Studosets",
     "visualsets": "Visualsets",
     "empty": "0 sets",
     "vak": "vak",
     "vakken": "vakken"
-
-
   },
-  "import" : {
-    "excel" : "Excel import",
-    "sven" : "SVEN import",
+  "import": {
+    "excel": "Excel import",
+    "sven": "SVEN import",
     "import": "importeer"
   },
-
   "flow": {
     "title": "Your Flow Boards",
     "created_by": "Created by",
-    "you" : "(you)",
+    "you": "(you)",
     "create_title": "Create new Flow Board",
     "add_title": "Board name",
     "description": "Add a short summary...",
@@ -1196,13 +1412,10 @@
         "done": "done"
       }
     }
-
   },
-
   "colorPicker": {
     "search_ph": "search..."
   },
-
   "iconPicker": {
     "no_icons_found": "No icons found"
   }

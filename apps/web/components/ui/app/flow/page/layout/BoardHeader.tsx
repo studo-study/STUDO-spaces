@@ -18,13 +18,13 @@ const BoardHeader = () => {
     const course = data.courses.find(i => i.id === courseId);
 
     if (isActive) {
-        return <div>
+        return <div className={"w-full"}>
             <FlowBoardOverviewHeader />
             <CreateFlowCourse createOpen={createCourseOpen} setCreateOpen={setCreateCourseOpen} board_title={data.title} board_id={data.id}/>
         </div>;
     }
 
-    return <div>
+    return <div className={"relative w-full"}>
         <BreadCrumbs
             board_id={data.id}
             board_title={data.title}

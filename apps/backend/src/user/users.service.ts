@@ -8,12 +8,15 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { and, eq, gte, inArray, ne } from 'drizzle-orm';
+import { and, eq, gte, inArray, ne, sql } from 'drizzle-orm';
 import {
   cards,
   classroomactivities,
   classrooms,
   classroomusers,
+  flowboards,
+  flowcourses,
+  flowrows,
   folders,
   images,
   sessioncards,
@@ -50,6 +53,7 @@ import {
   HeaderResponse,
   StartPagina,
   ClassActivities,
+  Boards,
 } from '@studo/types';
 import { UserResponseDto, UserResponseStatsDto } from './users.dto';
 
@@ -485,6 +489,7 @@ export class UserService {
       courses: await this.getCourses(user_id),
       class: await this.getClassmateActivity(user_id),
       stats: await this.getTotalStats(user_id),
+      boards: await this.getBoards(user_id),
     };
   }
 
@@ -583,5 +588,58 @@ export class UserService {
       studysets: ss.filter((ss) => ss.course === course_id),
       visualsets: vs.filter((vs) => vs.course === course_id),
     };
+  }
+
+  async getBoards(user_id: string): Promise<Boards[]> {
+    const owner = await this.db.query.users.findFirst({
+      where: eq(users.id, user_id),
+    });
+    if (!owner) {
+      throw new NotFoundException('owner not found');
+    }
+
+    const stats = await this.db
+      .select({
+        board_id: flowboards.id,
+        total_length: sql<number>`count(${flowrows.id})`.mapWith(Number),
+        done: sql<number>`count(*) filter (where ${flowrows.status} = 'done')`.mapWith(
+          Number,
+        ),
+        in_progress:
+          sql<number>`count(*) filter (where ${flowrows.status} = 'doing')`.mapWith(
+            Number,
+          ),
+      })
+      .from(flowboards)
+      .leftJoin(flowcourses, eq(flowcourses.board_id, flowboards.id))
+      .leftJoin(flowrows, eq(flowrows.flowcourse_id, flowcourses.id))
+      .where(eq(flowboards.owner_id, user_id))
+      .groupBy(flowboards.id);
+
+    const boards = await this.db.query.flowboards.findMany({
+      where: eq(flowboards.owner_id, user_id),
+    });
+
+    const statsByBoard = new Map(stats.map((s) => [s.board_id, s]));
+
+    return boards.map((board) => {
+      const s = statsByBoard.get(board.id);
+      return {
+        id: board.id,
+        owner_id: board.owner_id,
+        owner_name: owner.displayName,
+        owner_pfp: owner.img_url,
+        title: board.title,
+        icon: board.icon,
+        year: board.year,
+        semester: board.semester,
+        school: board.school_name,
+        school_id: board.school_id,
+        total_done: s?.done ?? 0,
+        total_in_progress: s?.in_progress ?? 0,
+        total_length: s?.total_length ?? 0,
+        courses: boards.length,
+      };
+    });
   }
 }

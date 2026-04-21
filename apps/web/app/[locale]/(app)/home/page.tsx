@@ -8,6 +8,14 @@ import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import JumpBackIn from "@/components/ui/app/home/jump-back-in/JumpBackIn";
 import QuickStats from "@/components/ui/app/home/quick_stats/QuickStats";
 import YourSets from "@/components/ui/app/home/YourSets/YourSets";
+import Courses from "@/components/ui/app/home/courses/Courses";
+import EmptyFallback from "@/components/ui/app/home/EmptyFallback/EmptyFallback";
+import Flow from "@/components/ui/app/home/flows/Flow";
+
+
+const FADE_BASE =
+    " h-full w-8 pointer-events-none to-transparent " +
+    "dark:from-bg-dark dark:via-bg-dark via-bg-white from-bg-white"
 
 
 export const metadata: Metadata = {
@@ -31,36 +39,41 @@ export default async function HomePage() {
 
     console.log(data);
     const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? '');
-
+    const split = data?.lastTen.toSpliced(3)
 
 
 
     return (
         <PageContainer>
-            <section className="w-full h-fit mb-3">
-                <div className="w-full h-fit flex flex-col gap-2 ">
+            <section className={`w-full h-fit mb-3 gap-5 flex flex-col sticky top-0 z-[999] pb-3 dark:bg-bg-dark bg-bg-white`}>
+                <div className={"w-full flex flex-col gap-2"}>
+                    <div className="w-full h-fit flex flex-col gap-2 ">
                     <span className="font-georgia font-bold dark:text-white text-studodarkblue text-2xl">
                         {welcome}
                     </span>
-                    <span className="dark:text-studogrey text-gray-400">{t("ready")}</span>
+                        <span className="dark:text-studogrey text-gray-400">{t("ready")}</span>
+                    </div>
                 </div>
-            </section>
-            <div className={"w-full grid grid-cols-1 gap-10"}>
                 <QuickStats stats={data?.stats}/>
-                <JumpBackIn items={data?.lastTen.splice(0, 2) ?? []} />
-                <YourSets/>
+            </section>
+
+            <div className={"w-full grid grid-cols-1 gap-10 pb-40"}>
+                {data?.lastTen && (<AnimateOnMount delay={0}><JumpBackIn items={split ?? []} /></AnimateOnMount>)}
+                {data?.lastTen.length > 0 && <AnimateOnMount delay={100}><YourSets items={data?.lastTen} /></AnimateOnMount>}
+                {data?.courses.length > 0 && <AnimateOnMount delay={200}><Courses items={data?.courses}/></AnimateOnMount>}
+                {data?.boards.length > 0 && <AnimateOnMount delay={300}><Flow items={data?.boards}/></AnimateOnMount>}
+                {data?.courses.length === 0 && data?.lastTen.length === 0  && <EmptyFallback/>}
+
             </div>
 
-
-            {/* Courses + Activity */}
-
-
-            <div className="fixed bottom-10 w-full h-fit flex items-end justify-center">
+            {data?.courses.length === 0 && data?.lastTen.length === 0  &&
+            <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
                 <AnimateOnMount delay={2000}>
                     <CTABlock t={t}/>
                 </AnimateOnMount>
 
-            </div>
+            </div>}
+           <div className={"fixed z-10 bottom-0 h-25 w-2/3 bg-linear-0 dark:from-bg-dark from-bg-white to-transparent"}/>
         </PageContainer>
     );
 }

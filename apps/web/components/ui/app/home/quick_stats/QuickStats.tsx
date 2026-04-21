@@ -46,20 +46,20 @@ const QuickStats = (props: QuickStatsProps) => {
     const t = useTranslations("home")
     return (<section className="grid grid-cols-4 gap-2 overflow-visible w-full">
         <StatItem
-            bg={STATS_CONFIG[0].color}
+            bg={stats.totalsets === 0 ? "bg-stuodgrey/30 opacity-50 ": STATS_CONFIG[0].color}
             image={"/icons/studyset.svg"}
             title={stats.totalsets + " " + (stats.totalsets === 1 ? t("set_studied") : t("sets_studied"))}
         />
         <StatItem
-            bg={STATS_CONFIG[1].color}
+            bg={stats.totalCards === 0 ? "bg-stuodgrey/30 opacity-50 ": STATS_CONFIG[1].color}
             icon={<FaRegEye />}
             title={stats.totalCards + " " + (stats.totalCards === 1 ? t("card") : t("cards"))} />
         <StatItem
-            bg={STATS_CONFIG[2].color}
+            bg={stats.cardsLearned === 0 ? "bg-stuodgrey/30 opacity-50 ": STATS_CONFIG[2].color}
             icon={<FaCheck />}
             title={stats.cardsLearned.toString() + " " + (stats.cardsLearned === 1 ? t("card_learned") : t("cards_learned"))} />
         <StatItem
-            bg={STATS_CONFIG[3].color}
+            bg={stats.timeLearned === 0 ? "bg-stuodgrey/30 opacity-50 ": STATS_CONFIG[3].color}
             icon={<LuTimer />}
             title={TimeParser(stats.timeLearned)}
         />

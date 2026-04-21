@@ -41,9 +41,9 @@ export default function StartingPagina() {
 					{!isLoadingUser && data.lastTen && <Recent recent={data.lastTen} />}
 					{isLoadingUser && <RecentSkeleton />}
 
-					{/* Courses and Activity grid */}
+					{/* courses and Activity grid */}
 					<div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
-						{/* Courses column */}
+						{/* courses column */}
 						<div className="w-full">
 							<Link
 								to="/courses"
