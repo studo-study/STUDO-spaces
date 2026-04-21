@@ -81,7 +81,7 @@ pnpm install
 
 # Binnen de repo staat een .env.example
 # Gebruik deze om zelf de .env's aan te maken
-cp apps/backend/.env.example apps/backend/.env
+cp apps/api-node/.env.example apps/api-node/.env
 cp apps/web/.env.example apps/web/.env
 ```
 
@@ -97,19 +97,19 @@ docker compose up
 
 ```bash
 # Migraties genereren
-pnpm --filter @studo/backend db:generate
+pnpm --filter @studo/api-node db:generate
 
 # Migraties uitvoeren
-pnpm --filter @studo/backend db:migrate
+pnpm --filter @studo/api-node db:migrate
 
 # Database seeden
-pnpm --filter @studo/backend db:seed
+pnpm --filter @studo/api-node db:seed
 ```
 
 ### Development
 
 ```bash
-# Start alles (backend + frontend)
+# Start alles (api-node + frontend)
 pnpm dev
 
 # Of individueel
