@@ -5,6 +5,7 @@ import AppLayoutClient from '@/components/ui/app/AppLayoutClient';
 import { ReactNode } from 'react';
 import PrivateClassroomHeader from "@/components/ui/app/classroom/PrivateClassroomHeader";
 import PublicClassroomHeader from "@/components/ui/app/classroom/PublicClassroomHeader";
+import PageContainer from "@/components/ui/design_system/page/PageContainer";
 
 export default async function ClassroomLayout({ children }: { children: ReactNode }) {
     const session = await auth();
@@ -12,12 +13,12 @@ export default async function ClassroomLayout({ children }: { children: ReactNod
     if (session) {
         return (
             <AppLayoutClient>
-                <div className="w-full h-full py-15 flex flex-col overflow-hidden">
+                <PageContainer>
                     <PrivateClassroomHeader />
                     <div className="w-full flex-1 overflow-hidden">
                         {children}
                     </div>
-                </div>
+                </PageContainer>
             </AppLayoutClient>
         );
     }

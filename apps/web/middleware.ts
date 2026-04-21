@@ -76,6 +76,12 @@ export default auth((request) => {
         "/profile",
         "/track",
         "/classroom",
+        "/pricing",
+        "/faq",
+        "/help-center",
+        "/contact",
+        "/blog",
+        "/studo",
         "/"];
 
     // Check of huidige route public is

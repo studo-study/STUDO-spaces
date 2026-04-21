@@ -14,7 +14,7 @@ export default function CourseItem({course}: CourseCardProps) {
             href={`/course/${course}`}
             className="group p-5 shadow-2xl rounded-2xl bg-white/30 dark:bg-studogrey/10 border dark:border-studogrey/20 border-gray-200 hover:border-studogrey/40 transition-all duration-300 text-center"
         >
-            <div className="w-12 h-12 mx-auto mb-3 rounded-full shadow-2xl flex items-center justify-center text-studodarkblue dark:text-white group-hover:scale-110 transition-transform duration-300">
+            <div className="min-w-12 min-h-12 w-12 h-12 max-w-12 mx-auto mb-3 rounded-full shadow-2xl flex items-center justify-center text-studodarkblue dark:text-white group-hover:scale-110 transition-transform duration-300">
                 <img src={coverImage} alt="" className="w-7 shadow-2xl" />
             </div>
             <h3 className="font-medium dark:text-white text-studodarkblue mb-1">{course}</h3>

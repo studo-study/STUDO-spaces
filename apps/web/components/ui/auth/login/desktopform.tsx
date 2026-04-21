@@ -82,7 +82,7 @@ export default function DesktopForm() {
 					shadow-2xl shadow-black/20
 					transition-all duration-700`}>
 
-                    <div className="w-full backdrop-blur-2xl flex flex-col gap-10 justify-center px-12 py-25 relative overflow-hidden">
+                    <div className="w-full backdrop-blur-2xl flex flex-col gap-10 justify-center px-12 py-15 relative overflow-hidden">
 
 
                         <div className="h-full justify-baseline relative gap-8 z-10 flex flex-col ">

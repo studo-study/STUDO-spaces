@@ -53,22 +53,23 @@ export default function LandingFooter() {
                         </div>
 
                         <div className="flex flex-col gap-4">
+                            <span className="font-bold font-roboto">{t("supportTitle").toUpperCase()}</span>
+                            <Link href="/faq" className="hover:underline">{t("supportFaq")}</Link>
+                            <Link href="/help-center" className="hover:underline">{t("supportCenter")}</Link>
+                            <Link href="/contact" className="hover:underline">{t("supportContact")}</Link>
+                            <Link href="/blog" className="hover:underline">{t("aboutBlog")}</Link>
+                        </div>
+
+                        <div className="flex flex-col gap-4">
                             <span className="font-bold font-roboto">{t("selectTitle").toUpperCase()}</span>
+                            <Link href="/pricing" className="hover:underline">{t("pricing")}</Link>
                             <Link href="/studo-select" className="hover:underline">{t("select")}</Link>
                             <Link href="/studo-for-education" className="hover:underline">{t("edu")}</Link>
                         </div>
 
-                        <div className="flex flex-col gap-4">
-                            <span className="font-bold font-roboto">{t("setTitle").toUpperCase()}</span>
-                            <Link href="/create-studoset" className="hover:underline">{t("ssBlock1")}</Link>
-                            <Link href="/your-files/sets" className="hover:underline">{t("ssBlock2")}</Link>
-                            <Link href="/create-visualset" className="hover:underline">{t("vsBlock1")}</Link>
-                            <Link href="/your-files/sets" className="hover:underline">{t("vsBlock2")}</Link>
-                        </div>
-
                     </div>
 
-                    <div className="w-full flex flex-col font-roboto uppercase sm:flex-row items-center justify-between gap-4 text-xs  opacity-50 px-6 sm:px-0">
+                    <div className="w-full flex flex-col font-roboto sm:flex-row items-center justify-between gap-4 text-xs  opacity-50 px-6 sm:px-0">
                         <div className={"w-1/3 flex flex-row  items-center gap-4 h-20"}>
                             <div className={"w-1/2 h-10 rounded-full flex items-center gap-2"}>
                                 <GiEuropeanFlag size={25}/>
@@ -79,8 +80,8 @@ export default function LandingFooter() {
                                 <span><span className={"font-bold"}>{t("privacy")}</span> {t("first")}</span>
                             </div>
                         </div>
-                        <p className=" order-first sm:order-none">
-                            {t("Version")} {process.env.NEXT_PUBLIC_VERSION}
+                        <p className="text-center sm:text-right">
+                            {t("made_in_ghent")}
                         </p>
                         <p className="text-center sm:text-right">
                             &copy; {CurrentYear} {t("rights")}

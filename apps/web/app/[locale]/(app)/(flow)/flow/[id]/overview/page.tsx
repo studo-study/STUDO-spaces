@@ -13,7 +13,7 @@ export default function Page() {
 
     return (<div className={"w-full h-full pt-5 flex flex-col gap-2"}>
         <span className={"text-2x dark:text-white text-studodarkblue font-bold"}>{t("your_courses")}:</span>
-        <div className={"flex flex-col gap-5"}>
+        <div className={"flex flex-col gap-2"}>
             {data.total_length !== 0 && data.total_in_progress !== 0 &&
                 <FlowProgress
                     total_done={data.total_done}
