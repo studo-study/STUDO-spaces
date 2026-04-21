@@ -7,7 +7,7 @@ import CourseItem from "@/components/ui/app/your-files/courses/courseItem";
 interface CoursesProps {
     items: string[]
 }
-const Courses = (props: CoursesProps) => {
+const CourseContainer = (props: CoursesProps) => {
     const {items} = props;
 
     const t = useTranslations("home")
@@ -22,5 +22,5 @@ const Courses = (props: CoursesProps) => {
     </section>)
 }
 
-Courses.displayName = "Courses"
-export default Courses;
+CourseContainer.displayName = "CourseContainer"
+export default CourseContainer;

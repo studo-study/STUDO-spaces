@@ -17,7 +17,10 @@ export default function FileHeader() {
     };
     return (
         <div className={"w-full h-30 flex flex-col justify-between items-center max-h-100"}>
-            <span className={"w-full font-bold dark:text-white text-3xl"}>{t("title")}</span>
+            <div className={"flex flex-col gap-1 w-full"}>
+                <span className={"w-full font-bold dark:text-white text-2xl font-georgia"}>{t("title")}</span>
+                <span className="dark:text-studogrey text-gray-400">{t("subtitle")}</span>
+            </div>
             <div className={"relative w-full max-h-10 flex flex-col"}>
                 <div className={"absolute z-20 bottom-0 w-full flex items-center justify-baseline gap-10 h-fit"}>
                     {header.map((item, i) => (

@@ -10,7 +10,7 @@ interface BreadCrumbsProps {
 const BreadCrumbs = (props: BreadCrumbsProps) => {
     const {board_title, board_id, course_title,course_id} = props;
     return (<div
-        className="w-full gap-1 dark:text-blue-400 text-emerald-400 absolute top-15 left-2 flex flex-row items-center">
+        className="w-full gap-1 dark:text-blue-400 text-emerald-400 absolute top-0 left-2 flex flex-row items-center">
                 <Link href={"/flow/" + board_id + "/overview"}
                     className={"text-xs px-3 py-1 border hover:underline border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"}> {board_title}</Link>
         <FaChevronRight size={12}/>

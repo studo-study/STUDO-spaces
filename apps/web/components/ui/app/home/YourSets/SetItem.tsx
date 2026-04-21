@@ -1,6 +1,8 @@
 import {LastStudied} from "@studo/types";
 import Image from "next/image";
 import {Link} from "@/i18n/routing";
+import {ProgressProps} from "@radix-ui/themes";
+import SmallProgress from "@/components/ui/design_system/progress/SmallProgress";
 
 interface SetItemProps {
     item: LastStudied;
@@ -12,11 +14,12 @@ const HomePageSetItem = (props: SetItemProps) => {
             <Image alt="settype" src={item.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg"} width={5} height={5} className={"w-4 dark:invert dark:brightness-0"}/>
             <span className={"font-bold dark:text-white text-studodarkblue"}>{item.title}</span>
         </div>
-        <div>
-
+        <div className={"flex flex-row gap-2 w-1/3"}>
+            <SmallProgress progress={100} length={100}/>
         </div>
     </Link>)
 }
+
 
 HomePageSetItem.displayName = "HomePageSetItem";
 export default HomePageSetItem;

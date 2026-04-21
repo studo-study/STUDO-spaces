@@ -1057,10 +1057,12 @@
   "home": {
     "jump-back-in_title": "Jump back in",
     "courses_overview_title": "Your Courses",
+    "flow_overview_title": "Your Boards",
     "pinned_title": "Pinned",
     "stats": "Statistics",
     "Streak": "Streak",
     "days": "days",
+    "all_boards": "All boards",
     "ready": "Ready to study?",
     "totCards": "Total Cards",
     "tmStd": "Time Studied",
@@ -1095,13 +1097,19 @@
     "set_overview_title": "Your Sets",
     "all_courses": "All courses",
     "all_sets": "All sets",
+    "flows_overview_title": "Your Flowboards",
     "fallback": {
       "nothing_title": "No sets yet",
       "nothing_paragraph": "You haven't created any sets"
+    },
+    "flow": {
+      "course": "course",
+      "courses": "courses"
     }
   },
   "y_f": {
     "title": "Your files",
+    "subtitle": "Manage & organize your materials",
     "sets": "Sets",
     "folders": "Folders",
     "courses": "Courses",

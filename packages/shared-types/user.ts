@@ -88,9 +88,28 @@ export interface ClassActivities {
   last_seen: string;
 }
 
+export interface Boards {
+  id: string;
+  owner_id: string;
+  owner_name: string;
+  owner_pfp: string;
+  title: string;
+  icon: string;
+  year: string | null;
+  semester: string | null;
+  school: string | null;
+  school_id: string | null;
+  total_done: number;
+  total_in_progress: number;
+  total_length: number;
+  courses: number;
+}
+
 export interface StartPagina {
   lastTen: LastStudied[];
   courses: string[];
+  boards: Boards[];
   class: ClassActivities[];
   stats: TotalStats;
 }
+

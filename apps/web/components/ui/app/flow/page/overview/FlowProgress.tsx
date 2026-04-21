@@ -16,7 +16,7 @@ const FlowProgress = (props: FlowProgressProps) => {
     const progPercent = Number(total_length) > 0 ? (Number(total_in_progress) / Number(total_length)) * 100 : 0;
 
     return (<div
-        className={"relative w-full flex flex-row min-h-full h-full px-2 gap-3 text-sm items-center justify-center dark:text-white text-studodarkblue"}>
+        className={"relative w-full flex flex-row min-h-fit h-full px-2 gap-3 text-sm items-center justify-center dark:text-white text-studodarkblue"}>
         <div
             className="relative w-full h-2 rounded-full bg-studogrey/30 border border-studoborder/30 flex flex-row">
                 <div
