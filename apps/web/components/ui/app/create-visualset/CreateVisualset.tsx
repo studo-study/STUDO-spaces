@@ -1,16 +1,18 @@
 "use client"
 import {useTranslations} from "next-intl";
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import {SetStateAction, useEffect, useLayoutEffect, useRef, useState} from "react";
 import SetImporter from "@/components/ui/app/create-studoset/SetImporter";
 import CardItem from "@/components/ui/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
 import ImportButton from "@/components/ui/app/create-studoset/importButton";
+import {CardData} from "@/types/types";
+
 const LANGUAGES = [
-    { code: "en", name: "English" },
-    { code: "nl", name: "Dutch" },
-    { code: "fr", name: "French" },
-    { code: "de", name: "German" },
-    { code: "es", name: "Spanish" }
+    {code: "en", name: "English"},
+    {code: "nl", name: "Dutch"},
+    {code: "fr", name: "French"},
+    {code: "de", name: "German"},
+    {code: "es", name: "Spanish"}
 ];
 
 export default function CreateVisualSetForm() {
@@ -29,7 +31,6 @@ export default function CreateVisualSetForm() {
 
         return () => sortable.destroy();
     }, [cardsContainerRef]);
-
 
 
     return (
@@ -90,10 +91,9 @@ export default function CreateVisualSetForm() {
                             type="submit"
                             className="px-10 w-fit flex flex-row items-center shadow-2xl cursor-pointer justify-center gap-2 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-500 text-white font-bold border border-studoborder active:scale-95 transition-transform"
                             data-cy="submit_studyset_top">
-                            {isMutating ? t("saving..."): t("create")}
+                            {isMutating ? t("saving...") : t("create")}
                         </button>
                     </div>
-
 
 
                     <div className="flex w-full mb-6 sm:mb-8 md:mb-10 flex-row justify-end">
@@ -108,8 +108,10 @@ export default function CreateVisualSetForm() {
 
                 {showImporter && (
                     <SetImporter
-                        onClose={() => setShowImporter(false)}
-                    />
+                        onClose={() => setShowImporter(false)} cardArray={[]}
+                        setCardArray={function (value: SetStateAction<CardData[]>): void {
+                            throw new Error("Function not implemented.");
+                        }}                    />
                 )}
             </form>
         </>

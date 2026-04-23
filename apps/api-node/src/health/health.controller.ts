@@ -11,10 +11,10 @@ import {
 @ApiBearerAuth()
 @Controller('health')
 export class HealthController {
-  @ApiOperation({ summary: 'Check of de backend draait.' })
+  @ApiOperation({ summary: 'Check of de api-node draait.' })
   @ApiResponse({
     status: 200,
-    description: 'checken of de backend draait',
+    description: 'checken of de api-node draait',
     example: 'pong',
   })
   @Get('ping')
