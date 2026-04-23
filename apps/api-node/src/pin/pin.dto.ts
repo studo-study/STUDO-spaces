@@ -96,7 +96,7 @@ export class UpdatePinDto {
   number?: number;
 
   @ApiProperty({
-    description: 'Update-timestamp (wordt door backend gezet)',
+    description: 'Update-timestamp (wordt door api-node gezet)',
     example: '2025-04-05T12:34:56.789Z',
     required: false,
   })
@@ -153,7 +153,10 @@ export class PinResponseDto {
   @IsString()
   image_id: string;
 
-  @ApiProperty({ description: 'ID van de ((visualset))', example: 'set_456def' })
+  @ApiProperty({
+    description: 'ID van de ((visualset))',
+    example: 'set_456def',
+  })
   @IsString()
   set_id: string;
 

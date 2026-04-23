@@ -1,4 +1,4 @@
 packages:
-  - "apps/backend"
+  - "apps/api-node"
   - "apps/web"
   - "packages/*"
