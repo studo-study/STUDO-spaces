@@ -180,7 +180,6 @@ export default function CreateVisualsetForm() {
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-full scroll-hidden h-fit mt-10 md:mt-0 flex text-sm sm:text-base flex-col items-center justify-baseline pt-20 px-10"
         >
             <div className="flex w-full flex-col items-center justify-center gap-3">
                 <span className="w-full text-2xl sm:text-3xl flex flex-col justify-center items-baseline text-studodarkblue font-bold dark:text-white">

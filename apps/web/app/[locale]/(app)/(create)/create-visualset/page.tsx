@@ -7,8 +7,8 @@ export const metadata: Metadata = {
 
 export default function CreateVisualsetPage() {
     return (
-        <div>
+        <>
             <CreateVisualsetForm/>
-        </div>
+        </>
     );
 }

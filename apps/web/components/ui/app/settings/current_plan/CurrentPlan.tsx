@@ -6,7 +6,7 @@ import {useState} from "react";
 
 export default function CurrentPlan() {
     const t = useTranslations("settings")
-    return( <section className={"flex flex-col gap-5 w-full h-fit"}>
+    return( <section className={"flex flex-col gap-5 w-full min-h-fit"}>
         <span className={"w-full text-base font-bold h-fit"}>{t("subscription")}</span>
         <div className={"w-full h-fit rounded-3xl border dark:border-studoborder border-zinc-300"}>
             <div className={"w-full gap-4 px-10 py-8 flex flex-col"}>
