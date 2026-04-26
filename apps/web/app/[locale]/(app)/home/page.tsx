@@ -11,6 +11,7 @@ import YourSets from "@/components/ui/app/home/YourSets/YourSets";
 import Courses from "@/components/ui/app/home/courses/Courses";
 import EmptyFallback from "@/components/ui/app/home/EmptyFallback/EmptyFallback";
 import Flow from "@/components/ui/app/home/flows/Flow";
+import GetStarted from "@/components/ui/app/home/get_started/GetStarted";
 
 
 const FADE_BASE =
@@ -62,6 +63,7 @@ export default async function HomePage() {
                 {data?.lastTen.length > 0 && <AnimateOnMount delay={100}><YourSets items={data?.lastTen} /></AnimateOnMount>}
                 {data?.courses.length > 0 && <AnimateOnMount delay={200}><Courses items={data?.courses}/></AnimateOnMount>}
                 {data?.boards.length > 0 && <AnimateOnMount delay={300}><Flow items={data?.boards}/></AnimateOnMount>}
+                {data?.lastTen && (<AnimateOnMount delay={400}><GetStarted/></AnimateOnMount>)}
                 {data?.courses.length === 0 && data?.lastTen.length === 0  && <EmptyFallback/>}
 
             </div>

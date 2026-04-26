@@ -18,7 +18,7 @@ export default function PersonalInfo() {
     const toggleEditRole = () => {
         setEditRole(!editRole)
     }
-    return(<section className={"flex flex-col gap-5 w-full min-h-50"}>
+    return(<section className={"flex flex-col gap-5 w-full min-h-fit"}>
             <span className={"w-full text-base font-bold h-fit"}>{t("personal info")}</span>
             <div className={"w-full min-h-40 h-fit rounded-3xl border border-studoborder "}>
                 <div className={"w-full border-b gap-4 border-studoborder  p-10 flex flex-col"}>

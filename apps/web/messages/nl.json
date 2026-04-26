@@ -988,15 +988,30 @@
     "card_error": "er zijn lege kaarten"
   },
   "createvisualset": {
-    "title": "Create new Visualset",
-    "title_placeholder": "Fill in a title...",
-    "course_placeholder": "Fill in a course...",
-    "folder_placeholder": "Select a folder...",
-    "term_language": "Term language...",
-    "def_language": "Definition language...",
-    "import": "Import",
-    "create": "Create Set",
-    "add_card": "Add Card"
+    "title": "Creëer nieuwe Visualset",
+    "title_placeholder": "Vul een titel in...",
+    "course_placeholder": "Vul een vak in...",
+    "folder_placeholder": "Selecteer een map...",
+    "create": "Creëer Visualset",
+    "saving": "Opslaan...",
+    "title_required": "Titel is verplicht",
+    "title_max": "Titel max 100 tekens",
+    "course_required": "Vak is verplicht",
+    "course_max": "Vak max 100 tekens",
+    "folder_required": "Map is verplicht",
+    "image_title": "Afbeelding titel",
+    "image_title_placeholder": "Vul een titel in voor deze afbeelding...",
+    "image_title_max": "Titel max 100 tekens",
+    "pins": "Pins",
+    "click_to_add_pins": "Klik op de afbeelding om pins toe te voegen",
+    "click_to_upload": "Klik om een afbeelding te uploaden",
+    "type_definition": "Typ een definitie",
+    "definition_placeholder": "Definitie...",
+    "cancel": "Annuleer",
+    "add": "Voeg toe",
+    "title_error": "titel is verplicht",
+    "course_error": "vak is verplicht",
+    "folder_error": "selecteer een map"
   },
   "card": {
     "Definition": "Definitie",
@@ -1011,7 +1026,8 @@
       "Welkom terug nachtuil",
       "Nog zo laat op? Je bent niet de enige...",
       "The night is still young.. and so are we 🎶",
-      "Aan 't studeermaxxen zo te zien"
+      "Aan 't studeermaxxen zo te zien",
+      "Nog bezig of al bezig???"
     ],
     "4": [
       "Tfoe tis wel beetje laat eh bro",
@@ -1019,7 +1035,8 @@
       "Nog altijd wakker... hoe!?",
       "Echt niet fatoe bro, ga pitten",
       "Masten, Douchen, Studo..",
-      "Ik wil wel bijna pitten eigenlijk"
+      "Ik wil wel bijna pitten eigenlijk",
+      "Okaaay letsgooo"
     ],
     "7": [
       "Goedemorgen {name}",
@@ -1046,7 +1063,7 @@
     "22": [
       "Welkom terug, de avond is nog jong, veel succes",
       "Tot laat aan het werk, goed bezig!",
-      "Tijd voor een romatnische avonddate met je studiemateriaal"
+      "Tijd voor een romantische avonddate met je studiemateriaal"
     ],
     "0": [
       "Middernacht is geweest en nog steeds aan het knallen!",
@@ -1058,6 +1075,7 @@
     "jump-back-in_title": "Jump back in",
     "courses_overview_title": "Your Courses",
     "flow_overview_title": "Your Boards",
+    "getstarted_overview_title": "Start Creating",
     "pinned_title": "Pinned",
     "stats": "Statistics",
     "Streak": "Streak",
@@ -1098,6 +1116,8 @@
     "all_courses": "All courses",
     "all_sets": "All sets",
     "flows_overview_title": "Your Flowboards",
+    "visualset_btn_lbl": "Create a Visualset",
+    "studoset_btn_lbl": "Create a Studoset",
     "fallback": {
       "nothing_title": "No sets yet",
       "nothing_paragraph": "You haven't created any sets"

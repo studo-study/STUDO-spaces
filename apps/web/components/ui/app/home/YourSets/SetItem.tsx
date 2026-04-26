@@ -15,7 +15,7 @@ const HomePageSetItem = (props: SetItemProps) => {
             <span className={"font-bold dark:text-white text-studodarkblue"}>{item.title}</span>
         </div>
         <div className={"flex flex-row gap-2 w-1/3"}>
-            <SmallProgress progress={100} length={100}/>
+            <SmallProgress progress={item.progress} length={item.length}/>
         </div>
     </Link>)
 }

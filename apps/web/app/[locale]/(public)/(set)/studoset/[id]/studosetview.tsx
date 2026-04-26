@@ -14,6 +14,7 @@ import SavedPopup from "@/components/ui/public/sets/studosets/savedpopup";
 import ClassroomPopup from "@/components/ui/public/sets/studosets/classroompopup";
 import SharePopup from "@/components/ui/public/sets/studosets/sharepopup";
 import SettingsPopup from "@/components/ui/public/sets/studosets/settingspopup";
+import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 
 
 interface viewProps {
@@ -146,9 +147,7 @@ export default async function StudosetView({ id }: viewProps) {
                     <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5">
                         <Link href={"/studoset/" + id + "/edit"} className={'w-full h-14 rounded-full flex items-center justify-center dark:bg-studoblue cursor-pointer bg-emerald-400 text-white font-bold border-studoborder border'} >{t("edit")}</Link>
                     </div>
-                    <span className={'w-full h-20 opacity-50 text-sm flex items-center justify-center'}>
-                        © 2026 - {year}. Studo inc. - {t('rights')}
-                    </span>
+                    <BottomCredits/>
                 </div>
         </>
     );
