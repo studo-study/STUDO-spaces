@@ -1026,7 +1026,8 @@
       "Welkom terug nachtuil",
       "Nog zo laat op? Je bent niet de enige...",
       "The night is still young.. and so are we 🎶",
-      "Aan 't studeermaxxen zo te zien"
+      "Aan 't studeermaxxen zo te zien",
+      "Nog bezig of al bezig???"
     ],
     "4": [
       "Tfoe tis wel beetje laat eh bro",
@@ -1034,7 +1035,8 @@
       "Nog altijd wakker... hoe!?",
       "Echt niet fatoe bro, ga pitten",
       "Masten, Douchen, Studo..",
-      "Ik wil wel bijna pitten eigenlijk"
+      "Ik wil wel bijna pitten eigenlijk",
+      "Okaaay letsgooo"
     ],
     "7": [
       "Goedemorgen {name}",
@@ -1061,7 +1063,7 @@
     "22": [
       "Welkom terug, de avond is nog jong, veel succes",
       "Tot laat aan het werk, goed bezig!",
-      "Tijd voor een romatnische avonddate met je studiemateriaal"
+      "Tijd voor een romantische avonddate met je studiemateriaal"
     ],
     "0": [
       "Middernacht is geweest en nog steeds aan het knallen!",
@@ -1114,6 +1116,8 @@
     "all_courses": "All courses",
     "all_sets": "All sets",
     "flows_overview_title": "Your Flowboards",
+    "visualset_btn_lbl": "Create a Visualset",
+    "studoset_btn_lbl": "Create a Studoset",
     "fallback": {
       "nothing_title": "No sets yet",
       "nothing_paragraph": "You haven't created any sets"
