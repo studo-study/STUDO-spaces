@@ -29,7 +29,7 @@ export function Shortcuts() {
         setIsMac(navigator.platform.includes("Mac"));
     }, []);
 
-    return (<section className="flex flex-col gap-5 w-full min-h-50">
+    return (<section className={"flex flex-col gap-5 w-full min-h-fit"}>
         <span className="w-full text-base font-bold h-fit">{t("shortcuts")}</span>
 
         <div className="flex flex-col divide-y divide-studoborder p-5 rounded-3xl border border-studoborder">

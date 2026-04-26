@@ -4,7 +4,7 @@ import {useTranslations} from "next-intl";
 export default function ClassroomSettings(){
     const t = useTranslations("settings")
     return(
-        <section className={"flex flex-col gap-5 w-full min-h-50"}>
+        <section className={"flex flex-col gap-5 w-full min-h-fit"}>
             <span className={"w-full text-base font-bold h-fit"}>{t("class_settings")}</span>
             <div className={"w-full min-h-40 h-fit rounded-3xl border border-studoborder"}>
                 <div className={"w-full border-b gap-4 border-studoborder px-10 py-8 flex flex-col"}>

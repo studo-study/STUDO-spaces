@@ -8,12 +8,14 @@ interface BaseButtonProps extends React.HTMLProps<HTMLButtonElement> {
     isLoading?: boolean;
     type?: "button" | "submit" | "reset";
     bg?:string;
+    rounded?: string;
 }
 
 const BaseButton = (props: BaseButtonProps) => {
-    const {label, icon, iconLeft, iconRight, onSubmit, isDisabled, isLoading, bg, children} = props;
+    const {label, icon, iconLeft, iconRight, onSubmit, isDisabled, isLoading, width, bg, children, rounded} = props;
     return (<button
-        className={`rounded-full border active:scale-95 transition-all duration-300 hover:border-studoborder border-studoborder/30 ${bg && bg} font-bold text-white flex flex-row gap-2 items-center justify-center px-5 py-2 cursor-pointer`}
+        className={`${rounded ? "rounded-"+rounded : "rounded-full"} cursor-pointer border active:scale-95 transition-all duration-300 hover:border-studoborder border-studoborder/30 ${bg && bg} font-bold text:text-studodarkblue dark:text-white flex flex-row gap-2 items-center justify-center px-5 py-2 cursor-pointer`}
+        style={{width: width}}
         type={"button"} onClick={onSubmit} {...props}>
         {iconLeft}
         {label && label}

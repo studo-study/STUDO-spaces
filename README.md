@@ -15,6 +15,7 @@ Studo lost dit op met:
 - **Studosets** — Term-definitie paren met spaced repetition, tijdstrijd en flashcard modi. Ondersteuning voor LaTeX, afbeeldingen en import uit Word/Excel.
 - **Visualsets** — Upload afbeeldingen, plaats pins met definities. Ideaal voor anatomie, aardrijkskunde en schema's. Leer via *Spotten* (typ de definitie) of *Aanwijzen* (duid de juiste pin aan).
 - **Classrooms** — Officiële klasgroepen, informele studygroups en open communities. Deel sets, volg voortgang en daag elkaar uit.
+- **Challenges** — Time Attack, Mastery Tournament en Duels om competitief te studeren.
 - **Studo Select** *(coming soon)* — AI-laag met SVEN: automatische set-generatie uit PDF's, course linking en semantic search.
 
 ---
@@ -24,12 +25,18 @@ Studo lost dit op met:
 | Layer | Technologie |
 |-------|------------|
 | Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS 4 |
-| Backend | NestJS 11, TypeScript, Drizzle ORM |
+| Backend (Node) | NestJS 11, TypeScript, Drizzle ORM |
+| Backend (Rust) | Rust microservices |
+| Backend (Swift) | Swift API services |
+| Mobile | React Native, Expo |
 | Database | PostgreSQL |
 | Storage | Scaleway S3 |
-| Auth | NextAuth (OAuth + JWT via Passport) |
-| AI | OpenAI API *(fase 3-4)* |
-| Infra | Docker, Railway |
+| Auth | NextAuth 5 (Google, Microsoft Entra ID, Credentials) |
+| AI | OpenAI API, Google Generative AI |
+| State | Zustand, React Query |
+| UI | Radix UI, Lucide Icons |
+| i18n | next-intl (en, nl, fr) |
+| Infra | Docker, Railway, Turborepo |
 
 ---
 
@@ -38,19 +45,26 @@ Studo lost dit op met:
 ```
 studo-web/
 ├── apps/
-│   ├── backend/          # NestJS API
+│   ├── api-node/             # NestJS API (TypeScript)
 │   │   ├── src/
 │   │   ├── migrations/
 │   │   ├── test/
 │   │   └── drizzle.config.ts
-│   └── web/              # Next.js frontend
-│       ├── app/
-│       ├── components/
-│       ├── store/
-│       ├── lib/
-│       ├── i18n/
-│       └── types/
-├── packages/             # Shared packages (types, utils)
+│   ├── services/
+│   │   ├── rust-services/    # Rust microservices
+│   │   └── swift-services/   # Swift API services
+│   ├── web/                  # Next.js frontend
+│   │   ├── app/
+│   │   ├── components/
+│   │   ├── store/
+│   │   ├── hooks/
+│   │   ├── lib/
+│   │   ├── messages/         # i18n vertalingen
+│   │   └── types/
+│   ├── mobile/               # React Native (Expo) app
+│   └── legacy/               # Legacy Vue frontend
+├── packages/
+│   └── shared-types/         # Gedeelde TypeScript types
 ├── turbo.json
 ├── pnpm-workspace.yaml
 └── package.json
@@ -79,8 +93,7 @@ cd STUDO-web
 # Installeer dependencies
 pnpm install
 
-# Binnen de repo staat een .env.example
-# Gebruik deze om zelf de .env's aan te maken
+# Maak .env bestanden aan op basis van de voorbeelden
 cp apps/api-node/.env.example apps/api-node/.env
 cp apps/web/.env.example apps/web/.env
 ```
@@ -88,38 +101,57 @@ cp apps/web/.env.example apps/web/.env
 ### Docker
 
 ```bash
-# Docker databank container starten in de root
+# PostgreSQL container starten
 docker compose up
 ```
-
 
 ### Database
 
 ```bash
 # Migraties genereren
-pnpm --filter @studo/api-node db:generate
+pnpm db:generate
 
 # Migraties uitvoeren
-pnpm --filter @studo/api-node db:migrate
+pnpm db:migrate
 
 # Database seeden
-pnpm --filter @studo/api-node db:seed
+pnpm db:seed
+
+# Database resetten (drop + recreate)
+pnpm db:reset
 ```
 
 ### Development
 
 ```bash
-# Start alles (api-node + frontend)
+# Start alles via Turborepo
 pnpm dev
 
 # Of individueel
 pnpm dev:web          # Next.js op :4000
 pnpm dev:api          # NestJS op :3000
-
-# Build
-pnpm build
 ```
 
+### Build
+
+```bash
+# Build alle apps
+pnpm build
+
+# Of individueel
+pnpm build:web
+pnpm build:api
+```
+
+### Docker Deployment
+
+```bash
+# Volledige backend stack
+docker compose -f docker-compose-backend.yml up
+
+# Met seeding
+docker compose -f docker-compose-backend.yml --profile seed up
+```
 
 ---
 
@@ -132,6 +164,10 @@ pnpm build
 | `pnpm lint` | Lint alle apps |
 | `pnpm dev:web` | Start alleen de frontend |
 | `pnpm dev:api` | Start alleen de backend |
+| `pnpm db:generate` | Genereer migraties uit schema wijzigingen |
+| `pnpm db:migrate` | Voer migraties uit |
+| `pnpm db:seed` | Seed de database |
+| `pnpm db:reset` | Reset de database |
 
 ---
 
@@ -141,6 +177,7 @@ pnpm build
 - [x] Visualsets met pin-based learning
 - [x] Classrooms, Study Groups & Communities
 - [x] Zoekfunctie & ecosysteem
+- [x] Challenges (Time Attack, Duels, Mastery Tournament)
 - [ ] Statistieken dashboard
 - [ ] Studo Courses & Verified Sets
 - [ ] Studo Select (AI-laag met SVEN)

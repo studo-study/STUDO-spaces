@@ -1,5 +1,4 @@
 import FlowHeader from "@/components/ui/app/flow/overview/FlowHeader";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import FlowGrid from "@/components/ui/app/flow/overview/FlowGrid";
 import FlowStoreInitializer from "@/components/providers/FlowStoreInitializer";
 import {auth} from "@/auth";
@@ -20,10 +19,10 @@ export default async function FlowPage() {
     const data = res.ok ? await res.json() : [];
 
     return (
-        <PageContainer>
+        <>
             <FlowStoreInitializer boards={data} />
             <FlowHeader />
             <FlowGrid />
-        </PageContainer>
+        </>
     );
 }
