@@ -185,6 +185,13 @@ docker compose -f docker-compose-backend.yml --profile seed up
 
 ---
 
+## Commando's
+```
+# aantal lijnen checken
+cloc . \
+  --exclude-dir=node_modules,.next,dist,build,Pods \
+  --exclude-ext=json,svg,txt
+```
 ## Licentie
 
 Proprietary — alle rechten voorbehouden.

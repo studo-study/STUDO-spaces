@@ -22,24 +22,6 @@
     "start:dev": {
       "cache": false,
       "persistent": true
-    },
-    "tasks": {
-      "build": {
-        "dependsOn": [
-          "^build"
-        ],
-        "outputs": [
-          ".next/**",
-          "dist/**"
-        ]
-      },
-      "lint": {},
-      "typecheck": {},
-      "test": {
-        "dependsOn": [
-          "^build"
-        ]
-      }
     }
   }
 }

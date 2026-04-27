@@ -39,6 +39,7 @@ const Avatar = ({ img_url, displayName, id, size = 36 }: AvatarProps) => {
                     src={img_url}
                     width={size}
                     height={size}
+                    title={displayName}
                     className="rounded-full object-cover"
                     style={{ width: size, height: size, minWidth: size, minHeight: size }}
                     alt={displayName}

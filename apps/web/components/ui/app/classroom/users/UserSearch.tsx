@@ -5,26 +5,27 @@ import {useTranslations} from "next-intl";
 import {StudySetItem} from "@/components/ui/app/your-files/sets/grid";
 import {FullClassroomSet} from "@studo/types";
 
-interface SetSearchProps<T extends { title: string; course?: string }> {
-    sets: T[];
-    setFilteredSets: React.Dispatch<React.SetStateAction<T[]>>;
+interface UserSearchProps<T extends { displayName: string;}> {
+    users: T[];
+    setFilteredUsers: React.Dispatch<React.SetStateAction<T[]>>;
 }
 
-export default function SetSearch<T extends { title: string; course?: string }>({sets, setFilteredSets}: SetSearchProps<T>) {
-    const t = useTranslations("y_f.your_sets");
+export default function UserSearch<T extends { displayName: string;}>({
+                                                                                     users,
+                                                                                     setFilteredUsers
+                                                                                 }: UserSearchProps<T>) {
+    const t = useTranslations("classroom");
     const [search, setSearch] = useState(false);
     const searchRef = useRef<HTMLInputElement>(null);
     const searching = () => {
         if (searchRef.current) {
             const query = searchRef.current.value.toLowerCase();
             if (query === "") {
-                setFilteredSets(sets as any);
+                setFilteredUsers(users as any);
             } else {
-                setFilteredSets(
-                    (sets as any[]).filter((item: any) =>
-                        item.title.toLowerCase().includes(query)
-                        || (item.course && item.course.toLowerCase().includes(query))
-                    )
+                setFilteredUsers(
+                    (users as any[]).filter((user: any) =>
+                        user.displayName.toLowerCase().includes(query))
                 );
             }
         }
@@ -40,11 +41,11 @@ export default function SetSearch<T extends { title: string; course?: string }>(
                 onBlur={() => setSearch(false)}
                 onChange={searching}
                 ref={searchRef}
-                placeholder={t("search")}
+                placeholder={t("search_user")}
                 type="text"
                 className="w-full h-full outline-none focus:ring-0"/>
             <button className="w-fit cursor-pointer">
-                <IoSearch />
+                <IoSearch/>
             </button>
         </div>
     )
