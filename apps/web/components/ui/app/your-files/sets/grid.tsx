@@ -41,7 +41,6 @@ export default function Grid({data}: GridProps) {
         ...data.visualsets.map(s => ({...s, type: "visualset" as const})),
     ];
 
-    const [grid, setGrid] = useState<boolean>(false);
     const [filteredSets, setFilteredSets] = useState<StudySetItem[]>(allSets);
     const containerRef = useRef(null);
     const selectionRef = useRef<HTMLSelectElement>(null);

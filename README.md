@@ -43,7 +43,7 @@ Studo lost dit op met:
 ## Monorepo Structuur
 
 ```
-studo-web/
+studo-spaces/
 ├── apps/
 │   ├── api-node/             # NestJS API (TypeScript)
 │   │   ├── src/

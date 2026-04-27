@@ -1,20 +1,34 @@
+"use client"
 import {memo, useMemo} from "react";
 import Link from "next/link";
 import CourseIcons from "@/data";
+import {IoShareOutline} from "react-icons/io5";
+import {MdEditNote} from "react-icons/md";
+import {FaExternalLinkAlt} from "react-icons/fa";
+import {FiTrash2} from "react-icons/fi";
+import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
+import {useTranslations} from "next-intl";
 
 interface CourseCardProps {
     course: string;
+    options?: boolean;
 }
 
-export default function CourseItem({course}: CourseCardProps) {
+export default function CourseItem({course, options}: CourseCardProps) {
     const coverImage = useMemo(() => getCoverImage(course), [course]);
-
+    const t = useTranslations("y_f.your_sets")
     return (
         <Link
             href={`/course/${course}`}
-            className="min-w-35 group p-5 rounded-2xl bg-studogrey/30 border  border-studoborder/30 hover:border-studoborder transition-all duration-300 text-center"
+            className="relative min-w-35 group p-5 rounded-2xl bg-studogrey/30 border  border-studoborder/30 hover:border-studoborder transition-all duration-300 text-center"
         >
-            <div className="min-w-12 min-h-12 w-12 h-12 max-w-12 mx-auto mb-3 rounded-full shadow-2xl flex items-center justify-center text-studodarkblue dark:text-white group-hover:scale-110 transition-transform duration-300">
+            {options && <div className={"absolute right-2 top-2"}>
+                <ItemOptions options={[
+                    {label: t("external_window"), icon:<FaExternalLinkAlt size={10}/> , onClick: () => console.log("test")},
+                    {label: t("delete_course"), icon: <FiTrash2 size={14}/>, onClick: () => {}, danger: true},
+                ]}/>
+            </div>}
+            <div className="min-w-12 min-h-12 w-12 h-12 max-w-12 mx-auto mb-3 rounded-full bg-white dark:bg-studogrey/30 flex items-center justify-center text-studodarkblue dark:text-white group-hover:scale-110 transition-transform duration-300">
                 <img src={coverImage} alt="" className="w-7 shadow-2xl" />
             </div>
             <h3 className="font-medium dark:text-white text-studodarkblue mb-1">{course}</h3>

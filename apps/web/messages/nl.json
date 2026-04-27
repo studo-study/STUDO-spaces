@@ -1146,8 +1146,11 @@
       "no_sets": "no sets yet",
       "no_results": "no result",
       "delete": "Delete set",
+      "delete_folder": "Delete folder",
+      "delete_course": "Delete course",
       "external_window": "Open in new tab",
-      "edit_set": "Edit set"
+      "edit_set": "Edit set",
+      "share_folder": "Share folder"
     }
   },
   "select": {
@@ -1216,7 +1219,8 @@
     "search": "Search Classrooms...",
     "members": "members",
     "member": "member",
-    "leave": "Leave"
+    "leave": "Leave classroom",
+    "external_window": "Open in new tab"
   },
   "classroom": {
     "overview": "Overview",

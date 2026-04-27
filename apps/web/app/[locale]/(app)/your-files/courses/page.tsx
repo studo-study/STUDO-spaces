@@ -29,7 +29,7 @@ export default async function Page({params}: {
     return (
         <div className="w-full grid grid-cols-5 gap-5 scroll-hidden py-5">
             {[...courses].map((item) => (
-                <CourseItem key={item} course={item}/>
+                <CourseItem key={item} course={item} options/>
             ))}
         </div>
     );

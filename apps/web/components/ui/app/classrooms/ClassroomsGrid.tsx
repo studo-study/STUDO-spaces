@@ -1,15 +1,10 @@
 "use client"
 
 import {useRef, useState} from "react";
-import {type Classroom, FullClassroom, LastStudied} from "@/types/types";
-import {useLocale, useTranslations} from "next-intl";
-import SetSearch from "@/components/ui/app/your-files/sets/search";
-import {HiOutlineViewList} from "react-icons/hi";
-import {BsGridFill} from "react-icons/bs";
-import {IoIosAdd} from "react-icons/io";
-import SetItem from "@/components/ui/app/SetItem";
+import {FullClassroom} from "@/types/types";
+import {useTranslations} from "next-intl";
 import ClassSearch from "@/components/ui/app/classrooms/ClassroomSearchbar";
-import {mockClassrooms, mockFullClassrooms} from "@/data/mocks/classroomsMock";
+import {mockFullClassrooms} from "@/data/mocks/classroomsMock";
 import ClassroomOverviewItem from "@/components/ui/app/classrooms/ClassroomOverviewItem";
 import {useUser} from "@/components/providers/UserProvider";
 const classrooms: FullClassroom[] = mockFullClassrooms

@@ -1,9 +1,8 @@
-import { useTranslations} from "next-intl";
+import {useTranslations} from "next-intl";
 import {Metadata} from "next";
 import {auth} from "@/auth";
-import {getTranslations, getLocale} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 import CTABlock from "@/components/ui/app/home/CTABlock";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import JumpBackIn from "@/components/ui/app/home/jump-back-in/JumpBackIn";
 import QuickStats from "@/components/ui/app/home/quick_stats/QuickStats";
@@ -27,7 +26,6 @@ export const metadata: Metadata = {
 export default async function HomePage() {
     const t = await getTranslations('home');
     const tTimed = await getTranslations('timed');
-    const locale = await getLocale();
 
     const session = await auth();
     const token = session?.accessToken;
@@ -44,10 +42,9 @@ export default async function HomePage() {
     const split = data?.lastTen.toSpliced(3)
 
 
-
-    return (
-        <PageContainer>
-            <section className={`w-full h-fit mb-3 gap-5 flex flex-col sticky top-0 z-[999] pb-3 dark:bg-bg-dark bg-bg-white`}>
+    return (<>
+            <section
+                className={`w-full h-fit mb-3 gap-5 flex flex-col sticky top-0 pt-5 z-[999] pb-3 dark:bg-bg-dark bg-bg-white`}>
                 <div className={"w-full flex flex-col gap-2"}>
                     <div className="w-full h-fit flex flex-col gap-2 ">
                     <span className="font-georgia font-bold dark:text-white text-studodarkblue text-2xl">
@@ -60,24 +57,27 @@ export default async function HomePage() {
             </section>
 
             <div className={"w-full grid grid-cols-1 gap-10 pb-15"}>
-                {data?.lastTen && (<AnimateOnMount delay={0}><JumpBackIn items={split ?? []} /></AnimateOnMount>)}
-                {data?.lastTen.length > 0 && <AnimateOnMount delay={100}><YourSets items={data?.lastTen} /></AnimateOnMount>}
-                {data?.courses.length > 0 && <AnimateOnMount delay={200}><Courses items={data?.courses}/></AnimateOnMount>}
+                {data?.lastTen && (<AnimateOnMount delay={0}><JumpBackIn items={split ?? []}/></AnimateOnMount>)}
+                {data?.lastTen.length > 0 &&
+                    <AnimateOnMount delay={100}><YourSets items={data?.lastTen}/></AnimateOnMount>}
+                {data?.courses.length > 0 &&
+                    <AnimateOnMount delay={200}><Courses items={data?.courses}/></AnimateOnMount>}
                 {data?.boards.length > 0 && <AnimateOnMount delay={300}><Flow items={data?.boards}/></AnimateOnMount>}
                 {data?.lastTen && (<AnimateOnMount delay={400}><GetStarted/></AnimateOnMount>)}
-                {data?.courses.length === 0 && data?.lastTen.length === 0  && <EmptyFallback/>}
+                {data?.courses.length === 0 && data?.lastTen.length === 0 && <EmptyFallback/>}
                 <BottomCredits/>
             </div>
 
-            {data?.courses.length === 0 && data?.lastTen.length === 0  &&
-            <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
-                <AnimateOnMount delay={2000}>
-                    <CTABlock t={t}/>
-                </AnimateOnMount>
+            {data?.courses.length === 0 && data?.lastTen.length === 0 &&
+                <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
+                    <AnimateOnMount delay={2000}>
+                        <CTABlock t={t}/>
+                    </AnimateOnMount>
 
-            </div>}
-           <div className={"fixed z-10 bottom-0 h-25 w-2/3 bg-linear-0 dark:from-bg-dark from-bg-white to-transparent"}/>
-        </PageContainer>
+                </div>}
+            <div
+                className={"fixed z-10 bottom-0 h-25 w-2/3 bg-linear-0 dark:from-bg-dark from-bg-white to-transparent"}/>
+        </>
     );
 }
 

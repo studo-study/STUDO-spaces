@@ -58,20 +58,20 @@ function ListItem({set, index, t, locale}: SetItemProps) {
                 flex gap-3 items-center w-full rounded-3xl bg-studogrey/30 border border-studoborder/30 hover:border-studoborder transition-all duration-300"
         >
             <div className="flex flex-row gap-3 items-center w-full sm:w-1/2 sm:flex-1">
-                <div className="w-15 h-15 rounded-full bg-studogrey/30 flex items-center justify-center">
+                <div className="w-15 h-15 rounded-full dark:bg-studogrey/30 bg-white flex items-center justify-center">
                     <Image width={32} height={32} className="w-8" src={getCoverImage(set.course)} alt={set.course}/>
                 </div>
 
                 <div className={"w-fit flex flex-col gap-1"}>
                     <div className={"w-fit flex flex-row gap-2 items-center"}>
                         <Image src={iconSrc} width={20} height={20}
-                               className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt=""/>
+                               className="dark:invert dark:opacity-50 dark:brightness-0 w-5 flex-shrink-0" alt=""/>
                         <span
                             className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
                             {set.title}
                         </span>
                     </div>
-                    <div className={"w-full flex flex-row gap-2 items-center text-white/30 text-xs"}>
+                    <div className={"w-full flex flex-row gap-2 items-center opacity-50 dark:text-white text-xs"}>
                         <span>{set.course}</span>
                         <span>•</span>
                         <span>{date}</span>

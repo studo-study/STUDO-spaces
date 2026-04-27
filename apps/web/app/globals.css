@@ -67,7 +67,7 @@ body::-webkit-scrollbar {
     --color-bg-white: rgb(239, 246, 255);
     --color-bg-dark: rgb(31, 41, 55);
     --color-studodark: rgba(224, 224, 224, 0.19);
-    --color-studogrey: rgba(200, 210, 210, 0.19);
+    --color-studogrey: rgba(200, 210, 210, 0.5);
     --color-studowhite: rgba(224, 224, 224, 0.19);
     --color-inputcolor: rgba(255, 255, 255, 0.175);
     --color-studoborder: rgb(131, 131, 131, 0.5);
@@ -79,6 +79,7 @@ body::-webkit-scrollbar {
 
 .dark {
     --color-studoborder: rgba(255, 255, 255, 0.3);
+    --color-studogrey: rgba(200, 210, 210, 0.19);
 }
 
 

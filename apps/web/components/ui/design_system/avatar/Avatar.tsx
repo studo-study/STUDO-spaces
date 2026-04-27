@@ -29,13 +29,20 @@ function hashId(id: string): number {
     return Math.abs(hash);
 }
 
-const Avatar = (props: AvatarProps) => {
-    const { img_url, displayName, id } = props;
+const Avatar = ({ img_url, displayName, id, size = 36 }: AvatarProps) => {
+    const fontSize = size * 0.38;
 
     if (img_url) {
         return (
             <div className="flex flex-row items-center gap-2">
-                <Image src={img_url} width={20} height={20} className="min-w-9 min-h-9 rounded-full" alt={displayName} />
+                <Image
+                    src={img_url}
+                    width={size}
+                    height={size}
+                    className="rounded-full object-cover"
+                    style={{ width: size, height: size, minWidth: size, minHeight: size }}
+                    alt={displayName}
+                />
             </div>
         );
     }
@@ -44,8 +51,11 @@ const Avatar = (props: AvatarProps) => {
     const gradient = gradients[hashId(id) % gradients.length];
 
     return (
-        <div className={`rounded-full min-w-9 min-h-9 items-center justify-center flex bg-linear-0 ${gradient}`}>
-            <span className="font-bold text-sm uppercase">{initials}</span>
+        <div
+            className={`rounded-full items-center justify-center flex bg-linear-0 ${gradient}`}
+            style={{ width: size, height: size, minWidth: size, minHeight: size }}
+        >
+            <span className="font-bold uppercase" style={{ fontSize }}>{initials}</span>
         </div>
     );
 };
