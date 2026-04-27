@@ -2,6 +2,7 @@
 import {ReactNode} from "react";
 import LandingHeader from "@/components/ui/marketing/landing_header/header";
 import LandingFooter from "@/components/ui/marketing/landing_footer/footer";
+import IcoSwitcher from "@/components/ui/overige/ui/IcoSwitcher";
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
     return (<div className={"scroll-hidden"}>
