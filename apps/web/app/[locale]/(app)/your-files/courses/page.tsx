@@ -27,7 +27,7 @@ export default async function Page({params}: {
     const t = await getTranslations("y_f.courses");
 
     return (
-        <div className="w-full grid grid-cols-5 gap-5 scroll-hidden py-25">
+        <div className="w-full grid grid-cols-5 gap-5 scroll-hidden py-5">
             {[...courses].map((item) => (
                 <CourseItem key={item} course={item}/>
             ))}

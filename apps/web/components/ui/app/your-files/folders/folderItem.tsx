@@ -1,85 +1,60 @@
 "use client";
-import {FaFolderOpen} from "react-icons/fa";
+import {FaChevronDown, FaChevronRight, FaFolderOpen} from "react-icons/fa";
 import Link from "next/link";
 import {useDraggable, useDroppable} from "@dnd-kit/core";
 import {Folder} from "@/types/types";
+import IconButton from "@/components/ui/design_system/button/IconButton";
+import {useState} from "react";
+import {FaFolderClosed} from "react-icons/fa6";
 
 interface FolderProps {
     folder: Folder;
 }
 
 export default function FolderItem({folder}: FolderProps) {
-    const {isOver, setNodeRef: setDropRef} = useDroppable({
-        id: folder.id,
-    });
+    const [isOpen, setIsOpen] = useState<boolean>(false)
 
-    const {attributes, listeners, setNodeRef: setDragRef, transform, isDragging} = useDraggable({
-        id: folder.id,
-    });
-
-    function combineRefs(el: HTMLElement | null) {
-        setDropRef(el);
-        setDragRef(el);
+    const toggleOpen = () => {
+        setIsOpen(prev => !prev)
     }
-
-    const style = {
-        transform: transform
-            ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-            : undefined,
-        opacity: isDragging ? 0.5 : 1,
-        border: isOver ? '#4f83ff solid 3px' : undefined,
-    };
-
     const handleDelete = () => {
         console.log("deleted");
     };
 
-    return (
-        <Link
-            href={"/your-files/folders/" + folder.id}
-            ref={combineRefs}
-            style={style}
-            className={"w-full h-20 flex items-center justify-between gap-5 px-3 rounded-full bg-studogrey/10 border border-studoborder/30 shadow-xl pr-10"}
-        >
-            <div className={"min-w-15 min-h-15 rounded-full bg-gray-700 items-center justify-center flex text-white/30 text-2xl"}>
-                <FaFolderOpen />
-            </div>
-
-            <span className={"w-full font-bold dark:text-white text-studodarkblue text-lg"}>
-               {folder.name}
-            </span>
-
-            <div
-                className={"w-fit flex items-center cursor-pointer text-white/30 text-2xl"}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    handleDelete();
-                }}
+    return (<>
+            <div className={"w-full h-15 flex items-center justify-between gap-5 px-3 rounded-xl  border border-studoborder/30 pr-10"}
             >
-                <img
-                    src="/icons/delete.svg"
-                    alt="delete"
-                    className="cursor-pointer h-4 sm:h-5 dark:invert dark:brightness-0"
-                />
-            </div>
+                <div className={"dark:text-white/30 text-2xl flex flex-row items-center gap-5"}>
+                <IconButton onClick={toggleOpen} icon={isOpen ? <FaChevronDown size={15}/> : <FaChevronRight size={15}/>}/>
+                    <div className={"w-fit flex flex-row items-center gap-2"}>
+                        <div className={"min-w-6"}>
+                            {isOpen ? <FaFolderOpen size={20}/> : <FaFolderClosed size={17}/>}
+                        </div>
+                        <Link  href={"/your-files/folders/" + folder.id} className={"w-fit font-bold hover:bg-studogrey/30 transition-all duration-300 px-3 rounded-full dark:text-white text-studodarkblue text-lg"}>
+                            {folder.name}
+                        </Link>
+                    </div>
+                </div>
 
-            <div
-                className={"w-fit flex items-center cursor-grab text-white/30 text-2xl"}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                }}
-                onPointerDown={(e) => e.stopPropagation()}
-                {...attributes}
-                {...listeners}
-            >
-                <img
-                    src="/icons/grab.svg"
-                    alt="grab"
-                    className="h-4 sm:h-5 dark:invert dark:brightness-0"
-                />
+
+                <div>
+                    <div
+                        className={"w-fit flex items-center cursor-grab text-white/30 text-2xl"}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }}
+                        onPointerDown={(e) => e.stopPropagation()}
+                    >
+                        <img
+                            src="/icons/grab.svg"
+                            alt="grab"
+                            className="h-4 sm:h-5 dark:invert dark:brightness-0"
+                        />
+                    </div>
+                </div>
+
             </div>
-        </Link>
+        </>
     );
 }

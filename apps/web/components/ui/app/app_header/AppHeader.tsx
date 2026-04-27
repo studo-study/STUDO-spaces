@@ -258,7 +258,6 @@ function SpecialeDag() {
         carnival: "from-fuchsia-600 via-fuchsia-500 to-fuchsia-400 dark:from-white dark:via-fuchsia-200 dark:to-fuchsia-200",
         kingsDay: "from-orange-500 via-orange-400 to-amber-400 dark:from-white dark:to-orange-200",
         midsummer: "from-blue-400 via-green-300 to-amber-300 dark:from-white dark:to-sky-200",
-        belgie: "from-zinc-900 via-amber-300 to-rose-700 dark:from-zinc-900 dark:via-amber-400 dark:to-rose-600",
         vs: "from-blue-600 to-red-700 dark:from-blue-600 dark:to-red-400",
         nederland: "from-orange-400 via-amber-500 to-orange-300 dark:from-orange-400 dark:via-amber-500 dark:to-orange-300",
     };
@@ -290,13 +289,7 @@ function SpecialeDag() {
         "31/11": feestdagen.newYear,
     };
 
-    if (locale === "nl" && key === "21/6") {
-        return feestdagen.belgie;
-    }
 
-    if (locale === "nl" && key === "27/3") {
-        return feestdagen.belgie;
-    }
 
     return vasteDagen[key] || "from-emerald-500 to-emerald-400 dark:from-white dark:to-blue-200";
 }

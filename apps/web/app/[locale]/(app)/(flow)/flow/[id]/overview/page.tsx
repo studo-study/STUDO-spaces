@@ -3,7 +3,7 @@ import FlowTable from "@/components/ui/app/flow/page/overview/FlowTable";
 import FlowProgress from "@/components/ui/app/flow/page/overview/FlowProgress";
 import UrgentPoints from "@/components/ui/app/flow/page/overview/UrgentPoints";
 import {useTranslations} from "next-intl";
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 
 export default function Page() {
     const t = useTranslations("flow");

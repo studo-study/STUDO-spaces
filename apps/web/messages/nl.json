@@ -1144,7 +1144,10 @@
       "all": "All Sets",
       "search": "search set...",
       "no_sets": "no sets yet",
-      "no_results": "no result"
+      "no_results": "no result",
+      "delete": "Delete set",
+      "external_window": "Open in new tab",
+      "edit_set": "Edit set"
     }
   },
   "select": {

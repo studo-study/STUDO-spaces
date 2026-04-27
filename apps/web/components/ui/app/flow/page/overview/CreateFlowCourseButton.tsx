@@ -1,6 +1,6 @@
 import {IoIosAdd} from "react-icons/io";
 import {useTranslations} from "next-intl";
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 
 const CreateFlowCourseButton = () => {
     const t = useTranslations("flow")
