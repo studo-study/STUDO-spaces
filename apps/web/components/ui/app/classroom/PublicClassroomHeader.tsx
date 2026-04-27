@@ -21,10 +21,8 @@ import TriggerSettings from "@/components/ui/app/classroom/header/Settings";
 const classroom: Classroom = mockFullClassrooms[0];
 
 export default function PublicClassroomHeader() {
-    const t = useTranslations("classroom")
     const pathname = usePathname();
     const items = [
-        {link: `/classroom/${classroom.id}/overview`, label:"overview"},
         {link: `/classroom/${classroom.id}/sets`, label:"set_title"},
         {link: `/classroom/${classroom.id}/members`, label:"users"},
     ]

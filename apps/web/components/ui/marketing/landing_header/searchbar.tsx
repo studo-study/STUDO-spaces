@@ -3,7 +3,7 @@ import {useParams} from "next/navigation";
 import {IoMdSearch} from "react-icons/io";
 import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
-import {useLoadingStore} from "@/store/loadingStore";
+import {useLoadingStore} from "@/store/slices/loading/loadingStore";
 import {useLocale} from "next-intl";
 
 export default function Searchbar() {

@@ -11,7 +11,7 @@ import TriggerClassrooms from "@/components/ui/marketing/landing_header/dropdown
 import Searchbar from "@/components/ui/marketing/landing_header/searchbar";
 import {useParams} from "next/navigation";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
-import {useLoadingStore} from "@/store/loadingStore";
+import {useLoadingStore} from "@/store/slices/loading/loadingStore";
 
 
 const menuItems = [

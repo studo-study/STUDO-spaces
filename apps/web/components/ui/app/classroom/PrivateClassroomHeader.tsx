@@ -17,6 +17,7 @@ import TriggerInvite from "@/components/ui/app/classroom/header/TriggerInvite";
 import InvitePeople from "@/components/ui/app/classroom/header/InvitePeople";
 import AddSet from "@/components/ui/app/classroom/header/AddSet";
 import TriggerSettings from "@/components/ui/app/classroom/header/Settings";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
 
 const classroom: Classroom = mockFullClassrooms[0];
 
@@ -24,7 +25,6 @@ export default function PrivateClassroomHeader() {
     const t = useTranslations("classroom")
     const pathname = usePathname();
     const items = [
-        {link: `/classroom/${classroom.id}/overview`, label:"overview"},
         {link: `/classroom/${classroom.id}/sets`, label:"set_title"},
         {link: `/classroom/${classroom.id}/members`, label:"users"},
     ]
@@ -55,7 +55,7 @@ export default function PrivateClassroomHeader() {
         setSettingsIsOpen(prev => !prev);
     }
 
-    const copyText = "www.studo.studygroup" + pathname;
+    const copyText = "www.studo.study" + pathname;
     const copy = () => {
         navigator.clipboard.writeText(copyText);
 
@@ -65,7 +65,7 @@ export default function PrivateClassroomHeader() {
         <div className="w-full flex flex-col gap-2">
             {/* Header row */}
             <div className="w-full flex items-center justify-between dark:text-white text-studodarkblue">
-                <div className="min-w-fit truncate font-bold text-3xl flex flex-row gap-5 items-center">
+                <div className="min-w-fit font-georgia truncate font-bold text-2xl flex flex-row gap-5 items-center">
                     <span>{classroom.name}</span>
                     <div>{getClassroomType(classroom.type)}</div>
                 </div>
@@ -124,15 +124,9 @@ export default function PrivateClassroomHeader() {
 
                     <div className="flex flex-row items-center gap-5 pb-3">
                         <TriggerInvite togglePopUp={toggleInvitePopUp} />
-                        <button
+                        <BaseButton label={t("copy")} iconLeft={<ImLink />}
                             onClick={() => { copy(); toggleCopiedAnimation(); }}
-                            className={`w-fit px-7 py-2 rounded-full active:scale-95 transition-all duration-300 ${
-                                copied ? "bg-emerald-400" : "dark:bg-white"
-                            } cursor-pointer flex items-center gap-3 justify-center`}
-                        >
-                            <ImLink />
-                            {t("copy")}
-                        </button>
+                            bg={`${copied ? "bg-emerald-400" : "bg-studogrey/30"} `}/>
                     </div>
                 </div>
                 <div className="absolute z-10 bottom-0 w-full h-0.5 bg-studogrey" />

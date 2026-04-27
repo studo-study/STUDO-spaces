@@ -9,6 +9,7 @@ import {GiPodium, GiSwordsEmblem} from "react-icons/gi";
 import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
 import {IoIosClose} from "react-icons/io";
+import Avatar from "@/components/ui/design_system/avatar/Avatar";
 
 export default function ChallengeGrid() {
     const members = mockChallengeMembers;
@@ -18,33 +19,23 @@ export default function ChallengeGrid() {
 
     const t = useTranslations("classroom.challenges")
     return (
-        <div className={"w-full h-full flex flex-col gap-3 overflow-y-auto pt-5"}>
-            <div className={"w-full h-full flex flex-col lg:grid lg:grid-cols-6 lg:grid-rows-5 gap-5"}>
-
-                {/* Running challenges — full width, horizontal scroll */}
-                <div className={"w-full lg:col-start-1 lg:col-end-7 lg:row-start-1 lg:row-end-2"}>
+        <div className={"w-full h-full flex flex-col scroll-hidden"}>
+            <div className={"w-full h-full flex flex-col"}>
+                <div className={"w-full gap-5 flex flex-col"}>
                     <span className={"text-studodarkblue dark:text-white flex items-center gap-2 font-bold"}>
                         <HiLightningBolt />
                         {t("running")}:
                     </span>
-                    <div className={"w-full h-28 flex flex-row overflow-x-auto scroll-hidden overflow-y-visible gap-5 py-3"}>
+                    <div className={"w-full h-fit grid grid-cols-2 grid-rows-3 gap-5"}>
                         {challenges
                             .filter(challenge => challenge.classroom_id === classroom)
                             .map((challenge, i) => <ChallengeItem challenge={challenge} key={i} />)}
                     </div>
                 </div>
 
-                {/* Bottom 3 panels — horizontal scroll on tablet, grid on desktop */}
-                <div className={"flex flex-row overflow-x-auto gap-5 lg:contents"}>
-
-                    {/* Left panel */}
-                    <div className={"min-w-[340px] lg:min-w-0 flex-shrink-0 h-64 lg:h-full rounded-2xl bg-studogrey/30 border-studoborder/10 border lg:col-start-1 lg:col-end-3 lg:row-start-2 lg:row-end-6"} />
-
-                    {/* Middle panel */}
-                    <div className={"min-w-[340px] lg:min-w-0 flex-shrink-0 h-64 lg:h-full rounded-2xl bg-studogrey/30 border-studoborder/10 border lg:col-start-3 lg:col-end-5 lg:row-start-2 lg:row-end-6"} />
-
-                    {/* Leaderboard */}
-                    <div className={"min-w-[280px] lg:min-w-0 flex-shrink-0 h-64 lg:h-full rounded-2xl p-5 bg-studogrey/30 border-studoborder/10 border lg:col-start-5 lg:col-end-7 lg:row-start-2 lg:row-end-6"}>
+                <div className={"grid grid-cols-2 min-w-full h-full gap-5 w-full"}>
+                    <div className={"min-w-full rounded-3xl bg-studogrey/30 border-studoborder/30 border"} />
+                    <div className={"min-w-full rounded-3xl p-5 bg-studogrey/30 border-studoborder/30 border "}>
                         <span className={"text-studodarkblue dark:text-white font-bold"}>
                             {t("current_leaderboard")}:
                         </span>
@@ -72,19 +63,19 @@ function ChallengeItem({challenge}: ChallengeItemProps) {
     const [popupChallenge, setPopupChallenge] = useState(false);
 
     return (
-        <div className={"w-48 md:w-56 lg:w-1/4 h-full relative flex-shrink-0"}>
+        <div className={"w-full min-h-full relative"}>
             <div
                 onClick={() => setPopupChallenge(prev => !prev)}
-                className={`w-full h-20 rounded-3xl bg-studogrey/10 cursor-pointer
+                className={`w-full h-10 rounded-full bg-studoblue/30 cursor-pointer
                     flex items-center dark:text-white text-studodarkblue justify-center gap-3
-                    border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 shadow-2xl`}
+                    border border-studoborder/30 hover:border-studoborder transition-all duration-300`}
             >
                 {challenge.challengeType === "time attack"
                     ? <IoHourglassOutline />
                     : challenge.challengeType === "mastery tournament"
                         ? <GiPodium />
                         : <GiSwordsEmblem />}
-                <span className={"font-bold truncate max-w-[60%]"}>{challenge.title}</span>
+                <span className={"font-bold truncate text-sm max-w-[60%]"}>{challenge.title}</span>
             </div>
             <ChallengePopup
                 challenge={challenge}
@@ -160,9 +151,7 @@ function UserItem({user}: UserItemProps) {
             flex items-center dark:text-white text-studodarkblue justify-start gap-3
             border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 shadow-2xl`}>
             <span className={"text-sm lg:text-base font-medium w-5 text-center shrink-0"}>{user.position}</span>
-            <div className={"w-10 h-10 shrink-0 rounded-full bg-studogrey overflow-hidden"}>
-                <Image src={user.img_url} width={40} height={40} alt={"pfp"} className={"object-cover w-10 h-10"} />
-            </div>
+                <Avatar displayName={user.displayName} id={user.user_id} size={40}/>
             <span className={"truncate text-sm lg:text-base"}>{user.displayName}</span>
         </div>
     )

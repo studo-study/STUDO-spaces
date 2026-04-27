@@ -122,3 +122,10 @@ export interface ChallengeMember {
   position: number;
   winner: boolean;
 }
+
+export interface JoinRequest {
+  displayName: string;
+  date: string;
+  img_url: string;
+  id: string;
+}

@@ -1,5 +1,5 @@
 "use client"
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 import FlowGridItem from "@/components/ui/app/flow/overview/FlowGridItem";
 
 export default function FlowGrid() {

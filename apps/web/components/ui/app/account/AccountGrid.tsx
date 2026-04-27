@@ -6,9 +6,9 @@ import {HiOutlineViewList} from "react-icons/hi";
 import {IoIosAdd} from "react-icons/io";
 import Link from "next/link";
 import { signOut } from 'next-auth/react';
+import ListItems from "@/components/ui/app/your-files/sets/listitems";
 
 export default function AccountGrid() {
-    const [grid, setGrid] = useState<boolean>(true);
     const t = useTranslations("account");
     const containerRef = useRef(null);
     const [AddIsOpen, setAddIsOpen] = useState(false);
@@ -26,18 +26,6 @@ export default function AccountGrid() {
         <div className={"w-full h-20 py-5 flex flex-row justify-between gap-3"}>
             <span className={"font-bold text-lg dark:text-white text-studodarkblue"}>{t("subtitle_sets")}:</span>
             <div className={"w-fit flex flex-row gap-5 items-center"}>
-                <button
-                    onClick={() => setGrid(!grid)}
-                    className={`${grid ? "border-white text-white bg-studogrey" : "border-studogrey text-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
-                >
-                    <BsGridFill />
-                </button>
-                <button
-                    onClick={() => setGrid(!grid)}
-                    className={`${grid ? "border-studogrey text-studogrey" : "border-white text-white bg-studogrey"} cursor-pointer w-8 h-8 rounded-lg border border-studogrey text-studogrey text-lg flex items-center justify-center`}
-                >
-                    <HiOutlineViewList />
-                </button>
                 <button
                     onClick={togglePopUp}
                     ref={containerRef}
@@ -57,13 +45,8 @@ export default function AccountGrid() {
 
         </div>
         <div className={"w-full h-fit gap-2 flex flex-col"}>
-            <div className={`flex-1 overflow-y-scroll scroll-hidden min-h-45 max-h-95 mb-10
-        ${grid ? "grid grid-cols-4 gap-5" : "flex flex-col gap-5"}`}
-            >
-              <SetItem grid={grid}/>
-              <SetItem grid={grid}/>
-              <SetItem grid={grid}/>
-              <SetItem grid={grid}/>
+            <div className={`flex-1 overflow-y-scroll scroll-hidden min-h-45 max-h-95 mb-10 flex flex-col gap-5"`}>
+                <ListItems items={[]}/>
             </div>
         </div>
 

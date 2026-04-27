@@ -43,7 +43,7 @@ Studo lost dit op met:
 ## Monorepo Structuur
 
 ```
-studo-web/
+studo-spaces/
 ├── apps/
 │   ├── api-node/             # NestJS API (TypeScript)
 │   │   ├── src/
@@ -185,6 +185,13 @@ docker compose -f docker-compose-backend.yml --profile seed up
 
 ---
 
+## Commando's
+```
+# aantal lijnen checken
+cloc . \
+  --exclude-dir=node_modules,.next,dist,build,Pods \
+  --exclude-ext=json,svg,txt
+```
 ## Licentie
 
 Proprietary — alle rechten voorbehouden.
