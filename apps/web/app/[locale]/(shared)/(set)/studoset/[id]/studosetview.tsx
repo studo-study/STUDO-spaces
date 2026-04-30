@@ -9,7 +9,6 @@ import CardItem from "@/components/ui/public/sets/studosets/carditem";
 import {Progress} from "@/components/ui/marketing/progress/progress";
 import {IoFilter, IoFolderOpenOutline} from "react-icons/io5";
 import {FaRegHeart} from "react-icons/fa";
-import {LuFolderOpen} from "react-icons/lu";
 import SavedPopup from "@/components/ui/public/sets/studosets/savedpopup";
 import ClassroomPopup from "@/components/ui/public/sets/studosets/classroompopup";
 import SharePopup from "@/components/ui/public/sets/studosets/sharepopup";
@@ -32,17 +31,17 @@ export default async function StudosetView({ id }: viewProps) {
         }
     ).then(res => res.json());
 
-    const not_studied = data?.session.cards.reduce((sum: number, card: any) => {
+    const not_studied = data?.session?.cards?.reduce((sum: number, card: any) => {
         return card.card_viewcount === 0 ? sum + 1 : sum;
-    }, 0);
+    }, 0) ?? 0;
 
-    const reviewed = data?.session.cards.reduce((sum: number, card: any) => {
+    const reviewed = data?.session?.cards?.reduce((sum: number, card: any) => {
         return card.card_viewcount === 1 ? sum + 1 : sum;
-    }, 0);
+    }, 0) ?? 0;
 
-    const studied = data?.session.cards.reduce((sum: number, card: any) => {
+    const studied = data?.session?.cards?.reduce((sum: number, card: any) => {
         return card.card_viewcount > 1 ? sum + 1 : sum;
-    }, 0);
+    }, 0) ?? 0;
 
     const year = new Date().getFullYear();
     console.log(data)
@@ -56,7 +55,7 @@ export default async function StudosetView({ id }: viewProps) {
                             dark:text-white min-w-0"
                     >
                         <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full flex-shrink-0">
-                            {data?.img_url != 'default' ? <Image src={data.img_url} alt={'pfp'} width={0} height={0} className={'object-cover w-full'}/> : <PiStudent size={10} color={"white"} />}
+                            {data?.img_url != 'default' ? <Image src={data?.img_url} alt={'pfp'} width={0} height={0} className={'object-cover w-full'}/> : <PiStudent size={10} color={"white"} />}
                         </div>
                         <span className="opacity-50 text-xs sm:text-sm truncate hover:underline">@{data?.displayName}</span>
                     </Link>
@@ -76,15 +75,15 @@ export default async function StudosetView({ id }: viewProps) {
                 <div className={"w-full h-20 flex flex-col gap-2 opacity-40"}>
                     <div className={"w-full flex flex-row gap-2 items-center"}>
                         <IoFolderOpenOutline />
-                        <span>{t("saved_in")}: {data?.folders[0]?.name}</span>
+                        <span>{t("saved_in")}: {data?.folders?.[0]?.name}</span>
                     </div>
-                    {data?.classrooms[0] && <div className={"w-full flex flex-row gap-2 items-center"}>
+                    {data?.classrooms?.[0] && <div className={"w-full flex flex-row gap-2 items-center"}>
                        <Image src={"/icons/classroom.svg"} alt={"studeerhoed"} width={17} height={0} className="min-h-4 h-5 sm:min-h-5 dark:invert dark:brightness-0"/>
                         <span>{t("added_to")}: {data?.classrooms[0]?.name}</span>
                     </div>}
                     <div className={"w-full flex flex-row gap-2 items-center"}>
                         <FaRegHeart />
-                        <span>{data?.likes.length} {data?.likes.length != 1 ? t("likes") : t("like")}</span>
+                        <span>{data?.likes?.length} {data?.likes?.length != 1 ? t("likes") : t("like")}</span>
                     </div>
                 </div>
                 <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center items-center">
@@ -122,15 +121,15 @@ export default async function StudosetView({ id }: viewProps) {
                     <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
                         <div className={"w-full h-full p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"}>
                             <span className={"font-bold"}>{t("not_learned")}</span>
-                            <Progress length={data?.cards.length} progress={not_studied}/>
+                            <Progress length={data?.cards?.length} progress={not_studied}/>
                         </div>
                         <div className={"w-full h-full p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"}>
                             <span className={"font-bold"}>{t("reviewed")}</span>
-                            <Progress length={data?.cards.length} progress={reviewed}/>
+                            <Progress length={data?.cards?.length} progress={reviewed}/>
                         </div>
                         <div className={"w-full h-full p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"}>
                             <span className={"font-bold"}>{t("studied")}</span>
-                            <Progress length={data?.cards.length} progress={studied}/>
+                            <Progress length={data?.cards?.length} progress={studied}/>
                         </div>
                     </div>
 
@@ -142,7 +141,7 @@ export default async function StudosetView({ id }: viewProps) {
                         </button>
                     </div>
                     <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 mb-8 sm:mb-10">
-                        {data?.cards.map((card: Card, i: number) =>  <CardItem key={i} index={i} card={card}/>)}
+                        {data?.cards?.map((card: Card, i: number) =>  <CardItem key={i} index={i} card={card}/>)}
                     </div>
                     <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5">
                         <Link href={"/studoset/" + id + "/edit"} className={'w-full h-14 rounded-full flex items-center justify-center dark:bg-studoblue cursor-pointer bg-emerald-400 text-white font-bold border-studoborder border'} >{t("edit")}</Link>
