@@ -1,18 +1,24 @@
-import {JSX, useState} from "react";
-import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
+import {useState} from "react";
+import {IoIosArrowDown} from "react-icons/io";
 import { MdOutlineRoute } from "react-icons/md";
 import {useTranslations} from "next-intl";
 import {GoProjectRoadmap} from "react-icons/go";
-import Link from "next/link";
 import Image from "next/image";
 import {FaArrowRightLong} from "react-icons/fa6";
+import {Link} from "@/i18n/routing";
+import {StudysetResponse, Track, VisualsetResponse} from "@studo/types";
+
+interface GroupedTrack {
+    grade: string;
+    tracks: Track[];
+}
 
 interface TracksProps {
-    tracks: any;
+    tracks: Track[];
 }
 export default function Tracks({tracks}: TracksProps) {
-    const trackGrades = new Set();
-    const filteredTracks = [];
+    const trackGrades = new Set<string>();
+    const filteredTracks: GroupedTrack[] = [];
 
     tracks.forEach((track) => {
         trackGrades.add(track.grade);
@@ -25,18 +31,17 @@ export default function Tracks({tracks}: TracksProps) {
         });
     });
 
-    console.log(filteredTracks);
     return (<div className={"w-full h-fit flex flex-col gap-5"}>
-        {filteredTracks.map((track, index) => (<TrackContainer key={index} index={index} track={track} />))}
+        {filteredTracks.map((group, index) => (<TrackContainer key={index} index={index} group={group} />))}
     </div>)
 }
 
 interface TrackContainerProps {
     index: number;
-    track: any;
+    group: GroupedTrack;
 }
 
-function TrackContainer({track, index}: TrackContainerProps) {
+function TrackContainer({group, index}: TrackContainerProps) {
     const t = useTranslations("trackview");
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const toggleOpen = () => {
@@ -48,10 +53,10 @@ function TrackContainer({track, index}: TrackContainerProps) {
             className={"w-full h-fit flex cursor-pointer flex-row justify-between items-center gap-3 pr-3"}>
             <div className="flex items-center gap-2 font-bold text-lg">
                 <MdOutlineRoute />
-            <span>{track.grade}:</span>
+            <span>{group.grade}:</span>
             </div>
             <div className="flex items-center gap-3">
-                <span className={"text-xs opacity-50 truncate"}>{track.tracks.length} {track.tracks.length === 1 ? t("vak") : t("vakken")}</span>
+                <span className={"text-xs opacity-50 truncate"}>{group.tracks.length} {group.tracks.length === 1 ? t("vak") : t("vakken")}</span>
                 <button
                     className="w-10 h-10 cursor-pointer rounded-full hover:bg-studogrey transition-colors duration-300 flex items-center justify-center"
                 >
@@ -63,14 +68,14 @@ function TrackContainer({track, index}: TrackContainerProps) {
         </div>
         {isOpen && (
         <div className={"w-full h-fit flex flex-col gap-5 pl-5 mb-5"}>
-            {track.tracks.map((track, index) => (<TrackItem track={track} key={index}/>))}
+            {group.tracks.map((track, index) => (<TrackItem track={track} key={index}/>))}
         </div>)}
 
     </div>)
 }
 
 interface TrackItemProps {
-    track: any;
+    track: Track;
 }
 
 function TrackItem({track}: TrackItemProps) {
@@ -134,7 +139,7 @@ function TrackItem({track}: TrackItemProps) {
 
     interface SetItemProps {
         type: string;
-        set: any;
+        set: StudysetResponse | VisualsetResponse;
     }
 
     function SetItem({type, set}: SetItemProps) {

@@ -57,7 +57,7 @@ export default function LandingFooter() {
                             <Link href="/faq" className="hover:underline">{t("supportFaq")}</Link>
                             <Link href="/help-center" className="hover:underline">{t("supportCenter")}</Link>
                             <Link href="/contact" className="hover:underline">{t("supportContact")}</Link>
-                            <Link href="/blog" className="hover:underline">{t("aboutBlog")}</Link>
+                            <Link href="/newsroom" className="hover:underline">{t("aboutNewsroom")}</Link>
                         </div>
 
                         <div className="flex flex-col gap-4">

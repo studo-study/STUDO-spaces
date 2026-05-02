@@ -1,5 +1,5 @@
 import {auth} from "@/auth";
-import LearnController from "@/app/[locale]/(public)/(set)/(modes)/learn/[id]/learncontroller";
+import LearnController from "@/app/[locale]/(shared)/(set)/(modes)/learn/[id]/learncontroller";
 
 export default async function LearnPage({params}: {
     params: Promise<{ locale: string; id: string }>

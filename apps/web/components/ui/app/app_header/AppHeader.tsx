@@ -14,6 +14,7 @@ import {Link} from "@/i18n/routing";
 import {FaArrowRight} from "react-icons/fa";
 import {StudoUser} from "@/types/types";
 import {useAppStore} from "@/store/useAppStore";
+import AppSearchbar from "@/components/ui/app/search/SearchBar";
 
 interface studyset {
     set_id: string;
@@ -86,12 +87,7 @@ export default function AppHeader({burgerOpen, Search, setSearch, createOpen, se
 
                 {/*center*/}
                 <div className={"w-full h-fit flex justify-end items-center"}>
-                    <SearchBar
-                        searchRef={searchRef}
-                        toggleSearch={toggleSearch}
-                        setSearch={setSearch}
-                        Search={Search}
-                    />
+                    <AppSearchbar/>
                 </div>
 
                 {/* Right section */}

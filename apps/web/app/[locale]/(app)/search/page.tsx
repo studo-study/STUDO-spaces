@@ -1,12 +1,24 @@
-import {useLocale} from "next-intl";
-import {redirect} from "next/navigation";
-import SearchHeader from "@/components/ui/marketing/search/searchheader";
-import SearchResults from "@/components/ui/marketing/search/searchResults";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-    return(<main className={`w-full dark:text-white text-studodarkblue
-          max-h-screen min-h-[90vh] pt-35 h-screen flex flex-col justify-baseline items-center
-          bg-gradient-to-b from-transparent via-transparent to-emerald-300/10`}>
-        <SearchResults/>
-    </main>)
+export default async function Page({
+                                       searchParams,
+                                   }: {
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+    const resolvedSearchParams = await searchParams;
+    const params = new URLSearchParams();
+
+    for (const key in resolvedSearchParams) {
+        const value = resolvedSearchParams[key];
+
+        if (Array.isArray(value)) {
+            value.forEach((v) => params.append(key, v));
+        } else if (value !== undefined) {
+            params.set(key, value);
+        }
+    }
+
+    const query = params.toString();
+
+    redirect(`/nl/search/all${query ? `?${query}` : ""}`);
 }

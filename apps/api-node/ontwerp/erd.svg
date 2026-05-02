@@ -513,9 +513,9 @@
         </g>
         <!-- Identify -->
         <g id="node7" class="node">
-            <title>Identify</title>
+            <title>Pin</title>
             <polygon fill="none" stroke="black" points="977.62,-1143.12 977.62,-1172.62 1065.62,-1172.62 1065.62,-1143.12 977.62,-1143.12"/>
-            <text text-anchor="start" x="987.12" y="-1153.42" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="16.00">Identify</text>
+            <text text-anchor="start" x="987.12" y="-1153.42" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="16.00">Pin</text>
             <polygon fill="none" stroke="black" points="977.62,-1115.88 977.62,-1143.12 1065.62,-1143.12 1065.62,-1115.88 977.62,-1115.88"/>
             <text text-anchor="start" x="982.62" y="-1125.83" font-family="Helvetica,sans-Serif" text-decoration="underline" font-size="14.00">id</text>
             <polygon fill="none" stroke="black" points="977.62,-1088.62 977.62,-1115.88 1065.62,-1115.88 1065.62,-1088.62 977.62,-1088.62"/>

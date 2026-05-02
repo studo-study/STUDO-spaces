@@ -11,14 +11,12 @@ import type {
     Status,
 } from '@studo/types';
 
-// ─── Dirty entry ────────────────────────────────────────────
 interface DirtyEntry {
     endpoint: string;
     method: string;
     payload: Record<string, unknown>;
 }
 
-// ─── Store interface ────────────────────────────────────────
 interface FlowState {
     // Data
     boards: FlowBoardOverview[];
@@ -58,7 +56,7 @@ interface FlowState {
 // ─── Internal state (not exposed to components) ─────────────
 let dirty: Map<string, DirtyEntry> = new Map();
 let flushTimer: ReturnType<typeof setTimeout> | null = null;
-let textTimers: Map<string, ReturnType<typeof setTimeout>> = new Map();
+const textTimers: Map<string, ReturnType<typeof setTimeout>> = new Map();
 
 function scheduleDirtyFlush() {
     if (flushTimer) clearTimeout(flushTimer);
@@ -89,7 +87,6 @@ function mergeDirty(key: string, endpoint: string, method: string, payload: Reco
     });
 }
 
-// ─── Sync board totals from activeCourse rows ──────────────
 function syncBoardTotals(set: Function, get: Function) {
     const {activeCourse, activeBoard} = get();
     if (!activeCourse || !activeBoard) return;
