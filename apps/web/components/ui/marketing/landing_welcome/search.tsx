@@ -3,7 +3,7 @@ import {useLocale, useTranslations} from "next-intl";
 import {IoMdSearch} from "react-icons/io";
 import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
-import {useLoadingStore} from "@/store/loadingStore";
+import {useLoadingStore} from "@/store/slices/loading/loadingStore";
 
 export default function SearchSets() {
     const t = useTranslations('landing.welcome');

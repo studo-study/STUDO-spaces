@@ -3,7 +3,7 @@ import {useTranslations} from "next-intl";
 import CourseItemProgress from "@/components/ui/app/flow/page/overview/CourseItemProgress";
 import {IoIosAdd} from "react-icons/io";
 import CourseRow from "@/components/ui/app/flow/page/CoursePage/overview_types/table/CourseRow";
-import {useFlowStore, selectCourseTotals, selectRows} from "@/store/flowStore";
+import {useFlowStore, selectCourseTotals, selectRows} from "@/store/slices/flow/flowStore";
 import {useShallow} from "zustand/react/shallow";
 
 const CourseTable = () => {

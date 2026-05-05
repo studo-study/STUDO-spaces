@@ -1,7 +1,6 @@
-import {ClassroomSet, FullStudyset, LastStudied} from "@/types/types";
+import {FullStudyset} from "@/types/types";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
-import {Progress} from "@/components/ui/marketing/progress/progress";
 import Image from "next/image";
 import CourseIcons from "@/data";
 import {HiLightningBolt} from "react-icons/hi";

@@ -2,7 +2,7 @@
 import FlowBoardOverviewHeader from "@/components/ui/app/flow/page/layout/FlowBoardOverviewHeader";
 import BreadCrumbs from "@/components/ui/app/flow/page/layout/BreadCrumbs";
 import {usePathname} from "@/i18n/routing";
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 import CreateFlowCourse from "@/components/ui/app/flow/page/layout/CreateFlowCourse";
 
 const BoardHeader = () => {

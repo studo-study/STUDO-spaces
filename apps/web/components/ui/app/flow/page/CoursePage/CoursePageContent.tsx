@@ -2,7 +2,7 @@
 import CoursePageHeader from "@/components/ui/app/flow/page/CoursePage/CoursePageHeader";
 import CourseTable from "@/components/ui/app/flow/page/CoursePage/overview_types/table/CourseTable";
 import CourseKanban from "@/components/ui/app/flow/page/CoursePage/overview_types/kanban/CourseKanban";
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 
 export default function CoursePageContent() {
     const activeCourse = useFlowStore((s) => s.activeCourse);

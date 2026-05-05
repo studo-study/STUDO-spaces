@@ -3,13 +3,14 @@ import {IoSearch} from "react-icons/io5";
 import {useRef, useState} from "react";
 import {useTranslations} from "next-intl";
 import {StudySetItem} from "@/components/ui/app/your-files/sets/grid";
+import {FullClassroomSet} from "@studo/types";
 
-interface SetSearchProps {
-    sets: StudySetItem[];
-    setFilteredSets: React.Dispatch<React.SetStateAction<StudySetItem[]>>;
+interface SetSearchProps<T extends { title: string; course?: string }> {
+    sets: T[];
+    setFilteredSets: React.Dispatch<React.SetStateAction<T[]>>;
 }
 
-export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
+export default function SetSearch<T extends { title: string; course?: string }>({sets, setFilteredSets}: SetSearchProps<T>) {
     const t = useTranslations("y_f.your_sets");
     const [search, setSearch] = useState(false);
     const searchRef = useRef<HTMLInputElement>(null);
@@ -17,12 +18,14 @@ export default function SetSearch({sets, setFilteredSets}: SetSearchProps) {
         if (searchRef.current) {
             const query = searchRef.current.value.toLowerCase();
             if (query === "") {
-                setFilteredSets(sets);
+                setFilteredSets(sets as any);
             } else {
-                setFilteredSets(sets.filter(item =>
-                    item.title.toLowerCase().includes(query)
-                    || item.course.toLowerCase().includes(query)
-                ));
+                setFilteredSets(
+                    (sets as any[]).filter((item: any) =>
+                        item.title.toLowerCase().includes(query)
+                        || (item.course && item.course.toLowerCase().includes(query))
+                    )
+                );
             }
         }
     }

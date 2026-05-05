@@ -8,7 +8,7 @@ import {useTranslations} from "next-intl";
 import {useUser} from "@/components/providers/UserProvider";
 import {FiTrash2} from "react-icons/fi";
 import {useRouter} from "next/navigation";
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 
 interface FlowGridItemProps {
     item: FlowBoardOverview;

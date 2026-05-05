@@ -13,7 +13,7 @@ import TagSelector from "@/components/ui/design_system/tag/TagSelector";
 import {LuLink} from "react-icons/lu";
 import ResourceIcon from "@/components/ui/app/flow/page/CoursePage/overview_types/table/ResourceIcon";
 import {HiCalendarDays} from "react-icons/hi2";
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 import {useShallow} from "zustand/react/shallow";
 
 interface CourseRowProps {

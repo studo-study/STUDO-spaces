@@ -23,7 +23,8 @@
     "db:drop": "drizzle-kit drop",
     "db:reset": "env-cmd tsx src/drizzle/reset.ts",
     "db:seed": "env-cmd tsx src/drizzle/seed.ts",
-    "db:init": "env-cmd tsx src/drizzle/init.ts"
+    "db:init": "env-cmd tsx src/drizzle/init.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@studo/types": "workspace:*",

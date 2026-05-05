@@ -41,7 +41,6 @@ export default function Grid({data}: GridProps) {
         ...data.visualsets.map(s => ({...s, type: "visualset" as const})),
     ];
 
-    const [grid, setGrid] = useState<boolean>(false);
     const [filteredSets, setFilteredSets] = useState<StudySetItem[]>(allSets);
     const containerRef = useRef(null);
     const selectionRef = useRef<HTMLSelectElement>(null);
@@ -98,18 +97,6 @@ export default function Grid({data}: GridProps) {
                 <div className="w-fit flex flex-row gap-5 items-center">
                     <SetSearch sets={allSets} setFilteredSets={setFilteredSets} />
                     <button
-                        onClick={() => setGrid(false)}
-                        className={`${!grid ? "border-studoblue dark:border-white text-studoblue dark:text-white bg-studoblue/30 dark:bg-studogrey" : "border-studoblue dark:border-white text-studoblue dark:text-white"} cursor-pointer border w-8 h-8 rounded-lg text-lg flex items-center justify-center`}
-                    >
-                        <HiOutlineViewList />
-                    </button>
-                    <button
-                        onClick={() => setGrid(true)}
-                        className={`${grid ? "border-studoblue bg-studoblue/30 dark:bg-studogrey dark:border-white text-studoblue dark:text-white" : "border-studoblue dark:border-white text-studoblue dark:text-white"} cursor-pointer w-8 h-8 rounded-lg border text-lg flex items-center justify-center`}
-                    >
-                        <BsGridFill />
-                    </button>
-                    <button
                         onClick={togglePopUp}
                         ref={containerRef}
                         className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
@@ -130,7 +117,7 @@ export default function Grid({data}: GridProps) {
                     <div className="w-full h-100 flex dark:text-white text-studodarkblue font-bold items-center justify-center">
                         {allSets.length === 0 ? t("no_sets") : t("no_results")}
                     </div>
-                ) : grid ? <GridItems items={filteredSets}/> : <ListItems items={filteredSets}/>
+                ) : <ListItems items={filteredSets}/>
                 }
             </div>
         </div>

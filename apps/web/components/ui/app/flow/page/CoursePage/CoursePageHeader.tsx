@@ -12,7 +12,7 @@ import {IoWarningOutline} from "react-icons/io5";
 import ToggleGroupBase from "@/components/ui/design_system/togglegroup/ToggleGroup";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 
 const CoursePageHeader = () => {
     const t = useTranslations("flow.course")

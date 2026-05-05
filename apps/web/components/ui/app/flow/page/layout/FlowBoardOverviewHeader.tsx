@@ -5,7 +5,7 @@ import {useTranslations} from "next-intl";
 import {IoIosCloudOutline} from "react-icons/io";
 import {getFlowIcon} from "@/components/ui/design_system/icons/iconRegistry";
 import {Link} from "@/i18n/routing";
-import {useFlowStore} from "@/store/flowStore";
+import {useFlowStore} from "@/store/slices/flow/flowStore";
 
 const FlowBoardOverviewHeader = () => {
     const t = useTranslations("flow")

@@ -1,6 +1,6 @@
 "use client"
 import {useRef} from 'react';
-import {useFlowStore} from '@/store/flowStore';
+import {useFlowStore} from '@/store/slices/flow/flowStore';
 import type {FlowBoardOverview, FlowBoardResponse, FullFlowCourseResponse} from '@studo/types';
 
 interface Props {

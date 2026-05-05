@@ -9,7 +9,7 @@ interface SetItemProps {
 }
 const HomePageSetItem = (props: SetItemProps) => {
     const {item} = props;
-    return (<Link href={item.type === "studyset" ? "/studoset/" + item.set_id : "/visualset/" + item.set_id} className={"w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 flex justify-between items-center px-5 gap-2"}>
+    return (<Link href={item.type === "studyset" ? "/studoset/" + item.set_id : "/visualset/" + item.set_id} className={"w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"}>
         <div className={"flex flex-row gap-2"}>
             <Image alt="settype" src={item.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg"} width={5} height={5} className={"w-4 dark:invert dark:brightness-0"}/>
             <span className={"font-bold dark:text-white text-studodarkblue"}>{item.title}</span>

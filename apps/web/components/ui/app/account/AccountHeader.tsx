@@ -3,6 +3,7 @@ import {useTranslations} from "next-intl";
 import Link from "next/link";
 import {IoMdSettings} from "react-icons/io";
 import {useUser} from "@/components/providers/UserProvider";
+import Avatar from "@/components/ui/design_system/avatar/Avatar";
 
 export default  function AccountHeader() {
     const t = useTranslations("account")
@@ -11,10 +12,10 @@ export default  function AccountHeader() {
     return(<div className={"w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-50 bg-gray-700 rounded-3xl border border-studoborder/30"}>
         <div className={"w-full h-fit  items-center justify-baseline flex flex-row gap-10"}>
             <div className={"max-w-25 max-h-25 overflow-hidden min-w-25 min-h-25 rounded-full flex items-center justify-center bg-gray-500"}>
-                <img src={user?.img_url} alt=""/>
+                {user && <Avatar id={user.id} displayName={user.displayName} img_url={user?.img_url} size={100}/>}
             </div>
             <div className={"w-full h-fit flex flex-col gap-5"}>
-                <div className={"w-full h-fit text-2xl flex flex-row gap-3 font-bold dark:text-white text-studodarkblue justify-between"}>
+                <div className={"w-full h-fit text-2xl flex flex-row items-center gap-3 font-bold dark:text-white text-studodarkblue justify-between"}>
                     <div className="flex items-center gap-2">
                         <span>{user?.displayName}</span>
                         <span className={"text-base cursor-pointer"}>#</span>
