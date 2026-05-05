@@ -13,6 +13,8 @@ import Image from "next/image";
 import {Link} from "@/i18n/routing";
 import {FaArrowRight} from "react-icons/fa";
 import {StudoUser} from "@/types/types";
+import {useAppStore} from "@/store/useAppStore";
+import AppSearchbar from "@/components/ui/app/search/SearchBar";
 
 interface studyset {
     set_id: string;
@@ -26,7 +28,6 @@ interface studyset {
 
 interface HeaderProps {
     burgerOpen: boolean;
-    setBurgerOpen: React.Dispatch<React.SetStateAction<boolean>>;
     Search: boolean;
     setSearch: React.Dispatch<React.SetStateAction<boolean>>;
     createOpen: boolean;
@@ -36,7 +37,7 @@ interface HeaderProps {
     isLoading: boolean;     // <- nieuw
 }
 
-export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate, user, isLoading}: HeaderProps) {
+export default function AppHeader({burgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate, user, isLoading}: HeaderProps) {
 
     const [AddIsOpen, setAddIsOpen] = useState(false);
     const [NotifIsOpen, setNotifIsOpen] = useState(false);
@@ -45,10 +46,9 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
     const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === 'true';
     const searchRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("header");
+    const toggleSidebar = useAppStore((s) => s.toggleSidebar);
     const premium = false
-    const toggleBurger = () => {
-        setBurgerOpen(!burgerOpen);
-    };
+
 
     const toggleSearch = () => {
         setSearch(true);
@@ -73,7 +73,7 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
                 {/* Left section */}
                 <div className="flex items-center gap-8 min-w-1/4">
                     <button
-                        onClick={toggleBurger}
+                        onClick={toggleSidebar}
                         className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb">
                         {burgerOpen ? <TbLayoutSidebarLeftCollapse className={"dark:opacity-30"}/> : <HiMenuAlt4 className={"dark:opacity-30"}/>}
                     </button>
@@ -87,12 +87,7 @@ export default function AppHeader({burgerOpen, setBurgerOpen, Search, setSearch,
 
                 {/*center*/}
                 <div className={"w-full h-fit flex justify-end items-center"}>
-                    <SearchBar
-                        searchRef={searchRef}
-                        toggleSearch={toggleSearch}
-                        setSearch={setSearch}
-                        Search={Search}
-                    />
+                    <AppSearchbar/>
                 </div>
 
                 {/* Right section */}

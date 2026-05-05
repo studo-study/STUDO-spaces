@@ -9,16 +9,17 @@ import CreateFolder from "@/components/ui/app/create-folder/CreateFolder";
 import AppLayoutContext from "@/components/context/AppLayoutContext";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 import {useRouter} from "next/navigation";
+import {useAppStore} from "@/store/useAppStore";
 
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
 
 function AppLayoutInner({children}: { children: ReactNode }) {
     const {user, isLoading} = useUser();
-    const [burgerOpen, setBurgerOpen] = useState(false);
     const [Search, setSearch] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
     const router = useRouter()
+    const sidebarOpen = useAppStore((s) => s.sidebarOpen);
     const toggleSearch = () => setSearch(true);
     const toggleCreate = () => {
         requestAnimationFrame(() => {
@@ -43,8 +44,7 @@ function AppLayoutInner({children}: { children: ReactNode }) {
         <AppLayoutContext.Provider value={{toggleCreate}}>
             <div className="h-screen min-w-screen h-fit flex flex-col overflow-hidden">
                 <MemoizedHeader
-                    burgerOpen={burgerOpen}
-                    setBurgerOpen={setBurgerOpen}
+                    burgerOpen={sidebarOpen}
                     Search={Search}
                     setSearch={setSearch}
                     createOpen={createOpen}
@@ -57,7 +57,7 @@ function AppLayoutInner({children}: { children: ReactNode }) {
                 <div className="flex-1 min-h-0 w-full flex flex-row relative">
                     <div className={"min-w-57 h-full"}>
                         <MemoizedBurger
-                            burgerOpen={burgerOpen}
+                            burgerOpen={sidebarOpen}
                             toggleSearch={toggleSearch}
                             toggleCreate={toggleCreate}
                         />

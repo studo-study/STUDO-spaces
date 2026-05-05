@@ -794,11 +794,11 @@
         </g>
         <!-- Identify -->
         <g id="node8" class="node">
-            <title>Identify</title>
+            <title>Pin</title>
             <polygon fill="none" stroke="black"
                      points="1011.12,-676.62 1011.12,-706.12 1099.12,-706.12 1099.12,-676.62 1011.12,-676.62"/>
             <text text-anchor="start" x="1040.88" y="-686.92" font-family="Helvetica,sans-Serif" font-weight="bold"
-                  font-size="16.00">Identify
+                  font-size="16.00">Pin
             </text>
             <polygon fill="none" stroke="black"
                      points="1011.12,-649.38 1011.12,-676.62 1099.12,-676.62 1099.12,-649.38 1011.12,-649.38"/>

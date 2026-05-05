@@ -1,0 +1,10 @@
+/Users/charlesdegreauwe/Development/STUDO-spaces/apps/services/rust-services/target/debug/deps/log-b63bb5a99dff7546.d: /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/lib.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/macros.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/serde.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/__private_api.rs
+
+/Users/charlesdegreauwe/Development/STUDO-spaces/apps/services/rust-services/target/debug/deps/liblog-b63bb5a99dff7546.rlib: /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/lib.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/macros.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/serde.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/__private_api.rs
+
+/Users/charlesdegreauwe/Development/STUDO-spaces/apps/services/rust-services/target/debug/deps/liblog-b63bb5a99dff7546.rmeta: /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/lib.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/macros.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/serde.rs /Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/__private_api.rs
+
+/Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/lib.rs:
+/Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/macros.rs:
+/Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/serde.rs:
+/Users/charlesdegreauwe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.29/src/__private_api.rs:

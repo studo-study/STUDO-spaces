@@ -80,7 +80,7 @@ export default auth((request) => {
         "/faq",
         "/help-center",
         "/contact",
-        "/blog",
+        "/newsroom",
         "/studo",
         "/"];
 
