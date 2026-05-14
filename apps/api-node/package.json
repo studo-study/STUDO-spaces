@@ -21,8 +21,9 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:drop": "drizzle-kit drop",
-    "db:reset": "env-cmd tsx src/drizzle/reset.ts",
-    "db:seed": "env-cmd tsx src/drizzle/seed.ts",
+    "db:reset": "env-cmd tsx scripts/reset.ts",
+    "db:seed": "env-cmd tsx scripts/seed.ts",
+    "db:reset-and-seed": "env-cmd tsx scripts/reset-and-seed.ts",
     "db:init": "env-cmd tsx src/drizzle/init.ts",
     "typecheck": "tsc --noEmit"
   },
