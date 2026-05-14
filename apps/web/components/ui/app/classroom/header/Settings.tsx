@@ -1,8 +1,7 @@
 "use client"
-import {IoIosAdd, IoIosNotificationsOff} from "react-icons/io";
+import {IoIosNotificationsOff} from "react-icons/io";
 import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
-import Link from "next/link";
 import {FaEllipsis} from "react-icons/fa6";
 import {IoExitOutline} from "react-icons/io5";
 

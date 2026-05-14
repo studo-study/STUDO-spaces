@@ -1,18 +1,16 @@
 "use client"
 import {useTranslations} from "next-intl";
 import {HiLightningBolt} from "react-icons/hi";
-import {mockChallengeMembers, mockChallenges, mockFullClassrooms} from "@/data/mocks/classroomsMock";
+import {mockChallenges, mockFullClassrooms} from "@/data/mocks/classroomsMock";
 import {useParams} from "next/navigation";
 import {ChallengeResponseDTO, ClassroomUser, FullClassroomSet} from "@/types/types";
 import {IoHourglassOutline} from "react-icons/io5";
 import {GiPodium, GiSwordsEmblem} from "react-icons/gi";
-import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
 import {IoIosClose} from "react-icons/io";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 
 export default function ChallengeGrid() {
-    const members = mockChallengeMembers;
     const challenges = mockChallenges;
     const classroom = useParams().id;
     const fullClassroom = mockFullClassrooms;

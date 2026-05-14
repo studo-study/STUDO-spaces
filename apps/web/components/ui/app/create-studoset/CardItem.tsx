@@ -1,4 +1,3 @@
-import { useFormContext } from "react-hook-form";
 import {useTranslations} from "next-intl";
 import {IoIosAdd} from "react-icons/io";
 import {useRef} from "react";
@@ -16,7 +15,6 @@ interface CardProps {
 }
 export default function CardItem({ index, id, deleteCard, isDouble, updateCard, length, term, definition }: CardProps) {
     const t = useTranslations("card");
-    const termRef = useRef<HTMLInputElement>(null);
     const defRef = useRef<HTMLInputElement>(null);
 
     return (

@@ -1,7 +1,6 @@
 import {Metadata} from "next";
 import {useTranslations} from "next-intl";
 import QuickStats from "@/components/ui/app/admin/stats/quick_stats/quickstats";
-import {SlGraph} from "react-icons/sl";
 import {VscGraphLine} from "react-icons/vsc";
 import {MdOutlineQueryStats} from "react-icons/md";
 import Overview from "@/components/ui/app/admin/stats/overview/overview";

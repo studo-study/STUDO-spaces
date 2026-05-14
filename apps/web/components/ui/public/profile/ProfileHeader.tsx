@@ -1,5 +1,4 @@
 import Link from "next/link";
-import {IoMdSettings} from "react-icons/io";
 import {User} from "next-auth";
 import {useTranslations} from "next-intl";
 

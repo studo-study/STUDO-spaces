@@ -25,7 +25,6 @@ const CourseRow = (props: CourseRowProps) => {
     const {rowId, containsRes} = props;
     const data = useFlowStore(useShallow((s) => s.activeCourse?.rows.find((r) => r.id === rowId)));
     const updateRow = useFlowStore((s) => s.updateRow);
-    const deleteRow = useFlowStore((s) => s.deleteRow);
     const t = useTranslations("flow.course.row")
 
     const [isOpen, setIsOpen] = useState<boolean>(false);

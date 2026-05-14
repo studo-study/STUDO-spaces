@@ -1,7 +1,6 @@
 import {TotalStats} from "@studo/types";
 import {useTranslations} from "next-intl";
 import StatItem from "@/components/ui/app/home/quick_stats/StatItem";
-import Image from "next/image";
 import {LuTimer} from "react-icons/lu";
 import {FaCheck, FaRegEye} from "react-icons/fa";
 

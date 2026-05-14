@@ -13,12 +13,6 @@ import Flow from "@/components/ui/app/home/flows/Flow";
 import GetStarted from "@/components/ui/app/home/get_started/GetStarted";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 
-
-const FADE_BASE =
-    " h-full w-8 pointer-events-none to-transparent " +
-    "dark:from-bg-dark dark:via-bg-dark via-bg-white from-bg-white"
-
-
 export const metadata: Metadata = {
     title: "Home | Studo"
 }

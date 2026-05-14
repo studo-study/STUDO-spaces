@@ -1,5 +1,4 @@
 "use client"
-import {useParams} from "next/navigation";
 import {IoMdSearch} from "react-icons/io";
 import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
@@ -33,7 +32,7 @@ export default function AppSearchbar() {
         if (inputFieldRef.current) {
             inputFieldRef.current.value = ""
         }
-    }, [query])
+    }, [locale, router, setLoading, query])
 
     return (
         <div className={`flex w-full min-w-24 max-w-40 lg:max-w-50 xl:max-w-100 shrink

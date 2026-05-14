@@ -20,12 +20,6 @@ export default function GridItems({items}: GridItemProps) {
     );
 }
 
-const COLORS = [
-    "from-amber-500/5 to-amber-400/5",
-    "from-purple-500/5 to-purple-400/5",
-    "from-blue-500/5 to-blue-400/5",
-    "from-emerald-500/5 to-emerald-400/5"
-] as const;
 
 interface SetItemProps {
     set: StudySetItem;

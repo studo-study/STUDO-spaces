@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {FullClassroom, FullClassroomSet, FullStudyset} from "@/types/types";
+import {FullClassroomSet, FullStudyset} from "@/types/types";
 import {usePathname} from "next/navigation";
 import {useUser} from "@/components/providers/UserProvider";
 import CourseIcons from "@/data";

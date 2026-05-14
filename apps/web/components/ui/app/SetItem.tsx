@@ -1,10 +1,9 @@
 "use client"
-import {memo} from "react";
 import Link from "next/link";
 import {Progress} from "@/components/ui/marketing/progress/progress";
 import {LastStudied} from "@/types/types";
 import {useTranslations} from "next-intl";
-import { mockStartPage, mockUser } from "@/data/mocks/startPageMock";
+import Image from 'next/image'
 
 const COLORS = [
     "from-amber-500/5 to-amber-400/5",
@@ -37,7 +36,7 @@ export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
             <div className={`h-0.5 w-full mb-3 bg-linear-to-r ${colorClass}`} />
 
             <div className={`flex flex-row gap-3 items-center w-full px-7`}>
-                <img src={iconSrc} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
+                <Image src={iconSrc} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" width={30} height={30}/>
                 <span className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
             {set.title}
         </span>
@@ -69,7 +68,7 @@ export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
             >
 
                 <div className={`flex flex-row gap-3 items-center "w-full sm:w-1/2 sm:flex-1`}>
-                    <img src={iconSrc} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
+                    <Image src={iconSrc} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" width={30} height={30}/>
                     <span className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
             {set.title}
         </span>

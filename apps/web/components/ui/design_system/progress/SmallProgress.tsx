@@ -1,5 +1,3 @@
-import {ProgressProps} from "@radix-ui/themes";
-
 interface SmallProgressProps {
     progress: number;
     length: number;

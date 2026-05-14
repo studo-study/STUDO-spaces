@@ -5,6 +5,7 @@ import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";
 import {signIn} from "next-auth/react";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
+import Image from "next/image";
 
 export default function DesktopForm() {
     const [open, setOpen] = useState(false);
@@ -15,6 +16,7 @@ export default function DesktopForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -51,6 +53,7 @@ export default function DesktopForm() {
 
         } catch (err) {
             setError(t('somethingWentWrong') || 'Er ging iets mis');
+            console.error(err)
             setLoading(false);
         }
     };
@@ -128,7 +131,8 @@ export default function DesktopForm() {
                                                 required
                                                 disabled={loading}
                                             />
-                                            <img
+                                            <Image
+                                                alt={'icon-eye'}
                                                 src={open ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}
                                                 onClick={toggleShow}
                                                 className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${

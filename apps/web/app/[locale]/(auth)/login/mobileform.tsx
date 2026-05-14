@@ -2,6 +2,7 @@
 import {useCallback, useState} from "react";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
+import Image from "next/image";
 import {useRouter, useSearchParams} from "next/navigation";
 import {signIn} from "next-auth/react";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
@@ -16,6 +17,7 @@ export default function MobileForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -52,6 +54,7 @@ export default function MobileForm() {
 
         } catch (err) {
             setError(t('somethingWentWrong') || 'Er ging iets mis');
+            console.error(err)
             setLoading(false);
         }
     };
@@ -123,9 +126,12 @@ export default function MobileForm() {
                                                     required
                                                     disabled={loading}
                                                 />
-                                                <img
+                                                <Image
                                                     src={open ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}
                                                     onClick={toggleShow}
+                                                    width={20}
+                                                    height={20}
+                                                    alt=""
                                                     className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${
                                                         open ? "" : "pt-0.5 sm:pt-1"
                                                     }`}
@@ -179,7 +185,7 @@ export default function MobileForm() {
                                                 dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                                                 transition-all duration-300 cursor-pointer"
                                             data-cy="login_google">
-                                            <img src={"/icons/logos/google.svg"} alt="" className="h-6" />
+                                            <Image src="/icons/logos/google.svg" width={24} height={24} alt="" className="h-6" />
                                             <span className="text-sm text-studodarkblue dark:text-slate-300">Google</span>
                                         </button>
                                         <button
@@ -190,7 +196,7 @@ export default function MobileForm() {
                                                 dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                                                 transition-all duration-300 cursor-pointer"
                                             data-cy="login_microsoft">
-                                            <img src={"/icons/logos/microsoft.svg"} alt="" className="h-6" />
+                                            <Image src="/icons/logos/microsoft.svg" width={24} height={24} alt="" className="h-6" />
                                             <span className="text-sm text-studodarkblue dark:text-slate-300">Microsoft</span>
                                         </button>
                                         {language === "nl" || language === "fr-BE"  ? (
@@ -202,7 +208,7 @@ export default function MobileForm() {
                                                 dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                                                 transition-all duration-300 cursor-pointer"
                                                 data-cy="login_smartschool">
-                                                <img src={"/icons/logos/smartschool.png"} alt="" className="h-6" />
+                                                <Image src="/icons/logos/smartschool.png" width={24} height={24} alt="" className="h-6" />
                                                 <span className="text-sm text-studodarkblue dark:text-slate-300">{t("Smartschool")}</span>
                                             </button>
                                         ): null}

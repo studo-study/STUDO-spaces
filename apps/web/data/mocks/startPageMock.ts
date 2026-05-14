@@ -1,5 +1,3 @@
-// lib/api/mocks/startPageMock.ts
-
 import type {
     StartPage,
     LastStudied,
@@ -11,7 +9,6 @@ import type {
     FullStudyset,
     Card,
     Folder,
-    SetLike,
 } from '../../types/types';
 
 // ============================================================

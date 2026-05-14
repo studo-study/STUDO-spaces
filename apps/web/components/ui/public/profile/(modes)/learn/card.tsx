@@ -1,7 +1,6 @@
 import {HiSpeakerphone} from "react-icons/hi";
 import {SlOptions} from "react-icons/sl";
 import {Card, SessionCard} from "@/types/types";
-import {useRef} from "react";
 
 interface CurrentCard {
     card: Card;
@@ -32,8 +31,6 @@ const LANGUAGES = [
 export default function LearnCard({currentCard, correct, incorrect, inputRef, disabled, termMode, termLang, defLang, check}: LearnCardProps) {
     console.log(termLang)
     const currentValue = termMode ? currentCard.card.term : currentCard.card.definition;
-    const term = getTalen(termLang, defLang, "term");
-    const def = getTalen(defLang, termLang, "definition");
     const checkInput = () => {
         if(inputRef.current) {
             check(inputRef.current.value);

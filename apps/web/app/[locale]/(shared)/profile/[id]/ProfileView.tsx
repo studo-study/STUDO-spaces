@@ -1,4 +1,3 @@
-import {getTranslations} from "next-intl/server";
 import {auth} from "@/auth";
 import ProfileHeader from "@/components/ui/public/profile/ProfileHeader";
 
@@ -6,7 +5,6 @@ interface viewProps {
     id: string;
 }
 export default async function ProfileView({ id }: viewProps) {
-    const t = await getTranslations("studoset");
     const session = await auth();
     console.log(id);
     const token = session?.accessToken;

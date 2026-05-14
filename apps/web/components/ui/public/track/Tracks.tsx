@@ -41,7 +41,7 @@ interface TrackContainerProps {
     group: GroupedTrack;
 }
 
-function TrackContainer({group, index}: TrackContainerProps) {
+function TrackContainer({group}: TrackContainerProps) {
     const t = useTranslations("trackview");
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const toggleOpen = () => {

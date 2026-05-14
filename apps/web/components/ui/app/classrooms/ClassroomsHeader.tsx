@@ -1,16 +1,9 @@
 "use client"
 import {useTranslations} from "next-intl";
-import Link from "next/link";
-import {usePathname} from "next/navigation";
 import TriggerClassroom from "@/components/ui/app/classrooms/CreateClassroom";
-import {useCallback, useRef, useState} from "react";
+import {useState} from "react";
 import CreateClassroom from "@/components/ui/app/classrooms/CreateClassroomPopup";
 
-const header = [
-    {url: "/your-files/sets", label: "sets"},
-    {url: "/your-files/courses", label: "courses"},
-    {url: "/your-files/folders", label: "folders"}
-]
 
 export default function ClassroomsHeader() {
     const t = useTranslations("classrooms")

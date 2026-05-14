@@ -7,7 +7,7 @@ interface ImageInfoProps {
     onUpdateTitle: (title: string) => void;
 }
 
-export default function ImageInfo({activeImageIndex, title, onUpdateTitle}: ImageInfoProps) {
+export default function ImageInfo({title, onUpdateTitle}: ImageInfoProps) {
     const t = useTranslations("createvisualset");
 
     return (

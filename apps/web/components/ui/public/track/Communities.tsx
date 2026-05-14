@@ -4,7 +4,6 @@ import {FaUniversity, FaUserFriends} from "react-icons/fa";
 import {IoSchoolOutline} from "react-icons/io5";
 import {TbWorld} from "react-icons/tb";
 import {useTranslations} from "next-intl";
-import {FaAngleRight} from "react-icons/fa6";
 
 interface CommunitiesProps {
     communities: any;

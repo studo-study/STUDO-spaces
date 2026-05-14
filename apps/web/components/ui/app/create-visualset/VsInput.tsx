@@ -1,5 +1,4 @@
 "use client"
-import {useTranslations} from "next-intl";
 import UploadField from "@/components/ui/app/create-visualset/UploadField";
 import ImageInfo from "@/components/ui/app/create-visualset/ImageInfo";
 import ItemOverview from "@/components/ui/app/create-visualset/ItemOverview";

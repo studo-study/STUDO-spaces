@@ -1,7 +1,7 @@
 "use client"
 import {IoSearch} from "react-icons/io5";
 import {useRef, useState} from "react";
-import {type Classroom, FullClassroom} from "@/types/types";
+import {FullClassroom} from "@/types/types";
 import {useTranslations} from "next-intl";
 
 interface ClassSearchProps {
@@ -25,7 +25,6 @@ export default function ClassSearch({classes, setFilteredClasses}: ClassSearchPr
             }
         }
     }
-``
     return (
         <div className={`h-10 gap-5 dark:text-white w-70 rounded-4xl glass-rgb transition-all duration-300 px-5
         ${search ? "dark:border-white border-gray-500" : "dark:border-studoborder/30 border-gray-300"} 

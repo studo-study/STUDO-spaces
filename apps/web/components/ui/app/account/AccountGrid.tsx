@@ -1,8 +1,6 @@
 "use client"
 import {useEffect, useRef, useState} from "react";
 import {useTranslations} from "next-intl";
-import {BsGridFill} from "react-icons/bs";
-import {HiOutlineViewList} from "react-icons/hi";
 import {IoIosAdd} from "react-icons/io";
 import Link from "next/link";
 import { signOut } from 'next-auth/react';
@@ -68,7 +66,7 @@ const menuItems = [
     { to: "/create-visualset", icon: "/icons/visualset.svg", label: "create_vs", color: "from-blue-400 to-indigo-500" },
 ];
 
-function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopupProps) {
+function AddPopUp({AddIsOpen, setAddIsOpen, containerRef}: AddPopupProps) {
     const t = useTranslations("header");
     const popupRef = useRef<HTMLDivElement>(null);
 
@@ -174,13 +172,3 @@ interface SetItemProps {
     grid: boolean;
 }
 
-function SetItem({ grid }: SetItemProps) {
-    return (
-        <div
-            className={`
-                w-full rounded-3xl bg-gray-700 border border-studoborder/50
-                ${grid ? "min-h-10 max-h-45" : "min-h-20"}
-            `}
-        />
-    );
-}

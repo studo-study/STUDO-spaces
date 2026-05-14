@@ -1,7 +1,5 @@
 import {BsThreeDots} from "react-icons/bs";
 import {LuCirclePlus} from "react-icons/lu";
-import {RxDragHandleDots2} from "react-icons/rx";
-
 interface GridHeaderProps {
     title: string,
     icon: React.ReactNode,

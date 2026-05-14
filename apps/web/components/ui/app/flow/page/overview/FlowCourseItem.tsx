@@ -6,7 +6,6 @@ import {useRouter} from "next/navigation";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
 import {FiTrash2} from "react-icons/fi";
 import {useTranslations} from "next-intl";
-import {RxDragHandleDots2} from "react-icons/rx";
 import {HiOutlineExternalLink} from "react-icons/hi";
 import {CgDanger} from "react-icons/cg";
 import {BsExclamationTriangle} from "react-icons/bs";

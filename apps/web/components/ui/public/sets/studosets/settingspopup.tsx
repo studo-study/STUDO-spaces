@@ -1,7 +1,4 @@
-interface SettingsPopupProps {
-    toggled: boolean;
-    setPopUpToggle:React.Dispatch<React.SetStateAction<boolean>>;
-}
+
 
 export default function SettingsPopup() {
 
@@ -10,6 +7,6 @@ export default function SettingsPopup() {
                     rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
                     dark:text-white"
     >
-        <img src={"/icons/settings.svg"}  className="h-4 sm:h-5 dark:invert dark:brightness-0" />
+        <img src={"/icons/settings.svg"}  className="h-4 sm:h-5 dark:invert dark:brightness-0" alt={''}/>
     </div>)
 }

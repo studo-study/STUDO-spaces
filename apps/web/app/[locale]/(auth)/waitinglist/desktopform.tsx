@@ -49,6 +49,7 @@ export default function DesktopForm() {
 
         } catch (err) {
             setError(t('somethingWentWrong'));
+            console.error(err)
         } finally {
             setLoading(false);
         }

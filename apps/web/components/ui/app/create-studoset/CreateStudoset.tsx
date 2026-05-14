@@ -23,7 +23,8 @@ export default function CreateStudosetForm() {
     const t = useTranslations("createstudoset");
     const [showImporter, setShowImporter] = useState(false);
     const router = useRouter();
-    const [error, setError] = useState<boolean>(false);
+    //TODO
+    const error = false;
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [folders, setFolders] = useState<{ folders: Folder[] }>({ folders: [] });
 
@@ -230,7 +231,7 @@ export default function CreateStudosetForm() {
                                         className={"h-12 px-5 gap-5 text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"}
                                         data-cy="folder_select">
                                         <option value="">{t("folder_placeholder")}</option>
-                                        {folders?.folders?.map((item, index) => (
+                                        {folders?.folders?.map((item) => (
                                             <option value={item.id} key={item.id}>{item.name}</option>
                                         ))}
                                     </select>

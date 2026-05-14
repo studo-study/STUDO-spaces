@@ -1,12 +1,10 @@
 "use client"
 import {useEffect, useRef} from "react";
-
 import {useTranslations} from "next-intl";
 import {Link} from "@/i18n/routing";
 import {IoHourglassOutline, IoSchoolOutline} from "react-icons/io5";
 import {FaUserFriends} from "react-icons/fa";
 import {TbWorld} from "react-icons/tb";
-import Image from "next/image";
 import {GiPodium, GiSwordsEmblem} from "react-icons/gi";
 
 interface TriggerClassroomProps {

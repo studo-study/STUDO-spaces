@@ -1,6 +1,6 @@
 import { PiStudent } from "react-icons/pi";
 import Flashcard from "@/components/ui/public/sets/studosets/flashcard";
-import {Link, usePathname} from "@/i18n/routing";
+import {Link} from "@/i18n/routing";
 import {auth} from "@/auth";
 import {getTranslations} from "next-intl/server";
 import Image from "next/image";
@@ -43,7 +43,6 @@ export default async function StudosetView({ id }: viewProps) {
         return card.card_viewcount > 1 ? sum + 1 : sum;
     }, 0) ?? 0;
 
-    const year = new Date().getFullYear();
     console.log(data)
 
     return (<>

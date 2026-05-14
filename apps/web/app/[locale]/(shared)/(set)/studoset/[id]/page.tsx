@@ -1,13 +1,11 @@
-// app/studosets/[flow_id]/layout.tsx
 import { auth } from '@/auth'
-import AuthLayout from "@/app/[locale]/(app)/layout";
 import StudosetView from "@/app/[locale]/(shared)/(set)/studoset/[id]/studosetview";
 import MarketingLayout from "@/app/[locale]/(marketing)/layout";
 
 export default async function StudosetPage({params}: {
     params: Promise<{ locale: string; id: string }>
 }) {
-    const { locale, id } = await params;
+    const { id } = await params;
     const session = await auth()
 
     if (session) {

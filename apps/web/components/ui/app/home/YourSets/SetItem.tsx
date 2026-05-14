@@ -1,7 +1,6 @@
 import {LastStudied} from "@studo/types";
 import Image from "next/image";
 import {Link} from "@/i18n/routing";
-import {ProgressProps} from "@radix-ui/themes";
 import SmallProgress from "@/components/ui/design_system/progress/SmallProgress";
 
 interface SetItemProps {

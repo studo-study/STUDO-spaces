@@ -15,7 +15,6 @@ interface UploadFieldProps {
 }
 
 export default function UploadField({
-    activeImageIndex,
     previewUrl,
     pins,
     onFileUpload,

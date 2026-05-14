@@ -1,7 +1,4 @@
-import {useEffect, useRef} from "react";
-import {IoIosAdd, IoIosClose} from "react-icons/io";
-import {useTranslations} from "next-intl";
-import Link from "next/link";
+import {IoIosAdd} from "react-icons/io";
 
 interface TriggerClassroomProps {
     togglePopUp: () => void,

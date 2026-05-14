@@ -4,7 +4,7 @@ import { FaYoutube } from "react-icons/fa6";
 import {Link} from "@/i18n/routing";
 import {useTranslations} from "next-intl";
 import {GiEuropeanFlag} from "react-icons/gi";
-import {MdOutlinePrivacyTip, MdPrivacyTip} from "react-icons/md";
+import {MdOutlinePrivacyTip} from "react-icons/md";
 import Image from "next/image";
 export default function LandingFooter() {
     const t = useTranslations("landing.footer");
@@ -92,16 +92,4 @@ export default function LandingFooter() {
             </div>
         </footer>
     );
-}
-
-function sets() {
-    const t = useTranslations();
-    return (<>
-            <Link href="/your-files/sets" className="hover:underline">{t("ssBlock1")}</Link>
-            <Link href="/create-studoset" className="hover:underline">{t("ssBlock2")}</Link>
-            <Link href="/your-files/sets" className="hover:underline">{t("vsBlock1")}</Link>
-            <Link href="/create-visualset" className="hover:underline">{t("vsBlock2")}</Link>
-        </>
-
-    )
 }

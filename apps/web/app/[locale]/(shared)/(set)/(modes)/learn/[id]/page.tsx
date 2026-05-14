@@ -4,7 +4,7 @@ import LearnController from "@/app/[locale]/(shared)/(set)/(modes)/learn/[id]/le
 export default async function LearnPage({params}: {
     params: Promise<{ locale: string; id: string }>
 }) {
-    const { locale, id } = await params;
+    const { id } = await params;
     const session = await auth()
     const token = session?.accessToken;
     const data = await fetch(

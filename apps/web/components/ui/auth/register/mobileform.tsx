@@ -3,6 +3,7 @@ import {useCallback, useState} from "react";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { registerUser } from "@/lib/api/auth";
 import { RegisterFormData, registerSchema } from "@/lib/validations/auth";
@@ -149,14 +150,16 @@ export default function MobileForm() {
                                                         className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
                                                         data-cy="password_input"
                                                     />
-                                                    <img
+                                                    <Image
                                                         src={open ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}
                                                         onClick={toggleShow}
+                                                        width={20}
+                                                        height={20}
+                                                        alt="Toggle password visibility"
                                                         className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${
                                                             open ? "" : "pt-0.5 sm:pt-1"
                                                         }`}
                                                         data-cy="toggle_password_visibility"
-                                                        alt="Toggle password visibility"
                                                     />
                                                 </div>
                                                 {errors.password && errors.password.message && (
@@ -177,9 +180,12 @@ export default function MobileForm() {
                                                         className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
                                                         data-cy="confirm_password_input"
                                                     />
-                                                    <img
+                                                    <Image
                                                         src={open ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}
                                                         onClick={toggleShow}
+                                                        width={20}
+                                                        height={20}
+                                                        alt=""
                                                         className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${
                                                             open ? "" : "pt-0.5 sm:pt-1"
                                                         }`}
@@ -257,7 +263,7 @@ export default function MobileForm() {
                                                 dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                                                 transition-all duration-300 cursor-pointer"
                                             data-cy="login_google">
-                                            <img src={"/icons/logos/google.svg"} alt="" className="h-6" />
+                                            <Image src="/icons/logos/google.svg" width={24} height={24} alt="" className="h-6" />
 
                                         </button>
                                         <button
@@ -268,7 +274,7 @@ export default function MobileForm() {
                                                 dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                                                 transition-all duration-300 cursor-pointer"
                                             data-cy="login_microsoft">
-                                            <img src={"/icons/logos/microsoft.svg"} alt="" className="h-6" />
+                                            <Image src="/icons/logos/microsoft.svg" width={24} height={24} alt="" className="h-6" />
 
                                         </button>
                                         {language === "nl" || language === "fr-BE"  ? (
@@ -280,7 +286,7 @@ export default function MobileForm() {
                                                 dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
                                                 transition-all duration-300 cursor-pointer"
                                                 data-cy="login_smartschool">
-                                                <img src={"/icons/logos/smartschool.png"} alt="" className="h-6" />
+                                                <Image src="/icons/logos/smartschool.png" width={24} height={24} alt="" className="h-6" />
 
                                             </button>
                                         ): null}

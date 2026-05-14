@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function NoResult() {
     return (
         <div className="w-full h-full pt-30 flex flex-col gap-3 justify-center items-center">

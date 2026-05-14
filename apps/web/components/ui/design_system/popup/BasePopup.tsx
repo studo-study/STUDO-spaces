@@ -1,5 +1,3 @@
-import {stopPropagation} from "@dnd-kit/core/dist/sensors/events";
-
 interface BasePopupProps extends React.HTMLProps<HTMLDivElement> {
     popupRef: React.RefObject<HTMLDivElement | null>;
     isOpen: boolean;

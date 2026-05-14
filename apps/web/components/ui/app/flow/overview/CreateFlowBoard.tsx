@@ -14,7 +14,6 @@ import {useRouter} from "next/navigation";
 import {useFlowStore} from "@/store/slices/flow/flowStore";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 import IconButton from "@/components/ui/design_system/button/IconButton";
-import {CgArrowsExpandRight} from "react-icons/cg";
 import {IoClose} from "react-icons/io5";
 import {IoIosAdd} from "react-icons/io";
 import {FiMinus} from "react-icons/fi";
@@ -27,7 +26,6 @@ interface CreateFlowBoardProps {
 
 const CreateFlowBoard = (props: CreateFlowBoardProps) => {
     const {createOpen, setCreateOpen} = props;
-    const router = useRouter();
     const popupRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 

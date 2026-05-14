@@ -1,6 +1,6 @@
 // components/app/app_header/header.tsx
 "use client"
-import {useLocale, useTranslations} from "next-intl";
+import {useLocale} from "next-intl";
 import {HiMenuAlt4} from "react-icons/hi";
 import TriggerAddPopup from "@/components/ui/app/app_header/popups/AddPopup";
 import {useEffect, useRef, useState} from "react";
@@ -8,23 +8,12 @@ import TriggerNotif from "@/components/ui/app/app_header/popups/NotificationsPop
 import StreakPopup from "@/components/ui/app/app_header/StreakPopup";
 import TriggerProfile from "@/components/ui/app/app_header/popups/ProfilePopup";
 import {TbLayoutSidebarLeftCollapse} from "react-icons/tb";
-import SearchBar from "@/components/ui/app/app_header/SearchContainer";
 import Image from "next/image";
 import {Link} from "@/i18n/routing";
 import {FaArrowRight} from "react-icons/fa";
 import {StudoUser} from "@/types/types";
 import {useAppStore} from "@/store/useAppStore";
 import AppSearchbar from "@/components/ui/app/search/SearchBar";
-
-interface studyset {
-    set_id: string;
-    last_studied: string;
-    title: string;
-    Course: string;
-    type: string;
-    progress: number;
-    length: number;
-}
 
 interface HeaderProps {
     burgerOpen: boolean;
@@ -37,7 +26,7 @@ interface HeaderProps {
     isLoading: boolean;     // <- nieuw
 }
 
-export default function AppHeader({burgerOpen, Search, setSearch, createOpen, setCreateOpen, toggleCreate, user, isLoading}: HeaderProps) {
+export default function AppHeader({burgerOpen, Search, toggleCreate, user, isLoading}: HeaderProps) {
 
     const [AddIsOpen, setAddIsOpen] = useState(false);
     const [NotifIsOpen, setNotifIsOpen] = useState(false);
@@ -45,17 +34,9 @@ export default function AppHeader({burgerOpen, Search, setSearch, createOpen, se
     const [StreakOpen, setStreakOpen] = useState(false);
     const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === 'true';
     const searchRef = useRef<HTMLInputElement>(null);
-    const t = useTranslations("header");
     const toggleSidebar = useAppStore((s) => s.toggleSidebar);
     const premium = false
 
-
-    const toggleSearch = () => {
-        setSearch(true);
-        if (searchRef.current) {
-            searchRef.current.focus();
-        }
-    };
 
     useEffect(() => {
         if (Search && searchRef.current) {

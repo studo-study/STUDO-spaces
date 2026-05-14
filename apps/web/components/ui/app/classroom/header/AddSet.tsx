@@ -1,19 +1,15 @@
 import {useEffect, useRef, useState} from "react";
 import {useTranslations} from "next-intl";
 import {IoIosClose} from "react-icons/io";
-import {HiUserGroup} from "react-icons/hi";
-import {IoAddCircleOutline, IoSchoolOutline} from "react-icons/io5";
-import {mockFullClassroomSets} from "@/data/mocks/classroomsMock";
+import {IoAddCircleOutline} from "react-icons/io5";
 import {mockFullStudysets} from "@/data/mocks/startPageMock";
-import {useSelector} from "react-redux";
 import SetItem from "@/components/ui/app/classroom/header/SetItem";
-import {FullClassroom, FullClassroomSet, FullStudyset} from "@/types/types";
+import {FullClassroomSet, FullStudyset} from "@/types/types";
 
 interface InvitePeopleProps {
     addOpen: boolean;
     setAddOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const classroomSets: FullClassroomSet[] = mockFullClassroomSets
 const userSets: FullStudyset[] = mockFullStudysets
 
 export default function AddSet({addOpen, setAddOpen}: InvitePeopleProps) {

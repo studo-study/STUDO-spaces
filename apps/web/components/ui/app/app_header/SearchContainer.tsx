@@ -12,6 +12,8 @@ interface SearchProps {
 export default function SearchBar({searchRef, toggleSearch, setSearch, Search}: SearchProps) {
     const [searches, setSearches] = useState<string | null>(null);
     const t = useTranslations("header");
+
+    //TODO
     useEffect(() => {
         setSearches(localStorage.getItem('searches'));
     }, []);

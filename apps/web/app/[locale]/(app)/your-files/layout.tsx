@@ -1,7 +1,5 @@
 import {ReactNode} from "react";
 import FileHeader from "@/components/ui/app/your-files/header";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
-
 
 export default function Layout({ children }: { children: ReactNode }) {
     return (

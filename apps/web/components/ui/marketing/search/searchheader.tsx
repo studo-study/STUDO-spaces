@@ -1,6 +1,6 @@
 "use client"
 import {useTranslations} from "next-intl";
-import {Link, usePathname} from "@/i18n/routing";
+import {usePathname} from "@/i18n/routing";
 
 const header = [
     {url: "/search-result", label: "all"},

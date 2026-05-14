@@ -3,7 +3,7 @@ import {useDraggable} from '@dnd-kit/core';
 
 interface Props {
     id: string;
-    children: any;
+    children: React.ReactNode;
 }
 
 export default function Draggable({id, children}: Props) {

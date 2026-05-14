@@ -73,7 +73,7 @@ export default function SearchSets() {
                 setLoading(false)
                 router.push(`/${locale}/search-result?q=${query}`)
             })
-    }, [query])
+    }, [query, setLoading, router, locale])
 
 
 

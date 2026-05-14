@@ -1,5 +1,5 @@
 "use client"
-import {FlowBoardResponse, FlowCourseResponse} from "@studo/types";
+import {FlowCourseResponse} from "@studo/types";
 import CreateFlowCourseButton from "@/components/ui/app/flow/page/overview/CreateFlowCourseButton";
 import FlowCourseItem from "@/components/ui/app/flow/page/overview/FlowCourseItem";
 

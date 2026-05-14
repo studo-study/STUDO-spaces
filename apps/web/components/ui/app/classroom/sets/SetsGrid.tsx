@@ -5,18 +5,15 @@ import {useTranslations} from "next-intl";
 import {FullStudyset} from "@/types/types";
 import {IoSearch} from "react-icons/io5";
 import SetListItems from "@/components/ui/app/classroom/sets/SetListItems";
-import {mockFullStudysets, mockStudysets} from "@/data/mocks/startPageMock";
+import {mockFullStudysets} from "@/data/mocks/startPageMock";
 
 
 const sets = mockFullStudysets;
 
 export default function SetsGrid() {
-    const User = useUser().user;
-    const selectionRef = useRef<HTMLSelectElement>(null);
     const t = useTranslations("classroom");
     const [filteredSets, setFilteredSets] = useState<FullStudyset[]>(sets);
 
-    const [grid, setGrid] = useState<boolean>(false);
     const [search, setSearch] = useState(false);
     const searchRef = useRef<HTMLInputElement>(null);
     const searching = () => {

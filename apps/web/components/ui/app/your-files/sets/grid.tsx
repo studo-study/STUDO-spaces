@@ -1,12 +1,9 @@
 "use client"
-import {BsGridFill} from "react-icons/bs";
-import {HiOutlineViewList} from "react-icons/hi";
 import {useEffect, useRef, useState} from "react";
 import {useLocale, useTranslations} from "next-intl";
 import Link from "next/link";
 import {IoIosAdd} from "react-icons/io";
 import SetSearch from "@/components/ui/app/your-files/sets/search";
-import GridItems from "@/components/ui/app/your-files/sets/griditems";
 import ListItems from "@/components/ui/app/your-files/sets/listitems";
 
 export interface StudySetItem {
@@ -67,7 +64,6 @@ export default function Grid({data}: GridProps) {
     }
 
     const t = useTranslations("y_f.your_sets");
-    const locale = useLocale();
 
     return (
         <div className="relative w-full h-full flex flex-col gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">

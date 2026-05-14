@@ -2,8 +2,6 @@
 import {IoSearch} from "react-icons/io5";
 import {useRef, useState} from "react";
 import {useTranslations} from "next-intl";
-import {StudySetItem} from "@/components/ui/app/your-files/sets/grid";
-import {FullClassroomSet} from "@studo/types";
 
 interface SetSearchProps<T extends { title: string; course?: string }> {
     sets: T[];

@@ -1,5 +1,3 @@
-import {useTranslations} from "next-intl";
-
 interface SmallBoardProgressProps {
     total_in_progress: number;
     total_length: number;

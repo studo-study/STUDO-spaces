@@ -25,6 +25,7 @@ export function Shortcuts() {
     const t = useTranslations("settings")
     const [isMac, setIsMac] = useState(false);
 
+    //TODO
     useEffect(() => {
         setIsMac(navigator.platform.includes("Mac"));
     }, []);

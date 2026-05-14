@@ -5,7 +5,7 @@ import ProgressBar from "@/components/ui/public/profile/(modes)/learn/progressba
 import LearnCard from "@/components/ui/public/profile/(modes)/learn/card";
 import SettingsTrigger from "@/components/ui/public/profile/(modes)/learn/settings";
 import ProgressScreen from "@/components/ui/public/profile/(modes)/learn/progressscreen";
-import { Card, FullStudyset, SessionCard } from "@/types/types";
+import { Card, FullStudyset } from "@/types/types";
 
 interface LearnProps {
     data: FullStudyset;

@@ -2,21 +2,12 @@
 import { useSearchParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import SearchHeader from "@/components/ui/marketing/search/searchheader";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import SearchResultClassroom from "@/components/ui/marketing/search/classrooms/searchresult_classroom";
 import SearchResultSets from "@/components/ui/marketing/search/sets/searchresult_sets";
 import SearchResultUsers from "@/components/ui/marketing/search/users/searchresult_users";
 import SearchResultStudo from "@/components/ui/marketing/search/studo/searchresult_studo";
 import NoResult from "@/components/ui/marketing/search/noresult";
 
-interface SetResultProps {
-    index: number;
-}
-function SetResult({index}: SetResultProps) {
-    return (<AnimateOnMount delay={index != 0 ? 50 * index : 100}>
-        <div className={"w-full h-30 bg-studoblue"}></div>
-    </AnimateOnMount>);
-}
 
 interface SearchResults {
     "data": [

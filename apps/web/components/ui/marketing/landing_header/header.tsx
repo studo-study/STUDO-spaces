@@ -9,7 +9,6 @@ import TriggerMethods from "@/components/ui/marketing/landing_header/dropdownmet
 import Image from "next/image";
 import TriggerClassrooms from "@/components/ui/marketing/landing_header/dropdownclassrooms";
 import Searchbar from "@/components/ui/marketing/landing_header/searchbar";
-import {useParams} from "next/navigation";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import {useLoadingStore} from "@/store/slices/loading/loadingStore";
 
@@ -26,25 +25,6 @@ const toolCategories = [
     {to: "/flashcards", icon: "/icons/cards.svg", label: "flashcards", gradient: "from-blue-400 to-blue-500"},
     {to: "/identify", icon: "/icons/pin-icon.svg", label: "identify", gradient: "from-rose-400 to-red-500"},
     {to: "/point", icon: "/icons/point.svg", label: "point", gradient: "from-violet-400 to-purple-500"},
-];
-
-const classroomTools = [
-    {to: "/classes", icon: "/icons/classroom.svg", label: "class_group", gradient: "from-green-400 to-emerald-500"},
-    {to: "/studygroups", icon: "/icons/studygroup.svg", label: "study_group", gradient: "from-cyan-400 to-sky-500"},
-    {
-        to: "/communities",
-        icon: "/icons/community.svg",
-        label: "community_group",
-        gradient: "from-indigo-400 to-violet-500"
-    },
-    {to: "/challenges/time-attack", icon: "/icons/clock.svg", label: "time", gradient: "from-fuchsia-400 to-pink-500"},
-    {
-        to: "/challenges/mastery-tournament",
-        icon: "/icons/podium.svg",
-        label: "mastery",
-        gradient: "from-red-400 to-orange-500"
-    },
-    {to: "/challenges/duel", icon: "/icons/duel.svg", label: "duel", gradient: "from-amber-400 to-yellow-500"},
 ];
 
 export default function LandingHeader() {

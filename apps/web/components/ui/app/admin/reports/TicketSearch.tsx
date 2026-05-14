@@ -1,17 +1,10 @@
 "use client"
-import {IoSearch} from "react-icons/io5";
-import {useRef, useState} from "react";
 import {useTranslations} from "next-intl";
-import {StudySetItem} from "@/components/ui/app/your-files/sets/grid";
-
-interface SetSearchProps {
-    sets: StudySetItem[];
-    setFilteredSets: React.Dispatch<React.SetStateAction<StudySetItem[]>>;
-}
+import {IoSearch} from "react-icons/io5";
 
 export default function TicketSearch() {
     const t = useTranslations("y_f.your_sets");
-    const [search, setSearch] = useState(false);
+    const search = false;
     return (
         <div className={`h-10 gap-5 px-5 dark:text-white w-70 rounded-4xl glass-rgb transition-all duration-300 
         ${search ? "dark:border-white border-gray-500" : "dark:border-studoborder/30 border-gray-300"} 

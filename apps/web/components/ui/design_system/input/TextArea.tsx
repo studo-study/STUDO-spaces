@@ -1,14 +1,4 @@
-interface InputFieldProps extends React.HTMLProps<HTMLTextAreaElement> {
-    placeholder?: string;
-    fontBold?: boolean;
-    textSize?: string;
-    initialValue?: string;
-    setValue?: (value: string) => void;
-    error?: string;
-    width?: string;
-    className?: string;
-    height?: string;
-}
+
 import { useEffect, useRef } from "react";
 
 interface TextAreaProps {

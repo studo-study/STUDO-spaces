@@ -1,4 +1,4 @@
-import {JSX, memo, ReactNode} from "react";
+import {ReactNode} from "react";
 import Link from "next/link";
 import {IoIosArrowForward} from "react-icons/io";
 

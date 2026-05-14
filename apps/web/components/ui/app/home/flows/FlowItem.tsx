@@ -1,7 +1,6 @@
 import {Boards} from "@studo/types";
 import {Link} from "@/i18n/routing";
 import {getFlowIcon} from "@/components/ui/design_system/icons/iconRegistry";
-import SmallProgress from "@/components/ui/design_system/progress/SmallProgress";
 import SmallBoardProgress from "@/components/ui/app/home/flows/SmallBoardProgress";
 import {useTranslations} from "next-intl";
 

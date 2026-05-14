@@ -1,5 +1,4 @@
 "use client"
-import {useTranslations} from "next-intl";
 import {IoIosAdd} from "react-icons/io";
 
 interface TriggerFlowProps {

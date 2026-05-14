@@ -17,7 +17,7 @@ interface ParsedInputType {
 }
 const ResourceIcon = (props: ResourceIconProps) => {
     const {input, deleteable, onDelete} = props;
-    const [parsedInput, setParsedInput] = useState<ParsedInputType>(Linkparser(input.link));
+    const [parsedInput] = useState<ParsedInputType>(Linkparser(input.link));
     const handleLink = () => {
         window.open(input.link, "_blank");
     }

@@ -44,7 +44,6 @@ const RowSelector = ({
                          datePicker = false,
                          multiple = false,
                          placeholder,
-                         error,
                          link
                      }: TagSelectorProps) => {
     const [isOpen, setIsOpen] = useState(false);

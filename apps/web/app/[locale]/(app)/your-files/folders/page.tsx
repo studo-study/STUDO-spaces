@@ -7,10 +7,7 @@ export const metadata:Metadata = {
     title:"Folders | Studo"
 }
 
-export default async function Page({params}: {
-    params: Promise<{ locale: string; id: string }>
-}) {
-    const { locale, id } = await params;
+export default async function Page() {
     const session = await auth();
     const token = session?.accessToken;
     const data = await fetch(

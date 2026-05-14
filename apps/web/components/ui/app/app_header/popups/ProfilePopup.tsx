@@ -8,22 +8,12 @@ import {LuLogOut, LuSettings} from "react-icons/lu";
 import {mockUser} from "@/data/mocks/startPageMock";
 import { signOut } from 'next-auth/react';
 import {StudoUser} from "@/types/types";
-import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 interface ProfileTriggerPopupProps{
     ProfileIsOpen: boolean,
     setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     user: StudoUser | null,
 }
 
-interface studyset {
-    "set_id": string;
-    "last_studied": string;
-    "title": string;
-    "Course": string;
-    "type": string;
-    "progress": number;
-    "length": number
-}
 
 const data = mockUser;
 

@@ -22,7 +22,6 @@ const LinkTag = ({
                      value,
                      onChange,
                      placeholder,
-                     error,
                      options,
                  }: LinkTagProps) => {
     const [isOpen, setIsOpen] = useState(false);

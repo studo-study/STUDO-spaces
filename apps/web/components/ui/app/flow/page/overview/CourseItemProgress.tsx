@@ -1,7 +1,4 @@
 "use client"
-import {useState} from "react";
-import TagSelector from "@/components/ui/design_system/tag/TagSelector";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import {useTranslations} from "next-intl";
 
 interface FlowProgressProps {

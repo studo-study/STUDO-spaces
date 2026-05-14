@@ -1,6 +1,6 @@
 "use client"
 import {FaPlus} from "react-icons/fa";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useCallback, useRef, useState} from "react";
 import {RiProgress4Line, RiProgress8Line} from "react-icons/ri";
 import {MdOutlineBrightness1} from "react-icons/md";
 import TicketSearch from "@/components/ui/app/admin/reports/TicketSearch";
@@ -8,7 +8,6 @@ import {IoFilter} from "react-icons/io5";
 import ReportColumn from "@/components/ui/app/admin/reports/ReportColumn";
 import mockReports from "@/data/mocks/reportMock";
 import {Issue} from "@/types/types";
-import Sortable from "sortablejs";
 
 const data: Issue[] = mockReports
 

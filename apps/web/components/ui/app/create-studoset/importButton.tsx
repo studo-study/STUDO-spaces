@@ -1,11 +1,6 @@
 "use client"
 import {useTranslations} from "next-intl";
-import {HiSparkles} from "react-icons/hi";
-import {IoSparklesSharp} from "react-icons/io5";
 import {FaWandMagicSparkles} from "react-icons/fa6";
-import {FiCommand} from "react-icons/fi";
-import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
-import {useEffect, useState} from "react";
 
 interface ImportButtonProps {
     setShowImporter: (value: boolean) => void;

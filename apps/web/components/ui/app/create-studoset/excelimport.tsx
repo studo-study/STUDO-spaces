@@ -1,5 +1,4 @@
 import {useTranslations} from "next-intl";
-import {RiFileExcel2Fill} from "react-icons/ri";
 
 export default function ExcelImport() {
     const t = useTranslations("import");

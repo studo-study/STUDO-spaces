@@ -1,4 +1,3 @@
-import {memo} from "react";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
 import {GoPlus} from "react-icons/go";

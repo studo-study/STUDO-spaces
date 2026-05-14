@@ -15,14 +15,6 @@ export default function SetListItems({items}:ListItemProps) {
         {items.map((item, index) => (<ListItem set={item} key={index} index={index} t={t} locale={locale} />))}
     </div>)
 }
-
-const COLORS = [
-    "from-amber-500/5 to-amber-400/5",
-    "from-purple-500/5 to-purple-400/5",
-    "from-blue-500/5 to-blue-400/5",
-    "from-emerald-500/5 to-emerald-400/5"
-] as const;
-
 interface SetItemProps {
     set: FullStudyset;
     t: ReturnType<typeof useTranslations>;
@@ -31,7 +23,7 @@ interface SetItemProps {
 }
 
 
-function ListItem({ set, index, t, locale }: SetItemProps) {
+function ListItem({ set, t, locale }: SetItemProps) {
     const date = new Date(set.created_at).toLocaleDateString(locale);
     const iconSrc = set.cards ? "/icons/studyset.svg" : "/icons/visualset.svg";
     const challenged = true;

@@ -1,13 +1,11 @@
 "use client";
 import {FaChevronDown, FaChevronRight, FaExternalLinkAlt, FaFolderOpen} from "react-icons/fa";
 import Link from "next/link";
-import {useDraggable, useDroppable} from "@dnd-kit/core";
 import {Folder} from "@/types/types";
 import IconButton from "@/components/ui/design_system/button/IconButton";
 import {useState} from "react";
 import {FaFolderClosed} from "react-icons/fa6";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
-import {MdEditNote} from "react-icons/md";
 import {FiTrash2} from "react-icons/fi";
 import {useTranslations} from "next-intl";
 import {IoShareOutline} from "react-icons/io5";

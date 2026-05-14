@@ -37,7 +37,6 @@ export default function UserPopup({ burgerOpen }: UserPopupProps) {
 
     const getHeight = () => {
         if (!isOpen) return "h-10";
-        const items = isModerator ? 2 : 1; // settings + eventueel mod
         return isModerator ? "h-[8.3rem]" : "h-[5.3rem]"; // 40px per item + 20px gaps
     };
 

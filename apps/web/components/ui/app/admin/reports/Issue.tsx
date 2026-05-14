@@ -1,39 +1,17 @@
 "use client"
 import {Issue} from "@/types/types";
-import {Link} from "@/i18n/routing";
 import {LuCircleUserRound} from "react-icons/lu";
-import {FaCircleNotch} from "react-icons/fa";
 import {PiCellSignalHighFill, PiCellSignalLowFill, PiCellSignalMediumFill, PiDotsThree} from "react-icons/pi";
 import {CgDanger} from "react-icons/cg";
 import {MdOutlineBrightness1} from "react-icons/md";
 import {RiProgress4Line, RiProgress8Line} from "react-icons/ri";
-import {ReactNode, useState} from "react";
+import {useState} from "react";
 import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
 import IssueDetails from "@/components/ui/app/admin/reports/IssueDetails";
 interface IssueProps {
     item: Issue
     status: string
-}
 
-interface vb {
-    report_id: string;
-    filled_by: number;
-    title: string;
-    report_type: string;
-    description: string;
-    target_id: string;
-    target_type: string;
-    reported_user_id: number;
-    status: string;
-    priority: string | null;
-    created_at: string | null;
-    resolved_at: string | null;
-    reviewed_by: number | null;
-    moderator_note: string | null;
-    assignee_id: string | null;
-    assignee_displayName: string | null;
-    number: number | null;
-}
 
 
 export default function IssueItem({item, status}: IssueProps) {

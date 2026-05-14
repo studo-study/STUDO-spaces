@@ -5,7 +5,6 @@ import {useRouter} from "@/i18n/routing";
 import {Folder, Pin} from "@/types/types";
 import VsInput from "@/components/ui/app/create-visualset/VsInput";
 import VsFooter from "@/components/ui/app/create-visualset/VsFooter";
-import Image from "next/image";
 
 export interface VisualsetImage {
     id: string;

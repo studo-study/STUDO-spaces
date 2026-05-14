@@ -1,9 +1,7 @@
 "use client"
-import {memo, useMemo} from "react";
+import {useMemo} from "react";
 import Link from "next/link";
 import CourseIcons from "@/data";
-import {IoShareOutline} from "react-icons/io5";
-import {MdEditNote} from "react-icons/md";
 import {FaExternalLinkAlt} from "react-icons/fa";
 import {FiTrash2} from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";

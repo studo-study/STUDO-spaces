@@ -1,11 +1,9 @@
 "use client"
-import {mockClassroomUsers} from "@/data/mocks/classroomsMock";
 import {IoClose} from "react-icons/io5";
 import {useState} from "react";
 import {ClassroomUser} from "@/types/types";
 import {useTranslations} from "next-intl";
 import {FaCheck} from "react-icons/fa6";
-import Image from "next/image";
 import Link from "next/link";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import UserSearch from "@/components/ui/app/classroom/users/UserSearch";

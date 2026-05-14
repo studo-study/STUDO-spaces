@@ -4,7 +4,6 @@ import {FaExternalLinkAlt, FaUserFriends} from "react-icons/fa";
 import {LiaUniversitySolid} from "react-icons/lia";
 import {IoSchoolOutline} from "react-icons/io5";
 import {TbWorld} from "react-icons/tb";
-import {MdEditNote} from "react-icons/md";
 import {FiTrash2} from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
 

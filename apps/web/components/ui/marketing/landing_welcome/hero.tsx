@@ -36,7 +36,6 @@ export default function Hero() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const launched = true;
 
     return (
         <section className="relative w-full max-w-screen overflow-visible h-fit xxl:h-3/4 flex flex-col items-center justify-start pt-10 px-4">

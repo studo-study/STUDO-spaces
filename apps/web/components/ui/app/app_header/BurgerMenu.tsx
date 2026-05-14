@@ -10,7 +10,6 @@ import {GoHome} from "react-icons/go";
 import {IoIosAdd} from "react-icons/io";
 import {usePathname} from "next/navigation";
 import UserPopup from "@/components/ui/app/app_header/popups/BurgerPopup";
-import {BsFileEarmarkCheck} from "react-icons/bs";
 import {LuClipboardList} from "react-icons/lu";
 
 interface BurgerProps {

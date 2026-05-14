@@ -1,7 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import MockGemini from "@/data/mockgemini";
 import {CardData} from "@/types/types";
-import {IoSparklesSharp} from "react-icons/io5";
 
 const MAX_FILES = 3;
 const ACCEPTED = ["image/png", "image/jpeg", "image/webp", "image/heic", "application/pdf"];
@@ -14,9 +12,9 @@ export default function SvenImport({onClose, cardArray, setCardArray}: importerP
     const [files, setFiles] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
-    const [results, setResults] = useState(null);
     const inputRef = useRef(null);
 
+    //TODO
     const addFiles = useCallback((incoming) => {
         const valid = Array.from(incoming).filter((f) => ACCEPTED.includes(f.type));
         setFiles((prev) => [...prev, ...valid].slice(0, MAX_FILES));

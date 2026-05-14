@@ -1,34 +1,18 @@
 "use client"
-import {useTranslations} from "next-intl";
-import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {Classroom} from "@/types/types";
 import {mockFullClassrooms} from "@/data/mocks/classroomsMock";
-import {IoPersonAdd, IoSchoolOutline} from "react-icons/io5";
+import {IoSchoolOutline} from "react-icons/io5";
 import {FaUserFriends} from "react-icons/fa";
 import {TbWorld} from "react-icons/tb";
 import {LiaUniversitySolid} from "react-icons/lia";
-import {FaEllipsis} from "react-icons/fa6";
-import {IoIosAdd} from "react-icons/io";
-import {ImLink} from "react-icons/im";
-import TriggerClassroom from "@/components/ui/app/classrooms/CreateClassroom";
 import {useState} from "react";
-import TriggerInvite from "@/components/ui/app/classroom/header/TriggerInvite";
-import InvitePeople from "@/components/ui/app/classroom/header/InvitePeople";
-import AddSet from "@/components/ui/app/classroom/header/AddSet";
-import TriggerSettings from "@/components/ui/app/classroom/header/Settings";
 
 const classroom: Classroom = mockFullClassrooms[0];
 
 export default function PublicClassroomHeader() {
     const pathname = usePathname();
-    const items = [
-        {link: `/classroom/${classroom.id}/sets`, label:"set_title"},
-        {link: `/classroom/${classroom.id}/members`, label:"users"},
-    ]
-    const rest = [
-        {link: `/classroom/${classroom.id}/challenges`, label:"challenges_title"}
-    ]
+
 
     const [invite, setInvite] = useState(false);
     const [add, setAdd] = useState(false);

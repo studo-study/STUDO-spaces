@@ -1,8 +1,7 @@
 import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
 import {IoIosClose} from "react-icons/io";
-import {HiUserGroup} from "react-icons/hi";
-import {IoPersonAdd, IoSchoolOutline} from "react-icons/io5";
+import {IoPersonAdd} from "react-icons/io5";
 import InviteItem from "@/components/ui/app/classroom/header/InviteItem";
 
 interface InvitePeopleProps {

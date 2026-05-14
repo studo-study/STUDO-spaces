@@ -2,13 +2,9 @@
 import {useState} from "react";
 import {useLocale, useTranslations} from "next-intl";
 import {useRouter, useSearchParams} from "next/navigation";
-import {signIn} from "next-auth/react";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import { db } from '@/lib/firebase/firebase';
-import {collection, addDoc, serverTimestamp, query, where, getDocs, setDoc, doc, getDoc} from 'firebase/firestore';
-import {navigate} from "next/dist/client/components/segment-cache/navigation";
-import router from "next/router";
-
+import {serverTimestamp, setDoc, doc, getDoc} from 'firebase/firestore';
 
 export default function MobileForm() {
     const t = useTranslations("waitinglist")
@@ -16,11 +12,9 @@ export default function MobileForm() {
 
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const locale = useLocale();
-    const searchParams = useSearchParams();
     const router= useRouter();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
