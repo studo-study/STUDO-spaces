@@ -1,4 +1,10 @@
-import { useState, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { CardData } from "@/types/types";
 
 const MAX_FILES = 3;
@@ -12,7 +18,7 @@ const ACCEPTED = [
 interface importerProps {
   onClose: () => void;
   cardArray: CardData[];
-  setCardArray: React.Dispatch<React.SetStateAction<CardData[]>>;
+  setCardArray: Dispatch<SetStateAction<CardData[]>>;
 }
 export default function SvenImport({
   onClose,
@@ -24,9 +30,10 @@ export default function SvenImport({
   const [isUploading, setIsUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  //TODO
   const addFiles = useCallback((incoming: FileList | File[]) => {
-    const valid = Array.from(incoming).filter((f: File) => ACCEPTED.includes(f.type));
+    const valid = Array.from(incoming).filter((f: File) =>
+      ACCEPTED.includes(f.type),
+    );
     setFiles((prev) => [...prev, ...valid].slice(0, MAX_FILES));
   }, []);
 
@@ -155,7 +162,7 @@ export default function SvenImport({
               className="flex items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-studogrey/20 border border-studoborder/20"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-studoborder/10 flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-studoborder/10 flex items-center justify-center shrink-0">
                   {file.type === "application/pdf" ? (
                     <svg
                       width="18"
@@ -197,7 +204,7 @@ export default function SvenImport({
                   e.stopPropagation();
                   removeFile(i);
                 }}
-                className="text-white/30 hover:text-red-400 transition-colors flex-shrink-0 cursor-pointer"
+                className="text-white/30 hover:text-red-400 transition-colors shrink-0 cursor-pointer"
               >
                 <svg
                   width="16"
@@ -225,11 +232,11 @@ export default function SvenImport({
                     relative  overflow-hidden
             w-full rounded-full font-bold text-lg
             transition-all duration-300 cursor-pointer select-none
-           h-full justify-center p-[3px] bg-gray-700
+           h-full justify-center p-0.75 bg-gray-700
             ${
               files.length === 0 || isUploading
                 ? "bg-gray-700 text-white/20 cursor-not-allowed"
-                : "bg-gradient-to-br from-blue-400 to-blue-500 text-white active:scale-[0.98] shadow-xl"
+                : "bg-linear-to-br from-blue-400 to-blue-500 text-white active:scale-[0.98] shadow-xl"
             }
           `}
         >
@@ -240,7 +247,7 @@ export default function SvenImport({
             className={`relative bg-w-full z-10 h-12 flex rounded-full items-center justify-center  ${
               files.length === 0 || isUploading
                 ? "bg-gray-700 text-white/20 cursor-not-allowed"
-                : "bg-gradient-to-br from-gray-700 to-gray-600 text-white active:scale-[0.98] shadow-xl"
+                : "bg-linear-to-br from-gray-700 to-gray-600 text-white active:scale-[0.98] shadow-xl"
             }`}
           >
             {isUploading ? (

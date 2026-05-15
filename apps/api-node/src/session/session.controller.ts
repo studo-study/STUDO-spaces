@@ -71,8 +71,7 @@ export class SessionController {
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
     console.log('🔍 Google callback - User:', req.user);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const token = await this.authService.validateGoogleUser(req.user as any);
 
     const frontendUrl =
@@ -103,7 +102,7 @@ export class SessionController {
   @Get('microsoft/callback')
   @UseGuards(AuthGuard('microsoft'))
   async microsoftAuthRedirect(@Req() req: Request, @Res() res: Response) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const token = await this.authService.validateMicrosoftUser(req.user as any);
 
     // 👇 Gebruik configService en correct pad
@@ -149,8 +148,10 @@ export class SessionController {
   @Get('smartschool/callback')
   @UseGuards(AuthGuard('smartschool'))
   async smartschoolLoginCallback(@Req() req: Request, @Res() res: Response) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const token = await this.authService.validateSmartschoolUser(req.user as any);
+    const token = await this.authService.validateSmartschoolUser(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      req.user as any,
+    );
     const frontendUrl =
       this.configService.get<string>('url.url') || 'http://localhost:5173/home';
     return res.redirect(`${frontendUrl}/auth/callback?token=${token}`);

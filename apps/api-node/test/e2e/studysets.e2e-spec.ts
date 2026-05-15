@@ -300,10 +300,7 @@ describe('Studysets', () => {
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server)
-        .post(baseUrl)
-        .send({})
-        .expect(401);
+      const response = await request(server).post(baseUrl).send({}).expect(401);
 
       expect(response.body.message).toBe('You need to be signed in');
     });

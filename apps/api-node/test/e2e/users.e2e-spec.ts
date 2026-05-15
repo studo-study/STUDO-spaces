@@ -682,9 +682,7 @@ describe('Users', () => {
       expect(response.body.message).toBe('User not found');
     });
 
-    testAuthHeader(() =>
-      request(server).get(`${baseUrl}/${userId2}/app`),
-    );
+    testAuthHeader(() => request(server).get(`${baseUrl}/${userId2}/app`));
   });
 
   describe('GET /api/users/:user_id/course/:course_id', () => {
