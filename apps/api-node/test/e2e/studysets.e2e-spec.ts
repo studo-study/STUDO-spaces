@@ -321,7 +321,6 @@ describe('Studysets', () => {
   // ============================================================
   describe('POST /api/studosets/:set_id/likes', () => {
     it('zou een studoset moeten kunnen liken', async () => {
-
       const response = await request(app.getHttpServer())
         .post(`${baseUrl}/${studySetId1}/likes`)
         .set('Authorization', `Bearer ${authToken}`)
@@ -338,7 +337,6 @@ describe('Studysets', () => {
         .delete(`${baseUrl}/${studySetId1}/likes`)
         .set('Authorization', `Bearer ${authToken}`);
     });
-
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
       const response = await request(app.getHttpServer())
@@ -708,7 +706,7 @@ describe('Studysets', () => {
     it('zou special characters in title en course moeten kunnen handelen', async () => {
       const specialSet = {
         title: 'Test & <Special> "Characters"',
-        course: 'Biology\'s Course (Advanced)',
+        course: "Biology's Course (Advanced)",
         global_term_language: 'en',
         global_definition_language: 'nl-NL',
         folder_id: folderId2,

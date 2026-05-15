@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, ReactNode } from "react";
+import { useState, useRef, useEffect, useLayoutEffect, ReactNode } from "react";
 
 interface LinkOption {
     value: string;
@@ -39,12 +39,13 @@ const LinkTag = ({
         return () => document.removeEventListener("mousedown", handleClick);
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (isOpen && inputRef.current) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setInputValue(value ?? "");
             inputRef.current.focus();
         }
-    }, [isOpen]);
+    }, [isOpen, value]);
 
     const handleSubmit = () => {
         if (inputValue.trim()) {

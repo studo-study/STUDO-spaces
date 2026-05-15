@@ -3,7 +3,7 @@ import {useTranslations} from "next-intl";
 import {HiLightningBolt} from "react-icons/hi";
 import {mockChallenges, mockFullClassrooms} from "@/data/mocks/classroomsMock";
 import {useParams} from "next/navigation";
-import {ChallengeResponseDTO, ClassroomUser, FullClassroomSet} from "@/types/types";
+import {ChallengeResponseDTO, ClassroomUser} from "@/types/types";
 import {IoHourglassOutline} from "react-icons/io5";
 import {GiPodium, GiSwordsEmblem} from "react-icons/gi";
 import {useEffect, useRef, useState} from "react";
@@ -93,8 +93,6 @@ interface ChallengePopupProps {
 function ChallengePopup({challenge, popupChallenge, setPopupChallenge}: ChallengePopupProps) {
     const popupRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const t = useTranslations("classroom.addset")
-    const [importedClassrooms, setImportedClassrooms] = useState<FullClassroomSet[]>([]);
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -106,12 +104,12 @@ function ChallengePopup({challenge, popupChallenge, setPopupChallenge}: Challeng
             setTimeout(() => document.addEventListener("mousedown", handleClickOutside), 0);
         }
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [popupChallenge, setPopupChallenge]);
+    }, [challenge, popupChallenge, setPopupChallenge]);
 
     useEffect(() => {
         if (popupChallenge) inputRef.current?.focus();
         else inputRef.current?.blur();
-    }, [challenge]);
+    }, [challenge, popupChallenge]);
 
     return (
         <div className={`fixed inset-0 flex items-start justify-center pt-24 md:pt-32 lg:pt-50 w-full bg-black/50 h-full z-[9999] px-4 md:px-8 lg:px-0

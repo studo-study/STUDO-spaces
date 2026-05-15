@@ -5,6 +5,7 @@ import {auth} from "@/auth";
 import {getTranslations} from "next-intl/server";
 import Image from "next/image";
 import {Card} from "@/types/types";
+import {SessionCardResponse} from "@studo/types";
 import CardItem from "@/components/ui/public/sets/studosets/carditem";
 import {Progress} from "@/components/ui/marketing/progress/progress";
 import {IoFilter, IoFolderOpenOutline} from "react-icons/io5";
@@ -31,15 +32,15 @@ export default async function StudosetView({ id }: viewProps) {
         }
     ).then(res => res.json());
 
-    const not_studied = data?.session?.cards?.reduce((sum: number, card: any) => {
+    const not_studied = data?.session?.cards?.reduce((sum: number, card: SessionCardResponse) => {
         return card.card_viewcount === 0 ? sum + 1 : sum;
     }, 0) ?? 0;
 
-    const reviewed = data?.session?.cards?.reduce((sum: number, card: any) => {
+    const reviewed = data?.session?.cards?.reduce((sum: number, card: SessionCardResponse) => {
         return card.card_viewcount === 1 ? sum + 1 : sum;
     }, 0) ?? 0;
 
-    const studied = data?.session?.cards?.reduce((sum: number, card: any) => {
+    const studied = data?.session?.cards?.reduce((sum: number, card: SessionCardResponse) => {
         return card.card_viewcount > 1 ? sum + 1 : sum;
     }, 0) ?? 0;
 
@@ -91,7 +92,7 @@ export default async function StudosetView({ id }: viewProps) {
                             <div className="inline-flex flex-row items-center gap-2 sm:gap-3 min-h-10 sm:min-h-12 w-full
                      text-studodarkblue justify-center rounded-full cursor-pointer bg-studogrey/30 uppercase
                      shadow-2xl border border-studoborder/30 font-semibold text-xs dark:text-white px-4 sm:px-8 sm:text-base md:text-base">
-                                <img src={"/icons/pencil.svg"} alt="" className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0" />
+                                <Image width={20} height={20}  src={"/icons/pencil.svg"} alt="" className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0" />
                                 <span className="truncate">{t("learn")}</span>
                             </div>
                         </Link>
@@ -99,7 +100,7 @@ export default async function StudosetView({ id }: viewProps) {
                             <div className="inline-flex flex-row items-center gap-2 sm:gap-3 min-h-10 sm:min-h-12 w-full
                      text-studodarkblue justify-center rounded-full cursor-pointer bg-studogrey/30 uppercase
                      shadow-2xl border border-studoborder/30 font-semibold text-xs dark:text-white px-4 sm:px-8 sm:text-base md:text-base">
-                                <img src={"/icons/clock.svg"} alt="" className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0" />
+                                <Image width={20} height={20}  src={"/icons/clock.svg"} alt="" className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0" />
                                 <span className="truncate">{t("speedy")}</span>
                             </div>
                         </Link>
@@ -107,7 +108,7 @@ export default async function StudosetView({ id }: viewProps) {
                             <div className="inline-flex flex-row items-center gap-2 sm:gap-3 min-h-10 sm:min-h-12 w-full
                      text-studodarkblue justify-center rounded-full cursor-pointer bg-studogrey/30 uppercase
                      shadow-2xl border border-studoborder/30 font-semibold text-xs dark:text-white px-4 sm:px-8 sm:text-base md:text-base">
-                                <img src={"/icons/cards.svg"} alt="" className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0" />
+                                <Image width={20} height={20}  src={"/icons/cards.svg"} alt="" className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0" />
                                 <span className="truncate">{t("flashcards")}</span>
                             </div>
                         </Link>

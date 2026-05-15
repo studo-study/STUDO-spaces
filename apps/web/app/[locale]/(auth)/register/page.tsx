@@ -4,6 +4,7 @@ import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import Link from "next/link";
 import DesktopForm from "@/components/ui/auth/register/desktopform";
 import MobileForm from "@/components/ui/auth/register/mobileform";
+import Image from "next/image"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -120,7 +121,9 @@ export default function RegisterPage() {
           transition-all duration-200 active:scale-105 focus:outline-none
           focus:ring-2 focus:ring-studogrey/50 cursor-pointer"
                       aria-label="Go back">
-                    <img
+                    <Image
+                        width={20}
+                        height={20}
                         src={"/icons/right.svg"}
                         alt=""
                         className="w-5 h-5 sm:w-6 sm:h-6 md:h-7 md:w-7 rotate-180 opacity-60 dark:invert"

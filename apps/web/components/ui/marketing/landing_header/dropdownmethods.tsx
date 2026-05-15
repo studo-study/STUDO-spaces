@@ -3,6 +3,7 @@ import {useEffect, useRef} from "react";
 
 import {useTranslations} from "next-intl";
 import {Link} from "@/i18n/routing";
+import Image from "next/image";
 
 interface TriggerMethodsProps {
     MethodsOpen: boolean,
@@ -23,7 +24,9 @@ export default function TriggerMethods({ MethodsOpen, setMethodsOpen }: TriggerM
             className={"relative min-w-fit w-fit h-fit flex flex-row gap-3 cursor-pointer"}
             onClick={togglePopUp}
         >
-            <img
+            <Image
+                width={20}
+                height={20}
                 src={"/icons/down.svg"}
                 className={`${MethodsOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
                 alt=""
@@ -119,7 +122,9 @@ function MethodsPopUp({ MethodsOpen, setMethodsOpen, triggerRef }: MethodsPopUpP
               group-hover:scale-110 group-hover:shadow-lg
               transition-all duration-200`}
                         >
-                            <img
+                            <Image
+                                width={20}
+                                height={20}
                                 src={item.icon}
                                 alt=""
                                 className="h-4 w-4 brightness-0 invert"

@@ -1,4 +1,5 @@
 import {FullClassroom} from "@/types/types";
+import {useTranslations} from "next-intl";
 import {Link} from "@/i18n/routing";
 import {FaExternalLinkAlt, FaUserFriends} from "react-icons/fa";
 import {LiaUniversitySolid} from "react-icons/lia";
@@ -9,7 +10,7 @@ import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions"
 
 
 interface ClassroomOverviewItemProps {
-    t: any;
+    t: ReturnType<typeof useTranslations>;
     classroom: FullClassroom;
 }
 export default function ClassroomOverviewItem({t, classroom}: ClassroomOverviewItemProps) {

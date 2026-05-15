@@ -41,7 +41,6 @@ export default function LandingHeader() {
 
 
     const popupRef = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
     const currentIndex = 0;
     const catIndex = 0;
     const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +49,6 @@ export default function LandingHeader() {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    setIsVisible(true);
                 }
             },
             {threshold: 0.1}
@@ -114,7 +112,7 @@ export default function LandingHeader() {
                             <Image src={"/logo/hat.svg"} alt={"hat"} height={0} width={0} className={"dark:block hidden w-13"}/>
                             <Image src={"/logo/hat_light.svg"} alt={"hat"} height={0} width={0} className={"dark:hidden w-13"}/>
                             <span
-                                className={`relative z-10 bg-gradient-to-r font-bold ${specialeDag()} bg-clip-text text-transparent transition-all duration-300`}>
+                                className={`relative z-10 bg-gradient-to-r font-bold ${specialeDag(useLocale())} bg-clip-text text-transparent transition-all duration-300`}>
                             Studo
                           </span>
 
@@ -193,7 +191,7 @@ export default function LandingHeader() {
                             <div className={"flex flex-col gap-3"}>
                                 <span className={"font-bold dark:text-white"}>{t("lm")}:</span>
                                 <div className={"w-full h-fit grid grid-cols-2 gap-3"}>
-                                    {menuItems.map((item, index) => (
+                                    {menuItems.map((item) => (
                                         <Link
                                             key={item.to}
                                             href={item.to}
@@ -318,12 +316,11 @@ export default function LandingHeader() {
 }
 
 
-function specialeDag() {
+function specialeDag(locale: string) {
     const date: Date = new Date();
     const dag = date.getDate();
     const maand = date.getMonth();
     const jaar = date.getFullYear();
-    const locale = useLocale();
     const feestdagen = {
         christmas: "from-rose-600 via-rose-500 to-rose-400 dark:from-white dark:to-rose-200",
         christmasDay: "from-red-600 via-red-500 to-red-400 dark:from-white dark:to-red-200",

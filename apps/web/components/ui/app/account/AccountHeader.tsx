@@ -4,6 +4,7 @@ import Link from "next/link";
 import {IoMdSettings} from "react-icons/io";
 import {useUser} from "@/components/providers/UserProvider";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import Image from "next/image"
 
 export default  function AccountHeader() {
     const t = useTranslations("account")
@@ -20,7 +21,7 @@ export default  function AccountHeader() {
                         <span>{user?.displayName}</span>
                         <span className={"text-base cursor-pointer"}>#</span>
                         <Link href={"/streak"}>
-                            <img src="/icons/streak.svg" alt="streak-icon" className="w-4 h-4 cursor-pointer" />
+                            <Image width={20} height={20}  src="/icons/streak.svg" alt="streak-icon" className="w-4 h-4 cursor-pointer" />
                         </Link>
 
                     </div>

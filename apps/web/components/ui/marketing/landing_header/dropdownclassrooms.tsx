@@ -6,6 +6,7 @@ import {IoHourglassOutline, IoSchoolOutline} from "react-icons/io5";
 import {FaUserFriends} from "react-icons/fa";
 import {TbWorld} from "react-icons/tb";
 import {GiPodium, GiSwordsEmblem} from "react-icons/gi";
+import Image from "next/image";
 
 interface TriggerClassroomProps {
     ClassOpen: boolean,
@@ -26,7 +27,9 @@ export default function TriggerClassrooms({ ClassOpen, setClassOpen }: TriggerCl
             className={"relative w-fit min-w-fit h-fit flex flex-row gap-3 cursor-pointer"}
             onClick={togglePopUp}
         >
-            <img
+            <Image
+                width={20}
+                height={20}
                 src={"/icons/down.svg"}
                 className={`${ClassOpen ? "rotate-180" : ""} transition-transform duration-300 dark:brightness-0 dark:invert h-7`}
                 alt=""

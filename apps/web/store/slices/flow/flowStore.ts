@@ -87,7 +87,7 @@ function mergeDirty(key: string, endpoint: string, method: string, payload: Reco
     });
 }
 
-function syncBoardTotals(set: Function, get: Function) {
+function syncBoardTotals(set: (state: Partial<FlowState>) => void, get: () => FlowState) {
     const {activeCourse, activeBoard} = get();
     if (!activeCourse || !activeBoard) return;
 
@@ -205,8 +205,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     },
 
     updateRow: (rowId, updates) => {
-        // Build API payload (strip client-only fields)
-        const {id, course_id, course_link, summary_link, resources, ...rest} = updates as Record<string, unknown>;
+        const {...rest} = updates as Record<string, unknown>;
         const payload: UpdateFlowRow = {};
         if (rest.title !== undefined) payload.title = rest.title as string;
         if (rest.order_index !== undefined) payload.order_index = rest.order_index as number;

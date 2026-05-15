@@ -40,12 +40,8 @@ interface SettingsPopupProps {
     containerRef: React.RefObject<HTMLDivElement | null>,
 }
 
-const menuItems = [
-    { to: "/create-studoset", icon: "/icons/studyset.svg", label: "create_ss", color: "from-emerald-400 to-teal-500" },
-    { to: "/create-visualset", icon: "/icons/visualset.svg", label: "create_vs", color: "from-blue-400 to-indigo-500" },
-];
 
-function SettingsPopup({SettingsIsOpen, setSettingsIsOpen, containerRef, toggleSettings}: SettingsPopupProps) {
+function SettingsPopup({SettingsIsOpen, setSettingsIsOpen, containerRef}: SettingsPopupProps) {
     const t = useTranslations("classroom.settings");
     const popupRef = useRef<HTMLDivElement>(null);
 

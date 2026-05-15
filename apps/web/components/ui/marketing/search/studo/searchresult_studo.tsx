@@ -2,9 +2,10 @@ import {useTranslations} from "next-intl";
 import { FaAngleRight } from "react-icons/fa6";
 import Image from "next/image";
 import {Link} from "@/i18n/routing";
+import {SearchResults, StudoProfileSearchResult} from "@studo/types";
 
 interface ResultStudoProps {
-    result: any
+    result: SearchResults
 }
 export default function SearchResultStudo({result}: ResultStudoProps) {
     const users = result && result.data[3].data.slice(0,4);
@@ -20,14 +21,14 @@ export default function SearchResultStudo({result}: ResultStudoProps) {
         </div>
         <div className={"w-full min-h-30 h-fit grid grid-cols-3 gap-5"}>
             {
-                result && users.map((item: any, i: number) => (<UserResult key={i} item={item}/>))
+                result && users.map((item: StudoProfileSearchResult, i: number) => (<UserResult key={i} item={item}/>))
             }
         </div>
     </div>)
 }
 
 interface SetResultProps {
-    item: any;
+    item: StudoProfileSearchResult;
 }
 
 function UserResult({item}: SetResultProps) {

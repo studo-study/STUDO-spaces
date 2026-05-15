@@ -42,7 +42,7 @@ export default function AppSearchbar() {
                 type="text"
                 ref={inputFieldRef}
                 onKeyDown={(e) => {
-                    e.key == "Enter" && toggleSearch()
+                    if (e.key == "Enter") toggleSearch()
                 }}
                 placeholder={"search..."}
                 className={"w-full h-full text-sm focus:border-none outline-none bg-transparent"}

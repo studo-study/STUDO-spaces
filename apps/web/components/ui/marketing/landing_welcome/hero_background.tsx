@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Image from "next/image";
 
 const floatingItems = [
@@ -28,11 +28,7 @@ interface HeroBackgroundProps {
 }
 
 export default function HeroBackground({ paused, color }: HeroBackgroundProps) {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
     return (
         <section className="fixed max-w-screen w-full inset-0 overflow-hidden pointer-events-none">

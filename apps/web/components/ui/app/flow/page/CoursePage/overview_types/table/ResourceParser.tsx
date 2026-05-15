@@ -1,4 +1,4 @@
-export function ResourceParser(link: string) {
+export function ResourceParser() {
     const title = "";
     const icon = null;
 

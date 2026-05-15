@@ -1,4 +1,4 @@
-
+import Image from "next/image";
 
 export default function SettingsPopup() {
 
@@ -7,6 +7,6 @@ export default function SettingsPopup() {
                     rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
                     dark:text-white"
     >
-        <img src={"/icons/settings.svg"}  className="h-4 sm:h-5 dark:invert dark:brightness-0" alt={''}/>
+        <Image src={"/icons/settings.svg"} width={20} height={20} className="h-4 sm:h-5 dark:invert dark:brightness-0" alt={''}/>
     </div>)
 }

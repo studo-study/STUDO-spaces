@@ -17,23 +17,28 @@ const menuItems = {
     moderator: {icon: <MdOutlineVerifiedUser />, link: "/admin/stats", label: "ad"},
 };
 
+interface MenuItemProps {
+    item: typeof menuItems.account;
+    showText: boolean;
+    t: ReturnType<typeof useTranslations>;
+}
+
+const MenuItem = ({ item, showText, t }: MenuItemProps) => (
+    <div className="w-full h-10 flex flex-row items-center">
+        <div className="flex items-center min-w-10 justify-center text-2xl dark:text-white">
+            {item.icon}
+        </div>
+        <span className={`dark:text-white whitespace-nowrap transition-all duration-200
+            ${showText ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
+            <Link href={item.link} className="hover:underline">{t(item.label)}</Link>
+        </span>
+    </div>
+);
+
 export default function UserPopup({ burgerOpen }: UserPopupProps) {
     const t = useTranslations("header");
     const [isOpen, setIsOpen] = useState(false);
     const { isModerator } = useUser();
-
-
-    const MenuItem = ({ item, showText }: { item: typeof menuItems.account, showText: boolean }) => (
-        <div className="w-full h-10 flex flex-row items-center">
-            <div className="flex items-center min-w-10 justify-center text-2xl dark:text-white">
-                {item.icon}
-            </div>
-            <span className={`dark:text-white whitespace-nowrap transition-all duration-200
-                ${showText ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
-                <Link href={item.link} className="hover:underline">{t(item.label)}</Link>
-            </span>
-        </div>
-    );
 
     const getHeight = () => {
         if (!isOpen) return "h-10";
@@ -68,8 +73,8 @@ export default function UserPopup({ burgerOpen }: UserPopupProps) {
 
                     <div className={`flex flex-col gap-2 transition-all duration-300 ease-out
                         ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-                        <MenuItem item={menuItems.settings} showText={burgerOpen && isOpen} />
-                        {isModerator && <MenuItem item={menuItems.moderator} showText={burgerOpen && isOpen} />}
+                        <MenuItem item={menuItems.settings} showText={burgerOpen && isOpen} t={t} />
+                        {isModerator && <MenuItem item={menuItems.moderator} showText={burgerOpen && isOpen} t={t} />}
                     </div>
                 </div>
             ) : (

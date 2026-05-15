@@ -16,10 +16,10 @@ export default function SetSearch<T extends { title: string; course?: string }>(
         if (searchRef.current) {
             const query = searchRef.current.value.toLowerCase();
             if (query === "") {
-                setFilteredSets(sets as any);
+                setFilteredSets(sets);
             } else {
                 setFilteredSets(
-                    (sets as any[]).filter((item: any) =>
+                    sets.filter((item) =>
                         item.title.toLowerCase().includes(query)
                         || (item.course && item.course.toLowerCase().includes(query))
                     )

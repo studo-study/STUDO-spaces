@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import {useCallback, useState} from "react";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import { useLocale, useTranslations } from "next-intl";
@@ -11,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {signIn} from "next-auth/react";
 
 export default function DesktopForm() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
     const language = useLocale();
     const t = useTranslations("register");
     const toggleShow = () => setOpen(!open);
@@ -38,7 +39,7 @@ export default function DesktopForm() {
         setServerError(null);
 
         try {
-            const { confirmPassword, ...registerData } = data;
+            const { ...registerData } = data;
 
 
             await registerUser(registerData);
@@ -56,8 +57,8 @@ export default function DesktopForm() {
 
             router.push(callbackUrl);
 
-        } catch (error: any) {
-            setServerError(error.message || 'Registratie mislukt');
+        } catch (error: unknown) {
+            setServerError(error instanceof Error ? error.message : 'Registratie mislukt');
         }
     };
 
@@ -165,9 +166,11 @@ export default function DesktopForm() {
                                                         className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
                                                         data-cy="password_input"
                                                     />
-                                                    <img
+                                                    <Image
                                                         src={open ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}
                                                         onClick={toggleShow}
+                                                        width={20}
+                                                        height={20}
                                                         className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${open ? "" : "pt-0.5 sm:pt-1"}`}
                                                         data-cy="toggle_password_visibility"
                                                         alt="Toggle password visibility"
@@ -193,9 +196,11 @@ export default function DesktopForm() {
                                                         className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
                                                         data-cy="confirm_password_input"
                                                     />
-                                                    <img
+                                                    <Image
                                                         src={open ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}
                                                         onClick={toggleShow}
+                                                        width={20}
+                                                        height={20}
                                                         className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${open ? "" : "pt-0.5 sm:pt-1"}`}
                                                         data-cy="toggle_password_visibility"
                                                         alt="Toggle password visibility"
@@ -278,7 +283,7 @@ export default function DesktopForm() {
                                                 dark:hover:bg-white/10 dark:hover:border-white/20 transition-all duration-300 cursor-pointer"
                                             data-cy="register_google"
                                         >
-                                            <img src="/icons/logos/google.svg" alt="Google" className="h-6" />
+                                            <Image src="/icons/logos/google.svg" alt="Google" width={24} height={24} className="h-6" />
                                         </button>
                                         <button
                                             type="button"
@@ -288,7 +293,7 @@ export default function DesktopForm() {
                                                 dark:hover:bg-white/10 dark:hover:border-white/20 transition-all duration-300 cursor-pointer"
                                             data-cy="register_microsoft"
                                         >
-                                            <img src="/icons/logos/microsoft.svg" alt="Microsoft" className="h-6" />
+                                            <Image src="/icons/logos/microsoft.svg" alt="Microsoft" width={24} height={24} className="h-6" />
                                         </button>
                                         {(language === "nl" || language === "fr-BE") && (
                                             <button
@@ -299,7 +304,7 @@ export default function DesktopForm() {
                                                     dark:hover:bg-white/10 dark:hover:border-white/20 transition-all duration-300 cursor-pointer"
                                                 data-cy="register_smartschool"
                                             >
-                                                <img src="/icons/logos/smartschool.png" alt="Smartschool" className="h-6" />
+                                                <Image src="/icons/logos/smartschool.png" alt="Smartschool" width={24} height={24} className="h-6" />
                                             </button>
                                         )}
                                     </div>

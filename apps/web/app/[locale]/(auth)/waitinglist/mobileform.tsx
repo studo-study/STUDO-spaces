@@ -1,7 +1,7 @@
 "use client"
 import {useState} from "react";
 import {useLocale, useTranslations} from "next-intl";
-import {useRouter, useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import { db } from '@/lib/firebase/firebase';
 import {serverTimestamp, setDoc, doc, getDoc} from 'firebase/firestore';
@@ -11,7 +11,6 @@ export default function MobileForm() {
     const errors = false;
 
     const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const locale = useLocale();
@@ -25,7 +24,6 @@ export default function MobileForm() {
             const existing = await getDoc(docRef);
 
             if (existing.exists()) {
-                setError(t('alreadyRegistered'));
                 return;
             }
 
@@ -45,7 +43,6 @@ export default function MobileForm() {
 
         } catch (err) {
             console.error('Firebase error details:', err);
-            setError(t('somethingWentWrong'));
         } finally {
             setLoading(false);
         }

@@ -39,7 +39,7 @@ export default function MobileForm() {
         setServerError(null);
 
         try {
-            const { confirmPassword, ...registerData } = data;
+            const { ...registerData } = data;
 
 
             await registerUser(registerData);
@@ -57,8 +57,8 @@ export default function MobileForm() {
 
             router.push(callbackUrl);
 
-        } catch (error: any) {
-            setServerError(error.message || 'Registratie mislukt');
+        } catch (error: unknown) {
+            setServerError(error instanceof Error ? error.message : 'Registratie mislukt');
         }
     };
 

@@ -1,6 +1,7 @@
 "use client"
 import {useMemo} from "react";
 import Link from "next/link";
+import Image from "next/image";
 import CourseIcons from "@/data";
 import {FaExternalLinkAlt} from "react-icons/fa";
 import {FiTrash2} from "react-icons/fi";
@@ -27,7 +28,7 @@ export default function CourseItem({course, options}: CourseCardProps) {
                 ]}/>
             </div>}
             <div className="min-w-12 min-h-12 w-12 h-12 max-w-12 mx-auto mb-3 rounded-full bg-white dark:bg-studogrey/30 flex items-center justify-center text-studodarkblue dark:text-white group-hover:scale-110 transition-transform duration-300">
-                <img src={coverImage} alt="" className="w-7 shadow-2xl" />
+                <Image src={coverImage} alt="" width={28} height={28} className="w-7 shadow-2xl" />
             </div>
             <h3 className="font-medium dark:text-white text-studodarkblue mb-1">{course}</h3>
         </Link>

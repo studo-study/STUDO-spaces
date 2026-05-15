@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
 import Sortable from "sortablejs";
@@ -62,7 +63,7 @@ export default function VsFooter({
                     rounded-lg cursor-pointer glass-rgb border border-studoborder/30
                     hover:opacity-80 transition-opacity self-start sm:self-auto"
             >
-                <img src="/icons/plus.svg" className="h-4 sm:h-5 invert" alt="Add"/>
+                <Image src="/icons/plus.svg" width={20} height={20} className="h-4 sm:h-5 invert" alt="Add"/>
             </div>
 
             <div

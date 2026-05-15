@@ -6,5 +6,5 @@ export function useDebounce<T>(value: T, delay: number, callback: (value: T) => 
     useEffect(() => {
         timeout.current = setTimeout(() => callback(value), delay);
         return () => clearTimeout(timeout.current);
-    }, [value]);
+    }, [callback, delay, value]);
 }

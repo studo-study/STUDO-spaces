@@ -1,5 +1,6 @@
 "use client"
 import {memo} from "react";
+import Image from "next/image"
 
 interface FooterItemProps {
     index: number;
@@ -39,7 +40,9 @@ const FooterItem = memo(function FooterItem({
                     className="rounded-full p-2 bg-gradient-to-br from-blue-400 to-blue-500"
                     onClick={handleRemove}
                 >
-                    <img
+                    <Image
+                        width={20}
+                        height={20}
                         src="/icons/cross.png"
                         alt="Remove"
                         className="w-3 rotate-45 cursor-pointer invert"
@@ -52,13 +55,17 @@ const FooterItem = memo(function FooterItem({
                     ${isActive ? "ring-2 ring-white ring-offset-0" : ""}`}
             >
                 {previewUrl ? (
-                    <img
+                    <Image
+                        width={20}
+                        height={20}
                         src={previewUrl}
                         alt={`Image ${index + 1}`}
                         className="w-full h-full object-cover"
                     />
                 ) : (
-                    <img
+                    <Image
+                        width={20}
+                        height={20}
                         src="/icons/image.svg"
                         alt="No image"
                         className="w-7 invert"

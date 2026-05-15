@@ -4,9 +4,10 @@ import {FaUniversity, FaUserFriends} from "react-icons/fa";
 import {IoSchoolOutline} from "react-icons/io5";
 import {TbWorld} from "react-icons/tb";
 import {useTranslations} from "next-intl";
+import {Community} from "@studo/types";
 
 interface CommunitiesProps {
-    communities: any;
+    communities: Community[];
 }
 
 export default function Communities({communities}: CommunitiesProps) {
@@ -16,7 +17,7 @@ export default function Communities({communities}: CommunitiesProps) {
     return(<div className={`w-full h-full flex flex-col gap-5 ${empty ? "hidden" : "flex"}`}>
         <div className={"w-full min-h-30 h-fit grid xl:grid-cols-3 grid-cols-2 gap-5"}>
             {
-                communities && klassen.map((item: any, i: number) => (<SetResult t={t} key={i} item={item}/>))
+                communities && klassen.map((item: Community, i: number) => (<SetResult t={t} key={i} item={item}/>))
             }
         </div>
     </div>)
@@ -24,12 +25,8 @@ export default function Communities({communities}: CommunitiesProps) {
 
 
 interface SetResultProps {
-    item: any;
-}
-
-interface SetResultProps {
-    item: any;
-    t: any;
+    item: Community;
+    t: ReturnType<typeof useTranslations>;
 }
 
 function SetResult({item, t}: SetResultProps) {

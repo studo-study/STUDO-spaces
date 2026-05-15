@@ -1,6 +1,6 @@
 "use client"
 import {FiCommand} from "react-icons/fi";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useTranslations} from "next-intl";
 import {Link} from "@/i18n/routing";
 import {LuDelete} from "react-icons/lu";
@@ -23,12 +23,7 @@ const shortcuts: Shortcut[] = [
 
 export function Shortcuts() {
     const t = useTranslations("settings")
-    const [isMac, setIsMac] = useState(false);
-
-    //TODO
-    useEffect(() => {
-        setIsMac(navigator.platform.includes("Mac"));
-    }, []);
+    const [isMac] = useState(() => typeof navigator !== 'undefined' && navigator.platform.includes("Mac"));
 
     return (<section className={"flex flex-col gap-5 w-full min-h-fit"}>
         <span className="w-full text-base font-bold h-fit">{t("shortcuts")}</span>

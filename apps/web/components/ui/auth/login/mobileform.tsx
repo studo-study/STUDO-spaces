@@ -9,7 +9,7 @@ import {signIn} from "next-auth/react";
 
 
 export default function MobileForm() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
     const language = useLocale();
     const t = useTranslations("login")
     const errors = false;
@@ -47,7 +47,7 @@ export default function MobileForm() {
             router.push(callbackUrl);
             router.refresh();
 
-        } catch (err) {
+        } catch {
             setLoading(false);
         }
     };

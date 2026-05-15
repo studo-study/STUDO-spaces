@@ -1,6 +1,4 @@
-import {NextRequest} from "next/server";
-
-export async function POST(request: NextRequest) {
+export async function POST() {
     try {
         return Response.json({ success: true })
     }

@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { IoIosClose } from "react-icons/io";
+import Image from "next/image";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
 
@@ -13,15 +14,11 @@ export default function CreateFolder({ createOpen, setCreateOpen }: CreateFolder
     const popupRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("createfolder");
-    const [mounted, setMounted] = useState(false);
+    const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
     useKeyboardShortcut("Escape", () => {
         setCreateOpen(false);
         if(inputRef.current) inputRef.current.value = "";
     }, {always: true});
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     useEffect(() => {
         if (!createOpen) return;
@@ -37,7 +34,11 @@ export default function CreateFolder({ createOpen, setCreateOpen }: CreateFolder
     }, [createOpen, setCreateOpen]);
 
     useEffect(() => {
-        createOpen ? inputRef.current?.focus() : inputRef.current?.blur();
+        if (createOpen) {
+            inputRef.current?.focus();
+        } else {
+            inputRef.current?.blur();
+        }
     }, [createOpen]);
 
 
@@ -57,7 +58,7 @@ export default function CreateFolder({ createOpen, setCreateOpen }: CreateFolder
                 </button>
 
                 <div className="flex items-center gap-2 mb-5">
-                    <img src="/icons/folder.svg" alt="" className="h-5 w-5 brightness-0 dark:invert" />
+                    <Image src="/icons/folder.svg" alt="" width={20} height={20} className="h-5 w-5 brightness-0 dark:invert" />
                     <span className="text-xl font-bold text-studodarkblue dark:text-white">{t("title")}:</span>
                 </div>
 

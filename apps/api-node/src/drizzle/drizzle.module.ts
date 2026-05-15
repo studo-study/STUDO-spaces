@@ -15,8 +15,7 @@ import { migrate } from 'drizzle-orm/postgres-js/migrator'; // 👈 postgres-js 
 export class DrizzleModule implements OnModuleDestroy, OnModuleInit {
   private readonly logger = new Logger(DrizzleModule.name);
 
-  constructor(@InjectDrizzle() private readonly db: DatabaseProvider) {
-  }
+  constructor(@InjectDrizzle() private readonly db: DatabaseProvider) {}
 
   async onModuleInit() {
     this.logger.log('⏳ Running migrations...');

@@ -1,10 +1,11 @@
 "use client"
 import {useEffect, useRef, useState} from "react";
-import {useLocale, useTranslations} from "next-intl";
+import {useTranslations} from "next-intl";
 import Link from "next/link";
 import {IoIosAdd} from "react-icons/io";
 import SetSearch from "@/components/ui/app/your-files/sets/search";
 import ListItems from "@/components/ui/app/your-files/sets/listitems";
+import Image from "next/image";
 
 export interface StudySetItem {
     id: string;
@@ -132,7 +133,7 @@ const menuItems = [
     { to: "/create-visualset", icon: "/icons/visualset.svg", label: "create_vs", color: "from-blue-400 to-indigo-500" },
 ];
 
-function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopupProps) {
+function AddPopUp({AddIsOpen, setAddIsOpen, containerRef}: AddPopupProps) {
     const t = useTranslations("header");
     const popupRef = useRef<HTMLDivElement>(null);
 
@@ -203,7 +204,9 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
                             group-hover:scale-110 group-hover:shadow-lg
                             transition-all duration-200`}
                         >
-                            <img
+                            <Image
+                                width={20}
+                                height={20}
                                 src={item.icon}
                                 alt=""
                                 className="h-4 w-4 brightness-0 invert"

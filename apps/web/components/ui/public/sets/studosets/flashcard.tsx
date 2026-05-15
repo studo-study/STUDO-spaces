@@ -1,6 +1,6 @@
 'use client'
 import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import 'animate.css';
 import {IoShuffleOutline} from "react-icons/io5";
 import {RxEnterFullScreen} from "react-icons/rx";
@@ -53,7 +53,7 @@ export default function Flashcard({cards, id}:FlashcardProps) {
 
     return (<div className={"w-full min-h-110 flex flex-col gap-5"}>
         <div className={'z-10 w-full h-full'}>
-            <Card card={shuffled[index]}/>
+            <Card card={shuffled[index]} key={shuffled[index]?.id}/>
         </div>
         <div className={'relative z-20 w-full h-15 gap-5 flex flex-row items-center justify-center'}>
             <div className={"absolute right-0 flex flex-row gap-3"}>
@@ -83,11 +83,7 @@ interface CardProps {
     card: Card;
 }
 function Card({card}:CardProps) {
-    const [isFlipped, setIsFlipped] = useState(true);
-
-    useEffect(() => {
-        setIsFlipped(false);
-    },[card])
+    const [isFlipped, setIsFlipped] = useState(false);
 
     return (
         <div className={`animate__fadeInLeft animate__animate w-full h-full card--container ${isFlipped ? 'flip' : ''}`} onClick={() => setIsFlipped(prev => !prev)}>

@@ -188,7 +188,7 @@ export default function DesktopForm() {
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
 											transition-all duration-300 cursor-pointer"
                                         data-cy="login_google">
-                                        <img src={"/icons/logos/google.svg"} alt="" className="h-6" />
+                                        <Image width={20} height={20} src={"/icons/logos/google.svg"} alt="" className="h-6" />
                                         <span className="text-sm text-studodarkblue dark:text-slate-300">Google</span>
                                     </button>
                                     <button
@@ -199,7 +199,7 @@ export default function DesktopForm() {
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
 											transition-all duration-300 cursor-pointer"
                                         data-cy="login_microsoft">
-                                        <img src={"/icons/logos/microsoft.svg"} alt="" className="h-6" />
+                                        <Image width={20} height={20} src={"/icons/logos/microsoft.svg"} alt="" className="h-6" />
                                         <span className="text-sm text-studodarkblue dark:text-slate-300">Microsoft</span>
                                     </button>
                                     {language === "nl" || language === "fr-BE"  ? (
@@ -211,7 +211,7 @@ export default function DesktopForm() {
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
 											transition-all duration-300 cursor-pointer"
                                             data-cy="login_smartschool">
-                                            <img src={"/icons/logos/smartschool.png"} alt="" className="h-6" />
+                                            <Image width={20} height={20}  src={"/icons/logos/smartschool.png"} alt="" className="h-6" />
                                             <span className="text-sm text-studodarkblue dark:text-slate-300">{t("Smartschool")}</span>
                                         </button>
                                     ): null}

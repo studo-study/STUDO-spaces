@@ -5,6 +5,7 @@ import {IoIosAdd} from "react-icons/io";
 import Link from "next/link";
 import { signOut } from 'next-auth/react';
 import ListItems from "@/components/ui/app/your-files/sets/listitems";
+import Image from "next/image"
 
 export default function AccountGrid() {
     const t = useTranslations("account");
@@ -140,7 +141,9 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef}: AddPopupProps) {
               group-hover:scale-110 group-hover:shadow-lg
               transition-all duration-200`}
                         >
-                            <img
+                            <Image
+                                width={20}
+                                height={20}
                                 src={item.icon}
                                 alt=""
                                 className="h-4 w-4 brightness-0 invert"
@@ -167,8 +170,3 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef}: AddPopupProps) {
         </div>
     );
 }
-
-interface SetItemProps {
-    grid: boolean;
-}
-

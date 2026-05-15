@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import {useLocale, useTranslations} from "next-intl";
+import {useLocale} from "next-intl";
 import {StudySetItem} from "@/components/ui/app/your-files/sets/grid";
 
 interface GridItemProps {
@@ -8,13 +8,12 @@ interface GridItemProps {
 }
 
 export default function GridItems({items}: GridItemProps) {
-    const t = useTranslations("y_f.your_sets");
     const locale = useLocale();
 
     return (
         <div className="flex-1 overflow-y-scroll scroll-hidden h-full mb-10 z-10 grid grid-cols-4 gap-5 pb-15">
-            {items.map((item, index) => (
-                <GridItem set={item} key={item.id} index={index} t={t} locale={locale} />
+            {items.map((item) => (
+                <GridItem set={item} key={item.id} locale={locale} />
             ))}
         </div>
     );
@@ -23,12 +22,10 @@ export default function GridItems({items}: GridItemProps) {
 
 interface SetItemProps {
     set: StudySetItem;
-    index: number;
-    t: ReturnType<typeof useTranslations>;
     locale: string;
 }
 
-function GridItem({set, index, t, locale}: SetItemProps) {
+function GridItem({set, locale}: SetItemProps) {
     const date = new Date(set.last_updated).toLocaleDateString(locale);
     const iconSrc = set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
     const link = set.type === "studyset" ? `/studoset/${set.id}` : `/visualset/${set.id}`;
@@ -41,7 +38,7 @@ function GridItem({set, index, t, locale}: SetItemProps) {
             <div className="h-0.5 w-full mb-3" />
 
             <div className="flex flex-row gap-3 items-center w-full px-7">
-                <img src={iconSrc} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
+                <Image src={iconSrc} width={20} height={20} className="invert opacity-50 brightness-0 w-5 flex-shrink-0" alt="" />
                 <span className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
                     {set.title}
                 </span>

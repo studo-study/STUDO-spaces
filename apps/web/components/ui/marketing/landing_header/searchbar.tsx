@@ -38,7 +38,7 @@ export default function Searchbar() {
             <input
                 type="text"
                 ref={inputFieldRef}
-                onKeyDown={(e) => {e.key == "Enter" && toggleSearch()}}
+                onKeyDown={(e) => { if (e.key === "Enter") toggleSearch(); }}
                 placeholder={"search..."}
                 className={"w-full h-full text-sm focus:border-none outline-none bg-transparent"}
             />

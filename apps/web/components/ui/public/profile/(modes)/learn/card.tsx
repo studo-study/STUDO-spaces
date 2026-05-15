@@ -20,15 +20,8 @@ interface LearnCardProps {
     disabled: boolean;
 }
 
-const LANGUAGES = [
-    { code: "en", name: "English" },
-    { code: "nl", name: "Dutch" },
-    { code: "fr", name: "French" },
-    { code: "de", name: "German" },
-    { code: "es", name: "Spanish" }
-];
 
-export default function LearnCard({currentCard, correct, incorrect, inputRef, disabled, termMode, termLang, defLang, check}: LearnCardProps) {
+export default function LearnCard({currentCard, correct, incorrect, inputRef, disabled, termMode, termLang, check}: LearnCardProps) {
     console.log(termLang)
     const currentValue = termMode ? currentCard.card.term : currentCard.card.definition;
     const checkInput = () => {
@@ -80,13 +73,4 @@ export default function LearnCard({currentCard, correct, incorrect, inputRef, di
         </div>
     </div>
     )
-}
-
-function getTalen(taal: string, vergelijker: string, type: string): string | void {
-    if (taal === vergelijker) {
-        return type;
-    }
-
-
-    return LANGUAGES.findLast((lang) => lang.code === taal)?.name;
 }

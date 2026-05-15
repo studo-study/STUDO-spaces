@@ -103,7 +103,7 @@ const CoursePageHeader = () => {
             >
                 <Chip
                     label={name}
-                    onPress={() => {data.resource ? window.open(data.resource) : ""}}
+                    onPress={() => { if (data.resource) window.open(data.resource); }}
                     iconLeft={icon}
                 />
             </BaseTooltip>}
@@ -112,7 +112,7 @@ const CoursePageHeader = () => {
     </div>)
 }
 
-function ExamDateParser(examDate: string, t: any) {
+function ExamDateParser(examDate: string, t: ReturnType<typeof useTranslations>) {
     return (<BaseTooltip content={t("exam_date")} position={"bottom"}>
         <Chip
             label={examDate}
@@ -125,7 +125,7 @@ function ExamStatus({examDate, totalItems, doneItems, t}: {
     examDate: string | null;
     totalItems: number;
     doneItems: number;
-    t: any
+    t: ReturnType<typeof useTranslations>
 }) {
     if (!examDate) return null;
 

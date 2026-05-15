@@ -1,7 +1,7 @@
 "use client"
 import {useTranslations} from "next-intl";
 import Link from "next/link";
-import {type FullClassroom, type FullClassroomSet} from "@/types/types";
+import {type FullClassroom} from "@/types/types";
 import Image from "next/image";
 import CourseIcons from "@/data";
 import SetSearch from "@/components/ui/app/your-files/sets/search";
@@ -15,7 +15,7 @@ export default function RecentlyAdded({items}: ListItemProps) {
     const t = useTranslations("classroom")
     const [filteredSets, setFilteredSets] = useState(items.sets);
     //TODO
-    const now = Date.now();
+    const [now] = useState(() => Date.now());
     const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
 
     const thisWeek = filteredSets.filter(item =>
@@ -77,13 +77,6 @@ export default function RecentlyAdded({items}: ListItemProps) {
     )
 }
 
-
-const COLORS = [
-    "from-amber-500/5 to-amber-400/5",
-    "from-purple-500/5 to-purple-400/5",
-    "from-blue-500/5 to-blue-400/5",
-    "from-emerald-500/5 to-emerald-400/5"
-] as const;
 
 interface SetItemProps {
     set: FullClassroomSet;

@@ -19,10 +19,10 @@ export default function UserSearch<T extends { displayName: string;}>({
         if (searchRef.current) {
             const query = searchRef.current.value.toLowerCase();
             if (query === "") {
-                setFilteredUsers(users as any);
+                setFilteredUsers(users);
             } else {
                 setFilteredUsers(
-                    (users as any[]).filter((user: any) =>
+                    users.filter((user) =>
                         user.displayName.toLowerCase().includes(query))
                 );
             }

@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import {IoClose} from "react-icons/io5";
 import {useState} from "react";
 import {ClassroomUser} from "@/types/types";
@@ -54,12 +55,12 @@ export default function ClassroomUserGrid(props: ClassroomUserGridProps) {
 }
 
 interface UserItemProps {
-    t: any;
+    t: ReturnType<typeof useTranslations>;
     user: ClassroomUser;
 }
 
 interface JoinRequestProps {
-    t: any;
+    t: ReturnType<typeof useTranslations>;
     request: JoinRequest;
     joinRequests: JoinRequest[];
     setJoinRequests: React.Dispatch<React.SetStateAction<JoinRequest[]>>;
@@ -102,7 +103,7 @@ function UserItem({t, user}: UserItemProps) {
                 {user.streak >= 5 &&
                     <div className={"w-fit flex flex-row items-center gap-0.5"}>
                         <span className={"text-studodarkblue dark:text-white"}>{user.streak} </span>
-                        <img src={"/icons/streak2.svg"} alt="streak" className="h-5"/></div>
+                        <Image src={"/icons/streak2.svg"} alt="streak" width={20} height={20} className="h-5"/></div>
                 }
             </div>
         </div>

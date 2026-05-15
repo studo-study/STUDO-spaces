@@ -1,11 +1,9 @@
 "use client";
-import {useCallback, useState} from "react";
+import {useState} from "react";
 import {useLocale, useTranslations} from "next-intl";
-import Link from "next/link";
-import {useRouter, useSearchParams} from "next/navigation";
-import {signIn} from "next-auth/react";
+import {useRouter} from "next/navigation";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
-import {addDoc, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, where} from "firebase/firestore";
+import {doc, getDoc, serverTimestamp, setDoc} from "firebase/firestore";
 import {db} from "@/lib/firebase/firebase";
 
 export default function DesktopForm() {
@@ -13,12 +11,9 @@ export default function DesktopForm() {
     const errors = false;
 
     const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const locale = useLocale();
-    const searchParams = useSearchParams();
     const router= useRouter();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,7 +24,6 @@ export default function DesktopForm() {
             const existing = await getDoc(docRef);
 
             if (existing.exists()) {
-                setError(t('alreadyRegistered'));
                 return;
             }
 
@@ -48,7 +42,6 @@ export default function DesktopForm() {
             router.push(`/${locale}/welcome`);
 
         } catch (err) {
-            setError(t('somethingWentWrong'));
             console.error(err)
         } finally {
             setLoading(false);

@@ -1,5 +1,4 @@
 "use client"
-import {useTranslations} from "next-intl";
 
 interface FlowProgressProps {
     total_in_progress: number;
@@ -11,7 +10,6 @@ const CourseItemProgress = (props: FlowProgressProps) => {
     const {total_in_progress, total_length, total_done} = props;
     const donePercent = Number(total_length) > 0 ? (Number(total_done) / Number(total_length)) * 100 : 0;
     const progPercent = Number(total_length) > 0 ? (Number(total_in_progress) / Number(total_length)) * 100 : 0;
-    const t = useTranslations("flow.course.row")
 
     return (<div
         className={"relative w-full flex flex-col h-fit gap-3 text-sm items-center justify-center dark:text-white text-studodarkblue"}>

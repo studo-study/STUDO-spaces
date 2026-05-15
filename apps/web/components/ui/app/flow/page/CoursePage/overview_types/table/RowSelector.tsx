@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect, ReactNode} from "react";
+import {useState, useRef, useEffect, useLayoutEffect, ReactNode} from "react";
 
 interface TagOption {
     value: string;
@@ -86,12 +86,13 @@ const RowSelector = ({
         return () => document.removeEventListener("mousedown", handleClick);
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (isOpen && freeInput && inputRef.current) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setInputValue(value as string);
             inputRef.current.focus();
         }
-    }, [isOpen]);
+    }, [isOpen, freeInput, value]);
 
     const handleSubmit = () => {
         if (inputValue.trim()) {

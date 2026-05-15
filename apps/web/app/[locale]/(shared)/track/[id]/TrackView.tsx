@@ -5,12 +5,13 @@ import {useEffect, useState} from "react";
 import {useTranslations} from "next-intl";
 import Tracks from "@/components/ui/public/track/Tracks";
 import Communities from "@/components/ui/public/track/Communities";
+import {StudoProfileResponse} from "@studo/types";
 
 
 export default function TrackView() {
     const t = useTranslations("trackview");
     const param = useParams();
-    const [result, setResult] = useState<any>()  // [] ipv null, anders crasht .map()
+    const [result, setResult] = useState<StudoProfileResponse | null>(null)  // [] ipv null, anders crasht .map()
     const [activePage, setActivePage] = useState("tracks");
 
     const toggleActivePage = (type: string) => {

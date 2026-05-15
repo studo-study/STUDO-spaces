@@ -10,7 +10,6 @@ import TagSelector from "@/components/ui/design_system/tag/TagSelector";
 import {LiaUniversitySolid} from "react-icons/lia";
 import {MdOutlineCalendarViewMonth} from "react-icons/md";
 import {HiCalendarDays} from "react-icons/hi2";
-import {useRouter} from "next/navigation";
 import {useFlowStore} from "@/store/slices/flow/flowStore";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
 import IconButton from "@/components/ui/design_system/button/IconButton";

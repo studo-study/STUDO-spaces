@@ -1,6 +1,7 @@
 import {useTranslations} from "next-intl";
 import {IoIosAdd} from "react-icons/io";
 import {useRef} from "react";
+import Image from "next/image";
 
 interface CardProps {
     index: number;
@@ -27,13 +28,18 @@ export default function CardItem({ index, id, deleteCard, isDouble, updateCard, 
                 <span className="text-sm sm:text-base text-studodarkblue dark:text-white">{index + 1}</span>
                 <div className="flex gap-2 sm:gap-3">
                     {length != 1 &&
-                        <img
-                        onClick={() => {deleteCard(id)}}
-                        src="/icons/delete.svg"
-                        alt="delete"
-                        className={`cursor-pointer h-4 sm:h-5 dark:invert dark:brightness-0`}
-                    />}
-                    <img
+                        <Image
+                            width={20}
+                            height={20}
+                            onClick={() => {deleteCard(id)}}
+                            src="/icons/delete.svg"
+                            alt="delete"
+                            className={`cursor-pointer h-4 sm:h-5 dark:invert dark:brightness-0`}
+                        />
+                    }
+                    <Image
+                        width={20}
+                        height={20}
                         src="/icons/grab.svg"
                         alt="grab"
                         className="handle cursor-grab h-4 sm:h-5 dark:invert dark:brightness-0"

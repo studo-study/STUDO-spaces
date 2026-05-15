@@ -2,6 +2,7 @@
 import {useTranslations} from "next-intl";
 import {PiMedalLight} from "react-icons/pi";
 import {useUser} from "@/components/providers/UserProvider";
+import Image from "next/image"
 
 export default function Stats() {
     const user = useUser().user;
@@ -10,13 +11,13 @@ export default function Stats() {
         <span className={"font-bold text-lg dark:text-white text-studodarkblue"}>{t("subtitle_stats")}:</span>
         <div className={"w-full flex flex-row gap-5"}>
             <div className={"w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"}>
-                <img src="/icons/studyset.svg" alt="cards" className={"w-5 dark:invert dark:brightness-0"}/>
+                <Image width={20} height={20}  src="/icons/studyset.svg" alt="cards" className={"w-5 dark:invert dark:brightness-0"}/>
                 <span>{t("total_cards")}:</span>
                 {user?.stats?.cardsLearned ?? 0}
             </div>
 
             <div className={"w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"}>
-                <img src="/icons/clock.svg" alt="cards" className={"w-5 dark:invert dark:brightness-0"}/>
+                <Image width={20} height={20}  src="/icons/clock.svg" alt="cards" className={"w-5 dark:invert dark:brightness-0"}/>
                 <span>{t("time_studied")}:</span>
                 {user?.stats?.timeLearned ?? 0}
             </div>

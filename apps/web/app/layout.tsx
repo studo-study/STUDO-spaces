@@ -1,8 +1,5 @@
 //app/layout.tsx
 import type {Metadata} from "next";
-//TODO
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import "/apps/web/app/globals.css";
 import IcoSwitcher from "@/components/ui/overige/ui/IcoSwitcher";
 

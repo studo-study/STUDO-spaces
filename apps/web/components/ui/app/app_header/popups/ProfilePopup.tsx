@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
@@ -30,7 +31,7 @@ export default function TriggerProfile({ProfileIsOpen, setProfileIsOpen, user}: 
             <div className={"absolute bg-emerald-500/50 h-10 w-10 rounded-full blur-sm"}/>
             {data.img_url ?
                 <div className="relative z-10 shadow-2xl overflow-hidden h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
-                    <img src={user?.img_url} alt="" className={"object-cover h-10 w-10"}/>
+                    <Image src={user?.img_url ?? ""} alt="" width={40} height={40} className={"object-cover h-10 w-10"}/>
                 </div>
 
             : <div className="relative z-10 shadow-2xl bg-emerald-600 h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">

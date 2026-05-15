@@ -1,10 +1,8 @@
 "use client"
-import {useTranslations} from "next-intl";
 import {useFlowStore} from "@/store/slices/flow/flowStore";
 
 const CourseKanban = () => {
     const data = useFlowStore((s) => s.activeCourse);
-    const t = useTranslations("flow.course.row")
 
     if (!data) return null;
 

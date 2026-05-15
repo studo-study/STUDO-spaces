@@ -21,7 +21,7 @@ interface StudoUser {
         timeLearned: number;
         cardsLearned: number;
     };
-    lastTen: any[];
+    lastTen: unknown[];
 }
 
 declare module "next-auth" {

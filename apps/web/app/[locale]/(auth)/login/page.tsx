@@ -1,10 +1,10 @@
 import HeroBackground from "@/components/ui/marketing/landing_welcome/hero_background";
 import {useTranslations} from "next-intl";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
-import {navigate} from "next/dist/client/components/segment-cache/navigation";
 import Link from "next/link";
 import DesktopForm from "@/components/ui/auth/login/desktopform";
 import MobileForm from "@/components/ui/auth/login/mobileform";
+import Image from "next/image"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -110,7 +110,7 @@ export default function LoginPage() {
         <div className={"w-full h-full"}>
             <div className="flex relative min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 sm:px-6">
                 <div className="absolute inset-0 hidden md:flex select-none pointer-events-none z-0">
-                    <HeroBackground color="to-blue-400/10" />
+                    <HeroBackground color="to-blue-400/10" paused={false} />
                 </div>
 
                 <Link href={"/welcome"}
@@ -121,7 +121,9 @@ export default function LoginPage() {
           transition-all duration-200 active:scale-105 focus:outline-none
           focus:ring-2 focus:ring-studogrey/50 cursor-pointer"
                     aria-label="Go back">
-                    <img
+                    <Image
+                        width={20}
+                        height={20}
                         src={"/icons/right.svg"}
                         alt=""
                         className="w-5 h-5 sm:w-6 sm:h-6 md:h-7 md:w-7 rotate-180 opacity-60 dark:invert"

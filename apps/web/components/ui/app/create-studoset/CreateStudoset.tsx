@@ -8,7 +8,6 @@ import ImportButton from "@/components/ui/app/create-studoset/importButton";
 import {useRouter} from "@/i18n/routing";
 import {CardData, Folder} from "@/types/types";
 import {useKeyboardShortcut} from "@/hooks/useKeyboardShortcut";
-import {FiCommand} from "react-icons/fi";
 
 const LANGUAGES = [
     { code: "en", name: "English" },

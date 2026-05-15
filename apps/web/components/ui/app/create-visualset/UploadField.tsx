@@ -2,6 +2,7 @@
 import {useRef, useState, useCallback} from "react";
 import {useTranslations} from "next-intl";
 import {Pin} from "@/types/types";
+import Image from "next/image";
 
 const GRID_SIZE = 40;
 
@@ -92,7 +93,9 @@ export default function UploadField({
                     className="w-full min-h-[640px] flex flex-col items-center justify-center gap-5 cursor-pointer"
                     onClick={handleUploadClick}
                 >
-                    <img
+                    <Image
+                        width={50}
+                        height={50}
                         src="/icons/uploadpicca.svg"
                         alt="Upload"
                         className="w-13 h-13 dark:invert dark:brightness-0"
@@ -105,7 +108,9 @@ export default function UploadField({
 
             {previewUrl && (
                 <div className="w-full aspect-square relative">
-                    <img
+                    <Image
+                        width={50}
+                        height={50}
                         src={previewUrl}
                         alt="Uploaded"
                         className="absolute inset-0 w-full h-full object-contain"
@@ -131,7 +136,9 @@ export default function UploadField({
                                         border border-transparent hover:border-studoblue/30"
                                 >
                                     {hasPin && (
-                                        <img
+                                        <Image
+                                            width={50}
+                                            height={50}
                                             src="/icons/pin.svg"
                                             alt="Pin"
                                             className="absolute inset-0 w-full h-full p-0.5 drop-shadow-md"

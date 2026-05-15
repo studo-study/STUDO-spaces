@@ -9,7 +9,14 @@ import {
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import { and, eq } from 'drizzle-orm';
-import { cards, sessioncards, sessionpins, studysessions, studysets, users } from '../drizzle/schema';
+import {
+  cards,
+  sessioncards,
+  sessionpins,
+  studysessions,
+  studysets,
+  users,
+} from '../drizzle/schema';
 import { v4 as uuidv4 } from 'uuid';
 import { SessionCardResponseDTO } from './sessioncard.dto';
 import { SessionPinResponseDTO } from './sessionpin.dto';
@@ -19,8 +26,7 @@ export class StudysessionService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
-  ) {
-  }
+  ) {}
 
   async getAll(): Promise<StudysessionListResponseDto> {
     const sessions = await this.db.query.studysessions.findMany();
@@ -54,7 +60,7 @@ export class StudysessionService {
     });
 
     if (!session) {
-      throw new NotFoundException('Session doesn\'t exist');
+      throw new NotFoundException("Session doesn't exist");
     }
 
     const pins = await this.db.query.sessionpins.findMany({
@@ -175,11 +181,19 @@ export class StudysessionService {
     }
   }
 
-  async resetById(user_id: string, session_id: string): Promise<StudysessionResponseDto> {
+  async resetById(
+    user_id: string,
+    session_id: string,
+  ): Promise<StudysessionResponseDto> {
     // const studysessie = this.getById(user_id, session_id);
-    const pins: SessionPinResponseDTO[] = await this.db.query.sessionpins.findMany({ where: eq(sessionpins.session_id, session_id) });
-    const cards: SessionCardResponseDTO[] = await this.db.query.sessioncards.findMany({ where: eq(sessioncards.session_id, session_id) });
-
+    const pins: SessionPinResponseDTO[] =
+      await this.db.query.sessionpins.findMany({
+        where: eq(sessionpins.session_id, session_id),
+      });
+    const cards: SessionCardResponseDTO[] =
+      await this.db.query.sessioncards.findMany({
+        where: eq(sessioncards.session_id, session_id),
+      });
 
     if (cards) {
       for (const card of cards) {
@@ -219,10 +233,7 @@ export class StudysessionService {
             pin_total_viewcount: pin.pin_total_viewcount,
           })
           .where(
-            and(
-              eq(sessionpins.id, pin.id),
-              eq(sessionpins.owner_id, user_id),
-            ),
+            and(eq(sessionpins.id, pin.id), eq(sessionpins.owner_id, user_id)),
           )
           .returning();
         if (updatePin.length === 0) {
@@ -234,11 +245,12 @@ export class StudysessionService {
     return this.getById(user_id, session_id);
   }
 
-
   async updateStreak(user_id: string): Promise<void> {
-    const update_streak = await this.db.query.users.findFirst({ where: eq(users.id, user_id) });
+    const update_streak = await this.db.query.users.findFirst({
+      where: eq(users.id, user_id),
+    });
     if (!update_streak) {
-      throw new NotFoundException('User doesn\'t exist');
+      throw new NotFoundException("User doesn't exist");
     }
     const today = new Date();
     const yesterday = new Date(today); // kopie van vandaag
@@ -248,11 +260,16 @@ export class StudysessionService {
       if (update_streak.streak_last_update === yesterday.toISOString()) {
         const updated = {
           streak_last_update: today.toISOString(),
-          streak_count: update_streak.streak_count ? update_streak.streak_count + 1 : 1,
+          streak_count: update_streak.streak_count
+            ? update_streak.streak_count + 1
+            : 1,
         };
         await this.db.update(users).set(updated);
       }
-      if (update_streak.streak_last_update != yesterday.toISOString() && update_streak.streak_last_update === today.toISOString()) {
+      if (
+        update_streak.streak_last_update != yesterday.toISOString() &&
+        update_streak.streak_last_update === today.toISOString()
+      ) {
         const updated = {
           streak_last_update: today.toISOString(),
           streak_count: 0,
@@ -261,7 +278,5 @@ export class StudysessionService {
         await this.db.update(users).set(updated);
       }
     }
-
   }
 }
-

@@ -41,7 +41,7 @@ const ItemOptions = ({ options }: ItemOptionsProps) => {
             </button>
 
             <div
-                onClick={(e) => {e.stopPropagation(), e.preventDefault()}}
+                onClick={(e) => { e.stopPropagation(); e.preventDefault(); }}
                 className={`
                     absolute right-0 top-full mt-1 z-[9999] min-w-[160px] rounded-xl
                     bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl

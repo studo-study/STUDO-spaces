@@ -5,9 +5,10 @@ import {IoSchoolOutline} from "react-icons/io5";
 import {FaUniversity, FaUserFriends} from "react-icons/fa";
 import {TbWorld} from "react-icons/tb";
 import { Link } from "@/i18n/routing";
+import {ClassroomSearchResult, SearchResults} from "@studo/types";
 
 interface ResultClassroomProps {
-    result: any
+    result: SearchResults
 }
 export default function SearchResultClassroom({result}: ResultClassroomProps) {
     const klassen = result && result.data[2].data.slice(0,2);
@@ -23,15 +24,15 @@ export default function SearchResultClassroom({result}: ResultClassroomProps) {
         </div>
         <div className={"w-full min-h-30 h-fit grid xl:grid-cols-3 grid-cols-2 gap-5"}>
             {
-                result && klassen.map((item: any, i: number) => (<SetResult t={t} key={i} item={item}/>))
+                result && klassen.map((item: ClassroomSearchResult, i: number) => (<SetResult t={t} key={i} item={item}/>))
             }
         </div>
     </div>)
 }
 
 interface SetResultProps {
-    item: any;
-    t: any;
+    item: ClassroomSearchResult;
+    t: ReturnType<typeof useTranslations>;
 }
 
 function SetResult({item, t}: SetResultProps) {

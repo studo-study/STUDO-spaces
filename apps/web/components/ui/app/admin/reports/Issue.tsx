@@ -12,8 +12,7 @@ interface IssueProps {
     item: Issue
     status: string
 
-
-
+}
 export default function IssueItem({item, status}: IssueProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const toggleOpen = () => {

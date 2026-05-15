@@ -1,9 +1,10 @@
 import {IoTrendingUpOutline} from "react-icons/io5";
 import {IoIosRocket, IoIosTrendingDown} from "react-icons/io";
 import {BiSolidPlaneAlt} from "react-icons/bi";
+import {useTranslations} from "next-intl";
 
 interface QuickstatsProps {
-    t: any;
+    t: ReturnType<typeof useTranslations>;
 }
 export default function QuickStats({t}: QuickstatsProps) {
     const TotalthisMonth = 70558;

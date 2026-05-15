@@ -2,9 +2,10 @@ import {useTranslations} from "next-intl";
 import { FaAngleRight } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
+import {SearchResults, SetSearchResult} from "@studo/types";
 
 interface ResultSetsProps {
-    result: any
+    result: SearchResults
 }
 export default function SearchResultSets({result}: ResultSetsProps) {
     const sets = result && result.data[0].data.slice(0,3);
@@ -20,15 +21,15 @@ export default function SearchResultSets({result}: ResultSetsProps) {
         </div>
         <div className={"w-full min-h-30 h-fit grid grid-cols-4 gap-5"}>
                 {
-                    result && sets.map((item: any, i: number) => (<SetResult key={i} t={t} item={item}/>))
+                    result && sets.map((item: SetSearchResult, i: number) => (<SetResult key={i} t={t} item={item}/>))
                 }
             </div>
     </div>)
 }
 
 interface SetResultProps {
-    item: any;
-    t: any;
+    item: SetSearchResult;
+    t: ReturnType<typeof useTranslations>;
 }
 
 function SetResult({item, t}: SetResultProps) {

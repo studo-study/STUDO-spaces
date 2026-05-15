@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import { FaYoutube } from "react-icons/fa6";
 
 import {Link} from "@/i18n/routing";
@@ -30,16 +31,16 @@ export default function LandingFooter() {
 
                             <div className="flex flex-row gap-5 items-center">
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                                    <img src={"/icons/socialmedia/instagram-svgrepo-com.svg"} alt="Instagram" className="h-10 invert" />
+                                    <Image src={"/icons/socialmedia/instagram-svgrepo-com.svg"} alt="Instagram" width={40} height={40} className="h-10 invert" />
                                 </a>
                                 <a href="https://www.tiktok.com/@studo.study" target="_blank" rel="noopener noreferrer">
-                                    <img src={"/icons/socialmedia/tiktok-svgrepo-com.svg"} alt="TikTok" className="h-7 invert" />
+                                    <Image src={"/icons/socialmedia/tiktok-svgrepo-com.svg"} alt="TikTok" width={28} height={28} className="h-7 invert" />
                                 </a>
                                 <a href="https://www.youtube.com/@STUDO-app" target="_blank" rel="noopener noreferrer">
                                     <FaYoutube size={30} />
                                 </a>
                                 <a href="https://www.linkedin.com/company/studo" target="_blank" rel="noopener noreferrer">
-                                    <img src={"/icons/socialmedia/linkedin-svgrepo-com.svg"} alt="LinkedIn" className="h-10 invert" />
+                                    <Image src={"/icons/socialmedia/linkedin-svgrepo-com.svg"} alt="LinkedIn" width={40} height={40} className="h-10 invert" />
                                 </a>
                             </div>
                         </div>

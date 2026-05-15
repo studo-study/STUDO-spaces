@@ -49,6 +49,7 @@ export default function DesktopForm() {
             router.refresh();
 
         } catch (err) {
+            console.error(err)
             setLoading(false);
         }
     };

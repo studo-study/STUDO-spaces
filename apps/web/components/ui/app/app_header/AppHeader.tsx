@@ -14,6 +14,7 @@ import {FaArrowRight} from "react-icons/fa";
 import {StudoUser} from "@/types/types";
 import {useAppStore} from "@/store/useAppStore";
 import AppSearchbar from "@/components/ui/app/search/SearchBar";
+import OnlineScanner from "@/components/ui/app/app_header/SocialSection";
 
 interface HeaderProps {
     burgerOpen: boolean;
@@ -73,6 +74,7 @@ export default function AppHeader({burgerOpen, Search, toggleCreate, user, isLoa
 
                 {/* Right section */}
                 <div className="flex items-center gap-5 ml-5 justify-end">
+                    <OnlineScanner/>
                     {/* Add button */}
                     <TriggerAddPopup
                         AddIsOpen={AddIsOpen}
@@ -218,7 +220,6 @@ function SpecialeDag() {
     const dag = date.getDate();
     const maand = date.getMonth();
     const jaar = date.getFullYear();
-    const locale = useLocale();
     const feestdagen = {
         christmas: "from-rose-600 via-rose-500 to-rose-400 dark:from-white dark:to-rose-200",
         christmasDay: "from-red-600 via-red-500 to-red-400 dark:from-white dark:to-red-200",

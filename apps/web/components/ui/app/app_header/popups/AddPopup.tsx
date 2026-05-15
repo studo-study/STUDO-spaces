@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import {IoIosAdd} from "react-icons/io";
 import {useEffect, useRef} from "react";
 import {useTranslations} from "next-intl";
@@ -114,7 +115,7 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
                                           shadow-md shadow-black/10
                                           group-hover:scale-110 group-hover:shadow-lg
                                           transition-all duration-200`}>
-                            <img src={item.icon} alt="" className="h-4 w-4 brightness-0 invert"/>
+                            <Image src={item.icon} alt="" width={16} height={16} className="h-4 w-4 brightness-0 invert"/>
                         </div>
 
                         <div className="font-medium text-sm flex flex-row items-center justify-between w-full">
@@ -153,7 +154,9 @@ function AddPopUp({AddIsOpen, setAddIsOpen, containerRef, toggleCreate}: AddPopu
               group-hover:scale-110 group-hover:shadow-lg
               transition-all duration-200`}
                     >
-                        <img
+                        <Image
+                            width={10}
+                            height={10}
                             src={"/icons/folder.svg"}
                             alt=""
                             className="h-4 w-4 brightness-0 invert"
