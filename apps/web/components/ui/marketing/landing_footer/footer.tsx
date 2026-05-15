@@ -6,7 +6,6 @@ import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { GiEuropeanFlag } from "react-icons/gi";
 import { MdOutlinePrivacyTip } from "react-icons/md";
-import Image from "next/image";
 export default function LandingFooter() {
   const t = useTranslations("landing.footer");
   const CurrentYear = new Date().getFullYear();

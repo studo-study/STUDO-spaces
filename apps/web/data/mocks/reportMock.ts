@@ -2,6 +2,7 @@ import { Issue } from "@/types/types";
 
 const mockReports: Issue[] = [
   {
+    id: "report-001",
     report_id: "RPT-001",
     title: "Beledigende termen in Studoset",
     filled_by: 12,
@@ -22,6 +23,7 @@ const mockReports: Issue[] = [
     number: 1,
   },
   {
+    id: "report-002",
     report_id: "RPT-002",
     filled_by: 8,
     report_type: "spam",
@@ -43,6 +45,7 @@ const mockReports: Issue[] = [
     number: 2,
   },
   {
+    id: "report-003",
     report_id: "RPT-003",
     filled_by: 34,
     report_type: "copyright",
@@ -63,6 +66,7 @@ const mockReports: Issue[] = [
     number: 3,
   },
   {
+    id: "report-004",
     report_id: "RPT-004",
     filled_by: 19,
     report_type: "harassment",
@@ -84,6 +88,7 @@ const mockReports: Issue[] = [
     number: 4,
   },
   {
+    id: "report-005",
     report_id: "RPT-005",
     filled_by: 56,
     report_type: "incorrect_content",
@@ -104,6 +109,7 @@ const mockReports: Issue[] = [
     number: 5,
   },
   {
+    id: "report-006",
     report_id: "RPT-006",
     filled_by: 71,
     report_type: "spam",
@@ -124,6 +130,7 @@ const mockReports: Issue[] = [
     number: 6,
   },
   {
+    id: "report-007",
     report_id: "RPT-007",
     filled_by: 42,
     report_type: "bug",
@@ -144,6 +151,7 @@ const mockReports: Issue[] = [
     number: 7,
   },
   {
+    id: "report-008",
     report_id: "RPT-008",
     filled_by: 3,
     report_type: "inappropriate_content",
@@ -165,6 +173,7 @@ const mockReports: Issue[] = [
     number: 8,
   },
   {
+    id: "report-009",
     report_id: "RPT-009",
     filled_by: 27,
     report_type: "incorrect_content",
@@ -185,6 +194,7 @@ const mockReports: Issue[] = [
     number: 9,
   },
   {
+    id: "report-010",
     report_id: "RPT-010",
     filled_by: 15,
     report_type: "copyright",

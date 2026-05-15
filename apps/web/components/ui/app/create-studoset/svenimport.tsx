@@ -19,22 +19,22 @@ export default function SvenImport({
   cardArray,
   setCardArray,
 }: importerProps) {
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   //TODO
-  const addFiles = useCallback((incoming) => {
-    const valid = Array.from(incoming).filter((f) => ACCEPTED.includes(f.type));
+  const addFiles = useCallback((incoming: FileList | File[]) => {
+    const valid = Array.from(incoming).filter((f: File) => ACCEPTED.includes(f.type));
     setFiles((prev) => [...prev, ...valid].slice(0, MAX_FILES));
   }, []);
 
-  const removeFile = (index) => {
+  const removeFile = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     if (e.dataTransfer.files) addFiles(e.dataTransfer.files);
@@ -55,7 +55,7 @@ export default function SvenImport({
         body: formData,
       });
       const data = await res.json();
-      const cards = data.map((card, index) => ({
+      const cards = data.map((card: Partial<CardData>, index: number) => ({
         ...card,
         id: crypto.randomUUID(),
         index: cardArray.length + index,
@@ -72,7 +72,7 @@ export default function SvenImport({
     }
   };
 
-  const formatSize = (bytes) => {
+  const formatSize = (bytes: number) => {
     if (bytes < 1024) return bytes + " B";
     if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
     return (bytes / 1048576).toFixed(1) + " MB";

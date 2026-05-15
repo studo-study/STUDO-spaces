@@ -30,8 +30,6 @@ export default function ProgressBar({
       >
         <div
           style={{ width: `${perc}%` }}
-          animate={{ width: `${perc}%` }}
-          transition={{ duration: 0.3 }}
           className={` h-full rounded-full bg-linear-90 ${queueMode ? "from-rose-300 to-rose-500" : "from-emerald-300 to-emerald-500 dark:from-bg-studoblue dark:to-blue-400"}`}
         />
       </div>

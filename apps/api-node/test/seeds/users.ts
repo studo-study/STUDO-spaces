@@ -23,6 +23,7 @@ export const USERS_SEED = [
     roles: [Role.USER, Role.ADMIN],
     publicRole: 'owner',
     verified: false,
+    banned: false,
   },
   {
     id: userId2,
@@ -38,6 +39,7 @@ export const USERS_SEED = [
     roles: [Role.USER],
     publicRole: 'student',
     verified: false,
+    banned: false,
   },
 ];
 

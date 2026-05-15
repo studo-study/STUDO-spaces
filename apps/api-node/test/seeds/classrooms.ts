@@ -19,6 +19,7 @@ export const CLASSROOM_SEED = [
     type: 'public',
     created_at: '2024-08-20T10:00:00.000Z',
     verified: true,
+    school: '',
   },
 ];
 

@@ -57,10 +57,10 @@ export default function SearchResults() {
         <SearchHeader query={query} size={size} />
       </div>
 
-      <SearchResultStudo result={result} />
-      <SearchResultSets result={result} />
-      <SearchResultUsers result={result} />
-      <SearchResultClassroom result={result} />
+      {result && <SearchResultStudo result={result} />}
+      {result && <SearchResultSets result={result} />}
+      {result && <SearchResultUsers result={result} />}
+      {result && <SearchResultClassroom result={result} />}
       {size === 0 && <NoResult />}
     </div>
   );

@@ -64,7 +64,7 @@ function SetResult({ item, t }: SetResultProps) {
             "px-3 py-1 flex items-center justify-center h-fit w-fit text-white dark:text-studodarkblue rounded-full bg-studoblue text-xs"
           }
         >
-          {t(getClassroomType(item.type))}
+          {t(getClassroomType(item.type) ?? "")}
         </span>
       </div>
       {!isColOrUn && (

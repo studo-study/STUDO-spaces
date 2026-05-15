@@ -121,9 +121,9 @@ function learnReducer(state: State, action: Action): State {
 export default function LearnController({ data }: LearnProps) {
   console.log("data", data);
   const cards = data.cards;
-  const sessionCards = data.session.cards;
+  const sessionCards = data.session!.cards;
   const inputRef = useRef<HTMLInputElement>(null!);
-  const startIndex = data.session.index;
+  const startIndex = data.session!.index;
 
   // Initialiseer correctCounts vanuit bestaande sessiedata
   const initialCounts: Record<string, number> = {};

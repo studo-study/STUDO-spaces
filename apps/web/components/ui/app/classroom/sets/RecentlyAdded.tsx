@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { type FullClassroom } from "@/types/types";
+import { type FullClassroom, type FullClassroomSet } from "@/types/types";
 import Image from "next/image";
 import CourseIcons from "@/data";
 import SetSearch from "@/components/ui/app/your-files/sets/search";
