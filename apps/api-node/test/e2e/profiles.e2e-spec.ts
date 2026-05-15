@@ -16,7 +16,7 @@ import { clearProfiles, seedProfiles, PROFILES_SEED } from '../seeds/profiles';
 describe('Profiles', () => {
   let app: INestApplication;
   let db: DatabaseProvider;
-  const server = (): Server => server() as unknown as Server;
+  let server: Server;
   let authToken: string;
   let adminToken: string;
 
@@ -24,6 +24,7 @@ describe('Profiles', () => {
 
   beforeAll(async () => {
     app = await createTestApp();
+    server = app.getHttpServer();
     db = app.get(DrizzleAsyncProvider);
 
     await seedUsers(app, db);
@@ -43,7 +44,7 @@ describe('Profiles', () => {
   // GET /api/profiles (Admin only)
   describe('GET /api/profiles', () => {
     it('moet 200 retourneren en alle profielen tonen (enkel vr admins)', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .get(baseUrl)
         .auth(adminToken, { type: 'bearer' });
 
@@ -61,14 +62,14 @@ describe('Profiles', () => {
     });
 
     it('moet 403 retourneren wanneer normale gebruiker oprvaagt', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .get(baseUrl)
         .auth(authToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(403);
     });
 
-    testAuthHeader(() => request(server()).get(baseUrl));
+    testAuthHeader(() => request(server).get(baseUrl));
   });
 
   // GET /api/profiles/:profile_id
@@ -76,7 +77,7 @@ describe('Profiles', () => {
     it('moet 200 en gevraagde profiel retourneren', async () => {
       const profileId = PROFILES_SEED[0].user_id;
 
-      const response = await request(server())
+      const response = await request(server)
         .get(`${baseUrl}/${profileId}`)
         .auth(authToken, { type: 'bearer' });
 
@@ -90,7 +91,7 @@ describe('Profiles', () => {
     it('moet  404 retourneren wanneer profile niet bestaat', async () => {
       const fakeUuid = '99999999-9999-9999-9999-999999999999';
 
-      const response = await request(server())
+      const response = await request(server)
         .get(`${baseUrl}/${fakeUuid}`)
         .auth(authToken, { type: 'bearer' });
 
@@ -98,7 +99,7 @@ describe('Profiles', () => {
     });
 
     testAuthHeader(() =>
-      request(server()).get(`${baseUrl}/${PROFILES_SEED[0].user_id}`),
+      request(server).get(`${baseUrl}/${PROFILES_SEED[0].user_id}`),
     );
   });
 });

@@ -21,11 +21,11 @@ import { clearCards, seedCards } from '../seeds/cards';
 describe('Studysets', () => {
   let app: INestApplication;
   let db: DatabaseProvider;
-  const server = (): Server => server() as unknown as Server;
+  let server: Server;
   let authToken: string; // paulallen@example.com - userId2
   let adminToken: string; // charles@test.com - userId1 (admin)
 
-  const baseUrl = '/api/studosets';
+  const baseUrl = '/api/studysets';
 
   // studySetId1 belongs to userId1 (admin/charles)
   // studySetId2 belongs to userId2 (user/paulallen)
@@ -38,6 +38,7 @@ describe('Studysets', () => {
 
   beforeAll(async () => {
     app = await createTestApp();
+    server = app.getHttpServer();
     db = app.get(DrizzleAsyncProvider);
 
     // Clear in reverse order of dependencies
@@ -83,7 +84,7 @@ describe('Studysets', () => {
   // ============================================================
   describe('GET /api/studosets', () => {
     it('zou alle studosets moeten retourneren voor admin', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .get(baseUrl)
         .set('Authorization', `Bearer ${adminToken}`)
         .expect(200);
@@ -94,14 +95,14 @@ describe('Studysets', () => {
     });
 
     it('niet-admins zouden 403 moeten krijgen', async () => {
-      await request(server())
+      await request(server)
         .get(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(403);
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server()).get(baseUrl).expect(401);
+      const response = await request(server).get(baseUrl).expect(401);
 
       expect(response.body.message).toBe('You need to be signed in');
     });
@@ -112,7 +113,7 @@ describe('Studysets', () => {
   // ============================================================
   describe('GET /api/studosets/:set_id', () => {
     it('zou een specifieke studoset met alle details moeten retourneren', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .get(`${baseUrl}/${studySetId1}`)
         .set('Authorization', `Bearer ${adminToken}`)
         .expect(200);
@@ -129,14 +130,14 @@ describe('Studysets', () => {
 
     it('zou 404 moeten retourneren voor een niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
-      await request(server())
+      await request(server)
         .get(`${baseUrl}/${fakeId}`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
 
     it('zou UUID format moeten valideren', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .get(`${baseUrl}/invalid-uuid`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
@@ -145,7 +146,7 @@ describe('Studysets', () => {
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .get(`${baseUrl}/${studySetId1}`)
         .expect(401);
 
@@ -158,7 +159,7 @@ describe('Studysets', () => {
   // ============================================================
   describe('GET /api/studosets/:set_id/studysession', () => {
     it('zou de studysession voor een specifieke studoset moeten retourneren', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .get(`${baseUrl}/${studySetId1}/studysession`)
         .set('Authorization', `Bearer ${adminToken}`)
         .expect(200);
@@ -171,21 +172,21 @@ describe('Studysets', () => {
 
     it('zou 404 moeten retourneren voor een niet-bestaande set', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
-      await request(server())
+      await request(server)
         .get(`${baseUrl}/${fakeId}/studysession`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
 
     it('zou UUID format moeten valideren', async () => {
-      await request(server())
+      await request(server)
         .get(`${baseUrl}/not-a-uuid/studysession`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .get(`${baseUrl}/${studySetId1}/studysession`)
         .expect(401);
 
@@ -202,27 +203,23 @@ describe('Studysets', () => {
         title: 'New Test Set',
         course: 'Test Course',
         global_term_language: 'en',
-        global_definition_language: 'nl-NL',
+        global_definition_language: 'nl',
         folder_id: folderId2,
         cardlist: [
           {
-            cards: [
-              {
-                term: 'Test Term 1',
-                definition: 'Test Definition 1',
-                number: 1,
-              },
-              {
-                term: 'Test Term 2',
-                definition: 'Test Definition 2',
-                number: 2,
-              },
-            ],
+            term: 'Test Term 1',
+            definition: 'Test Definition 1',
+            number: 1,
+          },
+          {
+            term: 'Test Term 2',
+            definition: 'Test Definition 2',
+            number: 2,
           },
         ],
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .post(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .send(newStudyset)
@@ -237,7 +234,7 @@ describe('Studysets', () => {
 
       // Cleanup - delete the created set
       if (response.body.id) {
-        await request(server())
+        await request(server)
           .delete(`${baseUrl}/${response.body.id}`)
           .set('Authorization', `Bearer ${authToken}`);
       }
@@ -249,7 +246,7 @@ describe('Studysets', () => {
         // Missing: course, global_term_language, global_definition_language, folder_id, cardlist
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .post(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .send(invalidStudyset)
@@ -264,12 +261,12 @@ describe('Studysets', () => {
         title: 'Test Set',
         course: 'Test Course',
         global_term_language: 'en',
-        global_definition_language: 'nl-NL',
+        global_definition_language: 'nl',
         folder_id: folderId2,
         cardlist: [],
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .post(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .send(invalidStudyset)
@@ -283,23 +280,19 @@ describe('Studysets', () => {
         title: 'Test Set',
         course: 'Test Course',
         global_term_language: 'en',
-        global_definition_language: 'nl-NL',
+        global_definition_language: 'nl',
         folder_id: folderId2,
         unknownField: 'should be rejected',
         cardlist: [
           {
-            cards: [
-              {
-                term: 'Test',
-                definition: 'Test',
-                number: 1,
-              },
-            ],
+            term: 'Test',
+            definition: 'Test',
+            number: 1,
           },
         ],
       };
 
-      await request(server())
+      await request(server)
         .post(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .send(studysetWithUnknownField)
@@ -307,7 +300,7 @@ describe('Studysets', () => {
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .post(baseUrl)
         .send({})
         .expect(401);
@@ -321,7 +314,7 @@ describe('Studysets', () => {
   // ============================================================
   describe('POST /api/studosets/:set_id/likes', () => {
     it('zou een studoset moeten kunnen liken', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .post(`${baseUrl}/${studySetId1}/likes`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(201);
@@ -333,13 +326,13 @@ describe('Studysets', () => {
       expect(response.body).toHaveProperty('created_at');
 
       // Cleanup - remove the like
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${studySetId1}/likes`)
         .set('Authorization', `Bearer ${authToken}`);
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .post(`${baseUrl}/${studySetId1}/likes`)
         .send({ set_id: studySetId1 })
         .expect(401);
@@ -354,14 +347,14 @@ describe('Studysets', () => {
   describe('DELETE /api/studosets/:set_id/likes', () => {
     it('zou een like moeten kunnen verwijderen', async () => {
       // First like the set
-      await request(server())
+      await request(server)
         .post(`${baseUrl}/${studySetId1}/likes`)
         .set('Authorization', `Bearer ${authToken}`)
         .send({ set_id: studySetId1 })
         .expect(201);
 
       // Then remove the like
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${studySetId1}/likes`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(204);
@@ -369,14 +362,14 @@ describe('Studysets', () => {
 
     it('zou 404 moeten retourneren als like niet bestaat', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${fakeId}/likes`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .delete(`${baseUrl}/${studySetId1}/likes`)
         .expect(401);
 
@@ -392,12 +385,12 @@ describe('Studysets', () => {
       const updateDto = {
         title: 'Updated Title',
         course: 'Updated Course',
-        global_term_language: 'nl-NL',
+        global_term_language: 'nl',
         global_definition_language: 'de',
         public_set: true,
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .put(`${baseUrl}/${studySetId1}`)
         .set('Authorization', `Bearer ${adminToken}`)
         .send(updateDto)
@@ -405,14 +398,14 @@ describe('Studysets', () => {
 
       expect(response.body).toHaveProperty('title', 'Updated Title');
       expect(response.body).toHaveProperty('course', 'Updated Course');
-      expect(response.body).toHaveProperty('global_term_language', 'nl-NL');
+      expect(response.body).toHaveProperty('global_term_language', 'nl');
       expect(response.body).toHaveProperty('global_definition_language', 'de');
       expect(response.body).toHaveProperty('public_set', true);
     });
 
     it('zou cards binnen een studoset moeten kunnen updaten', async () => {
       // First get the set to get card IDs
-      const getResponse = await request(server())
+      const getResponse = await request(server)
         .get(`${baseUrl}/${studySetId1}`)
         .set('Authorization', `Bearer ${adminToken}`)
         .expect(200);
@@ -431,7 +424,7 @@ describe('Studysets', () => {
           ],
         };
 
-        const response = await request(server())
+        const response = await request(server)
           .put(`${baseUrl}/${studySetId1}`)
           .set('Authorization', `Bearer ${adminToken}`)
           .send(updateDto)
@@ -451,7 +444,7 @@ describe('Studysets', () => {
         title: 'Hacked Title',
       };
 
-      await request(server())
+      await request(server)
         .put(`${baseUrl}/${studySetId1}`)
         .set('Authorization', `Bearer ${authToken}`)
         .send(updateDto)
@@ -460,7 +453,7 @@ describe('Studysets', () => {
 
     it('zou 404 moeten retourneren voor niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
-      await request(server())
+      await request(server)
         .put(`${baseUrl}/${fakeId}`)
         .set('Authorization', `Bearer ${authToken}`)
         .send({ title: 'Test' })
@@ -468,7 +461,7 @@ describe('Studysets', () => {
     });
 
     it('zou UUID format moeten valideren', async () => {
-      await request(server())
+      await request(server)
         .put(`${baseUrl}/invalid-uuid`)
         .set('Authorization', `Bearer ${authToken}`)
         .send({ title: 'Test' })
@@ -476,7 +469,7 @@ describe('Studysets', () => {
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .put(`${baseUrl}/${studySetId1}`)
         .send({ title: 'Test' })
         .expect(401);
@@ -496,7 +489,7 @@ describe('Studysets', () => {
         destinationFolder_id: folderId1,
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .put(`${baseUrl}/${studySetId1}/folder`)
         .set('Authorization', `Bearer ${adminToken}`)
         .send(switchDto)
@@ -512,7 +505,7 @@ describe('Studysets', () => {
         destinationFolder_id: folderId1,
       };
 
-      await request(server())
+      await request(server)
         .put(`${baseUrl}/${studySetId1}/folder`)
         .set('Authorization', `Bearer ${adminToken}`)
         .send(switchDto)
@@ -526,7 +519,7 @@ describe('Studysets', () => {
         // Missing destinationFolder_id
       };
 
-      await request(server())
+      await request(server)
         .put(`${baseUrl}/${studySetId1}/folder`)
         .set('Authorization', `Bearer ${adminToken}`)
         .send(invalidDto)
@@ -540,7 +533,7 @@ describe('Studysets', () => {
         destinationFolder_id: 'not-a-uuid',
       };
 
-      await request(server())
+      await request(server)
         .put(`${baseUrl}/${studySetId1}/folder`)
         .set('Authorization', `Bearer ${adminToken}`)
         .send(invalidDto)
@@ -555,7 +548,7 @@ describe('Studysets', () => {
         destinationFolder_id: folderId1,
       };
 
-      await request(server())
+      await request(server)
         .put(`${baseUrl}/${studySetId1}/folder`)
         .set('Authorization', `Bearer ${authToken}`)
         .send(switchDto)
@@ -569,7 +562,7 @@ describe('Studysets', () => {
         destinationFolder_id: folderId1,
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .put(`${baseUrl}/${studySetId1}/folder`)
         .send(switchDto)
         .expect(401);
@@ -584,7 +577,7 @@ describe('Studysets', () => {
   describe('POST /api/studosets/:set_id/studysession', () => {
     it('zou een nieuwe studysession moeten kunnen aanmaken', async () => {
       // authToken (paulallen) creates session for studySetId2 (which they own)
-      const response = await request(server())
+      const response = await request(server)
         .post(`${baseUrl}/${studySetId2}/studysession`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(201);
@@ -599,21 +592,21 @@ describe('Studysets', () => {
 
     it('zou 404 moeten retourneren voor niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
-      await request(server())
+      await request(server)
         .post(`${baseUrl}/${fakeId}/studysession`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
 
     it('zou UUID format moeten valideren', async () => {
-      await request(server())
+      await request(server)
         .post(`${baseUrl}/invalid-uuid/studysession`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .post(`${baseUrl}/${studySetId1}/studysession`)
         .expect(401);
 
@@ -635,18 +628,14 @@ describe('Studysets', () => {
         folder_id: folderId2,
         cardlist: [
           {
-            cards: [
-              {
-                term: 'Temp',
-                definition: 'Temp',
-                number: 1,
-              },
-            ],
+            term: 'Temp',
+            definition: 'Temp',
+            number: 1,
           },
         ],
       };
 
-      const createResponse = await request(server())
+      const createResponse = await request(server)
         .post(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .send(tempSet)
@@ -655,13 +644,13 @@ describe('Studysets', () => {
       const tempSetId = createResponse.body.id;
 
       // Delete as the owner
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${tempSetId}`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(204);
 
       // Verify it's deleted
-      await request(server())
+      await request(server)
         .get(`${baseUrl}/${tempSetId}`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
@@ -669,7 +658,7 @@ describe('Studysets', () => {
 
     it('zou 403 moeten retourneren bij delete van studoset van andere user', async () => {
       // authToken (paulallen) tries to delete studySetId1 (owned by charles)
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${studySetId1}`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(403);
@@ -677,21 +666,21 @@ describe('Studysets', () => {
 
     it('zou 404 moeten retourneren voor niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${fakeId}`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
 
     it('zou UUID format moeten valideren', async () => {
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/not-a-uuid`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server())
+      const response = await request(server)
         .delete(`${baseUrl}/${studySetId1}`)
         .expect(401);
 
@@ -708,22 +697,18 @@ describe('Studysets', () => {
         title: 'Test & <Special> "Characters"',
         course: "Biology's Course (Advanced)",
         global_term_language: 'en',
-        global_definition_language: 'nl-NL',
+        global_definition_language: 'nl',
         folder_id: folderId2,
         cardlist: [
           {
-            cards: [
-              {
-                term: 'Test',
-                definition: 'Test',
-                number: 1,
-              },
-            ],
+            term: 'Test',
+            definition: 'Test',
+            number: 1,
           },
         ],
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .post(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .send(specialSet)
@@ -733,7 +718,7 @@ describe('Studysets', () => {
       expect(response.body.course).toBe(specialSet.course);
 
       // Cleanup
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${response.body.id}`)
         .set('Authorization', `Bearer ${authToken}`);
     });
@@ -747,29 +732,25 @@ describe('Studysets', () => {
         folder_id: folderId2,
         cardlist: [
           {
-            cards: [
-              {
-                term: 'Japanese',
-                definition: 'Nihongo',
-                number: 1,
-              },
-              {
-                term: 'Greek',
-                definition: 'Ellinika',
-                number: 2,
-              },
-            ],
+            term: 'Japanese',
+            definition: 'Nihongo',
+            number: 1,
+          },
+          {
+            term: 'Greek',
+            definition: 'Ellinika',
+            number: 2,
           },
         ],
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .post(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .send(unicodeSet)
         .expect(201);
 
-      const getResponse = await request(server())
+      const getResponse = await request(server)
         .get(`${baseUrl}/${response.body.id}`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(200);
@@ -777,7 +758,7 @@ describe('Studysets', () => {
       expect(getResponse.body.cards.length).toBe(2);
 
       // Cleanup
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${response.body.id}`)
         .set('Authorization', `Bearer ${authToken}`);
     });
@@ -790,23 +771,19 @@ describe('Studysets', () => {
         global_definition_language: 'en',
         folder_id: folderId2,
         cardlist: [
-          {
-            cards: [
-              { term: 'First', definition: 'First def', number: 1 },
-              { term: 'Second', definition: 'Second def', number: 2 },
-              { term: 'Third', definition: 'Third def', number: 3 },
-            ],
-          },
+          { term: 'First', definition: 'First def', number: 1 },
+          { term: 'Second', definition: 'Second def', number: 2 },
+          { term: 'Third', definition: 'Third def', number: 3 },
         ],
       };
 
-      const response = await request(server())
+      const response = await request(server)
         .post(baseUrl)
         .set('Authorization', `Bearer ${authToken}`)
         .send(orderedSet)
         .expect(201);
 
-      const getResponse = await request(server())
+      const getResponse = await request(server)
         .get(`${baseUrl}/${response.body.id}`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(200);
@@ -819,7 +796,7 @@ describe('Studysets', () => {
       expect(sortedCards[2].term).toBe('Third');
 
       // Cleanup
-      await request(server())
+      await request(server)
         .delete(`${baseUrl}/${response.body.id}`)
         .set('Authorization', `Bearer ${authToken}`);
     });
