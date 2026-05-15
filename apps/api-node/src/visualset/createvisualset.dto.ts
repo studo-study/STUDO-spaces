@@ -27,7 +27,6 @@ export class CreateVisualsetWithFilesDto {
   })
   @IsString()
   pins_data: string;
-  
 }
 
 export interface ImageMetadata {

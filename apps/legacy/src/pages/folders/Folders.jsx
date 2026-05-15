@@ -24,7 +24,7 @@ export default function Folders() {
           user_id: set.user_id,
           type: "studyset",
           displayName: set.displayName,
-          img_url: set.img_url
+          img_url: set.img_url,
         })),
         ...(folder.sets.visualsets || []).map((set) => ({
           id: set.id,
@@ -34,8 +34,8 @@ export default function Folders() {
           user_id: set.user_id,
           type: "visualset",
           displayName: set.displayName,
-          img_url: set.img_url
-        }))
+          img_url: set.img_url,
+        })),
       ];
       setStudysets(allSets);
       setSortedsets(allSets);
@@ -57,24 +57,33 @@ export default function Folders() {
 
   return (
     <div className={"w-full h-full flex flex-col"}>
-      <div className={"w-full h-20 flex flex-row items-center justify-baseline gap-5"}>
-        <div className={"h-10 w-10 rounded-full flex items-center justify-center border border-studogrey/30\n" +
-          "    bg-white dark:bg-gray-700\n" +
-          "    text-studodarkblue dark:text-white\n" +
-          "    font-medium text-sm\n" +
-          "    shadow-sm hover:shadow-md\n" +
-          "    transition-all duration-200\n" +
-          "    cursor-pointer\n" +
-          "    focus:outline-none active:scale-105 transition-transform z-[2] select-none focus:ring-2 focus:ring-studogrey/50"}
-             onClick={handleNavigate}>
+      <div
+        className={
+          "w-full h-20 flex flex-row items-center justify-baseline gap-5"
+        }
+      >
+        <div
+          className={
+            "h-10 w-10 rounded-full flex items-center justify-center border border-studogrey/30\n" +
+            "    bg-white dark:bg-gray-700\n" +
+            "    text-studodarkblue dark:text-white\n" +
+            "    font-medium text-sm\n" +
+            "    shadow-sm hover:shadow-md\n" +
+            "    transition-all duration-200\n" +
+            "    cursor-pointer\n" +
+            "    focus:outline-none active:scale-105 transition-transform z-[2] select-none focus:ring-2 focus:ring-studogrey/50"
+          }
+          onClick={handleNavigate}
+        >
           <FaChevronLeft />
         </div>
-        <span className={"text-2xl font-bold"}>{!isLoading && folder && folder.name}</span>
+        <span className={"text-2xl font-bold"}>
+          {!isLoading && folder && folder.name}
+        </span>
       </div>
       <div className={"w-full h-full grid grid-cols-3 grid-rows-auto gap-3"}>
-        {!isLoading && sortedsets.map((set) => (
-          <StudysetItem key={set.id} set={set} />
-        ))}
+        {!isLoading &&
+          sortedsets.map((set) => <StudysetItem key={set.id} set={set} />)}
       </div>
     </div>
   );

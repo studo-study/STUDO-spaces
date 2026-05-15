@@ -6,56 +6,67 @@ import PinIcon from "../../../../assets/icons/pin.svg";
 const GRID_SIZE = 40;
 
 export default function UploadField({
-                                      activeImageIndex,
-                                      previewUrl,
-                                      pins,
-                                      onFileUpload,
-                                      onAddPin,
-                                      onRemovePinByCoords
-                                    }) {
+  activeImageIndex,
+  previewUrl,
+  pins,
+  onFileUpload,
+  onAddPin,
+  onRemovePinByCoords,
+}) {
   const { t } = useTranslation();
   const fileInputRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0, screenX: 0, screenY: 0 });
+  const [popupPosition, setPopupPosition] = useState({
+    x: 0,
+    y: 0,
+    screenX: 0,
+    screenY: 0,
+  });
   const [definition, setDefinition] = useState("");
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = useCallback((e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      onFileUpload(file);
-    }
-  }, [onFileUpload]);
+  const handleFileChange = useCallback(
+    (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        onFileUpload(file);
+      }
+    },
+    [onFileUpload],
+  );
 
-  const handleCellClick = useCallback((x, y, event) => {
-    // Check if identify already exists at this position
-    const existingPin = pins.find(pin => pin.x === x && pin.y === y);
+  const handleCellClick = useCallback(
+    (x, y, event) => {
+      // Check if identify already exists at this position
+      const existingPin = pins.find((pin) => pin.x === x && pin.y === y);
 
-    if (existingPin) {
-      // Remove existing identify
-      onRemovePinByCoords(x, y);
-      return;
-    }
+      if (existingPin) {
+        // Remove existing identify
+        onRemovePinByCoords(x, y);
+        return;
+      }
 
-    // Show popup for new identify
-    const rect = event.currentTarget.getBoundingClientRect();
-    const screenX = rect.left + rect.width / 2;
-    const screenY = rect.top + rect.height / 2;
+      // Show popup for new identify
+      const rect = event.currentTarget.getBoundingClientRect();
+      const screenX = rect.left + rect.width / 2;
+      const screenY = rect.top + rect.height / 2;
 
-    setPopupPosition({ x, y, screenX, screenY });
-    setDefinition("");
-    setShowPopup(true);
-  }, [pins, onRemovePinByCoords]);
+      setPopupPosition({ x, y, screenX, screenY });
+      setDefinition("");
+      setShowPopup(true);
+    },
+    [pins, onRemovePinByCoords],
+  );
 
   const handlePopupSubmit = useCallback(() => {
     if (definition.trim()) {
       onAddPin({
         definition: definition.trim(),
         x: popupPosition.x,
-        y: popupPosition.y
+        y: popupPosition.y,
       });
     }
     setShowPopup(false);
@@ -67,23 +78,28 @@ export default function UploadField({
     setDefinition("");
   }, []);
 
-  const handleKeyDown = useCallback((e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handlePopupSubmit();
-    } else if (e.key === "Escape") {
-      handlePopupCancel();
-    }
-  }, [handlePopupSubmit, handlePopupCancel]);
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handlePopupSubmit();
+      } else if (e.key === "Escape") {
+        handlePopupCancel();
+      }
+    },
+    [handlePopupSubmit, handlePopupCancel],
+  );
 
   // Check if a cell has a identify
-  const hasPinAt = useCallback((x, y) => {
-    return pins.some(pin => pin.x === x && pin.y === y);
-  }, [pins]);
+  const hasPinAt = useCallback(
+    (x, y) => {
+      return pins.some((pin) => pin.x === x && pin.y === y);
+    },
+    [pins],
+  );
 
   return (
     <div className="w-full h-full relative">
-
       {!previewUrl && (
         <div
           className="w-160 h-160 flex flex-col items-center justify-center gap-5 cursor-pointer"
@@ -100,7 +116,6 @@ export default function UploadField({
         </div>
       )}
 
-
       {previewUrl && (
         <div className="w-160 h-160 relative">
           <img
@@ -109,12 +124,11 @@ export default function UploadField({
             className="absolute inset-0 w-full h-full object-contain"
           />
 
-
           <div
             className="absolute inset-0 grid"
             style={{
               gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
-              gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`
+              gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`,
             }}
           >
             {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, index) => {
@@ -143,7 +157,6 @@ export default function UploadField({
         </div>
       )}
 
-
       <input
         ref={fileInputRef}
         type="file"
@@ -153,17 +166,14 @@ export default function UploadField({
       />
 
       {showPopup && (
-        <div
-          className="fixed inset-0 z-50"
-          onClick={handlePopupCancel}
-        >
+        <div className="fixed inset-0 z-50" onClick={handlePopupCancel}>
           <div
             className="absolute bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-2xl
               border border-gray-200 dark:border-gray-700 min-w-64"
             style={{
               left: `${popupPosition.screenX}px`,
               top: `${popupPosition.screenY + 20}px`,
-              transform: "translateX(-50%)"
+              transform: "translateX(-50%)",
             }}
             onClick={(e) => e.stopPropagation()}
           >

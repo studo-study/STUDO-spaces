@@ -15,7 +15,7 @@ const LANGUAGES = [
   { code: "nl", name: "Dutch" },
   { code: "fr", name: "French" },
   { code: "de", name: "German" },
-  { code: "es", name: "Spanish" }
+  { code: "es", name: "Spanish" },
 ];
 
 const EMPTY_CARD = { term: "", definition: "", image: "" };
@@ -27,8 +27,14 @@ const EMPTY_STUDYSET = {
   global_definition_language: "",
   folder_id: "",
   cardlist: [
-    { cards: [{ ...EMPTY_CARD, number: 1 }, { ...EMPTY_CARD, number: 2 }, { ...EMPTY_CARD, number: 3 }] }
-  ]
+    {
+      cards: [
+        { ...EMPTY_CARD, number: 1 },
+        { ...EMPTY_CARD, number: 2 },
+        { ...EMPTY_CARD, number: 3 },
+      ],
+    },
+  ],
 };
 
 export default function CreateOrEditSet() {
@@ -39,20 +45,33 @@ export default function CreateOrEditSet() {
   const cardsContainerRef = useRef(null);
   const sortableRef = useRef(null);
 
-  const { data: existingStudyset } = useSWR(id ? `studysets/${id}` : null, getById);
-  const { data: foldersData = { folders: [] }, isLoading: foldersLoading } = useSWR("folders/me", getAll);
-  const { trigger: saveStudyset, isMutating } = useSWRMutation("studysets", save);
+  const { data: existingStudyset } = useSWR(
+    id ? `studysets/${id}` : null,
+    getById,
+  );
+  const { data: foldersData = { folders: [] }, isLoading: foldersLoading } =
+    useSWR("folders/me", getAll);
+  const { trigger: saveStudyset, isMutating } = useSWRMutation(
+    "studysets",
+    save,
+  );
 
   const methods = useForm({
     mode: "onBlur",
     defaultValues: existingStudyset || EMPTY_STUDYSET,
-    values: existingStudyset
+    values: existingStudyset,
   });
 
-  const { register, handleSubmit, control, formState: { errors }, getValues } = methods;
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    getValues,
+  } = methods;
   const { fields, append, remove, move, replace } = useFieldArray({
     control,
-    name: "cardlist.0.cards"
+    name: "cardlist.0.cards",
   });
 
   useEffect(() => {
@@ -63,10 +82,14 @@ export default function CreateOrEditSet() {
         ghostClass: "opacity-50",
         onEnd: (evt) => {
           const { oldIndex, newIndex } = evt;
-          if (oldIndex !== undefined && newIndex !== undefined && oldIndex !== newIndex) {
+          if (
+            oldIndex !== undefined &&
+            newIndex !== undefined &&
+            oldIndex !== newIndex
+          ) {
             move(oldIndex, newIndex);
           }
-        }
+        },
       });
     }
 
@@ -82,73 +105,87 @@ export default function CreateOrEditSet() {
     append({ term: "", definition: "", image: "", number: fields.length + 1 });
   }, [append, fields.length]);
 
-  const removeCard = useCallback((index) => {
-    if (fields.length > 3) {
-      remove(index);
-    }
-  }, [remove, fields.length]);
-
-  const handleImport = useCallback((importedCards) => {
-    const currentCards = getValues("cardlist.0.cards");
-    let emptyCount = 0;
-
-    for (let i = 0; i < currentCards.length; i++) {
-      if (!currentCards[i].term && !currentCards[i].definition) {
-        emptyCount++;
-      } else {
-        break;
+  const removeCard = useCallback(
+    (index) => {
+      if (fields.length > 3) {
+        remove(index);
       }
-    }
+    },
+    [remove, fields.length],
+  );
 
-    const newCards = [];
-    for (let i = 0; i < importedCards.length; i++) {
-      newCards.push({
-        term: importedCards[i].term,
-        definition: importedCards[i].definition,
-        image: importedCards[i].url || "",
-        number: i + 1
-      });
-    }
+  const handleImport = useCallback(
+    (importedCards) => {
+      const currentCards = getValues("cardlist.0.cards");
+      let emptyCount = 0;
 
-    for (let i = emptyCount; i < currentCards.length; i++) {
-      if (currentCards[i].term || currentCards[i].definition) {
+      for (let i = 0; i < currentCards.length; i++) {
+        if (!currentCards[i].term && !currentCards[i].definition) {
+          emptyCount++;
+        } else {
+          break;
+        }
+      }
+
+      const newCards = [];
+      for (let i = 0; i < importedCards.length; i++) {
         newCards.push({
-          ...currentCards[i],
-          number: newCards.length + 1
+          term: importedCards[i].term,
+          definition: importedCards[i].definition,
+          image: importedCards[i].url || "",
+          number: i + 1,
         });
       }
-    }
 
-    while (newCards.length < 3) {
-      newCards.push({ term: "", definition: "", image: "", number: newCards.length + 1 });
-    }
-
-    replace(newCards);
-    setShowImporter(false);
-  }, [getValues, replace]);
-
-  const onSubmit = useCallback(async (data) => {
-    const formattedData = {
-      ...data,
-      id: id || undefined,
-      cardlist: [{
-        cards: data.cardlist[0].cards.map((card, index) => ({
-          ...card,
-          number: index + 1
-        }))
-      }]
-    };
-
-    await saveStudyset(formattedData, {
-      throwOnError: false,
-      onSuccess: (response) => {
-        navigate(`/studysets/${response.id || id}`);
-      },
-      onError: (error) => {
-
+      for (let i = emptyCount; i < currentCards.length; i++) {
+        if (currentCards[i].term || currentCards[i].definition) {
+          newCards.push({
+            ...currentCards[i],
+            number: newCards.length + 1,
+          });
+        }
       }
-    });
-  }, [id, saveStudyset, navigate]);
+
+      while (newCards.length < 3) {
+        newCards.push({
+          term: "",
+          definition: "",
+          image: "",
+          number: newCards.length + 1,
+        });
+      }
+
+      replace(newCards);
+      setShowImporter(false);
+    },
+    [getValues, replace],
+  );
+
+  const onSubmit = useCallback(
+    async (data) => {
+      const formattedData = {
+        ...data,
+        id: id || undefined,
+        cardlist: [
+          {
+            cards: data.cardlist[0].cards.map((card, index) => ({
+              ...card,
+              number: index + 1,
+            })),
+          },
+        ],
+      };
+
+      await saveStudyset(formattedData, {
+        throwOnError: false,
+        onSuccess: (response) => {
+          navigate(`/studysets/${response.id || id}`);
+        },
+        onError: (error) => {},
+      });
+    },
+    [id, saveStudyset, navigate],
+  );
 
   return (
     <FormProvider {...methods}>
@@ -156,11 +193,16 @@ export default function CreateOrEditSet() {
         onSubmit={handleSubmit(onSubmit)}
         className="w-screen scroll-hidden h-fit mt-10 md:mt-0 flex text-sm sm:text-base flex-col items-center justify-baseline
           pt-20 sm:pt-25 md:pt-35 px-4 sm:px-6 lg:px-8"
-        data-cy="studyset_form">
+        data-cy="studyset_form"
+      >
         <div className="flex w-full sm:w-11/12 md:w-4/5 lg:w-3/5 flex-col items-center justify-center gap-3">
-          <span className="w-full text-2xl sm:text-3xl flex flex-col justify-center items-baseline
-            text-studodarkblue font-atrament font-semibold dark:text-white">
-            {id ? t("edit studoset").toUpperCase() : t("create new studoset").toUpperCase()}
+          <span
+            className="w-full text-2xl sm:text-3xl flex flex-col justify-center items-baseline
+            text-studodarkblue font-atrament font-semibold dark:text-white"
+          >
+            {id
+              ? t("edit studoset").toUpperCase()
+              : t("create new studoset").toUpperCase()}
           </span>
 
           <div className="w-full gap-3 sm:gap-4 md:gap-5 flex-col flex">
@@ -168,7 +210,10 @@ export default function CreateOrEditSet() {
               <input
                 {...register("title", {
                   required: t("Title is required"),
-                  maxLength: { value: 200, message: t("Title max 200 characters") }
+                  maxLength: {
+                    value: 200,
+                    message: t("Title max 200 characters"),
+                  },
                 })}
                 type="text"
                 className="px-4 sm:px-[2vh] h-10 sm:h-12 rounded-full text-sm sm:text-base border-0
@@ -181,7 +226,10 @@ export default function CreateOrEditSet() {
               />
               <div className="h-5">
                 {errors.title && (
-                  <span className="text-red-500 text-xs sm:text-sm pl-4" data-cy="title_error">
+                  <span
+                    className="text-red-500 text-xs sm:text-sm pl-4"
+                    data-cy="title_error"
+                  >
                     {errors.title.message}
                   </span>
                 )}
@@ -193,7 +241,10 @@ export default function CreateOrEditSet() {
                 <input
                   {...register("course", {
                     required: t("Course is required"),
-                    maxLength: { value: 100, message: t("Course max 100 characters") }
+                    maxLength: {
+                      value: 100,
+                      message: t("Course max 100 characters"),
+                    },
                   })}
                   type="text"
                   autoComplete="off"
@@ -206,7 +257,10 @@ export default function CreateOrEditSet() {
                 />
                 <div className="h-5">
                   {errors.course && (
-                    <span className="text-red-500 text-xs sm:text-sm pl-4" data-cy="course_error">
+                    <span
+                      className="text-red-500 text-xs sm:text-sm pl-4"
+                      data-cy="course_error"
+                    >
                       {errors.course.message}
                     </span>
                   )}
@@ -216,20 +270,27 @@ export default function CreateOrEditSet() {
               <div className="w-full sm:w-1/2 gap-2 flex flex-col h-fit">
                 <div className="custom-select w-full flex flex-col h-10 sm:h-12">
                   <select
-                    {...register("folder_id", { required: t("Folder is required") })}
+                    {...register("folder_id", {
+                      required: t("Folder is required"),
+                    })}
                     className="text-studodarkblue h-10 sm:h-12 text-sm sm:text-base dark:text-white"
-                    data-cy="folder_select">
+                    data-cy="folder_select"
+                  >
                     <option value="">{t("Select folder...")}</option>
-                    {!foldersLoading && foldersData.folders?.map((folder) => (
-                      <option value={folder.id} key={folder.id}>
-                        {t(folder.name)}
-                      </option>
-                    ))}
+                    {!foldersLoading &&
+                      foldersData.folders?.map((folder) => (
+                        <option value={folder.id} key={folder.id}>
+                          {t(folder.name)}
+                        </option>
+                      ))}
                   </select>
                 </div>
                 <div className="h-5">
                   {errors.folder_id && (
-                    <span className="text-red-500 text-xs sm:text-sm pl-4" data-cy="folder_error">
+                    <span
+                      className="text-red-500 text-xs sm:text-sm pl-4"
+                      data-cy="folder_error"
+                    >
                       {errors.folder_id.message}
                     </span>
                   )}
@@ -241,18 +302,26 @@ export default function CreateOrEditSet() {
               <div className="w-full sm:w-1/2 gap-2 flex flex-col">
                 <div className="custom-select w-full flex flex-col h-10 sm:h-12">
                   <select
-                    {...register("global_term_language", { required: t("Term language required") })}
+                    {...register("global_term_language", {
+                      required: t("Term language required"),
+                    })}
                     className="text-studodarkblue h-10 sm:h-12 text-sm sm:text-base dark:text-white"
-                    data-cy="term_language_select">
+                    data-cy="term_language_select"
+                  >
                     <option value="">{t("Term language...")}</option>
                     {LANGUAGES.map((lang) => (
-                      <option value={lang.code} key={lang.code}>{lang.name}</option>
+                      <option value={lang.code} key={lang.code}>
+                        {lang.name}
+                      </option>
                     ))}
                   </select>
                 </div>
                 <div className="h-5">
                   {errors.global_term_language && (
-                    <span className="text-red-500 text-xs sm:text-sm pl-4" data-cy="term_language_error">
+                    <span
+                      className="text-red-500 text-xs sm:text-sm pl-4"
+                      data-cy="term_language_error"
+                    >
                       {errors.global_term_language.message}
                     </span>
                   )}
@@ -262,18 +331,26 @@ export default function CreateOrEditSet() {
               <div className="w-full sm:w-1/2 gap-2 flex flex-col">
                 <div className="custom-select w-full flex flex-col h-10 sm:h-12">
                   <select
-                    {...register("global_definition_language", { required: t("Definition language required") })}
+                    {...register("global_definition_language", {
+                      required: t("Definition language required"),
+                    })}
                     className="text-studodarkblue h-10 sm:h-12 text-sm sm:text-base dark:text-white"
-                    data-cy="definition_language_select">
+                    data-cy="definition_language_select"
+                  >
                     <option value="">{t("Definition language...")}</option>
                     {LANGUAGES.map((lang) => (
-                      <option value={lang.code} key={lang.code}>{lang.name}</option>
+                      <option value={lang.code} key={lang.code}>
+                        {lang.name}
+                      </option>
                     ))}
                   </select>
                 </div>
                 <div className="h-5">
                   {errors.global_definition_language && (
-                    <span className="text-red-500 text-xs sm:text-sm pl-4" data-cy="definition_language_error">
+                    <span
+                      className="text-red-500 text-xs sm:text-sm pl-4"
+                      data-cy="definition_language_error"
+                    >
                       {errors.global_definition_language.message}
                     </span>
                   )}
@@ -282,8 +359,7 @@ export default function CreateOrEditSet() {
             </div>
           </div>
 
-          <div
-            className="w-full h-fit flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between items-stretch sm:items-end mt-4">
+          <div className="w-full h-fit flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between items-stretch sm:items-end mt-4">
             <button
               type="button"
               onClick={() => setShowImporter(true)}
@@ -294,8 +370,13 @@ export default function CreateOrEditSet() {
                 shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
                 dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
                 dark:border-t-gray-500 dark:border-l-gray-500 dark:text-white"
-              data-cy="import_button">
-              <img src={Plus} className="h-4 sm:h-5 dark:brightness-0 dark:invert" alt="" />
+              data-cy="import_button"
+            >
+              <img
+                src={Plus}
+                className="h-4 sm:h-5 dark:brightness-0 dark:invert"
+                alt=""
+              />
               {t("import").toUpperCase()}
             </button>
 
@@ -309,14 +390,21 @@ export default function CreateOrEditSet() {
                 shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
                 dark:bg-studoblue dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
                 dark:text-white disabled:opacity-50"
-              data-cy="submit_studyset_top">
-              {isMutating ? t("saving...").toUpperCase() : (id ? t("save set").toUpperCase() : t("create set").toUpperCase())}
+              data-cy="submit_studyset_top"
+            >
+              {isMutating
+                ? t("saving...").toUpperCase()
+                : id
+                  ? t("save set").toUpperCase()
+                  : t("create set").toUpperCase()}
             </button>
           </div>
 
-          <div ref={cardsContainerRef}
-               className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10"
-               data-cy="cards_container">
+          <div
+            ref={cardsContainerRef}
+            className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 pt-6 sm:pt-8 md:pt-10"
+            data-cy="cards_container"
+          >
             {fields.map((field, index) => (
               <Card
                 key={field.id}
@@ -338,7 +426,8 @@ export default function CreateOrEditSet() {
                 shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
                 dark:bg-emerald-400 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
                 dark:text-white font-bold"
-              data-cy="add_card_button">
+              data-cy="add_card_button"
+            >
               {t("add card").toUpperCase()}
             </button>
           </div>
@@ -353,8 +442,13 @@ export default function CreateOrEditSet() {
                 shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
                 dark:bg-studoblue dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
                 dark:text-white"
-              data-cy="submit_studyset_bottom">
-              {isMutating ? t("saving...").toUpperCase() : (id ? t("save set").toUpperCase() : t("create set").toUpperCase())}
+              data-cy="submit_studyset_bottom"
+            >
+              {isMutating
+                ? t("saving...").toUpperCase()
+                : id
+                  ? t("save set").toUpperCase()
+                  : t("create set").toUpperCase()}
             </button>
           </div>
         </div>

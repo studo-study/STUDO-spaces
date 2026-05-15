@@ -1,3 +1,3 @@
 export default function PointPage() {
-    return <div></div>
+  return <div></div>;
 }

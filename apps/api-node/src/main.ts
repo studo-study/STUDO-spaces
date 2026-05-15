@@ -75,4 +75,4 @@ async function bootstrap() {
   console.log('Joehoe, server is opgestart op poort 3000');
 }
 
-bootstrap();
+void bootstrap();

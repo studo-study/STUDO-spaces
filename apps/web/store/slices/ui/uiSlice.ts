@@ -1,11 +1,11 @@
-import {StateCreator} from "zustand/vanilla";
+import { StateCreator } from "zustand/vanilla";
 
 export interface UISlice {
-    sidebarOpen: boolean;
-    toggleSidebar: () => void;
+  sidebarOpen: boolean;
+  toggleSidebar: () => void;
 }
 
 export const createUISlice: StateCreator<UISlice> = (set) => ({
-    sidebarOpen: true,
-    toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
+  sidebarOpen: true,
+  toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
 });

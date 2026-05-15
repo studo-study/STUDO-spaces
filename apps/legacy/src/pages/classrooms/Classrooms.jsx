@@ -26,27 +26,31 @@ export default function Classrooms() {
     <div className="w-full h-screen flex flex-col items-center justify-baseline pt-35">
       <div className="flex md:w-3/5 w-full flex-col items-center justify-center gap-3 px-4 sm:px-6 lg:px-8">
         <div className="w-full flex flex-row items-center justify-between">
-          <span className="w-full text-4xl flex flex-col justify-center items-baseline font-semibold
-          text-studodarkblue font-atrament dark:text-white">{t("YOUR CLASSROOMS")}
+          <span
+            className="w-full text-4xl flex flex-col justify-center items-baseline font-semibold
+          text-studodarkblue font-atrament dark:text-white"
+          >
+            {t("YOUR CLASSROOMS")}
           </span>
 
           <div className="relative">
-            <div
-              className="absolute inset-0 rounded-lg bg-emerald-400 opacity-45 blur-md z-[1] pointer-events-none" />
+            <div className="absolute inset-0 rounded-lg bg-emerald-400 opacity-45 blur-md z-[1] pointer-events-none" />
             <div
               onClick={toggleOpen}
               className="relative min-w-30 w-fit min-h-10 bg-emerald-400 rounded-full flex items-center justify-center cursor-pointer
                       active:scale-105 transition-transform z-[2] select-none gap-3
                       border-[0.5px] border-solid border-[#8181812f] border-t-emerald-300 border-l-emerald-300"
             >
-              <img src={plusIcon} className="w-4 h-auto invert brightness-0" alt="Add" />
-              <span className={"text-white font-atrament text-xl"}>{t("create").toUpperCase()}</span>
+              <img
+                src={plusIcon}
+                className="w-4 h-auto invert brightness-0"
+                alt="Add"
+              />
+              <span className={"text-white font-atrament text-xl"}>
+                {t("create").toUpperCase()}
+              </span>
             </div>
-            <CreateClassroom
-              isOpen={isOpen}
-              onClose={closePopup}
-            />
-
+            <CreateClassroom isOpen={isOpen} onClose={closePopup} />
           </div>
         </div>
         <Navbar data={data} isLoading={isLoading} />

@@ -15,7 +15,7 @@ import {
 
 import { SwitchFolderDto } from '../folder/folder.dto';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
-import { CardResponseDto, CreateCardDto, CreateCardListDto } from './card.dto';
+import { CardResponseDto, CreateCardDto } from './card.dto';
 import { SetLikeResponseDto } from './setlike.dto';
 import {
   type DatabaseProvider,
@@ -189,7 +189,9 @@ export class StudysetService {
     } else {
       sesh = await this.getBySetId(user_id, set_id);
       if (sesh.cards && sesh.cards.length === 0) {
-        await this.db.delete(studysessions).where(eq(studysessions.id, sesh.id));
+        await this.db
+          .delete(studysessions)
+          .where(eq(studysessions.id, sesh.id));
         sesh = await this.createSession(user_id, set_id);
       }
     }

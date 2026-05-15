@@ -1,5 +1,5 @@
-import type { StudysetResponse } from './studyset';
-import type { VisualsetResponse } from './visualset';
+import type { StudysetResponse } from "./studyset";
+import type { VisualsetResponse } from "./visualset";
 
 export interface StudoProfile {
   id: string;

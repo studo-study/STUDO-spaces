@@ -1,4 +1,5 @@
 import { IsString, IsNumber } from 'nestjs-swagger-dto';
+import { IsDefined } from 'class-validator';
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -7,10 +8,12 @@ export class RegisterUserRequestDto {
     example: 'charles@example.com',
     description: 'Email of the user',
   })
+  @IsDefined()
   @IsString({
     name: 'email',
     maxLength: 255,
     isEmail: true,
+    canBeEmpty: false,
   })
   email: string;
 
@@ -18,10 +21,12 @@ export class RegisterUserRequestDto {
     example: 'MyStrongPassword123',
     description: 'Password of the user',
   })
+  @IsDefined()
   @IsString({
     name: 'password',
     minLength: 8,
     maxLength: 128,
+    canBeEmpty: false,
   })
   password: string;
 
@@ -29,10 +34,12 @@ export class RegisterUserRequestDto {
     example: 'Charles',
     description: 'Display name of the user',
   })
+  @IsDefined()
   @IsString({
     name: 'displayName',
     minLength: 2,
     maxLength: 100,
+    canBeEmpty: false,
   })
   displayName: string;
 
@@ -40,10 +47,12 @@ export class RegisterUserRequestDto {
     example: 'user',
     description: 'Role of the user',
   })
+  @IsDefined()
   @IsString({
     name: 'role',
     minLength: 2,
     maxLength: 7,
+    canBeEmpty: false,
   })
   role: string;
 }

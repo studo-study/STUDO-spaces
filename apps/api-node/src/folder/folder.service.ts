@@ -19,10 +19,12 @@ export class FolderService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
-  ) {
-  }
+  ) {}
 
-  async create(user_id: string, folder: CreateFolderDto): Promise<FolderResponseDto> {
+  async create(
+    user_id: string,
+    folder: CreateFolderDto,
+  ): Promise<FolderResponseDto> {
     const id = uuidv6();
     const f = {
       id: id,

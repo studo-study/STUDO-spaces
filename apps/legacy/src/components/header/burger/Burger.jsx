@@ -22,27 +22,50 @@ export default function Burger({ isOpen, setIsOpen }) {
       border-gray-200 border-solid transform transition-transform font-atrament
       dark:bg-gray-700
       dark:border-gray-800
-      duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+    >
       <div className="flex flex-col gap-2">
         <div className="lg:hidden md:hidden lg:hidden">
           <Searchpart isOpen={setIsOpen} />
         </div>
-        <NavLink to="/home">{({ isActive }) => (
-          <MenuPart svg={Home} isActive={isActive} name={t("HOME")} />)}</NavLink>
-        <NavLink to="/studysets">{({ isActive }) => (
-          <MenuPart svg={List} isActive={isActive} name={t("STUDYSETS")} />)}</NavLink>
-        <NavLink to="/folders">{({ isActive }) => (
-          <MenuPart svg={Folder} isActive={isActive} name={t("FOLDERS")} />)}</NavLink>
-        <NavLink to="/courses">{({ isActive }) => (
-          <MenuPart svg={Courses} isActive={isActive} name={t("COURSES")} />)}</NavLink>
+        <NavLink to="/home">
+          {({ isActive }) => (
+            <MenuPart svg={Home} isActive={isActive} name={t("HOME")} />
+          )}
+        </NavLink>
+        <NavLink to="/studysets">
+          {({ isActive }) => (
+            <MenuPart svg={List} isActive={isActive} name={t("STUDYSETS")} />
+          )}
+        </NavLink>
+        <NavLink to="/folders">
+          {({ isActive }) => (
+            <MenuPart svg={Folder} isActive={isActive} name={t("FOLDERS")} />
+          )}
+        </NavLink>
+        <NavLink to="/courses">
+          {({ isActive }) => (
+            <MenuPart svg={Courses} isActive={isActive} name={t("COURSES")} />
+          )}
+        </NavLink>
         <div className="p-3 pt-10 pb-10">
           <hr className="border-gray-500 border-0.5 opacity-15" />
         </div>
         <div className="h-1/2 flex flex-col justify-end gap-2">
-          <NavLink to="/classrooms">{({ isActive }) => (
-            <MenuPart svg={Class} isActive={isActive} name={t("CLASSROOMS")} />)}</NavLink>
-          <NavLink to="/Account">{({ isActive }) => (
-            <MenuPart svg={Account} isActive={isActive} name={t("ACCOUNT")} />)}</NavLink>
+          <NavLink to="/classrooms">
+            {({ isActive }) => (
+              <MenuPart
+                svg={Class}
+                isActive={isActive}
+                name={t("CLASSROOMS")}
+              />
+            )}
+          </NavLink>
+          <NavLink to="/Account">
+            {({ isActive }) => (
+              <MenuPart svg={Account} isActive={isActive} name={t("ACCOUNT")} />
+            )}
+          </NavLink>
         </div>
       </div>
     </div>

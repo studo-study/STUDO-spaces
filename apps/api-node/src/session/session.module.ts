@@ -11,5 +11,4 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [SessionController],
   providers: [GoogleStrategy, MicrosoftStrategy],
 })
-export class SessionModule {
-}
+export class SessionModule {}

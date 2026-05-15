@@ -19,10 +19,12 @@ export default function PrivateRoute() {
   }
 
   if (isAuthed) {
-    return <div>
-      <NoIndex/>
-      <Outlet />
-    </div>;
+    return (
+      <div>
+        <NoIndex />
+        <Outlet />
+      </div>
+    );
   }
 
   return <Navigate replace to={`/welcome`} />;

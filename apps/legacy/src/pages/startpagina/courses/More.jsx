@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import Meer from "../../../assets/icons/more.svg";
 
 export default function More() {
-	return (
-		<Link
-			to="/courses"
-			className="min-w-28 min-h-28 max-w-28 max-h-28
+  return (
+    <Link
+      to="/courses"
+      className="min-w-28 min-h-28 max-w-28 max-h-28
         sm:min-w-32 sm:min-h-32 sm:max-w-32 sm:max-h-32
         md:min-w-36 md:min-h-36 md:max-w-36 md:max-h-36
         lg:min-w-32 lg:min-h-32 lg:max-w-32 lg:max-h-32
@@ -18,16 +18,18 @@ export default function More() {
         border-[0.5px] border-solid dark:border-t-gray-500 dark:border-l-gray-500
         border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
         hover:scale-105 transition-transform flex-shrink-0"
-		>
-			<div className="min-w-14 min-h-14 sm:min-w-16 sm:min-h-16 md:min-w-18 md:min-h-18 lg:min-w-16 lg:min-h-16
+    >
+      <div
+        className="min-w-14 min-h-14 sm:min-w-16 sm:min-h-16 md:min-w-18 md:min-h-18 lg:min-w-16 lg:min-h-16
         dark:shadow-[8px_8px_16px_#2d343f,-8px_-8px_16px_#2d343f]
-        rounded-full flex flex-col items-center justify-center bg-studowhite p-1.5 sm:p-2 md:p-3">
-				<img
-					src={Meer}
-					alt="more"
-					className="h-10 sm:h-12 md:h-14 lg:h-12 dark:brightness-0 dark:invert opacity-50"
-				/>
-			</div>
-		</Link>
-	);
+        rounded-full flex flex-col items-center justify-center bg-studowhite p-1.5 sm:p-2 md:p-3"
+      >
+        <img
+          src={Meer}
+          alt="more"
+          className="h-10 sm:h-12 md:h-14 lg:h-12 dark:brightness-0 dark:invert opacity-50"
+        />
+      </div>
+    </Link>
+  );
 }

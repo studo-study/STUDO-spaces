@@ -12,7 +12,8 @@ export default function Navbar() {
             to="/studysets"
             className="whitespace-nowrap h-6 flex justify-center items-center text-studodarkblue text-sm sm:text-base
               hover:scale-110 hover:text-green-300 transition-transform transition-colors duration-300 dark:text-white
-              aria-[current=page]:font-bold text-studoblue dark:text-green-300">
+              aria-[current=page]:font-bold text-studoblue dark:text-green-300"
+          >
             {t("Studysets")}
           </NavLink>
 
@@ -20,7 +21,8 @@ export default function Navbar() {
             to="/folders"
             className="whitespace-nowrap h-6 flex justify-center items-center text-studodarkblue text-sm sm:text-base
               hover:scale-110 hover:text-green-300 transition-transform transition-colors duration-300 dark:text-white
-              aria-[current=page]:font-bold text-studoblue dark:text-green-300">
+              aria-[current=page]:font-bold text-studoblue dark:text-green-300"
+          >
             {t("Folders")}
           </NavLink>
 
@@ -28,7 +30,8 @@ export default function Navbar() {
             to="/courses"
             className="whitespace-nowrap h-6 flex justify-center items-center text-studodarkblue text-sm sm:text-base
               hover:scale-110 hover:text-green-300 transition-transform transition-colors duration-300 dark:text-white
-              aria-[current=page]:font-bold text-studoblue dark:text-green-300">
+              aria-[current=page]:font-bold text-studoblue dark:text-green-300"
+          >
             {t("Courses")}
           </NavLink>
         </div>

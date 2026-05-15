@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   CanActivate,
   ExecutionContext,
   ForbiddenException,
@@ -15,7 +14,10 @@ export class DeleteUserGuard implements CanActivate {
   constructor(private readonly userService: UserService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req = context.switchToHttp().getRequest();
+    const req = context.switchToHttp().getRequest<{
+      user?: { id: string; role?: string };
+      params: { user_id: string };
+    }>();
     const authUser = req.user;
     const targetUserId = req.params.user_id;
 

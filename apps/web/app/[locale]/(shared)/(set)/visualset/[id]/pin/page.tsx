@@ -1,3 +1,3 @@
 export default function PinPage() {
-    return <div></div>
+  return <div></div>;
 }

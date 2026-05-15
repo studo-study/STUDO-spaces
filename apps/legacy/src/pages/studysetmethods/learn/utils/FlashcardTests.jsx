@@ -1,4 +1,9 @@
-import { checkAnswer, getNextCardIndex, isLearningComplete, initializeSessionCards } from "./FlashcardUtils.js";
+import {
+  checkAnswer,
+  getNextCardIndex,
+  isLearningComplete,
+  initializeSessionCards,
+} from "./FlashcardUtils.js";
 
 const mockCards = Array.from({ length: 10 }, (_, i) => ({
   id: `card_${i + 1}`,
@@ -6,7 +11,7 @@ const mockCards = Array.from({ length: 10 }, (_, i) => ({
   definition: `Definition ${i + 1}`,
   viewcount: 0,
   inQueue: false,
-  mastered: false
+  mastered: false,
 }));
 
 let queue = [];
@@ -21,16 +26,13 @@ const answerCard = (index, isCorrect) => {
   if (!isCorrect && !card.inQueue) {
     card.inQueue = true;
     queue.push(card);
-
   } else if (isCorrect && card.inQueue) {
     card.inQueue = false;
-    queue = queue.filter(c => c.id !== card.id);
+    queue = queue.filter((c) => c.id !== card.id);
     if (card.viewcount >= 2) card.mastered = true;
   } else if (isCorrect) {
     if (card.viewcount >= 2) card.mastered = true;
-
   }
-
 };
 
 answerCard(0, true);
@@ -57,7 +59,7 @@ const complete = isLearningComplete(mockCards, queue);
 
 const testCards = Array.from({ length: 5 }, (_, i) => ({
   id: `card_${i + 1}`,
-  inQueue: false
+  inQueue: false,
 }));
 
 const testQueue = [testCards[1], testCards[3]];
@@ -66,14 +68,12 @@ let nextIndex = getNextCardIndex(0, testCards, testQueue, 1);
 
 nextIndex = getNextCardIndex(2, testCards, testQueue, 4);
 
-
 nextIndex = getNextCardIndex(4, testCards, [], 9);
-
 
 const apiCards = [
   { id: "card_1", term: "Term 1", definition: "Def 1", number: 1 },
   { id: "card_2", term: "Term 2", definition: "Def 2", number: 2 },
-  { id: "card_3", term: "Term 3", definition: "Def 3", number: 3 }
+  { id: "card_3", term: "Term 3", definition: "Def 3", number: 3 },
 ];
 
 const sessionCards = [
@@ -84,7 +84,7 @@ const sessionCards = [
     card_total_viewcount: 5,
     inQueue: false,
     mastered: false,
-    times_relearned: 0
+    times_relearned: 0,
   },
   {
     id: "session_card_2",
@@ -93,8 +93,8 @@ const sessionCards = [
     card_total_viewcount: 2,
     inQueue: true,
     mastered: false,
-    times_relearned: 1
-  }
+    times_relearned: 1,
+  },
 ];
 
 const initialized = initializeSessionCards(apiCards, sessionCards);

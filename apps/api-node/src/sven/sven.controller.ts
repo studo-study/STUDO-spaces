@@ -1,19 +1,15 @@
-import { Request as ExpressRequest } from 'express';
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiConsumes,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import {
-  Body,
   Controller,
   HttpCode,
   HttpStatus,
   Post,
-  Request,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -28,15 +24,6 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
 import { ImageImportResponseDTO } from './sven.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
-
-interface AuthenticatedRequest extends ExpressRequest {
-  user: {
-    id: string;
-    email?: string;
-    role?: string;
-    // wat je JWT ook bevat
-  };
-}
 
 @ApiTags('sven')
 @ApiBearerAuth()
@@ -71,9 +58,7 @@ export class SvenController {
   )
   importImage(
     @UploadedFiles() files: Express.Multer.File[],
-    @Request() req: AuthenticatedRequest,
   ): Promise<ImageImportResponseDTO[]> {
-    //const user_id = req.user.id;
     return this.svenService.import(files);
   }
 }

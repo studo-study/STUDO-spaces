@@ -10,24 +10,21 @@ export default function Layout() {
   const {
     data: headerData = {},
     isLoading: isLoadingHeader,
-    error: errorHeader
+    error: errorHeader,
   } = useSWR("users/me/app");
 
-
-  return (<>
+  return (
+    <>
       <Helmet>
         <link rel="icon" type="image/png" href="/favicon.ico" />
       </Helmet>
 
-      <div
-        className="w-full min-h-screen text-studodarkblue  scroll-hidden dark:text-white scroll-hidden bg-blue-50 dark:bg-gray-800">
+      <div className="w-full min-h-screen text-studodarkblue  scroll-hidden dark:text-white scroll-hidden bg-blue-50 dark:bg-gray-800">
         <Header headerData={headerData} />
         <div>
           <Outlet />
         </div>
-
       </div>
-  </>
-
+    </>
   );
 }

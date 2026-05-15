@@ -15,11 +15,9 @@ export default function FoldersPage() {
   const closePopup = () => setIsOpen(false);
 
   const handleSuccess = async () => {
-    await mutate(
-      "folders/me",
-      async (currentData) => currentData,
-      { revalidate: true }
-    );
+    await mutate("folders/me", async (currentData) => currentData, {
+      revalidate: true,
+    });
   };
 
   const { data: folders, isLoading } = useSWR(
@@ -27,8 +25,8 @@ export default function FoldersPage() {
     () => getById("folders/me"),
     {
       revalidateOnFocus: false,
-      revalidateOnReconnect: false
-    }
+      revalidateOnReconnect: false,
+    },
   );
 
   return (
@@ -40,10 +38,15 @@ export default function FoldersPage() {
             onClick={toggleOpen}
             className="relative w-10 h-10 bg-studoblue rounded-full flex items-center justify-center cursor-pointer
               active:scale-105 transition-transform z-[2] select-none
-              border-[0.5px] border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300">
+              border-[0.5px] border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300"
+          >
             <img src={plusIcon} className="w-5 h-auto" alt="Add" />
           </div>
-          <CreateFolder isOpen={isOpen} onClose={closePopup} onSuccess={handleSuccess} />
+          <CreateFolder
+            isOpen={isOpen}
+            onClose={closePopup}
+            onSuccess={handleSuccess}
+          />
         </div>
       </div>
 
@@ -54,7 +57,8 @@ export default function FoldersPage() {
           </div>
         )}
 
-        {!isLoading && folders?.folders?.length > 0 && (
+        {!isLoading &&
+          folders?.folders?.length > 0 &&
           folders.folders.map((folder) => (
             <FolderItem
               key={folder.id}
@@ -63,8 +67,7 @@ export default function FoldersPage() {
               length={folders.folders.length}
               onSuccess={handleSuccess}
             />
-          ))
-        )}
+          ))}
       </div>
     </div>
   );

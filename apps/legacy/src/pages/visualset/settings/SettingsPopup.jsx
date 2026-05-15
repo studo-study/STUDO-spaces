@@ -5,15 +5,24 @@ import useSWRMutation from "swr/mutation";
 import { save, del, put, patch } from "../../../api/index.js";
 import { useNavigate } from "react-router-dom";
 
-
-export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPublic, sessionId, setId }) {
+export default function SettingsPopup({
+  toggled,
+  setPopUpToggle,
+  isOwner,
+  isPublic,
+  sessionId,
+  setId,
+}) {
   const { t } = useTranslation();
   const popupRef = useRef(null);
   const [publicSet, setPublicSet] = useState(isPublic);
   const [isResetting, setIsResetting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const navigate = useNavigate();
-  const { trigger: triggerUpdateSet, isMutating: isUpdating } = useSWRMutation(`visualsets/${setId}`, put);
+  const { trigger: triggerUpdateSet, isMutating: isUpdating } = useSWRMutation(
+    `visualsets/${setId}`,
+    put,
+  );
 
   useEffect(() => {
     setPublicSet(isPublic);
@@ -54,7 +63,6 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
 
     const newValue = !publicSet;
 
-
     try {
       const payload = { public_set: newValue };
       if (!payload.images?.length) delete payload.images;
@@ -62,9 +70,7 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
       await triggerUpdateSet(payload);
       setPublicSet(newValue);
       mutate(`visualsets/${setId}`);
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 
   const handleResetProgress = async () => {
@@ -91,10 +97,8 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
       await del(`visualsets/${setId}`, {});
       setPopUpToggle(false);
       setTimeout(() => navigate("/home"), 500);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
-
 
   return (
     <div
@@ -114,19 +118,20 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
       </span>
 
       <div className="w-full h-fit flex flex-col gap-5">
-
         {isOwner && (
           <div className="w-full flex flex-col gap-2">
-                <span className="text-sm font-medium dark:text-white">
-          {t("Set Visibility:")}
-        </span>
+            <span className="text-sm font-medium dark:text-white">
+              {t("Set Visibility:")}
+            </span>
 
-            <div className="w-full flex flex-row justify-between items-center p-4
-            bg-studowhite rounded-2xl border-2 border-studowhite shadow-sm">
+            <div
+              className="w-full flex flex-row justify-between items-center p-4
+            bg-studowhite rounded-2xl border-2 border-studowhite shadow-sm"
+            >
               <div className="flex flex-col">
-              <span className="font-medium text-sm truncate dark:text-white">
-                {t("Public set")}
-              </span>
+                <span className="font-medium text-sm truncate dark:text-white">
+                  {t("Public set")}
+                </span>
               </div>
               <button
                 onClick={togglePublic}
@@ -146,7 +151,6 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
           </div>
         )}
 
-
         <div className="w-full flex flex-col gap-3">
           <span className="text-sm font-medium dark:text-white">
             {t("Study Progress:")}
@@ -158,7 +162,7 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
             className={`w-full p-4 text-sm font-medium text-white bg-amber-500/70
               hover:bg-amber-500 rounded-2xl truncate shadow-md border-solid
               border-2 border-studowhite transition-all duration-500
-              ${(!sessionId || isResetting) ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+              ${!sessionId || isResetting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
           >
             {isResetting ? t("Resetting...") : t("Reset Progress")}
           </button>
@@ -166,10 +170,9 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
 
         {isOwner && (
           <div className="w-full flex flex-col gap-3">
-        <span className="text-sm font-medium dark:text-white">
-          {t("Delete ((visualset)):")}
-        </span>
-
+            <span className="text-sm font-medium dark:text-white">
+              {t("Delete ((visualset)):")}
+            </span>
 
             <button
               onClick={handleDeleteVisualset}
@@ -177,13 +180,12 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
               hover:bg-red-500 rounded-2xl truncate shadow-md border-solid
               border-2 border-studowhite
               transition-all duration-500
-              ${(!sessionId || isResetting) ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+              ${!sessionId || isResetting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             >
               {t("Delete Visualset")}
             </button>
           </div>
-        )
-        }
+        )}
       </div>
     </div>
   );

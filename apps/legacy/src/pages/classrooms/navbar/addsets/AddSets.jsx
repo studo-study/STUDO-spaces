@@ -14,7 +14,10 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
   const popupRef = useRef(null);
 
   const { data: sets, isLoading } = useSWR("users/me/studosets");
-  const { trigger: triggerImport } = useSWRMutation(`classrooms/${classroom}/sets/add`, save);
+  const { trigger: triggerImport } = useSWRMutation(
+    `classrooms/${classroom}/sets/add`,
+    save,
+  );
 
   const [sortedsets, setSortedsets] = useState([]);
   const [studysets, setStudysets] = useState([]);
@@ -31,7 +34,7 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
           user_id: set.user_id,
           type: "studyset",
           displayName: set.displayName,
-          img_url: set.img_url
+          img_url: set.img_url,
         })),
         ...sets.visualsets.map((set) => ({
           id: set.id,
@@ -41,8 +44,8 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
           user_id: set.user_id,
           type: "visualset",
           displayName: set.displayName,
-          img_url: set.img_url
-        }))
+          img_url: set.img_url,
+        })),
       ];
 
       setStudysets(allSets);
@@ -67,9 +70,9 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
   }, [isOpen, onClose]);
 
   const toggleSetSelection = (setId) => {
-    setSelectedSets(prev => {
+    setSelectedSets((prev) => {
       if (prev.includes(setId)) {
-        return prev.filter(id => id !== setId);
+        return prev.filter((id) => id !== setId);
       } else {
         return [...prev, setId];
       }
@@ -78,7 +81,6 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
 
   const handleImporteren = async () => {
     if (selectedSets.length === 0) {
-
       return;
     }
 
@@ -88,8 +90,7 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
       await triggerImport(body);
       setSelectedSets([]);
       onClose();
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (
@@ -106,11 +107,13 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
         bg-[rgba(224,224,224,0.2)] backdrop-blur-md
         dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
         transition-all duration-300 ease-in-out origin-top
-        ${isOpen
-        ? "opacity-100 scale-100 visible pointer-events-auto"
-        : "opacity-0 scale-95 invisible pointer-events-none"}
-      `}>
-
+        ${
+          isOpen
+            ? "opacity-100 scale-100 visible pointer-events-auto"
+            : "opacity-0 scale-95 invisible pointer-events-none"
+        }
+      `}
+    >
       <div className="grid grid-cols-[1fr_auto_1fr] sm:grid-cols-3 w-full h-fit gap-2 items-center">
         <div></div>
         <span className="font-atrament text-lg sm:text-2xl md:text-3xl dark:text-white text-center">
@@ -128,25 +131,40 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
         <Link to="/create-set" className="w-full min-w-fit overflow-hidden">
-          <div className="flex items-center w-full p-3 px-4 sm:p-4 sm:px-5
+          <div
+            className="flex items-center w-full p-3 px-4 sm:p-4 sm:px-5
             font-atrament text-sm sm:text-base text-[#2a3a42]
             bg-studogrey rounded-xl shadow-md
             border-solid border-2 border-studogrey gap-2
-            cursor-pointer select-none transition-transform duration-300 ease-out">
-            <img src={Studyset} alt="" className="h-5 sm:h-6 dark:invert dark:brightness-0" />
+            cursor-pointer select-none transition-transform duration-300 ease-out"
+          >
+            <img
+              src={Studyset}
+              alt=""
+              className="h-5 sm:h-6 dark:invert dark:brightness-0"
+            />
             <span className="font-sfpro text-sm sm:text-base dark:text-white truncate">
               {t("Create new studoset")}
             </span>
           </div>
         </Link>
 
-        <Link to="/create-visualset" className="w-full min-w-fit overflow-hidden">
-          <div className="flex items-center w-full p-3 px-4 sm:p-4 sm:px-5
+        <Link
+          to="/create-visualset"
+          className="w-full min-w-fit overflow-hidden"
+        >
+          <div
+            className="flex items-center w-full p-3 px-4 sm:p-4 sm:px-5
             font-atrament text-sm sm:text-base text-[#2a3a42]
             bg-studogrey rounded-xl shadow-md
             border-solid border-2 border-studogrey gap-2
-            cursor-pointer select-none transition-transform duration-300 ease-out">
-            <img src={Visualset} alt="" className="h-5 sm:h-6 dark:invert dark:brightness-0" />
+            cursor-pointer select-none transition-transform duration-300 ease-out"
+          >
+            <img
+              src={Visualset}
+              alt=""
+              className="h-5 sm:h-6 dark:invert dark:brightness-0"
+            />
             <span className="font-sfpro text-sm sm:text-base dark:text-white truncate">
               {t("Create new ((visualset))")}
             </span>
@@ -155,20 +173,21 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
       </div>
 
       <div className="w-full h-full flex flex-col overflow-y-auto scroll-hidden gap-2 sm:gap-3">
-        {!isLoading && sortedsets.map((set) => {
-          const isDisabled = classsets.some((cs) => cs.set_id === set.id);
-          const isSelected = selectedSets.includes(set.id);
+        {!isLoading &&
+          sortedsets.map((set) => {
+            const isDisabled = classsets.some((cs) => cs.set_id === set.id);
+            const isSelected = selectedSets.includes(set.id);
 
-          return (
-            <SetItem
-              key={set.id}
-              set={set}
-              isDisabled={isDisabled}
-              isSelected={isSelected}
-              onToggle={() => toggleSetSelection(set.id)}
-            />
-          );
-        })}
+            return (
+              <SetItem
+                key={set.id}
+                set={set}
+                isDisabled={isDisabled}
+                isSelected={isSelected}
+                onToggle={() => toggleSetSelection(set.id)}
+              />
+            );
+          })}
       </div>
 
       <div
@@ -178,7 +197,8 @@ export default function AddSets({ isOpen, onClose, classsets, classroom }) {
           w-full sm:w-2/3 md:w-1/2 lg:w-1/3
           rounded-full bg-studoblue cursor-pointer select-none
           border-[0.5px] border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300
-          dark:text-white hover:opacity-80 transition-opacity">
+          dark:text-white hover:opacity-80 transition-opacity"
+      >
         {t("import").toUpperCase()}
       </div>
     </div>

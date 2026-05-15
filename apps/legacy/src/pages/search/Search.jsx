@@ -16,7 +16,7 @@ export default function Search() {
   let searchResult = location.state?.results || null;
 
   const { data: searchData, isLoading: isSearchLoading } = useSWR(
-    query && !searchResult ? `search/${id}/${query}` : null
+    query && !searchResult ? `search/${id}/${query}` : null,
   );
 
   if (!searchResult && searchData) {
@@ -43,12 +43,13 @@ export default function Search() {
   };
 
   return (
-    <div
-      className="w-full flex flex-col items-center justify-center pt-20 mt-10 md:mt-0 sm:pt-25 md:pt-35 px-4 sm:px-6 lg:px-8">
+    <div className="w-full flex flex-col items-center justify-center pt-20 mt-10 md:mt-0 sm:pt-25 md:pt-35 px-4 sm:px-6 lg:px-8">
       <div className="flex w-full sm:w-11/12 md:w-4/5 lg:w-3/5 flex-col items-center justify-center gap-3">
         <span className="w-full flex text-xs sm:text-sm flex-baseline mb-3 sm:mb-5 gap-1 flex-wrap">
           {t("results for")}
-          <span className="text-emerald-400 italic cursor-pointer font-bold break-all">{query}</span>
+          <span className="text-emerald-400 italic cursor-pointer font-bold break-all">
+            {query}
+          </span>
         </span>
         <div className="w-full flex flex-col gap-2">
           <div className="w-full h-10 flex flex-row p-0">
@@ -57,7 +58,8 @@ export default function Search() {
                 items-center text-studodarkblue text-sm sm:text-base
                 transition-transform transition-colors duration-300 dark:text-white
                 aria-[current=page]:font-bold cursor-pointer text-studoblue dark:text-green-300`}
-              onClick={toggleAll}>
+              onClick={toggleAll}
+            >
               {t("All Results")}
             </div>
           </div>
