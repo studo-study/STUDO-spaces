@@ -31,7 +31,7 @@ jobs:
         run: pnpm turbo lint
 
       - name: Check formatting (Prettier)
-        run: pnpm prettier --check "apps/**/*.{ts,tsx,js,jsx}" "packages/**/*.{ts,tsx}"
+        run: pnpm exec prettier --check "apps/**/*.{ts,tsx,js,jsx}" "packages/**/*.{ts,tsx}"
 
   typecheck:
     name: TypeScript typecheck
