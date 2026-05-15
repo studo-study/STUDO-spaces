@@ -463,7 +463,7 @@ export class UserService {
   }
 
   //TODO
-  uploadProfilePicture(user_id: string, body: any) {
+  uploadProfilePicture(_user_id: string, _body: unknown) {
     throw new Error('not yet implemented');
   }
 

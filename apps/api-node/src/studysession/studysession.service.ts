@@ -10,14 +10,11 @@ import {
 } from '../drizzle/drizzle.provider';
 import { and, eq } from 'drizzle-orm';
 import {
-  cards,
   sessioncards,
   sessionpins,
   studysessions,
-  studysets,
   users,
 } from '../drizzle/schema';
-import { v4 as uuidv4 } from 'uuid';
 import { SessionCardResponseDTO } from './sessioncard.dto';
 import { SessionPinResponseDTO } from './sessionpin.dto';
 

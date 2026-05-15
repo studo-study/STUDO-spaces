@@ -15,13 +15,11 @@ import {
 } from '@nestjs/common';
 import {
   ClassroomListResponseDto,
-  ClassroomSetDto,
   CreateClassroomActivityDto,
   CreateClassroomDto,
   CreateClassroomSetsDto,
   CreateClassroomUserDto,
   FullClassroomResponseDto,
-  leaveClassroomDto,
   UpdateClassroomDto,
 } from './classroom.dto';
 import { ClassroomService } from './classroom.service';

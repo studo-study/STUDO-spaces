@@ -6,7 +6,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { LoginResponseDto } from './session/session.dto';
 @ApiTags('app')
 @ApiBearerAuth()
 @Controller()

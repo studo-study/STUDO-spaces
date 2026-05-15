@@ -15,7 +15,7 @@ import {
 
 import { SwitchFolderDto } from '../folder/folder.dto';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
-import { CardResponseDto, CreateCardDto, CreateCardListDto } from './card.dto';
+import { CardResponseDto, CreateCardDto } from './card.dto';
 import { SetLikeResponseDto } from './setlike.dto';
 import {
   type DatabaseProvider,
