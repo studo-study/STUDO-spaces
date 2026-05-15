@@ -1,16 +1,5 @@
-import * as schema from '../../src/drizzle/schema';
-import { Role } from '../../src/auth/roles';
-import postgres, { Sql } from 'postgres';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import * as argon2 from 'argon2';
-import { v6 as uuidv6 } from 'uuid';
 import { DatabaseProvider } from '../../src/drizzle/drizzle.provider';
-import { cards, sessioncards, studysets } from '../../src/drizzle/schema';
-import { STUDYSETS_SEED } from './studysets';
-
-const connection: Sql = postgres(process.env.DATABASE_URL as string, {
-  max: 5,
-});
+import { cards } from '../../src/drizzle/schema';
 
 const userId1 = '1f0c076e-f30c-64b0-a0f3-d5a021c6a9cb';
 const userId2 = '2f0c076e-f30c-6390-a0f3-d5a021c6a9cb';

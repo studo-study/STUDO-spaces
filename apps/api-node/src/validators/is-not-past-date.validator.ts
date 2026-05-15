@@ -1,8 +1,4 @@
-import {
-  registerDecorator,
-  ValidationOptions,
-  ValidationArguments,
-} from 'class-validator';
+import { registerDecorator, ValidationOptions } from 'class-validator';
 
 export function IsNotPastDate(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
@@ -12,7 +8,7 @@ export function IsNotPastDate(validationOptions?: ValidationOptions) {
       propertyName,
       options: validationOptions,
       validator: {
-        validate(value: unknown, _args: ValidationArguments): boolean {
+        validate(value: unknown): boolean {
           if (typeof value !== 'string') return true; // laat optional toe
 
           const date = new Date(value);

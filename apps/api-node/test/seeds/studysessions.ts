@@ -1,14 +1,5 @@
-import * as schema from '../../src/drizzle/schema';
-import postgres, { Sql } from 'postgres';
-import { drizzle } from 'drizzle-orm/postgres-js';
 import { DatabaseProvider } from '../../src/drizzle/drizzle.provider';
-import { studysessions, studysets } from '../../src/drizzle/schema';
-import { STUDYSETS_SEED } from './studysets';
-
-const connection: Sql = postgres(process.env.DATABASE_URL as string, {
-  max: 5,
-});
-const db = drizzle(connection, { schema });
+import { studysessions } from '../../src/drizzle/schema';
 const studySetId1 = '63c1725a-3723-4691-98e1-b8630cb1bdab';
 const studySetId2 = '2e145267-e5d7-48d0-a605-09c29157358e';
 const userId1 = '1f0c076e-f30c-64b0-a0f3-d5a021c6a9cb';

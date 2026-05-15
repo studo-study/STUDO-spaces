@@ -28,7 +28,7 @@ export class SearchService {
     private readonly db: DatabaseProvider,
   ) {}
 
-  async search(query: string, id: string) {
+  async search(query: string, _id: string) {
     const term: string = `%${query}%`;
     const [
       studoProfileResult,

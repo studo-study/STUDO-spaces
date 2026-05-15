@@ -52,45 +52,64 @@ export default function AddPopUp({ isOpen, onClose }) {
           bottom-0 left-0 right-0
           sm:bottom-auto sm:left-auto sm:right-30 sm:top-27
           
-          ${isOpen
-          ? "translate-y-0 sm:translate-y-0 opacity-100 visible pointer-events-auto"
-          : "translate-y-full sm:translate-y-0 opacity-0 invisible pointer-events-none"
-        }`}>
-
+          ${
+            isOpen
+              ? "translate-y-0 sm:translate-y-0 opacity-100 visible pointer-events-auto"
+              : "translate-y-full sm:translate-y-0 opacity-0 invisible pointer-events-none"
+          }`}
+      >
         <Link to="/create-set" className="w-full">
-          <div className="flex items-center w-full sm:w-56 h-12 font-atrament text-sm sm:text-base text-[#2a3a42]
+          <div
+            className="flex items-center w-full sm:w-56 h-12 font-atrament text-sm sm:text-base text-[#2a3a42]
             bg-studogrey rounded-xl shadow-md
             border-solid border-2 border-studogrey
             cursor-pointer select-none transition-transform duration-300 ease-out
-            hover:scale-105">
+            hover:scale-105"
+          >
             <span className="flex items-center w-full px-3 sm:px-4 py-2 gap-2 dark:text-white">
-              <img src={studyset} alt="" className="h-5 sm:h-6 dark:invert dark:brightness-0" />
+              <img
+                src={studyset}
+                alt=""
+                className="h-5 sm:h-6 dark:invert dark:brightness-0"
+              />
               {t("CREATE STUDYSET")}
             </span>
           </div>
         </Link>
 
         <Link to="/create-visualset" className="w-full">
-          <div className="flex items-center w-full sm:w-56 h-12 font-atrament text-sm sm:text-base text-[#2a3a42]
+          <div
+            className="flex items-center w-full sm:w-56 h-12 font-atrament text-sm sm:text-base text-[#2a3a42]
             bg-studogrey rounded-xl shadow-md
             border-solid border-2 border-studogrey
             cursor-pointer select-none transition-transform duration-300 ease-out
-            hover:scale-105">
+            hover:scale-105"
+          >
             <span className="flex items-center w-full px-3 sm:px-4 py-2 gap-2 dark:text-white">
-              <img src={visual} alt="" className="h-5 sm:h-6 dark:invert dark:brightness-0" />
+              <img
+                src={visual}
+                alt=""
+                className="h-5 sm:h-6 dark:invert dark:brightness-0"
+              />
               {t("CREATE VISUALSET")}
             </span>
           </div>
         </Link>
 
         <Link to="/create-folder" className="w-full">
-          <div className="flex items-center w-full sm:w-56 h-12 font-atrament text-sm sm:text-base text-[#2a3a42]
+          <div
+            className="flex items-center w-full sm:w-56 h-12 font-atrament text-sm sm:text-base text-[#2a3a42]
             bg-studogrey rounded-xl shadow-md
             border-solid border-2 border-studogrey
             cursor-pointer select-none transition-transform duration-300 ease-out
-            hover:scale-105">
+            hover:scale-105"
+          >
             <span className="flex items-center w-full px-3 sm:px-4 py-2 gap-2 dark:text-white">
-              <img src={folder} alt="" className="h-5 sm:h-6 dark:invert dark:brightness-0" />
+              <img
+                src={folder}
+                alt=""
+                className="h-5 sm:h-6 dark:invert dark:brightness-0"
+              />
               {t("CREATE FOLDER")}
             </span>
           </div>

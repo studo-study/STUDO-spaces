@@ -8,7 +8,9 @@ export default function Progressbar({ current, total, accuracy }) {
     <div className="w-full flex flex-col gap-2">
       <div className="flex justify-between items-center text-sm">
         <span className="font-medium opacity-70">Voortgang</span>
-        <span className="opacity-50">{current} / {total}</span>
+        <span className="opacity-50">
+          {current} / {total}
+        </span>
       </div>
 
       <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -20,11 +22,15 @@ export default function Progressbar({ current, total, accuracy }) {
 
       {accuracy !== undefined && (
         <div className="flex justify-end">
-          <span className={`text-xs font-medium ${
-            accuracy >= 80 ? "text-green-600 dark:text-green-400" :
-              accuracy >= 60 ? "text-yellow-600 dark:text-yellow-400" :
-                "text-red-600 dark:text-red-400"
-          }`}>
+          <span
+            className={`text-xs font-medium ${
+              accuracy >= 80
+                ? "text-green-600 dark:text-green-400"
+                : accuracy >= 60
+                  ? "text-yellow-600 dark:text-yellow-400"
+                  : "text-red-600 dark:text-red-400"
+            }`}
+          >
             {accuracy}% correct
           </span>
         </div>

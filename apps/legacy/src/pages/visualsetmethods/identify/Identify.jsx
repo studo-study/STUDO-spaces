@@ -35,7 +35,7 @@ export default function Identify() {
       const allPins = visualset.images.flatMap((img, imgIndex) =>
         (img.pins?.pins || img.pins || []).map((pin) => {
           const sessionPin = visualset.session.pins?.find(
-            (sp) => sp.pin_id === pin.id
+            (sp) => sp.pin_id === pin.id,
           );
           return {
             ...pin,
@@ -43,16 +43,16 @@ export default function Identify() {
             imageUrl: img.url,
             seen: sessionPin?.pin_viewcount || 0,
             x: pin.x || 0,
-            y: pin.y || 0
+            y: pin.y || 0,
           };
-        })
+        }),
       );
 
       setPins(allPins);
 
       const initialQueue = allPins.filter((pin) => {
         const sessionPin = visualset.session.pins?.find(
-          (sp) => sp.pin_id === pin.id
+          (sp) => sp.pin_id === pin.id,
         );
         return sessionPin?.inQueue;
       });
@@ -120,29 +120,35 @@ export default function Identify() {
 
     setPins(updatedPins);
 
-    setTimeout(() => {
-      if (answerState === "wrong") {
-        setDisplayedAnswer(currentPin.definition);
-        setTimeout(() => {
+    setTimeout(
+      () => {
+        if (answerState === "wrong") {
+          setDisplayedAnswer(currentPin.definition);
+          setTimeout(() => {
+            moveToNextPin();
+          }, 1800);
+        } else {
           moveToNextPin();
-        }, 1800);
-      } else {
-        moveToNextPin();
-      }
-    }, isCorrect ? 1500 : 1800);
+        }
+      },
+      isCorrect ? 1500 : 1800,
+    );
   };
 
   const handleQueueAnswer = (isCorrect) => {
-    setTimeout(() => {
-      if (answerState === "wrong") {
-        setDisplayedAnswer(currentPin.definition);
-        setTimeout(() => {
+    setTimeout(
+      () => {
+        if (answerState === "wrong") {
+          setDisplayedAnswer(currentPin.definition);
+          setTimeout(() => {
+            moveToNextQueuePin(isCorrect);
+          }, 1800);
+        } else {
           moveToNextQueuePin(isCorrect);
-        }, 1800);
-      } else {
-        moveToNextQueuePin(isCorrect);
-      }
-    }, isCorrect ? 1500 : 1800);
+        }
+      },
+      isCorrect ? 1500 : 1800,
+    );
   };
 
   const moveToNextPin = async () => {
@@ -208,18 +214,17 @@ export default function Identify() {
         pin_viewcount: pin.seen,
         inQueue: queue.some((q) => q.id === pin.id),
         session_id: visualset.session.id,
-        owner_id: visualset.user_id
+        owner_id: visualset.user_id,
       }));
 
       await put(`studysessions/${visualset.session.id}`, {
         arg: {
           pins: sessionPins,
           index: queueMode ? queueIndex : currentIndex,
-          user_id: visualset.user_id
-        }
+          user_id: visualset.user_id,
+        },
       });
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleKeyPress = (e) => {
@@ -233,7 +238,9 @@ export default function Identify() {
 
   const handleHint = () => {
     if (currentPin?.definition) {
-      setHintText(`The first letter is ${currentPin.definition[0].toUpperCase()}`);
+      setHintText(
+        `The first letter is ${currentPin.definition[0].toUpperCase()}`,
+      );
       setShowHint(true);
       setTimeout(() => {
         setShowHint(false);
@@ -257,11 +264,10 @@ export default function Identify() {
     try {
       await put(`studysessions/${visualset.session.id}/reset`, {
         arg: {
-          user_id: visualset.user_id
-        }
+          user_id: visualset.user_id,
+        },
       });
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const getPinIcon = (pin) => {
@@ -279,7 +285,7 @@ export default function Identify() {
       return {
         current: queueIndex + 1,
         total: queue.length,
-        percentage: Math.floor(((queueIndex + 1) / queue.length) * 100)
+        percentage: Math.floor(((queueIndex + 1) / queue.length) * 100),
       };
     }
 
@@ -288,7 +294,7 @@ export default function Identify() {
     return {
       current: totalSeen,
       total: totalRequired,
-      percentage: Math.round((totalSeen / totalRequired) * 100)
+      percentage: Math.round((totalSeen / totalRequired) * 100),
     };
   };
 
@@ -314,12 +320,18 @@ export default function Identify() {
     <div className="w-screen h-screen overflow-hidden bg-bg-white dark:bg-bg-dark transition-colors duration-300">
       <header className="w-full h-fit px-[3vw] py-[2vh]">
         <div className="flex flex-row items-center gap-[2vw] bg-transparent">
-          <Link to={`/visualset/${id}`} className="w-[5vh] pb-[1.3vh] cursor-pointer">
-            <img src={LeftArrow} alt="back" className="w-full dark:invert dark:brightness-0" />
+          <Link
+            to={`/visualset/${id}`}
+            className="w-[5vh] pb-[1.3vh] cursor-pointer"
+          >
+            <img
+              src={LeftArrow}
+              alt="back"
+              className="w-full dark:invert dark:brightness-0"
+            />
           </Link>
           <Link to="/" className="no-underline">
-            <span
-              className="font-atrament text-[3vh] font-bold text-studodarkblue dark:text-white transition-colors duration-300">
+            <span className="font-atrament text-[3vh] font-bold text-studodarkblue dark:text-white transition-colors duration-300">
               STUDO
             </span>
           </Link>
@@ -341,17 +353,15 @@ export default function Identify() {
           <div className="w-1/2 h-full flex gap-[3vh] flex-col items-center">
             <div className="h-[6vh] w-full flex justify-end flex-col gap-[0.5vh]">
               <div className="flex w-full h-fit flex-row justify-between">
-                <span
-                  className="text-[1vh] font-light text-studodarkblue dark:text-gray-300 transition-colors duration-300">
+                <span className="text-[1vh] font-light text-studodarkblue dark:text-gray-300 transition-colors duration-300">
                   {queueMode ? t("Revision") : t("Progress")}
                 </span>
-                <span
-                  className="text-[1vh] font-light text-studodarkblue dark:text-gray-300 transition-colors duration-300">
-                  <span>{progress.current}</span> / <span>{progress.total}</span>
+                <span className="text-[1vh] font-light text-studodarkblue dark:text-gray-300 transition-colors duration-300">
+                  <span>{progress.current}</span> /{" "}
+                  <span>{progress.total}</span>
                 </span>
               </div>
-              <div
-                className="w-full h-[1.5vh] rounded-full flex justify-start overflow-hidden bg-white/40 dark:bg-gray-700/40 backdrop-blur-md relative transition-colors duration-300">
+              <div className="w-full h-[1.5vh] rounded-full flex justify-start overflow-hidden bg-white/40 dark:bg-gray-700/40 backdrop-blur-md relative transition-colors duration-300">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-[#98c0cd] to-[#abd7c1] dark:from-[#6a9fb5] dark:to-[#7db896] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.6)] dark:shadow-[inset_1px_1px_2px_rgba(255,255,255,0.3)] transition-all duration-500 ease-in-out flex items-center justify-center"
                   style={{ width: `${progress.percentage}%` }}
@@ -363,12 +373,14 @@ export default function Identify() {
 
             {isComplete ? (
               <div className="w-full flex justify-center items-center h-full">
-                <div
-                  className="w-2/5 rounded-[50px] p-[5%] gap-[1vh] flex flex-col items-center justify-center animate-[fadeInLeft_1s] bg-studodark dark:bg-gray-800/30 backdrop-blur-md border border-studoborder dark:border-gray-700 rounded-[30px] shadow-[3px_3px_8px_#bebebe,-3px_-3px_8px_#d1e0ec80] dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#2a2a3a] transition-all duration-300">
+                <div className="w-2/5 rounded-[50px] p-[5%] gap-[1vh] flex flex-col items-center justify-center animate-[fadeInLeft_1s] bg-studodark dark:bg-gray-800/30 backdrop-blur-md border border-studoborder dark:border-gray-700 rounded-[30px] shadow-[3px_3px_8px_#bebebe,-3px_-3px_8px_#d1e0ec80] dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#2a2a3a] transition-all duration-300">
                   <div className="w-full h-full flex flex-col justify-center items-center gap-[3vh]">
-                    <img src={CardsEndImage} alt="" className="w-[25vh] dark:brightness-90" />
-                    <span
-                      className="text-[3vh] font-atrament text-studodarkblue dark:text-white text-center transition-colors duration-300">
+                    <img
+                      src={CardsEndImage}
+                      alt=""
+                      className="w-[25vh] dark:brightness-90"
+                    />
+                    <span className="text-[3vh] font-atrament text-studodarkblue dark:text-white text-center transition-colors duration-300">
                       {t("The set is fully studied")}
                     </span>
                     <div className="flex justify-center items-center w-full gap-[5vh]">
@@ -391,15 +403,13 @@ export default function Identify() {
             ) : (
               <>
                 <div className="w-full flex justify-center items-center">
-                  <div
-                    className="relative h-fit w-fit overflow-hidden p-5 h-[55vh] bg-studodark dark:bg-gray-800/30 backdrop-blur-md border border-studoborder dark:border-gray-700 rounded-[30px] shadow-[3px_3px_8px_#bebebe,-3px_-3px_8px_#ffffff30] dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#2a2a3a] animate-[bounceIn_1s] transition-all duration-300">
+                  <div className="relative h-fit w-fit overflow-hidden p-5 h-[55vh] bg-studodark dark:bg-gray-800/30 backdrop-blur-md border border-studoborder dark:border-gray-700 rounded-[30px] shadow-[3px_3px_8px_#bebebe,-3px_-3px_8px_#ffffff30] dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#2a2a3a] animate-[bounceIn_1s] transition-all duration-300">
                     <img
                       src={currentPin?.imageUrl}
                       alt="study"
                       className="w-full h-auto max-h-[calc(55vh-40px)] rounded-[10px] block bg-transparent object-contain"
                     />
-                    <div
-                      className="absolute top-5 left-5 grid grid-cols-[repeat(40,1fr)] grid-rows-[repeat(40,1fr)] w-[calc(100%-40px)] h-[calc(100%-40px)] z-10 pointer-events-none">
+                    <div className="absolute top-5 left-5 grid grid-cols-[repeat(40,1fr)] grid-rows-[repeat(40,1fr)] w-[calc(100%-40px)] h-[calc(100%-40px)] z-10 pointer-events-none">
                       {pins.map((pin, index) => {
                         const isCurrentPin = queueMode
                           ? queue[queueIndex]?.id === pin.id
@@ -411,17 +421,19 @@ export default function Identify() {
                             className="aspect-square w-full bg-transparent box-border cursor-pointer relative pointer-events-auto rounded-[50px] p-0 overflow-visible"
                             style={{
                               gridColumn: pin.x + 1,
-                              gridRow: pin.y + 1
+                              gridRow: pin.y + 1,
                             }}
                           >
                             <img
                               src={getPinIcon(pin)}
                               alt="pin"
                               className={`absolute w-full h-full top-1/2 left-1/2 transition-all duration-500 drop-shadow-[0_1px_2px_rgba(0,0,0,0.15)] hover:scale-150 ${
-                                isCurrentPin ? "animate-[bigTada_1.5s_infinite]" : ""
+                                isCurrentPin
+                                  ? "animate-[bigTada_1.5s_infinite]"
+                                  : ""
                               }`}
                               style={{
-                                transform: "translate(-50%, -50%)"
+                                transform: "translate(-50%, -50%)",
                               }}
                             />
                           </div>
@@ -432,8 +444,7 @@ export default function Identify() {
                 </div>
 
                 <div className="w-full">
-                  <div
-                    className="w-full p-[2%] h-fit flex flex-col items-start gap-[2vh] bg-studodark dark:bg-gray-800/30 backdrop-blur-md border border-studoborder dark:border-gray-700 rounded-[30px] shadow-[3px_3px_8px_#bebebe,-3px_-3px_8px_#ffffff30] dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#2a2a3a] animate-[bounceIn_1s] transition-all duration-300">
+                  <div className="w-full p-[2%] h-fit flex flex-col items-start gap-[2vh] bg-studodark dark:bg-gray-800/30 backdrop-blur-md border border-studoborder dark:border-gray-700 rounded-[30px] shadow-[3px_3px_8px_#bebebe,-3px_-3px_8px_#ffffff30] dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#2a2a3a] animate-[bounceIn_1s] transition-all duration-300">
                     <div className="w-full px-[3%] flex gap-[3vh] justify-between items-center">
                       <span
                         className="flex items-center h-[5vh] rounded-[15px] border-none text-[1.2vh] text-studodarkblue dark:text-gray-300 bg-transparent cursor-pointer transition-opacity duration-1000"

@@ -14,6 +14,7 @@ export const PROFILES_SEED = [
     join_date: '2024-01-15T10:00:00.000Z',
     streak: 29,
     verified: false,
+    tags: [],
   },
   {
     user_id: userId2,
@@ -23,6 +24,7 @@ export const PROFILES_SEED = [
     join_date: '2024-02-20T14:30:00.000Z',
     streak: 15,
     verified: false,
+    tags: [],
   },
 ];
 

@@ -15,27 +15,33 @@ export default function AboutLearn() {
   const title = t("seo.learn.title", "Learn | Studo");
   const description = t(
     "seo.learn.description",
-    "Master your studygroup material with Studo's Learn mode. Using spaced repetition and smart algorithms, we help you remember more in less time."
+    "Master your studygroup material with Studo's Learn mode. Using spaced repetition and smart algorithms, we help you remember more in less time.",
   );
   const keywords = t(
     "seo.learn.keywords",
-    "spaced repetition, learn mode, smart studying, memorization, studygroup technique, Studo learn"
+    "spaced repetition, learn mode, smart studying, memorization, studygroup technique, Studo learn",
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "Learn", path: "/learn" }
+    { name: "Learn", path: "/learn" },
   ];
 
   const faqs = [
     {
       question: t("faq.learn.what.question", "What is Learn mode?"),
-      answer: t("faq.learn.what.answer", "Learn mode uses spaced repetition to help you memorize content efficiently. It shows you cards at optimal intervals based on how well you know them.")
+      answer: t(
+        "faq.learn.what.answer",
+        "Learn mode uses spaced repetition to help you memorize content efficiently. It shows you cards at optimal intervals based on how well you know them.",
+      ),
     },
     {
       question: t("faq.learn.spaced.question", "What is spaced repetition?"),
-      answer: t("faq.learn.spaced.answer", "Spaced repetition is a learning technique where you review material at increasing intervals. It's scientifically proven to improve long-term memory retention.")
-    }
+      answer: t(
+        "faq.learn.spaced.answer",
+        "Spaced repetition is a learning technique where you review material at increasing intervals. It's scientifically proven to improve long-term memory retention.",
+      ),
+    },
   ];
 
   return (
@@ -46,7 +52,10 @@ export default function AboutLearn() {
         keywords={keywords}
         path="/learn"
         image="/og/welcome.png"
-        imageAlt={t("seo.learn.imageAlt", "Studo Learn Mode - Spaced repetition studygroup tool")}
+        imageAlt={t(
+          "seo.learn.imageAlt",
+          "Studo Learn Mode - Spaced repetition studygroup tool",
+        )}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />
@@ -101,7 +110,11 @@ export default function AboutLearn() {
               transition-all duration-700 delay-400
               ${mounted ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={hero} alt={t("Learn mode illustration")} className="w-3/4" />
+            <img
+              src={hero}
+              alt={t("Learn mode illustration")}
+              className="w-3/4"
+            />
           </div>
         </div>
       </main>

@@ -7,12 +7,7 @@ export default function ClassroomsRedirect() {
   if (isLoading) return null;
 
   if (data?.classrooms?.length > 0) {
-    return (
-      <Navigate
-        to={`/classrooms/${data.classrooms[0].id}`}
-        replace
-      />
-    );
+    return <Navigate to={`/classrooms/${data.classrooms[0].id}`} replace />;
   }
 
   return null;

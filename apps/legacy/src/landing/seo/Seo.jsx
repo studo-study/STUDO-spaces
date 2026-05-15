@@ -8,68 +8,68 @@ const BASE_URL = "https://studo.study";
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Studo",
-  "url": BASE_URL,
-  "logo": `${BASE_URL}/logo.png`,
-  "sameAs": [
+  name: "Studo",
+  url: BASE_URL,
+  logo: `${BASE_URL}/logo.png`,
+  sameAs: [
     "https://twitter.com/studo",
     "https://www.instagram.com/studo",
-    "https://www.linkedin.com/company/studo"
+    "https://www.linkedin.com/company/studo",
   ],
-  "contactPoint": {
+  contactPoint: {
     "@type": "ContactPoint",
-    "contactType": "customer support",
-    "email": "support@studo.studygroup"
-  }
+    contactType: "customer support",
+    email: "support@studo.studygroup",
+  },
 };
 
 // WebApplication schema
 const getWebAppSchema = (description) => ({
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Studo",
-  "url": BASE_URL,
-  "description": description,
-  "applicationCategory": "EducationalApplication",
-  "operatingSystem": "Web",
-  "inLanguage": SUPPORTED_LANGUAGES.map(lang => lang.code),
-  "offers": {
+  name: "Studo",
+  url: BASE_URL,
+  description: description,
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
+  inLanguage: SUPPORTED_LANGUAGES.map((lang) => lang.code),
+  offers: {
     "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock"
+    price: "0",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
   },
-  "aggregateRating": {
+  aggregateRating: {
     "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "1250"
-  }
+    ratingValue: "4.8",
+    ratingCount: "1250",
+  },
 });
 
 // Breadcrumb schema
 const getBreadcrumbSchema = (items) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": items.map((item, index) => ({
+  itemListElement: items.map((item, index) => ({
     "@type": "ListItem",
-    "position": index + 1,
-    "name": item.name,
-    "item": `${BASE_URL}${item.path}`
-  }))
+    position: index + 1,
+    name: item.name,
+    item: `${BASE_URL}${item.path}`,
+  })),
 });
 
 // FAQ schema
 const getFAQSchema = (faqs) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
+  mainEntity: faqs.map((faq) => ({
     "@type": "Question",
-    "name": faq.question,
-    "acceptedAnswer": {
+    name: faq.question,
+    acceptedAnswer: {
       "@type": "Answer",
-      "text": faq.answer
-    }
-  }))
+      text: faq.answer,
+    },
+  })),
 });
 
 // Generate URL for a specific language
@@ -81,18 +81,18 @@ const getLanguageUrl = (path, langCode) => {
 };
 
 export default function SEO({
-                              title,
-                              description,
-                              keywords,
-                              path = "",
-                              image = "/og/welcome.png",
-                              imageAlt,
-                              type = "website",
-                              breadcrumbs = [],
-                              faqs = [],
-                              noIndex = false,
-                              children
-                            }) {
+  title,
+  description,
+  keywords,
+  path = "",
+  image = "/og/welcome.png",
+  imageAlt,
+  type = "website",
+  breadcrumbs = [],
+  faqs = [],
+  noIndex = false,
+  children,
+}) {
   const { i18n } = useTranslation();
 
   const currentLang = i18n.language;
@@ -100,10 +100,7 @@ export default function SEO({
   const canonicalUrl = getLanguageUrl(path, currentLang);
   const ogImage = image.startsWith("http") ? image : `${BASE_URL}${image}`;
 
-  const structuredData = [
-    organizationSchema,
-    getWebAppSchema(description)
-  ];
+  const structuredData = [organizationSchema, getWebAppSchema(description)];
 
   if (breadcrumbs.length > 0) {
     structuredData.push(getBreadcrumbSchema(breadcrumbs));
@@ -131,7 +128,11 @@ export default function SEO({
           href={getLanguageUrl(path, lang.code)}
         />
       ))}
-      <link rel="alternate" hrefLang="x-default" href={getLanguageUrl(path, DEFAULT_LANGUAGE)} />
+      <link
+        rel="alternate"
+        hrefLang="x-default"
+        href={getLanguageUrl(path, DEFAULT_LANGUAGE)}
+      />
 
       {/* Open Graph */}
       <meta property="og:type" content={type} />
@@ -144,15 +145,15 @@ export default function SEO({
       {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
       <meta property="og:url" content={currentUrl} />
       <meta property="og:locale" content={currentLang.replace("-", "_")} />
-      {SUPPORTED_LANGUAGES
-        .filter(lang => lang.code !== currentLang)
-        .map((lang) => (
+      {SUPPORTED_LANGUAGES.filter((lang) => lang.code !== currentLang).map(
+        (lang) => (
           <meta
             key={`og-${lang.code}`}
             property="og:locale:alternate"
             content={lang.code.replace("-", "_")}
           />
-        ))}
+        ),
+      )}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -161,7 +162,10 @@ export default function SEO({
       <meta name="twitter:image" content={ogImage} />
 
       {/* Robots */}
-      <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+      <meta
+        name="robots"
+        content={noIndex ? "noindex, nofollow" : "index, follow"}
+      />
 
       {/* Additional */}
       <meta name="author" content="Studo" />

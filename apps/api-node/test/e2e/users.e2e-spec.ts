@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
+import type { Server } from 'http';
 
 import { createTestApp } from '../helpers/create-app';
-import { login, loginAdmin, loginAsUser } from '../helpers/login';
+import { loginAdmin, loginAsUser } from '../helpers/login';
 import { testAuthHeader } from '../helpers/testAuthHeader';
 import {
   DatabaseProvider,
@@ -33,6 +34,7 @@ describe('Users', () => {
   let app: INestApplication;
   let db: DatabaseProvider;
   let userService: UserService;
+  let server: Server;
   let userAuthToken: string;
   let adminAuthToken: string;
 
@@ -42,6 +44,7 @@ describe('Users', () => {
 
   beforeAll(async () => {
     app = await createTestApp();
+    server = app.getHttpServer();
     db = app.get(DrizzleAsyncProvider);
     userService = app.get(UserService);
 
@@ -79,7 +82,7 @@ describe('Users', () => {
 
   describe('POST /api/users', () => {
     it('moet 201 retourneren en token voor geregistreerde gebruiker', async () => {
-      const response = await request(app.getHttpServer()).post(baseUrl).send({
+      const response = await request(server).post(baseUrl).send({
         displayName: 'Register User',
         email: 'register@hogent.be',
         password: '123456789101112',
@@ -91,7 +94,7 @@ describe('Users', () => {
     });
 
     it('moet 409 retourneren bij duplicate email', async () => {
-      const response = await request(app.getHttpServer()).post(baseUrl).send({
+      const response = await request(server).post(baseUrl).send({
         displayName: 'Duplicate User',
         email: 'charles@test.com',
         password: '123456789101112',
@@ -105,7 +108,7 @@ describe('Users', () => {
     });
 
     it('moet 400 retourneren wanneer displayName ontbreekt', async () => {
-      const response = await request(app.getHttpServer()).post(baseUrl).send({
+      const response = await request(server).post(baseUrl).send({
         email: 'register@hogent.be',
         password: '123456789101112',
         role: 'student',
@@ -116,7 +119,7 @@ describe('Users', () => {
     });
 
     it('moet 400 retourneren wanneer email ontbreekt', async () => {
-      const response = await request(app.getHttpServer()).post(baseUrl).send({
+      const response = await request(server).post(baseUrl).send({
         displayName: 'Register User',
         password: '123456789101112',
         role: 'student',
@@ -127,7 +130,7 @@ describe('Users', () => {
     });
 
     it('moet 400 retourneren wanneer password ontbreekt', async () => {
-      const response = await request(app.getHttpServer()).post(baseUrl).send({
+      const response = await request(server).post(baseUrl).send({
         displayName: 'Register User',
         email: 'register@hogent.be',
         role: 'student',
@@ -138,7 +141,7 @@ describe('Users', () => {
     });
 
     it('moet 400 retourneren wanneer role ontbreekt', async () => {
-      const response = await request(app.getHttpServer()).post(baseUrl).send({
+      const response = await request(server).post(baseUrl).send({
         displayName: 'Register User',
         email: 'register@hogent.be',
         password: '123456789101112',
@@ -149,7 +152,7 @@ describe('Users', () => {
     });
 
     it('moet 400 retourneren wanneer password te kort is', async () => {
-      const response = await request(app.getHttpServer()).post(baseUrl).send({
+      const response = await request(server).post(baseUrl).send({
         displayName: 'Register User',
         email: 'register@hogent.be',
         password: 'short',
@@ -161,7 +164,7 @@ describe('Users', () => {
     });
 
     it('moet 400 retourneren wanneer password te lang is', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .post(baseUrl)
         .send({
           displayName: 'Register User',
@@ -177,7 +180,7 @@ describe('Users', () => {
 
   describe('GET /api/users', () => {
     it('moet 200 retourneren en alle users tonen', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(baseUrl)
         .auth(adminAuthToken, { type: 'bearer' });
 
@@ -201,19 +204,19 @@ describe('Users', () => {
     });
 
     it('moet 403 retourneren wanneer gewone user alle users opvraagt', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(baseUrl)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(403);
     });
 
-    testAuthHeader(() => request(app.getHttpServer()).get(baseUrl));
+    testAuthHeader(() => request(server).get(baseUrl));
   });
 
   describe('GET /api/users/:user_id', () => {
     it('moet 200 retourneren en gevraagde user met sets tonen', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId2}`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -228,7 +231,7 @@ describe('Users', () => {
     });
 
     it('moet 404 retourneren wanneer user niet bestaat', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/00000000-0000-0000-0000-000000000000`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -237,22 +240,20 @@ describe('Users', () => {
     });
 
     it('moet 403 retourneren wanneer user andere user opvraagt', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId1}`)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(403);
     });
 
-    testAuthHeader(() =>
-      request(app.getHttpServer()).get(`${baseUrl}/${userId1}`),
-    );
+    testAuthHeader(() => request(server).get(`${baseUrl}/${userId1}`));
   });
 
   describe('GET /api/users/:user_id/studosets', () => {
     it('moet 200 retourneren en alle studosets van user tonen', async () => {
-      const response = await request(app.getHttpServer())
-        .get(`${baseUrl}/${userId2}/studysets`)
+      const response = await request(server)
+        .get(`${baseUrl}/${userId2}/studosets`)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
@@ -274,8 +275,8 @@ describe('Users', () => {
         where: eq(users.email, 'empty.sets@hogent.be'),
       });
 
-      const response = await request(app.getHttpServer())
-        .get(`${baseUrl}/${newUser!.id}/studysets`)
+      const response = await request(server)
+        .get(`${baseUrl}/${newUser!.id}/studosets`)
         .auth(newToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
@@ -284,14 +285,14 @@ describe('Users', () => {
     });
 
     testAuthHeader(() =>
-      request(app.getHttpServer()).get(`${baseUrl}/${userId1}/studysets`),
+      request(server).get(`${baseUrl}/${userId1}/studosets`),
     );
   });
 
   describe('GET /api/users/:user_id/sets', () => {
     it('moet 200 retourneren en user statistieken tonen', async () => {
-      const response = await request(app.getHttpServer())
-        .get(`${baseUrl}/${userId2}/stats`)
+      const response = await request(server)
+        .get(`${baseUrl}/${userId2}/sets`)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
@@ -316,8 +317,8 @@ describe('Users', () => {
         where: eq(users.email, 'sets.test@hogent.be'),
       });
 
-      const response = await request(app.getHttpServer())
-        .get(`${baseUrl}/${newUser!.id}/stats`)
+      const response = await request(server)
+        .get(`${baseUrl}/${newUser!.id}/sets`)
         .auth(newToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
@@ -326,14 +327,12 @@ describe('Users', () => {
       expect(response.body.cardsLearned).toBe(0);
     });
 
-    testAuthHeader(() =>
-      request(app.getHttpServer()).get(`${baseUrl}/${userId1}/stats`),
-    );
+    testAuthHeader(() => request(server).get(`${baseUrl}/${userId1}/sets`));
   });
 
   describe('GET /api/users/:user_id/classrooms', () => {
     it('moet 200 retourneren en alle classrooms van user tonen', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId2}/classrooms`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -355,7 +354,7 @@ describe('Users', () => {
         where: eq(users.email, 'noclass@hogent.be'),
       });
 
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${newUser!.id}/classrooms`)
         .auth(newToken, { type: 'bearer' });
 
@@ -364,14 +363,14 @@ describe('Users', () => {
     });
 
     testAuthHeader(() =>
-      request(app.getHttpServer()).get(`${baseUrl}/${userId1}/classrooms`),
+      request(server).get(`${baseUrl}/${userId1}/classrooms`),
     );
   });
 
   describe('GET /api/users/:user_id/classrooms/:classroom_id', () => {
     it('moet 200 retourneren en specifieke classroom tonen', async () => {
       const classroomId = '0e2b6da7-d82b-4be2-bf3e-4b320bfd497b';
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId2}/classrooms/${classroomId}`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -393,7 +392,7 @@ describe('Users', () => {
       });
 
       const classroomId = '0e2b6da7-d82b-4be2-bf3e-4b320bfd497b';
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${newUser!.id}/classrooms/${classroomId}`)
         .auth(newToken, { type: 'bearer' });
 
@@ -402,7 +401,7 @@ describe('Users', () => {
     });
 
     testAuthHeader(() =>
-      request(app.getHttpServer()).get(
+      request(server).get(
         `${baseUrl}/${userId1}/classrooms/0e2b6da7-d82b-4be2-bf3e-4b320bfd497b`,
       ),
     );
@@ -410,7 +409,7 @@ describe('Users', () => {
 
   describe('GET /api/users/:user_id/start', () => {
     it('moet 200 retourneren en startpagina data tonen', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId2}/start`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -424,21 +423,19 @@ describe('Users', () => {
     });
 
     it('moet 403 retourneren voor andere user', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId1}/start`)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(403);
     });
 
-    testAuthHeader(() =>
-      request(app.getHttpServer()).get(`${baseUrl}/${userId2}/start`),
-    );
+    testAuthHeader(() => request(server).get(`${baseUrl}/${userId2}/start`));
   });
 
   describe('PUT /api/users/:user_id', () => {
     it('moet 200 retourneren en geüpdatete user tonen', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .put(`${baseUrl}/${userId2}`)
         .auth(userAuthToken, { type: 'bearer' })
         .send({
@@ -467,7 +464,7 @@ describe('Users', () => {
         where: eq(users.email, 'password.test@hogent.be'),
       });
 
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .put(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
@@ -490,7 +487,7 @@ describe('Users', () => {
         where: eq(users.email, 'streak.test@hogent.be'),
       });
 
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .put(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
@@ -516,7 +513,7 @@ describe('Users', () => {
         where: eq(users.email, 'image.test@hogent.be'),
       });
 
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .put(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
@@ -541,7 +538,7 @@ describe('Users', () => {
       });
 
       const loginTime = new Date().toISOString();
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .put(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
@@ -552,7 +549,7 @@ describe('Users', () => {
     });
 
     it('moet 409 retourneren bij duplicate email', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .put(`${baseUrl}/${userId2}`)
         .auth(userAuthToken, { type: 'bearer' })
         .send({
@@ -566,7 +563,7 @@ describe('Users', () => {
     });
 
     it('moet 404 retourneren bij niet-bestaande user', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .put(`${baseUrl}/00000000-0000-0000-0000-000000000000`)
         .auth(adminAuthToken, { type: 'bearer' })
         .send({
@@ -578,7 +575,7 @@ describe('Users', () => {
     });
 
     it('moet 403 retourneren wanneer user andere user probeert te updaten', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .put(`${baseUrl}/${userId1}`)
         .auth(userAuthToken, { type: 'bearer' })
         .send({
@@ -589,7 +586,7 @@ describe('Users', () => {
     });
 
     testAuthHeader(() =>
-      request(app.getHttpServer()).put(`${baseUrl}/${userId1}`).send({
+      request(server).put(`${baseUrl}/${userId1}`).send({
         displayName: 'Changed name',
       }),
     );
@@ -616,7 +613,7 @@ describe('Users', () => {
     });
 
     it('moet 403 retourneren wanneer user andere user probeert te verwijderen', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .delete(`${baseUrl}/${userId1}`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -625,7 +622,7 @@ describe('Users', () => {
     });
 
     it('moet 404 retourneren bij niet-bestaande user', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .delete(`${baseUrl}/00000000-0000-0000-0000-000000000000`)
         .auth(adminAuthToken, { type: 'bearer' });
 
@@ -634,7 +631,7 @@ describe('Users', () => {
     });
 
     it('moet 204 retourneren en user verwijderen', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .delete(`${baseUrl}/${deleteUserId}`)
         .auth(deleteAuthToken, { type: 'bearer' });
 
@@ -642,15 +639,13 @@ describe('Users', () => {
       expect(response.body).toEqual({});
     });
 
-    testAuthHeader(() =>
-      request(app.getHttpServer()).delete(`${baseUrl}/${userId1}`),
-    );
+    testAuthHeader(() => request(server).delete(`${baseUrl}/${userId1}`));
   });
 
   describe('GET /api/users/:user_id/app', () => {
     it('moet 200 retourneren en app_footer info tonen', async () => {
-      const response = await request(app.getHttpServer())
-        .get(`${baseUrl}/${userId2}/headers`)
+      const response = await request(server)
+        .get(`${baseUrl}/${userId2}/app`)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
@@ -661,8 +656,8 @@ describe('Users', () => {
     });
 
     it('moet 404 retourneren wanneer andere user app opvraagt', async () => {
-      const response = await request(app.getHttpServer())
-        .get(`${baseUrl}/${userId1}/headers`)
+      const response = await request(server)
+        .get(`${baseUrl}/${userId1}/app`)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(404);
@@ -670,8 +665,8 @@ describe('Users', () => {
     });
 
     it('moet 200 retourneren wanneer admin app opvraagt', async () => {
-      const response = await request(app.getHttpServer())
-        .get(`${baseUrl}/${userId1}/headers`)
+      const response = await request(server)
+        .get(`${baseUrl}/${userId1}/app`)
         .auth(adminAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
@@ -679,22 +674,20 @@ describe('Users', () => {
     });
 
     it('moet 404 retourneren voor niet-bestaande user', async () => {
-      const response = await request(app.getHttpServer())
-        .get(`${baseUrl}/00000000-0000-0000-0000-000000000000/headers`)
+      const response = await request(server)
+        .get(`${baseUrl}/00000000-0000-0000-0000-000000000000/app`)
         .auth(adminAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(404);
       expect(response.body.message).toBe('User not found');
     });
 
-    testAuthHeader(() =>
-      request(app.getHttpServer()).get(`${baseUrl}/${userId2}/headers`),
-    );
+    testAuthHeader(() => request(server).get(`${baseUrl}/${userId2}/app`));
   });
 
   describe('GET /api/users/:user_id/course/:course_id', () => {
     it('moet 200 retourneren en course studosets tonen', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId2}/course/Biology`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -706,7 +699,7 @@ describe('Users', () => {
     });
 
     it('moet alleen sets van opgegeven course retourneren', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId2}/course/Math`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -723,7 +716,7 @@ describe('Users', () => {
     });
 
     it('moet lege arrays retourneren voor niet-bestaande course', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId2}/course/NonExistentCourse`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -733,7 +726,7 @@ describe('Users', () => {
     });
 
     it('moet 404 retourneren wanneer andere user course opvraagt', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId1}/course/Biology`)
         .auth(userAuthToken, { type: 'bearer' });
 
@@ -742,7 +735,7 @@ describe('Users', () => {
     });
 
     it('moet 200 retourneren wanneer admin course opvraagt', async () => {
-      const response = await request(app.getHttpServer())
+      const response = await request(server)
         .get(`${baseUrl}/${userId1}/course/Biology`)
         .auth(adminAuthToken, { type: 'bearer' });
 
@@ -752,7 +745,7 @@ describe('Users', () => {
     });
 
     testAuthHeader(() =>
-      request(app.getHttpServer()).get(`${baseUrl}/${userId2}/course/Biology`),
+      request(server).get(`${baseUrl}/${userId2}/course/Biology`),
     );
   });
 

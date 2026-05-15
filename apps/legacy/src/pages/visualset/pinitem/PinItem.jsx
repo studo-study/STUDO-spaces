@@ -38,17 +38,14 @@ export default function PinItem({ pin, index, isOwner, onUpdate }) {
       return;
     }
     if (!editedDefinition.trim()) {
-
       return;
     }
 
     setIsSaving(true);
     try {
-
       await onUpdate(pin.id, editedDefinition.trim());
       setEdit(false);
     } catch (error) {
-
     } finally {
       setIsSaving(false);
     }
@@ -73,11 +70,12 @@ export default function PinItem({ pin, index, isOwner, onUpdate }) {
         border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2] outline-0"
       data-index={index}
     >
-      <div className="flex items-center justify-center min-w-10 h-10 rounded-full
-        bg-studoblue text-white font-bold text-sm">
+      <div
+        className="flex items-center justify-center min-w-10 h-10 rounded-full
+        bg-studoblue text-white font-bold text-sm"
+      >
         {pin.number}
       </div>
-
 
       <div className="flex items-center min-h-[5vh]" style={{ flex: "1" }}>
         {!edit ? (
@@ -102,13 +100,18 @@ export default function PinItem({ pin, index, isOwner, onUpdate }) {
       </div>
 
       {pin.imageTitle && (
-        <div className="flex items-center gap-1 text-xs opacity-50 dark:text-gray-400"
-             style={{ flex: "0 0 auto" }}>
+        <div
+          className="flex items-center gap-1 text-xs opacity-50 dark:text-gray-400"
+          style={{ flex: "0 0 auto" }}
+        >
           <span className="truncate max-w-20">{pin.imageTitle}</span>
         </div>
       )}
 
-      <div className="flex flex-row gap-3 items-center" style={{ flex: "0 0 auto" }}>
+      <div
+        className="flex flex-row gap-3 items-center"
+        style={{ flex: "0 0 auto" }}
+      >
         {isOwner && (
           <>
             {!edit ? (

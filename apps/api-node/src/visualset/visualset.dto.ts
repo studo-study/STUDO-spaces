@@ -4,10 +4,7 @@ import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { IsString, IsNumber } from 'nestjs-swagger-dto';
 import { Expose, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  ClassroomListResponseDto,
-  ClassroomResponseDto,
-} from '../classroom/classroom.dto';
+import { ClassroomResponseDto } from '../classroom/classroom.dto';
 import {
   IsArray,
   IsBoolean,

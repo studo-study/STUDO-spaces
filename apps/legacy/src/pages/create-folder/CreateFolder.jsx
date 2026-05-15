@@ -7,45 +7,50 @@ import { useNavigate } from "react-router-dom";
 const validationRules = {
   name: {
     required: "Folder name is required",
-    minLength: { value: 2, message: "Name must be at least 2 characters" }
-  }
+    minLength: { value: 2, message: "Name must be at least 2 characters" },
+  },
 };
 
 export default function CreateFolder() {
   const { t } = useTranslation();
   let navigate = useNavigate();
 
-  const { trigger: saveFolder, error: saveError } = useSWRMutation("folders", save);
+  const { trigger: saveFolder, error: saveError } = useSWRMutation(
+    "folders",
+    save,
+  );
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    reset
+    reset,
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      name: ""
-    }
+      name: "",
+    },
   });
 
   const onSubmit = async (values) => {
     if (!isValid) return;
 
-    await saveFolder({
-      name: values.name
-    }, {
-      throwOnError: false,
-      onSuccess: () => {
-        reset();
-        navigate(-1);
-      }
-    });
+    await saveFolder(
+      {
+        name: values.name,
+      },
+      {
+        throwOnError: false,
+        onSuccess: () => {
+          reset();
+          navigate(-1);
+        },
+      },
+    );
   };
 
   return (
-    <div
-      className="w-screen h-screen flex items-baseline pt-20 z-[0]  md:mt-0 mt-50 sm:pt-40 md:pt-75 justify-center px-4">
+    <div className="w-screen h-screen flex items-baseline pt-20 z-[0]  md:mt-0 mt-50 sm:pt-40 md:pt-75 justify-center px-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
         onClick={(e) => e.stopPropagation()}
@@ -56,9 +61,9 @@ export default function CreateFolder() {
           w-full sm:w-[450px] md:w-100
           min-h-fit h-fit
           shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#bebebe] backdrop-blur-xs
-          dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]">
-        <span
-          className="w-full text-lg sm:text-xl md:text-2xl px-2 sm:px-5 font-bold text-studodarkblue dark:text-white">
+          dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]"
+      >
+        <span className="w-full text-lg sm:text-xl md:text-2xl px-2 sm:px-5 font-bold text-studodarkblue dark:text-white">
           {t("Create a folder")}:
         </span>
 
@@ -80,7 +85,9 @@ export default function CreateFolder() {
             <p className="text-red-500 text-xs sm:text-sm w-full px-2 sm:px-5 h-4 sm:h-5">
               {t(errors.name.message)}
             </p>
-          ) : <div className="h-4 sm:h-5"></div>}
+          ) : (
+            <div className="h-4 sm:h-5"></div>
+          )}
         </div>
 
         <button
@@ -96,7 +103,8 @@ export default function CreateFolder() {
             border-t-blue-300 border-l-blue-300
             shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
             dark:bg-studoblue dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-            dark:text-white font-bold active:scale-95">
+            dark:text-white font-bold active:scale-95"
+        >
           {t("create folder").toUpperCase()}
         </button>
       </form>
