@@ -97,12 +97,12 @@ export interface ClassroomUserResponse {
 }
 
 export interface CreateChallenge {
-  challengeType: 'time attack' | 'mastery tournament' | 'duel';
+  challengeType: "time attack" | "mastery tournament" | "duel";
 }
 
 export interface ChallengeResponse {
   challenge_id: string;
-  challengeType: 'time attack' | 'mastery tournament' | 'duel';
+  challengeType: "time attack" | "mastery tournament" | "duel";
   start_date: string;
   end_date: string;
   running: boolean;

@@ -3,14 +3,19 @@ import ClassroomItem from "./ClassroomItem.jsx";
 import { useRef, useEffect } from "react";
 import useSWR from "swr";
 
-export default function ClassroomPopup({ toggled, toggleSave, selectedClassrooms, setPopUpToggle }) {
+export default function ClassroomPopup({
+  toggled,
+  toggleSave,
+  selectedClassrooms,
+  setPopUpToggle,
+}) {
   const { t } = useTranslation();
   const popupRef = useRef(null);
 
   const {
     data: classroomsData = { classrooms: [] },
     isLoading,
-    error
+    error,
   } = useSWR("users/me/classrooms");
 
   useEffect(() => {
@@ -42,13 +47,11 @@ export default function ClassroomPopup({ toggled, toggleSave, selectedClassrooms
 
   return (
     <>
-
       <div
         className={`fixed inset-0 bg-black/50 z-[9998] transition-opacity duration-300
           ${toggled ? "opacity-100 visible flex md:hidden" : "opacity-0 invisible"}`}
         onClick={() => setPopUpToggle(false)}
       />
-
 
       <div
         ref={popupRef}
@@ -64,18 +67,21 @@ export default function ClassroomPopup({ toggled, toggleSave, selectedClassrooms
           bottom-0 left-0 right-0
           sm:bottom-auto sm:left-auto sm:right-10 sm:top-28
           
-          ${toggled
-          ? "translate-y-0 sm:translate-y-0 opacity-100 visible pointer-events-auto"
-          : "translate-y-full sm:translate-y-0 opacity-0 invisible pointer-events-none"
-        }`}>
+          ${
+            toggled
+              ? "translate-y-0 sm:translate-y-0 opacity-100 visible pointer-events-auto"
+              : "translate-y-full sm:translate-y-0 opacity-0 invisible pointer-events-none"
+          }`}
+      >
         <span className="text-xl sm:text-2xl font-atrament font-semibold dark:text-white text-center">
           {t("add to classroom").toUpperCase()}
         </span>
 
-        <div className="w-full flex-1 overflow-y-auto flex flex-col gap-2
+        <div
+          className="w-full flex-1 overflow-y-auto flex flex-col gap-2
           scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600
-          rounded-xl pr-1 scroll-hidden">
-
+          rounded-xl pr-1 scroll-hidden"
+        >
           {isLoading && (
             <div className="w-full p-4 text-center text-xs sm:text-sm opacity-60 dark:text-gray-400">
               {t("Loading classrooms...")}
@@ -94,14 +100,16 @@ export default function ClassroomPopup({ toggled, toggleSave, selectedClassrooms
             </div>
           )}
 
-          {!isLoading && !error && classrooms.map((classroom) => (
-            <ClassroomItem
-              key={classroom.id}
-              classroom={classroom}
-              isSelected={selectedClassrooms.includes(classroom.id)}
-              onToggle={() => toggleSave(classroom.id)}
-            />
-          ))}
+          {!isLoading &&
+            !error &&
+            classrooms.map((classroom) => (
+              <ClassroomItem
+                key={classroom.id}
+                classroom={classroom}
+                isSelected={selectedClassrooms.includes(classroom.id)}
+                onToggle={() => toggleSave(classroom.id)}
+              />
+            ))}
         </div>
       </div>
     </>

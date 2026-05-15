@@ -2,10 +2,10 @@ import CourseIcons from "../../../data/Index.js";
 import { Link } from "react-router-dom";
 
 export default function CourseItem({ course }) {
-	return (
-		<Link
-			to={`/courses/${course.replace(" ", "-")}`}
-			className="min-w-28 min-h-28 max-w-28 max-h-28
+  return (
+    <Link
+      to={`/courses/${course.replace(" ", "-")}`}
+      className="min-w-28 min-h-28 max-w-28 max-h-28
         sm:min-w-32 sm:min-h-32 sm:max-w-32 sm:max-h-32
         md:min-w-36 md:min-h-36 md:max-w-36 md:max-h-36
         lg:min-w-32 lg:min-h-32 lg:max-w-32 lg:max-h-32
@@ -18,28 +18,30 @@ export default function CourseItem({ course }) {
         border-[0.5px] border-solid dark:border-t-gray-500 dark:border-l-gray-500
         border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
         hover:scale-105 transition-transform flex-shrink-0"
-		>
-			<div className="w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-16 lg:h-16
-        rounded-full flex items-center justify-center bg-studowhite p-1.5 sm:p-2 md:p-3">
-				<img
-					src={getCoverImage(course)}
-					className="max-h-12 sm:max-h-14 md:max-h-16 lg:max-h-14 min-h-10 sm:min-h-12 md:min-h-14 lg:min-h-12 w-auto"
-					alt={course}
-				/>
-			</div>
-			<span className="text-[10px] sm:text-xs md:text-sm text-center truncate max-w-full px-1">
+    >
+      <div
+        className="w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-16 lg:h-16
+        rounded-full flex items-center justify-center bg-studowhite p-1.5 sm:p-2 md:p-3"
+      >
+        <img
+          src={getCoverImage(course)}
+          className="max-h-12 sm:max-h-14 md:max-h-16 lg:max-h-14 min-h-10 sm:min-h-12 md:min-h-14 lg:min-h-12 w-auto"
+          alt={course}
+        />
+      </div>
+      <span className="text-[10px] sm:text-xs md:text-sm text-center truncate max-w-full px-1">
         {course}
       </span>
-		</Link>
-	);
+    </Link>
+  );
 }
 
 function getCoverImage(subject) {
-	const Import = Object.keys(CourseIcons).find((key) =>
-		subject.toLowerCase().includes(key)
-	);
-	if (!Import) {
-		return "./src/assets/icons/courses/default.svg";
-	}
-	return "./src/assets/icons/courses/" + CourseIcons[Import];
+  const Import = Object.keys(CourseIcons).find((key) =>
+    subject.toLowerCase().includes(key),
+  );
+  if (!Import) {
+    return "./src/assets/icons/courses/default.svg";
+  }
+  return "./src/assets/icons/courses/" + CourseIcons[Import];
 }

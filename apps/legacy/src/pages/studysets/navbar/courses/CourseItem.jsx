@@ -16,14 +16,17 @@ export default function CourseItem({ course }) {
         dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
         border-[0.5px] border-solid hover:scale-[1.02] transition-all duration-300
         dark:border-t-gray-500 dark:border-l-gray-500
-        border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]">
+        border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]"
+    >
       <div className="items-center flex flex-row justify-start gap-2 sm:gap-3 w-full min-w-0">
-        <div className="min-w-10 max-w-10 min-h-10 max-h-10
+        <div
+          className="min-w-10 max-w-10 min-h-10 max-h-10
           sm:min-w-12 sm:max-w-12 sm:min-h-12 sm:max-h-12
           md:min-w-14 md:max-w-14 md:min-h-14 md:max-h-14
           lg:min-w-16 lg:max-w-16 lg:min-h-16 lg:max-h-16
           dark:bg-studogrey rounded-full bg-white
-          flex justify-center items-center flex-shrink-0">
+          flex justify-center items-center flex-shrink-0"
+        >
           <img
             src={`${getCoverImage(course)}`}
             alt=""
@@ -44,11 +47,11 @@ export default function CourseItem({ course }) {
 }
 
 function getCoverImage(subject) {
-	const Import = Object.keys(CourseIcons).find((key) =>
-		subject.toLowerCase().includes(key)
-	);
-	if (!Import) {
-		return "./src/assets/icons/courses/default.svg";
-	}
-	return "./src/assets/icons/courses/" + CourseIcons[Import];
+  const Import = Object.keys(CourseIcons).find((key) =>
+    subject.toLowerCase().includes(key),
+  );
+  if (!Import) {
+    return "./src/assets/icons/courses/default.svg";
+  }
+  return "./src/assets/icons/courses/" + CourseIcons[Import];
 }

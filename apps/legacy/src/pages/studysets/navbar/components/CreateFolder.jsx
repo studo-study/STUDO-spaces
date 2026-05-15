@@ -36,39 +36,59 @@ export default function CreateFolder({ isOpen, onClose }) {
         bg-[rgba(224,224,224,0.2)] backdrop-blur-md
         dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
         transition-all duration-300 ease-in-out origin-top
-        ${isOpen
-        ? "opacity-100 scale-100 visible pointer-events-auto"
-        : "opacity-0 scale-95 invisible pointer-events-none"}
+        ${
+          isOpen
+            ? "opacity-100 scale-100 visible pointer-events-auto"
+            : "opacity-0 scale-95 invisible pointer-events-none"
+        }
       `}
     >
       <Link to="/create-set" className="w-full">
-        <div className="flex items-center justify-start w-30 h-8 font-atrament text-[#2a3a42]
+        <div
+          className="flex items-center justify-start w-30 h-8 font-atrament text-[#2a3a42]
               bg-studogrey rounded-2xl shadow-md text-base
               border-solid border-2 border-studogrey
               cursor-pointer select-none transition-transform duration-300 ease-out
-              hover:scale-105 dark:text-white">
-          <img src={studyset} alt="" className="h-4 ml-3 mr-2 dark:invert dark:brightness-0" />
+              hover:scale-105 dark:text-white"
+        >
+          <img
+            src={studyset}
+            alt=""
+            className="h-4 ml-3 mr-2 dark:invert dark:brightness-0"
+          />
           {t("STUDYSET")}
         </div>
       </Link>
 
       <Link to="/create-visualset" className="w-full">
-        <div className="flex items-center justify-start w-30 h-8 font-atrament text-base text-[#2a3a42]
+        <div
+          className="flex items-center justify-start w-30 h-8 font-atrament text-base text-[#2a3a42]
               bg-studogrey rounded-2xl shadow-md
               border-solid border-2 border-studogrey
               cursor-pointer select-none transition-transform duration-300 ease-out
-              hover:scale-105 dark:text-white">
-          <img src={visual} alt="" className="h-4 ml-3 mr-2 dark:invert dark:brightness-0" />
+              hover:scale-105 dark:text-white"
+        >
+          <img
+            src={visual}
+            alt=""
+            className="h-4 ml-3 mr-2 dark:invert dark:brightness-0"
+          />
           {t("VISUALSET")}
         </div>
       </Link>
       <Link to="/create-folder" className="w-full">
-        <div className="flex items-center justify-start w-30 h-8 font-atrament text-[#2a3a42]
+        <div
+          className="flex items-center justify-start w-30 h-8 font-atrament text-[#2a3a42]
               bg-studogrey rounded-2xl shadow-md text-base
               border-solid border-2 border-studogrey
               cursor-pointer select-none transition-transform duration-300 ease-out
-              hover:scale-105 dark:text-white">
-          <img src={folder} alt="" className="h-4 ml-3 mr-2 dark:invert dark:brightness-0" />
+              hover:scale-105 dark:text-white"
+        >
+          <img
+            src={folder}
+            alt=""
+            className="h-4 ml-3 mr-2 dark:invert dark:brightness-0"
+          />
           {t("FOLDER")}
         </div>
       </Link>

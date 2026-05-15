@@ -30,20 +30,19 @@ export default function Visualset() {
   const { id } = useParams();
   const { user } = useAuth();
 
-  const {
-    data: visualset = {},
-    isLoading,
-    error
-  } = useSWR(`visualsets/${id}`);
+  const { data: visualset = {}, isLoading, error } = useSWR(`visualsets/${id}`);
 
+  const { data: foldersData = { folders: [] }, isLoading: foldersLoading } =
+    useSWR("folders/me");
 
-  const {
-    data: foldersData = { folders: [] },
-    isLoading: foldersLoading
-  } = useSWR("folders/me");
-
-  const { trigger: triggerLike } = useSWRMutation(`visualsets/${id}/likes`, save);
-  const { trigger: triggerUpdateFolder } = useSWRMutation(`visualsets/${id}/folder`, put);
+  const { trigger: triggerLike } = useSWRMutation(
+    `visualsets/${id}/likes`,
+    save,
+  );
+  const { trigger: triggerUpdateFolder } = useSWRMutation(
+    `visualsets/${id}/folder`,
+    put,
+  );
 
   const [saved, setSaved] = useState(false);
   const [popUpToggle, setPopUpToggle] = useState(false);
@@ -63,12 +62,12 @@ export default function Visualset() {
   const getAllPins = () => {
     if (!visualset?.images) return [];
     return visualset.images.flatMap((img, imgIndex) =>
-      (img.pins?.pins || img.pins || []).map(pin => ({
+      (img.pins?.pins || img.pins || []).map((pin) => ({
         ...pin,
         imageIndex: imgIndex,
         imageUrl: img.url,
-        imageTitle: img.title
-      }))
+        imageTitle: img.title,
+      })),
     );
   };
 
@@ -76,14 +75,16 @@ export default function Visualset() {
 
   const getSessionPinData = (pinId) => {
     if (!visualset?.session?.pins) return null;
-    return visualset.session.pins.find(sp => sp.pin_id === pinId);
+    return visualset.session.pins.find((sp) => sp.pin_id === pinId);
   };
 
   useEffect(() => {
     if (!isLoading && visualset && visualset.likes && user) {
       const userHasLiked = visualset.likes.some
         ? visualset.likes.some((like) => user.id === like.user_id)
-        : (visualset.likes.likes || []).some((like) => user.id === like.user_id);
+        : (visualset.likes.likes || []).some(
+            (like) => user.id === like.user_id,
+          );
       setLoved(userHasLiked);
       const likesArray = visualset.likes.likes || visualset.likes || [];
       setLoveCounter(Array.isArray(likesArray) ? likesArray.length : 0);
@@ -100,7 +101,7 @@ export default function Visualset() {
     }
     if (visualset?.classrooms) {
       const classroomIds = visualset.classrooms
-        ? visualset.classrooms.map(c => c.id).filter(Boolean)
+        ? visualset.classrooms.map((c) => c.id).filter(Boolean)
         : [];
       setSelectedClassrooms(classroomIds);
     }
@@ -146,7 +147,7 @@ export default function Visualset() {
       await triggerUpdateFolder({
         user_id: user.id,
         set_id: visualset.id,
-        destinationFolder_id: folderId
+        destinationFolder_id: folderId,
       });
       setSelectedFolder(folderId);
       setSaved(true);
@@ -155,8 +156,7 @@ export default function Visualset() {
         setCurrentFolderName(folder.name);
       }
       mutate(`visualsets/${id}`);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const toggleSaveClassroom = async (classroomId) => {
@@ -165,17 +165,21 @@ export default function Visualset() {
     try {
       if (isCurrentlySelected) {
         await del(`classrooms/${classroomId}/sets/${id}`, { arg: null });
-        setSelectedClassrooms(prev => prev.filter(cId => cId !== classroomId));
+        setSelectedClassrooms((prev) =>
+          prev.filter((cId) => cId !== classroomId),
+        );
       } else {
         await save(`classrooms/${classroomId}/sets/${id}`, { arg: {} });
-        setSelectedClassrooms(prev => [...prev, classroomId]);
+        setSelectedClassrooms((prev) => [...prev, classroomId]);
       }
       mutate(`visualsets/${id}`);
     } catch (error) {
       if (isCurrentlySelected) {
-        setSelectedClassrooms(prev => [...prev, classroomId]);
+        setSelectedClassrooms((prev) => [...prev, classroomId]);
       } else {
-        setSelectedClassrooms(prev => prev.filter(cId => cId !== classroomId));
+        setSelectedClassrooms((prev) =>
+          prev.filter((cId) => cId !== classroomId),
+        );
       }
     }
   };
@@ -247,21 +251,20 @@ export default function Visualset() {
   const toggleShare = () => setSharePopupToggle((prev) => !prev);
   const toggleSettings = () => setSettingsPopupToggle((prev) => !prev);
 
-
   const handlePinUpdate = async (pinId, definition) => {
     const updatedPins = pins.map((pin) =>
-      pin.id === pinId ? { ...pin, definition } : pin
+      pin.id === pinId ? { ...pin, definition } : pin,
     );
 
     await put(`visualsets/${id}`, {
       arg: {
-        pins: updatedPins.map(pin => ({
+        pins: updatedPins.map((pin) => ({
           id: pin.id,
           definition: pin.definition,
           number: pin.number,
-          imageIndex: pin.imageIndex
-        }))
-      }
+          imageIndex: pin.imageIndex,
+        })),
+      },
     });
 
     mutate(`visualsets/${id}`);
@@ -269,21 +272,32 @@ export default function Visualset() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-baseline pt-35">
-      <div className="flex w-full sm:w-1/2 md:w-5/12 lg:w-5/12 xl:w-2/5 2xl:w-2/5 max-w-[700px]
-        flex-col items-center justify-center gap-3 px-4">
-
+      <div
+        className="flex w-full sm:w-1/2 md:w-5/12 lg:w-5/12 xl:w-2/5 2xl:w-2/5 max-w-[700px]
+        flex-col items-center justify-center gap-3 px-4"
+      >
         <div className="w-full h-fit flex flex-row items-center justify-baseline gap-3 text-sm">
           {t("Created by")}
-          <Link to={`/profile/${visualset.user_id}`} className="flex flex-row w-fit h-fit rounded-4xl
+          <Link
+            to={`/profile/${visualset.user_id}`}
+            className="flex flex-row w-fit h-fit rounded-4xl
             gap-2 p-2 pl-4 pr-5 bg-studodark max-w-2/5
             dark:border-gray-700 dark:border-t-gray-500 dark:border-l-border-gray-500
             border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
             shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
             dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-            dark:text-white">
+            dark:text-white"
+          >
             <div className="min-h-5 max-w-5 min-w-5 bg-amber-300 overflow-hidden rounded-full">
-              {visualset.img_url === "default" ? <PiStudent size={10} color={"white"} /> :
-                <img src={visualset.img_url} alt="pfp" className="w-full h-full object-cover" />}
+              {visualset.img_url === "default" ? (
+                <PiStudent size={10} color={"white"} />
+              ) : (
+                <img
+                  src={visualset.img_url}
+                  alt="pfp"
+                  className="w-full h-full object-cover"
+                />
+              )}
             </div>
             <span className="opacity-50 text-sm inline-block truncate w-full hover:underline">
               @{visualset.displayName}
@@ -292,13 +306,16 @@ export default function Visualset() {
         </div>
 
         <div className="w-full flex flex-row items-center justify-around">
-          <span className="inline-block w-2/3 flex flex-row items-center justify-baseline
-            text-4xl font-atrament font-semibold truncate">
+          <span
+            className="inline-block w-2/3 flex flex-row items-center justify-baseline
+            text-4xl font-atrament font-semibold truncate"
+          >
             {visualset.title?.toUpperCase() || t("Untitled Set")}
           </span>
           <div className="w-1/3 flex h-full gap-3 flex-row items-center justify-end relative">
             {isOwner && (
-              <div className="inline-flex flex-row items-center gap-[0.6em] min-h-10 min-w-10
+              <div
+                className="inline-flex flex-row items-center gap-[0.6em] min-h-10 min-w-10
                 font-atrament font-normal text-[#2a3a42] justify-center
                 rounded-[50px] bg-[#e7e7e747] cursor-pointer select-none
                 dark:border-gray-700 dark:border-t-gray-500 dark:border-l-border-gray-500
@@ -306,40 +323,65 @@ export default function Visualset() {
                 shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
                 dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
                 dark:text-white"
-                   onClick={togglePopUp}>
-                <img src={saved && selectedFolder ? Saved : Save} alt=""
-                     className="h-5 dark:invert dark:brightness-0" />
+                onClick={togglePopUp}
+              >
+                <img
+                  src={saved && selectedFolder ? Saved : Save}
+                  alt=""
+                  className="h-5 dark:invert dark:brightness-0"
+                />
               </div>
             )}
 
-            <div className="inline-flex flex-row items-center gap-[0.6em] min-h-10 min-w-10
+            <div
+              className="inline-flex flex-row items-center gap-[0.6em] min-h-10 min-w-10
               font-normal text-[#2a3a42] justify-center rounded-[50px] bg-[#e7e7e747] cursor-pointer
               dark:border-gray-700 dark:border-t-gray-500 dark:border-l-border-gray-500
               border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
               shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
               dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-              dark:text-white" onClick={toggleClassroom}>
-              <img src={Classroom} alt="" className="h-5 dark:invert dark:brightness-0" />
+              dark:text-white"
+              onClick={toggleClassroom}
+            >
+              <img
+                src={Classroom}
+                alt=""
+                className="h-5 dark:invert dark:brightness-0"
+              />
             </div>
 
-            <div className="inline-flex flex-row items-center gap-[0.6em] min-h-10 min-w-10
+            <div
+              className="inline-flex flex-row items-center gap-[0.6em] min-h-10 min-w-10
               font-atrament font-normal text-[#2a3a42] justify-center rounded-[50px] bg-[#e7e7e747] cursor-pointer
               dark:border-gray-700 dark:border-t-gray-500 dark:border-l-border-gray-500
               border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
               shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
               dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-              dark:text-white" onClick={toggleShare}>
-              <img src={Share} alt="" className="h-5 dark:invert dark:brightness-0" />
+              dark:text-white"
+              onClick={toggleShare}
+            >
+              <img
+                src={Share}
+                alt=""
+                className="h-5 dark:invert dark:brightness-0"
+              />
             </div>
 
-            <div className="inline-flex flex-row items-center gap-[0.6em] min-h-10 min-w-10
+            <div
+              className="inline-flex flex-row items-center gap-[0.6em] min-h-10 min-w-10
               font-atrament font-normal text-[#2a3a42] justify-center rounded-[50px] bg-[#e7e7e747] cursor-pointer
               dark:border-gray-700 dark:border-t-gray-500 dark:border-l-border-gray-500
               border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
               shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
               dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-              dark:text-white" onClick={toggleSettings}>
-              <img src={Settings} alt="" className="h-5 dark:invert dark:brightness-0" />
+              dark:text-white"
+              onClick={toggleSettings}
+            >
+              <img
+                src={Settings}
+                alt=""
+                className="h-5 dark:invert dark:brightness-0"
+              />
             </div>
 
             <SavePopUp
@@ -374,37 +416,63 @@ export default function Visualset() {
 
         {isOwner && selectedFolder && currentFolderName && (
           <div className="w-full h-fit flex flex-row items-center gap-2 text-sm opacity-70">
-            <img src={Folder} alt="" className="h-4 dark:invert dark:brightness-0" />
-            <span>{t("Saved in")}: {currentFolderName}</span>
+            <img
+              src={Folder}
+              alt=""
+              className="h-4 dark:invert dark:brightness-0"
+            />
+            <span>
+              {t("Saved in")}: {currentFolderName}
+            </span>
           </div>
         )}
 
         {visualset.classrooms && visualset.classrooms.length > 0 && (
           <div className="w-full h-fit flex flex-row items-center gap-2 text-sm opacity-70">
-            <img src={Classroom} alt="" className="h-4 dark:invert dark:brightness-0" />
+            <img
+              src={Classroom}
+              alt=""
+              className="h-4 dark:invert dark:brightness-0"
+            />
             <span>
-              {t("Added to")}: {visualset.classrooms.map(c => c.name).join(", ")}
+              {t("Added to")}:{" "}
+              {visualset.classrooms.map((c) => c.name).join(", ")}
             </span>
           </div>
         )}
 
         {!isOwner ? (
           <div className="w-full h-15 gap-2 flex flex-row justify-baseline items-center">
-            <div className="w-fit flex flex-row cursor-pointer gap-2 inline-flex" onClick={toggleLoved}>
-              <img src={loved ? Loved : Love} alt="" className={`h-6 cursor-pointer dark:opacity-50 
+            <div
+              className="w-fit flex flex-row cursor-pointer gap-2 inline-flex"
+              onClick={toggleLoved}
+            >
+              <img
+                src={loved ? Loved : Love}
+                alt=""
+                className={`h-6 cursor-pointer dark:opacity-50 
                 dark:invert dark:brightness-0 
                 ${loved ? "" : "opacity-50"} 
-                ${animate ? "animate__animated animate__rubberBand" : ""}`} />
+                ${animate ? "animate__animated animate__rubberBand" : ""}`}
+              />
               <span className="opacity-50 inline-block truncate select-none">
-                {formatter(loveCounter)} {loveCounter === 1 ? t("person loved this set") : t("people loved this set")}
+                {formatter(loveCounter)}{" "}
+                {loveCounter === 1
+                  ? t("person loved this set")
+                  : t("people loved this set")}
               </span>
             </div>
           </div>
         ) : (
           <div className="w-full h-10 gap-2 flex flex-row justify-baseline items-center">
-            <img src={Love} alt="" className="h-5 opacity-50 dark:invert dark:brightness-0" />
+            <img
+              src={Love}
+              alt=""
+              className="h-5 opacity-50 dark:invert dark:brightness-0"
+            />
             <span className="opacity-50 inline-block truncate select-none text-sm">
-              {formatter(loveCounter)} {loveCounter === 1 ? t("like") : t("likes")}
+              {formatter(loveCounter)}{" "}
+              {loveCounter === 1 ? t("like") : t("likes")}
             </span>
           </div>
         )}
@@ -412,28 +480,40 @@ export default function Visualset() {
         <div className="w-full h-fit flex flex-col gap-10 justify-center items-center">
           <div className="w-full inline-grid gap-5 grid-cols-2 grid-rows-1">
             <Link to={`/identify/${visualset.id}`}>
-              <div className="inline-flex flex-row items-center gap-3 min-h-12 w-full
+              <div
+                className="inline-flex flex-row items-center gap-3 min-h-12 w-full
                 font-normal text-[#2a3a42] justify-center
                 rounded-2xl bg-[#e7e7e747] cursor-pointer
                 dark:border-gray-700 dark:border-t-gray-500 dark:border-l-border-gray-500
                 border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
                 shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
                 dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-                dark:text-white pl-8 pr-10 font-atrament text-xl">
-                <img src={Identify} alt="" className="h-5 dark:invert dark:brightness-0" />
+                dark:text-white pl-8 pr-10 font-atrament text-xl"
+              >
+                <img
+                  src={Identify}
+                  alt=""
+                  className="h-5 dark:invert dark:brightness-0"
+                />
                 {t("identify").toUpperCase()}
               </div>
             </Link>
             <Link to={`/point/${visualset.id}`}>
-              <div className="inline-flex flex-row items-center gap-3 min-h-12 w-full
+              <div
+                className="inline-flex flex-row items-center gap-3 min-h-12 w-full
                 font-normal text-[#2a3a42] justify-center
                 rounded-2xl bg-[#e7e7e747] cursor-pointer
                 dark:border-gray-700 dark:border-t-gray-500 dark:border-l-border-gray-500
                 border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
                 shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
                 dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-                dark:text-white pl-8 pr-8 font-atrament text-xl">
-                <img src={Pin} alt="" className="h-5 dark:invert dark:brightness-0" />
+                dark:text-white pl-8 pr-8 font-atrament text-xl"
+              >
+                <img
+                  src={Pin}
+                  alt=""
+                  className="h-5 dark:invert dark:brightness-0"
+                />
                 {t("point").toUpperCase()}
               </div>
             </Link>
@@ -446,7 +526,9 @@ export default function Visualset() {
           />
 
           <hr className="w-full border-0.5 border-solid border-gray-500 mt-5 mb-2" />
-          <span className="w-full h-fit mb-3 font-bold">{t("Your Progress:")}</span>
+          <span className="w-full h-fit mb-3 font-bold">
+            {t("Your Progress:")}
+          </span>
 
           <div className="w-full flex flex-row justify-between items-center gap-5">
             <Progress
@@ -506,7 +588,7 @@ function calcProgress(sessionPins, allPins) {
   let stud = 0;
 
   allPins.forEach((pin) => {
-    const sessionPin = sessionPins.find(sp => sp.pin_id === pin.id);
+    const sessionPin = sessionPins.find((sp) => sp.pin_id === pin.id);
     if (!sessionPin || sessionPin.pin_viewcount === 0) nstud++;
     else if (sessionPin.pin_viewcount === 1) rev++;
     else if (sessionPin.pin_viewcount >= 2) stud++;
@@ -517,6 +599,6 @@ function calcProgress(sessionPins, allPins) {
   return [
     Math.round((nstud * 100) / total),
     Math.round((rev * 100) / total),
-    Math.round((stud * 100) / total)
+    Math.round((stud * 100) / total),
   ];
 }

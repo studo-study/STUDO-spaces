@@ -8,24 +8,22 @@ import ConsoleEasterEgg from "@/components/ui/overige/easteregg/console";
 import SessionProvider from "@/components/providers/SessionProvider";
 
 export const metadata: Metadata = {
-    title: "Studo",
-    description: "Learn smarter",
+  title: "Studo",
+  description: "Learn smarter",
 };
 
 export default async function LocaleLayout({
-                                               children,
-                                           }: {
-    children: ReactNode;
-    params: Promise<{ locale: string }>;
+  children,
+}: {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
-    const messages = await getMessages();
+  const messages = await getMessages();
 
-    return (
-        <NextIntlClientProvider messages={messages}>
-            <SessionProvider>
-                {children}
-            </SessionProvider>
-            <ConsoleEasterEgg />
-        </NextIntlClientProvider>
-    );
+  return (
+    <NextIntlClientProvider messages={messages}>
+      <SessionProvider>{children}</SessionProvider>
+      <ConsoleEasterEgg />
+    </NextIntlClientProvider>
+  );
 }

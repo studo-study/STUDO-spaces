@@ -41,19 +41,17 @@ export default function Profile() {
   if (!Profile) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
-        <div className="text-studodarkblue dark:text-white">No profile found</div>
+        <div className="text-studodarkblue dark:text-white">
+          No profile found
+        </div>
       </div>
     );
   }
 
   return (
-    <div
-      className="w-full min-h-screen flex flex-col items-center justify-baseline pt-20 sm:pt-25 md:pt-35 px-4 sm:px-6 lg:px-8">
-      <div
-        className="flex w-full sm:w-11/12 md:w-4/5 lg:w-3/5 flex-col items-center justify-center gap-3 sm:gap-4 md:gap-5">
-
+    <div className="w-full min-h-screen flex flex-col items-center justify-baseline pt-20 sm:pt-25 md:pt-35 px-4 sm:px-6 lg:px-8">
+      <div className="flex w-full sm:w-11/12 md:w-4/5 lg:w-3/5 flex-col items-center justify-center gap-3 sm:gap-4 md:gap-5">
         <ProfileHeader profile={Profile.profile} />
-
 
         <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5">
           <div className="flex flex-row justify-between">
@@ -62,7 +60,8 @@ export default function Profile() {
                 to="studysets"
                 className={({ isActive }) =>
                   `min-w-16 sm:min-w-20 text-sm sm:text-base ${isActive ? "font-bold" : "opacity-50"}`
-                }>
+                }
+              >
                 {t("studysets")}
               </NavLink>
               <span className="text-sm sm:text-base">|</span>
@@ -70,16 +69,19 @@ export default function Profile() {
                 to="visualsets"
                 className={({ isActive }) =>
                   `min-w-16 sm:min-w-20 text-sm sm:text-base ${isActive ? "font-bold" : "opacity-50"}`
-                }>
+                }
+              >
                 {t("visualsets")}
               </NavLink>
             </div>
           </div>
 
-          <Outlet context={{
-            studysets: Profile.studysets,
-            visualsets: Profile.visualsets
-          }} />
+          <Outlet
+            context={{
+              studysets: Profile.studysets,
+              visualsets: Profile.visualsets,
+            }}
+          />
 
           <div className="w-full h-10 flex flex-row justify-end items-center">
             <div className="text-studodarkblue dark:text-white cursor-pointer text-sm sm:text-base">

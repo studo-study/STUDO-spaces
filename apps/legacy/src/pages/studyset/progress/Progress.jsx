@@ -1,5 +1,5 @@
 export default function Progress({ type, percent, onClick, active }) {
-  const offset = 1600 - ((percent / 100) * 1600);
+  const offset = 1600 - (percent / 100) * 1600;
 
   return (
     <div
@@ -13,9 +13,9 @@ export default function Progress({ type, percent, onClick, active }) {
         border-[0.5px] border-solid dark:border-t-gray-500 dark:border-l-gray-500
         border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
         transition-all duration-300
-        ${active ? "ring-2 ring-studoblue dark:ring-emerald-400 scale-[1.02]" : "hover:scale-[1.01]"}`}>
-      <span
-        className="font-bold dark:text-white text-studodarkblue text-xs sm:text-sm md:text-base text-center truncate w-full px-2">
+        ${active ? "ring-2 ring-studoblue dark:ring-emerald-400 scale-[1.02]" : "hover:scale-[1.01]"}`}
+    >
+      <span className="font-bold dark:text-white text-studodarkblue text-xs sm:text-sm md:text-base text-center truncate w-full px-2">
         {type}:
       </span>
       <div className="neu-wrapper relative w-full">
@@ -24,7 +24,8 @@ export default function Progress({ type, percent, onClick, active }) {
           data-name="Layer 2"
           className="w-full"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1115.79 607.89">
+          viewBox="0 0 1115.79 607.89"
+        >
           <defs>
             <style>
               {`
@@ -58,14 +59,16 @@ export default function Progress({ type, percent, onClick, active }) {
                 ${type === "Herhaald" || type === "Reviewed" ? "stroke-amber-500" : ""}
                 ${type === "Gestudeerd" || type === "Studied" ? "stroke-emerald-400" : ""}`}
               style={{
-                strokeDashoffset: offset
+                strokeDashoffset: offset,
               }}
               d="M50,557.89c0-280.5,227.39-507.89,507.89-507.89s507.9,227.39,507.9,507.89"
             />
           </g>
         </svg>
-        <div className="progress-text top-1/2 left-1/2 -translate-x-1/50 -translate-y-1/2
-          text-2xl sm:text-3xl md:text-4xl font-bold text-studodarkblue  dark:text-white">
+        <div
+          className="progress-text top-1/2 left-1/2 -translate-x-1/50 -translate-y-1/2
+          text-2xl sm:text-3xl md:text-4xl font-bold text-studodarkblue  dark:text-white"
+        >
           {percent}%
         </div>
       </div>

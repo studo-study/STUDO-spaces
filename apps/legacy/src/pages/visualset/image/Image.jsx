@@ -5,12 +5,15 @@ import PinIcon from "../../../assets/icons/pin.svg";
 
 const GRID_SIZE = 40;
 
-export default function ImageComponent({ images, activeImageIndex = 0, onImageChange }) {
+export default function ImageComponent({
+  images,
+  activeImageIndex = 0,
+  onImageChange,
+}) {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(activeImageIndex);
   const [hoveredPin, setHoveredPin] = useState(null);
   const [animate, setAnimate] = useState(false);
-
 
   useEffect(() => {
     if (onImageChange) {
@@ -40,23 +43,26 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
   };
 
   const getPinAt = (x, y) => {
-    return pins.find(pin => pin.x === x && pin.y === y);
+    return pins.find((pin) => pin.x === x && pin.y === y);
   };
 
   if (!images || images.length === 0) {
     return (
-      <div className="w-full aspect-square max-w-[640px] mx-auto flex items-center justify-center
+      <div
+        className="w-full aspect-square max-w-[640px] mx-auto flex items-center justify-center
         bg-studowhite rounded-4xl border-[0.5px] border-solid
         border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
-        dark:bg-gray-700 dark:border-t-gray-500 dark:border-l-gray-500">
-        <span className="text-gray-500 dark:text-gray-400">{t("No images available")}</span>
+        dark:bg-gray-700 dark:border-t-gray-500 dark:border-l-gray-500"
+      >
+        <span className="text-gray-500 dark:text-gray-400">
+          {t("No images available")}
+        </span>
       </div>
     );
   }
 
   return (
     <div className="w-full flex flex-col gap-5">
-
       <div
         className={`relative w-full aspect-square max-w-[640px] mx-auto overflow-hidden
           bg-studowhite rounded-4xl
@@ -66,7 +72,6 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
           border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
           ${animate ? "animate__animated animate__fadeIn animate__faster" : ""}`}
       >
-
         <img
           src={currentImage.url}
           alt={currentImage.title || `Image ${currentIndex + 1}`}
@@ -78,7 +83,7 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
           className="absolute inset-0 grid"
           style={{
             gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
-            gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`
+            gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`,
           }}
         >
           {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, index) => {
@@ -100,12 +105,16 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
                       alt="Identify"
                       className={`absolute inset-0 w-full h-full p-0.5 drop-shadow-md
                         transition-transform duration-200 cursor-pointer
-                        ${hoveredPin?.id === pin.id || (hoveredPin?.x === pin.x && hoveredPin?.y === pin.y)
-                        ? "scale-125 z-20"
-                        : "z-10"}`}
+                        ${
+                          hoveredPin?.id === pin.id ||
+                          (hoveredPin?.x === pin.x && hoveredPin?.y === pin.y)
+                            ? "scale-125 z-20"
+                            : "z-10"
+                        }`}
                     />
                     {/* Tooltip on hover */}
-                    {(hoveredPin?.id === pin.id || (hoveredPin?.x === pin.x && hoveredPin?.y === pin.y)) && (
+                    {(hoveredPin?.id === pin.id ||
+                      (hoveredPin?.x === pin.x && hoveredPin?.y === pin.y)) && (
                       <div
                         className="absolute z-50 bg-studodarkblue text-white text-sm
                           px-3 py-2 rounded-xl whitespace-nowrap shadow-lg
@@ -114,10 +123,12 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
                           left: "50%",
                           transform: "translateX(-50%)",
                           top: "100%",
-                          marginTop: "8px"
+                          marginTop: "8px",
                         }}
                       >
-                        <span className="font-semibold mr-1">{pin.number || pins.indexOf(pin) + 1}.</span>
+                        <span className="font-semibold mr-1">
+                          {pin.number || pins.indexOf(pin) + 1}.
+                        </span>
                         {pin.definition}
                         <div
                           className="absolute -top-1 left-1/2 -translate-x-1/2
@@ -134,15 +145,19 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
 
         {/* Image title overlay */}
         {currentImage.title && (
-          <div className="absolute bottom-4 left-4 bg-black/50 text-white
-            px-4 py-2 rounded-xl text-sm backdrop-blur-sm z-30">
+          <div
+            className="absolute bottom-4 left-4 bg-black/50 text-white
+            px-4 py-2 rounded-xl text-sm backdrop-blur-sm z-30"
+          >
             {currentImage.title}
           </div>
         )}
 
         {/* Identify count indicator */}
-        <div className="absolute top-4 right-4 bg-studoblue text-white
-          px-3 py-1 rounded-full text-sm font-medium shadow-md z-30">
+        <div
+          className="absolute top-4 right-4 bg-studoblue text-white
+          px-3 py-1 rounded-full text-sm font-medium shadow-md z-30"
+        >
           {pins.length} {pins.length === 1 ? t("pin") : t("pins")}
         </div>
       </div>
@@ -158,17 +173,24 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
               border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
               shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
               dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-              dark:text-white cursor-pointer hover:scale-105 transition-transform">
-            <img src={Left} alt="Previous" className="h-8 dark:invert dark:brightness-0" />
+              dark:text-white cursor-pointer hover:scale-105 transition-transform"
+          >
+            <img
+              src={Left}
+              alt="Previous"
+              className="h-8 dark:invert dark:brightness-0"
+            />
           </div>
 
           {/* Image counter */}
-          <div className="flex justify-center items-center dark:border-gray-700 min-w-25 h-12 rounded-full
+          <div
+            className="flex justify-center items-center dark:border-gray-700 min-w-25 h-12 rounded-full
             dark:border-t-gray-500 dark:border-l-border-gray-500
             border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
             shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a] pl-8 pr-8
             dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-            dark:text-white font-atrament text-xl">
+            dark:text-white font-atrament text-xl"
+          >
             <span className="font-sfpro text-base flex flex-row justify-center">
               {currentIndex + 1} / {images.length}
             </span>
@@ -182,8 +204,13 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
               border-[0.5px] border-solid border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
               shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
               dark:bg-gray-700 dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-              dark:text-white cursor-pointer hover:scale-105 transition-transform">
-            <img src={Left} alt="Next" className="h-8 dark:invert dark:brightness-0 rotate-180" />
+              dark:text-white cursor-pointer hover:scale-105 transition-transform"
+          >
+            <img
+              src={Left}
+              alt="Next"
+              className="h-8 dark:invert dark:brightness-0 rotate-180"
+            />
           </div>
         </div>
       )}
@@ -200,14 +227,13 @@ export default function ImageComponent({ images, activeImageIndex = 0, onImageCh
               }}
               className={`min-w-16 h-16 rounded-xl overflow-hidden cursor-pointer
                 transition-all duration-200 
-                ${currentIndex === index
-                ? "ring-3 ring-white"
-                : "opacity-60 hover:opacity-100"}`}
+                ${
+                  currentIndex === index
+                    ? "ring-3 ring-white"
+                    : "opacity-60 hover:opacity-100"
+                }`}
             >
-              <img
-                src={img.url}
-                className="w-full h-full object-cover"
-              />
+              <img src={img.url} className="w-full h-full object-cover" />
             </div>
           ))}
         </div>

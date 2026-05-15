@@ -1,15 +1,21 @@
-
-import { auth } from '@/auth'
+import { auth } from "@/auth";
 import AuthLayout from "@/app/[locale]/(app)/layout";
 import MarketingLayout from "@/app/[locale]/(marketing)/layout";
 import TrackView from "@/app/[locale]/(shared)/track/[id]/TrackView";
 
-
 export default async function TrackPage() {
-    const session = await auth()
+  const session = await auth();
 
-    if (session) {
-        return <AuthLayout><TrackView /></AuthLayout>
-    }
-    return <MarketingLayout><TrackView /></MarketingLayout>
+  if (session) {
+    return (
+      <AuthLayout>
+        <TrackView />
+      </AuthLayout>
+    );
+  }
+  return (
+    <MarketingLayout>
+      <TrackView />
+    </MarketingLayout>
+  );
 }

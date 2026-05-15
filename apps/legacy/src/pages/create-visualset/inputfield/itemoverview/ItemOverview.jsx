@@ -26,10 +26,13 @@ const ItemOverview = memo(function ItemOverview({ pins, onRemovePin }) {
                 bg-studowhite dark:bg-gray-600 rounded-xl
                 hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors
                 cursor-pointer group"
-              onClick={() => onRemovePin(index)}>
+              onClick={() => onRemovePin(index)}
+            >
               <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center flex-shrink-0
-                  bg-studoblue text-white text-[10px] sm:text-xs font-bold rounded-full">
+                <span
+                  className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center flex-shrink-0
+                  bg-studoblue text-white text-[10px] sm:text-xs font-bold rounded-full"
+                >
                   {index + 1}
                 </span>
                 <span className="text-studodarkblue dark:text-white text-xs sm:text-sm truncate">

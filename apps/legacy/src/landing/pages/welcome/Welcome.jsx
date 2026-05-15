@@ -10,36 +10,51 @@ export default function Welcome() {
   const title = t("seo.welcome.title", "Smart online studying | Studo");
   const description = t(
     "seo.welcome.description",
-    "Studo helps students learn faster with flashcards, visual studygroup sets, and AI-driven learning methods. Free to use."
+    "Studo helps students learn faster with flashcards, visual studygroup sets, and AI-driven learning methods. Free to use.",
   );
   const keywords = t(
     "seo.welcome.keywords",
-    "flashcards, studygroup, learn, Quizlet alternative, AI learning, online studying, Studo, students"
+    "flashcards, studygroup, learn, Quizlet alternative, AI learning, online studying, Studo, students",
   );
 
   const faqs = [
     {
       question: t("faq.what.question", "What is Studo?"),
-      answer: t("faq.what.answer", "Studo is an online learning platform designed to help students studygroup smarter. You can use flashcards, learn modes, and interactive visual studygroup sets that make learning easier and more engaging.")
+      answer: t(
+        "faq.what.answer",
+        "Studo is an online learning platform designed to help students studygroup smarter. You can use flashcards, learn modes, and interactive visual studygroup sets that make learning easier and more engaging.",
+      ),
     },
     {
       question: t("faq.free.question", "Is Studo free to use?"),
-      answer: t("faq.free.answer", "Yes! The core studygroup modes are completely free. You can create as many studygroup sets as you like and use all the main learning tools without paying.")
+      answer: t(
+        "faq.free.answer",
+        "Yes! The core studygroup modes are completely free. You can create as many studygroup sets as you like and use all the main learning tools without paying.",
+      ),
     },
     {
-      question: t("faq.tools.question", "What studygroup tools does Studo offer?"),
-      answer: t("faq.tools.answer", "Studo offers a range of studygroup tools: Learn mode, Flashcards, Speedy quiz, Identify (for visual learning), and Point mode for visual studygroup sets. The visual sets are especially powerful, letting you organize and interact with your material in ways that go beyond basic flashcards.")
+      question: t(
+        "faq.tools.question",
+        "What studygroup tools does Studo offer?",
+      ),
+      answer: t(
+        "faq.tools.answer",
+        "Studo offers a range of studygroup tools: Learn mode, Flashcards, Speedy quiz, Identify (for visual learning), and Point mode for visual studygroup sets. The visual sets are especially powerful, letting you organize and interact with your material in ways that go beyond basic flashcards.",
+      ),
     },
     {
-      question: t("faq.quizlet.question", "How is Studo different from Quizlet?"),
-      answer: t("faq.quizlet.answer", "Compared to Quizlet, Studo offers far more advanced visual studosets and statistics about your studying. Plus the core functionality is free, which Quizlet isn't. While there are optional select upgrades and some ads, the main learning tools are completely free, letting you focus on studying effectively.")
-    }
+      question: t(
+        "faq.quizlet.question",
+        "How is Studo different from Quizlet?",
+      ),
+      answer: t(
+        "faq.quizlet.answer",
+        "Compared to Quizlet, Studo offers far more advanced visual studosets and statistics about your studying. Plus the core functionality is free, which Quizlet isn't. While there are optional select upgrades and some ads, the main learning tools are completely free, letting you focus on studying effectively.",
+      ),
+    },
   ];
 
-
-  const breadcrumbs = [
-    { name: "Home", path: "/welcome" }
-  ];
+  const breadcrumbs = [{ name: "Home", path: "/welcome" }];
 
   return (
     <>
@@ -49,7 +64,10 @@ export default function Welcome() {
         keywords={keywords}
         path="/welcome"
         image="/og/welcome.png"
-        imageAlt={t("seo.welcome.imageAlt", "Studo - Smart flashcards for students")}
+        imageAlt={t(
+          "seo.welcome.imageAlt",
+          "Studo - Smart flashcards for students",
+        )}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />

@@ -4,7 +4,11 @@ import SearchBarContent from "./SearchBarContent.jsx";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function SearchBar({ toggleSearch, searchvalue, setSearchvalue }) {
+export default function SearchBar({
+  toggleSearch,
+  searchvalue,
+  setSearchvalue,
+}) {
   const { t, i18n } = useTranslation();
   const outerBtn = useRef(null);
   const triggerBtn = useRef(null);
@@ -15,7 +19,6 @@ export default function SearchBar({ toggleSearch, searchvalue, setSearchvalue })
     if (triggered) {
       if (searchvalue.trim()) {
         toggleSearch(searchvalue);
-
       }
     } else {
       content.current.classList.remove("hidden");

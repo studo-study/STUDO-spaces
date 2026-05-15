@@ -6,14 +6,14 @@ import Plus from "../../../assets/icons/cross.png";
 import FooterItem from "./footeritem/FooterItem.jsx";
 
 export default function VsFooter({
-                                   images,
-                                   activeIndex,
-                                   onSelectImage,
-                                   onAddImage,
-                                   onRemoveImage,
-                                   onReorderImages,
-                                   isMutating
-                                 }) {
+  images,
+  activeIndex,
+  onSelectImage,
+  onAddImage,
+  onRemoveImage,
+  onReorderImages,
+  isMutating,
+}) {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const containerRef = useRef(null);
@@ -28,10 +28,14 @@ export default function VsFooter({
         ghostClass: "opacity-50",
         onEnd: (evt) => {
           const { oldIndex, newIndex } = evt;
-          if (oldIndex !== undefined && newIndex !== undefined && oldIndex !== newIndex) {
+          if (
+            oldIndex !== undefined &&
+            newIndex !== undefined &&
+            oldIndex !== newIndex
+          ) {
             onReorderImages(oldIndex, newIndex);
           }
-        }
+        },
       });
     }
 
@@ -44,19 +48,25 @@ export default function VsFooter({
   }, [onReorderImages]);
 
   return (
-    <div className="w-full h-auto min-h-[68px] sm:min-h-[76px]
+    <div
+      className="w-full h-auto min-h-[68px] sm:min-h-[76px]
       rounded-2xl sm:rounded-br-4xl sm:rounded-tr-4xl bg-studogrey
       flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center
-      p-2 sm:p-3 justify-between overflow-visible scroll-hidden">
-
+      p-2 sm:p-3 justify-between overflow-visible scroll-hidden"
+    >
       {/* Add image button */}
       <div
         onClick={onAddImage}
         className="h-10 sm:h-12 w-10 sm:w-12 flex-shrink-0 bg-studogrey flex justify-center items-center
           rounded-lg cursor-pointer
           hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors
-          self-start sm:self-auto">
-        <img src={Plus} className="h-4 sm:h-5 dark:invert dark:brightness-0" alt="Add" />
+          self-start sm:self-auto"
+      >
+        <img
+          src={Plus}
+          className="h-4 sm:h-5 dark:invert dark:brightness-0"
+          alt="Add"
+        />
       </div>
 
       {/* Sortable images list */}
@@ -64,7 +74,8 @@ export default function VsFooter({
         ref={containerRef}
         className="h-10 sm:h-12 w-full px-0.5 sm:px-0.75 bg-studogrey scroll-hidden
           items-center rounded-lg gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden
-          flex flex-row">
+          flex flex-row"
+      >
         {images.map((field, index) => (
           <FooterItem
             key={field.id}
@@ -90,8 +101,11 @@ export default function VsFooter({
           shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffffaa]
           dark:shadow-[3px_3px_6px_#3A3939,-3px_-3px_6px_#3A3939]
           bg-studoblue text-white border-t-blue-300 border-l-blue-300
-          disabled:opacity-50 flex-shrink-0">
-        {isMutating ? t("saving...").toUpperCase() : t("create ((visualset))").toUpperCase()}
+          disabled:opacity-50 flex-shrink-0"
+      >
+        {isMutating
+          ? t("saving...").toUpperCase()
+          : t("create ((visualset))").toUpperCase()}
       </button>
     </div>
   );

@@ -5,31 +5,31 @@
 // NEXTAUTH TYPE EXTENSIONS
 // ============================================
 
-declare module 'next-auth' {
-    interface Session extends DefaultSession {
-        user: StudoUser;
-        accessToken: string;
-    }
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user: StudoUser;
+    accessToken: string;
+  }
 
-    interface User extends StudoUser {
-        accessToken: string;
-    }
+  interface User extends StudoUser {
+    accessToken: string;
+  }
 }
 
-declare module 'next-auth/jwt' {
-    interface JWT extends DefaultJWT {
-        accessToken: string;
-        user: StudoUser;
-    }
+declare module "next-auth/jwt" {
+  interface JWT extends DefaultJWT {
+    accessToken: string;
+    user: StudoUser;
+  }
 }
 
 export interface LoginCredentials {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface AuthResponse {
-    token: string;
+  token: string;
 }
 
 // ============================================================
@@ -37,105 +37,104 @@ export interface AuthResponse {
 // ============================================================
 
 export interface RegisterUserRequest {
-    email: string;
-    password: string;
-    displayName: string;
-    role: string;
+  email: string;
+  password: string;
+  displayName: string;
+  role: string;
 }
 
 export interface RegisterUserResponse {
-    success: boolean;
-    message: string;
-    userId?: string;
+  success: boolean;
+  message: string;
+  userId?: string;
 }
 
 export interface ApiError {
-    message: string;
-    errors?: Record<string, string[]>;
+  message: string;
+  errors?: Record<string, string[]>;
 }
 
 // ============================================================
 // USER / PROFILE
 // ============================================================
 
-
 export interface UpdateUserRequest {
-    email?: string;
-    password?: string;
-    displayName?: string;
-    img_url?: string;
-    streak_started?: string;
-    streak_count?: number;
-    streak_last_update?: string;
-    last_login?: string;
-    role?: string;
+  email?: string;
+  password?: string;
+  displayName?: string;
+  img_url?: string;
+  streak_started?: string;
+  streak_count?: number;
+  streak_last_update?: string;
+  last_login?: string;
+  role?: string;
 }
 
 export interface User {
-    id: string;
-    email: string;
-    displayName: string;
-    img_url: string;
-    join_date: string;
-    joinNumber: number;
-    totalSets: number;
-    streak_started: string | null;
-    streak_count: number | null;
-    streak_last_update: string | null;
-    last_login: string;
-    publicRole: string;
-    verified: boolean;
+  id: string;
+  email: string;
+  displayName: string;
+  img_url: string;
+  join_date: string;
+  joinNumber: number;
+  totalSets: number;
+  streak_started: string | null;
+  streak_count: number | null;
+  streak_last_update: string | null;
+  last_login: string;
+  publicRole: string;
+  verified: boolean;
 }
 
 export interface Stats {
-    totalsets: number;
-    timeLearned: number;
-    cardsLearned: number;
+  totalsets: number;
+  timeLearned: number;
+  cardsLearned: number;
 }
 
 export interface LastStudied {
-    set_id: string;
-    id: string;
-    last_studied: string;
-    title: string;
-    course: string;
-    type: string;
-    progress: number;
-    length: number;
+  set_id: string;
+  id: string;
+  last_studied: string;
+  title: string;
+  course: string;
+  type: string;
+  progress: number;
+  length: number;
 }
 
 export interface UserWithStats extends User {
-    stats: UserStats;
-    lastTen: LastStudied[];
+  stats: UserStats;
+  lastTen: LastStudied[];
 }
 
 export interface UserListResponse {
-    users: User[];
+  users: User[];
 }
 
 export interface HeaderInfo {
-    displayName: string;
-    email: string;
-    streak_count: number | null;
-    pfp: string;
+  displayName: string;
+  email: string;
+  streak_count: number | null;
+  pfp: string;
 }
 
 export interface ClassActivity {
-    id: string;
-    classroom_id: string;
-    user_id: string;
-    displayName: string;
-    img_url: string;
-    set_id: string;
-    set_type: string;
-    title: string;
-    last_seen: string;
+  id: string;
+  classroom_id: string;
+  user_id: string;
+  displayName: string;
+  img_url: string;
+  set_id: string;
+  set_type: string;
+  title: string;
+  last_seen: string;
 }
 
 export interface StartPage {
-    lastTen: LastStudied[];
-    courses: string[];
-    class: ClassActivity[];
+  lastTen: LastStudied[];
+  courses: string[];
+  class: ClassActivity[];
 }
 
 // ============================================================
@@ -143,33 +142,33 @@ export interface StartPage {
 // ============================================================
 
 export interface CreateCard {
-    term: string;
-    definition: string;
-    image?: string | null;
-    number: number;
+  term: string;
+  definition: string;
+  image?: string | null;
+  number: number;
 }
 
 export interface UpdateCard {
-    id: string;
-    term?: string;
-    definition?: string;
-    number?: number;
-    updated_at?: string;
+  id: string;
+  term?: string;
+  definition?: string;
+  number?: number;
+  updated_at?: string;
 }
 
 export interface Card {
-    id: string;
-    term: string;
-    definition: string;
-    number: number;
-    created_at: string;
-    updated_at: string;
-    set_id: string;
-    owner_id: string;
+  id: string;
+  term: string;
+  definition: string;
+  number: number;
+  created_at: string;
+  updated_at: string;
+  set_id: string;
+  owner_id: string;
 }
 
 export interface CardListResponse {
-    cards: Card[];
+  cards: Card[];
 }
 
 // ============================================================
@@ -177,19 +176,19 @@ export interface CardListResponse {
 // ============================================================
 
 export interface CreateSetLike {
-    set_id: string;
+  set_id: string;
 }
 
 export interface SetLike {
-    id: string;
-    user_id: string;
-    set_id: string;
-    set_type: 'studyset' | 'visualset';
-    created_at: string;
+  id: string;
+  user_id: string;
+  set_id: string;
+  set_type: "studyset" | "visualset";
+  created_at: string;
 }
 
 export interface SetLikeListResponse {
-    likes: SetLike[];
+  likes: SetLike[];
 }
 
 // ============================================================
@@ -197,53 +196,53 @@ export interface SetLikeListResponse {
 // ============================================================
 
 export interface CreateStudyset {
-    title: string;
-    course: string;
-    global_term_language: string;
-    global_definition_language: string;
-    folder_id: string;
-    cardlist: CreateCard[];
+  title: string;
+  course: string;
+  global_term_language: string;
+  global_definition_language: string;
+  folder_id: string;
+  cardlist: CreateCard[];
 }
 
 export interface UpdateStudyset {
-    title?: string;
-    course?: string;
-    global_term_language?: string;
-    global_definition_language?: string;
-    public_set?: boolean;
-    cards?: UpdateCard[];
+  title?: string;
+  course?: string;
+  global_term_language?: string;
+  global_definition_language?: string;
+  public_set?: boolean;
+  cards?: UpdateCard[];
 }
 
 export interface Studyset {
-    id: string;
-    title: string;
-    course: string;
-    global_term_language: string;
-    global_definition_language: string;
-    created_at: string;
-    last_updated: string;
-    public_set: boolean;
-    displayName: string;
-    img_url: string;
-    user_id: string;
-    folder_id: string;
+  id: string;
+  title: string;
+  course: string;
+  global_term_language: string;
+  global_definition_language: string;
+  created_at: string;
+  last_updated: string;
+  public_set: boolean;
+  displayName: string;
+  img_url: string;
+  user_id: string;
+  folder_id: string;
 }
 
 export interface FullStudyset extends Studyset {
-    cards: Card[];
-    likes: SetLike[];
-    session: StudySession;
-    classrooms?: Classroom[];
-    folders?: Folder[];
+  cards: Card[];
+  likes: SetLike[];
+  session: StudySession;
+  classrooms?: Classroom[];
+  folders?: Folder[];
 }
 
 export interface StudysetListResponse {
-    sets: Studyset[];
+  sets: Studyset[];
 }
 
 export interface AllSetsResponse {
-    studysets: Studyset[];
-    visualsets: Visualset[];
+  studysets: Studyset[];
+  visualsets: Visualset[];
 }
 
 // ============================================================
@@ -251,72 +250,72 @@ export interface AllSetsResponse {
 // ============================================================
 
 export interface CreateImage {
-    title: string;
-    url: string;
-    index: number;
-    grid_x: number;
-    grid_y: number;
-    scale: string;
+  title: string;
+  url: string;
+  index: number;
+  grid_x: number;
+  grid_y: number;
+  scale: string;
 }
 
 export interface UpdateImage extends CreateImage {
-    id: string;
+  id: string;
 }
 
 export interface Image {
-    id: string;
-    title: string;
-    url: string;
-    index: number;
-    grid_x: number;
-    grid_y: number;
-    scale: string;
-    set_id: string;
+  id: string;
+  title: string;
+  url: string;
+  index: number;
+  grid_x: number;
+  grid_y: number;
+  scale: string;
+  set_id: string;
 }
 
 export interface ImageWithPins extends Image {
-    pins: PinListResponse;
+  pins: PinListResponse;
 }
 
 export interface CreateVisualset {
-    title: string;
-    subject: string;
-    folder_id: string;
-    images: CreateImage[];
-    pins: CreatePin[];
+  title: string;
+  subject: string;
+  folder_id: string;
+  images: CreateImage[];
+  pins: CreatePin[];
 }
 
 export interface UpdateVisualset {
-    title?: string;
-    public_set?: boolean;
-    course?: string;
-    folder_id?: string;
-    images?: UpdateImage[];
-    pins?: UpdatePin[];
+  title?: string;
+  public_set?: boolean;
+  course?: string;
+  folder_id?: string;
+  images?: UpdateImage[];
+  pins?: UpdatePin[];
 }
 
 export interface Visualset {
-    id: string;
-    title: string;
-    course: string;
-    created_at: string;
-    last_updated: string;
-    public_set: boolean;
-    user_id: string;
-    displayName: string;
-    img_url: string;
-    folder_id: string;
+  id: string;
+  title: string;
+  course: string;
+  created_at: string;
+  last_updated: string;
+  public_set: boolean;
+  user_id: string;
+  displayName: string;
+  img_url: string;
+  folder_id: string;
 }
 
 export interface FullVisualset extends Visualset {
-    images: ImageWithPins[];
-    likes: SetLikeListResponse;
-    session?: StudySession;
-    classrooms?: Classroom[];
+  images: ImageWithPins[];
+  likes: SetLikeListResponse;
+  session?: StudySession;
+  classrooms?: Classroom[];
 }
 
 export interface VisualsetListResponse {
-    visualsets: Visualset[];
+  visualsets: Visualset[];
 }
 
 // ============================================================
@@ -324,32 +323,32 @@ export interface VisualsetListResponse {
 // ============================================================
 
 export interface CreatePin {
-    number: number;
-    definition: string;
-    x: number;
-    y: number;
-    image_id: string;
+  number: number;
+  definition: string;
+  x: number;
+  y: number;
+  image_id: string;
 }
 
 export interface UpdatePin extends Partial<CreatePin> {
-    id: string;
+  id: string;
 }
 
 export interface Pin {
-    id: string;
-    number: number;
-    definition: string;
-    x: number;
-    y: number;
-    created_at: string;
-    updated_at: string;
-    image_id: string;
-    set_id: string;
-    owner_id: string;
+  id: string;
+  number: number;
+  definition: string;
+  x: number;
+  y: number;
+  created_at: string;
+  updated_at: string;
+  image_id: string;
+  set_id: string;
+  owner_id: string;
 }
 
 export interface PinListResponse {
-    pins: Pin[];
+  pins: Pin[];
 }
 
 // ============================================================
@@ -357,36 +356,36 @@ export interface PinListResponse {
 // ============================================================
 
 export interface CreateFolder {
-    name: string;
+  name: string;
 }
 
 export interface UpdateFolder {
-    name?: string;
+  name?: string;
 }
 
 export interface Folder {
-    id: string;
-    name: string;
-    owner_id: string;
+  id: string;
+  name: string;
+  owner_id: string;
 }
 
 export interface FolderSets {
-    studysets: Studyset[];
-    visualsets: Visualset[];
+  studysets: Studyset[];
+  visualsets: Visualset[];
 }
 
 export interface FullFolder extends Folder {
-    sets: FolderSets;
+  sets: FolderSets;
 }
 
 export interface FolderListResponse {
-    folders: Folder[];
+  folders: Folder[];
 }
 
 export interface SwitchFolderRequest {
-    user_id: string;
-    set_id: string;
-    destinationFolder_id: string;
+  user_id: string;
+  set_id: string;
+  destinationFolder_id: string;
 }
 
 // ============================================================
@@ -394,84 +393,84 @@ export interface SwitchFolderRequest {
 // ============================================================
 
 export interface CreateClassroom {
-    name: string;
-    type: string;
+  name: string;
+  type: string;
 }
 
 export interface UpdateClassroom {
-    name?: string;
-    owner?: string;
-    type?: string;
-    verified?: boolean;
+  name?: string;
+  owner?: string;
+  type?: string;
+  verified?: boolean;
 }
 
 export interface Classroom {
-    id: string;
-    name: string;
-    owner_id: string;
-    type: string;
-    created_at: string;
-    verified: boolean;
-    school: string;
-    public: boolean;
+  id: string;
+  name: string;
+  owner_id: string;
+  type: string;
+  created_at: string;
+  verified: boolean;
+  school: string;
+  public: boolean;
 }
 
 export interface ClassroomSet {
-    set_id: string;
-    set_type: string;
-    classroom_id: string;
-    added_by: string;
+  set_id: string;
+  set_type: string;
+  classroom_id: string;
+  added_by: string;
 }
 
 export interface FullClassroomSet extends ClassroomSet {
-    title: string;
-    course: string;
-    owner: string;
-    created_at: string;
+  title: string;
+  course: string;
+  owner: string;
+  created_at: string;
 }
 
 export interface ClassroomUser {
-    user_id: string;
-    classroom_id: string;
-    img_url: string;
-    role: string;
-    joined_at: string;
-    displayName: string;
-    streak: number;
-    verified: boolean;
-    position: number;
+  user_id: string;
+  classroom_id: string;
+  img_url: string;
+  role: string;
+  joined_at: string;
+  displayName: string;
+  streak: number;
+  verified: boolean;
+  position: number;
 }
 
 export interface FullClassroom extends Classroom {
-    sets: FullClassroomSet[];
-    users: ClassroomUser[];
+  sets: FullClassroomSet[];
+  users: ClassroomUser[];
 }
 
 export interface ClassroomListResponse {
-    classrooms: Classroom[];
+  classrooms: Classroom[];
 }
 
 export interface CreateClassroomUser {
-    classroom_id: string;
-    role: string;
+  classroom_id: string;
+  role: string;
 }
 
 export interface UpdateClassroomUser {
-    role: string;
+  role: string;
 }
 
 export interface CreateClassroomSet {
-    set_id: string;
+  set_id: string;
 }
 
 export interface CreateClassroomSets {
-    sets: string[];
+  sets: string[];
 }
 
 export interface CreateClassroomActivity {
-    user_id: string;
-    set_id: string;
-    classroom_id: string;
+  user_id: string;
+  set_id: string;
+  classroom_id: string;
 }
 
 // ============================================================
@@ -479,46 +478,46 @@ export interface CreateClassroomActivity {
 // ============================================================
 
 export interface StudySession {
-    id: string;
-    started_at: string;
-    duration_min: number;
-    ended_at?: string;
-    index: number;
-    accuracy: number;
-    average_response_time: number;
-    longest_focus_streak: number;
-    last_seen?: string;
-    last_studied?: string;
-    user_id: string;
-    set_id: string;
-    set_type: 'studyset' | 'visualset';
-    cards: SessionCard[];
+  id: string;
+  started_at: string;
+  duration_min: number;
+  ended_at?: string;
+  index: number;
+  accuracy: number;
+  average_response_time: number;
+  longest_focus_streak: number;
+  last_seen?: string;
+  last_studied?: string;
+  user_id: string;
+  set_id: string;
+  set_type: "studyset" | "visualset";
+  cards: SessionCard[];
 }
 
 export interface SessionCard {
-    id: string;
-    number: number;
-    card_viewcount: number;
-    card_total_viewcount: number;
-    inQueue: boolean;
-    mastered: boolean;
-    times_relearned: number;
-    card_id: string;
-    session_id: string;
-    owner_id: string;
+  id: string;
+  number: number;
+  card_viewcount: number;
+  card_total_viewcount: number;
+  inQueue: boolean;
+  mastered: boolean;
+  times_relearned: number;
+  card_id: string;
+  session_id: string;
+  owner_id: string;
 }
 
 export interface SessionPin {
-    id: string;
-    number: number;
-    pin_viewcount: number;
-    pin_total_viewcount: number;
-    inQueue: boolean;
-    mastered: boolean;
-    times_relearned: number;
-    pin_id: string;
-    session_id: string;
-    owner_id: string;
+  id: string;
+  number: number;
+  pin_viewcount: number;
+  pin_total_viewcount: number;
+  inQueue: boolean;
+  mastered: boolean;
+  times_relearned: number;
+  pin_id: string;
+  session_id: string;
+  owner_id: string;
 }
 
 // ============================================================
@@ -526,43 +525,43 @@ export interface SessionPin {
 // ============================================================
 
 export interface SearchSetResult {
-    id: string;
-    title: string;
-    subject: string;
-    last_studied?: string;
-    owner: string;
-    img_url: string;
-    owner_id: string;
-    verified: boolean;
-    likes: number;
-    items: number;
-    type: 'studyset' | 'visualset';
+  id: string;
+  title: string;
+  subject: string;
+  last_studied?: string;
+  owner: string;
+  img_url: string;
+  owner_id: string;
+  verified: boolean;
+  likes: number;
+  items: number;
+  type: "studyset" | "visualset";
 }
 
 export interface SearchProfileResult {
-    id: string;
-    displayName: string;
-    img_url: string;
-    studoProfile: boolean;
-    profileType: string;
-    type: 'profile';
+  id: string;
+  displayName: string;
+  img_url: string;
+  studoProfile: boolean;
+  profileType: string;
+  type: "profile";
 }
 
 export interface SearchClassroomResult {
-    id: string;
-    name: string;
-    owner: string;
-    owner_id: string;
-    type: 'classroom';
-    verified: boolean;
+  id: string;
+  name: string;
+  owner: string;
+  owner_id: string;
+  type: "classroom";
+  verified: boolean;
 }
 
 export interface SearchResults {
-    data: [
-        { type: 'set'; data: SearchSetResult[] },
-        { type: 'profile'; data: SearchProfileResult[] },
-        { type: 'classroom'; data: SearchClassroomResult[] }
-    ];
+  data: [
+    { type: "set"; data: SearchSetResult[] },
+    { type: "profile"; data: SearchProfileResult[] },
+    { type: "classroom"; data: SearchClassroomResult[] },
+  ];
 }
 
 // ============================================================
@@ -570,24 +569,24 @@ export interface SearchResults {
 // ============================================================
 
 export interface ApiError {
-    status: number;
-    message: string;
-    errors?: Record<string, string[]>;
+  status: number;
+  message: string;
+  errors?: Record<string, string[]>;
 }
 
 export interface PaginatedRequest {
-    page?: number;
-    limit?: number;
-    sort?: string;
-    order?: 'asc' | 'desc';
+  page?: number;
+  limit?: number;
+  sort?: string;
+  order?: "asc" | "desc";
 }
 
 export interface PaginatedResponse<T> {
-    data: T[];
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
 // ============================================================
@@ -595,19 +594,23 @@ export interface PaginatedResponse<T> {
 // ============================================================
 
 export function isStudyset(set: Studyset | Visualset): set is Studyset {
-    return 'global_term_language' in set;
+  return "global_term_language" in set;
 }
 
 export function isVisualset(set: Studyset | Visualset): set is Visualset {
-    return !('global_term_language' in set);
+  return !("global_term_language" in set);
 }
 
-export function isFullStudyset(set: Studyset | FullStudyset): set is FullStudyset {
-    return 'cards' in set;
+export function isFullStudyset(
+  set: Studyset | FullStudyset,
+): set is FullStudyset {
+  return "cards" in set;
 }
 
-export function isFullVisualset(set: Visualset | FullVisualset): set is FullVisualset {
-    return 'images' in set;
+export function isFullVisualset(
+  set: Visualset | FullVisualset,
+): set is FullVisualset {
+  return "images" in set;
 }
 
 // ============================================================
@@ -616,53 +619,52 @@ export function isFullVisualset(set: Visualset | FullVisualset): set is FullVisu
 
 export type AnySet = Studyset | Visualset;
 export type AnyFullSet = FullStudyset | FullVisualset;
-export type SetType = 'studyset' | 'visualset';
+export type SetType = "studyset" | "visualset";
 
 export interface SetIdentifier {
-    id: string;
-    type: SetType;
+  id: string;
+  type: SetType;
 }
-
 
 // shared-types/next-auth.d.ts
 
-import { DefaultSession } from 'next-auth';
-import { DefaultJWT } from 'next-auth/jwt';
+import { DefaultSession } from "next-auth";
+import { DefaultJWT } from "next-auth/jwt";
 
 // ============================================
 // JOUW USER TYPES
 // ============================================
 
 export interface UserStats {
-    totalsets: number;
-    timeLearned: number;
-    cardsLearned: number;
+  totalsets: number;
+  timeLearned: number;
+  cardsLearned: number;
 }
 
 interface RecentSet {
-    set_id: string;
-    last_studied: string;
-    title: string;
-    course: string;
-    type: 'studyset' | 'visualset';
-    progress: number;
-    length: number;
+  set_id: string;
+  last_studied: string;
+  title: string;
+  course: string;
+  type: "studyset" | "visualset";
+  progress: number;
+  length: number;
 }
 
 export interface StudoUser {
-    id: string;
-    email: string;
-    displayName: string;
-    img_url: string;
-    join_date: string;
-    joinNumber: number;
-    totalSets: number;
-    streak_count: number;
-    streak_last_update: string;
-    publicRole: 'owner' | 'admin' | 'user'; // pas aan naar jouw rollen
-    verified: boolean;
-    stats: UserStats;
-    lastTen: RecentSet[];
+  id: string;
+  email: string;
+  displayName: string;
+  img_url: string;
+  join_date: string;
+  joinNumber: number;
+  totalSets: number;
+  streak_count: number;
+  streak_last_update: string;
+  publicRole: "owner" | "admin" | "user"; // pas aan naar jouw rollen
+  verified: boolean;
+  stats: UserStats;
+  lastTen: RecentSet[];
 }
 
 // ============================================
@@ -670,74 +672,72 @@ export interface StudoUser {
 // ============================================
 
 export interface ChallengeResponseDTO {
-    challenge_id: string;
-    challengeType: 'time attack' | 'mastery tournament' | 'duel';
-    start_date: string;
-    end_date: string;
-    running: boolean;
-    title: string;
-    set_id: string;
-    displayName: string;
-    creator_id: string;
-    classroom_id: string;
+  challenge_id: string;
+  challengeType: "time attack" | "mastery tournament" | "duel";
+  start_date: string;
+  end_date: string;
+  running: boolean;
+  title: string;
+  set_id: string;
+  displayName: string;
+  creator_id: string;
+  classroom_id: string;
 }
 
 export interface ChallengeMemberDTO {
-    challenge_id: string;
-    user_id: string;
-    displayName: string;
-    img_url: string;
-    classroom_id: string;
-    position: number;
-    winner: boolean;
+  challenge_id: string;
+  user_id: string;
+  displayName: string;
+  img_url: string;
+  classroom_id: string;
+  position: number;
+  winner: boolean;
 }
 
-
-
 export interface ProfileDto {
-    user_id: string;
-    displayName: string;
-    img_url: string;
-    banner_url: string | null;
-    join_date: string;
-    joinNumber: number;
-    streak: number;
-    verified: boolean;
-    studoProfile: boolean;
+  user_id: string;
+  displayName: string;
+  img_url: string;
+  banner_url: string | null;
+  join_date: string;
+  joinNumber: number;
+  streak: number;
+  verified: boolean;
+  studoProfile: boolean;
 }
 
 export interface ProfileResponseDto {
-    profile: ProfileDto;
-    studysets: Studyset[];
-    visualsets: Visualset[];
+  profile: ProfileDto;
+  studysets: Studyset[];
+  visualsets: Visualset[];
 }
 
 export interface CardData {
-    id: string;
-    index: number;
-    term: string;
-    definition: string;
-    image: string;
-    isDouble: boolean;
+  id: string;
+  index: number;
+  term: string;
+  definition: string;
+  image: string;
+  isDouble: boolean;
 }
 
 export interface Issue {
-    id: string;
-    report_id: string;
-    filled_by: number;
-    title: string;
-    report_type: string;
-    description: string;
-    target_id: string;
-    target_type: string;
-    reported_user_id: number;
-    status: string;
-    priority: string | null;
-    created_at: string | null;
-    resolved_at: string | null;
-    reviewed_by: number | null;
-    moderator_note: string | null;
-    assignee_id: string | null;
-    assignee_displayName: string | null;
-    number: number;
+  id: string;
+  report_id: string;
+  filled_by: number;
+  title: string;
+  report_type: string;
+  description: string;
+  target_id: string;
+  target_type: string;
+  reported_user_id: number;
+  status: string;
+  priority: string | null;
+  created_at: string | null;
+  resolved_at: string | null;
+  reviewed_by: number | null;
+  moderator_note: string | null;
+  assignee_id: string | null;
+  assignee_displayName: string | null;
+  number: number;
 }

@@ -1,18 +1,17 @@
 import { useState } from "react";
 
 export default function Flashcard({
-                                    question,
-                                    answer,
-                                    showAnswer,
-                                    viewcount,
-                                    inQueue,
-                                    mastered
-                                  }) {
+  question,
+  answer,
+  showAnswer,
+  viewcount,
+  inQueue,
+  mastered,
+}) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
     <div className="w-full relative">
-
       <div className="absolute -top-2 left-3 flex gap-2 z-10">
         {inQueue && (
           <span className="px-2 py-1 bg-orange-500 text-white text-xs rounded-full">
@@ -28,7 +27,6 @@ export default function Flashcard({
           {viewcount}/2
         </span>
       </div>
-
 
       <div
         className="w-full min-h-[280px] rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer
@@ -47,9 +45,7 @@ export default function Flashcard({
         </div>
 
         {showAnswer && (
-          <p className="text-xs opacity-30 mt-4">
-            Klik om te draaien
-          </p>
+          <p className="text-xs opacity-30 mt-4">Klik om te draaien</p>
         )}
       </div>
     </div>

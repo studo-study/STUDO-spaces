@@ -15,27 +15,36 @@ export default function AboutStudysets() {
   const title = t("seo.studosets.title", "Studysets | Studo");
   const description = t(
     "seo.studosets.description",
-    "Create custom studygroup sets with Studo. Add terms, definitions, and images to build the perfect studygroup material. Share with classmates or keep private."
+    "Create custom studygroup sets with Studo. Add terms, definitions, and images to build the perfect studygroup material. Share with classmates or keep private.",
   );
   const keywords = t(
     "seo.studosets.keywords",
-    "studygroup sets, create flashcards, custom studygroup material, share studygroup sets, Studo studygroup sets"
+    "studygroup sets, create flashcards, custom studygroup material, share studygroup sets, Studo studygroup sets",
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "Study Sets", path: "/about-studosets" }
+    { name: "Study Sets", path: "/about-studosets" },
   ];
 
   const faqs = [
     {
       question: t("faq.studosets.what.question", "What are studygroup sets?"),
-      answer: t("faq.studosets.what.answer", "Study sets are collections of flashcards with terms and definitions. You can create them for any subject and studygroup them using various modes like Learn, Flashcards, or Speedy.")
+      answer: t(
+        "faq.studosets.what.answer",
+        "Study sets are collections of flashcards with terms and definitions. You can create them for any subject and studygroup them using various modes like Learn, Flashcards, or Speedy.",
+      ),
     },
     {
-      question: t("faq.studosets.share.question", "Can I share my studygroup sets?"),
-      answer: t("faq.studosets.share.answer", "Yes! You can make your studygroup sets public to share with classmates or the community, or keep them private for personal use.")
-    }
+      question: t(
+        "faq.studosets.share.question",
+        "Can I share my studygroup sets?",
+      ),
+      answer: t(
+        "faq.studosets.share.answer",
+        "Yes! You can make your studygroup sets public to share with classmates or the community, or keep them private for personal use.",
+      ),
+    },
   ];
 
   return (
@@ -46,7 +55,10 @@ export default function AboutStudysets() {
         keywords={keywords}
         path="/about-studysets"
         image="/og/welcome.png"
-        imageAlt={t("seo.studosets.imageAlt", "Studo Study Sets - Create and share")}
+        imageAlt={t(
+          "seo.studosets.imageAlt",
+          "Studo Study Sets - Create and share",
+        )}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />
@@ -101,7 +113,11 @@ export default function AboutStudysets() {
               transition-all duration-700 delay-400
               ${mounted ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={hero} alt={t("Create studygroup sets illustration")} className="min-w-2/1" />
+            <img
+              src={hero}
+              alt={t("Create studygroup sets illustration")}
+              className="min-w-2/1"
+            />
           </div>
         </div>
       </main>

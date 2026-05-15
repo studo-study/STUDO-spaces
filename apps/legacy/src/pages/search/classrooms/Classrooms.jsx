@@ -1,3 +1,3 @@
-export default function ClassroomsPage({result}) {
-  return (<div></div>);
+export default function ClassroomsPage({ result }) {
+  return <div></div>;
 }

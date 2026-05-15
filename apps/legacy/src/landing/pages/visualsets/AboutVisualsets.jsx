@@ -15,27 +15,36 @@ export default function AboutVisualsets() {
   const title = t("seo.visualsets.title", "Visualsets | Studo");
   const description = t(
     "seo.visualsets.description",
-    "Create visual studygroup sets with Studo. Upload images and add interactive labels for anatomy, geography, diagrams, and any image-based learning."
+    "Create visual studygroup sets with Studo. Upload images and add interactive labels for anatomy, geography, diagrams, and any image-based learning.",
   );
   const keywords = t(
     "seo.visualsets.keywords",
-    "visual learning, image flashcards, anatomy studygroup, diagram learning, visual sets, Studo visual"
+    "visual learning, image flashcards, anatomy studygroup, diagram learning, visual sets, Studo visual",
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "Visual Sets", path: "/about-visualsets" }
+    { name: "Visual Sets", path: "/about-visualsets" },
   ];
 
   const faqs = [
     {
       question: t("faq.visualsets.what.question", "What are visual sets?"),
-      answer: t("faq.visualsets.what.answer", "Visual sets are image-based studygroup materials where you can label parts of an image. They're perfect for anatomy, maps, diagrams, and any visual subject.")
+      answer: t(
+        "faq.visualsets.what.answer",
+        "Visual sets are image-based studygroup materials where you can label parts of an image. They're perfect for anatomy, maps, diagrams, and any visual subject.",
+      ),
     },
     {
-      question: t("faq.visualsets.create.question", "How do I create a visual set?"),
-      answer: t("faq.visualsets.create.answer", "Upload an image, then click to add labels to different parts. You can add as many labels as you need and then studygroup using Identify or Point mode.")
-    }
+      question: t(
+        "faq.visualsets.create.question",
+        "How do I create a visual set?",
+      ),
+      answer: t(
+        "faq.visualsets.create.answer",
+        "Upload an image, then click to add labels to different parts. You can add as many labels as you need and then studygroup using Identify or Point mode.",
+      ),
+    },
   ];
 
   return (
@@ -46,7 +55,10 @@ export default function AboutVisualsets() {
         keywords={keywords}
         path="/about-visualsets"
         image="/og/welcome.png"
-        imageAlt={t("seo.visualsets.imageAlt", "Studo Visual Sets - Image-based learning")}
+        imageAlt={t(
+          "seo.visualsets.imageAlt",
+          "Studo Visual Sets - Image-based learning",
+        )}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />
@@ -102,7 +114,11 @@ export default function AboutVisualsets() {
               transition-all duration-700 delay-400
               ${mounted ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={hero} alt={t("Create visual sets illustration")} className="w-2/3" />
+            <img
+              src={hero}
+              alt={t("Create visual sets illustration")}
+              className="w-2/3"
+            />
           </div>
         </div>
       </main>

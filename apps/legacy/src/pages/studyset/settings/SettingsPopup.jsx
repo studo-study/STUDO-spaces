@@ -5,7 +5,14 @@ import useSWRMutation from "swr/mutation";
 import { save, del, put } from "../../../api/index.js";
 import { useNavigate } from "react-router-dom";
 
-export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPublic, sessionId, setId }) {
+export default function SettingsPopup({
+  toggled,
+  setPopUpToggle,
+  isOwner,
+  isPublic,
+  sessionId,
+  setId,
+}) {
   const { t } = useTranslation();
   const popupRef = useRef(null);
   const [publicSet, setPublicSet] = useState(isPublic);
@@ -13,7 +20,10 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const navigate = useNavigate();
 
-  const { trigger: triggerUpdateSet, isMutating: isUpdating } = useSWRMutation(`studysets`, save);
+  const { trigger: triggerUpdateSet, isMutating: isUpdating } = useSWRMutation(
+    `studysets`,
+    save,
+  );
 
   useEffect(() => {
     setPublicSet(isPublic);
@@ -60,10 +70,7 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
       await triggerUpdateSet({ id: setId, public_set: newValue });
       setPublicSet(newValue);
       mutate(`studysets/${setId}`);
-    } catch (error) {
-
-
-    }
+    } catch (error) {}
   };
 
   const handleResetProgress = async () => {
@@ -76,7 +83,6 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
       setShowResetConfirm(false);
       setPopUpToggle(false);
     } catch (error) {
-
     } finally {
       setIsResetting(false);
     }
@@ -89,7 +95,6 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
       setPopUpToggle(false);
       setTimeout(() => navigate("/home"), 1000);
     } catch (error) {
-
     } finally {
       setIsResetting(false);
     }
@@ -97,13 +102,11 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
 
   return (
     <>
-
       <div
         className={`fixed md:block inset-0 bg-black/50 z-[9998] transition-opacity flex md:hidden duration-300
           ${toggled ? "opacity-100 visible" : "opacity-0 invisible"}`}
         onClick={() => setPopUpToggle(false)}
       />
-
 
       <div
         ref={popupRef}
@@ -120,10 +123,12 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
           bottom-0 left-0 right-0
           sm:bottom-auto sm:left-auto sm:right-10 sm:top-28
           
-          ${toggled
-          ? "translate-y-0 sm:translate-y-0 opacity-100 visible pointer-events-auto"
-          : "translate-y-full sm:translate-y-0 opacity-0 invisible pointer-events-none"
-        }`}>
+          ${
+            toggled
+              ? "translate-y-0 sm:translate-y-0 opacity-100 visible pointer-events-auto"
+              : "translate-y-full sm:translate-y-0 opacity-0 invisible pointer-events-none"
+          }`}
+      >
         <span className="text-xl sm:text-2xl font-atrament font-semibold dark:text-white text-center">
           {t("Settings").toUpperCase()}
         </span>
@@ -135,8 +140,10 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
                 {t("Set Visibility:")}
               </span>
 
-              <div className="w-full flex flex-row justify-between items-center p-3 sm:p-4
-                bg-studowhite rounded-2xl border-2 border-studowhite shadow-sm">
+              <div
+                className="w-full flex flex-row justify-between items-center p-3 sm:p-4
+                bg-studowhite rounded-2xl border-2 border-studowhite shadow-sm"
+              >
                 <div className="flex flex-col">
                   <span className="font-medium text-sm truncate dark:text-white">
                     {t("Public set")}
@@ -148,7 +155,8 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
                   className={`relative w-12 h-6 sm:w-14 sm:h-7 rounded-full transition-all duration-300 flex-shrink-0
                     ${publicSet ? "bg-green-500" : "bg-gray-400"}
                     ${isUpdating ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-                  aria-label={publicSet ? t("Make private") : t("Make public")}>
+                  aria-label={publicSet ? t("Make private") : t("Make public")}
+                >
                   <div
                     className={`absolute top-0.5 sm:top-1 w-5 h-5 bg-white rounded-full shadow-md 
                       transition-transform duration-300
@@ -171,7 +179,8 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
                 hover:bg-amber-500 rounded-2xl truncate shadow-md border-solid
                 border-2 border-studowhite
                 transition-all duration-500
-                ${(!sessionId || isResetting) ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}>
+                ${!sessionId || isResetting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+            >
               {t("Reset Progress")}
             </button>
           </div>
@@ -187,7 +196,8 @@ export default function SettingsPopup({ toggled, setPopUpToggle, isOwner, isPubl
                 className="w-full p-3 sm:p-4 text-xs sm:text-sm font-medium text-white bg-red-400/50
                   hover:bg-red-500 rounded-2xl truncate shadow-md border-solid
                   border-2 border-studowhite
-                  transition-all duration-500 cursor-pointer">
+                  transition-all duration-500 cursor-pointer"
+              >
                 {t("Delete Studyset")}
               </button>
             </div>

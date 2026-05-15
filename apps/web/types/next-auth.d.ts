@@ -5,39 +5,39 @@ import "next-auth/jwt";
 type PublicRole = "user" | "owner" | "admin";
 
 interface StudoUser {
-    id: string;
-    email: string;
-    displayName: string;
-    img_url: string;
-    join_date: string;
-    joinNumber: number;
-    totalSets: number;
-    streak_count: number;
-    streak_last_update: string;
-    publicRole: PublicRole;
-    verified: boolean;
-    stats: {
-        totalsets: number;
-        timeLearned: number;
-        cardsLearned: number;
-    };
-    lastTen: unknown[];
+  id: string;
+  email: string;
+  displayName: string;
+  img_url: string;
+  join_date: string;
+  joinNumber: number;
+  totalSets: number;
+  streak_count: number;
+  streak_last_update: string;
+  publicRole: PublicRole;
+  verified: boolean;
+  stats: {
+    totalsets: number;
+    timeLearned: number;
+    cardsLearned: number;
+  };
+  lastTen: unknown[];
 }
 
 declare module "next-auth" {
-    interface Session {
-        user: StudoUser;
-        accessToken: string;
-    }
+  interface Session {
+    user: StudoUser;
+    accessToken: string;
+  }
 
-    interface User extends StudoUser {
-        accessToken: string;
-    }
+  interface User extends StudoUser {
+    accessToken: string;
+  }
 }
 
 declare module "next-auth/jwt" {
-    interface JWT {
-        accessToken: string;
-        user: StudoUser;
-    }
+  interface JWT {
+    accessToken: string;
+    user: StudoUser;
+  }
 }

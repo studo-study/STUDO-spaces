@@ -5,20 +5,23 @@ import "animate.css";
 import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function CardItem({ card, index, isOwner, onUpdate, onToggleStar }) {
+export default function CardItem({
+  card,
+  index,
+  isOwner,
+  onUpdate,
+  onToggleStar,
+}) {
   const { t } = useTranslation();
-
 
   const DefinitieInput = useRef(null);
   const TermInput = useRef(null);
-
 
   const [edit, setEdit] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [editedTerm, setEditedTerm] = useState(card.term);
   const [editedDefinition, setEditedDefinition] = useState(card.definition);
-
 
   useEffect(() => {
     setEditedTerm(card.term);
@@ -50,7 +53,6 @@ export default function CardItem({ card, index, isOwner, onUpdate, onToggleStar 
     }
 
     if (!editedTerm.trim() || !editedDefinition.trim()) {
-
       return;
     }
 
@@ -59,7 +61,6 @@ export default function CardItem({ card, index, isOwner, onUpdate, onToggleStar 
       await onUpdate(card.id, editedTerm.trim(), editedDefinition.trim());
       setEdit(false);
     } catch (error) {
-
     } finally {
       setIsSaving(false);
     }
@@ -73,7 +74,6 @@ export default function CardItem({ card, index, isOwner, onUpdate, onToggleStar 
     }
   };
 
-
   return (
     <div
       className="w-full flex flex-row items-center justify-start flex-nowrap
@@ -85,12 +85,17 @@ export default function CardItem({ card, index, isOwner, onUpdate, onToggleStar 
         border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2] outline-0"
       data-index={index}
     >
-      <div className="flex items-center justify-center min-w-10 h-10 rounded-full
-        bg-studoblue text-white font-bold text-sm">
+      <div
+        className="flex items-center justify-center min-w-10 h-10 rounded-full
+        bg-studoblue text-white font-bold text-sm"
+      >
         {card.number}
       </div>
 
-      <div className="flex items-center min-h-[5vh]" style={{ flex: "0 0 30%" }}>
+      <div
+        className="flex items-center min-h-[5vh]"
+        style={{ flex: "0 0 30%" }}
+      >
         {!edit ? (
           <span className="text-left p-2 pl-5 break-words">{card.term}</span>
         ) : (
@@ -111,7 +116,6 @@ export default function CardItem({ card, index, isOwner, onUpdate, onToggleStar 
           />
         )}
       </div>
-
 
       <div className="flex items-center min-h-[5vh]" style={{ flex: "1" }}>
         {!edit ? (
@@ -134,9 +138,10 @@ export default function CardItem({ card, index, isOwner, onUpdate, onToggleStar 
         )}
       </div>
 
-
-      <div className="flex flex-row gap-3 items-center" style={{ flex: "0 0 auto" }}>
-
+      <div
+        className="flex flex-row gap-3 items-center"
+        style={{ flex: "0 0 auto" }}
+      >
         {isOwner && (
           <>
             {!edit ? (

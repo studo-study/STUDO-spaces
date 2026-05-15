@@ -1,23 +1,29 @@
-import {auth} from "@/auth";
+import { auth } from "@/auth";
 import FlowStoreInitializer from "@/components/providers/FlowStoreInitializer";
 import CoursePageContent from "@/components/ui/app/flow/page/CoursePage/CoursePageContent";
 
-export default async function Page({params}: { params: Promise<{ id: string, course_id: string }>; }) {
-    const {course_id} = await params;
-    const session = await auth();
-    const token = session?.accessToken;
-    const res = await fetch(
-        `${process.env.AUTH_API_URL}/flows/course/${course_id}`,
-        {
-            headers: {Authorization: `Bearer ${token}`},
-            method: "GET",
-        }
-    );
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string; course_id: string }>;
+}) {
+  const { course_id } = await params;
+  const session = await auth();
+  const token = session?.accessToken;
+  const res = await fetch(
+    `${process.env.AUTH_API_URL}/flows/course/${course_id}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+      method: "GET",
+    },
+  );
 
-    const data = await res.json();
+  const data = await res.json();
 
-    return (<>
-        <FlowStoreInitializer course={data}/>
-        <CoursePageContent/>
-    </>)
+  return (
+    <>
+      <FlowStoreInitializer course={data} />
+      <CoursePageContent />
+    </>
+  );
 }

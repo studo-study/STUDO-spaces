@@ -9,14 +9,14 @@ export default defineConfig([
   globalIgnores(["dist"]), // 👈 1
   {
     files: ["cypress/**/*.{js,jsx}"],
-    ...pluginCypress.configs.recommended,// 👈 2
+    ...pluginCypress.configs.recommended, // 👈 2
     plugins: {
-      "@stylistic": stylistic
+      "@stylistic": stylistic,
     }, // 👈 5
     extends: [
       js.configs.recommended,
       reactHooks.configs["recommended-latest"],
-      reactRefresh.configs.vite
+      reactRefresh.configs.vite,
     ], // 👈 4
     languageOptions: {
       ecmaVersion: 2020,
@@ -24,8 +24,8 @@ export default defineConfig([
       parserOptions: {
         ecmaVersion: "latest",
         ecmaFeatures: { jsx: true },
-        sourceType: "module"
-      }
+        sourceType: "module",
+      },
     }, // 👈 3
     rules: {
       "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
@@ -33,15 +33,15 @@ export default defineConfig([
       "react/jsx-no-target-blank": "off",
       "react-refresh/only-export-components": [
         "warn",
-        { allowConstantExport: true }
+        { allowConstantExport: true },
       ],
       "@stylistic/no-multiple-empty-lines": [
         "error",
         {
           max: 1,
           maxEOF: 1,
-          maxBOF: 0
-        }
+          maxBOF: 0,
+        },
       ],
       "@stylistic/indent": ["error", 2, { SwitchCase: 1 }],
       "@stylistic/quotes": ["error", "single"],
@@ -52,15 +52,15 @@ export default defineConfig([
         "error",
         {
           code: 120,
-          tabWidth: 2
-        }
+          tabWidth: 2,
+        },
       ],
       "@stylistic/arrow-parens": ["error", "always"],
       "@stylistic/brace-style": ["error", "1tbs", { allowSingleLine: false }],
       "@stylistic/no-inner-declarations": "off",
       "react/react-in-jsx-scope": "off",
       "react/jsx-props-no-spreading": "off",
-      "react/prop-types": "off"
-    }
-  }
+      "react/prop-types": "off",
+    },
+  },
 ]);

@@ -12,11 +12,41 @@ import point from "../../../assets/icons/start/hero-pin.svg";
 import HeroBackground from "./HeroBackground.jsx";
 
 const studyModes = [
-  { to: "/learn", label: "Learn", icon: learn, color: "from-emerald-500 to-emerald-400", shadow: "shadow-emerald-500/30" },
-  { to: "/flashcards", label: "Flashcards", icon: flash, color: "from-blue-500 to-blue-400", shadow: "shadow-blue-500/30" },
-  { to: "/speedy", label: "Speedy", icon: speedy, color: "from-amber-500 to-orange-400", shadow: "shadow-amber-500/30" },
-  { to: "/identify", label: "Identify", icon: pin, color: "from-rose-500 to-red-400", shadow: "shadow-rose-500/30" },
-  { to: "/point", label: "Point", icon: point, color: "from-violet-500 to-purple-400", shadow: "shadow-violet-500/30" },
+  {
+    to: "/learn",
+    label: "Learn",
+    icon: learn,
+    color: "from-emerald-500 to-emerald-400",
+    shadow: "shadow-emerald-500/30",
+  },
+  {
+    to: "/flashcards",
+    label: "Flashcards",
+    icon: flash,
+    color: "from-blue-500 to-blue-400",
+    shadow: "shadow-blue-500/30",
+  },
+  {
+    to: "/speedy",
+    label: "Speedy",
+    icon: speedy,
+    color: "from-amber-500 to-orange-400",
+    shadow: "shadow-amber-500/30",
+  },
+  {
+    to: "/identify",
+    label: "Identify",
+    icon: pin,
+    color: "from-rose-500 to-red-400",
+    shadow: "shadow-rose-500/30",
+  },
+  {
+    to: "/point",
+    label: "Point",
+    icon: point,
+    color: "from-violet-500 to-purple-400",
+    shadow: "shadow-violet-500/30",
+  },
 ];
 
 export default function Hero() {
@@ -30,7 +60,7 @@ export default function Hero() {
   const features = [
     t("Create custom studygroup sets"),
     t("Text or visual learning"),
-    t("Study anywhere, anytime")
+    t("Study anywhere, anytime"),
   ];
 
   return (
@@ -48,7 +78,6 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 flex flex-col 3xl:min-h-screen items-center text-center pt-5 3xl:pt-20 overflow-visible gap-8 3xl:w-2/3 max-w-screen">
-
         {/* Badge */}
         <div
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-full 
@@ -93,9 +122,14 @@ export default function Hero() {
           aria-label={t("Key modes")}
         >
           {features.map((feature, i) => (
-            <li key={i} className="flex items-center gap-2 text-emerald-500 dark:text-studoblue">
+            <li
+              key={i}
+              className="flex items-center gap-2 text-emerald-500 dark:text-studoblue"
+            >
               <FaCheck aria-hidden="true" />
-              <span className="text-studodarkblue/60 dark:text-white/60">{feature}</span>
+              <span className="text-studodarkblue/60 dark:text-white/60">
+                {feature}
+              </span>
             </li>
           ))}
         </ul>

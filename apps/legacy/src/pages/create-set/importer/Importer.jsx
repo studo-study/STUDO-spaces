@@ -37,7 +37,7 @@ export default function Importer({ onClose, onImport }) {
         cards.push({
           term: parts[0]?.trim() || "",
           definition: parts[1]?.trim() || "",
-          url: parts[2]?.trim() || ""
+          url: parts[2]?.trim() || "",
         });
       }
     });
@@ -47,22 +47,28 @@ export default function Importer({ onClose, onImport }) {
     }
   }, [rawInput, termSeparator, cardSeparator, onImport]);
 
-  const handleKeyDown = useCallback((e) => {
-    if (e.key === "Tab") {
-      e.preventDefault();
-      const start = e.target.selectionStart;
-      const end = e.target.selectionEnd;
-      const newValue = rawInput.substring(0, start) + "\t" + rawInput.substring(end);
-      setRawInput(newValue);
-      setTimeout(() => {
-        e.target.selectionStart = e.target.selectionEnd = start + 1;
-      }, 0);
-    }
-  }, [rawInput]);
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        const start = e.target.selectionStart;
+        const end = e.target.selectionEnd;
+        const newValue =
+          rawInput.substring(0, start) + "\t" + rawInput.substring(end);
+        setRawInput(newValue);
+        setTimeout(() => {
+          e.target.selectionStart = e.target.selectionEnd = start + 1;
+        }, 0);
+      }
+    },
+    [rawInput],
+  );
 
   return (
-    <div className="fixed inset-0 w-full h-full flex justify-center items-center z-[9999]
-      bg-blue-50 dark:bg-bg-dark px-4 sm:px-6 md:px-10 py-4 sm:py-5">
+    <div
+      className="fixed inset-0 w-full h-full flex justify-center items-center z-[9999]
+      bg-blue-50 dark:bg-bg-dark px-4 sm:px-6 md:px-10 py-4 sm:py-5"
+    >
       <div className="absolute top-3 right-3 sm:top-5 sm:right-5">
         <IoClose
           size={28}
@@ -106,7 +112,9 @@ export default function Importer({ onClose, onImport }) {
                   onChange={() => setTermSeparator("tab")}
                   className="w-4 h-4 sm:w-5 sm:h-5 accent-studoblue"
                 />
-                <span className="text-sm sm:text-base text-studodarkblue dark:text-white">Tab</span>
+                <span className="text-sm sm:text-base text-studodarkblue dark:text-white">
+                  Tab
+                </span>
               </label>
 
               <label className="flex items-center gap-2 sm:gap-3 cursor-pointer">
@@ -117,7 +125,9 @@ export default function Importer({ onClose, onImport }) {
                   onChange={() => setTermSeparator("comma")}
                   className="w-4 h-4 sm:w-5 sm:h-5 accent-studoblue"
                 />
-                <span className="text-sm sm:text-base text-studodarkblue dark:text-white">Comma</span>
+                <span className="text-sm sm:text-base text-studodarkblue dark:text-white">
+                  Comma
+                </span>
               </label>
             </div>
 
@@ -134,7 +144,9 @@ export default function Importer({ onClose, onImport }) {
                   onChange={() => setCardSeparator("newline")}
                   className="w-4 h-4 sm:w-5 sm:h-5 accent-studoblue"
                 />
-                <span className="text-sm sm:text-base text-studodarkblue dark:text-white">New Line</span>
+                <span className="text-sm sm:text-base text-studodarkblue dark:text-white">
+                  New Line
+                </span>
               </label>
 
               <label className="flex items-center gap-2 sm:gap-3 cursor-pointer">
@@ -145,7 +157,9 @@ export default function Importer({ onClose, onImport }) {
                   onChange={() => setCardSeparator("semicolon")}
                   className="w-4 h-4 sm:w-5 sm:h-5 accent-studoblue"
                 />
-                <span className="text-sm sm:text-base text-studodarkblue dark:text-white">Semicolon</span>
+                <span className="text-sm sm:text-base text-studodarkblue dark:text-white">
+                  Semicolon
+                </span>
               </label>
             </div>
           </div>
@@ -161,7 +175,8 @@ export default function Importer({ onClose, onImport }) {
               rounded-full bg-studoblue cursor-pointer select-none
               border-[0.5px] border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300
               shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
-              dark:text-white">
+              dark:text-white"
+          >
             {t("import").toUpperCase()}
           </button>
         </div>

@@ -16,7 +16,7 @@ export default function Stats() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (ref.current) {
@@ -30,18 +30,18 @@ export default function Stats() {
     {
       icon: FiTool,
       label: t("5 studygroup tools"),
-      ariaLabel: t("Five different studygroup tools available")
+      ariaLabel: t("Five different studygroup tools available"),
     },
     {
       icon: IoMdInfinite,
       label: t("endless sets"),
-      ariaLabel: t("Create unlimited studygroup sets")
+      ariaLabel: t("Create unlimited studygroup sets"),
     },
     {
       icon: TbFreeRights,
       label: t("100% free"),
-      ariaLabel: t("Completely free to use")
-    }
+      ariaLabel: t("Completely free to use"),
+    },
   ];
 
   return (

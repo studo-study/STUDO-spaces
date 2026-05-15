@@ -26,7 +26,7 @@ export default function StudysetsPage() {
           user_id: set.user_id,
           type: "studyset",
           displayName: set.displayName,
-          img_url: set.img_url
+          img_url: set.img_url,
         })),
         ...sets.visualsets.map((set) => ({
           id: set.id,
@@ -36,8 +36,8 @@ export default function StudysetsPage() {
           user_id: set.user_id,
           type: "visualset",
           displayName: set.displayName,
-          img_url: set.img_url
-        }))
+          img_url: set.img_url,
+        })),
       ];
       setStudysets(allSets);
       setSortedsets(allSets);
@@ -62,7 +62,8 @@ export default function StudysetsPage() {
             onClick={toggleOpen}
             className="relative w-10 h-10 bg-studoblue rounded-full flex items-center justify-center cursor-pointer
               active:scale-105 transition-transform z-[2] select-none
-              border-[0.5px] border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300">
+              border-[0.5px] border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300"
+          >
             <img src={plusIcon} className="w-5 h-auto" alt="Add" />
           </div>
           <CreatePopup isOpen={isOpen} onClose={closePopup} />
@@ -85,7 +86,8 @@ export default function StudysetsPage() {
             bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgMS41TDYgNi41TDExIDEuNSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==')]
             bg-[length:10px] bg-[center_right_8px] bg-no-repeat
             pr-7 text-center"
-          onChange={sortSets}>
+          onChange={sortSets}
+        >
           <option value="all">{t("all sets")}</option>
           <option value="studyset">{t("studysets")}</option>
           <option value="visualset">{t("visualsets")}</option>
@@ -99,9 +101,8 @@ export default function StudysetsPage() {
           </div>
         ) : (
           <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {!isLoading && sortedsets.map((set) => (
-              <StudysetItem key={set.id} set={set} />
-            ))}
+            {!isLoading &&
+              sortedsets.map((set) => <StudysetItem key={set.id} set={set} />)}
           </div>
         )}
       </div>

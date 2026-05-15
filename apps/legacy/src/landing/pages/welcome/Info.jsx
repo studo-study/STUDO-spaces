@@ -12,7 +12,8 @@ const features = [
     image: smart,
     imageAlt: "Smart studying illustration",
     color: "from-orange-400 to-amber-500",
-    bgColor: "bg-gradient-to-br from-orange-400 to-amber-50 dark:from-orange-400 dark:to-amber-400",
+    bgColor:
+      "bg-gradient-to-br from-orange-400 to-amber-50 dark:from-orange-400 dark:to-amber-400",
     direction: "normal",
   },
   {
@@ -21,7 +22,8 @@ const features = [
     image: laptop,
     imageAlt: "Student using laptop illustration",
     color: "from-blue-400 to-cyan-500",
-    bgColor: "bg-gradient-to-br from-blue-400 to-cyan-50 dark:from-blue-400 dark:to-cyan-400",
+    bgColor:
+      "bg-gradient-to-br from-blue-400 to-cyan-50 dark:from-blue-400 dark:to-cyan-400",
     direction: "reverse",
   },
   {
@@ -30,7 +32,8 @@ const features = [
     image: ready,
     imageAlt: "Ready for challenges illustration",
     color: "from-emerald-400 to-teal-500",
-    bgColor: "bg-gradient-to-br from-emerald-400 to-teal-50 dark:from-emerald-400 dark:to-teal-400",
+    bgColor:
+      "bg-gradient-to-br from-emerald-400 to-teal-50 dark:from-emerald-400 dark:to-teal-400",
     direction: "normal",
     showCTA: true,
   },
@@ -49,7 +52,9 @@ function FeatureCard({ feature, index, isVisible }) {
       aria-labelledby={`feature-title-${index}`}
     >
       {/* Text column */}
-      <div className={`flex overflow-visible flex-col w-full gap-6 ${isReverse ? "lg:order-2 items-end text-right" : "lg:order-1 items-start text-left"}`}>
+      <div
+        className={`flex overflow-visible flex-col w-full gap-6 ${isReverse ? "lg:order-2 items-end text-right" : "lg:order-1 items-start text-left"}`}
+      >
         <div className="inline-flex overflow-visible items-center gap-2">
           <span
             className={`w-8 h-8 rounded-full backdrop-blur-sm bg-gradient-to-r ${feature.color} flex items-center justify-center text-white font-bold text-sm`}
@@ -92,7 +97,12 @@ function FeatureCard({ feature, index, isVisible }) {
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
               </svg>
             </Link>
           </div>
@@ -131,7 +141,7 @@ export default function Info() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (ref.current) {
@@ -159,7 +169,8 @@ export default function Info() {
           className={`text-center mb-16 lg:mb-24 transition-all duration-700
             ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <span className="inline-block px-4 py-2 rounded-full text-sm font-medium
+          <span
+            className="inline-block px-4 py-2 rounded-full text-sm font-medium
             bg-emerald-100 dark:bg-studoblue/20
             text-emerald-700 dark:text-studoblue
             border border-emerald-200 dark:border-studoblue/30
