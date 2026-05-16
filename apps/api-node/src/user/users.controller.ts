@@ -76,7 +76,7 @@ export class UserController {
   @Public()
   @Post()
   async registerUser(
-    @Body() registerDto: types.RegisterUserRequest,
+    @Body() registerDto: RegisterUserRequestDto,
   ): Promise<types.LoginResponse> {
     const token = await this.authService.register(registerDto);
     return { token };

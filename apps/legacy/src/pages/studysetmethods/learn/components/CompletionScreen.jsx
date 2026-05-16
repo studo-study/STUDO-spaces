@@ -11,11 +11,11 @@ const formatDuration = (minutes) => {
 };
 
 export default function CompletionScreen({
-                                           studysetId,
-                                           stats,
-                                           totalCards,
-                                           sessionDuration
-                                         }) {
+  studysetId,
+  stats,
+  totalCards,
+  sessionDuration,
+}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -42,8 +42,7 @@ export default function CompletionScreen({
   };
 
   return (
-    <div
-      className="w-screen h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+    <div className="w-screen h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
       <div className="max-w-2xl w-full bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center">
         <div className="text-8xl mb-6 animate-bounce">
           {getAccuracyEmoji(stats.accuracy)}
@@ -61,7 +60,9 @@ export default function CompletionScreen({
             <div className="text-sm text-gray-600 uppercase tracking-wide mb-2">
               {t("accuracy")}
             </div>
-            <div className={`text-4xl font-bold ${getAccuracyColor(stats.accuracy)}`}>
+            <div
+              className={`text-4xl font-bold ${getAccuracyColor(stats.accuracy)}`}
+            >
               {stats.accuracy}%
             </div>
             <div className="text-sm text-gray-500 mt-2">
@@ -88,18 +89,19 @@ export default function CompletionScreen({
             <div className="text-4xl font-bold text-purple-600">
               {formatDuration(sessionDuration)}
             </div>
-            <div className="text-sm text-gray-500 mt-2">
-              {t("great_focus")}
-            </div>
+            <div className="text-sm text-gray-500 mt-2">{t("great_focus")}</div>
           </div>
         </div>
 
         <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-6 mb-8">
           <p className="text-lg text-gray-700">
-            {stats.accuracy >= 90 ? t("excellent_work") :
-              stats.accuracy >= 75 ? t("great_job") :
-                stats.accuracy >= 60 ? t("good_effort") :
-                  t("keep_practicing")}
+            {stats.accuracy >= 90
+              ? t("excellent_work")
+              : stats.accuracy >= 75
+                ? t("great_job")
+                : stats.accuracy >= 60
+                  ? t("good_effort")
+                  : t("keep_practicing")}
           </p>
         </div>
 
@@ -120,9 +122,7 @@ export default function CompletionScreen({
         </div>
 
         <div className="mt-8 pt-8 border-t border-gray-200">
-          <p className="text-sm text-gray-500 mb-3">
-            {t("share_achievement")}
-          </p>
+          <p className="text-sm text-gray-500 mb-3">{t("share_achievement")}</p>
           <div className="flex justify-center gap-3">
             <button className="w-10 h-10 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
               𝕏

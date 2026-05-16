@@ -40,15 +40,18 @@ export default function AddImage({ index }) {
     setShowModal(false);
   }, [inputValue, setValue, index, t]);
 
-  const handleKeyDown = useCallback((e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSave();
-    }
-    if (e.key === "Escape") {
-      closeModal();
-    }
-  }, [handleSave, closeModal]);
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSave();
+      }
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    },
+    [handleSave, closeModal],
+  );
 
   const handleClear = useCallback(() => {
     setInputValue("");
@@ -58,10 +61,7 @@ export default function AddImage({ index }) {
 
   return (
     <>
-      <input
-        type="hidden"
-        {...register(`cardlist.0.cards.${index}.image`)}
-      />
+      <input type="hidden" {...register(`cardlist.0.cards.${index}.image`)} />
 
       <div
         onClick={openModal}
@@ -73,7 +73,8 @@ export default function AddImage({ index }) {
           border-[0.5px] border-solid overflow-hidden
           dark:border-t-gray-500 dark:border-l-gray-500
           border-[#8181812f] border-t-[#ffffff] border-l-[#f2f2f2]
-          hover:opacity-80 transition-opacity">
+          hover:opacity-80 transition-opacity"
+      >
         {imageUrl ? (
           <img
             src={imageUrl}
@@ -96,12 +97,13 @@ export default function AddImage({ index }) {
         <div
           className="fixed inset-0 z-[9999] p-4 sm:p-6 md:p-8 w-full bg-white dark:bg-gray-700
             flex items-center justify-center"
-          onClick={closeModal}>
+          onClick={closeModal}
+        >
           <div
             className="dark:bg-gray-700 w-full max-w-lg rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6
               shadow-2xl border border-gray-200 dark:border-gray-700"
-            onClick={(e) => e.stopPropagation()}>
-
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-center mb-3 sm:mb-4">
               <span className="font-atrament text-lg sm:text-xl font-semibold text-studodarkblue dark:text-white">
                 {t("add image").toUpperCase()}
@@ -147,7 +149,9 @@ export default function AddImage({ index }) {
                   text-studodarkblue dark:text-white focus:outline-none outline-0"
               />
               {error && (
-                <span className="text-red-500 text-xs sm:text-sm mt-1 pl-4">{error}</span>
+                <span className="text-red-500 text-xs sm:text-sm mt-1 pl-4">
+                  {error}
+                </span>
               )}
             </div>
 
@@ -159,7 +163,8 @@ export default function AddImage({ index }) {
                   className="flex-1 py-2 px-3 sm:px-4 rounded-full text-sm sm:text-base
                     bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400
                     font-atrament font-semibold
-                    hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors">
+                    hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
+                >
                   {t("Remove")}
                 </button>
               )}
@@ -176,7 +181,8 @@ export default function AddImage({ index }) {
                   border-t-blue-300 border-l-blue-300
                   shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
                   dark:bg-studoblue dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
-                  dark:text-white font-bold">
+                  dark:text-white font-bold"
+              >
                 {t("save").toUpperCase()}
               </button>
             </div>

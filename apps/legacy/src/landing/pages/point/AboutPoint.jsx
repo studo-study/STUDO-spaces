@@ -15,27 +15,36 @@ export default function AboutPoint() {
   const title = t("seo.point.title", "Point | Studo");
   const description = t(
     "seo.point.description",
-    "Study images interactively with Studo's Point mode. Click on the correct location to test your visual knowledge. Perfect for maps, anatomy, and diagrams."
+    "Study images interactively with Studo's Point mode. Click on the correct location to test your visual knowledge. Perfect for maps, anatomy, and diagrams.",
   );
   const keywords = t(
     "seo.point.keywords",
-    "point mode, interactive learning, image quiz, visual studygroup, click to learn, Studo point"
+    "point mode, interactive learning, image quiz, visual studygroup, click to learn, Studo point",
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "Point", path: "/point" }
+    { name: "Point", path: "/point" },
   ];
 
   const faqs = [
     {
       question: t("faq.point.what.question", "What is Point mode?"),
-      answer: t("faq.point.what.answer", "Point mode tests your knowledge by asking you to click on the correct location on an image. It's great for learning anatomy, geography, and diagram-based subjects.")
+      answer: t(
+        "faq.point.what.answer",
+        "Point mode tests your knowledge by asking you to click on the correct location on an image. It's great for learning anatomy, geography, and diagram-based subjects.",
+      ),
     },
     {
-      question: t("faq.point.difference.question", "What's the difference between Point and Identify?"),
-      answer: t("faq.point.difference.answer", "In Identify mode, you name labeled parts. In Point mode, you click where something is located. Both help with visual learning but test different skills.")
-    }
+      question: t(
+        "faq.point.difference.question",
+        "What's the difference between Point and Identify?",
+      ),
+      answer: t(
+        "faq.point.difference.answer",
+        "In Identify mode, you name labeled parts. In Point mode, you click where something is located. Both help with visual learning but test different skills.",
+      ),
+    },
   ];
 
   return (
@@ -46,7 +55,10 @@ export default function AboutPoint() {
         keywords={keywords}
         path="/point"
         image="/og/welcome.png"
-        imageAlt={t("seo.point.imageAlt", "Studo Point Mode - Interactive image learning")}
+        imageAlt={t(
+          "seo.point.imageAlt",
+          "Studo Point Mode - Interactive image learning",
+        )}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />
@@ -102,7 +114,11 @@ export default function AboutPoint() {
               transition-all duration-700 delay-400
               ${mounted ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={hero} alt={t("Point mode illustration")} className="w-3/4" />
+            <img
+              src={hero}
+              alt={t("Point mode illustration")}
+              className="w-3/4"
+            />
           </div>
         </div>
       </main>

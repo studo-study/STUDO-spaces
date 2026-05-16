@@ -7,8 +7,6 @@ import {
   SessionCardResponseDTO,
   updateSessionCardDTO,
 } from './sessioncard.dto';
-import { CardResponseDto } from '../studyset/card.dto';
-import { PinResponseDto } from '../pin/pin.dto';
 
 export class UpdateStudysessionDto {
   @ApiProperty({

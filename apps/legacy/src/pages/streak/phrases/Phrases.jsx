@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 export default function Phrases() {
   const { t, i18n } = useTranslation();
   const zinnen = [
-
     t("Nice work"),
     t("Well done"),
     t("Keep on going"),
@@ -40,7 +39,7 @@ export default function Phrases() {
     t("WOW WOW WOW"),
     t("Highkey crushing it right now"),
     t("Congratulations, now get back to work"),
-    t("yes, we can - Yoda")
+    t("yes, we can - Yoda"),
   ];
 
   let random = Math.floor(Math.random() * zinnen.length);

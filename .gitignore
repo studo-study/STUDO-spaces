@@ -33,7 +33,7 @@ lerna-debug.log*
 # Runtime / env
 .env
 .env*.local
-.env.test
+# .env.test is committed intentionally — contains only test dummies, no real secrets
 .env.development
 .env.production
 

@@ -19,7 +19,6 @@ export default function Searchpart({ isOpen }) {
 
   const clearSearch = () => {
     search.current.value = "";
-
   };
 
   return (
@@ -29,11 +28,7 @@ export default function Searchpart({ isOpen }) {
                  border-2 border-studogrey text-studodarkblue
                  dark:text-white"
     >
-      <img
-        className="h-4 w-4 dark:invert"
-        src={SearchIcon}
-        alt="search icon"
-      />
+      <img className="h-4 w-4 dark:invert" src={SearchIcon} alt="search icon" />
 
       <input
         type="text"

@@ -1,9 +1,14 @@
 import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { createBrowserRouter, RouterProvider, Navigate, Outlet } from "react-router-dom";
-import './i18n';
-import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from './i18n';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
+import "./i18n";
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from "./i18n";
 import { SWRConfig } from "swr";
 import { HelmetProvider } from "react-helmet-async";
 
@@ -61,101 +66,101 @@ import Identify from "./pages/visualsetmethods/identify/Identify.jsx";
 const privateRoutes = [
   {
     path: "home",
-    element: <StartingPagina />
+    element: <StartingPagina />,
   },
   {
     path: "privacy",
-    element: <Privacy />
+    element: <Privacy />,
   },
   {
     path: "studysets",
     element: <Studysets />,
-    children: [{ index: true, element: <StudysetsPage /> }]
+    children: [{ index: true, element: <StudysetsPage /> }],
   },
   {
     path: "folders",
     element: <Studysets />,
-    children: [{ index: true, element: <FoldersPage /> }]
+    children: [{ index: true, element: <FoldersPage /> }],
   },
   {
     path: "folders/:id",
     element: <Studysets />,
-    children: [{ index: true, element: <Folders /> }]
+    children: [{ index: true, element: <Folders /> }],
   },
   {
     path: "courses",
     element: <Studysets />,
-    children: [{ index: true, element: <CoursesPage /> }]
+    children: [{ index: true, element: <CoursesPage /> }],
   },
   {
     path: "courses/:id",
     element: <Studysets />,
-    children: [{ index: true, element: <Course /> }]
+    children: [{ index: true, element: <Course /> }],
   },
   {
     path: "search",
-    element: <Search />
+    element: <Search />,
   },
   {
     path: "studoset/:id",
-    element: <Studyset />
+    element: <Studyset />,
   },
   {
     path: "learn/:id",
-    element: <Learn />
+    element: <Learn />,
   },
   {
     path: "identify/:id",
-    element: <Identify />
+    element: <Identify />,
   },
   {
     path: "point/:id",
-    element: <Point />
+    element: <Point />,
   },
   {
     path: "flashcards/:id",
-    element: <Flashcards />
+    element: <Flashcards />,
   },
   {
     path: "speedy/:id",
-    element: <Speedy />
+    element: <Speedy />,
   },
   {
     path: "((visualset))/:id",
-    element: <Visualset />
+    element: <Visualset />,
   },
   {
     path: "create-set",
-    element: <CreateOrEditSet />
+    element: <CreateOrEditSet />,
   },
   {
     path: "create-set/:id",
-    element: <CreateOrEditSet />
+    element: <CreateOrEditSet />,
   },
   {
     path: "create-folder",
-    element: <CreateFolder />
+    element: <CreateFolder />,
   },
   {
     path: "create-((visualset))",
-    element: <CreateOrEditVisualset />
+    element: <CreateOrEditVisualset />,
   },
   {
     path: "account",
-    element: <Account />
+    element: <Account />,
   },
   {
     path: "classroom/:id",
-    element: <ClassPage />
+    element: <ClassPage />,
   },
   {
     path: "classrooms",
     element: <Classrooms />,
-    children: [{ path: ":id", element: <Classroom /> }]
+    children: [{ path: ":id", element: <Classroom /> }],
   },
   {
     path: "streak",
-    element: <Streak />
+    element: <Streak />,
   },
   {
     path: "profile/:id",
@@ -163,9 +168,9 @@ const privateRoutes = [
     children: [
       { index: true, element: <Navigate to="studysets" replace /> },
       { path: "studysets", element: <Sets /> },
-      { path: "visualsets", element: <Visualsets /> }
-    ]
-  }
+      { path: "visualsets", element: <Visualsets /> },
+    ],
+  },
 ];
 
 // Landing pages (public, need language prefixes for SEO)
@@ -191,16 +196,18 @@ const authRoutes = [
 
 // Generate language-prefixed routes for marketing pages
 const generateLangRoutes = (routes, layout) => {
-  const langCodes = SUPPORTED_LANGUAGES.map(l => l.code).filter(c => c !== DEFAULT_LANGUAGE);
+  const langCodes = SUPPORTED_LANGUAGES.map((l) => l.code).filter(
+    (c) => c !== DEFAULT_LANGUAGE,
+  );
 
-  return langCodes.map(lang => ({
+  return langCodes.map((lang) => ({
     path: lang,
     element: <LanguageWrapper lang={lang}>{layout}</LanguageWrapper>,
     children: [
       // Redirect /nl → /nl/welcome
       { index: true, element: <Navigate to={`/${lang}/welcome`} replace /> },
-      ...routes
-    ]
+      ...routes,
+    ],
   }));
 };
 
@@ -211,24 +218,24 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/home" replace />
+        element: <Navigate to="/home" replace />,
       },
       {
         element: <PrivateRoute />,
-        children: privateRoutes
+        children: privateRoutes,
       },
       {
         path: "*",
         element: <PrivateRoute />,
-        children: [{ index: true, element: <Error /> }]
-      }
-    ]
+        children: [{ index: true, element: <Error /> }],
+      },
+    ],
   },
 
   // Landing pages - default language (no prefix)
   {
     element: <LandingLayout />,
-    children: landingRoutes
+    children: landingRoutes,
   },
 
   // Landing pages - with language prefix (/nl/welcome, /de/welcome, etc.)
@@ -238,25 +245,32 @@ const router = createBrowserRouter([
   ...authRoutes,
 
   // Auth pages - with language prefix
-  ...SUPPORTED_LANGUAGES
-    .filter(l => l.code !== DEFAULT_LANGUAGE)
-    .flatMap(lang =>
-      authRoutes.map(route => ({
+  ...SUPPORTED_LANGUAGES.filter((l) => l.code !== DEFAULT_LANGUAGE).flatMap(
+    (lang) =>
+      authRoutes.map((route) => ({
         path: `${lang.code}/${route.path}`,
-        element: <LanguageWrapper lang={lang.code}>{route.element}</LanguageWrapper>
-      }))
-    ),
+        element: (
+          <LanguageWrapper lang={lang.code}>{route.element}</LanguageWrapper>
+        ),
+      })),
+  ),
 
   // Auth callback (no language prefix needed)
   {
     path: "/auth/callback",
-    element: <AuthCallback />
-  }
+    element: <AuthCallback />,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Suspense fallback={<div className="w-screen h-screen flex items-center justify-center">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="w-screen h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
       <HelmetProvider>
         <AuthProvider>
           <SWRConfig
@@ -265,7 +279,7 @@ createRoot(document.getElementById("root")).render(
               revalidateOnFocus: false,
               revalidateOnReconnect: false,
               shouldRetryOnError: false,
-              dedupingInterval: 60_000
+              dedupingInterval: 60_000,
             }}
           >
             <RouterProvider router={router} />
@@ -273,5 +287,5 @@ createRoot(document.getElementById("root")).render(
         </AuthProvider>
       </HelmetProvider>
     </Suspense>
-  </StrictMode>
+  </StrictMode>,
 );

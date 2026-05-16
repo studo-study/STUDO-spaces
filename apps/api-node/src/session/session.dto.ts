@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'nestjs-swagger-dto';
+import { IsString } from 'nestjs-swagger-dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginRequestDto {

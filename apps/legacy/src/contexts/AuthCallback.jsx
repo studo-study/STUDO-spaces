@@ -3,16 +3,11 @@ import { JWT_TOKEN_KEY } from "./auth";
 
 export default function AuthCallback() {
   useEffect(() => {
-
-
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
     const refreshToken = urlParams.get("refresh");
 
-
     if (token && token.trim() !== "") {
-
-
       localStorage.removeItem(JWT_TOKEN_KEY);
       localStorage.removeItem("refreshToken");
 
@@ -20,7 +15,6 @@ export default function AuthCallback() {
       if (refreshToken) {
         localStorage.setItem("refreshToken", refreshToken);
       }
-
 
       setTimeout(() => {
         window.location.replace("/home");

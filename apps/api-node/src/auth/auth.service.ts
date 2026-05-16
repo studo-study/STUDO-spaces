@@ -96,7 +96,12 @@ export class AuthService {
   }
 
   //google users
-  async validateGoogleUser(googleUser: any): Promise<string> {
+  async validateGoogleUser(googleUser: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    picture?: string;
+  }): Promise<string> {
     // Check of user bestaat op basis van email
     let user = await this.db.query.users.findFirst({
       where: eq(users.email, googleUser.email),
@@ -112,7 +117,7 @@ export class AuthService {
         email: googleUser.email,
         passwordHash: '',
         displayName: `${googleUser.firstName} ${googleUser.lastName}`,
-        img_url: googleUser.picture || '',
+        img_url: googleUser.picture ?? '',
         join_date: date.toISOString(),
         totalSets: 0,
         streak_started: null,
@@ -129,7 +134,7 @@ export class AuthService {
       const newProfile = {
         user_id: uid,
         displayName: `${googleUser.firstName} ${googleUser.lastName}`,
-        img_url: googleUser.picture || '',
+        img_url: googleUser.picture ?? '',
         banner_url: '',
         join_date: date.toISOString(),
         streak: 0,
@@ -167,7 +172,13 @@ export class AuthService {
   }
 
   //microsoft users
-  async validateMicrosoftUser(microsoftUser: any): Promise<string> {
+  async validateMicrosoftUser(microsoftUser: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    displayName: string;
+    picture?: string;
+  }): Promise<string> {
     // Check of user bestaat op basis van email
     let user = await this.db.query.users.findFirst({
       where: eq(users.email, microsoftUser.email),
@@ -238,7 +249,13 @@ export class AuthService {
   }
 
   //smartschool users
-  async validateSmartschoolUser(smartschoolUser: any): Promise<string> {
+  async validateSmartschoolUser(smartschoolUser: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    displayName: string;
+    picture?: string;
+  }): Promise<string> {
     // Check of user bestaat op basis van email
     let user = await this.db.query.users.findFirst({
       where: eq(users.email, smartschoolUser.email),

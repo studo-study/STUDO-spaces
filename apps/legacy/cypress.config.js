@@ -4,15 +4,14 @@ export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:5173",
     supportFile: false,
-    setupNodeEvents(on, config) {
-    }
+    setupNodeEvents(on, config) {},
   },
 
   component: {
     devServer: {
       framework: "react",
-      bundler: "vite"
-    }
+      bundler: "vite",
+    },
   },
 
   defaultCommandTimeout: 4000,
@@ -22,5 +21,5 @@ export default defineConfig({
   screenshotOnRunFailure: true,
 
   viewportWidth: 1280,
-  viewportHeight: 720
+  viewportHeight: 720,
 });

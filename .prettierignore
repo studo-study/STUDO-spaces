@@ -1,0 +1,4 @@
+apps/legacy/**
+node_modules
+.next
+dist

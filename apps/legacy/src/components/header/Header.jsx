@@ -25,14 +25,13 @@ export default function Header({ headerData }) {
   const closePopup = () => setTriggerPopup(false);
   const closeAddPop = () => setTriggerAddPop(false);
 
-
   const [searchQuery, setSearchQuery] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
 
   const {
     data: searchData = {},
     isLoading: isSearchLoading,
-    error: searchError
+    error: searchError,
   } = useSWR(`search/${id}/${searchQuery}`);
 
   useEffect(() => {
@@ -40,8 +39,8 @@ export default function Header({ headerData }) {
       navigate(`/search?q=${searchQuery}`, {
         state: {
           query: searchQuery,
-          results: searchData
-        }
+          results: searchData,
+        },
       });
       setIsSearching(false);
       setSearchQuery(null);
@@ -60,7 +59,6 @@ export default function Header({ headerData }) {
     setIsSearching(true);
     setSearchQuery(query);
   };
-
 
   return (
     <div className="w-screen fixed top-0 left-0 flex m-0 flex-col z-[999]">

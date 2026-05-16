@@ -23,13 +23,13 @@ export default function CoursesPage() {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="w-full h-fit flex flex-row items-center justify-between gap-2 sm:gap-3 py-3">
-      </div>
+      <div className="w-full h-fit flex flex-row items-center justify-between gap-2 sm:gap-3 py-3"></div>
 
       <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-        {!isLoading && coursesArray.map((course, index) => (
-          <CourseItem course={course} key={index} />
-        ))}
+        {!isLoading &&
+          coursesArray.map((course, index) => (
+            <CourseItem course={course} key={index} />
+          ))}
       </div>
       <Outlet />
     </div>

@@ -44,8 +44,7 @@ interface AuthenticatedRequest extends ExpressRequest {
 @ApiBearerAuth()
 @Controller('studysessions')
 export class StudysessionController {
-  constructor(private readonly seshService: StudysessionService) {
-  }
+  constructor(private readonly seshService: StudysessionService) {}
 
   // GET ALL STUDYSESSIONS ------------------------------------------
   @ApiOperation({ summary: 'Haal alle studysessions op (admin).' })

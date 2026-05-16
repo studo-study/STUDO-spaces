@@ -36,18 +36,18 @@ export interface StudoProfileSearchResult {
 
 export interface SearchResults {
   data: [
-    { type: 'set'; data: SetSearchResult[] },
-    { type: 'profile'; data: ProfileSearchResult[] },
-    { type: 'classroom'; data: ClassroomSearchResult[] },
+    { type: "set"; data: SetSearchResult[] },
+    { type: "profile"; data: ProfileSearchResult[] },
+    { type: "classroom"; data: ClassroomSearchResult[] },
     { data: StudoProfileSearchResult[] },
   ];
 }
 
 export interface PublicSearchResults {
   data: [
-    { type: 'set'; data: SetSearchResult[] },
-    { type: 'profile'; data: ProfileSearchResult[] },
-    { type: 'classroom'; data: ClassroomSearchResult[] },
+    { type: "set"; data: SetSearchResult[] },
+    { type: "profile"; data: ProfileSearchResult[] },
+    { type: "classroom"; data: ClassroomSearchResult[] },
     { data: StudoProfileSearchResult[] },
   ];
 }

@@ -17,9 +17,7 @@ import {
   ApiResponse,
   ApiParam,
 } from '@nestjs/swagger';
-import { ParseUserIdPipe } from '../auth/pipes/parseUserId.pipe';
 import { Public } from '../auth/decorators/public.decorator';
-import { PublicSearchRsultsDto } from '../search/search.dto';
 
 @ApiTags('profile')
 @ApiBearerAuth()

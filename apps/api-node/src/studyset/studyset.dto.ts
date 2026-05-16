@@ -1,9 +1,4 @@
-import {
-  CardResponseDto,
-  CreateCardDto,
-  CreateCardListDto,
-  UpdateCardDto,
-} from './card.dto';
+import { CardResponseDto, CreateCardDto, UpdateCardDto } from './card.dto';
 import { VisualsetResponseDto } from '../visualset/visualset.dto';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { ClassroomResponseDto } from '../classroom/classroom.dto';
