@@ -14,7 +14,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
   return (
     <div className="w-full flex flex-row items-center justify-between">
       <div className="flex flex-row gap-2 items-center dark:text-white/75 text-studodarkblue">
-        {sectionIcon && sectionIcon}
+        {sectionIcon}
         <span className="w-full text-lg font-bold ">{title}</span>
       </div>
       {href && (

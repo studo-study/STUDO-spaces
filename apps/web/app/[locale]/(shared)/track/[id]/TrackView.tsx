@@ -97,7 +97,7 @@ export default function TrackView() {
                   >
                     Studo
                   </span>{" "}
-                  {result && result?.profile && result.profile.displayName}
+                  {result?.profile?.displayName}
                 </span>
                 <Image
                   src="/icons/verified.svg"
