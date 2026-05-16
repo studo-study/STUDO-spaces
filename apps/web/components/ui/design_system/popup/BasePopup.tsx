@@ -16,8 +16,8 @@ const BasePopup = (props: BasePopupProps) => {
                  
                       z-[9999] truncate rounded-2xl 
                       ${width ? `w-${width}` : "w-1/4"}
-                      ${!height && "min-h-135"}
-                      ${className && className}
+                      ${height ?? "min-h-135"}
+                      ${className}
                       
         bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl
         border border-white/50 dark:border-white/10 overflow-visible

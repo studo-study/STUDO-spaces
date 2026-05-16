@@ -11,7 +11,7 @@ interface CommunitiesProps {
 }
 
 export default function Communities({ communities }: CommunitiesProps) {
-  const klassen = communities && communities;
+  const klassen = communities;
   const empty = klassen && klassen.length === 0;
   const t = useTranslations("landing.search_result.classroom");
   return (

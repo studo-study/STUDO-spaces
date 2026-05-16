@@ -30,7 +30,7 @@ const InputField = (props: InputFieldProps) => {
         ${width ?? "w-fit"} 
         ${error ? "border border-transparent border-b-rose-500" : null} transparent 
         ${fontBold ? "font-bold" : ""} 
-        ${className && className}
+        ${className}
         ${textSize ? `text-${textSize}` : ""} 
         dark:text-white text-studodarkblue`}
     >

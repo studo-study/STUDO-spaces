@@ -96,11 +96,7 @@ export default function UserPopup({ burgerOpen }: UserPopupProps) {
               t={t}
             />
             {isModerator && (
-              <MenuItem
-                item={menuItems.moderator}
-                showText={burgerOpen && isOpen}
-                t={t}
-              />
+              <MenuItem item={menuItems.moderator} showText={isOpen} t={t} />
             )}
           </div>
         </div>
