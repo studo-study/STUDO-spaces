@@ -293,7 +293,7 @@ importers:
         version: 12.11.0
       glin-profanity:
         specifier: ^3.1.5
-        version: 3.3.0(react@19.2.3)(zod@4.3.6)
+        version: 3.3.0(react@19.2.3)(zod@4.4.0)
       i18n:
         specifier: ^0.15.3
         version: 0.15.3
@@ -337,8 +337,8 @@ importers:
         specifier: ^3.4.0
         version: 3.5.0
       zod:
-        specifier: ^4.3.5
-        version: 4.3.6
+        specifier: ^4.4.0
+        version: 4.4.0
       zustand:
         specifier: ^5.0.11
         version: 5.0.12(@types/react@19.2.14)(immer@11.1.4)(react@19.2.3)(use-sync-external-store@1.6.0(react@19.2.3))
@@ -12903,10 +12903,10 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
-  glin-profanity@3.3.0(react@19.2.3)(zod@4.3.6):
+  glin-profanity@3.3.0(react@19.2.3)(zod@4.4.0):
     optionalDependencies:
       react: 19.2.3
-      zod: 4.3.6
+      zod: 4.4.0
 
   glob-parent@5.1.2:
     dependencies:
@@ -15291,6 +15291,8 @@ snapshots:
       zod: 4.3.6
 
   zod@4.3.6: {}
+
+  zod@4.4.0: {}
 
   zustand@5.0.12(@types/react@19.2.14)(immer@11.1.4)(react@19.2.3)(use-sync-external-store@1.6.0(react@19.2.3)):
     optionalDependencies:
