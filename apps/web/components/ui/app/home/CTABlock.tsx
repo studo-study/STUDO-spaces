@@ -1,32 +1,38 @@
-import {memo} from "react";
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
-import {GoPlus} from "react-icons/go";
+import { GoPlus } from "react-icons/go";
 
-export default function CTABlock({ t }: { t: ReturnType<typeof useTranslations> }) {
-    return (
-        <div className="p-6 rounded-3xl shadow-2xl backdrop-blur-xl bg-gradient-to-br dark:from-emerald-500/10 dark:to-emerald-400/10 from-emerald-500/50 to-teal-500/50 border border-studoborder/30">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">{t("lets_go")}</h3>
-                    <p className="dark:text-studogrey text-sm text-studodarkblue/40">{t("create_block")}</p>
-                </div>
-                <div className="flex gap-3">
-                    <Link
-                        href="/create-studoset"
-                        className="px-5 py-2.5 min-w-30 rounded-full text-sm font-bold bg-emerald-400 text-white hover:opacity-90 transition-opacity flex items-center gap-2"
-                    >
-                        <GoPlus /> {t("create_ss")}
-                    </Link>
-                    <Link
-                        href="/create-visualset"
-                        className="px-5 py-2.5 min-w-30 rounded-full text-sm bg-blue-500 font-bold  text-white hover:opacity-90 transition-opacity flex items-center gap-2"
-                    >
-                        <GoPlus /> {t("create_vs")}
-                    </Link>
-                </div>
-            </div>
+export default function CTABlock({
+  t,
+}: {
+  t: ReturnType<typeof useTranslations>;
+}) {
+  return (
+    <div className="p-6 rounded-3xl shadow-2xl backdrop-blur-xl bg-gradient-to-br dark:from-emerald-500/10 dark:to-emerald-400/10 from-emerald-500/50 to-teal-500/50 border border-studoborder/30">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 className="text-lg font-semibold text-white mb-1">
+            {t("lets_go")}
+          </h3>
+          <p className="dark:text-studogrey text-sm text-studodarkblue/40">
+            {t("create_block")}
+          </p>
         </div>
-    );
+        <div className="flex gap-3">
+          <Link
+            href="/create-studoset"
+            className="px-5 py-2.5 min-w-30 rounded-full text-sm font-bold bg-emerald-400 text-white hover:opacity-90 transition-opacity flex items-center gap-2"
+          >
+            <GoPlus /> {t("create_ss")}
+          </Link>
+          <Link
+            href="/create-visualset"
+            className="px-5 py-2.5 min-w-30 rounded-full text-sm bg-blue-500 font-bold  text-white hover:opacity-90 transition-opacity flex items-center gap-2"
+          >
+            <GoPlus /> {t("create_vs")}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 }
-

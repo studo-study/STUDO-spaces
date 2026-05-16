@@ -1,6 +1,6 @@
 const UrgentPoints = () => {
-    return (<div></div>)
-}
+  return <div></div>;
+};
 
-UrgentPoints.displayName = "UrgentPoints"
+UrgentPoints.displayName = "UrgentPoints";
 export default UrgentPoints;

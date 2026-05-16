@@ -1,3 +1,3 @@
-export default function UsersPage({result}) {
-  return (<div></div>);
+export default function UsersPage({ result }) {
+  return <div></div>;
 }

@@ -12,7 +12,7 @@ const floatingItems = [
   { src: ruler, size: "w-16", seed: 3 },
   { src: graduate, size: "w-20", seed: 4 },
   { src: pencil, size: "w-18", seed: 5 },
-  { src: book, size: "w-22", seed: 6 }
+  { src: book, size: "w-22", seed: 6 },
 ];
 
 export default function HeroBackground({ color }) {
@@ -25,14 +25,16 @@ export default function HeroBackground({ color }) {
   return (
     <section className="fixed max-w-screen w-full inset-0 overflow-hidden pointer-events-none">
       {/* Subtiele gradient overlay */}
-      <div className={`absolute max-w-screen w-full inset-0 bg-gradient-to-b from-transparent via-transparent ${color}`} />
+      <div
+        className={`absolute max-w-screen w-full inset-0 bg-gradient-to-b from-transparent via-transparent ${color}`}
+      />
 
       {floatingItems.map((item, i) => (
         <img
           key={i}
           src={item.src}
           alt=""
-		  className={`absolute ${item.size} floating-blob ${mounted ? 'animate' : ''}`}
+          className={`absolute ${item.size} floating-blob ${mounted ? "animate" : ""}`}
           style={{
             "--seed": item.seed,
             "--start-x": `${Math.random() * 80 + 10}%`,
@@ -44,7 +46,7 @@ export default function HeroBackground({ color }) {
 
             opacity: mounted ? 0.2 : 0,
             left: "var(--start-x)",
-            top: "var(--start-y)"
+            top: "var(--start-y)",
           }}
         />
       ))}

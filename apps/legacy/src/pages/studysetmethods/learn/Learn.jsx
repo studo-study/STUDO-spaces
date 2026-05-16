@@ -13,18 +13,14 @@ import {
   getNextCardIndex,
   isLearningComplete as checkComplete,
   initializeSessionCards,
-  createSessionUpdateBody
+  createSessionUpdateBody,
 } from "./utils/FlashcardUtils.js";
 
 export default function Learn() {
   const { t } = useTranslation();
   const { id } = useParams();
 
-  const {
-    data: studyset,
-    isLoading,
-    error
-  } = useSWR(`studysets/${id}`);
+  const { data: studyset, isLoading, error } = useSWR(`studysets/${id}`);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
@@ -37,7 +33,7 @@ export default function Learn() {
     accuracy: 0,
     correctAnswers: 0,
     totalAnswers: 0,
-    startTime: Date.now()
+    startTime: Date.now(),
   });
 
   useEffect(() => {
@@ -45,12 +41,12 @@ export default function Learn() {
 
     const initializedCards = initializeSessionCards(
       studyset.cards,
-      studyset.session.cards
+      studyset.session.cards,
     );
 
     setSessionCards(initializedCards);
 
-    const initialQueue = initializedCards.filter(card => card.inQueue);
+    const initialQueue = initializedCards.filter((card) => card.inQueue);
     setQueue(initialQueue);
 
     if (studyset.session.index) {
@@ -63,19 +59,19 @@ export default function Learn() {
     return sessionCards[currentIndex];
   }, [sessionCards, currentIndex]);
 
-
   const isComplete = useMemo(() => {
     return checkComplete(sessionCards, queue);
   }, [sessionCards, queue]);
 
-
   const handleCheckAnswer = () => {
     if (!currentCard || userAnswer.trim() === "") return;
 
-    const expectedAnswer = termAsQuestion ? currentCard.definition : currentCard.term;
+    const expectedAnswer = termAsQuestion
+      ? currentCard.definition
+      : currentCard.term;
     const isCorrect = checkAnswer(userAnswer, expectedAnswer);
 
-    const updatedCards = sessionCards.map(card => {
+    const updatedCards = sessionCards.map((card) => {
       if (card.id === currentCard.id) {
         const newViewcount = card.viewcount + 1;
         const updatedCard = {
@@ -83,16 +79,16 @@ export default function Learn() {
           viewcount: newViewcount,
           totalViewcount: card.totalViewcount + 1,
           attempts: card.attempts + 1,
-          lastAnswerCorrect: isCorrect
+          lastAnswerCorrect: isCorrect,
         };
 
         if (!isCorrect && !card.inQueue) {
           updatedCard.inQueue = true;
-          setQueue(prev => [...prev, updatedCard]);
+          setQueue((prev) => [...prev, updatedCard]);
         } else if (isCorrect && card.inQueue) {
           updatedCard.inQueue = false;
           updatedCard.mastered = newViewcount >= 2;
-          setQueue(prev => prev.filter(c => c.id !== card.id));
+          setQueue((prev) => prev.filter((c) => c.id !== card.id));
         } else if (isCorrect && newViewcount >= 2) {
           updatedCard.mastered = true;
         }
@@ -105,21 +101,30 @@ export default function Learn() {
     setSessionCards(updatedCards);
     setShowAnswer(true);
 
-    setSessionStats(prev => ({
+    setSessionStats((prev) => ({
       ...prev,
       totalAnswers: prev.totalAnswers + 1,
       correctAnswers: prev.correctAnswers + (isCorrect ? 1 : 0),
-      accuracy: Math.round(((prev.correctAnswers + (isCorrect ? 1 : 0)) / (prev.totalAnswers + 1)) * 100)
+      accuracy: Math.round(
+        ((prev.correctAnswers + (isCorrect ? 1 : 0)) /
+          (prev.totalAnswers + 1)) *
+          100,
+      ),
     }));
 
-    setCardsAnswered(prev => prev + 1);
+    setCardsAnswered((prev) => prev + 1);
   };
 
   const handleNextCard = async () => {
     setShowAnswer(false);
     setUserAnswer("");
 
-    const nextIndex = getNextCardIndex(currentIndex, sessionCards, queue, cardsAnswered);
+    const nextIndex = getNextCardIndex(
+      currentIndex,
+      sessionCards,
+      queue,
+      cardsAnswered,
+    );
     setCurrentIndex(nextIndex);
 
     await saveProgress();
@@ -133,18 +138,17 @@ export default function Learn() {
       currentIndex,
       sessionStats,
       currentCard?.id,
-      sessionCards
+      sessionCards,
     );
 
     try {
       await put(`studysessions/${studyset.session.id}`, updateBody);
       mutate(`studysets/${id}`);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const toggleQuestionMode = () => {
-    setTermAsQuestion(prev => !prev);
+    setTermAsQuestion((prev) => !prev);
     setShowAnswer(false);
     setUserAnswer("");
   };
@@ -173,7 +177,9 @@ export default function Learn() {
   }
 
   if (isComplete) {
-    const sessionDuration = Math.floor((Date.now() - sessionStats.startTime) / 60000);
+    const sessionDuration = Math.floor(
+      (Date.now() - sessionStats.startTime) / 60000,
+    );
 
     return (
       <CompletionScreen
@@ -187,9 +193,7 @@ export default function Learn() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-baseline pt-35">
-      <div
-        className="flex w-full sm:w-1/2 md:w-5/12 lg:w-5/12 xl:w-2/5 2xl:w-2/5 max-w-[700px] flex-col items-center justify-center gap-6 px-4">
-
+      <div className="flex w-full sm:w-1/2 md:w-5/12 lg:w-5/12 xl:w-2/5 2xl:w-2/5 max-w-[700px] flex-col items-center justify-center gap-6 px-4">
         <div className="w-full flex flex-row items-center justify-between">
           <span className="text-2xl font-semibold truncate">
             {studyset.title || t("Untitled Set")}
@@ -218,7 +222,9 @@ export default function Learn() {
 
         {currentCard && (
           <Flashcard
-            question={termAsQuestion ? currentCard.term : currentCard.definition}
+            question={
+              termAsQuestion ? currentCard.term : currentCard.definition
+            }
             answer={termAsQuestion ? currentCard.definition : currentCard.term}
             showAnswer={showAnswer}
             viewcount={currentCard.viewcount}
@@ -236,11 +242,14 @@ export default function Learn() {
           />
         ) : (
           <div className="w-full flex flex-col gap-3">
-            <div className={`w-full p-3 rounded-xl text-center font-medium
-              ${currentCard.lastAnswerCorrect
-              ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400"
-              : "bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400"
-            }`}>
+            <div
+              className={`w-full p-3 rounded-xl text-center font-medium
+              ${
+                currentCard.lastAnswerCorrect
+                  ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                  : "bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400"
+              }`}
+            >
               {currentCard.lastAnswerCorrect ? "✓ Correct" : "✗ Fout"}
             </div>
 
@@ -258,7 +267,7 @@ export default function Learn() {
 
         <div className="w-full flex justify-between text-sm opacity-50 mt-2">
           <span>Nauwkeurigheid: {sessionStats.accuracy}%</span>
-          <span>Over: {sessionCards.filter(c => !c.mastered).length}</span>
+          <span>Over: {sessionCards.filter((c) => !c.mastered).length}</span>
         </div>
 
         <Link

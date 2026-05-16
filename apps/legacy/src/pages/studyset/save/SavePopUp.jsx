@@ -5,14 +5,20 @@ import { Link } from "react-router-dom";
 import { useRef, useEffect } from "react";
 import useSWR from "swr";
 
-export default function SavePopUp({ toggled, toggleSave, saved, selectedFolder, setPopUpToggle }) {
+export default function SavePopUp({
+  toggled,
+  toggleSave,
+  saved,
+  selectedFolder,
+  setPopUpToggle,
+}) {
   const { t } = useTranslation();
   const popupRef = useRef(null);
 
   const {
     data: foldersData = { folders: [] },
     isLoading,
-    error
+    error,
   } = useSWR("folders/me");
 
   useEffect(() => {
@@ -44,13 +50,11 @@ export default function SavePopUp({ toggled, toggleSave, saved, selectedFolder, 
 
   return (
     <>
-
       <div
         className={`fixed inset-0 bg-black/50 z-[9998] transition-opacity duration-300
           ${toggled ? "opacity-100 visible md:hidden flex" : "opacity-0 invisible"}`}
         onClick={() => setPopUpToggle(false)}
       />
-
 
       <div
         ref={popupRef}
@@ -66,30 +70,43 @@ export default function SavePopUp({ toggled, toggleSave, saved, selectedFolder, 
           bottom-0 left-0 right-0
           sm:bottom-auto sm:left-auto sm:right-10 sm:top-28
           
-          ${toggled
-          ? "translate-y-0 sm:translate-y-0 opacity-100 visible pointer-events-auto"
-          : "translate-y-full sm:translate-y-0 opacity-0 invisible pointer-events-none"
-        }`}>
+          ${
+            toggled
+              ? "translate-y-0 sm:translate-y-0 opacity-100 visible pointer-events-auto"
+              : "translate-y-full sm:translate-y-0 opacity-0 invisible pointer-events-none"
+          }`}
+      >
         <span className="text-xl sm:text-2xl font-atrament font-semibold dark:text-white text-center">
           {t("Save in folder").toUpperCase()}
         </span>
 
-        <Link to="/create-folder" className="w-full" onClick={() => setPopUpToggle(false)}>
-          <div className="flex items-center w-full p-3 sm:p-4 px-4 sm:px-5 font-atrament text-sm sm:text-base text-[#2a3a42]
+        <Link
+          to="/create-folder"
+          className="w-full"
+          onClick={() => setPopUpToggle(false)}
+        >
+          <div
+            className="flex items-center w-full p-3 sm:p-4 px-4 sm:px-5 font-atrament text-sm sm:text-base text-[#2a3a42]
             bg-studogrey rounded-xl shadow-md
             border-solid border-2 border-studogrey gap-2
-            cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.02]">
-            <img src={Plus} alt="plus" className="h-5 sm:h-6 dark:invert dark:brightness-0 flex-shrink-0" />
+            cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.02]"
+          >
+            <img
+              src={Plus}
+              alt="plus"
+              className="h-5 sm:h-6 dark:invert dark:brightness-0 flex-shrink-0"
+            />
             <span className="font-sfpro text-sm sm:text-base dark:text-white truncate">
               {t("Create new folder")}
             </span>
           </div>
         </Link>
 
-        <div className="w-full flex-1 overflow-y-auto flex flex-col gap-2
+        <div
+          className="w-full flex-1 overflow-y-auto flex flex-col gap-2
           scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600
-          rounded-xl pr-1 scroll-hidden">
-
+          rounded-xl pr-1 scroll-hidden"
+        >
           {isLoading && (
             <div className="w-full p-4 text-center text-xs sm:text-sm opacity-60 dark:text-gray-400">
               {t("Loading folders...")}
@@ -108,14 +125,16 @@ export default function SavePopUp({ toggled, toggleSave, saved, selectedFolder, 
             </div>
           )}
 
-          {!isLoading && !error && folders.map((folder) => (
-            <FolderItem
-              key={folder.id}
-              folder={folder}
-              isSelected={selectedFolder === folder.id}
-              onToggle={() => toggleSave(folder.id)}
-            />
-          ))}
+          {!isLoading &&
+            !error &&
+            folders.map((folder) => (
+              <FolderItem
+                key={folder.id}
+                folder={folder}
+                isSelected={selectedFolder === folder.id}
+                onToggle={() => toggleSave(folder.id)}
+              />
+            ))}
         </div>
       </div>
     </>

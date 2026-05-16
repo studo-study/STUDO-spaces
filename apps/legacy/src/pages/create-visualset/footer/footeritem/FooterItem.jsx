@@ -3,13 +3,13 @@ import Plus from "../../../../assets/icons/cross.png";
 import Photo from "../../../../assets/icons/image.svg";
 
 const FooterItem = memo(function FooterItem({
-                                              index,
-                                              isActive,
-                                              previewUrl,
-                                              canRemove,
-                                              onSelect,
-                                              onRemove
-                                            }) {
+  index,
+  isActive,
+  previewUrl,
+  canRemove,
+  onSelect,
+  onRemove,
+}) {
   const handleRemove = (e) => {
     e.stopPropagation();
     if (canRemove) {
@@ -22,7 +22,6 @@ const FooterItem = memo(function FooterItem({
       onClick={onSelect}
       className={`relative min-h-11 max-h-11 min-w-11 max-w-11 cursor-grab rounded-lg active:cursor-grabbing`}
     >
-
       <div
         className={`absolute inset-0 z-10 ${canRemove ? "pointer-events-auto cursor-pointer" : "pointer-events-none"}
           flex justify-center items-center backdrop-blur-sm bg-studowhite/80 rounded-lg
@@ -37,7 +36,6 @@ const FooterItem = memo(function FooterItem({
           />
         </div>
       </div>
-
 
       <div
         className={`min-w-11 min-h-11 rounded-lg bg-studowhite dark:bg-gray-600 flex justify-center items-center overflow-hidden

@@ -8,32 +8,38 @@ import i18n from "i18next";
 
 const validationRules = {
   name: {
-    required: ("classroom name is required"),
-    minLength: { value: 2, message: "name should be at least 2 characters long" },
-    maxLength: { value: 64, message: "name can be maximum 64 characters long" }
+    required: "classroom name is required",
+    minLength: {
+      value: 2,
+      message: "name should be at least 2 characters long",
+    },
+    maxLength: { value: 64, message: "name can be maximum 64 characters long" },
   },
   type: {
-    required: "type is required"
-  }
+    required: "type is required",
+  },
 };
 
 export default function CreateClassroom({ isOpen, onClose }) {
   const { t } = useTranslation();
   const popupRef = useRef(null);
 
-  const { trigger: saveClassroom, error: saveError } = useSWRMutation("classrooms", save);
+  const { trigger: saveClassroom, error: saveError } = useSWRMutation(
+    "classrooms",
+    save,
+  );
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
-    reset
+    reset,
   } = useForm({
     mode: "onBlur",
     defaultValues: {
       name: "",
-      type: ""
-    }
+      type: "",
+    },
   });
 
   useEffect(() => {
@@ -62,8 +68,8 @@ export default function CreateClassroom({ isOpen, onClose }) {
         onSuccess: () => {
           reset();
           onClose();
-        }
-      }
+        },
+      },
     );
   };
 
@@ -83,10 +89,13 @@ export default function CreateClassroom({ isOpen, onClose }) {
         dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
         transition-all duration-300 ease-in-out origin-top
         font-sfpro overflow-y-auto
-        ${isOpen
-        ? "opacity-100 scale-100 visible pointer-events-auto"
-        : "opacity-0 scale-95 invisible pointer-events-none"}
-      `}>
+        ${
+          isOpen
+            ? "opacity-100 scale-100 visible pointer-events-auto"
+            : "opacity-0 scale-95 invisible pointer-events-none"
+        }
+      `}
+    >
       <div className="grid grid-cols-[1fr_auto_1fr] sm:grid-cols-3 w-full h-fit gap-2 items-center">
         <div></div>
         <span className="font-atrament text-xl sm:text-2xl md:text-3xl dark:text-white text-center">
@@ -106,7 +115,8 @@ export default function CreateClassroom({ isOpen, onClose }) {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full flex-1 flex flex-col py-6 sm:py-8 md:py-10 justify-center
           gap-3 bg-studowhite rounded-xl sm:rounded-2xl border-2 border-studowhite shadow-sm
-          p-4 sm:p-5">
+          p-4 sm:p-5"
+      >
         <div className="w-full flex flex-col gap-2">
           <span className="text-xs sm:text-sm text-studodarkblue dark:text-white">
             {t("Classroom Name")}:
@@ -125,11 +135,15 @@ export default function CreateClassroom({ isOpen, onClose }) {
             />
           </div>
           {errors.name ? (
-            <p className="text-red-500 text-xs sm:text-sm mt-2 ml-4 min-h-8 sm:min-h-12 flex"
-               data-cy="classroom_name_error">
+            <p
+              className="text-red-500 text-xs sm:text-sm mt-2 ml-4 min-h-8 sm:min-h-12 flex"
+              data-cy="classroom_name_error"
+            >
               {errors.name.message}
             </p>
-          ) : <div className="min-h-8 sm:min-h-12 w-full"></div>}
+          ) : (
+            <div className="min-h-8 sm:min-h-12 w-full"></div>
+          )}
         </div>
 
         <div className="w-full flex flex-col gap-2">
@@ -144,7 +158,8 @@ export default function CreateClassroom({ isOpen, onClose }) {
               className="text-studodarkblue min-h-10 sm:min-h-12 text-sm sm:text-base
                 dark:text-white px-4 sm:px-[2vh] rounded-full
                 bg-[rgba(255,255,255,0.175)] shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-                border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0">
+                border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0"
+            >
               <option value="">{t("Select type...")}</option>
               <option value="studygroup">{t("studygroup with friends")}</option>
               <option value="school">{t("school classroom")}</option>
@@ -152,11 +167,15 @@ export default function CreateClassroom({ isOpen, onClose }) {
             </select>
           </div>
           {errors.type ? (
-            <p className="text-red-500 text-xs sm:text-sm mt-2 ml-4 min-h-8 sm:min-h-12 flex"
-               data-cy="classroom_type_error">
+            <p
+              className="text-red-500 text-xs sm:text-sm mt-2 ml-4 min-h-8 sm:min-h-12 flex"
+              data-cy="classroom_type_error"
+            >
               {errors.type.message}
             </p>
-          ) : <div className="min-h-8 sm:min-h-12 w-full"></div>}
+          ) : (
+            <div className="min-h-8 sm:min-h-12 w-full"></div>
+          )}
         </div>
 
         <div className="flex justify-end gap-4 w-full">
@@ -167,7 +186,8 @@ export default function CreateClassroom({ isOpen, onClose }) {
               text-white font-atrament text-sm sm:text-base md:text-lg
               active:scale-105 transition-transform font-semibold w-full z-[2] select-none
               border-[0.5px] border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300
-              cursor-pointer">
+              cursor-pointer"
+          >
             {t("create classroom").toUpperCase()}
           </button>
         </div>

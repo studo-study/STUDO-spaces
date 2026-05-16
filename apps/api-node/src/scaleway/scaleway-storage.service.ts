@@ -16,7 +16,10 @@ export class ScalewayStorageService implements OnModuleInit {
     const accessKey = this.configService.get<string>('SCALEWAY_ACCESS_KEY');
     const secretKey = this.configService.get<string>('SCALEWAY_SECRET_KEY');
     const bucketName = this.configService.get<string>('SCALEWAY_BUCKET_NAME');
-    const region = this.configService.get<string>('SCALEWAY_REGION', 'nl-NL-ams');
+    const region = this.configService.get<string>(
+      'SCALEWAY_REGION',
+      'nl-NL-ams',
+    );
 
     if (!accessKey || !secretKey || !bucketName) {
       throw new Error(

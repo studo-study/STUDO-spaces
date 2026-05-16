@@ -15,27 +15,33 @@ export default function AboutSpeedy() {
   const title = t("seo.speedy.title", "Speedy | Studo");
   const description = t(
     "seo.speedy.description",
-    "Challenge yourself with Studo's Speedy mode. Race against the clock to answer questions quickly and improve your recall speed under pressure."
+    "Challenge yourself with Studo's Speedy mode. Race against the clock to answer questions quickly and improve your recall speed under pressure.",
   );
   const keywords = t(
     "seo.speedy.keywords",
-    "speed quiz, timed studygroup, quick recall, fast learning, studygroup game, Studo speedy"
+    "speed quiz, timed studygroup, quick recall, fast learning, studygroup game, Studo speedy",
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "Speedy", path: "/speedy" }
+    { name: "Speedy", path: "/speedy" },
   ];
 
   const faqs = [
     {
       question: t("faq.speedy.what.question", "What is Speedy mode?"),
-      answer: t("faq.speedy.what.answer", "Speedy mode is a timed quiz that challenges you to answer questions as fast as possible. It helps improve recall speed and makes studying more engaging.")
+      answer: t(
+        "faq.speedy.what.answer",
+        "Speedy mode is a timed quiz that challenges you to answer questions as fast as possible. It helps improve recall speed and makes studying more engaging.",
+      ),
     },
     {
       question: t("faq.speedy.benefit.question", "Why use Speedy mode?"),
-      answer: t("faq.speedy.benefit.answer", "Speedy mode helps you practice under time pressure, which can improve performance on timed exams. It also makes studying more fun and game-like.")
-    }
+      answer: t(
+        "faq.speedy.benefit.answer",
+        "Speedy mode helps you practice under time pressure, which can improve performance on timed exams. It also makes studying more fun and game-like.",
+      ),
+    },
   ];
 
   return (
@@ -46,7 +52,10 @@ export default function AboutSpeedy() {
         keywords={keywords}
         path="/speedy"
         image="/og/welcome.png"
-        imageAlt={t("seo.speedy.imageAlt", "Studo Speedy Mode - Timed quiz challenge")}
+        imageAlt={t(
+          "seo.speedy.imageAlt",
+          "Studo Speedy Mode - Timed quiz challenge",
+        )}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />
@@ -101,7 +110,11 @@ export default function AboutSpeedy() {
               transition-all duration-700 delay-400
               ${mounted ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={hero} alt={t("Speedy mode illustration")} className="w-3/4" />
+            <img
+              src={hero}
+              alt={t("Speedy mode illustration")}
+              className="w-3/4"
+            />
           </div>
         </div>
       </main>

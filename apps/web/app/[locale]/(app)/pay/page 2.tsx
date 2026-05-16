@@ -1,3 +1,3 @@
 export default function PayPage() {
-    return (<div></div>);
+  return <div></div>;
 }

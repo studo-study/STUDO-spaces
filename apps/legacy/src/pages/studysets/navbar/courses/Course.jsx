@@ -24,7 +24,7 @@ export default function Course() {
           user_id: set.user_id,
           type: "studyset",
           displayName: set.displayName,
-          img_url: set.img_url
+          img_url: set.img_url,
         })),
         ...sets.visualsets.map((set) => ({
           id: set.id,
@@ -34,8 +34,8 @@ export default function Course() {
           user_id: set.user_id,
           type: "visualset",
           displayName: set.displayName,
-          img_url: set.img_url
-        }))
+          img_url: set.img_url,
+        })),
       ];
       setStudysets(allSets);
       setSortedsets(allSets);
@@ -68,7 +68,8 @@ export default function Course() {
             transition-all duration-200
             cursor-pointer
             focus:outline-none active:scale-105 z-[2] select-none focus:ring-2 focus:ring-studogrey/50"
-          onClick={handleNavigate}>
+          onClick={handleNavigate}
+        >
           <FaChevronLeft className="text-xs sm:text-sm" />
         </div>
         <span className="text-lg sm:text-xl md:text-2xl font-bold truncate">
@@ -77,9 +78,8 @@ export default function Course() {
       </div>
 
       <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-        {!isLoading && sortedsets.map((set) => (
-          <StudysetItem key={set.id} set={set} />
-        ))}
+        {!isLoading &&
+          sortedsets.map((set) => <StudysetItem key={set.id} set={set} />)}
       </div>
     </div>
   );

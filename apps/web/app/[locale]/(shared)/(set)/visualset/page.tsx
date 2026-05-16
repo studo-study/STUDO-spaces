@@ -1,3 +1,3 @@
 export default function VisualsetPage() {
-    return (<div></div>)
+  return <div></div>;
 }

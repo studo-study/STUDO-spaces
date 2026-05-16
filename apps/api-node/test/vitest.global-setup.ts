@@ -8,7 +8,7 @@ declare global {
   var postgresContainer: StartedPostgreSqlContainer | undefined;
 }
 
-export default async function() {
+export default async function () {
   console.log('🚢 Pulling and starting PostgreSQL container');
 
   const container = await new PostgreSqlContainer('postgres:16').start();

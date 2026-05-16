@@ -16,14 +16,14 @@ const EMPTY_IMAGE = {
   grid_x: 0,
   grid_y: 0,
   scale: "1",
-  pins: []
+  pins: [],
 };
 
 const EMPTY_VISUALSET = {
   title: "",
   subject: "",
   folder_id: "",
-  images: [{ ...EMPTY_IMAGE }]
+  images: [{ ...EMPTY_IMAGE }],
 };
 
 const saveVisualset = async (url, { arg }) => {
@@ -39,7 +39,7 @@ const saveVisualset = async (url, { arg }) => {
     index,
     grid_x: img.grid_x || 0,
     grid_y: img.grid_y || 0,
-    scale: img.scale || "1"
+    scale: img.scale || "1",
   }));
   formData.append("images_metadata", JSON.stringify(imagesMetadata));
 
@@ -50,8 +50,8 @@ const saveVisualset = async (url, { arg }) => {
       y: pin.y,
       number: pinIndex + 1,
       image_index: imgIndex,
-      img_url: ""
-    }))
+      img_url: "",
+    })),
   );
   formData.append("pins_data", JSON.stringify(pinsData));
 
@@ -66,8 +66,8 @@ const saveVisualset = async (url, { arg }) => {
     url: `${url}${id ? `/${id}` : ""}`,
     data: formData,
     headers: {
-      "Content-Type": "multipart/form-data"
-    }
+      "Content-Type": "multipart/form-data",
+    },
   });
 
   return response.data;
@@ -81,30 +81,40 @@ export default function CreateOrEditVisualset() {
 
   const { data: existingVisualset } = useSWR(
     id ? `visualsets/${id}` : null,
-    getById
+    getById,
   );
 
-  const { data: foldersData = { folders: [] }, isLoading: foldersLoading } = useSWR(
-    "folders/me",
-    getAll
-  );
+  const { data: foldersData = { folders: [] }, isLoading: foldersLoading } =
+    useSWR("folders/me", getAll);
 
   const { trigger: saveSet, isMutating } = useSWRMutation(
     "visualsets",
-    saveVisualset
+    saveVisualset,
   );
 
   const methods = useForm({
     mode: "onBlur",
     defaultValues: existingVisualset || EMPTY_VISUALSET,
-    values: existingVisualset
+    values: existingVisualset,
   });
 
-  const { handleSubmit, control, formState: { errors }, getValues, setValue, watch } = methods;
-
-  const { fields: imageFields, append: appendImage, remove: removeImage, move: moveImage } = useFieldArray({
+  const {
+    handleSubmit,
     control,
-    name: "images"
+    formState: { errors },
+    getValues,
+    setValue,
+    watch,
+  } = methods;
+
+  const {
+    fields: imageFields,
+    append: appendImage,
+    remove: removeImage,
+    move: moveImage,
+  } = useFieldArray({
+    control,
+    name: "images",
   });
 
   const currentImage = watch(`images.${activeImageIndex}`);
@@ -114,79 +124,99 @@ export default function CreateOrEditVisualset() {
     setActiveImageIndex(imageFields.length);
   }, [appendImage, imageFields.length]);
 
-  const handleRemoveImage = useCallback((index) => {
-    if (imageFields.length > 1) {
-      removeImage(index);
-      if (activeImageIndex >= index && activeImageIndex > 0) {
-        setActiveImageIndex(activeImageIndex - 1);
-      }
-    }
-  }, [removeImage, imageFields.length, activeImageIndex]);
-
-  const handleReorderImages = useCallback((fromIndex, toIndex) => {
-    moveImage(fromIndex, toIndex);
-    if (activeImageIndex === fromIndex) {
-      setActiveImageIndex(toIndex);
-    }
-  }, [moveImage, activeImageIndex]);
-
-  const addPin = useCallback((pin) => {
-    const currentPins = getValues(`images.${activeImageIndex}.pins`) || [];
-    setValue(`images.${activeImageIndex}.pins`, [...currentPins, pin]);
-  }, [activeImageIndex, getValues, setValue]);
-
-  const removePin = useCallback((pinIndex) => {
-    const currentPins = getValues(`images.${activeImageIndex}.pins`) || [];
-    setValue(
-      `images.${activeImageIndex}.pins`,
-      currentPins.filter((_, i) => i !== pinIndex)
-    );
-  }, [activeImageIndex, getValues, setValue]);
-
-  const removePinByCoords = useCallback((x, y) => {
-    const currentPins = getValues(`images.${activeImageIndex}.pins`) || [];
-    setValue(
-      `images.${activeImageIndex}.pins`,
-      currentPins.filter((pin) => !(pin.x === x && pin.y === y))
-    );
-  }, [activeImageIndex, getValues, setValue]);
-
-  const handleFileUpload = useCallback((file) => {
-    if (file && file.type.startsWith("image/")) {
-      const previewUrl = URL.createObjectURL(file);
-      setValue(`images.${activeImageIndex}.file`, file);
-      setValue(`images.${activeImageIndex}.previewUrl`, previewUrl);
-    }
-  }, [activeImageIndex, setValue]);
-
-  const onSubmit = useCallback(async (data) => {
-    const hasImages = data.images.some((img) => img.file || img.previewUrl);
-    if (!hasImages) {
-
-      return;
-    }
-
-    const hasPins = data.images.some((img) => img.pins && img.pins.length > 0);
-    if (!hasPins) {
-
-      return;
-    }
-
-    await saveSet(
-      {
-        ...data,
-        id: id || undefined
-      },
-      {
-        throwOnError: false,
-        onSuccess: (response) => {
-          navigate(`/visualsets/${response.id || id}`);
-        },
-        onError: (error) => {
+  const handleRemoveImage = useCallback(
+    (index) => {
+      if (imageFields.length > 1) {
+        removeImage(index);
+        if (activeImageIndex >= index && activeImageIndex > 0) {
+          setActiveImageIndex(activeImageIndex - 1);
         }
       }
-    );
-  }, [id, saveSet, navigate]);
+    },
+    [removeImage, imageFields.length, activeImageIndex],
+  );
+
+  const handleReorderImages = useCallback(
+    (fromIndex, toIndex) => {
+      moveImage(fromIndex, toIndex);
+      if (activeImageIndex === fromIndex) {
+        setActiveImageIndex(toIndex);
+      }
+    },
+    [moveImage, activeImageIndex],
+  );
+
+  const addPin = useCallback(
+    (pin) => {
+      const currentPins = getValues(`images.${activeImageIndex}.pins`) || [];
+      setValue(`images.${activeImageIndex}.pins`, [...currentPins, pin]);
+    },
+    [activeImageIndex, getValues, setValue],
+  );
+
+  const removePin = useCallback(
+    (pinIndex) => {
+      const currentPins = getValues(`images.${activeImageIndex}.pins`) || [];
+      setValue(
+        `images.${activeImageIndex}.pins`,
+        currentPins.filter((_, i) => i !== pinIndex),
+      );
+    },
+    [activeImageIndex, getValues, setValue],
+  );
+
+  const removePinByCoords = useCallback(
+    (x, y) => {
+      const currentPins = getValues(`images.${activeImageIndex}.pins`) || [];
+      setValue(
+        `images.${activeImageIndex}.pins`,
+        currentPins.filter((pin) => !(pin.x === x && pin.y === y)),
+      );
+    },
+    [activeImageIndex, getValues, setValue],
+  );
+
+  const handleFileUpload = useCallback(
+    (file) => {
+      if (file && file.type.startsWith("image/")) {
+        const previewUrl = URL.createObjectURL(file);
+        setValue(`images.${activeImageIndex}.file`, file);
+        setValue(`images.${activeImageIndex}.previewUrl`, previewUrl);
+      }
+    },
+    [activeImageIndex, setValue],
+  );
+
+  const onSubmit = useCallback(
+    async (data) => {
+      const hasImages = data.images.some((img) => img.file || img.previewUrl);
+      if (!hasImages) {
+        return;
+      }
+
+      const hasPins = data.images.some(
+        (img) => img.pins && img.pins.length > 0,
+      );
+      if (!hasPins) {
+        return;
+      }
+
+      await saveSet(
+        {
+          ...data,
+          id: id || undefined,
+        },
+        {
+          throwOnError: false,
+          onSuccess: (response) => {
+            navigate(`/visualsets/${response.id || id}`);
+          },
+          onError: (error) => {},
+        },
+      );
+    },
+    [id, saveSet, navigate],
+  );
 
   return (
     <FormProvider {...methods}>
@@ -194,7 +224,8 @@ export default function CreateOrEditVisualset() {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full min-h-screen flex text-sm sm:text-base flex-col items-center justify-baseline
           pt-20 sm:pt-25 md:pt-35 gap-3 sm:gap-4 md:gap-5 mb-16 sm:mb-20 overflow-y-auto
-          scroll-hidden px-4 sm:px-6 lg:px-8">
+          scroll-hidden px-4 sm:px-6 lg:px-8"
+      >
         <div className="w-full sm:w-11/12 md:w-4/5 lg:w-3/5 h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 scroll-hidden">
           <VsHeader
             folders={foldersData.folders || []}

@@ -12,10 +12,11 @@ export default function FolderItem({ folder, isSelected, onToggle }) {
         transition-all duration-300 gap-3
              border-2
              ease-out
-        ${isSelected
-        ? "bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-400  dark:border-emerald-600"
-        : "border-solid border-2 border-studogrey hover:bg-gray-50 dark:hover:bg-gray-600"
-      }`}
+        ${
+          isSelected
+            ? "bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-400  dark:border-emerald-600"
+            : "border-solid border-2 border-studogrey hover:bg-gray-50 dark:hover:bg-gray-600"
+        }`}
     >
       <img
         src={Folder}
@@ -24,7 +25,9 @@ export default function FolderItem({ folder, isSelected, onToggle }) {
       />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <span className={`text-sm truncate dark:text-white ${isSelected ? "font-medium" : ""}`}>
+        <span
+          className={`text-sm truncate dark:text-white ${isSelected ? "font-medium" : ""}`}
+        >
           {folder.name || folder.title || t("Unnamed folder")}
         </span>
         {folder.set_count !== undefined && (
@@ -33,8 +36,6 @@ export default function FolderItem({ folder, isSelected, onToggle }) {
           </span>
         )}
       </div>
-
-
     </div>
   );
 }

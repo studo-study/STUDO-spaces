@@ -1,9 +1,9 @@
-import type { CreateCard, UpdateCard, CardResponse } from './card';
-import type { SetLikeResponse } from './setlike';
-import type { StudysessionResponse } from './studysession';
-import type { ClassroomResponse } from './classroom';
-import type { FolderResponse } from './folder';
-import type { VisualsetResponse } from './visualset';
+import type { CreateCard, UpdateCard, CardResponse } from "./card";
+import type { SetLikeResponse } from "./setlike";
+import type { StudysessionResponse } from "./studysession";
+import type { ClassroomResponse } from "./classroom";
+import type { FolderResponse } from "./folder";
+import type { VisualsetResponse } from "./visualset";
 
 export interface CreateStudyset {
   title: string;

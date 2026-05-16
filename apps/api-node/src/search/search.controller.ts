@@ -1,5 +1,4 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
-import { StudysessionService } from '../studysession/studysession.service';
 import { SearchService } from './search.service';
 import { PublicSearchRsultsDto, SearchResultsDto } from './search.dto';
 import { Roles } from '../auth/decorators/roles.decorator';

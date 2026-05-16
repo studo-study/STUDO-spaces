@@ -3,7 +3,10 @@ import { useFormContext } from "react-hook-form";
 
 export default function ImageInfo({ activeImageIndex }) {
   const { t } = useTranslation();
-  const { register, formState: { errors } } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   const imageErrors = errors?.images?.[activeImageIndex];
 
@@ -14,7 +17,7 @@ export default function ImageInfo({ activeImageIndex }) {
       </label>
       <input
         {...register(`images.${activeImageIndex}.title`, {
-          maxLength: { value: 100, message: t("Title max 100 characters") }
+          maxLength: { value: 100, message: t("Title max 100 characters") },
         })}
         type="text"
         className="px-[2vh] h-12 rounded-[50px] text-base border-0
@@ -25,8 +28,12 @@ export default function ImageInfo({ activeImageIndex }) {
         placeholder={t("Fill in a title for this image...")}
       />
       {imageErrors?.title ? (
-        <span className="text-red-500 text-sm h-8 pl-4">{imageErrors.title.message}</span>
-      ) : (<div className={"h-8"}></div>)}
+        <span className="text-red-500 text-sm h-8 pl-4">
+          {imageErrors.title.message}
+        </span>
+      ) : (
+        <div className={"h-8"}></div>
+      )}
     </div>
   );
 }

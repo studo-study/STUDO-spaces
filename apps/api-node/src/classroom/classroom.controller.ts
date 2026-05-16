@@ -10,15 +10,16 @@ import {
   Put,
   ParseUUIDPipe,
   UseGuards,
-  Request, BadRequestException,
+  Request,
+  BadRequestException,
 } from '@nestjs/common';
 import {
   ClassroomListResponseDto,
-  ClassroomSetDto, CreateClassroomActivityDto,
-  CreateClassroomDto, CreateClassroomSetsDto,
+  CreateClassroomActivityDto,
+  CreateClassroomDto,
+  CreateClassroomSetsDto,
   CreateClassroomUserDto,
   FullClassroomResponseDto,
-  leaveClassroomDto,
   UpdateClassroomDto,
 } from './classroom.dto';
 import { ClassroomService } from './classroom.service';
@@ -48,8 +49,7 @@ interface AuthenticatedRequest extends ExpressRequest {
 @ApiBearerAuth()
 @Controller('classrooms')
 export class ClassroomController {
-  constructor(private readonly classService: ClassroomService) {
-  }
+  constructor(private readonly classService: ClassroomService) {}
 
   //OPHALEN VAN CLASSROOM-DATA
   //alle klassen ophalen
@@ -139,7 +139,8 @@ export class ClassroomController {
   createClassroomSet(
     @Param('classroom_id', ParseUUIDPipe) classroom: string,
     @Param('set_id', ParseUUIDPipe) set_id: string,
-    @Request() req: AuthenticatedRequest) {
+    @Request() req: AuthenticatedRequest,
+  ) {
     const user_id = req.user.id;
     return this.classService.add(classroom, set_id, user_id);
   }
@@ -155,7 +156,8 @@ export class ClassroomController {
   createClassroomSets(
     @Param('classroom_id', ParseUUIDPipe) classroom_id: string,
     @Body() sets: CreateClassroomSetsDto,
-    @Request() req: AuthenticatedRequest) {
+    @Request() req: AuthenticatedRequest,
+  ) {
     const user_id = req.user.id;
     return this.classService.addSets(classroom_id, user_id, sets);
   }
@@ -191,7 +193,6 @@ export class ClassroomController {
     const user_id = req.user.id;
     return this.classService.createActivity(user_id, classroom_id, activity);
   }
-
 
   //UPDATEN
   //classroom updaten
@@ -254,7 +255,8 @@ export class ClassroomController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async removeSetClassroom(
     @Param('classroom_id', ParseUUIDPipe) classroom_id: string,
-    @Param('set_id', ParseUUIDPipe) set_id: string) {
+    @Param('set_id', ParseUUIDPipe) set_id: string,
+  ) {
     return this.classService.remove(classroom_id, set_id);
   }
 }

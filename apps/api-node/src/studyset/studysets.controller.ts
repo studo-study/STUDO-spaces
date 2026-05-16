@@ -6,14 +6,11 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseUUIDPipe,
   Post,
   Put,
   UseGuards,
   Request,
   BadRequestException,
-  ValidationPipe,
-  UsePipes,
 } from '@nestjs/common';
 import {
   CreateStudysetDto,
@@ -122,7 +119,6 @@ export class StudysetsController {
   @Get(':set_id/likes')
   async getAllSetLikes(
     @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Request() req: AuthenticatedRequest,
   ): Promise<SetLikeResponseDto[]> {
     return this.studysetService.getAllLikes(set_id);
   }

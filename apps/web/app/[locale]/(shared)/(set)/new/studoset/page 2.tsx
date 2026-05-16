@@ -1,3 +1,3 @@
 export default function NewStudosetPage() {
-    return <div></div>
+  return <div></div>;
 }

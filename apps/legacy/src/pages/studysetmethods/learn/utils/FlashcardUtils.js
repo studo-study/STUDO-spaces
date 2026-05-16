@@ -5,7 +5,6 @@ export const normalizeString = (str, removeParentheses = false) => {
     normalized = normalized.replace(/\s*\([^)]*\)/g, "");
   }
 
-
   normalized = normalized.replace(/\s+/g, " ");
 
   return normalized;
@@ -19,7 +18,6 @@ export const checkAnswer = (userAnswer, expectedAnswer) => {
     return true;
   }
 
-
   if (expectedAnswer.includes("(") && !userAnswer.includes("(")) {
     const userCleaned = normalizeString(userAnswer, true);
     const expectedCleaned = normalizeString(expectedAnswer, true);
@@ -29,7 +27,6 @@ export const checkAnswer = (userAnswer, expectedAnswer) => {
 
   return false;
 };
-
 
 export const calculateAccuracy = (correct, total) => {
   if (total === 0) return 0;
@@ -58,13 +55,16 @@ export const shouldBeMastered = (card) => {
 /**
  * Gets the next card index based on queue and progression logic
  */
-export const getNextCardIndex = (currentIndex, sessionCards, queue, cardsAnswered) => {
-
+export const getNextCardIndex = (
+  currentIndex,
+  sessionCards,
+  queue,
+  cardsAnswered,
+) => {
   if ((cardsAnswered + 1) % 5 === 0 && queue.length > 0) {
     const nextQueueCard = queue[0];
-    return sessionCards.findIndex(c => c.id === nextQueueCard.id);
+    return sessionCards.findIndex((c) => c.id === nextQueueCard.id);
   }
-
 
   return (currentIndex + 1) % sessionCards.length;
 };
@@ -72,8 +72,7 @@ export const getNextCardIndex = (currentIndex, sessionCards, queue, cardsAnswere
 export const isLearningComplete = (sessionCards, queue) => {
   if (sessionCards.length === 0) return false;
 
-
-  const allCardsViewed = sessionCards.every(card => card.viewcount >= 2);
+  const allCardsViewed = sessionCards.every((card) => card.viewcount >= 2);
 
   // Queue must be empty
   const queueEmpty = queue.length === 0;
@@ -86,7 +85,7 @@ export const isLearningComplete = (sessionCards, queue) => {
  */
 export const initializeSessionCards = (apiCards, sessionCards) => {
   return apiCards.map((card) => {
-    const sessionCard = sessionCards?.find(sc => sc.card_id === card.id);
+    const sessionCard = sessionCards?.find((sc) => sc.card_id === card.id);
 
     return {
       id: card.id,
@@ -102,18 +101,17 @@ export const initializeSessionCards = (apiCards, sessionCards) => {
       timesRelearned: sessionCard?.times_relearned || 0,
       // Local state
       attempts: 0,
-      lastAnswerCorrect: null
+      lastAnswerCorrect: null,
     };
   });
 };
-
 
 export const createSessionUpdateBody = (
   sessionId,
   currentIndex,
   stats,
   currentCardId,
-  sessionCards
+  sessionCards,
 ) => {
   return {
     index: currentIndex,
@@ -121,7 +119,7 @@ export const createSessionUpdateBody = (
     duration_min: Math.floor((Date.now() - stats.startTime) / 60000),
     last_studied: new Date().toISOString(),
     last_seen: currentCardId,
-    cards: sessionCards.map(card => ({
+    cards: sessionCards.map((card) => ({
       id: card.sessionCardId,
       card_id: card.id,
       number: card.number,
@@ -129,7 +127,7 @@ export const createSessionUpdateBody = (
       card_total_viewcount: card.totalViewcount,
       inQueue: card.inQueue,
       mastered: card.mastered,
-      times_relearned: card.timesRelearned
-    }))
+      times_relearned: card.timesRelearned,
+    })),
   };
 };

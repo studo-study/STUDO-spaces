@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import Copy from "../../../assets/icons/copy.svg";
 import { useTranslation } from "react-i18next";
-import { FaFacebook, FaTwitter, FaWhatsapp, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaWhatsapp,
+  FaLinkedin,
+  FaEnvelope,
+} from "react-icons/fa";
 
 export default function SharePopUp({ toggled, id, title, setPopUpToggle }) {
   const { t } = useTranslation();
@@ -16,7 +22,6 @@ export default function SharePopUp({ toggled, id, title, setPopUpToggle }) {
       inputLink.current.value = shareUrl;
     }
   }, [shareUrl]);
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -72,7 +77,7 @@ export default function SharePopUp({ toggled, id, title, setPopUpToggle }) {
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
     whatsapp: `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
-    email: `mailto:?subject=${encodeURIComponent(shareText)}&body=${encodeURIComponent(`${shareText}\n\n${shareUrl}`)}`
+    email: `mailto:?subject=${encodeURIComponent(shareText)}&body=${encodeURIComponent(`${shareText}\n\n${shareUrl}`)}`,
   };
 
   const openShareWindow = (url, name) => {
@@ -102,9 +107,13 @@ export default function SharePopUp({ toggled, id, title, setPopUpToggle }) {
 
       {/* Copy link section */}
       <div className="w-full flex flex-col gap-2">
-        <span className="text-sm font-medium dark:text-white">{t("Copy link")}</span>
-        <div className="w-full flex flex-row justify-between items-center p-4
-            bg-studowhite rounded-2xl border-2 border-studowhite shadow-sm">
+        <span className="text-sm font-medium dark:text-white">
+          {t("Copy link")}
+        </span>
+        <div
+          className="w-full flex flex-row justify-between items-center p-4
+            bg-studowhite rounded-2xl border-2 border-studowhite shadow-sm"
+        >
           <div className="w-full h-fit flex flex-row gap-3 justify-between items-center">
             <input
               type="text"
@@ -119,14 +128,20 @@ export default function SharePopUp({ toggled, id, title, setPopUpToggle }) {
             />
             <button
               onClick={toggleCopy}
-              className={"min-w-12 min-h-12 bg-studoblue rounded-full flex items-center justify-center " +
+              className={
+                "min-w-12 min-h-12 bg-studoblue rounded-full flex items-center justify-center " +
                 "cursor-pointer active:scale-105 transition-transform select-none " +
-                "border-2 border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300"}
+                "border-2 border-solid border-[#8181812f] border-t-blue-300 border-l-blue-300"
+              }
             >
               {copied ? (
                 <span className="text-white text-lg">✓</span>
               ) : (
-                <img src={Copy} className="w-5 dark:invert dark:brightness-0" alt="Copy" />
+                <img
+                  src={Copy}
+                  className="w-5 dark:invert dark:brightness-0"
+                  alt="Copy"
+                />
               )}
             </button>
           </div>
@@ -134,12 +149,16 @@ export default function SharePopUp({ toggled, id, title, setPopUpToggle }) {
       </div>
 
       <div className="w-full flex items-center gap-3">
-        <span className="text-sm font-medium dark:text-white">{t("Or share via:")}</span>
+        <span className="text-sm font-medium dark:text-white">
+          {t("Or share via:")}
+        </span>
       </div>
 
       {/* Social share buttons */}
-      <div className="w-full flex flex-row justify-between items-center p-4
-            bg-studowhite rounded-2xl border-2 border-studowhite shadow-sm">
+      <div
+        className="w-full flex flex-row justify-between items-center p-4
+            bg-studowhite rounded-2xl border-2 border-studowhite shadow-sm"
+      >
         <button
           onClick={() => openShareWindow(socialLinks.facebook, "facebook")}
           className="flex items-center justify-center w-12 h-12 rounded-full
@@ -198,7 +217,7 @@ export default function SharePopUp({ toggled, id, title, setPopUpToggle }) {
             try {
               await navigator.share({
                 title: shareText,
-                url: shareUrl
+                url: shareUrl,
               });
             } catch (error) {
               if (error.name !== "AbortError") {

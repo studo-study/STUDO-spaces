@@ -1,6 +1,6 @@
 const IssueDetails = () => {
-    return (<div></div>);
-}
+  return <div></div>;
+};
 
-IssueDetails.displayName = 'IssueDetails';
+IssueDetails.displayName = "IssueDetails";
 export default IssueDetails;

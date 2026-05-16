@@ -1,3 +1,3 @@
 export default function SetsPage() {
-  return (<div></div>);
+  return <div></div>;
 }

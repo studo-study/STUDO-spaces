@@ -15,27 +15,36 @@ export default function AboutPin() {
   const title = t("seo.identify.title", "Pin | Studo");
   const description = t(
     "seo.identify.description",
-    "Learn visually with Studo's Identify mode. Perfect for anatomy, geography, diagrams, and any image-based learning. Point and Pin parts on images."
+    "Learn visually with Studo's Identify mode. Perfect for anatomy, geography, diagrams, and any image-based learning. Point and Pin parts on images.",
   );
   const keywords = t(
     "seo.identify.keywords",
-    "visual learning, identify mode, image studygroup, anatomy learning, diagram studygroup, Studo identify"
+    "visual learning, identify mode, image studygroup, anatomy learning, diagram studygroup, Studo identify",
   );
 
   const breadcrumbs = [
     { name: "Home", path: "/welcome" },
-    { name: "Identify", path: "/identify" }
+    { name: "Identify", path: "/identify" },
   ];
 
   const faqs = [
     {
       question: t("faq.identify.what.question", "What is Identify mode?"),
-      answer: t("faq.identify.what.answer", "Identify mode lets you learn from images by identifying labeled parts. It's perfect for anatomy, maps, diagrams, and any visual subject.")
+      answer: t(
+        "faq.identify.what.answer",
+        "Identify mode lets you learn from images by identifying labeled parts. It's perfect for anatomy, maps, diagrams, and any visual subject.",
+      ),
     },
     {
-      question: t("faq.identify.use.question", "What can I use Identify mode for?"),
-      answer: t("faq.identify.use.answer", "Identify mode is great for anatomy, geography, biology diagrams, art history, engineering schematics, and any subject where you need to learn parts of an image.")
-    }
+      question: t(
+        "faq.identify.use.question",
+        "What can I use Identify mode for?",
+      ),
+      answer: t(
+        "faq.identify.use.answer",
+        "Identify mode is great for anatomy, geography, biology diagrams, art history, engineering schematics, and any subject where you need to learn parts of an image.",
+      ),
+    },
   ];
 
   return (
@@ -46,7 +55,10 @@ export default function AboutPin() {
         keywords={keywords}
         path="/identify"
         image="/og/welcome.png"
-        imageAlt={t("seo.identify.imageAlt", "Studo Identify Mode - Visual learning tool")}
+        imageAlt={t(
+          "seo.identify.imageAlt",
+          "Studo Identify Mode - Visual learning tool",
+        )}
         breadcrumbs={breadcrumbs}
         faqs={faqs}
       />
@@ -102,7 +114,11 @@ export default function AboutPin() {
               transition-all duration-700 delay-400
               ${mounted ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={hero} alt={t("Identify mode illustration")} className="w-3/4" />
+            <img
+              src={hero}
+              alt={t("Identify mode illustration")}
+              className="w-3/4"
+            />
           </div>
         </div>
       </main>

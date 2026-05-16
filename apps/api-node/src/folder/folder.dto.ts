@@ -17,7 +17,6 @@ export class CreateFolderDto {
     maxLength: 100,
   })
   name: string;
-  
 }
 
 export class UpdateFolderDto {

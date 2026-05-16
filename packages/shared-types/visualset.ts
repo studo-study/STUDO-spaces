@@ -1,7 +1,7 @@
-import type { CreatePin, UpdatePin, PinResponseList } from './pin';
-import type { SetLikeResponseList } from './setlike';
-import type { StudysessionResponse } from './studysession';
-import type { ClassroomResponse } from './classroom';
+import type { CreatePin, UpdatePin, PinResponseList } from "./pin";
+import type { SetLikeResponseList } from "./setlike";
+import type { StudysessionResponse } from "./studysession";
+import type { ClassroomResponse } from "./classroom";
 
 export interface VisualsetResponse {
   id: string;
