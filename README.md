@@ -13,30 +13,30 @@ Studenten gebruiken gemiddeld 3 tot 5 losse tools om te studeren: Quizlet voor v
 Studo lost dit op met:
 
 - **Studosets** — Term-definitie paren met spaced repetition, tijdstrijd en flashcard modi. Ondersteuning voor LaTeX, afbeeldingen en import uit Word/Excel.
-- **Visualsets** — Upload afbeeldingen, plaats pins met definities. Ideaal voor anatomie, aardrijkskunde en schema's. Leer via *Spotten* (typ de definitie) of *Aanwijzen* (duid de juiste pin aan).
+- **Visualsets** — Upload afbeeldingen, plaats pins met definities. Ideaal voor anatomie, aardrijkskunde en schema's. Leer via _Spotten_ (typ de definitie) of _Aanwijzen_ (duid de juiste pin aan).
 - **Classrooms** — Officiële klasgroepen, informele studygroups en open communities. Deel sets, volg voortgang en daag elkaar uit.
 - **Challenges** — Time Attack, Mastery Tournament en Duels om competitief te studeren.
-- **Studo Select** *(coming soon)* — AI-laag met SVEN: automatische set-generatie uit PDF's, course linking en semantic search.
+- **Studo Select** _(coming soon)_ — AI-laag met SVEN: automatische set-generatie uit PDF's, course linking en semantic search.
 
 ---
 
 ## Tech Stack
 
-| Layer | Technologie |
-|-------|------------|
-| Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS 4 |
-| Backend (Node) | NestJS 11, TypeScript, Drizzle ORM |
-| Backend (Rust) | Rust microservices |
-| Backend (Swift) | Swift API services |
-| Mobile | React Native, Expo |
-| Database | PostgreSQL |
-| Storage | Scaleway S3 |
-| Auth | NextAuth 5 (Google, Microsoft Entra ID, Credentials) |
-| AI | OpenAI API, Google Generative AI |
-| State | Zustand, React Query |
-| UI | Radix UI, Lucide Icons |
-| i18n | next-intl (en, nl, fr) |
-| Infra | Docker, Railway, Turborepo |
+| Layer           | Technologie                                          |
+| --------------- | ---------------------------------------------------- |
+| Frontend        | Next.js 16, React 19, TypeScript, Tailwind CSS 4     |
+| Backend (Node)  | NestJS 11, TypeScript, Drizzle ORM                   |
+| Backend (Rust)  | Rust microservices                                   |
+| Backend (Swift) | Swift API services                                   |
+| Mobile          | React Native, Expo                                   |
+| Database        | PostgreSQL                                           |
+| Storage         | Scaleway S3                                          |
+| Auth            | NextAuth 5 (Google, Microsoft Entra ID, Credentials) |
+| AI              | OpenAI API, Google Generative AI                     |
+| State           | Zustand, React Query                                 |
+| UI              | Radix UI, Lucide Icons                               |
+| i18n            | next-intl (en, nl, fr)                               |
+| Infra           | Docker, Railway, Turborepo                           |
 
 ---
 
@@ -81,7 +81,7 @@ Gemanaged met **pnpm workspaces** en **Turborepo**.
 - Node.js ≥ 20
 - pnpm ≥ 10
 - PostgreSQL
-- Docker *(optioneel, voor database)*
+- Docker _(optioneel, voor database)_
 
 ### Installatie
 
@@ -93,9 +93,9 @@ cd STUDO-web
 # Installeer dependencies
 pnpm install
 
-# Maak .env bestanden aan op basis van de voorbeelden
-cp apps/api-node/.env.example apps/api-node/.env
-cp apps/web/.env.example apps/web/.env
+# Maak de root .env aan en distribueer naar alle apps
+cp .env.example .env   # vul de waarden in
+pnpm env:sync
 ```
 
 ### Docker
@@ -157,17 +157,21 @@ docker compose -f docker-compose-backend.yml --profile seed up
 
 ## Scripts
 
-| Command | Beschrijving |
-|---------|-------------|
-| `pnpm dev` | Start alle apps via Turborepo |
-| `pnpm build` | Build alle apps |
-| `pnpm lint` | Lint alle apps |
-| `pnpm dev:web` | Start alleen de frontend |
-| `pnpm dev:api` | Start alleen de backend |
-| `pnpm db:generate` | Genereer migraties uit schema wijzigingen |
-| `pnpm db:migrate` | Voer migraties uit |
-| `pnpm db:seed` | Seed de database |
-| `pnpm db:reset` | Reset de database |
+| Command                  | Beschrijving                              |
+| ------------------------ | ----------------------------------------- |
+| `pnpm dev`               | Start alle apps via Turborepo             |
+| `pnpm build`             | Build alle apps                           |
+| `pnpm lint`              | Lint alle apps                            |
+| `pnpm dev:web`           | Start alleen de frontend                  |
+| `pnpm dev:api`           | Start alleen de backend                   |
+| `pnpm build:web`         | Build alleen de frontend                  |
+| `pnpm build:api`         | Build alleen de backend                   |
+| `pnpm env:sync`          | Distribueer root `.env` naar alle apps    |
+| `pnpm db:generate`       | Genereer migraties uit schema wijzigingen |
+| `pnpm db:migrate`        | Voer migraties uit                        |
+| `pnpm db:seed`           | Seed de database                          |
+| `pnpm db:reset`          | Reset de database                         |
+| `pnpm db:reset-and-seed` | Reset en seed de database in één stap     |
 
 ---
 
@@ -186,12 +190,14 @@ docker compose -f docker-compose-backend.yml --profile seed up
 ---
 
 ## Commando's
+
 ```
 # aantal lijnen checken
 cloc . \
   --exclude-dir=node_modules,.next,dist,build,Pods \
   --exclude-ext=json,svg,txt
 ```
+
 ## Licentie
 
 Proprietary — alle rechten voorbehouden.
