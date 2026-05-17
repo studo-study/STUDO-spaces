@@ -15,7 +15,8 @@
     "db:migrate": "pnpm --filter @studo/api-node db:migrate",
     "db:seed": "pnpm --filter @studo/api-node db:seed",
     "db:reset": "pnpm --filter @studo/api-node db:reset",
-    "db:reset-and-seed": "pnpm --filter @studo/api-node db:reset-and-seed"
+    "db:reset-and-seed": "pnpm --filter @studo/api-node db:reset-and-seed",
+    "env:sync": "cp .env apps/api-node/.env && cp .env apps/web/.env && cp .env apps/legacy/.env && sed -i '' 's|AUTH_URL=http://localhost:4000/|AUTH_URL=http://localhost:5173/|' apps/legacy/.env && sed -i '' 's|NEXT_PUBLIC_FRONTEND=http://localhost:4000/|NEXT_PUBLIC_FRONTEND=http://localhost:5173/|' apps/legacy/.env"
   },
   "devDependencies": {
     "husky": "^9.1.7",
