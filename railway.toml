@@ -1,0 +1,7 @@
+[build]
+buildCommand = "pnpm --filter @studo/types build && pnpm --filter @studo/api-node build"
+
+[deploy]
+startCommand = "node apps/api-node/dist/main"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
