@@ -39,6 +39,7 @@ export default function AppHeader({
   const [ProfileIsOpen, setProfileIsOpen] = useState(false);
   const [StreakOpen, setStreakOpen] = useState(false);
   const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === "true";
+  const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const searchRef = useRef<HTMLInputElement>(null);
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
   const premium = false;
@@ -93,9 +94,22 @@ export default function AppHeader({
           <Link
             href={"/home"}
             title={SpecialeDagTitel()}
-            className={`font-georgia text-3xl font-bold truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}
+            className={"w-fit flex flex-row gap-1"}
           >
-            Studo
+            <span
+              className={`font-georgia text-3xl font-bold truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}
+            >
+              Studo
+            </span>
+            {beta && (
+              <span
+                className={
+                  "text-emerald-800 dark:text-blue-400 text-xs font-georgia"
+                }
+              >
+                beta
+              </span>
+            )}
           </Link>
           {premium && (
             <Link
