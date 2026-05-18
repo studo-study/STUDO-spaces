@@ -10,14 +10,6 @@ type ToastItem = {
   duration?: number;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const test = {
-  id: "qsfdqsfqsdf",
-  message:
-    "super mega lange testmessage voor in de toast om te zien of de overflow deftig werkt",
-  variant: "error",
-};
-
 type ToastContextValue = {
   show: (
     message: string,
