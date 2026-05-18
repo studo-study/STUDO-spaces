@@ -73,6 +73,7 @@ export default function LandingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const launched = true;
+  const beta = process.env.NEXT_PUBLIC_BETA === "true";
 
   const url = usePathname();
   console.log(url);
@@ -164,11 +165,22 @@ export default function LandingHeader() {
                 width={0}
                 className={"dark:hidden w-13"}
               />
-              <span
-                className={`relative z-10 bg-gradient-to-r font-bold ${specialeDag(useLocale())} bg-clip-text text-transparent transition-all duration-300`}
-              >
-                Studo
-              </span>
+              <div className={"w-fit flex flex-row gap-1 h-fit"}>
+                <span
+                  className={`relative z-10 bg-gradient-to-r font-bold ${specialeDag(useLocale())} bg-clip-text text-transparent transition-all duration-300`}
+                >
+                  Studo
+                </span>
+                {beta && (
+                  <span
+                    className={
+                      "text-emerald-800 dark:text-blue-400 text-xs font-georgia"
+                    }
+                  >
+                    beta
+                  </span>
+                )}
+              </div>
             </Link>
 
             <nav className="hidden md:flex flex-row gap-4 lg:gap-10 items-center min-w-0">
