@@ -23,6 +23,7 @@ export default function DesktopForm() {
   const locale = useLocale();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || `/${locale}/home`;
+  const otherLogin = false;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -187,84 +188,86 @@ export default function DesktopForm() {
                 </AnimateOnMount>
               </form>
 
-              <AnimateOnMount delay={500}>
-                <div
-                  className={`flex flex-col gap-4 transition-all duration-500 delay-500`}
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="flex-1 h-px bg-white/10" />
-                    <span className="text-xs text-slate-500">
-                      {t("or log in with")}
-                    </span>
-                    <div className="flex-1 h-px bg-white/10" />
-                  </div>
+              {otherLogin && (
+                <AnimateOnMount delay={500}>
+                  <div
+                    className={`flex flex-col gap-4 transition-all duration-500 delay-500`}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="flex-1 h-px bg-white/10" />
+                      <span className="text-xs text-slate-500">
+                        {t("or log in with")}
+                      </span>
+                      <div className="flex-1 h-px bg-white/10" />
+                    </div>
 
-                  <div className="flex gap-4 flex-col">
-                    <button
-                      type="button"
-                      onClick={loginGoogle}
-                      className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
-											bg-studodarkblue/5 border-studodarkblue/5
-											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
-											transition-all duration-300 cursor-pointer"
-                      data-cy="login_google"
-                    >
-                      <Image
-                        src="/icons/logos/google.svg"
-                        width={24}
-                        height={24}
-                        alt=""
-                        className="h-6"
-                      />
-                      <span className="text-sm text-studodarkblue dark:text-slate-300">
-                        Google
-                      </span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={loginMicrosoft}
-                      className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
-											bg-studodarkblue/5 border-studodarkblue/5
-											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
-											transition-all duration-300 cursor-pointer"
-                      data-cy="login_microsoft"
-                    >
-                      <Image
-                        src="/icons/logos/microsoft.svg"
-                        width={24}
-                        height={24}
-                        alt=""
-                        className="h-6"
-                      />
-                      <span className="text-sm text-studodarkblue dark:text-slate-300">
-                        Microsoft
-                      </span>
-                    </button>
-                    {language === "nl" || language === "fr-BE" ? (
+                    <div className="flex gap-4 flex-col">
                       <button
                         type="button"
-                        onClick={loginSmartschool}
+                        onClick={loginGoogle}
                         className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
 											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
 											transition-all duration-300 cursor-pointer"
-                        data-cy="login_smartschool"
+                        data-cy="login_google"
                       >
                         <Image
-                          src="/icons/logos/smartschool.png"
+                          src="/icons/logos/google.svg"
                           width={24}
                           height={24}
                           alt=""
                           className="h-6"
                         />
                         <span className="text-sm text-studodarkblue dark:text-slate-300">
-                          {t("Smartschool")}
+                          Google
                         </span>
                       </button>
-                    ) : null}
+                      <button
+                        type="button"
+                        onClick={loginMicrosoft}
+                        className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
+											bg-studodarkblue/5 border-studodarkblue/5
+											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
+											transition-all duration-300 cursor-pointer"
+                        data-cy="login_microsoft"
+                      >
+                        <Image
+                          src="/icons/logos/microsoft.svg"
+                          width={24}
+                          height={24}
+                          alt=""
+                          className="h-6"
+                        />
+                        <span className="text-sm text-studodarkblue dark:text-slate-300">
+                          Microsoft
+                        </span>
+                      </button>
+                      {language === "nl" || language === "fr-BE" ? (
+                        <button
+                          type="button"
+                          onClick={loginSmartschool}
+                          className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
+											bg-studodarkblue/5 border-studodarkblue/5
+											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
+											transition-all duration-300 cursor-pointer"
+                          data-cy="login_smartschool"
+                        >
+                          <Image
+                            src="/icons/logos/smartschool.png"
+                            width={24}
+                            height={24}
+                            alt=""
+                            className="h-6"
+                          />
+                          <span className="text-sm text-studodarkblue dark:text-slate-300">
+                            {t("Smartschool")}
+                          </span>
+                        </button>
+                      ) : null}
+                    </div>
                   </div>
-                </div>
-              </AnimateOnMount>
+                </AnimateOnMount>
+              )}
               <AnimateOnMount delay={600}>
                 <p
                   className={`text-center text-sm text-slate-500 transition-all duration-500 delay-600`}

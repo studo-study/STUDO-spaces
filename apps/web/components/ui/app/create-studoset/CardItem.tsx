@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { IoIosAdd } from "react-icons/io";
 import { useRef } from "react";
+import Image from "next/image";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
 import InputField from "@/components/ui/design_system/input/InputField";
 

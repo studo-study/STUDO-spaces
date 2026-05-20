@@ -36,9 +36,11 @@ export default function FlashcardMode({ cards, id }: FlashcardProps) {
   } = useFlashcardStore();
   const [shuffleMode, setShuffleMode] = useState(false);
 
+  // Sync server cards into store (resets only when switching sets)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     init(id, cards);
-  }, [init, id, cards]);
+  }, [id]);
 
   const toggleShuffle = () => {
     const newMode = !shuffleMode;

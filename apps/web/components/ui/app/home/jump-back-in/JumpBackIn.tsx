@@ -3,7 +3,7 @@ import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
 import { useTranslations } from "next-intl";
 import { MdReplay } from "react-icons/md";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { LastStudied } from "@studo/types";
 import LastTenItem from "@/components/ui/app/home/jump-back-in/LastTenItem";
 
@@ -23,61 +23,50 @@ const FADE_BASE =
 const JumpBackIn = ({ items }: JumpBackInProps) => {
   const t = useTranslations("home");
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [scrollState, setScrollState] = useState({
-    atStart: true,
-    atEnd: false,
-    activeIndex: 0,
-  });
-
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const updateScrollState = () => {
-      const { scrollLeft, clientWidth, scrollWidth } = container;
-      const atStart = scrollLeft <= 1;
-      const atEnd = scrollLeft + clientWidth >= scrollWidth - 1;
-
-      let activeIndex = 0;
-      let closest = Infinity;
-      Array.from(container.children).forEach((child, i) => {
-        const el = child as HTMLElement;
-        const distance = Math.abs(el.offsetLeft - scrollLeft);
-        if (distance < closest) {
-          closest = distance;
-          activeIndex = i;
-        }
-      });
-
-      setScrollState({ atStart, atEnd, activeIndex });
-    };
-
-    updateScrollState();
-    container.addEventListener("scroll", updateScrollState, { passive: true });
-    window.addEventListener("resize", updateScrollState);
-
-    return () => {
-      container.removeEventListener("scroll", updateScrollState);
-      window.removeEventListener("resize", updateScrollState);
-    };
-  }, [items.length]);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   if (items.length === 0) return null;
 
-  const { atStart, atEnd, activeIndex } = scrollState;
   const lastIndex = items.length - 1;
+  const isAtStart = activeIndex === 0;
+  const isAtEnd = activeIndex === lastIndex;
 
-  const scrollToIndex = (index: number) => {
+  const scrollTo = (index: number) => {
     const container = scrollRef.current;
-    const item = container?.children[index] as HTMLElement | undefined;
-    if (!container || !item) return;
-    container.scrollTo({ left: item.offsetLeft, behavior: "smooth" });
+    if (!container) return;
+
+    const item = container.children[index] as HTMLElement | undefined;
+    if (!item) return;
+
+    setActiveIndex(index);
+
+    const itemStart = item.offsetLeft;
+    const itemEnd = itemStart + item.offsetWidth;
+    const viewStart = container.scrollLeft;
+    const viewEnd = viewStart + container.clientWidth;
+
+    let targetScroll: number;
+
+    if (itemEnd > viewEnd) {
+      // Item valt rechts buiten beeld → rechts uitlijnen
+      targetScroll = itemEnd - container.clientWidth;
+    } else if (itemStart < viewStart) {
+      // Item valt links buiten beeld → links uitlijnen
+      targetScroll = itemStart;
+    } else {
+      // Forceer scroll naar het item toch, zodat er altijd beweging is
+      targetScroll = itemStart;
+    }
+
+    container.scrollTo({
+      left: targetScroll,
+      behavior: "smooth",
+    });
   };
 
-  const handleForward = () =>
-    scrollToIndex(atEnd ? 0 : Math.min(activeIndex + 1, lastIndex));
+  const handleForward = () => scrollTo(isAtEnd ? 0 : activeIndex + 1);
   const handleBackward = () =>
-    scrollToIndex(atStart ? lastIndex : Math.max(activeIndex - 1, 0));
+    scrollTo(isAtStart ? lastIndex : activeIndex - 1);
 
   return (
     <section className="flex flex-col gap-5 overflow-visible">
@@ -87,7 +76,7 @@ const JumpBackIn = ({ items }: JumpBackInProps) => {
       />
 
       <div className="relative w-full h-50 flex flex-row gap-2 overflow-visible">
-        {!atStart && (
+        {!isAtStart && (
           <>
             <div className={`${FADE_BASE} left-0 bg-linear-90`} />
             <button
@@ -109,7 +98,7 @@ const JumpBackIn = ({ items }: JumpBackInProps) => {
           ))}
         </div>
 
-        {!atEnd && (
+        {!isAtEnd && (
           <>
             <button
               onClick={handleForward}
@@ -122,13 +111,12 @@ const JumpBackIn = ({ items }: JumpBackInProps) => {
           </>
         )}
       </div>
-
       {items.length > 1 && (
         <div className="w-full flex items-center justify-center gap-3">
           {items.map((_, i) => (
             <button
               key={i}
-              onClick={() => scrollToIndex(i)}
+              onClick={() => scrollTo(i)}
               aria-label={t("jump-back-in_goto", { index: i + 1 })}
               className={`w-2.5 h-2.5 rounded-full border border-studoborder cursor-pointer transition-colors ${
                 activeIndex === i ? "bg-studoblue" : ""

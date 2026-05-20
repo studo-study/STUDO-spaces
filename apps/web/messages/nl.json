@@ -986,7 +986,9 @@
     "folder_error": "selecteer een map",
     "term_lang_error": "selecteer een taal",
     "def_lang_error": "selecteer een taal",
-    "card_error": "er zijn lege kaarten"
+    "card_error": "er zijn lege kaarten",
+    "saving": "Opslaan...",
+    "submit_error": "Er is iets misgegaan, probeer opnieuw"
   },
   "createvisualset": {
     "title": "Creëer nieuwe Visualset",
