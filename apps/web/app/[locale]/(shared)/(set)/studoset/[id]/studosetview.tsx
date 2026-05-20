@@ -14,7 +14,6 @@ import SharePopup from "@/components/ui/public/sets/studosets/sharepopup";
 import SettingsPopup from "@/components/ui/public/sets/studosets/settingspopup";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
 
 interface viewProps {

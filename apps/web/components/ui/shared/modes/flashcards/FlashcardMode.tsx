@@ -25,18 +25,17 @@ interface FlashcardProps {
 const storageKey = (id: string) => `studo-fc-${id}`;
 
 export default function FlashcardMode({ cards, id }: FlashcardProps) {
-  const [index, setIndex] = useState(0);
   const [shuffled, setShuffled] = useState(cards);
   const [shuffleMode, setShuffleMode] = useState(false);
 
-  // Restore index from localStorage on mount
-  useEffect(() => {
+  const [index, setIndex] = useState(() => {
+    if (typeof window === "undefined") return 0;
     const saved = localStorage.getItem(storageKey(id));
-    if (saved !== null) {
-      const parsed = parseInt(saved, 10);
-      if (!isNaN(parsed) && parsed < cards.length) setIndex(parsed);
-    }
-  }, [id, cards.length]);
+    if (saved === null) return 0;
+    const parsed = Number.parseInt(saved, 10);
+    if (Number.isNaN(parsed)) return 0;
+    return parsed;
+  });
 
   // Persist index to localStorage on change
   useEffect(() => {
