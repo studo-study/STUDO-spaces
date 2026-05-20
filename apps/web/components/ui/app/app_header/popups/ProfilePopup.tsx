@@ -1,14 +1,13 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { PiStudent } from "react-icons/pi";
 import { MdOutlinePrivacyTip, MdOutlineVerifiedUser } from "react-icons/md";
 import { LuLogOut, LuSettings } from "react-icons/lu";
 import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
-import { FaAngleRight } from "react-icons/fa6";
-import { useToast } from "@/components/providers/ToastProvider";
 interface ProfileTriggerPopupProps {
   ProfileIsOpen: boolean;
   setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,7 +29,24 @@ export default function TriggerProfile({
       onClick={togglePopUp}
       className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
     >
-      <Avatar size={40} id={user?.id} displayName={user?.displayName} />
+      <div
+        className={"absolute bg-emerald-500/50 h-10 w-10 rounded-full blur-sm"}
+      />
+      {user?.img_url && user.img_url !== "default" ? (
+        <div className="relative z-10 shadow-2xl overflow-hidden h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
+          <Image
+            src={user?.img_url ?? ""}
+            alt=""
+            width={40}
+            height={40}
+            className={"object-cover h-10 w-10"}
+          />
+        </div>
+      ) : (
+        <div className="relative z-10 shadow-2xl bg-emerald-600 h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
+          <PiStudent />
+        </div>
+      )}
 
       <ProfilePopup
         ProfileIsOpen={ProfileIsOpen}
@@ -57,7 +73,6 @@ function ProfilePopup({
 }: ProfilePopupProps) {
   const t = useTranslations("header");
   const popupRef = useRef<HTMLDivElement>(null);
-  const toast = useToast();
   const Items = [
     {
       link: "/settings",
@@ -116,7 +131,7 @@ function ProfilePopup({
     <div
       ref={popupRef}
       className={`absolute top-full right-0 mt-4
-        z-[9999] w-75 truncate h-fit
+        z-[9999] w-56 truncate h-fit
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
         backdrop-blur-xl
@@ -146,12 +161,12 @@ function ProfilePopup({
             >
               <span
                 className={
-                  "text-studodarkblue dark:text-white text-start font-bold text-xl truncate overflow-hidden w-full"
+                  "font-studodarkblue dark:text-white text-start font-bold text-xl truncate overflow-hidden w-full"
                 }
               >
                 {user?.displayName}
               </span>
-              <span className={"text-zinc-400 truncate"}>{user?.email}</span>
+              <span className={"text-studogrey"}>{user?.email}</span>
             </div>
           </Link>
 
@@ -168,21 +183,33 @@ function ProfilePopup({
               <div
                 className={
                   "w-full rounded-xl px-3 flex flex-row gap-3 h-full transition-all " +
-                  `duration-100 hover:bg-linear-to-r from-transparent ${mod.gradient} text-sm dark:text-white items-center justify-baseline`
+                  `duration-100 hover:bg-linear-to-r from-transparent ${mod.gradient} text-sm dark:text-white text-studodarkblue items-center justify-baseline`
                 }
               >
                 <div
                   className={`flex items-center justify-center w-8 h-8 rounded-lg
                                   bg-gradient-to-br ${mod.color}
                                   shadow-md shadow-black/10
-                                  group-hover:scale-110 text-white group-hover:shadow-lg
+                                  group-hover:scale-110 group-hover:shadow-lg
                                   transition-all duration-200`}
                 >
                   {mod.icon}
                 </div>
                 <span>{t(mod.label)}</span>
 
-                <FaAngleRight className="w-4 h-4 text-white ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
+                <svg
+                  className="w-4 h-4 ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
               </div>
             </Link>
           ) : null}
@@ -236,10 +263,7 @@ function ProfilePopup({
             );
           })}
           <button
-            onClick={() => {
-              signOut({ callbackUrl: "/" });
-              toast.success("logged out");
-            }}
+            onClick={() => signOut({ callbackUrl: "/" })}
             className={`group p-2 flex cursor-pointer w-full items-center h-18
                                     transition-all duration-200 ease-out
                          ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}

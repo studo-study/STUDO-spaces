@@ -69,7 +69,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
         }
       >
         {toasts.map((t) => (
-          <div key={t.id} className={"pointer-events-auto"}>
+          <div key={t.id} className="pointer-events-auto toast-slide-in">
             <Toast
               message={t.message}
               variant={t.variant}

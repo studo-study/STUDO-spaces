@@ -1,20 +1,23 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FullClassroom } from "@/types/types";
 import { useTranslations } from "next-intl";
 import ClassSearch from "@/components/ui/app/classrooms/ClassroomSearchbar";
-import { mockFullClassrooms } from "@/data/mocks/classroomsMock";
 import ClassroomOverviewItem from "@/components/ui/app/classrooms/ClassroomOverviewItem";
 import { useUser } from "@/components/providers/UserProvider";
-const classrooms: FullClassroom[] = mockFullClassrooms;
+import { useClassrooms } from "@/hooks/useClassrooms";
 
 export default function ClassroomGrid() {
+  const { classrooms, isLoading } = useClassrooms();
   const User = useUser().user;
   const selectionRef = useRef<HTMLSelectElement>(null);
   const t = useTranslations("classrooms");
-  const [filteredClasses, setFilteredClasses] =
-    useState<FullClassroom[]>(classrooms);
+  const [filteredClasses, setFilteredClasses] = useState<FullClassroom[]>([]);
+
+  useEffect(() => {
+    setFilteredClasses(classrooms);
+  }, [classrooms]);
 
   const filterClasses = () => {
     if (selectionRef.current && User) {
@@ -85,9 +88,15 @@ export default function ClassroomGrid() {
       <div
         className={"w-full h-fit flex flex-col gap-5 overflow-visible pb-15"}
       >
-        {filteredClasses.length > 0 &&
-          filteredClasses.map((item, i) => (
-            <ClassroomOverviewItem key={i} t={t} classroom={item} />
+        {isLoading && (
+          <div className="w-full py-10 text-center text-sm opacity-50">
+            Loading...
+          </div>
+        )}
+        {!isLoading &&
+          filteredClasses.length > 0 &&
+          filteredClasses.map((item) => (
+            <ClassroomOverviewItem key={item.id} t={t} classroom={item} />
           ))}
       </div>
     </div>

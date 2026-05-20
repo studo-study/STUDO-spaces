@@ -1,4 +1,3 @@
-// components/app/app_header/burger.tsx
 "use client";
 import Link from "next/link";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
