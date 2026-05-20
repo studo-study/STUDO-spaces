@@ -1,4 +1,3 @@
-// components/app/app_header/burger.tsx
 "use client";
 import Link from "next/link";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
@@ -15,7 +14,6 @@ import { IoIosAdd } from "react-icons/io";
 import { usePathname } from "next/navigation";
 import UserPopup from "@/components/ui/app/app_header/popups/BurgerPopup";
 import { LuClipboardList } from "react-icons/lu";
-import { MdTraffic } from "react-icons/md";
 
 interface BurgerProps {
   burgerOpen: boolean;
