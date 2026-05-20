@@ -28,10 +28,13 @@ export default async function HomePage() {
     next: { revalidate: 60 },
   }).then((res) => res.json());
 
-  console.log(data);
   const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? "");
   const split = data?.lastTen.toSpliced(3);
 
+  const isEmpty =
+    data?.lastTen.length === 0 &&
+    data?.courses.length === 0 &&
+    data?.boards.length === 0;
   return (
     <>
       <section
@@ -71,24 +74,21 @@ export default async function HomePage() {
             <Flow items={data?.boards} />
           </AnimateOnMount>
         )}
-        {data?.lastTen && (
+        {data?.lastTen === 0 && (
           <AnimateOnMount delay={400}>
             <GetStarted />
           </AnimateOnMount>
         )}
-        {data?.courses.length === 0 && data?.lastTen.length === 0 && (
-          <EmptyFallback />
-        )}
-        <BottomCredits />
+        {isEmpty && <EmptyFallback />}
       </div>
-
-      {data?.courses.length === 0 && data?.lastTen.length === 0 && (
+      {isEmpty && (
         <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
           <AnimateOnMount delay={2000}>
             <CTABlock t={t} />
           </AnimateOnMount>
         </div>
       )}
+      <BottomCredits />
       <div
         className={
           "fixed z-10 bottom-0 h-25 w-2/3 bg-linear-0 dark:from-bg-dark from-bg-white to-transparent"

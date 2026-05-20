@@ -950,7 +950,8 @@
     "search": "Search",
     "nonotif": "no notifications",
     "allup": "you're up-to-date",
-    "search": "zoeken..."
+    "search": "zoeken...",
+    "verkeersituatie": "Verkeer"
   },
   "createfolder": {
     "title": "create a folder",

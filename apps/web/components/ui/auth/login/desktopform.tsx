@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useToast } from "@/components/providers/ToastProvider";
 
 export default function DesktopForm() {
   const [open, setOpen] = useState(false);
@@ -13,7 +14,7 @@ export default function DesktopForm() {
   const t = useTranslations("login");
   const errors = false;
   const toggleShow = () => setOpen(!open);
-
+  const toast = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,8 +28,6 @@ export default function DesktopForm() {
     e.preventDefault();
     setLoading(true);
 
-    console.log("🚀 Attempting login with:", { email, password: "***" });
-
     try {
       const result = await signIn("credentials", {
         email,
@@ -37,11 +36,11 @@ export default function DesktopForm() {
       });
 
       if (result?.error) {
+        toast.error(result?.error);
         setLoading(false);
         return;
       }
-
-      console.log("✅ Login successful, redirecting to:", callbackUrl);
+      toast.success("Succesfully logged in");
       router.push(callbackUrl);
       router.refresh();
     } catch (err) {

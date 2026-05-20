@@ -10,6 +10,7 @@ import { RegisterFormData, registerSchema } from "@/lib/validations/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import { useToast } from "@/components/providers/ToastProvider";
 
 export default function DesktopForm() {
   const [open, setOpen] = useState<boolean>(false);
@@ -18,6 +19,7 @@ export default function DesktopForm() {
   const toggleShow = () => setOpen(!open);
 
   const [serverError, setServerError] = useState<string | null>(null);
+  const toast = useToast();
 
   const router = useRouter();
   const locale = useLocale();
@@ -50,10 +52,12 @@ export default function DesktopForm() {
       });
 
       if (result?.error) {
+        toast.error(result?.error);
         router.push("/login?registered=true");
         return;
       }
 
+      toast.success("Succesfully registered");
       router.push(callbackUrl);
     } catch (error: unknown) {
       setServerError(
