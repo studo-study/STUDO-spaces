@@ -14,7 +14,7 @@ import { GoHome } from "react-icons/go";
 import { IoIosAdd } from "react-icons/io";
 import { usePathname } from "next/navigation";
 import UserPopup from "@/components/ui/app/app_header/popups/BurgerPopup";
-import { LuClipboardList, LuTrafficCone } from "react-icons/lu";
+import { LuClipboardList } from "react-icons/lu";
 import { MdTraffic } from "react-icons/md";
 
 interface BurgerProps {
