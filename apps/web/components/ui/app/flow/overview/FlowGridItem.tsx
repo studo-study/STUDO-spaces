@@ -2,7 +2,6 @@
 import { FlowBoardOverview } from "@studo/types";
 import { Link } from "@/i18n/routing";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
-import Image from "next/image";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
 import { useTranslations } from "next-intl";
 import { useUser } from "@/components/providers/UserProvider";

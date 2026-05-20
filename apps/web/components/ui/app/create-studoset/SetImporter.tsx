@@ -5,7 +5,6 @@ import SvenImport from "@/components/ui/app/create-studoset/svenimport";
 import ExcelImport from "@/components/ui/app/create-studoset/excelimport";
 import { CardData } from "@/types/types";
 import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
-import { LuSheet } from "react-icons/lu";
 import { RiAiGenerate } from "react-icons/ri";
 interface importerProps {
   onClose: () => void;

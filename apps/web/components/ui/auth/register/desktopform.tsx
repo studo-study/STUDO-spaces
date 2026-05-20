@@ -1,78 +1,25 @@
 "use client";
 import Image from "next/image";
-import { useCallback, useState } from "react";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
-import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { registerUser } from "@/lib/api/auth";
-import { RegisterFormData, registerSchema } from "@/lib/validations/auth";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
+import { useRegisterForm } from "@/hooks/useRegisterForm";
 
 export default function DesktopForm() {
-  const [open, setOpen] = useState<boolean>(false);
-  const language = useLocale();
-  const t = useTranslations("register");
-  const toggleShow = () => setOpen(!open);
-
-  const [serverError, setServerError] = useState<string | null>(null);
-
-  const router = useRouter();
-  const locale = useLocale();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || `/${locale}/home`;
-
   const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      role: "student",
+    form: {
+      register,
+      formState: { errors, isSubmitting },
     },
-  });
-
-  const onSubmit = async (data: RegisterFormData) => {
-    setServerError(null);
-
-    try {
-      const { ...registerData } = data;
-
-      await registerUser(registerData);
-
-      const result = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false, // We handlen redirect zelf
-      });
-
-      if (result?.error) {
-        router.push("/login?registered=true");
-        return;
-      }
-
-      router.push(callbackUrl);
-    } catch (error: unknown) {
-      setServerError(
-        error instanceof Error ? error.message : "Registratie mislukt",
-      );
-    }
-  };
-
-  const loginGoogle = useCallback(() => {
-    signIn("google");
-  }, []);
-
-  const loginMicrosoft = useCallback(() => {
-    signIn("microsoft-entra-id");
-  }, []);
-
-  const loginSmartschool = useCallback(() => {
-    window.location.href = "http://localhost:3000/api/sessions/smartschool";
-  }, []);
+    t,
+    language,
+    showPassword: open,
+    toggleShowPassword: toggleShow,
+    serverError,
+    onSubmit,
+    loginGoogle,
+    loginMicrosoft,
+    loginSmartschool,
+  } = useRegisterForm();
 
   return (
     <div className="w-full h-full 3xl:absolute 3xl:inset-0 3xl:flex 3xl:justify-center 3xl:items-center flex justify-end">
@@ -98,7 +45,7 @@ export default function DesktopForm() {
 
               <form
                 data-cy="login_form"
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={onSubmit}
                 className="flex flex-col gap-4"
               >
                 <AnimateOnMount delay={300}>

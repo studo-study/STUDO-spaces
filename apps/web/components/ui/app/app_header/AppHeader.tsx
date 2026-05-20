@@ -13,7 +13,6 @@ import { Link } from "@/i18n/routing";
 import { FaArrowRight } from "react-icons/fa";
 import { StudoUser } from "@/types/types";
 import { useAppStore } from "@/store/useAppStore";
-import AppSearchbar from "@/components/ui/app/search/SearchBar";
 import OnlineScanner from "@/components/ui/app/app_header/SocialSection";
 
 interface HeaderProps {
