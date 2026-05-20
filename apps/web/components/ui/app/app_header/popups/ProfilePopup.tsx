@@ -6,7 +6,6 @@ import Link from "next/link";
 import { PiStudent } from "react-icons/pi";
 import { MdOutlinePrivacyTip, MdOutlineVerifiedUser } from "react-icons/md";
 import { LuLogOut, LuSettings } from "react-icons/lu";
-import { mockUser } from "@/data/mocks/startPageMock";
 import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
 interface ProfileTriggerPopupProps {
@@ -14,8 +13,6 @@ interface ProfileTriggerPopupProps {
   setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   user: StudoUser | null;
 }
-
-const data = mockUser;
 
 export default function TriggerProfile({
   ProfileIsOpen,
@@ -35,7 +32,7 @@ export default function TriggerProfile({
       <div
         className={"absolute bg-emerald-500/50 h-10 w-10 rounded-full blur-sm"}
       />
-      {data.img_url ? (
+      {user?.img_url && user.img_url !== "default" ? (
         <div className="relative z-10 shadow-2xl overflow-hidden h-10 w-10 text-xl flex items-center justify-center text-white rounded-full border border-studoborder">
           <Image
             src={user?.img_url ?? ""}

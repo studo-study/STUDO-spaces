@@ -53,7 +53,8 @@ const variantMap = {
   secondary: "bg-blue-600 text-white",
   outline: "border border-gray-300 text-black dark:text-white",
   prompt: "border border-zinc-300 text-zinc-500",
-  ghost: "text-zinc-500 hover:bg-gray-200 transition-colors duration-200",
+  ghost:
+    "text-studodarkblue dark:text-white border-none hover:text-studoblue transition-colors duration-200",
   approve: "text-white bg-emerald-500",
   submit:
     "bg-rose-500 text-white p-0 min-h-full rounded-xl max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",

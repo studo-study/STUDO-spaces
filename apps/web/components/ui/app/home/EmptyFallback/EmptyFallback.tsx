@@ -6,7 +6,7 @@ const EmptyFallback = () => {
   return (
     <div
       className={
-        "w-full min-h-100 flex flex-col items-center justify-center gap-4"
+        "w-full min-h-100 flex-1 flex flex-col items-center justify-center gap-4"
       }
     >
       <Image

@@ -68,14 +68,8 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
           "fixed bottom-7 right-7 z-[9999] flex flex-col gap-2 items-end pointer-events-none"
         }
       >
-        <Toast
-          message={"test"}
-          variant={"success"}
-          duration={10000}
-          onClose={() => console.log("test")}
-        />
         {toasts.map((t) => (
-          <div key={t.id} className={"pointer-events-auto"}>
+          <div key={t.id} className="pointer-events-auto toast-slide-in">
             <Toast
               message={t.message}
               variant={t.variant}
