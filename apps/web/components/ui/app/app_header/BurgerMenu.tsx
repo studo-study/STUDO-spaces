@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import { FaHouse, FaTrafficLight } from "react-icons/fa6";
+import { FaHouse } from "react-icons/fa6";
 import { PiBooks } from "react-icons/pi";
 import {
   IoFolderOpenOutline,
