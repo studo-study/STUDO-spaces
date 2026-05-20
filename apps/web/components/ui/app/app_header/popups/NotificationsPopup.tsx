@@ -29,7 +29,9 @@ export default function TriggerNotif({
       <div className="flex items-center justify-center bg-slate-200 dark:bg-gray-700/50 text-2xl dark:text-white/30 min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl">
         <IoMdNotificationsOutline />
       </div>
-      <div className="absolute top-0.5 right-0.5 rounded-full border-studoborder border bg-rose-500 w-2 h-2" />
+      {notifications.notifications.length > 0 && (
+        <div className="absolute top-0.5 right-0.5 rounded-full border-studoborder border bg-rose-500 w-2 h-2" />
+      )}
       <NotifPopup
         NotifIsOpen={NotifIsOpen}
         setNotifIsOpen={setNotifIsOpen}

@@ -23,7 +23,7 @@ const OnlineScanner = () => {
       {!isOnline && (
         <div
           className={
-            "truncate dark:text-white text-rose-700 font-medium text-sm flex flex-row gap-1 sm:gap-2 items-center"
+            "truncate dark:text-white text-rose-700 font-semibold text-sm flex flex-row gap-1 sm:gap-2 items-center"
           }
         >
           <RiWifiOffLine />

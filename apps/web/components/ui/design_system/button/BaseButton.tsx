@@ -52,11 +52,13 @@ const variantMap = {
   primary: "bg-rose-600 text-white",
   secondary: "bg-blue-600 text-white",
   outline: "border border-gray-300 text-black dark:text-white",
+  outline_link:
+    "border border-studoborder dark:bg-studogrey/30 text-studodarkblue dark:text-white w-full",
   prompt: "border border-zinc-300 text-zinc-500",
   ghost: "text-zinc-500 hover:bg-gray-200 transition-colors duration-200",
   approve: "text-white bg-emerald-500",
   submit:
-    "bg-rose-500 text-white p-0 min-h-full rounded-xl max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
+    "bg-blue-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
   default: "text-studodarkblue dark:text-white",
 } as const;
 
@@ -86,7 +88,6 @@ const BaseButton = (props: BaseButtonProps) => {
     isLoading,
     isDisabled,
     disabled,
-    error,
     type = "button",
     px,
     className,
@@ -111,24 +112,20 @@ const BaseButton = (props: BaseButtonProps) => {
     .join(" ");
 
   return (
-    <div>
-      <button
-        type={type}
-        disabled={disabled || isDisabled || isLoading}
-        onClick={onClick ?? onSubmit}
-        className={classes}
-        style={{ width: width as string | number | undefined }}
-        {...rest}
-      >
-        {iconLeft}
-        {icon}
-        {isLoading ? "laden..." : label}
-        {iconRight}
-        {children}
-      </button>
-
-      {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
-    </div>
+    <button
+      type={type}
+      disabled={disabled || isDisabled || isLoading}
+      onClick={onClick ?? onSubmit}
+      className={classes}
+      style={{ width: width as string | number | undefined }}
+      {...rest}
+    >
+      {iconLeft}
+      {icon}
+      {isLoading ? "laden..." : label}
+      {iconRight}
+      {children}
+    </button>
   );
 };
 

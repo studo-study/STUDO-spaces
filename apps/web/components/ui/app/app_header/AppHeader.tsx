@@ -124,9 +124,10 @@ export default function AppHeader({
         </div>
 
         {/*center*/}
+        {/*
         <div className={"w-full h-fit flex justify-end items-center"}>
           <AppSearchbar />
-        </div>
+        </div>*/}
 
         {/* Right section */}
         <div className="flex items-center gap-5 ml-5 justify-end">

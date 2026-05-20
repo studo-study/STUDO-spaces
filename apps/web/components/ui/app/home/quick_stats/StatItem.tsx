@@ -12,7 +12,7 @@ const StatItem = (props: StatItemProps) => {
   const { title, icon, image, bg } = props;
   return (
     <div
-      className={`w-full h-10 text-sm flex text-white font-bold items-center justify-center bg-studogrey/30 ${bg && "bg-linear-0 " + bg} gap-2 rounded-full border border-transparent dark:border-studoborder/30`}
+      className={`w-full h-10 text-sm flex font-bold items-center justify-center dark:bg-studogrey/30 bg-zinc-300 dark:text-white text-studodarkblue ${bg && "bg-linear-0 " + bg} gap-2 rounded-full border border-transparent dark:border-studoborder/30`}
     >
       {icon}
       {image && (

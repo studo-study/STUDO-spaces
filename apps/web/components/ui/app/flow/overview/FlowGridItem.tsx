@@ -9,6 +9,7 @@ import { useUser } from "@/components/providers/UserProvider";
 import { FiTrash2 } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useFlowStore } from "@/store/slices/flow/flowStore";
+import Avatar from "@/components/ui/design_system/avatar/Avatar";
 
 interface FlowGridItemProps {
   item: FlowBoardOverview;
@@ -17,7 +18,9 @@ export default function FlowGridItem(props: FlowGridItemProps) {
   const { item } = props;
   const t = useTranslations("flow");
   const { Icon, color } = getFlowIcon(item.icon);
-  const id = useUser().user?.id;
+  const user = useUser().user;
+  const id = user?.id;
+  const name = user?.displayName;
   const router = useRouter();
   const { removeBoard } = useFlowStore();
   //methods
@@ -75,13 +78,7 @@ export default function FlowGridItem(props: FlowGridItemProps) {
                 "w-8 h-8 rounded-full overflow-hidden border border-studoborder"
               }
             >
-              <Image
-                alt={"pfp"}
-                width={0}
-                height={0}
-                src={item.owner_pfp}
-                className="h-8 w-8 contain"
-              />
+              <Avatar displayName={name!} id={id!} />
             </div>
             <Link
               href={

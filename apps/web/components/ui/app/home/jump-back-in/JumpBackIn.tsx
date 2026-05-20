@@ -111,19 +111,20 @@ const JumpBackIn = ({ items }: JumpBackInProps) => {
           </>
         )}
       </div>
-
-      <div className="w-full flex items-center justify-center gap-3">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => scrollTo(i)}
-            aria-label={t("jump-back-in_goto", { index: i + 1 })}
-            className={`w-2.5 h-2.5 rounded-full border border-studoborder cursor-pointer transition-colors ${
-              activeIndex === i ? "bg-studoblue" : ""
-            }`}
-          />
-        ))}
-      </div>
+      {items.length > 1 && (
+        <div className="w-full flex items-center justify-center gap-3">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollTo(i)}
+              aria-label={t("jump-back-in_goto", { index: i + 1 })}
+              className={`w-2.5 h-2.5 rounded-full border border-studoborder cursor-pointer transition-colors ${
+                activeIndex === i ? "bg-studoblue" : ""
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

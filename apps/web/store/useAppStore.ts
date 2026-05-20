@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { createUISlice, UISlice } from "@/store/slices/ui/uiSlice";
 
-type AppStore = UISlice; // voeg hier later meer slices toe met &
+type AppStore = UISlice;
 
 export const useAppStore = create<AppStore>()(
   persist(

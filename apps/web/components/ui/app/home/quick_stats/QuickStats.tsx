@@ -11,14 +11,14 @@ interface QuickStatsProps {
 const STATS_CONFIG = [
   {
     color:
-      "dark:from-orange-500/20 dark:to-orange-600/20 from-orange-400 to-orange-500",
+      "dark:from-orange-500/20 dark:to-orange-600/20 from-orange-400 to-orange-500 text-white",
     measurement: "days",
     label: "Streak",
     extra: "",
   },
   {
     color:
-      "dark:from-purple-500/20 dark:to-purple-400/20 from-purple-500 to-purple-500 ",
+      "dark:from-purple-500/20 dark:to-purple-400/20 from-purple-500 to-purple-500 text-white",
     icon: "/icons/studyset.svg",
     measurement: "cards",
     label: "totCards",
@@ -27,7 +27,7 @@ const STATS_CONFIG = [
   },
   {
     color:
-      "dark:from-blue-500/20 dark:to-blue-500/20 from-blue-400 to-blue-500",
+      "dark:from-blue-500/20 dark:to-blue-500/20 from-blue-400 to-blue-500 text-white",
     icon: "/icons/clock.svg",
     measurement: "min",
     label: "tmStd",
@@ -36,7 +36,7 @@ const STATS_CONFIG = [
   },
   {
     color:
-      "dark:from-emerald-500/20 dark:to-emerald-600/20 from-emerald-400 to-emerald-500",
+      "dark:from-emerald-500/20 dark:to-emerald-600/20 from-emerald-400 to-emerald-500 text-white",
     iconComponent: true,
     measurement: "cards",
     label: "mastered",

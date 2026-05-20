@@ -6,6 +6,7 @@ import React, {
   SetStateAction,
 } from "react";
 import { CardData } from "@/types/types";
+import { RxShare2 } from "react-icons/rx";
 
 const MAX_FILES = 3;
 const ACCEPTED = [
@@ -120,37 +121,25 @@ export default function SvenImport({
         <div
           className={`
           w-16 h-16 rounded-2xl flex items-center justify-center
-          transition-all duration-300
+          transition-all duration-300 text-3xl border border-studoborder/30
           ${isDragging ? "bg-studoblue/20" : "bg-studoborder/10"}
         `}
         >
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-white/60"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="17 8 12 3 7 8" />
-            <line x1="12" y1="3" x2="12" y2="15" />
-          </svg>
+          <RxShare2 />
         </div>
 
         <div className="text-center">
-          <p className="text-white/80 font-medium text-lg">
+          <p className="dark:text-white/80 text-studodarkblue font-medium text-lg">
             {isDragging
               ? "Drop je bestanden hier"
               : "Sleep afbeeldingen hierheen"}
           </p>
-          <p className="text-white/40 text-sm mt-1">
-            of klik om te selecteren — max {MAX_FILES} bestanden
+          <p className="dark:text-white/40 text-studodarkblue text-sm mt-1">
+            of klik om te selecteren - max {MAX_FILES} bestanden
           </p>
-          <p className="text-white/30 text-xs mt-2">PNG, JPG, WebP, PDF</p>
+          <p className="dark:text-white/30 text-studodarkblue/30 text-xs mt-2">
+            PNG, JPG, WebP, PDF
+          </p>
         </div>
       </div>
 

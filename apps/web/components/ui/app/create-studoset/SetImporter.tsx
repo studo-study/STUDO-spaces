@@ -1,15 +1,19 @@
 import { useTranslations } from "next-intl";
-import { IoClose, IoSparklesSharp } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import SvenImport from "@/components/ui/app/create-studoset/svenimport";
 import ExcelImport from "@/components/ui/app/create-studoset/excelimport";
 import { CardData } from "@/types/types";
-import { RiFileExcel2Fill } from "react-icons/ri";
+import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
+import { LuSheet } from "react-icons/lu";
+import { RiAiGenerate } from "react-icons/ri";
 interface importerProps {
   onClose: () => void;
   cardArray: CardData[];
   setCardArray: React.Dispatch<React.SetStateAction<CardData[]>>;
 }
+
+type Tab = "sven" | "excel";
 
 export default function SetImporter({
   onClose,
@@ -17,10 +21,8 @@ export default function SetImporter({
   setCardArray,
 }: importerProps) {
   const t = useTranslations("import");
-  const [sven, setSven] = useState<boolean>(true);
-  const toggleSven = () => {
-    setSven(!sven);
-  };
+  const [tab, setTab] = useState<Tab>("sven");
+
   return (
     <div
       className="fixed inset-0 w-full h-full flex flex-col justify-between items-center z-[9999]
@@ -38,35 +40,22 @@ export default function SetImporter({
             className="cursor-pointer text-gray-700 dark:text-white hover:text-gray-500 sm:w-[35px] sm:h-[35px]"
           />
         </div>
-        <div
-          className={
-            "w-1/4 rounded-full h-14 border border-studoborder/30 bg-studogrey/30 shadow-2xl text-studodarkblue dark:text-white flex items-center justify-center gap-2 p-2 px-2"
-          }
-        >
-          <div
-            onClick={toggleSven}
-            className={`w-1/2 cursor-pointer gap-2 rounded-full bg-gray-700 font-bold border border-gray-700 hover:border-studoborder transition-all duration-300  ${!sven && "border-studoborder"}  shadow-2xl h-full flex items-center justify-center`}
-          >
-            <RiFileExcel2Fill />
-            <span>{t("excel")}</span>
-          </div>
-          <div
-            onClick={toggleSven}
-            className="w-1/2 relative group rounded-full cursor-pointer bg-gray-700  flex items-center h-full justify-center p-[1px] "
-          >
-            <div
-              className={`absolute inset-0 w-full opacity-0 h-full group-hover:opacity-100 ${sven && "opacity-100"} transition-opacity duration-300 aiBorderAnimation rounded-full`}
-            />
-
-            <div className="relative z-10 px-5 w-full h-full rounded-full  bg-gray-700 flex items-center justify-center gap-2 text-white font-bold">
-              <IoSparklesSharp />
-              <span className={"truncate font-black"}>{t("sven")}</span>
-            </div>
-          </div>
-        </div>
+        <TabSwitcher
+          tabs={[
+            {
+              key: "sven",
+              label: t("sven"),
+              icon: <RiAiGenerate />,
+            },
+          ]}
+          value={tab}
+          onChange={(key) => {
+            setTab(key as Tab);
+          }}
+        />
       </div>
       <div className={"w-3/4 h-full"}>
-        {sven ? (
+        {tab === "sven" ? (
           <SvenImport
             onClose={onClose}
             cardArray={cardArray}

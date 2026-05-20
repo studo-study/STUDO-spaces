@@ -25,12 +25,12 @@ export default function ProgressBar({
 
       <div
         className={
-          "w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row items-center justify-baseline h-3 rounded-full border border-gray-300 dark:border-studoborder/30"
+          "w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row items-center justify-baseline h-2 rounded-full border border-gray-300 dark:border-studoborder/30"
         }
       >
         <div
           style={{ width: `${perc}%` }}
-          className={` h-full rounded-full bg-linear-90 ${queueMode ? "from-rose-300 to-rose-500" : "from-emerald-300 to-emerald-500 dark:from-bg-studoblue dark:to-blue-400"}`}
+          className={` h-full rounded-full bg-linear-90 ${queueMode ? "from-rose-400 to-rose-500" : "from-emerald-400 to-emerald-500"}`}
         />
       </div>
     </div>
