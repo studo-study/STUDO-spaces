@@ -1,5 +1,4 @@
 "use client";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useState, useEffect } from "react";
 import "animate.css";
 import { IoShuffleOutline } from "react-icons/io5";

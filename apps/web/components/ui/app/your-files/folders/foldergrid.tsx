@@ -1,6 +1,5 @@
 "use client";
 import FolderItem from "@/components/ui/app/your-files/folders/folderItem";
-import { Folder } from "@/types/types";
 import { useFolders } from "@/hooks/app/folders/useFolders";
 
 export default function FolderGrid() {

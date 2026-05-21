@@ -14,9 +14,7 @@ import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions"
 import { FiTrash2 } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { IoShareOutline } from "react-icons/io5";
-import { StudysetResponse, VisualsetResponse } from "@studo/types";
 import { useFolder } from "@/hooks/app/folders/useFolder";
-import SetItem from "@/components/ui/app/SetItem";
 
 interface FolderProps {
   folder: Folder;

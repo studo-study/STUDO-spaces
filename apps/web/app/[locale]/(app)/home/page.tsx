@@ -11,9 +11,6 @@ import YourSets from "@/components/ui/app/home/YourSets/YourSets";
 import Courses from "@/components/ui/app/home/courses/Courses";
 import EmptyFallback from "@/components/ui/app/home/EmptyFallback/EmptyFallback";
 import Flow from "@/components/ui/app/home/flows/Flow";
-import GetStarted from "@/components/ui/app/home/get_started/GetStarted";
-import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
-
 export const metadata: Metadata = {
   title: "Home | Studo",
 };

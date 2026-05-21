@@ -904,7 +904,8 @@
     "Microsoft": "Microsoft",
     "Smartschool": "Smartschool",
     "Don't have an account?": "Nog geen account?",
-    "sign up": "registreren"
+    "sign up": "registreren",
+    "succesful_login": "Succesvol ingelogd"
   },
   "register": {
     "Create account": "Creër account",
