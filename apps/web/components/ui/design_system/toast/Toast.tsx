@@ -39,16 +39,16 @@ const Toast = (props: ToastProps) => {
     return () => cancelAnimationFrame(raf);
   }, [open]);
 
-  useEffect(() => {
-    if (!visible || duration <= 0) return;
-    const timer = setTimeout(() => handleClose(), duration);
-    return () => clearTimeout(timer);
-  }, [visible, duration]);
-
   const handleClose = () => {
     setVisible(false);
     setTimeout(() => onClose?.(), 300);
   };
+
+  useEffect(() => {
+    if (!visible || duration <= 0) return;
+    const timer = setTimeout(() => handleClose(), duration);
+    return () => clearTimeout(timer);
+  }, [visible, duration, handleClose]);
 
   return (
     <div

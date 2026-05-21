@@ -32,7 +32,7 @@ export function useRegisterForm() {
   const onSubmit = async (data: RegisterFormData) => {
     setServerError(null);
     try {
-      const { confirmPassword: _, ...registerData } = data;
+      const { ...registerData } = data;
       await registerUser(registerData);
 
       const result = await signIn("credentials", {
