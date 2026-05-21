@@ -15,6 +15,7 @@ import { FiTrash2 } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { IoShareOutline } from "react-icons/io5";
 import { useFolder } from "@/hooks/app/folders/useFolder";
+import { useDeleteFolder } from "@/hooks/app/folders/useDeleteFolder";
 
 interface FolderProps {
   folder: Folder;
@@ -22,6 +23,7 @@ interface FolderProps {
 
 export default function FolderItem({ folder }: FolderProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { mutate: deleteFolder } = useDeleteFolder();
   const t = useTranslations("y_f.your_sets");
   const { data: folderDetails } = useFolder(folder.id, isOpen);
   const sets = [
@@ -32,7 +34,7 @@ export default function FolderItem({ folder }: FolderProps) {
     setIsOpen((prev) => !prev);
   };
   const handleDelete = () => {
-    console.log("deleted");
+    deleteFolder(folder.id);
   };
   console.log(folderDetails);
 

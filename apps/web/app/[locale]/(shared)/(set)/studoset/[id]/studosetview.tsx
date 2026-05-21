@@ -6,7 +6,7 @@ import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/public/sets/studosets/CardList";
 import { Progress } from "@/components/ui/marketing/progress/progress";
 import { IoFilter, IoFolderOpenOutline } from "react-icons/io5";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import SavedPopup from "@/components/ui/public/sets/studosets/savedpopup";
 import ClassroomPopup from "@/components/ui/public/sets/studosets/classroompopup";
 import SharePopup from "@/components/ui/public/sets/studosets/sharepopup";
@@ -18,7 +18,8 @@ import { useTranslations } from "next-intl";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useSplash } from "@/components/providers/app/SplashProvider";
-import { useEffect } from "react";
+import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
+import { useEffect, useMemo } from "react";
 
 interface viewProps {
   id: string;
@@ -29,13 +30,21 @@ export default function StudosetView({ id }: viewProps) {
   const speedy = false;
   const learn = false;
   const { setLoaded } = useSplash();
-
   const { data } = useStudoset(id);
-
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
 
+  const { like, unlike } = useLikeStudoset(id, userId ?? "");
+  const likes = useMemo(() => data?.likes ?? [], [data]);
+  const liked = useMemo(
+    () => likes.some((l) => l.user_id === userId),
+    [likes, userId],
+  );
+  const toggleLike = () => {
+    if (liked) unlike.mutate(data?.id);
+    else like.mutate(data?.id);
+  };
   if (!data?.cards) return null;
   const not_studied =
     data?.session?.cards?.reduce((sum: number, card: SessionCardResponse) => {
@@ -55,11 +64,11 @@ export default function StudosetView({ id }: viewProps) {
   const isOwner = !!userId && userId === data?.user_id;
 
   return (
-    <>
+    <div className={"w-full h-full px-10"}>
       <div className="w-full h-fit flex flex-row items-center justify-baseline gap-2 sm:gap-3 text-xs sm:text-sm flex-wrap">
         <span>{t("created")}</span>
         <Link
-          href={`/profile/` + data?.user_id}
+          href={isOwner ? "/account" : `/profile/` + data?.user_id}
           className="flex flex-row w-fit h-fit rounded-full sm:rounded-4xl
                             gap-1.5 sm:gap-2 p-1 sm:p-2 pl-3 sm:pl-2 pr-3 sm:pr-5 l max-w-fit
                              bg-studogrey/30 border border-studoborder/30 shadow-2x
@@ -77,7 +86,7 @@ export default function StudosetView({ id }: viewProps) {
           </span>
         </Link>
       </div>
-      <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+      <div className="w-full mb-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
         <span className="w-full sm:w-2/3 flex flex-row items-center justify-baseline text-2xl sm:text-3xl md:text-4xl font-semibold truncate">
           {(data && data.title) || t("set_title")}
         </span>
@@ -88,15 +97,15 @@ export default function StudosetView({ id }: viewProps) {
           <SettingsPopup />
         </div>
       </div>
-      <div className={"w-full h-20 flex flex-col gap-2 opacity-40"}>
-        <div className={"w-full flex flex-row gap-2 items-center"}>
+      <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
+        <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
           <IoFolderOpenOutline />
           <span>
             {t("saved_in")}: {data?.folders?.[0]?.name}
           </span>
         </div>
         {data?.classrooms?.[0] && (
-          <div className={"w-full flex flex-row gap-2 items-center"}>
+          <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
             <Image
               src={"/icons/classroom.svg"}
               alt={"studeerhoed"}
@@ -110,10 +119,16 @@ export default function StudosetView({ id }: viewProps) {
           </div>
         )}
         <div className={"w-full flex flex-row gap-2 items-center"}>
-          <FaRegHeart />
+          <div
+            onClick={() => {
+              toggleLike();
+            }}
+            className={`${isOwner ? "pointer-events-none opacity-40" : "cursor-pointer active:scale-95 transition-all duration-300"}`}
+          >
+            {liked ? <FaHeart className={"text-rose-500"} /> : <FaRegHeart />}
+          </div>
           <span>
-            {data?.likes?.length}{" "}
-            {data?.likes?.length != 1 ? t("likes") : t("like")}
+            {likes?.length} {likes?.length != 1 ? t("likes") : t("like")}
           </span>
         </div>
       </div>
@@ -220,6 +235,6 @@ export default function StudosetView({ id }: viewProps) {
         <CardList cards={data?.cards ?? []} isOwner={isOwner} setId={id} />
         <BottomCredits />
       </div>
-    </>
+    </div>
   );
 }

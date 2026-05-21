@@ -407,7 +407,16 @@ export class VisualsetService {
     }
 
     if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this ((visualset))');
+      await this.db
+        .delete(studysessions)
+        .where(
+          and(
+            eq(studysessions.set_id, set_id),
+            eq(studysessions.user_id, user_id),
+            eq(studysessions.set_type, 'visualset'),
+          ),
+        );
+      return;
     }
 
     await this.db.transaction(async (tx) => {

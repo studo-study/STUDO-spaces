@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
@@ -28,47 +28,51 @@ export interface StudySetItem {
 
 export default function Grid() {
   const { sets, visualsets } = useSets();
-  const allSets: StudySetItem[] = [
-    ...sets.map((s: StudysetResponse) => ({
-      ...s,
-      type: "studyset" as const,
-    })),
-    ...visualsets.map((s: VisualsetResponse) => ({
-      ...s,
-      type: "visualset" as const,
-    })),
-  ];
+  const allSets: StudySetItem[] = useMemo(
+    () => [
+      ...sets.map((s: StudysetResponse) => ({
+        ...s,
+        type: "studyset" as const,
+      })),
+      ...visualsets.map((s: VisualsetResponse) => ({
+        ...s,
+        type: "visualset" as const,
+      })),
+    ],
+    [sets, visualsets],
+  );
 
-  const [filteredSets, setFilteredSets] = useState<StudySetItem[]>(allSets);
   const containerRef = useRef(null);
-  const selectionRef = useRef<HTMLSelectElement>(null);
   const [AddIsOpen, setAddIsOpen] = useState(false);
+  const [sortMode, setSortMode] = useState<"all" | "recent" | "created">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredSets = useMemo(() => {
+    let result = allSets;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (s) =>
+          s.title.toLowerCase().includes(q) ||
+          s.course.toLowerCase().includes(q),
+      );
+    }
+    if (sortMode === "recent")
+      return [...result].sort(
+        (a, b) =>
+          new Date(b.last_updated).getTime() -
+          new Date(a.last_updated).getTime(),
+      );
+    if (sortMode === "created")
+      return [...result].sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+      );
+    return result;
+  }, [allSets, sortMode, searchQuery]);
 
   const togglePopUp = () => setAddIsOpen((prev) => !prev);
   const toggleCreate = () => setAddIsOpen((prev) => !prev);
-
-  const filterSets = () => {
-    if (selectionRef.current) {
-      const value = selectionRef.current.value;
-      if (value === "all") setFilteredSets(allSets);
-      if (value === "recent")
-        setFilteredSets(
-          [...allSets].sort(
-            (a, b) =>
-              new Date(b.last_updated).getTime() -
-              new Date(a.last_updated).getTime(),
-          ),
-        );
-      if (value === "created")
-        setFilteredSets(
-          [...allSets].sort(
-            (a, b) =>
-              new Date(b.created_at).getTime() -
-              new Date(a.created_at).getTime(),
-          ),
-        );
-    }
-  };
 
   const t = useTranslations("y_f.your_sets");
 
@@ -78,9 +82,10 @@ export default function Grid() {
         <div className="w-fit flex flex-row gap-5 items-center">
           <select
             name="sort sets"
-            ref={selectionRef}
-            defaultValue="all"
-            onChange={filterSets}
+            value={sortMode}
+            onChange={(e) =>
+              setSortMode(e.target.value as "all" | "recent" | "created")
+            }
             className="
                             px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
                             border dark:border-studogrey/30 border-gray-200
@@ -99,7 +104,7 @@ export default function Grid() {
           </select>
         </div>
         <div className="w-fit flex flex-row gap-5 items-center">
-          <SetSearch sets={allSets} setFilteredSets={setFilteredSets} />
+          <SetSearch sets={allSets} setSearchQuery={setSearchQuery} />
           <button
             onClick={togglePopUp}
             ref={containerRef}

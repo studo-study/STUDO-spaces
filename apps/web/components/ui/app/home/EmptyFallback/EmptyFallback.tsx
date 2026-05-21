@@ -9,7 +9,7 @@ const EmptyFallback = () => {
   const { data, isLoading: boardsLoading } = useBoards();
   const t = useTranslations("home.fallback");
 
-  if (setsLoading || boardsLoading) return null;
+  if (setsLoading && boardsLoading) return null;
   if (sets.length > 0 || (data?.boards ?? []).length > 0) return null;
 
   return (

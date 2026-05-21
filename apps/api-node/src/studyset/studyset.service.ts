@@ -521,7 +521,16 @@ export class StudysetService {
     }
 
     if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this studoset');
+      await this.db
+        .delete(studysessions)
+        .where(
+          and(
+            eq(studysessions.set_id, set_id),
+            eq(studysessions.user_id, user_id),
+            eq(studysessions.set_type, 'studyset'),
+          ),
+        );
+      return;
     }
 
     await this.db.transaction(async (tx) => {
