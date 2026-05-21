@@ -47,7 +47,7 @@ const Toast = (props: ToastProps) => {
     if (!visible || duration <= 0) return;
     const timer = setTimeout(() => handleClose(), duration);
     return () => clearTimeout(timer);
-  }, [visible, duration]);
+  }, [visible, duration, handleClose]);
 
   return (
     <div
