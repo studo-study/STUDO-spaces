@@ -37,6 +37,7 @@ export default function DesktopForm() {
       });
 
       if (result?.error) {
+        toast.error(result?.error);
         setLoading(false);
         toast.error(result?.error);
         return;

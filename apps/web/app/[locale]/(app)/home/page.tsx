@@ -32,6 +32,10 @@ export default async function HomePage() {
   const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? "");
   const split = data?.lastTen.toSpliced(3);
 
+  const isEmpty =
+    data?.lastTen.length === 0 &&
+    data?.courses.length === 0 &&
+    data?.boards.length === 0;
   return (
     <>
       <section
@@ -87,6 +91,7 @@ export default async function HomePage() {
           </AnimateOnMount>
         </div>
       )}
+      <BottomCredits />
       <div
         className={
           "fixed z-10 bottom-0 h-25 w-2/3 bg-linear-0 dark:from-bg-dark from-bg-white to-transparent"
