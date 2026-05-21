@@ -6,7 +6,7 @@ const BottomCredits = () => {
   return (
     <span
       className={
-        "absolute bottom w-full min-h-20 opacity-50 text-sm flex items-center justify-center"
+        " w-full min-h-20 opacity-50 text-sm flex items-center justify-center"
       }
     >
       © 2026 - {year}. Studo inc. - {t("rights")}

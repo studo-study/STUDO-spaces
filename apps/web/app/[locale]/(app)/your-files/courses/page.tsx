@@ -3,7 +3,6 @@ import CourseItem from "@/components/ui/app/your-files/courses/courseItem";
 import { auth } from "@/auth";
 import { AllsetsResponse } from "@studo/types";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {

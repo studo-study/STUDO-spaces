@@ -28,6 +28,10 @@ const variantIcons = {
 const Toast = (props: ToastProps) => {
   const { message, variant, duration = 4000, onClose, open = true } = props;
   const [visible, setVisible] = useState(false);
+  const handleClose = () => {
+    setVisible(false);
+    setTimeout(() => onClose?.(), 300);
+  };
 
   useEffect(() => {
     if (!open) {
@@ -44,11 +48,6 @@ const Toast = (props: ToastProps) => {
     const timer = setTimeout(() => handleClose(), duration);
     return () => clearTimeout(timer);
   }, [visible, duration]);
-
-  const handleClose = () => {
-    setVisible(false);
-    setTimeout(() => onClose?.(), 300);
-  };
 
   return (
     <div

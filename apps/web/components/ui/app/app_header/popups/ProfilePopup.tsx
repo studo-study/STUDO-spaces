@@ -21,7 +21,6 @@ export default function TriggerProfile({
   user,
 }: ProfileTriggerPopupProps) {
   const containerRef = useRef(null);
-  const toast = useToast();
   const togglePopUp = () => {
     setProfileIsOpen((prev) => !prev);
   };

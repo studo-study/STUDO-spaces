@@ -45,6 +45,7 @@ export default function DesktopForm() {
       router.push(callbackUrl);
       router.refresh();
     } catch (err) {
+      console.error(err);
       toast.error(t("something_wrong"));
       setLoading(false);
     }
