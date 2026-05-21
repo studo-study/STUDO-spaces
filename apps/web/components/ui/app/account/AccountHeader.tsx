@@ -5,6 +5,7 @@ import { IoMdSettings } from "react-icons/io";
 import { useUser } from "@/components/providers/UserProvider";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import Image from "next/image";
+import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 
 export default function AccountHeader() {
   const t = useTranslations("account");
@@ -13,7 +14,7 @@ export default function AccountHeader() {
   return (
     <div
       className={
-        "w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-50 bg-gray-700 rounded-3xl border border-studoborder/30"
+        "w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-50 bg-studogrey/30 rounded-3xl border border-studoborder/30"
       }
     >
       <div
@@ -23,16 +24,11 @@ export default function AccountHeader() {
       >
         <div
           className={
-            "max-w-25 max-h-25 overflow-hidden min-w-25 min-h-25 rounded-full flex items-center justify-center bg-gray-500"
+            "max-w-25 max-h-25 overflow-hidden min-w-25 min-h-25 rounded-full flex items-center justify-center bg--500"
           }
         >
           {user && (
-            <Avatar
-              id={user.id}
-              displayName={user.displayName}
-              img_url={user?.img_url}
-              size={100}
-            />
+            <Avatar id={user.id} displayName={user.displayName} size={100} />
           )}
         </div>
         <div className={"w-full h-fit flex flex-col gap-5"}>
@@ -43,16 +39,23 @@ export default function AccountHeader() {
           >
             <div className="flex items-center gap-2">
               <span>{user?.displayName}</span>
-              <span className={"text-base cursor-pointer"}>#</span>
-              <Link href={"/streak"}>
-                <Image
-                  width={20}
-                  height={20}
-                  src="/icons/streak.svg"
-                  alt="streak-icon"
-                  className="w-4 h-4 cursor-pointer"
-                />
-              </Link>
+              {user && (
+                <BaseTooltip content={user.joinNumber}>
+                  <span className={"text-base cursor-pointer"}>#</span>
+                </BaseTooltip>
+              )}
+
+              {user && user.streak_count != 0 && (
+                <Link href={"/streak"}>
+                  <Image
+                    width={20}
+                    height={20}
+                    src="/icons/streak.svg"
+                    alt="streak-icon"
+                    className="w-4 h-4 cursor-pointer"
+                  />
+                </Link>
+              )}
             </div>
 
             <Link

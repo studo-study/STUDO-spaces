@@ -1,3 +1,4 @@
+"use client";
 import { useTranslations } from "next-intl";
 import Phrases from "@/data/phrases";
 
@@ -32,7 +33,9 @@ export default function StreakPage() {
           {Streak}
           {t("phrase_2")}.
         </span>
-        <span className="font-sfpro text-xl text-gray-400">{Phrases()}!</span>
+        <span className="font-sfpro text-xl text-gray-400">
+          <Phrases />!
+        </span>
       </div>
     </div>
   );

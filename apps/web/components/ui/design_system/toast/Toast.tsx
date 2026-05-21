@@ -1,55 +1,65 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { IoWarning, IoInformationCircle } from "react-icons/io5";
+import { IoInformationCircle } from "react-icons/io5";
 import { ToastProps } from "@/components/ui/design_system/toast/Toast.types";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { CgDanger } from "react-icons/cg";
-import { FaCheckCircle } from "react-icons/fa";
+import IconButton from "@/components/ui/design_system/button/IconButton";
+import { FaCircleCheck } from "react-icons/fa6";
+import { MdDangerous } from "react-icons/md";
+import { BiSolidErrorCircle } from "react-icons/bi";
 
 const variantStyles = {
-  success: "bg-emerald-400/20 border-studoborder/30",
-  error: "bg-rose-500/20 border-studoborder/30",
-  warning: "bg-yellow-500/20 border-studoborder/30",
-  info: "bg-blue-400/20 border-studoborder/30",
+  success: "bg-green-500/20 border-green-400/30",
+  error: "bg-rose-500/20 border-rose-400/30",
+  warning: "bg-yellow-500/20 border-yellow-400/30",
+  info: "bg-blue-500/20 border-blue-400/30",
   ghost: "",
 };
 
 const variantIcons = {
-  success: <FaCheckCircle className={"text-emerald-400"} size={18} />,
-  error: <CgDanger className={"text-rose-500"} size={18} />,
-  warning: <IoWarning className={"text-yellow-600"} size={18} />,
-  info: <IoInformationCircle className={"text-blue-600"} size={18} />,
+  success: <FaCircleCheck className={"text-emerald-400"} size={18} />,
+  error: <BiSolidErrorCircle className={"text-rose-500"} size={18} />,
+  warning: (
+    <MdDangerous className={"dark:text-orange-400 text-orange-500"} size={18} />
+  ),
+  info: <IoInformationCircle className={"text-studoblue"} size={18} />,
 };
 
 const Toast = (props: ToastProps) => {
   const { message, variant, duration = 4000, onClose, open = true } = props;
-  const [visible, setVisible] = useState<boolean>(open);
+  const [visible, setVisible] = useState(false);
+  const handleClose = useCallback(() => {
+    setVisible(false);
+
+    const timeout = setTimeout(() => {
+      onClose?.();
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [onClose]);
 
   useEffect(() => {
-    setVisible(open);
+    if (!open) {
+      // geen synchrone setState in de effect-body, in een microtask/raf zetten
+      const raf = requestAnimationFrame(() => setVisible(false));
+      return () => cancelAnimationFrame(raf);
+    }
+    const raf = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(raf);
   }, [open]);
 
   useEffect(() => {
     if (!visible || duration <= 0) return;
-    const timer = setTimeout(() => {
-      setVisible(false);
-      onClose?.();
-    }, duration);
+    const timer = setTimeout(() => handleClose(), duration);
     return () => clearTimeout(timer);
-  }, [visible, duration, onClose]);
-
-  const handleClose = () => {
-    setVisible(false);
-    onClose?.();
-  };
+  }, [visible, duration, handleClose]);
 
   return (
     <div
       role={"status"}
       aria-live={"polite"}
-      className={`border bg-studogrey/30 backdrop-blur-2xl
-                      rounded-4xl border-studoborder/30 shadow-3xl
+      className={`border shadow-2xl bg-studogrey/50 backdrop-blur-2xl
+                      rounded-full border-studoborder/30 text-white
                       min-w-64 max-w-sm h-fit
                       flex items-center gap-3 pl-4 pr-2 py-2
                       transition-all duration-300 ease-out
@@ -64,17 +74,12 @@ const Toast = (props: ToastProps) => {
       {variant && variantIcons[variant]}
       <span
         className={
-          "flex-1 text-sm text-studodarkblue dark:text-white truncate, overflow-hidden"
+          "flex-1 text-sm dark:text-white text-studodarkblue truncate, overflow-hidden"
         }
       >
         {message}
       </span>
-      <BaseButton
-        size={"icon"}
-        variant={"ghost"}
-        icon={<IoClose size={15} />}
-        onClick={handleClose}
-      />
+      <IconButton icon={<IoClose size={15} />} onClick={handleClose} />
     </div>
   );
 };

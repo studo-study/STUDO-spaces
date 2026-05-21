@@ -28,6 +28,7 @@ export default async function HomePage() {
     next: { revalidate: 60 },
   }).then((res) => res.json());
 
+  const isEmpty = data?.lastTen.length === 0 && data?.courses.length === 0;
   const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? "");
   const split = data?.lastTen.toSpliced(3);
 
@@ -53,7 +54,7 @@ export default async function HomePage() {
         <QuickStats stats={data?.stats} />
       </section>
 
-      <div className={"w-full grid grid-cols-1 gap-10 pb-15"}>
+      <div className={"w-full flex-1 grid grid-cols-1 gap-10 pb-15"}>
         {data?.lastTen && (
           <AnimateOnMount delay={0}>
             <JumpBackIn items={split ?? []} />
@@ -74,13 +75,15 @@ export default async function HomePage() {
             <Flow items={data?.boards} />
           </AnimateOnMount>
         )}
-        {data?.lastTen === 0 && (
+        {data?.lastTen > 0 && (
           <AnimateOnMount delay={400}>
             <GetStarted />
           </AnimateOnMount>
         )}
         {isEmpty && <EmptyFallback />}
+        <BottomCredits />
       </div>
+
       {isEmpty && (
         <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
           <AnimateOnMount delay={2000}>

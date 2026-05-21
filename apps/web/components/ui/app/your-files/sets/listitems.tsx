@@ -44,6 +44,7 @@ function ListItem({ set, t, locale }: SetItemProps) {
     .toLocaleDateString(locale)
     .split("-")
     .join("/");
+  console.log(set);
   const iconSrc =
     set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
   const link =
@@ -88,18 +89,14 @@ function ListItem({ set, t, locale }: SetItemProps) {
             }
           >
             <span>{set.course}</span>
-            <span>•</span>
-            <span>{date}</span>
+            {set.last_updated && <span>•</span>}
+            <span>{set.last_updated && date}</span>
           </div>
         </div>
       </div>
 
       <div className="min-w-60 w-full sm:w-auto flex flex-row items-center justify-end sm:gap-6">
-        <Avatar
-          id={set.user_id}
-          displayName={set.displayName}
-          img_url={set.img_url}
-        />
+        <Avatar id={set.user_id} displayName={set.displayName} />
         <div>
           <ItemOptions
             options={[

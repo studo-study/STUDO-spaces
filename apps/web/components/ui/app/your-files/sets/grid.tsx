@@ -118,10 +118,28 @@ export default function Grid({ data }: GridProps) {
           </button>
         </div>
       </div>
-      <div className="w-full h-fit gap-2 flex flex-col">
+      <div className="w-full flex-1 h-fit gap-2 flex flex-col">
         {filteredSets.length === 0 ? (
-          <div className="w-full h-100 flex dark:text-white text-studodarkblue font-bold items-center justify-center">
-            {allSets.length === 0 ? t("no_sets") : t("no_results")}
+          <div className="w-full h-fit flex-1 flex-col gap-2 flex dark:text-white text-studodarkblue font-bold items-center pt-40">
+            <Image
+              width={100}
+              height={100}
+              src={"/images/fallbacks/books.png"}
+              alt=""
+              className="h-30 w-30 opacity-50 saturate-0"
+            />
+            <div className={"flex flex-col items-center justify-center gap-2"}>
+              <span className={"dark:text-white text-xl font-bold"}>
+                {t("nothing_title")}
+              </span>
+              <p
+                className={
+                  "dark:text-studogrey text-gray-400 font-normal text-sm"
+                }
+              >
+                {t("nothing_paragraph")}
+              </p>
+            </div>
           </div>
         ) : (
           <ListItems items={filteredSets} />

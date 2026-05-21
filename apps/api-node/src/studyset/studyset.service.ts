@@ -129,6 +129,51 @@ export class StudysetService {
     return set;
   }
 
+  async createCard(
+    user_id: string,
+    set_id: string,
+    data: CreateCardDto,
+  ): Promise<CardResponseDto> {
+    const date = new Date();
+
+    const set = await this.db.query.studysets.findFirst({
+      where: eq(studysets.id, set_id),
+    });
+    if (!set) throw new NotFoundException('Studyset not found');
+    if (set.user_id !== user_id)
+      throw new ForbiddenException('You do not own this studoset');
+
+    const card = {
+      id: uuidv6(),
+      term: data.term,
+      definition: data.definition,
+      image: data.image ?? null,
+      number: data.number,
+      created_at: date.toISOString(),
+      updated_at: date.toISOString(),
+      card_viewcount: 0,
+      card_total_viewcount: 0,
+      inQueue: false,
+      mastered: false,
+      times_relearned: 0,
+      set_id,
+      owner_id: user_id,
+    };
+
+    await this.db.insert(cards).values(card);
+
+    return {
+      id: card.id,
+      term: card.term,
+      definition: card.definition,
+      number: card.number,
+      created_at: card.created_at,
+      updated_at: card.updated_at,
+      set_id: card.set_id,
+      owner_id: card.owner_id,
+    };
+  }
+
   async getAll(): Promise<StudysetListResponseDto> {
     return { sets: await this.db.query.studysets.findMany() };
   }

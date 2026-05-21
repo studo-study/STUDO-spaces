@@ -1,11 +1,10 @@
 "use client";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "animate.css";
 import { IoShuffleOutline } from "react-icons/io5";
-import { RxEnterFullScreen } from "react-icons/rx";
-import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import ProgressBar from "@/components/ui/public/profile/(modes)/learn/progressbar";
+import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 
 interface Card {
   id: string;
@@ -23,65 +22,75 @@ interface FlashcardProps {
   id: string;
 }
 
-export default function Flashcard({ cards = [], id }: FlashcardProps) {
-  const [index, setIndex] = useState(0);
-  const [shuffled, setShuffled] = useState(cards ?? []);
+const storageKey = (id: string) => `studo-fc-${id}`;
+
+export default function FlashcardMode({ cards, id }: FlashcardProps) {
+  const [shuffled, setShuffled] = useState(cards);
   const [shuffleMode, setShuffleMode] = useState(false);
+
+  const [index, setIndex] = useState(() => {
+    if (typeof window === "undefined") return 0;
+    const saved = localStorage.getItem(storageKey(id));
+    if (saved === null) return 0;
+    const parsed = Number.parseInt(saved, 10);
+    if (Number.isNaN(parsed)) return 0;
+    return parsed;
+  });
+
+  // Persist index to localStorage on change
+  useEffect(() => {
+    localStorage.setItem(storageKey(id), String(index));
+  }, [id, index]);
+
   const goForward = () => {
-    if (index + 1 > cards.length - 1) {
-      setIndex(0);
-    } else setIndex(index + 1);
+    setIndex((i) => (i + 1 > cards.length - 1 ? 0 : i + 1));
   };
   const goBack = () => {
-    if (index - 1 < 0) {
-      setIndex(cards.length - 1);
-    } else setIndex(index - 1);
+    setIndex((i) => (i - 1 < 0 ? cards.length - 1 : i - 1));
   };
   const toggleShuffle = () => {
     const newMode = !shuffleMode;
     setShuffleMode(newMode);
     setIndex(0);
-    if (newMode) {
-      setShuffled(shuffle(cards));
-    } else {
-      setShuffled(cards);
-    }
+    setShuffled(newMode ? shuffle(cards) : cards);
   };
 
-  if (!shuffled.length) return null;
+  useKeyboardShortcut("ArrowRight", goForward);
+  useKeyboardShortcut("ArrowLeft", goBack);
 
   return (
-    <div className={"w-full min-h-110 flex flex-col gap-5"}>
-      <div className={"z-10 w-full h-full"}>
+    <div className={"relative w-full h-full flex flex-col gap-5 items-center"}>
+      <div
+        className={"z-10 max-h-120 flex flex-col gap-5 max-w-180 w-full h-full"}
+      >
+        <ProgressBar
+          cardIndex={index}
+          cardLength={cards.length}
+          queueIndex={0}
+          queueLength={0}
+          queueMode={false}
+        />
         <Card card={shuffled[index]} key={shuffled[index]?.id} />
+      </div>
+      <div className={"absolute right-0 flex flex-row gap-3"}>
+        <button
+          onClick={toggleShuffle}
+          className={`w-12 h-12 cursor-pointer transition-all duration-300 border ${shuffleMode ? "dark:border-studoblue border-emerald-400" : "border-studoborder/30"}  bg-studogrey/30 rounded-full shadow-3xl flex flex-row items-center justify-center`}
+        >
+          <IoShuffleOutline
+            className={
+              shuffleMode
+                ? "dark:text-studoblue transition-all duration-300 text-emerald-400"
+                : ""
+            }
+          />
+        </button>
       </div>
       <div
         className={
-          "relative z-20 w-full h-15 gap-5 flex flex-row items-center justify-center"
+          "absolute bottom-10 flex flex-row gap-5 left-1/2 -translate-1/2"
         }
       >
-        <div className={"absolute right-0 flex flex-row gap-3"}>
-          <button
-            onClick={toggleShuffle}
-            className={`w-12 h-12 cursor-pointer transition-all duration-300 border ${shuffleMode ? "dark:border-studoblue border-emerald-400" : "border-studoborder/30"}  bg-studogrey/30 rounded-full shadow-3xl flex flex-row items-center justify-center`}
-          >
-            <IoShuffleOutline
-              className={
-                shuffleMode
-                  ? "dark:text-studoblue transition-all duration-300 text-emerald-400"
-                  : ""
-              }
-            />
-          </button>
-          <Link
-            href={"/flashcards/" + id}
-            className={
-              "w-12 h-12 cursor-pointer border border-studoborder/30  bg-studogrey/30 rounded-full shadow-3xl flex flex-row items-center justify-center"
-            }
-          >
-            <RxEnterFullScreen />
-          </Link>
-        </div>
         <button
           onClick={goBack}
           className={
@@ -116,7 +125,8 @@ interface CardProps {
 }
 function Card({ card }: CardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const t = useTranslations("card");
+
+  useKeyboardShortcut(" ", () => setIsFlipped((f) => !f));
 
   return (
     <div
@@ -130,30 +140,16 @@ function Card({ card }: CardProps) {
       >
         <div
           className={
-            "side-a backface-hidden top-0 left-0 absolute  w-full cursor-pointer h-full flex items-center justify-center rounded-3xl border hover:border-studoborder transition-all duration-300 border-studoborder/30 bg-studogrey/30 "
+            "side-a backface-hidden top-0 left-0 absolute  w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30 "
           }
         >
-          <span
-            className={
-              "absolute top-3 left-3 border-studoborder rounded-3xl px-3 text-sm opacity-50 py-1 bg-studogrey/30 lowercase"
-            }
-          >
-            {t("Term")}
-          </span>
           <span className={"text-xl select-none font-bold"}>{card.term}</span>
         </div>
         <div
           className={
-            "side-b backface-hidden top-0 left-0 absolute  w-full cursor-pointer h-full flex items-center justify-center rounded-3xl border hover:border-studoborder transition-all duration-300 border-studoborder/30 bg-studogrey/30 "
+            "side-b backface-hidden top-0 left-0 absolute  w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30 "
           }
         >
-          <span
-            className={
-              "absolute top-3 left-3 border-studoborder rounded-3xl px-3 text-sm opacity-50 py-1 bg-studogrey/30 lowercase"
-            }
-          >
-            {t("Definition")}
-          </span>
           <span className={"text-xl select-none"}>{card.definition}</span>
         </div>
       </div>

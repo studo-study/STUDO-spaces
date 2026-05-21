@@ -9,6 +9,14 @@ const withBundleAnalyzer = createBundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: [
+      "react-icons",
+      "lucide-react",
+      "@radix-ui/themes",
+      "chart.js",
+    ],
+  },
   images: {
     remotePatterns: [
       {
@@ -35,6 +43,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "wallpaperaccess.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*",
       },
     ],
   },
