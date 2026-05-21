@@ -32,7 +32,7 @@ export default function CardItem({
   const toast = useToast();
   const termRef = useRef<HTMLInputElement>(null);
   const definitionRef = useRef<HTMLInputElement>(null);
-  const blurTimer = useRef<ReturnType<typeof setTimeout>>();
+  const blurTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const currentCard = studosetCards.find((c) => c.id === card.id) ?? card;
   const isEditing = editingCardId === card.id;

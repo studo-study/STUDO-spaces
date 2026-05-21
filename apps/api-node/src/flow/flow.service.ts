@@ -161,6 +161,9 @@ export class FlowService {
       progress:
         totalLength > 0 ? Math.round((totalDone / totalLength) * 100) : 0,
       total_length: totalLength,
+      total_done: totalDone,
+      total_in_progress: totalLength - totalDone,
+      courses: courses.length,
     };
   }
 
@@ -257,6 +260,9 @@ export class FlowService {
       school_id: body.school_id ?? null,
       progress: 0,
       total_length: 0,
+      total_done: 0,
+      total_in_progress: 0,
+      courses: 0,
     };
   }
 

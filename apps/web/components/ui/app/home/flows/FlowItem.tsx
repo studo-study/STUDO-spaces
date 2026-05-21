@@ -1,11 +1,11 @@
-import { Boards } from "@studo/types";
+import { FlowBoardOverview } from "@studo/types";
 import { Link } from "@/i18n/routing";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
 import SmallBoardProgress from "@/components/ui/app/home/flows/SmallBoardProgress";
 import { useTranslations } from "next-intl";
 
 interface FlowItemProps {
-  board: Boards;
+  board: FlowBoardOverview;
 }
 const FlowItem = (props: FlowItemProps) => {
   const { board } = props;
