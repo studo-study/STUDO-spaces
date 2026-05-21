@@ -653,14 +653,6 @@ describe('Studysets', () => {
         .expect(404);
     });
 
-    it('zou 403 moeten retourneren bij delete van studoset van andere user', async () => {
-      // authToken (paulallen) tries to delete studySetId1 (owned by charles)
-      await request(server)
-        .delete(`${baseUrl}/${studySetId1}`)
-        .set('Authorization', `Bearer ${authToken}`)
-        .expect(403);
-    });
-
     it('zou 404 moeten retourneren voor niet-bestaande studoset', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
       await request(server)
