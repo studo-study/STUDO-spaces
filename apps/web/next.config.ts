@@ -4,14 +4,16 @@ import createBundleAnalyzer from "@next/bundle-analyzer";
 import path from "path";
 
 const withNextIntl = createNextIntlPlugin();
-
 const withBundleAnalyzer = createBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: path.join(__dirname, "../../"),
+  },
+  outputFileTracingRoot: path.join(__dirname, "../../"),
   experimental: {
-    outputFileTracingRoot: path.join(__dirname, "../../"),
     optimizePackageImports: [
       "react-icons",
       "lucide-react",
