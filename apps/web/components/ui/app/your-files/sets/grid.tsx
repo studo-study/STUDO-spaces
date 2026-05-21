@@ -74,14 +74,15 @@ export default function Grid({ data }: GridProps) {
 
   return (
     <div className="relative w-full h-full flex flex-col gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">
-      <div className="sticky top-0 w-full h-20 z-20 backdrop-blur-2xl py-8 flex overflow-visible flex-row items-center justify-between gap-3">
-        <div className="w-fit flex flex-row gap-5 items-center">
-          <select
-            name="sort sets"
-            ref={selectionRef}
-            defaultValue="all"
-            onChange={filterSets}
-            className="
+      {filteredSets.length > 0 && (
+        <div className="sticky top-0 w-full h-20 z-20 backdrop-blur-2xl py-8 flex overflow-visible flex-row items-center justify-between gap-3">
+          <div className="w-fit flex flex-row gap-5 items-center">
+            <select
+              name="sort sets"
+              ref={selectionRef}
+              defaultValue="all"
+              onChange={filterSets}
+              className="
                             px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
                             border dark:border-studogrey/30 border-gray-200
                             bg-white/50 dark:bg-gray-700
@@ -92,32 +93,33 @@ export default function Grid({ data }: GridProps) {
                             cursor-pointer w-45 text-center
                             focus:outline-none focus:ring-2 focus:ring-studogrey/50
                             appearance-none"
-          >
-            <option value="all">{t("all")}</option>
-            <option value="recent">{t("recent")}</option>
-            <option value="created">{t("created")}</option>
-          </select>
+            >
+              <option value="all">{t("all")}</option>
+              <option value="recent">{t("recent")}</option>
+              <option value="created">{t("created")}</option>
+            </select>
+          </div>
+          <div className="w-fit flex flex-row gap-5 items-center">
+            <SetSearch sets={allSets} setFilteredSets={setFilteredSets} />
+            <button
+              onClick={togglePopUp}
+              ref={containerRef}
+              className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
+            >
+              <div className="absolute bg-blue-500/50 h-8 w-8 rounded-full blur-sm" />
+              <div className="relative z-10 shadow-2xl bg-blue-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
+                <IoIosAdd />
+              </div>
+              <AddPopUp
+                AddIsOpen={AddIsOpen}
+                setAddIsOpen={setAddIsOpen}
+                containerRef={containerRef}
+                toggleCreate={toggleCreate}
+              />
+            </button>
+          </div>
         </div>
-        <div className="w-fit flex flex-row gap-5 items-center">
-          <SetSearch sets={allSets} setFilteredSets={setFilteredSets} />
-          <button
-            onClick={togglePopUp}
-            ref={containerRef}
-            className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
-          >
-            <div className="absolute bg-blue-500/50 h-8 w-8 rounded-full blur-sm" />
-            <div className="relative z-10 shadow-2xl bg-blue-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
-              <IoIosAdd />
-            </div>
-            <AddPopUp
-              AddIsOpen={AddIsOpen}
-              setAddIsOpen={setAddIsOpen}
-              containerRef={containerRef}
-              toggleCreate={toggleCreate}
-            />
-          </button>
-        </div>
-      </div>
+      )}
       <div className="w-full flex-1 h-fit gap-2 flex flex-col">
         {filteredSets.length === 0 ? (
           <div className="w-full h-fit flex-1 flex-col gap-2 flex dark:text-white text-studodarkblue font-bold items-center pt-40">

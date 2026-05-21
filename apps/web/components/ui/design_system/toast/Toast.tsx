@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { IoInformationCircle } from "react-icons/io5";
 import { ToastProps } from "@/components/ui/design_system/toast/Toast.types";
@@ -39,10 +39,13 @@ const Toast = (props: ToastProps) => {
     return () => cancelAnimationFrame(raf);
   }, [open]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setVisible(false);
-    setTimeout(() => onClose?.(), 300);
-  };
+
+    setTimeout(() => {
+      onClose?.();
+    }, 300);
+  }, [onClose]);
 
   useEffect(() => {
     if (!visible || duration <= 0) return;
