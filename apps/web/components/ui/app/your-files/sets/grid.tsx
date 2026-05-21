@@ -128,9 +128,18 @@ export default function Grid({ data }: GridProps) {
               alt=""
               className="h-30 w-30 opacity-50 saturate-0"
             />
-            <span className={"font-normal text-xl"}>
-              {allSets.length === 0 ? t("no_sets") : t("no_results")}
-            </span>
+            <div className={"flex flex-col items-center justify-center gap-2"}>
+              <span className={"dark:text-white text-xl font-bold"}>
+                {t("nothing_title")}
+              </span>
+              <p
+                className={
+                  "dark:text-studogrey text-gray-400 font-normal text-sm"
+                }
+              >
+                {t("nothing_paragraph")}
+              </p>
+            </div>
           </div>
         ) : (
           <ListItems items={filteredSets} />
