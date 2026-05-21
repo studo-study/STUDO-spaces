@@ -6,7 +6,8 @@ import {
   InjectDrizzle,
 } from './drizzle.provider';
 import path from 'node:path';
-import { migrate } from 'drizzle-orm/postgres-js/migrator'; // 👈 postgres-js in plaats van mysql2
+import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import * as fs from 'node:fs'; // 👈 postgres-js in plaats van mysql2
 
 @Module({
   providers: [...drizzleProvider],
@@ -20,10 +21,27 @@ export class DrizzleModule implements OnModuleDestroy, OnModuleInit {
   async onModuleInit() {
     this.logger.log('⏳ Running migrations...');
 
+    // Probeer meerdere kandidaat-paden, pak de eerste die bestaat
+    const candidates = [
+      path.resolve(__dirname, '..', '..', 'migrations'),
+      path.resolve(__dirname, '..', '..', '..', 'migrations'),
+      path.resolve(process.cwd(), 'apps/api-node/migrations'),
+      path.resolve(process.cwd(), 'migrations'),
+    ];
+
+    const migrationsFolder = candidates.find((p) => fs.existsSync(p));
+
+    if (!migrationsFolder) {
+      this.logger.error(
+        `❌ No migrations folder found. Tried: ${candidates.join(', ')}`,
+      );
+      throw new Error('Migrations folder not found');
+    }
+
+    this.logger.log(`📂 Using migrations folder: ${migrationsFolder}`);
+
     try {
-      await migrate(this.db, {
-        migrationsFolder: path.resolve(__dirname, '..', '..', 'migrations'),
-      });
+      await migrate(this.db, { migrationsFolder });
       this.logger.log('✅ Migrations completed!');
     } catch (error) {
       this.logger.error('❌ Migration failed:', error);
