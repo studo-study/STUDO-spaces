@@ -37,15 +37,15 @@ export default function DesktopForm() {
       });
 
       if (result?.error) {
-        toast.error(result?.error);
         setLoading(false);
+        toast.error(result?.error);
         return;
       }
-      toast.success("Succesfully logged in");
+      toast.success(t("successful_login"));
       router.push(callbackUrl);
       router.refresh();
     } catch (err) {
-      console.error(err);
+      toast.error(t("something_wrong"));
       setLoading(false);
     }
   };

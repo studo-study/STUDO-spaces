@@ -2,7 +2,7 @@
 import { useCallback, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { registerUser } from "@/lib/api/auth";
@@ -24,7 +24,8 @@ export function useRegisterForm() {
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   const form = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(registerSchema as any) as Resolver<RegisterFormData>,
     defaultValues: { role: "student" },
   });
 

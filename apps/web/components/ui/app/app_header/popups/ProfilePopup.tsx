@@ -8,6 +8,7 @@ import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { FaAngleRight } from "react-icons/fa6";
+import { useToast } from "@/components/providers/ToastProvider";
 interface ProfileTriggerPopupProps {
   ProfileIsOpen: boolean;
   setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,7 @@ export default function TriggerProfile({
   user,
 }: ProfileTriggerPopupProps) {
   const containerRef = useRef(null);
+  const toast = useToast();
   const togglePopUp = () => {
     setProfileIsOpen((prev) => !prev);
   };
@@ -56,6 +58,7 @@ function ProfilePopup({
 }: ProfilePopupProps) {
   const t = useTranslations("header");
   const popupRef = useRef<HTMLDivElement>(null);
+  const toast = useToast();
   const Items = [
     {
       link: "/settings",
@@ -234,7 +237,10 @@ function ProfilePopup({
             );
           })}
           <button
-            onClick={() => signOut({ callbackUrl: "/" })}
+            onClick={() => {
+              signOut({ callbackUrl: "/" });
+              toast.success("logged out");
+            }}
             className={`group p-2 flex cursor-pointer w-full items-center h-18
                                     transition-all duration-200 ease-out
                          ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
