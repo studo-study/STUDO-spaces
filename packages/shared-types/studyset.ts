@@ -35,7 +35,10 @@ export interface StudysetResponse {
   displayName: string;
   img_url: string;
   user_id: string;
-  folder_id: string;
+  folder_id?: string | null;
+  card_count?: number;
+  last_studied?: string | null;
+  progress?: number;
 }
 
 export interface FullStudysetResponse extends StudysetResponse {
@@ -53,4 +56,10 @@ export interface StudysetListResponse {
 export interface AllsetsResponse {
   studysets: StudysetResponse[];
   visualsets: VisualsetResponse[];
+}
+
+export interface MyStudysetsResponse {
+  sets: StudysetResponse[];
+  visualsets: VisualsetResponse[];
+  stats: import("./user").TotalStats;
 }

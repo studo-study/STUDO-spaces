@@ -152,6 +152,10 @@ export interface FlowResourceResponse {
   resource_type?: ResourceType;
 }
 
+export interface MyBoardsResponse {
+  boards: FlowBoardOverview[];
+}
+
 export type ResourceType =
   | "course"
   | "notes"
