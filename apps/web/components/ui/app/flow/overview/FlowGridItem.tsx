@@ -4,7 +4,7 @@ import { Link } from "@/i18n/routing";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
 import { useTranslations } from "next-intl";
-import { useUser } from "@/components/providers/UserProvider";
+import { useUser } from "@/components/providers/auth/UserProvider";
 import { FiTrash2 } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useFlowStore } from "@/store/slices/flow/flowStore";

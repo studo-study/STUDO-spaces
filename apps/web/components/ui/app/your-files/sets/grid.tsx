@@ -6,12 +6,14 @@ import { IoIosAdd } from "react-icons/io";
 import SetSearch from "@/components/ui/app/your-files/sets/search";
 import ListItems from "@/components/ui/app/your-files/sets/listitems";
 import Image from "next/image";
+import { useSets } from "@/hooks/app/useSets";
+import { StudysetResponse, type VisualsetResponse } from "@studo/types";
 
 export interface StudySetItem {
   id: string;
   title: string;
   course: string;
-  studoset: boolean;
+  studoset?: boolean;
   global_term_language?: string;
   global_definition_language?: string;
   created_at: string;
@@ -20,23 +22,21 @@ export interface StudySetItem {
   displayName: string;
   img_url: string;
   user_id: string;
-  folder_id: string;
+  folder_id?: string | null;
   type: "studyset" | "visualset";
 }
 
-interface SetsResponse {
-  studysets: Omit<StudySetItem, "type">[];
-  visualsets: Omit<StudySetItem, "type">[];
-}
-
-interface GridProps {
-  data: SetsResponse;
-}
-
-export default function Grid({ data }: GridProps) {
+export default function Grid() {
+  const { sets, visualsets } = useSets();
   const allSets: StudySetItem[] = [
-    ...data.studysets.map((s) => ({ ...s, type: "studyset" as const })),
-    ...data.visualsets.map((s) => ({ ...s, type: "visualset" as const })),
+    ...sets.map((s: StudysetResponse) => ({
+      ...s,
+      type: "studyset" as const,
+    })),
+    ...visualsets.map((s: VisualsetResponse) => ({
+      ...s,
+      type: "visualset" as const,
+    })),
   ];
 
   const [filteredSets, setFilteredSets] = useState<StudySetItem[]>(allSets);

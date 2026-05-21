@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { auth } from "@/auth";
-import FlowStoreInitializer from "@/components/providers/FlowStoreInitializer";
+import FlowStoreInitializer from "@/components/providers/app/FlowStoreInitializer";
 import BoardHeader from "@/components/ui/app/flow/page/layout/BoardHeader";
 
 export default async function FlowOverviewLayout({

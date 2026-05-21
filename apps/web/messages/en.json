@@ -649,7 +649,6 @@
     "name_50_char_max": "Name can be  at most 50 characters",
     "pwd_dont_match": "Passwords must match",
     "confirm_pwd": "Please confirm your password"
-
   },
   "header": {
     "create_ss": "Create Studoset",
@@ -673,7 +672,6 @@
     "search": "Search",
     "nonotif": "no notifications",
     "allup": "you're up-to-date"
-
   },
   "createfolder": {
     "title": "create a folder",
@@ -711,11 +709,7 @@
       "Evening shift activated — you can handle this.",
       "You got this!"
     ],
-    "19": [
-      "Good evening, {name}",
-      "Welcome Back",
-      "Let's Go Champ"
-    ],
+    "19": ["Good evening, {name}", "Welcome Back", "Let's Go Champ"],
     "22": [
       "Welcome back. The evening is advancing — good luck.",
       "Late-night studying? Respect for keeping at it.",
@@ -728,6 +722,10 @@
     ]
   },
   "home": {
+    "jump-back-in_title": "Jump back in",
+    "jump-back-in_next": "Next",
+    "jump-back-in_previous": "Previous",
+    "jump-back-in_goto": "Go to item {index}",
     "stats": "Statistics",
     "Streak": "Streak",
     "days": "days",
@@ -752,7 +750,7 @@
     "create_block": "create card or pin sets",
     "checkStats": "more stats"
   },
-  "y_f" : {
+  "y_f": {
     "title": "Your Files"
   }
 }

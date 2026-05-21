@@ -2,7 +2,7 @@ import { useEffect, useRef, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
 
 interface CreateFolderProps {

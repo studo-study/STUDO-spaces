@@ -1,7 +1,6 @@
+"use client";
 import Flashcard from "@/components/ui/public/sets/studosets/flashcard";
 import { Link } from "@/i18n/routing";
-import { auth } from "@/auth";
-import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/public/sets/studosets/CardList";
@@ -15,24 +14,29 @@ import SettingsPopup from "@/components/ui/public/sets/studosets/settingspopup";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import { useTranslations } from "next-intl";
+import { useStudoset } from "@/hooks/app/useStudoset";
+import { useUser } from "@/components/providers/auth/UserProvider";
+import { useSplash } from "@/components/providers/app/SplashProvider";
+import { useEffect } from "react";
 
 interface viewProps {
   id: string;
 }
-export default async function StudosetView({ id }: viewProps) {
-  const t = await getTranslations("studoset");
-  const session = await auth();
-  const token = session?.accessToken;
-  const userId = session?.user?.id;
+export default function StudosetView({ id }: viewProps) {
+  const t = useTranslations("studoset");
+  const userId = useUser().user?.id;
   const speedy = false;
   const learn = false;
-  const data = await fetch(`${process.env.AUTH_API_URL}/studysets/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-    next: { revalidate: 60 },
-  })
-    .then((res) => (res.ok ? res.json() : null))
-    .catch(() => null);
+  const { setLoaded } = useSplash();
 
+  const { data } = useStudoset(id);
+
+  useEffect(() => {
+    if (data?.cards) setLoaded(true);
+  }, [data?.cards, setLoaded]);
+
+  if (!data?.cards) return null;
   const not_studied =
     data?.session?.cards?.reduce((sum: number, card: SessionCardResponse) => {
       return card.card_viewcount === 0 ? sum + 1 : sum;

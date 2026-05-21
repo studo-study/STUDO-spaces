@@ -4,12 +4,9 @@ import { useTranslations } from "next-intl";
 import { MdReplay } from "react-icons/md";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
-import { LastStudied } from "@studo/types";
 import LastTenItem from "@/components/ui/app/home/jump-back-in/LastTenItem";
-
-interface JumpBackInProps {
-  items: LastStudied[];
-}
+import { useSets } from "@/hooks/app/useSets";
+import { LastStudied } from "@studo/types";
 
 const ARROW_BASE =
   "absolute z-20 top-1/2 -translate-y-1/2 h-7 w-7 flex justify-center items-center " +
@@ -20,7 +17,8 @@ const FADE_BASE =
   "absolute z-10 h-full w-8 pointer-events-none to-transparent " +
   "dark:from-bg-dark from-bg-white";
 
-const JumpBackIn = ({ items }: JumpBackInProps) => {
+const JumpBackIn = () => {
+  const { sets, visualsets } = useSets();
   const t = useTranslations("home");
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useState({
@@ -28,6 +26,36 @@ const JumpBackIn = ({ items }: JumpBackInProps) => {
     atEnd: false,
     activeIndex: 0,
   });
+
+  const items: LastStudied[] = [
+    ...sets
+      .filter((s) => s.last_studied)
+      .map((s) => ({
+        set_id: s.id,
+        last_studied: s.last_studied!,
+        title: s.title,
+        Course: s.course,
+        type: "studyset" as const,
+        progress: s.progress ?? 0,
+        length: s.card_count ?? 0,
+      })),
+    ...visualsets
+      .filter((vs) => vs.last_studied)
+      .map((vs) => ({
+        set_id: vs.id,
+        last_studied: vs.last_studied!,
+        title: vs.title,
+        Course: vs.course,
+        type: "visualset" as const,
+        progress: vs.progress ?? 0,
+        length: vs.pin_count ?? 0,
+      })),
+  ]
+    .sort(
+      (a, b) =>
+        new Date(b.last_studied).getTime() - new Date(a.last_studied).getTime(),
+    )
+    .slice(0, 3);
 
   useEffect(() => {
     const container = scrollRef.current;

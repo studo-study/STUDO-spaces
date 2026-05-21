@@ -37,6 +37,7 @@ async function resetDatabase() {
   await db.delete(schema.pins);
   await db.delete(schema.cards);
   await db.delete(schema.images);
+  await db.delete(schema.folder_sets);
   await db.delete(schema.visualsets);
   await db.delete(schema.studysets);
   await db.delete(schema.folders);
@@ -284,7 +285,6 @@ async function seedStudo() {
         user_id: userId1,
         displayName: 'Studo Admin',
         img_url: 'https://i.pravatar.cc/150?img=1',
-        folder_id: folderId1,
       },
       {
         id: studySetId2,
@@ -299,7 +299,6 @@ async function seedStudo() {
         user_id: userId2,
         img_url: 'https://i.pravatar.cc/150?img=2',
         displayName: 'Paul ALlan',
-        folder_id: folderId2,
       },
     ]);
     console.log('Studysets seeded\n');
@@ -318,6 +317,32 @@ async function seedStudo() {
         user_id: userId4,
         displayName: 'geneeskunde',
         img_url: 'https://i.pravatar.cc/150?img=1',
+      },
+    ]);
+    console.log('Visualsets seeded\n');
+
+    // === folder_sets ===
+    console.log('Seeding folder_sets...');
+    await db.insert(schema.folder_sets).values([
+      {
+        id: uuidv6(),
+        user_id: userId1,
+        set_id: studySetId1,
+        set_type: 'studyset',
+        folder_id: folderId1,
+      },
+      {
+        id: uuidv6(),
+        user_id: userId2,
+        set_id: studySetId2,
+        set_type: 'studyset',
+        folder_id: folderId2,
+      },
+      {
+        id: uuidv6(),
+        user_id: userId4,
+        set_id: visualSetId1,
+        set_type: 'visualset',
         folder_id: folderId1,
       },
     ]);

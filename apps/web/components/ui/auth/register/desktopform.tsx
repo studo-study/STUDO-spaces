@@ -2,7 +2,7 @@
 import Image from "next/image";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import Link from "next/link";
-import { useRegisterForm } from "@/hooks/useRegisterForm";
+import { useRegisterForm } from "@/hooks/overige/useRegisterForm";
 
 export default function DesktopForm() {
   const {

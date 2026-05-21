@@ -1,16 +1,17 @@
+"use client";
 import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
 import Container from "@/components/ui/design_system/container/Container";
 import { useTranslations } from "next-intl";
 import { PiBooks } from "react-icons/pi";
 import CourseItem from "@/components/ui/app/your-files/courses/courseItem";
+import { useCourses } from "@/hooks/app/useCourses";
 
-interface CoursesProps {
-  items: string[];
-}
-const CourseContainer = (props: CoursesProps) => {
-  const { items } = props;
-
+const Courses = () => {
+  const { courses } = useCourses();
   const t = useTranslations("home");
+
+  if (courses.length === 0) return null;
+
   return (
     <section className="flex flex-col gap-5 overflow-visible">
       <SectionHeader
@@ -21,7 +22,7 @@ const CourseContainer = (props: CoursesProps) => {
       />
       <Container height={"30"}>
         <div className="min-w-full w-full flex flex-row gap-5">
-          {items.map((item, index) => (
+          {courses.map((item, index) => (
             <CourseItem course={item} key={index} />
           ))}
         </div>
@@ -30,5 +31,5 @@ const CourseContainer = (props: CoursesProps) => {
   );
 };
 
-CourseContainer.displayName = "CourseContainer";
-export default CourseContainer;
+Courses.displayName = "Courses";
+export default Courses;

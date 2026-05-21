@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { PiMedalLight } from "react-icons/pi";
-import { useUser } from "@/components/providers/UserProvider";
+import { useUser } from "@/components/providers/auth/UserProvider";
 import Image from "next/image";
 
 export default function Stats() {

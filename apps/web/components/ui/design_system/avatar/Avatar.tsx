@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { useUser } from "@/components/providers/UserProvider";
+import { useUser } from "@/components/providers/auth/UserProvider";
 import { PiStudent } from "react-icons/pi";
 
 interface AvatarProps {

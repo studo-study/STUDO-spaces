@@ -1,6 +1,6 @@
 import FlowHeader from "@/components/ui/app/flow/overview/FlowHeader";
 import FlowGrid from "@/components/ui/app/flow/overview/FlowGrid";
-import FlowStoreInitializer from "@/components/providers/FlowStoreInitializer";
+import FlowStoreInitializer from "@/components/providers/app/FlowStoreInitializer";
 import { auth } from "@/auth";
 
 export default async function FlowPage() {

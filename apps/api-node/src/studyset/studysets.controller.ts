@@ -15,6 +15,7 @@ import {
 import {
   CreateStudysetDto,
   fullSetResponseDto,
+  MyStudysetsResponseDto,
   StudysetListResponseDto,
   StudysetResponseDto,
   UpdateStudysetDto,
@@ -64,6 +65,23 @@ export class StudysetsController {
   @Get()
   async getAllStudysets(): Promise<StudysetListResponseDto> {
     return this.studysetService.getAll();
+  }
+
+  //GET alle studosets van de ingelogde user -----------------------------------
+
+  @ApiOperation({ summary: 'Haal alle studosets op van de ingelogde user.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Studysets gevonden',
+    type: [StudysetResponseDto],
+  })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.USER, Role.ADMIN)
+  @Get('me')
+  async getMyStudysets(
+    @Request() req: AuthenticatedRequest,
+  ): Promise<MyStudysetsResponseDto> {
+    return this.studysetService.getAllByUser(req.user.id);
   }
 
   //GET specfieke studosets's session ----------------------------------------

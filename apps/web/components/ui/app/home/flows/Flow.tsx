@@ -1,17 +1,19 @@
+"use client";
 import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
 import Container from "@/components/ui/design_system/container/Container";
 import { useTranslations } from "next-intl";
 import { FaRegClipboard } from "react-icons/fa";
 import FlowItem from "@/components/ui/app/home/flows/FlowItem";
-import { Boards } from "@studo/types";
+import { useBoards } from "@/hooks/app/useBoards";
 
-interface FlowProps {
-  items: Boards[];
-}
-const Flow = (props: FlowProps) => {
-  const { items } = props;
-
+const Flow = () => {
+  const { data, isLoading } = useBoards();
   const t = useTranslations("home");
+
+  const boards = data?.boards ?? [];
+
+  if (isLoading || boards.length === 0) return null;
+
   return (
     <section className="flex flex-col gap-5 overflow-visible">
       <SectionHeader
@@ -22,7 +24,7 @@ const Flow = (props: FlowProps) => {
       />
       <Container height={"30"}>
         <div className="min-w-full w-full flex flex-row gap-5">
-          {items.map((item, index) => (
+          {boards.map((item, index) => (
             <FlowItem key={index} board={item} />
           ))}
         </div>

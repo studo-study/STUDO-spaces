@@ -1074,6 +1074,9 @@
   },
   "home": {
     "jump-back-in_title": "Ga verder",
+    "jump-back-in_next": "Volgende",
+    "jump-back-in_previous": "Vorige",
+    "jump-back-in_goto": "Ga naar item {index}",
     "courses_overview_title": "Jouw vakken",
     "flow_overview_title": "Jouw boards",
     "getstarted_overview_title": "Begin met maken",

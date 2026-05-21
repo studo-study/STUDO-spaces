@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { MyStudysetsResponse } from "@studo/types";
 
-export function useStudosets() {
+export function useSets() {
   const query = useQuery<MyStudysetsResponse>({
     queryKey: ["studosets"],
     queryFn: () => fetch("/api/studysets/me").then((r) => r.json()),

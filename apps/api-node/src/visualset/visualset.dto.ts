@@ -86,9 +86,22 @@ export class VisualsetResponseDto {
   @ApiProperty({
     example: 'folder123',
     description: 'Folder ID',
+    required: false,
   })
   @Expose()
-  folder_id: string;
+  folder_id?: string | null;
+
+  @ApiProperty({ example: 8, required: false })
+  @Expose()
+  pin_count?: number;
+
+  @ApiProperty({ example: '2024-09-01T10:00:00.000Z', required: false })
+  @Expose()
+  last_studied?: string | null;
+
+  @ApiProperty({ example: 75, required: false })
+  @Expose()
+  progress?: number;
 }
 
 export class PublicVisualsetResponseDto {

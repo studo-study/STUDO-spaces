@@ -52,7 +52,7 @@ export default function AppHeader({
   return (
     <div
       className={
-        "h-fit z-[9999] top-0 w-screen flex flex-col dark:border-none border-b border-b-studoborder/30"
+        "h-fit z-[100] top-0 w-screen flex flex-col dark:border-none border-b border-b-studoborder/30"
       }
     >
       <div className={"w-screen h-0.5"}></div>

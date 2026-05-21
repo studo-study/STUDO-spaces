@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Metadata } from "next";
 import { auth } from "@/auth";
 import { getTranslations } from "next-intl/server";
+
 import CTABlock from "@/components/ui/app/home/CTABlock";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import JumpBackIn from "@/components/ui/app/home/jump-back-in/JumpBackIn";
@@ -20,22 +21,9 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const t = await getTranslations("home");
   const tTimed = await getTranslations("timed");
-
   const session = await auth();
-  const token = session?.accessToken;
-  const data = await fetch(`${process.env.AUTH_API_URL}/users/me/start`, {
-    headers: { Authorization: `Bearer ${token}` },
-    next: { revalidate: 60 },
-  }).then((res) => res.json());
-
-  const isEmpty = data?.lastTen.length === 0 && data?.courses.length === 0;
   const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? "");
-  const split = data?.lastTen.toSpliced(3);
 
-  const isEmpty =
-    data?.lastTen.length === 0 &&
-    data?.courses.length === 0 &&
-    data?.boards.length === 0;
   return (
     <>
       <section
@@ -51,46 +39,34 @@ export default async function HomePage() {
             </span>
           </div>
         </div>
-        <QuickStats stats={data?.stats} />
+        <QuickStats />
       </section>
 
       <div className={"w-full flex-1 grid grid-cols-1 gap-10 pb-15"}>
-        {data?.lastTen && (
-          <AnimateOnMount delay={0}>
-            <JumpBackIn items={split ?? []} />
-          </AnimateOnMount>
-        )}
-        {data?.lastTen.length > 0 && (
-          <AnimateOnMount delay={100}>
-            <YourSets items={data?.lastTen} />
-          </AnimateOnMount>
-        )}
-        {data?.courses.length > 0 && (
-          <AnimateOnMount delay={200}>
-            <Courses items={data?.courses} />
-          </AnimateOnMount>
-        )}
-        {data?.boards.length > 0 && (
-          <AnimateOnMount delay={300}>
-            <Flow items={data?.boards} />
-          </AnimateOnMount>
-        )}
-        {data?.lastTen > 0 && (
-          <AnimateOnMount delay={400}>
-            <GetStarted />
-          </AnimateOnMount>
-        )}
-        {isEmpty && <EmptyFallback />}
-        <BottomCredits />
+        <AnimateOnMount delay={0}>
+          <JumpBackIn />
+        </AnimateOnMount>
+        <AnimateOnMount delay={100}>
+          <YourSets />
+        </AnimateOnMount>
+        <AnimateOnMount delay={200}>
+          <Courses />
+        </AnimateOnMount>
+        <AnimateOnMount delay={300}>
+          <Flow />
+        </AnimateOnMount>
+        <AnimateOnMount delay={400}>
+          <GetStarted />
+        </AnimateOnMount>
+        <EmptyFallback />
       </div>
 
-      {isEmpty && (
-        <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
-          <AnimateOnMount delay={2000}>
-            <CTABlock t={t} />
-          </AnimateOnMount>
-        </div>
-      )}
+      <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
+        <AnimateOnMount delay={2000}>
+          <CTABlock />
+        </AnimateOnMount>
+      </div>
+
       <BottomCredits />
       <div
         className={

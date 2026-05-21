@@ -94,8 +94,7 @@ export class FolderController {
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Param('folder_id', ParseUUIDPipe) folder_id: string,
   ): Promise<FullFolderResponseDto> {
-    console.log('✅ Endpoint reached! folder_id:', folder_id);
-    return this.foldersService.getById(folder_id);
+    return this.foldersService.getById(folder_id, user_id);
   }
 
   // DELETE FOLDER --------------------------------------------------

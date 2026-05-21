@@ -25,6 +25,7 @@ import {
   classrooms,
   classroomsets,
   classroomusers,
+  folder_sets,
   images,
   pins,
   sessionpins,
@@ -67,7 +68,6 @@ export class VisualsetService {
       user_id: user_id,
       displayName: name.displayName,
       img_url: name.img_url,
-      folder_id: data.folder_id,
       studoset: false,
     };
 
@@ -163,6 +163,16 @@ export class VisualsetService {
         owner_id: user_id,
       };
       await this.db.insert(sessionpins).values(sessionPin);
+    }
+
+    if (data.folder_id) {
+      await this.db.insert(folder_sets).values({
+        id: uuidv4(),
+        user_id: user_id,
+        set_id: setId,
+        set_type: 'visualset',
+        folder_id: data.folder_id,
+      });
     }
 
     return visualset;
@@ -321,9 +331,32 @@ export class VisualsetService {
         title: body?.title,
         course: body?.course,
         public_set: body?.public_set,
-        folder_id: body.folder_id,
       })
       .where(eq(visualsets.id, set_id));
+
+    if (body.folder_id) {
+      const existing = await this.db.query.folder_sets.findFirst({
+        where: and(
+          eq(folder_sets.user_id, user_id),
+          eq(folder_sets.set_id, set_id),
+          eq(folder_sets.set_type, 'visualset'),
+        ),
+      });
+      if (existing) {
+        await this.db
+          .update(folder_sets)
+          .set({ folder_id: body.folder_id })
+          .where(eq(folder_sets.id, existing.id));
+      } else {
+        await this.db.insert(folder_sets).values({
+          id: uuidv4(),
+          user_id: user_id,
+          set_id: set_id,
+          set_type: 'visualset',
+          folder_id: body.folder_id,
+        });
+      }
+    }
 
     // images updaten
     if (body.images && body.images.length > 0) {
@@ -435,14 +468,28 @@ export class VisualsetService {
       throw new NotFoundException('Visualset not found');
     }
 
-    if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this ((visualset))');
-    }
+    const existing = await this.db.query.folder_sets.findFirst({
+      where: and(
+        eq(folder_sets.user_id, user_id),
+        eq(folder_sets.set_id, dto.set_id),
+        eq(folder_sets.set_type, 'visualset'),
+      ),
+    });
 
-    await this.db
-      .update(visualsets)
-      .set({ folder_id: dto.destinationFolder_id })
-      .where(eq(visualsets.id, dto.set_id));
+    if (existing) {
+      await this.db
+        .update(folder_sets)
+        .set({ folder_id: dto.destinationFolder_id })
+        .where(eq(folder_sets.id, existing.id));
+    } else {
+      await this.db.insert(folder_sets).values({
+        id: uuidv4(),
+        user_id: user_id,
+        set_id: dto.set_id,
+        set_type: 'visualset',
+        folder_id: dto.destinationFolder_id,
+      });
+    }
 
     return this.getById(user_id, dto.set_id);
   }

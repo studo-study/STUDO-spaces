@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import ConsoleEasterEgg from "@/components/ui/overige/easteregg/console";
-import SessionProvider from "@/components/providers/SessionProvider";
+import SessionProvider from "@/components/providers/auth/SessionProvider";
 
 export const metadata: Metadata = {
   title: "Studo",

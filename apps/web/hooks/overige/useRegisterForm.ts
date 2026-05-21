@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { registerUser } from "@/lib/api/auth";
 import { RegisterFormData, registerSchema } from "@/lib/validations/auth";
-import { useToast } from "@/components/providers/ToastProvider";
+import { useToast } from "@/components/providers/app/ToastProvider";
 
 export function useRegisterForm() {
   const [showPassword, setShowPassword] = useState(false);

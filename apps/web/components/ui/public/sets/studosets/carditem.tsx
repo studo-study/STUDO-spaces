@@ -3,7 +3,7 @@ import { useRef, useCallback } from "react";
 import { MdCheck, MdEdit } from "react-icons/md";
 import { Card } from "@/types/types";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
-import { useToast } from "@/components/providers/ToastProvider";
+import { useToast } from "@/components/providers/app/ToastProvider";
 
 interface CarditemProps {
   index: number;

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import "animate.css";
 import { IoShuffleOutline } from "react-icons/io5";
 import ProgressBar from "@/components/ui/public/profile/(modes)/learn/progressbar";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { useFlashcardStore } from "@/store/slices/flashcard/flashcardStore";
 
 interface Card {

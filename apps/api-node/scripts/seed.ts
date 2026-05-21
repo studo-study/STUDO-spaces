@@ -289,7 +289,6 @@ export async function seedStudo(
         user_id: userId1,
         displayName: 'Studo Admin',
         img_url: 'https://i.pravatar.cc/150?img=1',
-        folder_id: folderId1,
       },
       {
         id: studySetId2,
@@ -304,7 +303,6 @@ export async function seedStudo(
         user_id: userId2,
         img_url: 'https://i.pravatar.cc/150?img=2',
         displayName: 'Paul ALlan',
-        folder_id: folderId2,
       },
     ]);
     console.log('Studysets seeded\n');
@@ -323,7 +321,6 @@ export async function seedStudo(
         user_id: userId4,
         displayName: 'geneeskunde',
         img_url: 'https://i.pravatar.cc/150?img=1',
-        folder_id: folderId1,
       },
     ]);
     console.log('Visualsets seeded\n');

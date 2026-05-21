@@ -7,8 +7,8 @@ import Sortable from "sortablejs";
 import ImportButton from "@/components/ui/app/create-studoset/importButton";
 import { useRouter } from "@/i18n/routing";
 import { CardData, Folder } from "@/types/types";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
-import { useToast } from "@/components/providers/ToastProvider";
+import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
+import { useToast } from "@/components/providers/app/ToastProvider";
 import InputField from "@/components/ui/design_system/input/InputField";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 

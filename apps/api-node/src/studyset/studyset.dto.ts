@@ -1,5 +1,6 @@
 import { CardResponseDto, CreateCardDto, UpdateCardDto } from './card.dto';
 import { VisualsetResponseDto } from '../visualset/visualset.dto';
+
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { ClassroomResponseDto } from '../classroom/classroom.dto';
 import { FolderResponseDto } from '../folder/folder.dto';
@@ -198,9 +199,22 @@ export class StudysetResponseDto {
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'Folder ID where the studoset belongs',
+    required: false,
   })
   @Expose()
-  folder_id: string;
+  folder_id?: string | null;
+
+  @ApiProperty({ example: 12, required: false })
+  @Expose()
+  card_count?: number;
+
+  @ApiProperty({ example: '2024-09-01T10:00:00.000Z', required: false })
+  @Expose()
+  last_studied?: string | null;
+
+  @ApiProperty({ example: 75, required: false })
+  @Expose()
+  progress?: number;
 }
 
 export class fullSetResponseDto extends StudysetResponseDto {
@@ -241,6 +255,24 @@ export class fullSetResponseDto extends StudysetResponseDto {
   })
   @Expose()
   folders: FolderResponseDto[] | undefined;
+}
+
+export class UserStatsDto {
+  @ApiProperty({ example: 12 }) totalsets: number;
+  @ApiProperty({ example: 340 }) timeLearned: number;
+  @ApiProperty({ example: 200 }) totalCards: number;
+  @ApiProperty({ example: 150 }) cardsLearned: number;
+}
+
+export class MyStudysetsResponseDto {
+  @ApiProperty({ type: [StudysetResponseDto] })
+  sets: StudysetResponseDto[];
+
+  @ApiProperty({ type: [VisualsetResponseDto] })
+  visualsets: VisualsetResponseDto[];
+
+  @ApiProperty({ type: UserStatsDto })
+  stats: UserStatsDto;
 }
 
 export class StudysetListResponseDto {

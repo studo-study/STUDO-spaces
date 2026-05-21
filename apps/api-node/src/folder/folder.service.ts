@@ -11,8 +11,8 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { folders, studysets, visualsets } from '../drizzle/schema';
-import { eq } from 'drizzle-orm';
+import { folder_sets, folders, studysets, visualsets } from '../drizzle/schema';
+import { and, eq, inArray } from 'drizzle-orm';
 
 @Injectable()
 export class FolderService {
@@ -49,47 +49,62 @@ export class FolderService {
     };
   }
 
-  async getById(folder_id: string): Promise<FullFolderResponseDto> {
-    console.log('🔍 getById called with:', folder_id);
-
+  async getById(
+    folder_id: string,
+    user_id: string,
+  ): Promise<FullFolderResponseDto> {
     const folder = await this.db.query.folders.findFirst({
       where: eq(folders.id, folder_id),
     });
-
-    console.log('📁 Found folder:', folder);
 
     if (!folder) {
       throw new NotFoundException();
     }
 
-    console.log('🔄 Fetching sets...');
-    const sets = await this.getAllFolderSets(folder_id);
-    console.log('📚 Found sets:', sets);
+    const sets = await this.getAllFolderSets(folder_id, user_id);
 
-    const result = {
+    return {
       id: folder.id,
       name: folder.name,
       owner_id: folder.owner_id,
       sets: sets,
     };
-
-    console.log('✅ Returning result:', JSON.stringify(result, null, 2));
-
-    return result;
   }
 
-  async getAllFolderSets(folder_id: string): Promise<FolderSetsDto> {
-    const ss = await this.db.query.studysets.findMany({
-      where: eq(studysets.folder_id, folder_id),
+  async getAllFolderSets(
+    folder_id: string,
+    user_id: string,
+  ): Promise<FolderSetsDto> {
+    const entries = await this.db.query.folder_sets.findMany({
+      where: and(
+        eq(folder_sets.folder_id, folder_id),
+        eq(folder_sets.user_id, user_id),
+      ),
     });
 
-    const vs = await this.db.query.visualsets.findMany({
-      where: eq(visualsets.folder_id, folder_id),
-    });
-    return {
-      studysets: ss,
-      visualsets: vs,
-    };
+    const studysetIds = entries
+      .filter((e) => e.set_type === 'studyset')
+      .map((e) => e.set_id);
+
+    const visualsetIds = entries
+      .filter((e) => e.set_type === 'visualset')
+      .map((e) => e.set_id);
+
+    const ss =
+      studysetIds.length > 0
+        ? await this.db.query.studysets.findMany({
+            where: inArray(studysets.id, studysetIds),
+          })
+        : [];
+
+    const vs =
+      visualsetIds.length > 0
+        ? await this.db.query.visualsets.findMany({
+            where: inArray(visualsets.id, visualsetIds),
+          })
+        : [];
+
+    return { studysets: ss, visualsets: vs };
   }
 
   async deleteById(folder_id: string): Promise<void> {
