@@ -1,6 +1,7 @@
 import createNextIntlPlugin from "next-intl/plugin";
 import { NextConfig } from "next";
 import createBundleAnalyzer from "@next/bundle-analyzer";
+import path from "path";
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -10,6 +11,7 @@ const withBundleAnalyzer = createBundleAnalyzer({
 
 const nextConfig: NextConfig = {
   experimental: {
+    outputFileTracingRoot: path.join(__dirname, "../../"),
     optimizePackageImports: [
       "react-icons",
       "lucide-react",
