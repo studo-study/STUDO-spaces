@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FullClassroomSet, FullStudyset } from "@/types/types";
 import { usePathname } from "next/navigation";
-import { useUser } from "@/components/providers/UserProvider";
+import { useUser } from "@/components/providers/auth/UserProvider";
 import CourseIcons from "@/data";
 import { useState } from "react";
 

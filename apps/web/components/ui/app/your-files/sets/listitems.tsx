@@ -6,9 +6,9 @@ import { StudySetItem } from "@/components/ui/app/your-files/sets/grid";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { FiTrash2 } from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
-import { useCallback } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdEditNote } from "react-icons/md";
+import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
 
 interface ListItemProps {
   items: StudySetItem[];
@@ -49,10 +49,8 @@ function ListItem({ set, t, locale }: SetItemProps) {
     set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
   const link =
     set.type === "studyset" ? `/studoset/${set.id}` : `/visualset/${set.id}`;
-
-  const handleDelete = useCallback(() => {
-    // TODO
-  }, []);
+  const { mutate: deleteSet } = useDeleteStudoset();
+  const handleDelete = () => deleteSet(set.id);
   return (
     <Link
       href={link}
@@ -109,7 +107,11 @@ function ListItem({ set, t, locale }: SetItemProps) {
               {
                 label: t("delete"),
                 icon: <FiTrash2 size={14} />,
-                onClick: () => handleDelete(),
+                onClick: (ev) => {
+                  ev.preventDefault();
+                  ev.stopPropagation();
+                  handleDelete();
+                },
                 danger: true,
               },
             ]}

@@ -904,7 +904,8 @@
     "Microsoft": "Microsoft",
     "Smartschool": "Smartschool",
     "Don't have an account?": "Nog geen account?",
-    "sign up": "registreren"
+    "sign up": "registreren",
+    "succesful_login": "Succesvol ingelogd"
   },
   "register": {
     "Create account": "Creër account",
@@ -1074,6 +1075,9 @@
   },
   "home": {
     "jump-back-in_title": "Ga verder",
+    "jump-back-in_next": "Volgende",
+    "jump-back-in_previous": "Vorige",
+    "jump-back-in_goto": "Ga naar item {index}",
     "courses_overview_title": "Jouw vakken",
     "flow_overview_title": "Jouw boards",
     "getstarted_overview_title": "Begin met maken",
@@ -1086,11 +1090,11 @@
     "totCards": "Totaal kaarten",
     "tmStd": "Studietijd",
     "min": "min",
-    "cards": "kaarten gezien",
+    "cards": "kaarten bekeken",
     "pins": "pins",
     "week": "per week",
-    "cards_learned": "Kaarten beheerst",
-    "card_learned": "Kaart beheerst",
+    "cards_learned": "kaarten geleerd",
+    "card_learned": "Kaart geleerd",
     "dagen": "dagen",
     "Continue": "Sets",
     "checkAll": "alle sets",
@@ -1107,11 +1111,11 @@
     "day": "dag",
     "hour": "uur",
     "hours": "uren",
-    "minute": "minuut",
-    "minutes": "minuten",
-    "card": "kaart gezien",
-    "set_studied": "set aangemaakt",
-    "sets_studied": "sets aangemaakt",
+    "minute": "min",
+    "minutes": "min",
+    "card": "kaart bekeken",
+    "set_studied": "set gemaakt",
+    "sets_studied": "sets gestudeerd",
     "lets_go": "Begin hier",
     "set_overview_title": "Jouw sets",
     "all_courses": "Alle vakken",
@@ -1153,7 +1157,8 @@
       "delete_course": "Vak verwijderen",
       "external_window": "Open in nieuw tabblad",
       "edit_set": "Set bewerken",
-      "share_folder": "Map delen"
+      "share_folder": "Map delen",
+      "see_more": "meer bekijken"
     }
   },
   "select": {
@@ -1453,5 +1458,9 @@
   },
   "iconPicker": {
     "no_icons_found": "Geen iconen gevonden"
+  },
+  "folders": {
+    "nothing_title": "Niets te zien hier",
+    "nothing_paragraph": "Je hebt nog geen sets in deze map gestoken"
   }
 }

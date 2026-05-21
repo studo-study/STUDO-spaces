@@ -1,27 +1,23 @@
+import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function POST(req: Request) {
   const session = await auth();
-
   if (!session?.accessToken) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await request.json();
-  console.log("Request body:", body);
+  const body = await req.json();
 
   const response = await fetch(`${process.env.AUTH_API_URL}/studysets`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${session.accessToken}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
   });
-
   const data = await response.json();
-  console.log("Server response data:", data);
 
   return NextResponse.json(data, { status: response.status });
 }

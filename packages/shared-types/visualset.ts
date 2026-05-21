@@ -14,7 +14,10 @@ export interface VisualsetResponse {
   user_id: string;
   displayName: string;
   img_url: string;
-  folder_id: string;
+  folder_id?: string | null;
+  pin_count?: number;
+  last_studied?: string | null;
+  progress?: number;
 }
 
 export interface PublicVisualsetResponse {

@@ -1,12 +1,18 @@
+"use client";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
+import { useSets } from "@/hooks/app/sets/useSets";
+import { useBoards } from "@/hooks/app/flow/useBoards";
 
-export default function CTABlock({
-  t,
-}: {
-  t: ReturnType<typeof useTranslations>;
-}) {
+export default function CTABlock() {
+  const { sets, isLoading: setsLoading } = useSets();
+  const { data, isLoading: boardsLoading } = useBoards();
+  const t = useTranslations("home");
+
+  if (setsLoading || boardsLoading) return null;
+  if (sets.length > 0 || (data?.boards ?? []).length > 0) return null;
+
   return (
     <div className="p-6 rounded-3xl shadow-2xl backdrop-blur-xl bg-gradient-to-br dark:from-emerald-500/10 dark:to-emerald-400/10 from-emerald-500/50 to-teal-500/50 border border-studoborder/30">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">

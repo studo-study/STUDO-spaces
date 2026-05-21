@@ -50,6 +50,9 @@ export interface FlowBoardOverview {
   school_id: string | null;
   progress: number;
   total_length: number;
+  total_done: number;
+  total_in_progress: number;
+  courses: number;
 }
 
 export interface CreateFlowCourse {
@@ -150,6 +153,10 @@ export interface FlowResourceResponse {
   link: string;
   link_type?: string;
   resource_type?: ResourceType;
+}
+
+export interface MyBoardsResponse {
+  boards: FlowBoardOverview[];
 }
 
 export type ResourceType =

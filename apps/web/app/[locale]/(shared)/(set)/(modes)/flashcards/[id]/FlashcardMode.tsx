@@ -1,10 +1,9 @@
 "use client";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useState, useEffect } from "react";
 import "animate.css";
 import { IoShuffleOutline } from "react-icons/io5";
 import ProgressBar from "@/components/ui/public/profile/(modes)/learn/progressbar";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { useFlashcardStore } from "@/store/slices/flashcard/flashcardStore";
 
 interface Card {
@@ -80,36 +79,6 @@ export default function FlashcardMode({ cards, id }: FlashcardProps) {
                 : ""
             }
           />
-        </button>
-      </div>
-      <div
-        className={
-          "absolute bottom-10 flex flex-row gap-5 left-1/2 -translate-1/2"
-        }
-      >
-        <button
-          onClick={goBack}
-          className={
-            "w-15 h-12 cursor-pointer border border-studoborder/30 bg-studogrey/30 rounded-full shadow-3xl flex flex-row items-center justify-center"
-          }
-        >
-          <IoIosArrowBack />
-        </button>
-        <div
-          className={
-            "w-32 h-12 cursor-pointer border border-studoborder/30 bg-studogrey/30 rounded-full flex flex-row items-center justify-center"
-          }
-        >
-          <span className={"w-1/3 text-center"}>{index + 1}</span>|
-          <span className={"w-1/3 text-center"}>{cards.length}</span>
-        </div>
-        <button
-          onClick={goForward}
-          className={
-            "w-15 h-12 cursor-pointer border border-studoborder/30 bg-studogrey/30 rounded-full shadow-3xl flex flex-row items-center justify-center"
-          }
-        >
-          <IoIosArrowForward />
         </button>
       </div>
     </div>

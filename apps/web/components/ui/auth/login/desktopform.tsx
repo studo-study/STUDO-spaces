@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { useToast } from "@/components/providers/ToastProvider";
+import { useToast } from "@/components/providers/app/ToastProvider";
 
 export default function DesktopForm() {
   const [open, setOpen] = useState(false);

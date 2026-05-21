@@ -10,7 +10,7 @@ import TagSelector from "@/components/ui/design_system/tag/TagSelector";
 import { HiCalendarDays } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 import { useFlowStore } from "@/store/slices/flow/flowStore";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { FaChevronRight } from "react-icons/fa";
 import IconButton from "@/components/ui/design_system/button/IconButton";
 import { IoClose } from "react-icons/io5";

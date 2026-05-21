@@ -1,12 +1,10 @@
-import { TotalStats } from "@studo/types";
+"use client";
 import { useTranslations } from "next-intl";
 import StatItem from "@/components/ui/app/home/quick_stats/StatItem";
 import { LuTimer } from "react-icons/lu";
 import { FaCheck, FaRegEye } from "react-icons/fa";
-
-interface QuickStatsProps {
-  stats: TotalStats;
-}
+import { useSets } from "@/hooks/app/sets/useSets";
+import StatItemSkeleton from "@/components/ui/app/home/quick_stats/StatItemSkeleton";
 
 const STATS_CONFIG = [
   {
@@ -44,9 +42,20 @@ const STATS_CONFIG = [
   },
 ];
 
-const QuickStats = (props: QuickStatsProps) => {
-  const { stats } = props;
+const QuickStats = () => {
+  const { stats, isLoading } = useSets();
   const t = useTranslations("home");
+
+  if (isLoading || !stats) {
+    return (
+      <section className="grid grid-cols-4 gap-2 overflow-visible w-full">
+        {[...Array(4)].map((_, i) => (
+          <StatItemSkeleton key={i} />
+        ))}
+      </section>
+    );
+  }
+
   return (
     <section className="grid grid-cols-4 gap-2 overflow-visible w-full">
       <StatItem
@@ -95,15 +104,13 @@ const QuickStats = (props: QuickStatsProps) => {
             : STATS_CONFIG[3].color
         }
         icon={<LuTimer />}
-        title={TimeParser(stats.timeLearned)}
+        title={TimeParser(stats.timeLearned, t)}
       />
     </section>
   );
 };
 
-function TimeParser(time: number) {
-  const t = useTranslations("home");
-
+function TimeParser(time: number, t: ReturnType<typeof useTranslations>) {
   if (time < 60) {
     return `${time} ${time === 1 ? t("minute") : t("minutes")} ${t("studied")}`;
   }

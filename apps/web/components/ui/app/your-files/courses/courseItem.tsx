@@ -18,7 +18,7 @@ export default function CourseItem({ course, options }: CourseCardProps) {
   const t = useTranslations("y_f.your_sets");
   return (
     <Link
-      href={`/your-files/courses/${course}`}
+      href={`/your-files/courses/${course.replace(" ", "-")}`}
       className="relative min-w-35 group p-5 rounded-2xl bg-studogrey/30 border  border-studoborder/30 hover:border-studoborder transition-all duration-300 text-center"
     >
       {options && (

@@ -116,6 +116,18 @@ export const folders = pgTable('folders', {
     .notNull(),
 });
 
+export const folder_sets = pgTable('folder_sets', {
+  id: varchar('id', { length: 64 }).primaryKey(),
+  user_id: varchar('user_id', { length: 64 })
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
+  set_id: varchar('set_id', { length: 64 }).notNull(),
+  set_type: varchar('set_type', { length: 20 }).notNull(), // 'studyset' | 'visualset'
+  folder_id: varchar('folder_id', { length: 64 })
+    .references(() => folders.id, { onDelete: 'cascade' })
+    .notNull(),
+});
+
 export const studysets = pgTable(
   'studysets',
   {
@@ -136,9 +148,6 @@ export const studysets = pgTable(
     img_url: varchar('img_url', { length: 250 }).notNull(),
     user_id: varchar('user_id', { length: 64 })
       .references(() => users.id, { onDelete: 'cascade' })
-      .notNull(),
-    folder_id: varchar('folder_id', { length: 64 })
-      .references(() => folders.id, { onDelete: 'cascade' })
       .notNull(),
   },
   (table) => [
@@ -171,9 +180,6 @@ export const visualsets = pgTable(
       .notNull(),
     displayName: varchar('displayname', { length: 100 }).notNull(),
     img_url: varchar('img_url', { length: 250 }).notNull(),
-    folder_id: varchar('folder_id', { length: 64 })
-      .references(() => folders.id, { onDelete: 'cascade' })
-      .notNull(),
   },
   (table) => [
     index('visualsets_search_index').using(
@@ -564,18 +570,24 @@ export const foldersRelations = relations(folders, ({ one, many }) => ({
     fields: [folders.owner_id],
     references: [users.id],
   }),
-  studysets: many(studysets),
-  visualsets: many(visualsets),
+  folder_sets: many(folder_sets),
+}));
+
+export const folderSetsRelations = relations(folder_sets, ({ one }) => ({
+  user: one(users, {
+    fields: [folder_sets.user_id],
+    references: [users.id],
+  }),
+  folder: one(folders, {
+    fields: [folder_sets.folder_id],
+    references: [folders.id],
+  }),
 }));
 
 export const studysetsRelations = relations(studysets, ({ one, many }) => ({
   user: one(users, {
     fields: [studysets.user_id],
     references: [users.id],
-  }),
-  folder: one(folders, {
-    fields: [studysets.folder_id],
-    references: [folders.id],
   }),
   cards: many(cards),
   classroomactivities: many(classroomactivities),
@@ -586,10 +598,6 @@ export const visualsetsRelations = relations(visualsets, ({ one, many }) => ({
   user: one(users, {
     fields: [visualsets.user_id],
     references: [users.id],
-  }),
-  folder: one(folders, {
-    fields: [visualsets.folder_id],
-    references: [folders.id],
   }),
   images: many(images),
   pins: many(pins),

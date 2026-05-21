@@ -1,27 +1,27 @@
+import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
-  request: NextRequest,
+  req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const { id } = await params;
   const session = await auth();
   if (!session?.accessToken) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const { id } = await params;
-  const body = await request.json();
+  const { cards } = await req.json();
 
   const response = await fetch(`${process.env.AUTH_API_URL}/studysets/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${session.accessToken}`,
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ cards }),
   });
-
   const data = await response.json();
+
   return NextResponse.json(data, { status: response.status });
 }

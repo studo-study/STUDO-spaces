@@ -11,7 +11,7 @@ import { LiaUniversitySolid } from "react-icons/lia";
 import { MdOutlineCalendarViewMonth } from "react-icons/md";
 import { HiCalendarDays } from "react-icons/hi2";
 import { useFlowStore } from "@/store/slices/flow/flowStore";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import IconButton from "@/components/ui/design_system/button/IconButton";
 import { IoClose } from "react-icons/io5";
 import { IoIosAdd } from "react-icons/io";

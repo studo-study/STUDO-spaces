@@ -4,7 +4,6 @@ import Link from "next/link";
 import { type FullClassroom, type FullClassroomSet } from "@/types/types";
 import Image from "next/image";
 import CourseIcons from "@/data";
-import SetSearch from "@/components/ui/app/your-files/sets/search";
 import { useState } from "react";
 
 interface ListItemProps {
@@ -13,7 +12,7 @@ interface ListItemProps {
 
 export default function RecentlyAdded({ items }: ListItemProps) {
   const t = useTranslations("classroom");
-  const [filteredSets, setFilteredSets] = useState(items.sets);
+  const [filteredSets] = useState(items.sets);
   //TODO
   const [now] = useState(() => Date.now());
   const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
@@ -31,9 +30,7 @@ export default function RecentlyAdded({ items }: ListItemProps) {
   const pinned = [];
   return (
     <>
-      <div className="w-full flex flex-row gap-5 items-center justify-end py-3">
-        <SetSearch sets={items.sets} setFilteredSets={setFilteredSets} />
-      </div>
+      <div className="w-full flex flex-row gap-5 items-center justify-end py-3"></div>
       <div className={"w-full min-h-full h-full flex flex-col gap-3"}>
         {pinned.length > 0 && (
           <>

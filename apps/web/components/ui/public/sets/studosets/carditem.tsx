@@ -3,7 +3,7 @@ import { useRef, useCallback } from "react";
 import { MdCheck, MdEdit } from "react-icons/md";
 import { Card } from "@/types/types";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
-import { useToast } from "@/components/providers/ToastProvider";
+import { useToast } from "@/components/providers/app/ToastProvider";
 
 interface CarditemProps {
   index: number;
@@ -32,7 +32,7 @@ export default function CardItem({
   const toast = useToast();
   const termRef = useRef<HTMLInputElement>(null);
   const definitionRef = useRef<HTMLInputElement>(null);
-  const blurTimer = useRef<ReturnType<typeof setTimeout>>();
+  const blurTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const currentCard = studosetCards.find((c) => c.id === card.id) ?? card;
   const isEditing = editingCardId === card.id;

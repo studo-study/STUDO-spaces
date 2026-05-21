@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, ReactNode } from "react";
 interface OptionItem {
   label: string;
   icon?: ReactNode;
-  onClick: () => void;
+  onClick: (value: React.MouseEvent) => void;
   danger?: boolean;
 }
 
@@ -65,7 +65,7 @@ const ItemOptions = ({ options }: ItemOptionsProps) => {
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                option.onClick();
+                option.onClick(e);
                 setIsOpen(false);
               }}
               className={`

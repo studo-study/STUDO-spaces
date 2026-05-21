@@ -1,15 +1,12 @@
 "use client";
 import FolderItem from "@/components/ui/app/your-files/folders/folderItem";
-import { Folder } from "@/types/types";
+import { useFolders } from "@/hooks/app/folders/useFolders";
 
-interface FolderProps {
-  folders: Folder[];
-}
-
-export default function FolderGrid({ folders }: FolderProps) {
+export default function FolderGrid() {
+  const folders = useFolders().data?.folders;
   return (
     <div className={"w-full h-fit flex flex-col gap-5 py-5"}>
-      {folders.map((item) => (
+      {folders?.map((item) => (
         <FolderItem key={item.id} folder={item} />
       ))}
     </div>

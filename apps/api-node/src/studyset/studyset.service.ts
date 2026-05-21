@@ -8,6 +8,7 @@ import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 import {
   CreateStudysetDto,
   fullSetResponseDto,
+  MyStudysetsResponseDto,
   StudysetListResponseDto,
   StudysetResponseDto,
   UpdateStudysetDto,
@@ -27,14 +28,17 @@ import {
   classrooms,
   classroomsets,
   classroomusers,
+  folder_sets,
   folders,
+  pins,
   sessioncards,
   setlikes,
   studysessions,
   studysets,
   users,
+  visualsets,
 } from '../drizzle/schema';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, count, eq, inArray, sql } from 'drizzle-orm';
 
 @Injectable()
 export class StudysetService {
@@ -68,7 +72,6 @@ export class StudysetService {
       user_id: user_id,
       displayName: name.displayName,
       img_url: name.img_url,
-      folder_id: data.folder_id,
       studoset: false,
     };
 
@@ -116,6 +119,16 @@ export class StudysetService {
 
     await this.db.insert(studysets).values(set);
     await this.db.insert(studysessions).values(session);
+
+    if (data.folder_id) {
+      await this.db.insert(folder_sets).values({
+        id: uuidv6(),
+        user_id: user_id,
+        set_id: setId,
+        set_type: 'studyset',
+        folder_id: data.folder_id,
+      });
+    }
     await this.db
       .update(users)
       .set({
@@ -126,7 +139,7 @@ export class StudysetService {
     for (const card of CARDS) {
       await this.db.insert(cards).values(card);
     }
-    return set;
+    return { ...set, folder_id: data.folder_id ?? null };
   }
 
   async createCard(
@@ -176,6 +189,136 @@ export class StudysetService {
 
   async getAll(): Promise<StudysetListResponseDto> {
     return { sets: await this.db.query.studysets.findMany() };
+  }
+
+  async getAllByUser(user_id: string): Promise<MyStudysetsResponseDto> {
+    const ownSets = await this.db.query.studysets.findMany({
+      where: eq(studysets.user_id, user_id),
+    });
+
+    const allSessions = await this.db.query.studysessions.findMany({
+      where: and(
+        eq(studysessions.user_id, user_id),
+        eq(studysessions.set_type, 'studyset'),
+      ),
+    });
+
+    const sessionSetIds = [...new Set(allSessions.map((s) => s.set_id))].filter(
+      (id) => !ownSets.some((s) => s.id === id),
+    );
+
+    let studiedSets: StudysetResponseDto[] = [];
+    if (sessionSetIds.length > 0) {
+      studiedSets = await this.db.query.studysets.findMany({
+        where: inArray(studysets.id, sessionSetIds),
+      });
+    }
+
+    const allSets = [...ownSets, ...studiedSets];
+    const allSetIds = allSets.map((s) => s.id);
+
+    const cardCounts =
+      allSetIds.length > 0
+        ? await this.db
+            .select({ set_id: cards.set_id, count: count() })
+            .from(cards)
+            .where(inArray(cards.set_id, allSetIds))
+            .groupBy(cards.set_id)
+        : [];
+
+    const folderEntries =
+      allSetIds.length > 0
+        ? await this.db.query.folder_sets.findMany({
+            where: and(
+              eq(folder_sets.user_id, user_id),
+              eq(folder_sets.set_type, 'studyset'),
+              inArray(folder_sets.set_id, allSetIds),
+            ),
+          })
+        : [];
+
+    const userSessionCards = await this.db.query.sessioncards.findMany({
+      where: eq(sessioncards.owner_id, user_id),
+    });
+
+    const sets = allSets.map((set) => ({
+      ...set,
+      card_count: cardCounts.find((c) => c.set_id === set.id)?.count ?? 0,
+      last_studied:
+        allSessions.find((s) => s.set_id === set.id)?.last_studied ?? null,
+      progress: allSessions.find((s) => s.set_id === set.id)?.accuracy ?? 0,
+      folder_id:
+        folderEntries.find((f) => f.set_id === set.id)?.folder_id ?? null,
+    }));
+
+    // --- Visualsets ---
+    const ownVisualsets = await this.db.query.visualsets.findMany({
+      where: eq(visualsets.user_id, user_id),
+    });
+
+    const allVSSessions = await this.db.query.studysessions.findMany({
+      where: and(
+        eq(studysessions.user_id, user_id),
+        eq(studysessions.set_type, 'visualset'),
+      ),
+    });
+
+    const vsSessionSetIds = [
+      ...new Set(allVSSessions.map((s) => s.set_id)),
+    ].filter((id) => !ownVisualsets.some((vs) => vs.id === id));
+
+    let studiedVisualsets: (typeof ownVisualsets)[number][] = [];
+    if (vsSessionSetIds.length > 0) {
+      studiedVisualsets = await this.db.query.visualsets.findMany({
+        where: inArray(visualsets.id, vsSessionSetIds),
+      });
+    }
+
+    const allVisualsets = [...ownVisualsets, ...studiedVisualsets];
+    const allVSIds = allVisualsets.map((vs) => vs.id);
+
+    const pinCounts =
+      allVSIds.length > 0
+        ? await this.db
+            .select({ set_id: pins.set_id, count: count() })
+            .from(pins)
+            .where(inArray(pins.set_id, allVSIds))
+            .groupBy(pins.set_id)
+        : [];
+
+    const vsFolderEntries =
+      allVSIds.length > 0
+        ? await this.db.query.folder_sets.findMany({
+            where: and(
+              eq(folder_sets.user_id, user_id),
+              eq(folder_sets.set_type, 'visualset'),
+              inArray(folder_sets.set_id, allVSIds),
+            ),
+          })
+        : [];
+
+    const visualsetsMapped = allVisualsets.map((vs) => ({
+      ...vs,
+      pin_count: pinCounts.find((p) => p.set_id === vs.id)?.count ?? 0,
+      last_studied:
+        allVSSessions.find((s) => s.set_id === vs.id)?.last_studied ?? null,
+      progress: allVSSessions.find((s) => s.set_id === vs.id)?.accuracy ?? 0,
+      folder_id:
+        vsFolderEntries.find((f) => f.set_id === vs.id)?.folder_id ?? null,
+    }));
+
+    const stats = {
+      totalsets: sets.length + visualsetsMapped.length,
+      timeLearned: [...allSessions, ...allVSSessions].reduce(
+        (sum, s) => sum + s.duration_min,
+        0,
+      ),
+      totalCards: userSessionCards.length,
+      cardsLearned: userSessionCards.filter((c) => c.card_viewcount >= 2)
+        .length,
+    };
+
+    return { sets, visualsets: visualsetsMapped, stats };
   }
 
   async getById(user_id: string, set_id: string): Promise<fullSetResponseDto> {
@@ -250,8 +393,19 @@ export class StudysetService {
     const likes = await this.db.query.setlikes.findMany({
       where: eq(setlikes.set_id, set_id),
     });
+
+    // Get folder_id for this user/set combination
+    const folderEntry = await this.db.query.folder_sets.findFirst({
+      where: and(
+        eq(folder_sets.user_id, user_id),
+        eq(folder_sets.set_id, set_id),
+        eq(folder_sets.set_type, 'studyset'),
+      ),
+    });
+
     return {
       ...set,
+      folder_id: folderEntry?.folder_id ?? null,
       cards: kaarten.sort((a, b) => a.number - b.number),
       likes: likes,
       session: sesh,
@@ -367,7 +521,16 @@ export class StudysetService {
     }
 
     if (set.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this studoset');
+      await this.db
+        .delete(studysessions)
+        .where(
+          and(
+            eq(studysessions.set_id, set_id),
+            eq(studysessions.user_id, user_id),
+            eq(studysessions.set_type, 'studyset'),
+          ),
+        );
+      return;
     }
 
     await this.db.transaction(async (tx) => {
@@ -430,10 +593,28 @@ export class StudysetService {
       throw new ForbiddenException('You do not own this studoset');
     }
 
-    await this.db
-      .update(studysets)
-      .set({ folder_id: dto.destinationFolder_id })
-      .where(eq(studysets.id, dto.set_id));
+    const existing = await this.db.query.folder_sets.findFirst({
+      where: and(
+        eq(folder_sets.user_id, user_id),
+        eq(folder_sets.set_id, dto.set_id),
+        eq(folder_sets.set_type, 'studyset'),
+      ),
+    });
+
+    if (existing) {
+      await this.db
+        .update(folder_sets)
+        .set({ folder_id: dto.destinationFolder_id })
+        .where(eq(folder_sets.id, existing.id));
+    } else {
+      await this.db.insert(folder_sets).values({
+        id: uuidv6(),
+        user_id: user_id,
+        set_id: dto.set_id,
+        set_type: 'studyset',
+        folder_id: dto.destinationFolder_id,
+      });
+    }
 
     return this.getById(user_id, dto.set_id);
   }

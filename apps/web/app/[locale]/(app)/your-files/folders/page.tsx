@@ -20,7 +20,7 @@ export default async function Page() {
     <div className=" w-full flex flex-col gap-10 scroll-hidden">
       <section className={"w-full h-fit"}>
         <FolderTopBar />
-        <FolderGrid folders={data.folders} />
+        <FolderGrid />
       </section>
     </div>
   );

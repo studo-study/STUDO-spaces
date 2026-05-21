@@ -1,4 +1,3 @@
-// store/loadingStore.ts
 import { create } from "zustand";
 
 interface LoadingStore {

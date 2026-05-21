@@ -5,8 +5,8 @@ import { FullClassroom } from "@/types/types";
 import { useTranslations } from "next-intl";
 import ClassSearch from "@/components/ui/app/classrooms/ClassroomSearchbar";
 import ClassroomOverviewItem from "@/components/ui/app/classrooms/ClassroomOverviewItem";
-import { useUser } from "@/components/providers/UserProvider";
-import { useClassrooms } from "@/hooks/useClassrooms";
+import { useUser } from "@/components/providers/auth/UserProvider";
+import { useClassrooms } from "@/hooks/app/classrooms/useClassrooms";
 
 export default function ClassroomGrid() {
   const { classrooms, isLoading } = useClassrooms();

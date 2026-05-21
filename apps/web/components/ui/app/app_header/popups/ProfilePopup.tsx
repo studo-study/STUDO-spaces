@@ -8,7 +8,7 @@ import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { FaAngleRight } from "react-icons/fa6";
-import { useToast } from "@/components/providers/ToastProvider";
+import { useToast } from "@/components/providers/app/ToastProvider";
 interface ProfileTriggerPopupProps {
   ProfileIsOpen: boolean;
   setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>;

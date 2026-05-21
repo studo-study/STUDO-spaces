@@ -3,11 +3,14 @@
 import { memo, ReactNode, useState } from "react";
 import AppHeader from "@/components/ui/app/app_header/AppHeader";
 import BurgerMenu from "@/components/ui/app/app_header/BurgerMenu";
-import { UserProvider, useUser } from "@/components/providers/UserProvider";
+import {
+  UserProvider,
+  useUser,
+} from "@/components/providers/auth/UserProvider";
 import ConsoleEasterEgg from "@/components/ui/overige/easteregg/console";
 import CreateFolder from "@/components/ui/app/create-folder/CreateFolder";
 import AppLayoutContext from "@/components/context/AppLayoutContext";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
 

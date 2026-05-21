@@ -51,7 +51,11 @@ export default function Flashcard({ cards = [], id }: FlashcardProps) {
   if (!shuffled.length) return null;
 
   return (
-    <div className={"w-full min-h-110 flex flex-col gap-5"}>
+    <div
+      className={
+        "w-full min-h-110 h-110 xl:h-130 max-h-150 flex flex-col gap-5"
+      }
+    >
       <div className={"z-10 w-full h-full"}>
         <Card card={shuffled[index]} key={shuffled[index]?.id} />
       </div>
@@ -135,7 +139,7 @@ function Card({ card }: CardProps) {
         >
           <span
             className={
-              "absolute top-3 left-3 border-studoborder rounded-3xl px-3 text-sm opacity-50 py-1 bg-studogrey/30 lowercase"
+              "absolute top-3 left-3 border-studoborder font-bold rounded-3xl px-3 text-sm opacity-50 py-1 bg-studogrey/30 lowercase"
             }
           >
             {t("Term")}
@@ -149,7 +153,7 @@ function Card({ card }: CardProps) {
         >
           <span
             className={
-              "absolute top-3 left-3 border-studoborder rounded-3xl px-3 text-sm opacity-50 py-1 bg-studogrey/30 lowercase"
+              "absolute top-3 left-3 font-bold border-studoborder rounded-3xl px-3 text-sm opacity-50 py-1 bg-studogrey/30 lowercase"
             }
           >
             {t("Definition")}

@@ -10,6 +10,14 @@ interface TriggerAddProps {
   setAddIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleCreate: () => void;
 }
+/*
+const createVisualset= {
+    to: "/create-visualset",
+    icon: "/icons/visualset.svg",
+    label: "create_vs",
+    color: "from-blue-400 to-indigo-500",
+    key: "v",
+  }*/
 
 export default function TriggerAddPopup({
   AddIsOpen,
@@ -56,13 +64,6 @@ const menuItems = [
     color: "from-emerald-400 to-teal-500",
     key: "s",
   },
-  {
-    to: "/create-visualset",
-    icon: "/icons/visualset.svg",
-    label: "create_vs",
-    color: "from-blue-400 to-indigo-500",
-    key: "v",
-  },
 ];
 
 function AddPopUp({
@@ -101,7 +102,7 @@ function AddPopUp({
     <div
       ref={popupRef}
       className={`absolute top-full right-0 mt-4
-        z-[9999] w-60 p-2 truncate
+        z-[99999] w-60 p-2 truncate
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
         backdrop-blur-xl
