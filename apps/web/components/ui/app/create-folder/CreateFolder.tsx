@@ -1,9 +1,12 @@
+"use client";
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
+import { useCreateFolder } from "@/hooks/app/folders/useCreateFolder";
+import { useToast } from "@/components/providers/app/ToastProvider";
 
 interface CreateFolderProps {
   createOpen: boolean;
@@ -17,6 +20,7 @@ export default function CreateFolder({
   const popupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const t = useTranslations("createfolder");
+  const mutation = useCreateFolder();
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
@@ -54,10 +58,27 @@ export default function CreateFolder({
 
   const isOpen = mounted && createOpen;
   const close = () => setCreateOpen(false);
+  const toast = useToast();
+  const handleSubmit = async () => {
+    const name = inputRef.current?.value.trim();
+    if (!name) return;
+    try {
+      await mutation.mutateAsync({ name });
+      if (inputRef.current) inputRef.current.value = "";
+      toast.success("folder created");
+      close();
+    } catch {
+      toast.error("folder creation failed");
+    }
+  };
 
   return (
     <PopupBackdrop isOpen={isOpen} setIsOpen={setCreateOpen}>
       <div
+        onClick={(ev) => {
+          ev.stopPropagation();
+          ev.preventDefault();
+        }}
         ref={popupRef}
         className={`relative w-1/5 p-7 rounded-2xl bg-white/80 dark:bg-[#1e293b] border border-white/50 dark:border-white/10 shadow-xl transition-all duration-300 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}`}
       >
@@ -84,11 +105,16 @@ export default function CreateFolder({
         <input
           ref={inputRef}
           placeholder={t("placeholder")}
+          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           className="w-full h-12 px-5 mb-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
         />
 
-        <button className="w-full h-12 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 text-white font-bold border border-studoborder active:scale-95 transition-transform">
-          {t("button")}
+        <button
+          onClick={handleSubmit}
+          disabled={mutation.isPending}
+          className="w-full h-12 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 text-white font-bold border border-studoborder active:scale-95 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {mutation.isPending ? "..." : t("button")}
         </button>
       </div>
     </PopupBackdrop>

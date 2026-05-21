@@ -63,28 +63,28 @@ export default function FlashcardMode({ cards, id }: FlashcardProps) {
       <div
         className={"z-10 max-h-120 flex flex-col gap-5 max-w-180 w-full h-full"}
       >
-        <ProgressBar
-          cardIndex={index}
-          cardLength={cards.length}
-          queueIndex={0}
-          queueLength={0}
-          queueMode={false}
-        />
-        <Card card={shuffled[index]} key={shuffled[index]?.id} />
-      </div>
-      <div className={"absolute right-0 flex flex-row gap-3"}>
-        <button
-          onClick={toggleShuffle}
-          className={`w-12 h-12 cursor-pointer transition-all duration-300 border ${shuffleMode ? "dark:border-studoblue border-emerald-400" : "border-studoborder/30"}  bg-studogrey/30 rounded-full shadow-3xl flex flex-row items-center justify-center`}
-        >
-          <IoShuffleOutline
-            className={
-              shuffleMode
-                ? "dark:text-studoblue transition-all duration-300 text-emerald-400"
-                : ""
-            }
+        <div className={"w-full flex flex-row gap-5 items-center"}>
+          <ProgressBar
+            cardIndex={index}
+            cardLength={cards.length}
+            queueIndex={0}
+            queueLength={0}
+            queueMode={false}
           />
-        </button>
+          <button
+            onClick={toggleShuffle}
+            className={`min-w-12 h-12 cursor-pointer transition-all duration-300 border ${shuffleMode ? "dark:border-studoblue border-emerald-400" : "border-studoborder/30"}  bg-studogrey/30 rounded-full shadow-3xl flex flex-row items-center justify-center`}
+          >
+            <IoShuffleOutline
+              className={
+                shuffleMode
+                  ? "dark:text-studoblue transition-all duration-300 text-emerald-400"
+                  : ""
+              }
+            />
+          </button>
+        </div>
+        <Card card={shuffled[index]} key={shuffled[index]?.id} />
       </div>
       <div
         className={

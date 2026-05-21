@@ -1,4 +1,4 @@
-import { useSets } from "./useSets";
+import { useSets } from "../sets/useSets";
 
 export function useCourses() {
   const { sets, visualsets, isLoading, error } = useSets();

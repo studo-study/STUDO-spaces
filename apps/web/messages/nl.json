@@ -1110,11 +1110,11 @@
     "day": "dag",
     "hour": "uur",
     "hours": "uren",
-    "minute": "minuut",
-    "minutes": "minuten",
+    "minute": "min",
+    "minutes": "min",
     "card": "kaart gezien",
-    "set_studied": "set aangemaakt",
-    "sets_studied": "sets aangemaakt",
+    "set_studied": "set gemaakt",
+    "sets_studied": "sets gemaakt",
     "lets_go": "Begin hier",
     "set_overview_title": "Jouw sets",
     "all_courses": "Alle vakken",
@@ -1156,7 +1156,8 @@
       "delete_course": "Vak verwijderen",
       "external_window": "Open in nieuw tabblad",
       "edit_set": "Set bewerken",
-      "share_folder": "Map delen"
+      "share_folder": "Map delen",
+      "see_more": "meer bekijken"
     }
   },
   "select": {
@@ -1456,5 +1457,9 @@
   },
   "iconPicker": {
     "no_icons_found": "Geen iconen gevonden"
+  },
+  "folders": {
+    "nothing_title": "Niets te zien hier",
+    "nothing_paragraph": "Je hebt nog geen sets in deze map gestoken"
   }
 }

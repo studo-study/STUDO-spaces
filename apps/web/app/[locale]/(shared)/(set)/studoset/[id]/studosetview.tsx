@@ -15,7 +15,7 @@ import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCr
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
 import { useTranslations } from "next-intl";
-import { useStudoset } from "@/hooks/app/useStudoset";
+import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useEffect } from "react";

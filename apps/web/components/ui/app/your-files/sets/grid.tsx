@@ -6,7 +6,7 @@ import { IoIosAdd } from "react-icons/io";
 import SetSearch from "@/components/ui/app/your-files/sets/search";
 import ListItems from "@/components/ui/app/your-files/sets/listitems";
 import Image from "next/image";
-import { useSets } from "@/hooks/app/useSets";
+import { useSets } from "@/hooks/app/sets/useSets";
 import { StudysetResponse, type VisualsetResponse } from "@studo/types";
 
 export interface StudySetItem {

@@ -1,34 +1,29 @@
 "use client";
-import { useSets } from "@/hooks/app/sets/useSets";
-import { StudysetResponse, type VisualsetResponse } from "@studo/types";
-import { StudySetItem } from "@/components/ui/app/your-files/sets/grid";
 import Image from "next/image";
 import ListItems from "@/components/ui/app/your-files/sets/listitems";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import { FaChevronLeft } from "react-icons/fa";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import { useFolder } from "@/hooks/app/folders/useFolder";
+import { StudySetItem } from "@/components/ui/app/your-files/sets/grid";
 
-interface CourseSetsProps {
+interface FolderSetsProps {
   id: string;
 }
-const CourseSets = (props: CourseSetsProps) => {
+const tagType = <T, K extends string>(
+  items: T[],
+  type: K,
+): (T & { type: K })[] => items.map((item) => ({ ...item, type }));
+const FolderSets = (props: FolderSetsProps) => {
   const { id } = props;
-  const course = id.replace("-", " ");
-  console.log(course);
-  const t = useTranslations("course");
+  const t = useTranslations("folders");
 
-  const { sets, visualsets } = useSets();
+  const folder = useFolder(id).data;
   const allSets: StudySetItem[] = [
-    ...sets.map((s: StudysetResponse) => ({
-      ...s,
-      type: "studyset" as const,
-    })),
-    ...visualsets.map((s: VisualsetResponse) => ({
-      ...s,
-      type: "visualset" as const,
-    })),
-  ].filter((set) => set.course === course);
+    ...tagType(folder?.sets?.studysets ?? [], "studyset"),
+    ...tagType(folder?.sets?.visualsets ?? [], "visualset"),
+  ];
 
   const router = useRouter();
   return (
@@ -39,9 +34,9 @@ const CourseSets = (props: CourseSetsProps) => {
           variant={"icon"}
           icon={<FaChevronLeft />}
           width={"fit"}
-          onClick={() => router.push("/your-files/courses")}
+          onClick={() => router.push("/your-files/folders")}
         />
-        <span className={"text-2xl font-bold"}>{course}</span>
+        <span className={"text-2xl font-bold"}>{folder?.name}</span>
       </div>
       <div className="w-full flex-1 h-fit gap-2 flex flex-col">
         {allSets.length === 0 ? (
@@ -49,7 +44,7 @@ const CourseSets = (props: CourseSetsProps) => {
             <Image
               width={100}
               height={100}
-              src={"/images/fallbacks/books.png"}
+              src={"/images/fallbacks/dust.png"}
               alt=""
               className="h-30 w-30 opacity-50 saturate-0"
             />
@@ -74,5 +69,5 @@ const CourseSets = (props: CourseSetsProps) => {
   );
 };
 
-CourseSets.displayName = "CourseSets";
-export default CourseSets;
+FolderSets.displayName = "FolderSets";
+export default FolderSets;

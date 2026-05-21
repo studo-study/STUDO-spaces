@@ -139,7 +139,7 @@ export class StudysetService {
     for (const card of CARDS) {
       await this.db.insert(cards).values(card);
     }
-    return set;
+    return { ...set, folder_id: data.folder_id ?? null };
   }
 
   async createCard(
@@ -393,8 +393,19 @@ export class StudysetService {
     const likes = await this.db.query.setlikes.findMany({
       where: eq(setlikes.set_id, set_id),
     });
+
+    // Get folder_id for this user/set combination
+    const folderEntry = await this.db.query.folder_sets.findFirst({
+      where: and(
+        eq(folder_sets.user_id, user_id),
+        eq(folder_sets.set_id, set_id),
+        eq(folder_sets.set_type, 'studyset'),
+      ),
+    });
+
     return {
       ...set,
+      folder_id: folderEntry?.folder_id ?? null,
       cards: kaarten.sort((a, b) => a.number - b.number),
       likes: likes,
       session: sesh,
@@ -567,6 +578,10 @@ export class StudysetService {
     });
     if (!checkset) {
       throw new NotFoundException('Studyset not found');
+    }
+
+    if (checkset.user_id !== user_id) {
+      throw new ForbiddenException('You do not own this studoset');
     }
 
     const existing = await this.db.query.folder_sets.findFirst({

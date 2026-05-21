@@ -5,8 +5,9 @@ import { MdReplay } from "react-icons/md";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
 import LastTenItem from "@/components/ui/app/home/jump-back-in/LastTenItem";
-import { useSets } from "@/hooks/app/useSets";
+import { useSets } from "@/hooks/app/sets/useSets";
 import { LastStudied } from "@studo/types";
+import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 
 const ARROW_BASE =
   "absolute z-20 top-1/2 -translate-y-1/2 h-7 w-7 flex justify-center items-center " +
@@ -108,64 +109,66 @@ const JumpBackIn = () => {
     scrollToIndex(atStart ? lastIndex : Math.max(activeIndex - 1, 0));
 
   return (
-    <section className="flex flex-col gap-5 overflow-visible">
-      <SectionHeader
-        sectionIcon={<MdReplay />}
-        title={t("jump-back-in_title")}
-      />
+    <AnimateOnMount delay={0}>
+      <section className="flex flex-col gap-5 overflow-visible">
+        <SectionHeader
+          sectionIcon={<MdReplay />}
+          title={t("jump-back-in_title")}
+        />
 
-      <div className="relative w-full h-50 flex flex-row gap-2 overflow-visible">
-        {!atStart && (
-          <>
-            <div className={`${FADE_BASE} left-0 bg-linear-90`} />
-            <button
-              onClick={handleBackward}
-              aria-label={t("jump-back-in_previous")}
-              className={`${ARROW_BASE} left-3`}
-            >
-              <IoChevronBack />
-            </button>
-          </>
-        )}
+        <div className="relative w-full h-50 flex flex-row gap-2 overflow-visible">
+          {!atStart && (
+            <>
+              <div className={`${FADE_BASE} left-0 bg-linear-90`} />
+              <button
+                onClick={handleBackward}
+                aria-label={t("jump-back-in_previous")}
+                className={`${ARROW_BASE} left-3`}
+              >
+                <IoChevronBack />
+              </button>
+            </>
+          )}
 
-        <div
-          ref={scrollRef}
-          className="relative w-full h-full flex flex-row gap-5 overflow-x-scroll overflow-y-visible scroll-hidden"
-        >
-          {items.map((item, i) => (
-            <LastTenItem data={item} key={i} />
-          ))}
+          <div
+            ref={scrollRef}
+            className="relative w-full h-full flex flex-row gap-5 overflow-x-scroll overflow-y-visible scroll-hidden"
+          >
+            {items.map((item, i) => (
+              <LastTenItem data={item} key={i} />
+            ))}
+          </div>
+
+          {!atEnd && (
+            <>
+              <button
+                onClick={handleForward}
+                aria-label={t("jump-back-in_next")}
+                className={`${ARROW_BASE} right-3`}
+              >
+                <IoChevronForward />
+              </button>
+              <div className={`${FADE_BASE} right-0 bg-linear-270`} />
+            </>
+          )}
         </div>
 
-        {!atEnd && (
-          <>
-            <button
-              onClick={handleForward}
-              aria-label={t("jump-back-in_next")}
-              className={`${ARROW_BASE} right-3`}
-            >
-              <IoChevronForward />
-            </button>
-            <div className={`${FADE_BASE} right-0 bg-linear-270`} />
-          </>
+        {items.length > 1 && (
+          <div className="w-full flex items-center justify-center gap-3">
+            {items.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToIndex(i)}
+                aria-label={t("jump-back-in_goto", { index: i + 1 })}
+                className={`w-2.5 h-2.5 rounded-full border border-studoborder cursor-pointer transition-colors ${
+                  activeIndex === i ? "bg-studoblue" : ""
+                }`}
+              />
+            ))}
+          </div>
         )}
-      </div>
-
-      {items.length > 1 && (
-        <div className="w-full flex items-center justify-center gap-3">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollToIndex(i)}
-              aria-label={t("jump-back-in_goto", { index: i + 1 })}
-              className={`w-2.5 h-2.5 rounded-full border border-studoborder cursor-pointer transition-colors ${
-                activeIndex === i ? "bg-studoblue" : ""
-              }`}
-            />
-          ))}
-        </div>
-      )}
-    </section>
+      </section>
+    </AnimateOnMount>
   );
 };
 

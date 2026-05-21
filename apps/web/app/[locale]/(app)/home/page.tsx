@@ -27,9 +27,9 @@ export default async function HomePage() {
   return (
     <>
       <section
-        className={`w-full h-fit mb-3 gap-5 flex flex-col sticky top-0 pt-5 z-[999] pb-3 dark:bg-bg-dark bg-bg-white`}
+        className={`w-full h-fit mb-3 gap-5 flex flex-col sticky top-0 pt-5 z-[20] pb-3 dark:bg-bg-dark bg-bg-white`}
       >
-        <div className={"w-full flex flex-col gap-2"}>
+        <div className={"w-full flex-1 flex flex-col gap-2"}>
           <div className="w-full h-fit flex flex-col gap-2 ">
             <span className="font-georgia font-bold dark:text-white text-studodarkblue text-2xl">
               {welcome}
@@ -42,23 +42,15 @@ export default async function HomePage() {
         <QuickStats />
       </section>
 
-      <div className={"w-full flex-1 grid grid-cols-1 gap-10 pb-15"}>
-        <AnimateOnMount delay={0}>
-          <JumpBackIn />
-        </AnimateOnMount>
-        <AnimateOnMount delay={100}>
-          <YourSets />
-        </AnimateOnMount>
-        <AnimateOnMount delay={200}>
-          <Courses />
-        </AnimateOnMount>
-        <AnimateOnMount delay={300}>
-          <Flow />
-        </AnimateOnMount>
-        <AnimateOnMount delay={400}>
-          <GetStarted />
-        </AnimateOnMount>
+      <div className={"w-full grid grid-cols-1 gap-10 pb-10"}>
         <EmptyFallback />
+
+        <JumpBackIn />
+        <YourSets />
+
+        <Courses />
+
+        <Flow />
       </div>
 
       <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
@@ -66,8 +58,6 @@ export default async function HomePage() {
           <CTABlock />
         </AnimateOnMount>
       </div>
-
-      <BottomCredits />
       <div
         className={
           "fixed z-10 bottom-0 h-25 w-2/3 bg-linear-0 dark:from-bg-dark from-bg-white to-transparent"

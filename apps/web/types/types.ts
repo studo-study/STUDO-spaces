@@ -200,7 +200,7 @@ export interface CreateStudyset {
   course: string;
   global_term_language: string;
   global_definition_language: string;
-  folder_id: string;
+  folder_id?: string;
   cardlist: CreateCard[];
 }
 

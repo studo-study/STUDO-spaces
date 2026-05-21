@@ -14,9 +14,7 @@ export default async function StudosetPage({
   if (session) {
     return (
       <StudosetSplashWrapper id={id}>
-        <div className="flex w-full h-full max-w-3/4 flex-col gap-3 sm:gap-5">
-          <StudosetView id={id} />
-        </div>
+        <StudosetView id={id} />
       </StudosetSplashWrapper>
     );
   }

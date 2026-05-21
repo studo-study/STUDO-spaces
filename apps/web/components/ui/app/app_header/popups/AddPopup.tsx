@@ -101,7 +101,7 @@ function AddPopUp({
     <div
       ref={popupRef}
       className={`absolute top-full right-0 mt-4
-        z-[9999] w-60 p-2 truncate
+        z-[99999] w-60 p-2 truncate
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
         backdrop-blur-xl

@@ -1,16 +1,18 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { useCreateStudyset } from "@/hooks/app/sets/useCreateStudoset";
 import SetImporter from "@/components/ui/app/create-studoset/SetImporter";
 import CardItem from "@/components/ui/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
 import ImportButton from "@/components/ui/app/create-studoset/importButton";
 import { useRouter } from "@/i18n/routing";
-import { CardData, Folder } from "@/types/types";
+import { CardData } from "@/types/types";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import InputField from "@/components/ui/design_system/input/InputField";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import { useFolders } from "@/hooks/app/folders/useFolders";
 
 const LANGUAGES = [
   { code: "en", name: "English" },
@@ -32,12 +34,10 @@ const firstCard = (): CardData => ({
 export default function CreateStudosetForm() {
   const t = useTranslations("createstudoset");
   const [showImporter, setShowImporter] = useState(false);
-  const [isMutating, setIsMutating] = useState(false);
   const router = useRouter();
+  const mutation = useCreateStudyset();
   const toast = useToast();
-  const [folders, setFolders] = useState<{ folders: Folder[] }>({
-    folders: [],
-  });
+  const folders = useFolders().data?.folders ?? [];
   const [cardArray, setCardArray] = useState<CardData[]>([firstCard()]);
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -50,7 +50,6 @@ export default function CreateStudosetForm() {
   const validate = (): boolean => {
     const title = titleRef.current?.value?.trim();
     const course = courseRef.current?.value?.trim();
-    const folderId = folderRef.current?.value;
     const termLang = termLangRef.current?.value;
     const defLang = defLangRef.current?.value;
 
@@ -62,10 +61,7 @@ export default function CreateStudosetForm() {
       toast.error(t("course_error"));
       return false;
     }
-    if (!folderId) {
-      toast.error(t("folder_error"));
-      return false;
-    }
+
     if (!termLang) {
       toast.error(t("term_lang_error"));
       return false;
@@ -92,7 +88,7 @@ export default function CreateStudosetForm() {
 
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (isMutating) return;
+    if (mutation.isPending) return;
     if (!validate()) return;
 
     const body = {
@@ -109,25 +105,11 @@ export default function CreateStudosetForm() {
       })),
     };
 
-    setIsMutating(true);
     try {
-      const res = await fetch("/api/studysets", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      if (!res.ok) {
-        toast.error(t("submit_error"));
-        return;
-      }
-
-      const data = await res.json();
+      const data = await mutation.mutateAsync(body);
       router.push(`/studoset/${data.id}`);
     } catch {
       toast.error(t("submit_error"));
-    } finally {
-      setIsMutating(false);
     }
   };
 
@@ -215,15 +197,6 @@ export default function CreateStudosetForm() {
     return () => sortable.destroy();
   }, []);
 
-  useEffect(() => {
-    fetch("/api/folders")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (data) setFolders(data);
-      })
-      .catch(() => {});
-  }, []);
-
   useKeyboardShortcut("i", () => setShowImporter((p) => !p), {
     ctrl: true,
     always: true,
@@ -274,7 +247,7 @@ export default function CreateStudosetForm() {
                   data-cy="folder_select"
                 >
                   <option value="">{t("folder_placeholder")}</option>
-                  {folders?.folders?.map((item) => (
+                  {folders?.map((item) => (
                     <option value={item.id} key={item.id}>
                       {item.name}
                     </option>
@@ -320,12 +293,12 @@ export default function CreateStudosetForm() {
             <ImportButton setShowImporter={setShowImporter} />
             <BaseButton
               type="submit"
-              disabled={isMutating}
+              disabled={mutation.isPending}
               variant={"submit"}
               textSize={"sm"}
               data-cy="submit_studyset_top"
               className={"max-h-10"}
-              label={isMutating ? t("saving") : t("create")}
+              label={mutation.isPending ? t("saving") : t("create")}
             />
           </div>
 
@@ -365,12 +338,12 @@ export default function CreateStudosetForm() {
           <div className="flex w-full mb-6 sm:mb-8 md:mb-10 flex-row justify-end">
             <BaseButton
               type="submit"
-              disabled={isMutating}
+              disabled={mutation.isPending}
               variant={"submit"}
               textSize={"sm"}
               data-cy="submit_studyset_top"
               className={"min-w-1/4 max-h-10"}
-              label={isMutating ? t("saving") : t("create")}
+              label={mutation.isPending ? t("saving") : t("create")}
             />
           </div>
         </div>

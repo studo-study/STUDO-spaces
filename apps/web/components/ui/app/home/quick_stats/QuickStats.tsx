@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import StatItem from "@/components/ui/app/home/quick_stats/StatItem";
 import { LuTimer } from "react-icons/lu";
 import { FaCheck, FaRegEye } from "react-icons/fa";
-import { useSets } from "@/hooks/app/useSets";
+import { useSets } from "@/hooks/app/sets/useSets";
 import StatItemSkeleton from "@/components/ui/app/home/quick_stats/StatItemSkeleton";
 
 const STATS_CONFIG = [

@@ -49,9 +49,11 @@ export class CreateStudysetDto {
   @ApiProperty({
     example: 'f45cd674-73a5-4d4f-abdb-b405981cd2b3',
     description: 'Folder ID where the studoset belongs',
+    required: false,
   })
   @IsString({ name: 'folder_id', maxLength: 64 })
-  folder_id: string;
+  @IsOptional()
+  folder_id?: string;
 
   @IsArray()
   @ValidateNested({ each: true })

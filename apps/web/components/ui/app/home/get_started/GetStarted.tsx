@@ -6,8 +6,8 @@ import { FaPlus } from "react-icons/fa";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { useSets } from "@/hooks/app/useSets";
-import { useBoards } from "@/hooks/app/useBoards";
+import { useSets } from "@/hooks/app/sets/useSets";
+import { useBoards } from "@/hooks/app/flow/useBoards";
 
 const GetStarted = () => {
   const { sets, isLoading: setsLoading } = useSets();

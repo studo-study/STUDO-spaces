@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import CourseItem from "@/components/ui/app/your-files/courses/courseItem";
-import { useSets } from "@/hooks/app/useSets";
+import { useSets } from "@/hooks/app/sets/useSets";
 import { useTranslations } from "next-intl";
 
 const CourseGrid = () => {
