@@ -250,29 +250,37 @@ export class StudysessionService {
       throw new NotFoundException("User doesn't exist");
     }
     const today = new Date();
-    const yesterday = new Date(today); // kopie van vandaag
+    today.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
 
-    if (update_streak.streak_last_update != today.toISOString()) {
-      if (update_streak.streak_last_update === yesterday.toISOString()) {
-        const updated = {
-          streak_last_update: today.toISOString(),
-          streak_count: update_streak.streak_count
-            ? update_streak.streak_count + 1
-            : 1,
-        };
-        await this.db.update(users).set(updated);
-      }
-      if (
-        update_streak.streak_last_update != yesterday.toISOString() &&
-        update_streak.streak_last_update === today.toISOString()
-      ) {
-        const updated = {
-          streak_last_update: today.toISOString(),
-          streak_count: 0,
-          streak_started: today.toISOString(),
-        };
-        await this.db.update(users).set(updated);
+    const lastUpdate = update_streak.streak_last_update;
+    const lastUpdateDay = lastUpdate ? new Date(lastUpdate) : null;
+    if (lastUpdateDay) lastUpdateDay.setHours(0, 0, 0, 0);
+
+    const isToday = lastUpdateDay?.getTime() === today.getTime();
+    const isYesterday = lastUpdateDay?.getTime() === yesterday.getTime();
+
+    if (!isToday) {
+      if (isYesterday) {
+        await this.db
+          .update(users)
+          .set({
+            streak_last_update: new Date(),
+            streak_count: update_streak.streak_count
+              ? update_streak.streak_count + 1
+              : 1,
+          })
+          .where(eq(users.id, user_id));
+      } else {
+        await this.db
+          .update(users)
+          .set({
+            streak_last_update: new Date(),
+            streak_count: 0,
+            streak_started: new Date(),
+          })
+          .where(eq(users.id, user_id));
       }
     }
   }

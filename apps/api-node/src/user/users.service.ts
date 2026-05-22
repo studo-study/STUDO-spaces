@@ -440,10 +440,16 @@ export class UserService {
         passwordHash: passwordhash ?? user.passwordHash,
         displayName: body.displayName ?? user.displayName,
         img_url: body.img_url ?? user.img_url,
-        streak_started: body.streak_started ?? user.streak_started,
+        streak_started: body.streak_started
+          ? new Date(body.streak_started)
+          : user.streak_started,
         streak_count: body.streak_count ?? user.streak_count,
-        streak_last_update: body.streak_last_update ?? user.streak_last_update,
-        last_login: body.last_login ?? user.last_login,
+        streak_last_update: body.streak_last_update
+          ? new Date(body.streak_last_update)
+          : user.streak_last_update,
+        last_login: body.last_login
+          ? new Date(body.last_login)
+          : user.last_login,
         roles: body.role ?? user.roles,
       })
       .where(eq(users.id, user_id));
