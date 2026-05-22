@@ -14,7 +14,6 @@ import {
   TbCalendar,
   TbShield,
   TbUser,
-  TbMail,
   TbHash,
 } from "react-icons/tb";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
@@ -47,33 +46,6 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
     <h2 className="text-sm font-semibold uppercase tracking-widest opacity-40">
       {children}
     </h2>
-  );
-}
-
-function SetRow({
-  title,
-  course,
-  updatedAt,
-  type,
-}: {
-  title: string;
-  course: string;
-  updatedAt: string;
-  type: "studyset" | "visualset";
-}) {
-  return (
-    <div className="flex items-center gap-3 rounded-xl border border-studoborder/20 px-4 py-3">
-      <span className="text-studoborder opacity-50">
-        {type === "studyset" ? <TbBook size={18} /> : <TbPhoto size={18} />}
-      </span>
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">{title}</p>
-        <p className="truncate text-xs opacity-50">{course}</p>
-      </div>
-      <p className="shrink-0 text-xs opacity-40">
-        {new Date(updatedAt).toLocaleDateString("nl-BE")}
-      </p>
-    </div>
   );
 }
 

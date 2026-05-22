@@ -46,7 +46,6 @@ import {
   UserResponseStatsDto,
 } from './users.dto';
 import { LoginResponseDto } from '../session/session.dto';
-import { UserResponse } from '@studo/types';
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {

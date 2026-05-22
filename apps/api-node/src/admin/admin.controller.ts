@@ -13,11 +13,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
 import { ParseUserIdPipe } from '../auth/pipes/parseUserId.pipe';
 import * as types from '@studo/types';
-import {
-  AdminStatsResponse,
-  AdminUserDetail,
-  UserResponse,
-} from '@studo/types';
+import { AdminStatsResponse, AdminUserDetail } from '@studo/types';
 
 @ApiTags('admin')
 @ApiBearerAuth()

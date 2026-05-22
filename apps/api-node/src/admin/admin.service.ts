@@ -222,9 +222,7 @@ export class AdminService {
         join_date: u.join_date.toISOString(),
       })),
       recentActivity,
-      popularSets: popularSets.filter(
-        Boolean,
-      ) as AdminStatsResponse['popularSets'],
+      popularSets: popularSets.filter(Boolean),
     };
   }
 

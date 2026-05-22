@@ -8,7 +8,7 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { and, eq, gte, inArray, ne, or, sql } from 'drizzle-orm';
+import { and, eq, gte, inArray, ne, sql } from 'drizzle-orm';
 import {
   cards,
   classroomactivities,
@@ -54,7 +54,6 @@ import {
   StartPagina,
   ClassActivities,
   Boards,
-  UserResponse,
 } from '@studo/types';
 import { UserResponseDto, UserResponseStatsDto } from './users.dto';
 
