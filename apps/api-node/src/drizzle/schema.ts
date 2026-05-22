@@ -11,6 +11,7 @@ import {
   text,
   pgEnum,
 } from 'drizzle-orm/pg-core';
+// timestamp columns are always stored as UTC, no timezone offset
 import { relations, sql } from 'drizzle-orm';
 
 export const users = pgTable(
@@ -21,13 +22,13 @@ export const users = pgTable(
     passwordHash: varchar('password_hash', { length: 255 }).notNull(),
     displayName: varchar('displayname', { length: 100 }).notNull(),
     img_url: varchar('img_url', { length: 250 }).notNull(),
-    join_date: varchar('join_date', { length: 24 }).notNull(),
+    join_date: timestamp('join_date').notNull(),
     joinNumber: serial('join_number').notNull().unique(),
     totalSets: integer('total_sets').notNull(),
-    streak_started: varchar('streak_started', { length: 24 }),
+    streak_started: timestamp('streak_started'),
     streak_count: integer('streak_count'),
-    streak_last_update: varchar('streak_last_update', { length: 24 }),
-    last_login: varchar('last_login', { length: 24 }).notNull(),
+    streak_last_update: timestamp('streak_last_update'),
+    last_login: timestamp('last_login').notNull(),
     roles: jsonb('roles').notNull(),
     publicRole: varchar('public_role', { length: 24 }).notNull(),
     verified: boolean('verified').notNull(),
@@ -46,7 +47,7 @@ export const profiles = pgTable(
     displayName: varchar('displayname', { length: 100 }).notNull(),
     img_url: varchar('img_url', { length: 250 }).notNull(),
     banner_url: varchar('banner_url', { length: 250 }),
-    join_date: varchar('join_date', { length: 24 }).notNull(),
+    join_date: timestamp('join_date').notNull(),
     joinNumber: serial('join_number').notNull().unique(),
     streak: integer('streak').notNull(),
     verified: boolean('verified').notNull(),

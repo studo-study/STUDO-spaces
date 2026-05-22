@@ -50,7 +50,7 @@ export default async function HomePage() {
         <Flow />
       </div>
 
-      <div className="fixed z-40 bottom-10 w-full h-fit flex items-end justify-center">
+      <div className="fixed z-40 bottom-10 w-fit left-1/2 -translate-1/2 h-fit flex items-end justify-center">
         <AnimateOnMount delay={2000}>
           <CTABlock />
         </AnimateOnMount>

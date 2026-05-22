@@ -16,8 +16,23 @@ export class ProfileService {
     private readonly db: DatabaseProvider,
   ) {}
 
+  private serializeProfile(p: {
+    user_id: string;
+    displayName: string;
+    img_url: string;
+    banner_url: string | null;
+    join_date: Date;
+    joinNumber: number;
+    streak: number;
+    verified: boolean;
+    tags: string[];
+  }) {
+    return { ...p, join_date: p.join_date.toISOString() };
+  }
+
   async getAll(): Promise<ProfileListResponseDto> {
-    return { profiles: await this.db.query.profiles.findMany() };
+    const all = await this.db.query.profiles.findMany();
+    return { profiles: all.map((p) => this.serializeProfile(p)) };
   }
 
   async getById(user_id: string): Promise<ProfileResponseDto> {
@@ -36,7 +51,7 @@ export class ProfileService {
     });
 
     return {
-      profile: profile,
+      profile: this.serializeProfile(profile),
       studysets: ss,
       visualsets: vs,
     };

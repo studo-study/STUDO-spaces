@@ -67,32 +67,33 @@ export class AuthService {
 
   //login functie
   async login({ email, password }: LoginRequest): Promise<string> {
-    // 👇 1
     const user = await this.db.query.users.findFirst({
       where: eq(users.email, email),
     });
 
-    // 👇 2
     if (!user) {
       throw new UnauthorizedException(
         'The given email and password do not match',
       );
     }
 
-    // 👇 3
     const passwordValid = await this.verifyPassword(
       password,
       user.passwordHash,
     );
 
-    // 👇 4
     if (!passwordValid) {
       throw new UnauthorizedException(
         'The given email and password do not match',
       );
     }
 
-    return this.signJwt(user); // 👈 5
+    await this.db
+      .update(users)
+      .set({ last_login: new Date() })
+      .where(eq(users.id, user.id));
+
+    return this.signJwt(user);
   }
 
   //google users
@@ -118,12 +119,12 @@ export class AuthService {
         passwordHash: '',
         displayName: `${googleUser.firstName} ${googleUser.lastName}`,
         img_url: googleUser.picture ?? '',
-        join_date: date.toISOString(),
+        join_date: date,
         totalSets: 0,
         streak_started: null,
         streak_count: 0,
         streak_last_update: null,
-        last_login: date.toISOString(),
+        last_login: date,
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
@@ -136,7 +137,7 @@ export class AuthService {
         displayName: `${googleUser.firstName} ${googleUser.lastName}`,
         img_url: googleUser.picture ?? '',
         banner_url: '',
-        join_date: date.toISOString(),
+        join_date: date,
         streak: 0,
         verified: false,
         studoProfile: false,
@@ -163,7 +164,7 @@ export class AuthService {
       // Update last_login voor bestaande user
       await this.db
         .update(users)
-        .set({ last_login: new Date().toISOString() })
+        .set({ last_login: new Date() })
         .where(eq(users.id, user.id));
     }
 
@@ -195,12 +196,12 @@ export class AuthService {
         passwordHash: '',
         displayName: `${microsoftUser.firstName} ${microsoftUser.lastName}`,
         img_url: microsoftUser.picture || 'default',
-        join_date: date.toISOString(),
+        join_date: date,
         totalSets: 0,
         streak_started: null,
         streak_count: 0,
         streak_last_update: null,
-        last_login: date.toISOString(),
+        last_login: date,
         roles: [Role.USER],
         publicRole: 'student',
         verified: true, // Microsoft users zijn al geverifieerd
@@ -213,7 +214,7 @@ export class AuthService {
         displayName: `${microsoftUser.firstName} ${microsoftUser.lastName}`,
         img_url: microsoftUser.picture || '',
         banner_url: '',
-        join_date: date.toISOString(),
+        join_date: date,
         streak: 0,
         verified: false,
         studoProfile: false,
@@ -240,7 +241,7 @@ export class AuthService {
       // Update last_login voor bestaande user
       await this.db
         .update(users)
-        .set({ last_login: new Date().toISOString() })
+        .set({ last_login: new Date() })
         .where(eq(users.id, user.id));
     }
 
@@ -272,12 +273,12 @@ export class AuthService {
         passwordHash: '',
         displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
         img_url: smartschoolUser.picture || 'default',
-        join_date: date.toISOString(),
+        join_date: date,
         totalSets: 0,
         streak_started: null,
         streak_count: 0,
         streak_last_update: null,
-        last_login: date.toISOString(),
+        last_login: date,
         roles: [Role.USER],
         publicRole: 'student',
         verified: true, // Microsoft users zijn al geverifieerd
@@ -290,7 +291,7 @@ export class AuthService {
         displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
         img_url: smartschoolUser.picture || '',
         banner_url: '',
-        join_date: date.toISOString(),
+        join_date: date,
         streak: 0,
         verified: false,
         studoProfile: false,
@@ -317,7 +318,7 @@ export class AuthService {
       // Update last_login voor bestaande user
       await this.db
         .update(users)
-        .set({ last_login: new Date().toISOString() })
+        .set({ last_login: new Date() })
         .where(eq(users.id, user.id));
     }
 
@@ -352,12 +353,12 @@ export class AuthService {
       passwordHash: passwordHash,
       displayName: displayName,
       img_url: 'default',
-      join_date: date.toISOString(),
+      join_date: date,
       totalSets: 0,
-      streak_started: date.toISOString(),
+      streak_started: date,
       streak_count: 0,
-      streak_last_update: date.toISOString(),
-      last_login: date.toISOString(),
+      streak_last_update: date,
+      last_login: date,
       roles: [Role.USER],
       publicRole: role,
       verified: false,
@@ -370,7 +371,7 @@ export class AuthService {
       displayName: displayName,
       img_url: '',
       banner_url: '',
-      join_date: date.toISOString(),
+      join_date: date,
       streak: 0,
       verified: false,
       studoProfile: false,
@@ -419,12 +420,12 @@ export class AuthService {
         passwordHash: '',
         displayName: socialUser.displayName,
         img_url: socialUser.img_url || 'default',
-        join_date: date.toISOString(),
+        join_date: date,
         totalSets: 0,
         streak_started: null,
         streak_count: 0,
         streak_last_update: null,
-        last_login: date.toISOString(),
+        last_login: date,
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
@@ -436,7 +437,7 @@ export class AuthService {
         displayName: socialUser.displayName,
         img_url: socialUser.img_url || '',
         banner_url: '',
-        join_date: date.toISOString(),
+        join_date: date,
         streak: 0,
         verified: false,
         studoProfile: false,
@@ -460,7 +461,7 @@ export class AuthService {
       await this.db
         .update(users)
         .set({
-          last_login: new Date().toISOString(),
+          last_login: new Date(),
           img_url: socialUser.img_url || user.img_url, // update foto
         })
         .where(eq(users.id, user.id));

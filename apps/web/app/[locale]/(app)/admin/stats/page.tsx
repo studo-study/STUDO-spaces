@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import QuickStats from "@/components/ui/app/admin/stats/quick_stats/quickstats";
 import { VscGraphLine } from "react-icons/vsc";
 import { MdOutlineQueryStats } from "react-icons/md";
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   title: "Admin Dashboard | Studo",
 };
 
-export default function ModeratorPage() {
-  const t = useTranslations("admin");
+export default async function ModeratorPage() {
+  const t = await getTranslations("admin");
   return (
     <div className={"w-full min-h-full flex flex-col gap-12"}>
       <div className={"w-full h-fit flex flex-col items-center gap-5"}>
@@ -22,7 +22,7 @@ export default function ModeratorPage() {
           <VscGraphLine />
           {t("subtitle_stats")}:
         </span>
-        <QuickStats t={t} />
+        <QuickStats />
       </div>
       <div className={"w-full h-3/4 flex flex-col gap-5"}>
         <span
@@ -33,7 +33,7 @@ export default function ModeratorPage() {
           <MdOutlineQueryStats />
           {t("subtitle_overview")}:
         </span>
-        <Overview t={t} />
+        <Overview />
       </div>
     </div>
   );
