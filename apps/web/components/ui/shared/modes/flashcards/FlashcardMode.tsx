@@ -1,10 +1,15 @@
 "use client";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "animate.css";
 import { IoShuffleOutline } from "react-icons/io5";
 import ProgressBar from "@/components/ui/public/profile/(modes)/learn/progressbar";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import { useTranslations } from "next-intl";
+import { GrPowerReset } from "react-icons/gr";
+import { useStudoset } from "@/hooks/app/sets/useStudoset";
 
 interface Card {
   id: string;
@@ -18,35 +23,78 @@ interface Card {
 }
 
 interface FlashcardProps {
-  cards: Card[];
   id: string;
 }
 
 const storageKey = (id: string) => `studo-fc-${id}`;
 
-export default function FlashcardMode({ cards, id }: FlashcardProps) {
-  const [shuffled, setShuffled] = useState(cards);
+interface PersistedState {
+  index: number;
+  termMode: boolean;
+  shuffleMode: boolean;
+  shuffledIds: string[];
+}
+
+function loadState(id: string, cards: Card[]): PersistedState {
+  if (typeof window === "undefined")
+    return { index: 0, termMode: true, shuffleMode: false, shuffledIds: [] };
+  try {
+    const raw = localStorage.getItem(storageKey(id));
+    if (!raw)
+      return { index: 0, termMode: true, shuffleMode: false, shuffledIds: [] };
+    return JSON.parse(raw) as PersistedState;
+  } catch {
+    return { index: 0, termMode: true, shuffleMode: false, shuffledIds: [] };
+  }
+}
+
+export default function FlashcardMode({ id }: FlashcardProps) {
+  const cards = useStudoset(id)?.data?.cards || [];
+  const t = useTranslations("flashcards");
+
+  const [index, setIndex] = useState(0);
+  const [termMode, setTermMode] = useState(true);
   const [shuffleMode, setShuffleMode] = useState(false);
+  const [shuffled, setShuffled] = useState<Card[]>([]);
 
-  const [index, setIndex] = useState(() => {
-    if (typeof window === "undefined") return 0;
-    const saved = localStorage.getItem(storageKey(id));
-    if (saved === null) return 0;
-    const parsed = Number.parseInt(saved, 10);
-    if (Number.isNaN(parsed)) return 0;
-    return parsed;
-  });
-
-  // Persist index to localStorage on change
+  // Eenmalig initialiseren vanuit localStorage zodra cards geladen zijn
+  const initialized = useRef(false);
   useEffect(() => {
-    localStorage.setItem(storageKey(id), String(index));
-  }, [id, index]);
+    if (cards.length === 0 || initialized.current) return;
+    initialized.current = true;
+
+    const saved = loadState(id, cards);
+    setTermMode(saved.termMode);
+    setShuffleMode(saved.shuffleMode);
+    setIndex(saved.index < cards.length ? saved.index : 0);
+
+    if (saved.shuffleMode && saved.shuffledIds.length > 0) {
+      const ordered = saved.shuffledIds
+        .map((sid) => cards.find((c) => c.id === sid))
+        .filter(Boolean) as Card[];
+      setShuffled(ordered.length === cards.length ? ordered : cards);
+    } else {
+      setShuffled(cards);
+    }
+  }, [id, cards]);
+
+  // Persist naar localStorage — sla over als cards nog niet geladen zijn
+  useEffect(() => {
+    if (shuffled.length === 0) return;
+    const state: PersistedState = {
+      index,
+      termMode,
+      shuffleMode,
+      shuffledIds: shuffled.map((c) => c.id),
+    };
+    localStorage.setItem(storageKey(id), JSON.stringify(state));
+  }, [id, index, termMode, shuffleMode, shuffled]);
 
   const goForward = () => {
-    setIndex((i) => (i + 1 > cards.length - 1 ? 0 : i + 1));
+    setIndex((i) => (i + 1 > shuffled.length - 1 ? 0 : i + 1));
   };
   const goBack = () => {
-    setIndex((i) => (i - 1 < 0 ? cards.length - 1 : i - 1));
+    setIndex((i) => (i - 1 < 0 ? shuffled.length - 1 : i - 1));
   };
   const toggleShuffle = () => {
     const newMode = !shuffleMode;
@@ -55,6 +103,9 @@ export default function FlashcardMode({ cards, id }: FlashcardProps) {
     setShuffled(newMode ? shuffle(cards) : cards);
   };
 
+  const toggleReset = () => {
+    setIndex(0);
+  };
   useKeyboardShortcut("ArrowRight", goForward);
   useKeyboardShortcut("ArrowLeft", goBack);
 
@@ -71,20 +122,41 @@ export default function FlashcardMode({ cards, id }: FlashcardProps) {
             queueLength={0}
             queueMode={false}
           />
-          <button
-            onClick={toggleShuffle}
-            className={`min-w-12 h-12 cursor-pointer transition-all duration-300 border ${shuffleMode ? "dark:border-studoblue border-emerald-400" : "border-studoborder/30"}  bg-studogrey/30 rounded-full shadow-3xl flex flex-row items-center justify-center`}
-          >
-            <IoShuffleOutline
-              className={
-                shuffleMode
-                  ? "dark:text-studoblue transition-all duration-300 text-emerald-400"
-                  : ""
-              }
-            />
-          </button>
+          <BaseTooltip content={t("answer_with")}>
+            <BaseButton
+              variant={"icon"}
+              onClick={() => setTermMode((prev) => !prev)}
+            >
+              <p className={"text-sm"}>
+                {termMode ? t("definition") : t("term")}
+              </p>
+            </BaseButton>
+          </BaseTooltip>
+          <BaseTooltip content={t("shuffle")}>
+            <BaseButton variant={"icon"} onClick={toggleShuffle}>
+              <IoShuffleOutline
+                size={20}
+                className={
+                  shuffleMode
+                    ? "dark:text-studoblue transition-all duration-300 text-emerald-400"
+                    : ""
+                }
+              />
+            </BaseButton>
+          </BaseTooltip>
+          <BaseTooltip content={t("reset")}>
+            <BaseButton variant={"icon"} onClick={toggleReset}>
+              <GrPowerReset size={20} />
+            </BaseButton>
+          </BaseTooltip>
         </div>
-        <Card card={shuffled[index]} key={shuffled[index]?.id} />
+        {shuffled[index] ? (
+          <Card
+            card={shuffled[index]}
+            key={shuffled[index].id}
+            termMode={termMode}
+          />
+        ) : null}
       </div>
       <div
         className={
@@ -122,8 +194,9 @@ export default function FlashcardMode({ cards, id }: FlashcardProps) {
 
 interface CardProps {
   card: Card;
+  termMode: boolean;
 }
-function Card({ card }: CardProps) {
+function Card({ card, termMode }: CardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   useKeyboardShortcut(" ", () => setIsFlipped((f) => !f));
@@ -143,14 +216,30 @@ function Card({ card }: CardProps) {
             "side-a backface-hidden top-0 left-0 absolute  w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30 "
           }
         >
-          <span className={"text-xl select-none font-bold"}>{card.term}</span>
+          {termMode ? (
+            <span className={"text-xl text-center select-none font-bold"}>
+              {card.term}
+            </span>
+          ) : (
+            <span className="block text-xl text-center text-balance leading-relaxed select-none">
+              {card.definition}
+            </span>
+          )}
         </div>
         <div
           className={
-            "side-b backface-hidden top-0 left-0 absolute  w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30 "
+            "side-b backface-hidden top-0 left-0 absolute px-5  w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30 "
           }
         >
-          <span className={"text-xl select-none"}>{card.definition}</span>
+          {termMode ? (
+            <span className="block text-xl text-center text-balance leading-relaxed select-none">
+              {card.definition}
+            </span>
+          ) : (
+            <span className={"text-xl text-center select-none font-bold"}>
+              {card.term}
+            </span>
+          )}
         </div>
       </div>
     </div>

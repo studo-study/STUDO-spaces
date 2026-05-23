@@ -1476,5 +1476,12 @@
       "pop_title": "Deel set",
       "copy_message": "Naar klembord gekopieerd"
     }
+  },
+  "flashcards": {
+    "definition": "Definitie",
+    "term": "Term",
+    "answer_with": "antwoord met",
+    "shuffle": "shuffle",
+    "reset": "reset"
   }
 }

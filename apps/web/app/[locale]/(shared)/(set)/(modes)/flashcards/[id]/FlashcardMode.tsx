@@ -110,17 +110,19 @@ function Card({ card, front }: CardProps) {
       >
         <div
           className={
-            "side-a backface-hidden top-0 left-0 absolute w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
+            "side-a backface-hidden px-5 top-0 left-0 absolute w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
           }
         >
-          <span className={"text-xl select-none font-bold"}>{frontText}</span>
+          <span className={"text-xl select-none text-center font-bold"}>
+            {frontText}
+          </span>
         </div>
         <div
           className={
-            "side-b backface-hidden top-0 left-0 absolute w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
+            "side-b backface-hidden top-0 px-5 left-0 absolute w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
           }
         >
-          <span className={"text-xl select-none"}>{backText}</span>
+          <span className={"text-sm select-none text-center"}>{backText}</span>
         </div>
       </div>
     </div>

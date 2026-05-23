@@ -16,9 +16,10 @@ const BaseTooltip = ({
   delay = 200,
 }: BaseTooltipProps) => {
   const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const show = () => {
     timeoutRef.current = setTimeout(() => {
@@ -30,8 +31,17 @@ const BaseTooltip = ({
         left: { top: rect.top + rect.height / 2, left: rect.left - 8 },
         right: { top: rect.top + rect.height / 2, left: rect.right + 8 },
       };
-      setCoords(posMap[position]);
-      setVisible(true);
+
+      let { top, left } = posMap[position];
+      // viewport clamping
+      const margin = 8;
+      left = Math.min(Math.max(left, margin), window.innerWidth - margin);
+      top = Math.min(Math.max(top, margin), window.innerHeight - margin);
+
+      setCoords({ top, left });
+      setMounted(true);
+      // next frame zodat de transition kan starten vanuit de begin-staat
+      requestAnimationFrame(() => setVisible(true));
     }, delay);
   };
 
@@ -53,6 +63,14 @@ const BaseTooltip = ({
     right: "translate(0%, -50%)",
   };
 
+  // arrow zit aan de tegenovergestelde kant van waar de tooltip staat
+  const arrowMap = {
+    top: "bottom-[-4px] left-1/2 -translate-x-1/2",
+    bottom: "top-[-4px] left-1/2 -translate-x-1/2",
+    left: "right-[-4px] top-1/2 -translate-y-1/2",
+    right: "left-[-4px] top-1/2 -translate-y-1/2",
+  };
+
   return (
     <div
       ref={triggerRef}
@@ -61,17 +79,29 @@ const BaseTooltip = ({
       onMouseLeave={hide}
     >
       {children}
-      {visible &&
+      {mounted &&
         createPortal(
           <div
-            className="fixed z-[9999] whitespace-nowrap rounded-full border border-studoborder/30 bg-black/80 px-3 py-1.5 text-sm font-medium text-white shadow-lg pointer-events-none"
+            role="tooltip"
+            className={`fixed z-[9999] whitespace-nowrap rounded-full border border-studoborder/30
+              bg-black/50 px-3 py-1.5 text-sm font-medium text-white shadow-lg
+              pointer-events-none backdrop-blur-sm
+              transition-all duration-150 ease-out
+              ${visible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
             style={{
               top: coords.top,
               left: coords.left,
-              transform: transformMap[position],
+              transform: `${transformMap[position]} ${visible ? "" : ""}`,
+            }}
+            onTransitionEnd={() => {
+              if (!visible) setMounted(false);
             }}
           >
             {content}
+            <span
+              className={`absolute h-2 w-2 rotate-45 bg-black/50
+                border-studoborder/30 ${arrowMap[position]}`}
+            />
           </div>,
           document.body,
         )}

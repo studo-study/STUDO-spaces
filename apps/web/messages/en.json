@@ -1465,5 +1465,12 @@
   "folders": {
     "nothing_title": "Nothing to see here",
     "nothing_paragraph": "You haven't added any sets to this folder yet"
+  },
+  "flashcards": {
+    "definition": "Definition",
+    "term": "Term",
+    "answer_with": "answer with",
+    "shuffle": "shuffle",
+    "reset": "reset"
   }
 }
