@@ -3,7 +3,7 @@ import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
 import { useFolders } from "@/hooks/app/folders/useFolders";
 import { useTranslations } from "next-intl";
 import { FaCheck } from "react-icons/fa6";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { useToast } from "@/components/providers/app/ToastProvider";
 
@@ -14,17 +14,17 @@ export default function SavedPopup() {
   const t = useTranslations("popup.folders");
 
   const toggleSave = (id: string, name: string) => {
-    if (id === saved) removeFromFolder(name);
+    if (id === saved) removeFromFolder();
     else addToFolder(id, name);
   };
 
   const addToFolder = (id: string, name: string) => {
-    if (saved) removeFromFolder("");
+    if (saved) removeFromFolder();
     setSaved(id);
     toast.success(t("added_to_folder") + " " + name);
   };
 
-  const removeFromFolder = (name: string) => {
+  const removeFromFolder = () => {
     setSaved("");
   };
 
