@@ -1,22 +1,16 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/admin-auth";
 
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const { session, error } = await requireAdmin();
+  if (error) return error;
+
   const { id } = await params;
-  const session = await auth();
-  if (!session?.accessToken) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
-
   const response = await fetch(`${process.env.AUTH_API_URL}/admin/cred/${id}`, {
-    headers: {
-      Authorization: `Bearer ${session.accessToken}`,
-    },
+    headers: { Authorization: `Bearer ${session!.accessToken}` },
   });
-  const data = await response.json();
-
-  return NextResponse.json(data, { status: response.status });
+  return NextResponse.json(await response.json(), { status: response.status });
 }

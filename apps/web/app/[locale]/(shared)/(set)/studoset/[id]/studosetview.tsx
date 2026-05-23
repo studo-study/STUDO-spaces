@@ -66,12 +66,12 @@ export default function StudosetView({ id }: viewProps) {
 
   return (
     <div className={"w-full h-full px-10"}>
-      <div className="w-full h-fit flex flex-row items-center justify-baseline gap-2 sm:gap-3 text-xs sm:text-sm flex-wrap">
+      <div className="w-full h-fit flex flex-row items-center mb-3 justify-baseline gap-2 sm:gap-3 text-xs sm:text-sm flex-wrap">
         <span>{t("created")}</span>
         <Link
           href={isOwner ? "/account" : `/profile/` + data?.user_id}
           className="flex flex-row w-fit h-fit rounded-full sm:rounded-4xl
-                            gap-1.5 sm:gap-2 p-1 sm:p-2 pl-3 sm:pl-2 pr-3 sm:pr-5 l max-w-fit
+                            gap-1.5 sm:gap-2 px-1 pr-3 py-1 l max-w-fit
                              bg-studogrey/30 border border-studoborder/30 shadow-2x
                             dark:text-white min-w-0"
         >
@@ -92,7 +92,7 @@ export default function StudosetView({ id }: viewProps) {
           {(data && data.title) || t("set_title")}
         </span>
         <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
-          <SavedPopup />
+          <SavedPopup setId={id} />
           <ClassroomPopup />
           <SharePopup />
           <SettingsPopup />

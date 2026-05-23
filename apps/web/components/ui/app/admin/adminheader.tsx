@@ -17,6 +17,7 @@ export default function AdminHeader() {
     { link: "/admin/reports", label: "reports" },
     { link: "/admin/users", label: "users" },
     { link: "/admin/search", label: "search" },
+    { link: "/admin/invite", label: "invite" },
   ];
   return (
     <div className={"w-full h-fit flex flex-col gap-3"}>

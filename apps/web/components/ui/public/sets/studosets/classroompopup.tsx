@@ -1,6 +1,10 @@
 import Image from "next/image";
+import { useClassrooms } from "@/hooks/app/classrooms/useClassrooms";
 
 export default function ClassroomPopup() {
+  const { classrooms } = useClassrooms();
+
+  if (classrooms.length === 0) return null;
   return (
     <div
       className="inline-flex cursor-pointer active:scale-95 transition-[scale] duration-300 flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
