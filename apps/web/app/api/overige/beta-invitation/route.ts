@@ -10,7 +10,7 @@ const subjects = {
 
 type Locale = keyof typeof subjects;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend: Resend | null = null;
 const templateCache = new Map<Locale, string>();
 
 async function getTemplate(locale: Locale) {
@@ -39,6 +39,7 @@ export async function POST(request: Request) {
 
     const html = await getTemplate(locale as Locale);
 
+    if (!resend) resend = new Resend(process.env.RESEND_API_KEY);
     const { data, error } = await resend.emails.send({
       from: "STUDO <noreply@studo.study>",
       to: email,
