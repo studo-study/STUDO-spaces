@@ -12,6 +12,7 @@
     "reports": "Rapporten",
     "users": "Users",
     "search": "Zoeken",
+    "invite": "Uitnodigen",
     "recently_usrs": "Recent geregistreerde users",
     "most_pp_set": "Meest populaire sets",
     "graphs": "STUDO Grafieken",
@@ -1462,5 +1463,16 @@
   "folders": {
     "nothing_title": "Niets te zien hier",
     "nothing_paragraph": "Je hebt nog geen sets in deze map gestoken"
+  },
+  "popup": {
+    "folders": {
+      "pop_title": "Toevoegen aan map",
+      "added_to_folder": "Toegevoegd aan",
+      "removed_from_folder": "Verwijderd van"
+    },
+    "share": {
+      "pop_title": "Deel set",
+      "copy_message": "Naar klembord gekopieerd"
+    }
   }
 }

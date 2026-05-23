@@ -12,6 +12,7 @@
     "reports": "Reports",
     "users": "Users",
     "search": "Search",
+    "invite": "Invite",
     "recently_usrs": "Recently registered users",
     "most_pp_set": "Most popular sets",
     "graphs": "STUDO Charts",
@@ -48,7 +49,7 @@
       "coming": "sign up"
     },
     "footer": {
-      "footerQuote": "Less Sweating, More Learning!",
+      "footerQuote": "Stress less, Learn More!",
       "aboutTitle": "about studo",
       "selectTitle": "Products",
       "setTitle": "Sets",
@@ -87,8 +88,8 @@
       "AnywhereAnytime": "Study anywhere, anytime",
       "HeroSection": "Hero section",
       "NewStudyTool": "Your new study tool",
-      "Quote1": "Less Sweating,",
-      "Quote2": "More Learning",
+      "Quote1": "Stress Less,",
+      "Quote2": "Learn More",
       "Subtitle": "Free tools to study faster and smarter",
       "KeyFeatures": "What you can do with it",
       "CTA": "Call to action",

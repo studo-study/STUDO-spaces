@@ -66,6 +66,21 @@ export class ClassroomController {
     return this.classService.getAll();
   }
 
+  @ApiOperation({ summary: 'haal alle classroooms van een user op' })
+  @ApiResponse({
+    status: 200,
+    description: 'Alle classrooms opgehaald',
+    type: ClassroomListResponseDto,
+  })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.USER, Role.ADMIN)
+  @Get('user/:id')
+  async getUserClassrooms(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<ClassroomListResponseDto> {
+    return this.classService.getAllByUserId(id);
+  }
+
   //één specifieke classroom ophalen inclusief users en sets
   @ApiOperation({
     summary: 'Haal specifieke classroom op inclusief users en sets.',
