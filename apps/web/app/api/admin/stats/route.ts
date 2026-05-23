@@ -1,18 +1,12 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/admin-auth";
 
 export async function GET() {
-  const session = await auth();
-  if (!session?.accessToken) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
+  const { session, error } = await requireAdmin();
+  if (error) return error;
 
   const response = await fetch(`${process.env.AUTH_API_URL}/admin/stats`, {
-    headers: {
-      Authorization: `Bearer ${session.accessToken}`,
-    },
+    headers: { Authorization: `Bearer ${session!.accessToken}` },
   });
-  const data = await response.json();
-
-  return NextResponse.json(data, { status: response.status });
+  return NextResponse.json(await response.json(), { status: response.status });
 }

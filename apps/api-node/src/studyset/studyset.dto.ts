@@ -17,6 +17,16 @@ import {
   ValidateNested,
 } from 'class-validator';
 
+export class SaveToFolderDto {
+  @ApiProperty({
+    description: 'UUID van de doelfolder',
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    format: 'uuid',
+  })
+  @IsString({ name: 'folder_id', minLength: 20 })
+  folder_id: string;
+}
+
 export class CreateStudysetDto {
   @ApiProperty({
     example: 'Heart Diagram',

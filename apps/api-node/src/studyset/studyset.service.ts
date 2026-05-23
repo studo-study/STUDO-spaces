@@ -136,8 +136,8 @@ export class StudysetService {
         + 1`,
       })
       .where(eq(users.id, user_id));
-    for (const card of CARDS) {
-      await this.db.insert(cards).values(card);
+    if (CARDS.length > 0) {
+      await this.db.insert(cards).values(CARDS);
     }
     return { ...set, folder_id: data.folder_id ?? null };
   }
@@ -619,6 +619,47 @@ export class StudysetService {
     return this.getById(user_id, dto.set_id);
   }
 
+  async saveToFolder(
+    user_id: string,
+    set_id: string,
+    folder_id: string,
+  ): Promise<void> {
+    const existing = await this.db.query.folder_sets.findFirst({
+      where: and(
+        eq(folder_sets.user_id, user_id),
+        eq(folder_sets.set_id, set_id),
+        eq(folder_sets.set_type, 'studyset'),
+      ),
+    });
+
+    if (existing) {
+      await this.db
+        .update(folder_sets)
+        .set({ folder_id })
+        .where(eq(folder_sets.id, existing.id));
+    } else {
+      await this.db.insert(folder_sets).values({
+        id: uuidv6(),
+        user_id,
+        set_id,
+        set_type: 'studyset',
+        folder_id,
+      });
+    }
+  }
+
+  async removeFromFolder(user_id: string, set_id: string): Promise<void> {
+    await this.db
+      .delete(folder_sets)
+      .where(
+        and(
+          eq(folder_sets.user_id, user_id),
+          eq(folder_sets.set_id, set_id),
+          eq(folder_sets.set_type, 'studyset'),
+        ),
+      );
+  }
+
   async likeSet(user_id: string, set_id: string): Promise<SetLikeResponseDto> {
     const date = new Date();
     const like = {
@@ -692,24 +733,22 @@ export class StudysetService {
       where: eq(cards.set_id, set_id),
     });
 
-    const seshcards = await Promise.all(
-      kaartjes.map(async (kaart) => {
-        const created = {
-          id: uuidv4(),
-          number: kaart.number,
-          card_viewcount: 0,
-          card_total_viewcount: 0,
-          inQueue: false,
-          mastered: false,
-          times_relearned: 0,
-          card_id: kaart.id,
-          session_id: ssid,
-          owner_id: user_id,
-        };
-        await this.db.insert(sessioncards).values(created);
-        return created;
-      }),
-    );
+    const seshcards = kaartjes.map((kaart) => ({
+      id: uuidv4(),
+      number: kaart.number,
+      card_viewcount: 0,
+      card_total_viewcount: 0,
+      inQueue: false,
+      mastered: false,
+      times_relearned: 0,
+      card_id: kaart.id,
+      session_id: ssid,
+      owner_id: user_id,
+    }));
+
+    if (seshcards.length > 0) {
+      await this.db.insert(sessioncards).values(seshcards);
+    }
 
     return { ...session, cards: seshcards, pins: null };
   }

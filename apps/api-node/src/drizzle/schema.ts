@@ -281,7 +281,7 @@ export const sessioncards = pgTable('sessioncards', {
   mastered: boolean('mastered').notNull(),
   times_relearned: integer('times_relearned').notNull(),
   card_id: varchar('card_id', { length: 64 })
-    .references(() => cards.id, { onDelete: 'set null' })
+    .references(() => cards.id, { onDelete: 'cascade' })
     .notNull(),
   session_id: varchar('session_id', { length: 64 })
     .references(() => studysessions.id, { onDelete: 'cascade' })
@@ -557,6 +557,8 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   classroomactivities: many(classroomactivities),
   sessioncards: many(sessioncards),
   sessionpins: many(sessionpins),
+  flowboards: many(flowboards),
+  flowcourses: many(flowcourses),
 }));
 
 export const profilesRelations = relations(profiles, ({ one }) => ({
@@ -591,8 +593,6 @@ export const studysetsRelations = relations(studysets, ({ one, many }) => ({
     references: [users.id],
   }),
   cards: many(cards),
-  classroomactivities: many(classroomactivities),
-  studysessions: many(studysessions),
 }));
 
 export const visualsetsRelations = relations(visualsets, ({ one, many }) => ({
@@ -602,8 +602,6 @@ export const visualsetsRelations = relations(visualsets, ({ one, many }) => ({
   }),
   images: many(images),
   pins: many(pins),
-  classroomactivities: many(classroomactivities),
-  studysessions: many(studysessions),
 }));
 
 export const imagesRelations = relations(images, ({ one, many }) => ({
@@ -699,6 +697,7 @@ export const classroomsRelations = relations(classrooms, ({ one, many }) => ({
   classroomusers: many(classroomusers),
   classroomsets: many(classroomsets),
   classroomactivities: many(classroomactivities),
+  studoprofilecommunities: many(studoprofilecommunities),
 }));
 
 export const classroomusersRelations = relations(classroomusers, ({ one }) => ({
@@ -752,6 +751,10 @@ export const studocommunitiesRelations = relations(
       fields: [studoprofilecommunities.studoprofile_id],
       references: [studoprofiles.id],
     }),
+    classroom: one(classrooms, {
+      fields: [studoprofilecommunities.classroom_id],
+      references: [classrooms.id],
+    }),
   }),
 );
 
@@ -772,7 +775,7 @@ export const flowcoursesRelations = relations(flowcourses, ({ one, many }) => ({
   rows: many(flowrows),
 }));
 
-export const flowrowsRelations = relations(flowrows, ({ one }) => ({
+export const flowrowsRelations = relations(flowrows, ({ one, many }) => ({
   course: one(flowcourses, {
     fields: [flowrows.flowcourse_id],
     references: [flowcourses.id],
@@ -784,5 +787,13 @@ export const flowrowsRelations = relations(flowrows, ({ one }) => ({
   visualset: one(visualsets, {
     fields: [flowrows.visualset],
     references: [visualsets.id],
+  }),
+  resources: many(flowresources),
+}));
+
+export const flowresourcesRelations = relations(flowresources, ({ one }) => ({
+  row: one(flowrows, {
+    fields: [flowresources.row_id],
+    references: [flowrows.id],
   }),
 }));

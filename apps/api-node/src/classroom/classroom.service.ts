@@ -277,6 +277,17 @@ export class ClassroomService {
     return { classrooms: await this.db.query.classrooms.findMany() };
   }
 
+  async getAllByUserId(id: string): Promise<ClassroomListResponseDto> {
+    const rows = await this.db.query.classroomusers.findMany({
+      where: eq(classroomusers.user_id, id),
+      with: {
+        classroom: true,
+      },
+    });
+
+    return { classrooms: rows.map((r) => r.classroom) };
+  }
+
   async getById(id: string): Promise<FullClassroomResponseDto> {
     const classroom = await this.db.query.classrooms.findFirst({
       where: eq(classrooms.id, id),
