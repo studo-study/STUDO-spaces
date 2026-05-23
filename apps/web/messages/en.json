@@ -1472,5 +1472,16 @@
     "answer_with": "answer with",
     "shuffle": "shuffle",
     "reset": "reset"
+  },
+  "popup": {
+    "folders": {
+      "pop_title": "Add to folder",
+      "added_to_folder": "Added to",
+      "removed_from_folder": "Removed from"
+    },
+    "share": {
+      "pop_title": "Share set",
+      "copy_message": "Added to clipboard"
+    }
   }
 }

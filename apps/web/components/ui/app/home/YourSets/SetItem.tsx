@@ -36,7 +36,7 @@ const HomePageSetItem = (props: SetItemProps) => {
         </span>
       </div>
       <div className={"flex flex-row gap-2 w-1/3"}>
-        <SmallProgress progress={item.progress} length={item.length} />
+        <SmallProgress progress={0} length={item.length} />
       </div>
     </Link>
   );

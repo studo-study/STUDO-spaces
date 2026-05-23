@@ -76,14 +76,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // JWT CALLBACK
     // ========================================
     jwt: async ({ token, user, account, profile }) => {
-      console.log("🔍 JWT callback:", {
-        hasUser: !!user,
-        provider: account?.provider,
-        tokenEmail: token.email,
-        tokenName: token.name,
-        profile: profile,
-      });
-
       // Check of de backend JWT token verlopen is (enkel als er geen nieuwe login is)
       if (!user && token.accessToken) {
         try {
@@ -164,8 +156,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       if (account?.provider === "google") {
-        console.log("🔍 Google profile:", JSON.stringify(profile));
-        console.log("🔍 Google token:", JSON.stringify(token));
         try {
           const res = await fetch(
             `${process.env.AUTH_API_URL}/sessions/social-login`,
