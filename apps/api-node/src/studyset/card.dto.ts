@@ -15,7 +15,7 @@ export class CreateCardDto {
     example: 'Photosynthesis',
     description: 'Term van de kaart',
   })
-  @IsString({ name: 'term', maxLength: 128 })
+  @IsString({ name: 'term', maxLength: 512 })
   @IsNotEmpty()
   term: string;
 
@@ -24,7 +24,7 @@ export class CreateCardDto {
       'Process by which plants convert light energy into chemical energy',
     description: 'Definitie van de kaart',
   })
-  @IsString({ name: 'definition', maxLength: 128 })
+  @IsString({ name: 'definition', maxLength: 512 })
   @IsNotEmpty()
   definition: string;
 

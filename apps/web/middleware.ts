@@ -118,6 +118,19 @@ export default auth((request) => {
       pathWithoutLocale === route || pathWithoutLocale.startsWith(route + "/"),
   );
 
+  // ========================================
+  // TOKEN VERLOPEN → uitloggen
+  // ========================================
+  if (
+    (request.auth as { error?: string } | null)?.error === "AccessTokenExpired"
+  ) {
+    const loginUrl = new URL(`/${locale}/login`, request.url);
+    const response = NextResponse.redirect(loginUrl);
+    response.cookies.delete("authjs.session-token");
+    response.cookies.delete("__Secure-authjs.session-token");
+    return response;
+  }
+
   const isAdminRoute = pathWithoutLocale.startsWith("/admin");
 
   if (isAdminRoute) {

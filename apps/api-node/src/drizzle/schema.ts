@@ -231,8 +231,8 @@ export const pins = pgTable('pins', {
 
 export const cards = pgTable('cards', {
   id: varchar('id', { length: 64 }).primaryKey(),
-  term: varchar('term', { length: 128 }).notNull(),
-  definition: varchar('definition', { length: 128 }).notNull(),
+  term: varchar('term', { length: 512 }).notNull(),
+  definition: varchar('definition', { length: 512 }).notNull(),
   number: integer('number').notNull(),
   created_at: varchar('created_at', { length: 24 }).notNull(),
   updated_at: varchar('updated_at', { length: 24 }).notNull(),

@@ -148,7 +148,7 @@ function Card({ card }: CardProps) {
         </div>
         <div
           className={
-            "side-b backface-hidden top-0 left-0 absolute  w-full cursor-pointer h-full flex items-center justify-center rounded-3xl border hover:border-studoborder transition-all duration-300 border-studoborder/30 bg-studogrey/30 "
+            "side-b backface-hidden px-10 top-0 left-0 absolute  w-full cursor-pointer h-full flex items-center justify-center rounded-3xl border hover:border-studoborder transition-all duration-300 border-studoborder/30 bg-studogrey/30 "
           }
         >
           <span
@@ -158,7 +158,13 @@ function Card({ card }: CardProps) {
           >
             {t("Definition")}
           </span>
-          <span className={"text-xl select-none"}>{card.definition}</span>
+          <span
+            className={
+              "block text-xl text-center text-balance leading-relaxed select-none"
+            }
+          >
+            {card.definition}
+          </span>
         </div>
       </div>
     </div>

@@ -42,7 +42,7 @@ export function Progress({ length, progress, height = 56 }: ProgressProps) {
           strokeWidth="10"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className={`transition-all duration-500 ease-out ${getStrokeColor({ prog })}`}
+          className={`transition-all ${progress == 0 && "opacity-0"} duration-500 ease-out ${getStrokeColor({ prog })}`}
           style={{
             transform: "rotate(-90deg)",
             transformOrigin: "50% 50%",

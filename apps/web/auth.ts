@@ -76,13 +76,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // JWT CALLBACK
     // ========================================
     jwt: async ({ token, user, account, profile }) => {
-      console.log("🔍 JWT callback:", {
-        hasUser: !!user,
-        provider: account?.provider,
-        tokenEmail: token.email,
-        tokenName: token.name,
-        profile: profile,
-      });
+      // Check of de backend JWT token verlopen is (enkel als er geen nieuwe login is)
+      if (!user && token.accessToken) {
+        try {
+          const payload = JSON.parse(
+            Buffer.from(
+              (token.accessToken as string).split(".")[1],
+              "base64",
+            ).toString(),
+          );
+          if (Date.now() >= payload.exp * 1000) {
+            return { ...token, error: "AccessTokenExpired" as const };
+          }
+        } catch {
+          return { ...token, error: "AccessTokenExpired" as const };
+        }
+      }
 
       // Bij CREDENTIALS login (bestaande flow)
       if (user && account?.provider === "credentials") {
@@ -147,8 +156,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       if (account?.provider === "google") {
-        console.log("🔍 Google profile:", JSON.stringify(profile));
-        console.log("🔍 Google token:", JSON.stringify(token));
         try {
           const res = await fetch(
             `${process.env.AUTH_API_URL}/sessions/social-login`,
@@ -183,6 +190,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         ...session,
         user: token.user,
         accessToken: token.accessToken,
+        error: token.error,
       };
     },
   },

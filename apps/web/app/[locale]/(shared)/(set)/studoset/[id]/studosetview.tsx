@@ -35,6 +35,7 @@ export default function StudosetView({ id }: viewProps) {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
 
+  console.log(data);
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
   const liked = useMemo(
@@ -98,12 +99,14 @@ export default function StudosetView({ id }: viewProps) {
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
-        <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
-          <IoFolderOpenOutline />
-          <span>
-            {t("saved_in")}: {data?.folders?.[0]?.name}
-          </span>
-        </div>
+        {data?.folder_id && (
+          <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
+            <IoFolderOpenOutline />
+            <span>
+              {t("saved_in")}: {data?.folders?.[0]?.name}
+            </span>
+          </div>
+        )}
         {data?.classrooms?.[0] && (
           <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
             <Image
