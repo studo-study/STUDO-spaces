@@ -91,7 +91,7 @@ export default function StudosetView({ id }: viewProps) {
           {(data && data.title) || t("set_title")}
         </span>
         <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
-          <SavedPopup />
+          <SavedPopup setId={id} />
           <ClassroomPopup />
           <SharePopup />
           <SettingsPopup />

@@ -988,7 +988,9 @@
     "def_lang_error": "selecteer een taal",
     "card_error": "er zijn lege kaarten",
     "saving": "Opslaan...",
-    "submit_error": "Er is iets misgegaan, probeer opnieuw"
+    "submit_error": "Er is iets misgegaan, probeer opnieuw",
+    "draft": "(draft)",
+    "delete_draft": "Verwijder Draft"
   },
   "createvisualset": {
     "title": "Creëer nieuwe Visualset",

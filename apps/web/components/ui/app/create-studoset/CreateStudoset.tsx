@@ -22,6 +22,17 @@ const LANGUAGES = [
   { code: "es", name: "Spanish" },
 ];
 
+const DRAFT_KEY = "create-studoset-draft";
+
+type Draft = {
+  title: string;
+  course: string;
+  folder_id: string;
+  termLang: string;
+  defLang: string;
+  cardArray: CardData[];
+};
+
 const firstCard = (): CardData => ({
   id: crypto.randomUUID(),
   index: 0,
@@ -38,7 +49,20 @@ export default function CreateStudosetForm() {
   const mutation = useCreateStudyset();
   const toast = useToast();
   const folders = useFolders().data?.folders ?? [];
-  const [cardArray, setCardArray] = useState<CardData[]>([firstCard()]);
+
+  const savedDraft = (): Draft | null => {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const [hasDraft, setHasDraft] = useState(() => !!savedDraft());
+  const [cardArray, setCardArray] = useState<CardData[]>(
+    () => savedDraft()?.cardArray ?? [firstCard()],
+  );
 
   const titleRef = useRef<HTMLInputElement>(null);
   const courseRef = useRef<HTMLInputElement>(null);
@@ -47,6 +71,54 @@ export default function CreateStudosetForm() {
   const defLangRef = useRef<HTMLSelectElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
+  const saveDraft = () => {
+    const d: Draft = {
+      title: titleRef.current?.value ?? "",
+      course: courseRef.current?.value ?? "",
+      folder_id: folderRef.current?.value ?? "",
+      termLang: termLangRef.current?.value ?? "",
+      defLang: defLangRef.current?.value ?? "",
+      cardArray,
+    };
+    const hasContent =
+      d.title.trim() !== "" ||
+      d.course.trim() !== "" ||
+      d.cardArray.some(
+        (c) => c.term.trim() !== "" || c.definition.trim() !== "",
+      );
+    if (hasContent) {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+      setHasDraft(true);
+    }
+  };
+
+  // Restore ref-based fields from draft on mount
+  useEffect(() => {
+    const d = savedDraft();
+    if (!d) return;
+    if (titleRef.current) titleRef.current.value = d.title;
+    if (courseRef.current) courseRef.current.value = d.course;
+    if (folderRef.current) folderRef.current.value = d.folder_id;
+    if (termLangRef.current) termLangRef.current.value = d.termLang;
+    if (defLangRef.current) defLangRef.current.value = d.defLang;
+  }, []);
+
+  // Save draft whenever cardArray changes
+  useEffect(() => {
+    saveDraft();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardArray]);
+
+  const deleteDraft = () => {
+    localStorage.removeItem(DRAFT_KEY);
+    setHasDraft(false);
+    setCardArray([firstCard()]);
+    if (titleRef.current) titleRef.current.value = "";
+    if (courseRef.current) courseRef.current.value = "";
+    if (folderRef.current) folderRef.current.value = "";
+    if (termLangRef.current) termLangRef.current.value = "";
+    if (defLangRef.current) defLangRef.current.value = "";
+  };
   const validate = (): boolean => {
     const title = titleRef.current?.value?.trim();
     const course = courseRef.current?.value?.trim();
@@ -107,6 +179,8 @@ export default function CreateStudosetForm() {
 
     try {
       const data = await mutation.mutateAsync(body);
+      localStorage.removeItem(DRAFT_KEY);
+      setHasDraft(false);
       router.push(`/studoset/${data.id}`);
     } catch {
       toast.error(t("submit_error"));
@@ -216,9 +290,12 @@ export default function CreateStudosetForm() {
         data-cy="studyset_form"
       >
         <div className="flex w-full flex-col items-center justify-center gap-3">
-          <span className="w-full text-2xl sm:text-3xl flex flex-col justify-center items-baseline text-studodarkblue font-bold dark:text-white">
+          <div className="w-full text-2xl sm:text-3xl flex flex-row gap-2 items-end text-studodarkblue font-bold dark:text-white">
             {t("title")}
-          </span>
+            <span className={"text-lg opacity-50"}>
+              {hasDraft && t("draft")}
+            </span>
+          </div>
 
           <div className="w-full gap-3 sm:gap-4 md:gap-5 flex-col flex">
             <div className="flex flex-col gap-1">
@@ -227,6 +304,7 @@ export default function CreateStudosetForm() {
                 variant={"cardInput"}
                 placeholder={t("title_placeholder")}
                 data-cy="title_input"
+                onChange={saveDraft}
               />
             </div>
 
@@ -237,6 +315,7 @@ export default function CreateStudosetForm() {
                   variant={"cardInput"}
                   placeholder={t("course_placeholder")}
                   data-cy="course_input"
+                  onChange={saveDraft}
                 />
               </div>
 
@@ -245,6 +324,7 @@ export default function CreateStudosetForm() {
                   ref={folderRef}
                   className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
                   data-cy="folder_select"
+                  onChange={saveDraft}
                 >
                   <option value="">{t("folder_placeholder")}</option>
                   {folders?.map((item) => (
@@ -262,6 +342,7 @@ export default function CreateStudosetForm() {
                   ref={termLangRef}
                   className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
                   data-cy="term_language_select"
+                  onChange={saveDraft}
                 >
                   <option value="">{t("term_language")}</option>
                   {LANGUAGES.map((lang) => (
@@ -277,6 +358,7 @@ export default function CreateStudosetForm() {
                   ref={defLangRef}
                   className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
                   data-cy="definition_language_select"
+                  onChange={saveDraft}
                 >
                   <option value="">{t("def_language")}</option>
                   {LANGUAGES.map((lang) => (
@@ -291,15 +373,29 @@ export default function CreateStudosetForm() {
 
           <div className="w-full h-fit flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between items-stretch sm:items-end mt-4">
             <ImportButton setShowImporter={setShowImporter} />
-            <BaseButton
-              type="submit"
-              disabled={mutation.isPending}
-              variant={"submit"}
-              textSize={"sm"}
-              data-cy="submit_studyset_top"
-              className={"max-h-10"}
-              label={mutation.isPending ? t("saving") : t("create")}
-            />
+            <div className={"w-fit flex flex-row gap-2 items-center"}>
+              {hasDraft && (
+                <BaseButton
+                  type="button"
+                  disabled={mutation.isPending}
+                  variant={"danger"}
+                  textSize={"sm"}
+                  data-cy="submit_studyset_top"
+                  className={"max-h-10"}
+                  onClick={deleteDraft}
+                  label={t("delete_draft")}
+                />
+              )}
+              <BaseButton
+                type="submit"
+                disabled={mutation.isPending}
+                variant={"submit"}
+                textSize={"sm"}
+                data-cy="submit_studyset_top"
+                className={"max-h-10"}
+                label={mutation.isPending ? t("saving") : t("create")}
+              />
+            </div>
           </div>
 
           <div

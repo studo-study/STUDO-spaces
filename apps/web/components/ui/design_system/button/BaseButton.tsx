@@ -49,8 +49,10 @@ const sizeMap = {
 } as const;
 
 const variantMap = {
-  primary: "bg-rose-600 text-white",
-  secondary: "bg-blue-600 text-white",
+  primary:
+    "bg-emerald-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
+  danger:
+    "bg-rose-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
   outline: "border border-gray-300 text-black dark:text-white",
   outline_link:
     "border border-studoborder dark:bg-studogrey/30 text-studodarkblue dark:text-white w-full",

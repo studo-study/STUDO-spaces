@@ -988,7 +988,9 @@
     "def_lang_error": "select a language",
     "card_error": "there are empty cards",
     "saving": "Saving...",
-    "submit_error": "Something went wrong, please try again"
+    "submit_error": "Something went wrong, please try again",
+    "draft": "(draft)",
+    "delete_draft": "Verwijder Draft"
   },
   "createvisualset": {
     "title": "Create new Visualset",

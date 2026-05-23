@@ -619,6 +619,47 @@ export class StudysetService {
     return this.getById(user_id, dto.set_id);
   }
 
+  async saveToFolder(
+    user_id: string,
+    set_id: string,
+    folder_id: string,
+  ): Promise<void> {
+    const existing = await this.db.query.folder_sets.findFirst({
+      where: and(
+        eq(folder_sets.user_id, user_id),
+        eq(folder_sets.set_id, set_id),
+        eq(folder_sets.set_type, 'studyset'),
+      ),
+    });
+
+    if (existing) {
+      await this.db
+        .update(folder_sets)
+        .set({ folder_id })
+        .where(eq(folder_sets.id, existing.id));
+    } else {
+      await this.db.insert(folder_sets).values({
+        id: uuidv6(),
+        user_id,
+        set_id,
+        set_type: 'studyset',
+        folder_id,
+      });
+    }
+  }
+
+  async removeFromFolder(user_id: string, set_id: string): Promise<void> {
+    await this.db
+      .delete(folder_sets)
+      .where(
+        and(
+          eq(folder_sets.user_id, user_id),
+          eq(folder_sets.set_id, set_id),
+          eq(folder_sets.set_type, 'studyset'),
+        ),
+      );
+  }
+
   async likeSet(user_id: string, set_id: string): Promise<SetLikeResponseDto> {
     const date = new Date();
     const like = {

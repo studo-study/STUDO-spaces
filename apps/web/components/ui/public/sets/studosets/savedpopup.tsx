@@ -3,29 +3,32 @@ import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
 import { useFolders } from "@/hooks/app/folders/useFolders";
 import { useTranslations } from "next-intl";
 import { FaCheck } from "react-icons/fa6";
-import { useState } from "react";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { useToast } from "@/components/providers/app/ToastProvider";
+import { useStudoset } from "@/hooks/app/sets/useStudoset";
+import { useSaveStudoset } from "@/hooks/app/sets/useSaveStudoset";
 
-export default function SavedPopup() {
+interface SavedPopupProps {
+  setId: string;
+}
+
+export default function SavedPopup({ setId }: SavedPopupProps) {
   const folders = useFolders().data?.folders;
-  const [saved, setSaved] = useState<string>("");
+  const { data } = useStudoset(setId);
+  const { save, remove } = useSaveStudoset(setId);
   const toast = useToast();
   const t = useTranslations("popup.folders");
 
-  const toggleSave = (id: string, name: string) => {
-    if (id === saved) removeFromFolder();
-    else addToFolder(id, name);
-  };
+  const saved = data?.folder_id ?? null;
 
-  const addToFolder = (id: string, name: string) => {
-    if (saved) removeFromFolder();
-    setSaved(id);
-    toast.success(t("added_to_folder") + " " + name);
-  };
-
-  const removeFromFolder = () => {
-    setSaved("");
+  const toggleSave = (folderId: string, name: string) => {
+    if (folderId === saved) {
+      remove.mutate(undefined);
+    } else {
+      save.mutate(folderId, {
+        onSuccess: () => toast.success(t("added_to_folder") + " " + name),
+      });
+    }
   };
 
   if (!folders) return null;

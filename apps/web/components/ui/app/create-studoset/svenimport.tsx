@@ -63,6 +63,8 @@ export default function SvenImport({
         body: formData,
       });
       const data = await res.json();
+      if (!res.ok)
+        throw new Error(data?.message ?? `Server error ${res.status}`);
       const cards = data.map((card: Partial<CardData>, index: number) => ({
         ...card,
         id: crypto.randomUUID(),
