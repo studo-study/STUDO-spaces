@@ -66,7 +66,7 @@ const LastTenItem = (props: LastTenItemProps) => {
         <div
           className={"w-1/3 flex flex-col gap-2 items-center justify-center"}
         >
-          <Progress height={80} length={data.length} progress={data.progress} />
+          <Progress height={80} length={10} progress={0} />
         </div>
       </div>
     </Container>
