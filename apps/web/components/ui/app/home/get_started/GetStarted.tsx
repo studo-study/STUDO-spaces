@@ -45,7 +45,7 @@ const GetStarted = () => {
               }
             />
           </Link>
-
+          {/*
           <Link
             href={"/create-visualset"}
             className={"min-w-full h-full flex items-center justify-center"}
@@ -65,7 +65,7 @@ const GetStarted = () => {
                 />
               }
             />
-          </Link>
+          </Link>*/}
         </div>
       </Container>
     </section>

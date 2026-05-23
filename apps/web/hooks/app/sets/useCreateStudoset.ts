@@ -11,7 +11,10 @@ export function useCreateStudyset() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      }).then((r) => r.json()),
+      }).then((r) => {
+        if (!r.ok) throw new Error("Failed to create studyset");
+        return r.json();
+      }),
 
     onSuccess: (newSet) => {
       queryClient.setQueryData(

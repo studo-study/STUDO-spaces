@@ -31,12 +31,14 @@ export default function CTABlock() {
           >
             <GoPlus /> {t("create_ss")}
           </Link>
-          <Link
-            href="/create-visualset"
-            className="px-5 py-2.5 min-w-30 rounded-full text-sm bg-blue-500 font-bold  text-white hover:opacity-90 transition-opacity flex items-center gap-2"
-          >
-            <GoPlus /> {t("create_vs")}
-          </Link>
+          {/*
+            <Link
+              href="/create-visualset"
+              className="px-5 py-2.5 min-w-30 rounded-full text-sm bg-blue-500 font-bold  text-white hover:opacity-90 transition-opacity flex items-center gap-2"
+            >
+              <GoPlus /> {t("create_vs")}
+            </Link>
+          */}
         </div>
       </div>
     </div>

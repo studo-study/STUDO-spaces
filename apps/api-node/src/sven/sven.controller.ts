@@ -49,7 +49,7 @@ export class SvenController {
         fileSize: 10 * 1024 * 1024, // 10MB per file
       },
       fileFilter: (req, file, cb) => {
-        if (!file.mimetype.match(/\/(jpg|jpeg|heic|png|gif|webpipe|pdf)$/)) {
+        if (!file.mimetype.match(/\/(jpg|jpeg|heic|png|gif|webp|pdf)$/)) {
           return cb(new Error('This file is not allowed!'), false);
         }
         cb(null, true);

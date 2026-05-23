@@ -62,7 +62,13 @@ export class SvenService {
   async uploadImage(
     file: Express.Multer.File,
   ): Promise<ImageImportResponseDTO[]> {
-    const model = this.genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    const model = this.genAI.getGenerativeModel({
+      model: 'gemini-2.5-flash',
+      generationConfig: {
+        // @ts-expect-error thinkingConfig is not yet in the type definitions
+        thinkingConfig: { thinkingBudget: 0 },
+      },
+    });
 
     const imagePart = {
       inlineData: {

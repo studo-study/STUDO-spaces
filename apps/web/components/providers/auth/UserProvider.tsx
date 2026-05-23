@@ -1,6 +1,6 @@
 "use client";
-import { createContext, useContext, ReactNode } from "react";
-import { useSession } from "next-auth/react";
+import { createContext, useContext, ReactNode, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
 
 interface UserContextType {
@@ -17,6 +17,14 @@ const UserContext = createContext<UserContextType>({
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (
+      (session as { error?: string } | null)?.error === "AccessTokenExpired"
+    ) {
+      signOut({ callbackUrl: "/login" });
+    }
+  }, [session]);
 
   const user = session?.user ?? null;
   const isModerator =

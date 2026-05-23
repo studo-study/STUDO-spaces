@@ -28,6 +28,7 @@ declare module "next-auth" {
   interface Session {
     user: StudoUser;
     accessToken: string;
+    error?: "AccessTokenExpired";
   }
 
   interface User extends StudoUser {
@@ -39,5 +40,6 @@ declare module "next-auth/jwt" {
   interface JWT {
     accessToken: string;
     user: StudoUser;
+    error?: "AccessTokenExpired";
   }
 }
