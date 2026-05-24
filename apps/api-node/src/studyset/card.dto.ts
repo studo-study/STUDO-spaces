@@ -46,12 +46,12 @@ export class CreateCardDto {
   @IsNotEmpty()
   number: number;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: false,
     description: 'boolean die aantoont of term LaTeX is van een kaart',
   })
-  @IsNotEmpty()
-  term_is_latex: boolean;
+  @IsOptional()
+  term_is_latex?: boolean;
 }
 
 export class CreateCardListDto {

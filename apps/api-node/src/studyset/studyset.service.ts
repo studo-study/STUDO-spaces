@@ -113,7 +113,7 @@ export class StudysetService {
         times_relearned: 0,
         set_id: setId,
         owner_id: user_id,
-        term_is_latex: c.term_is_latex,
+        term_is_latex: c.term_is_latex ?? false,
       };
       CARDS.push(card);
     });
@@ -172,7 +172,7 @@ export class StudysetService {
       times_relearned: 0,
       set_id,
       owner_id: user_id,
-      term_is_latex: data.term_is_latex,
+      term_is_latex: data.term_is_latex ?? false,
     };
 
     await this.db.insert(cards).values(card);
