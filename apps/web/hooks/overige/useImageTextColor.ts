@@ -41,7 +41,7 @@ export function useImageTextColor(src: string, area: Options) {
       img.removeEventListener("load", handleLoad);
       fac.destroy();
     };
-  }, [src, area.left, area.top, area.width, area.height]);
+  }, [src, area.left, area.top, area.width, area.height, area]);
 
   return isDark;
 }

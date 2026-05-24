@@ -20,6 +20,12 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
   const pf = profile.profile;
   const bannerSrc = pf.banner_url || FALLBACK_BANNER;
   const t = useTranslations("account");
+  const isDark = useImageTextColor(bannerSrc, {
+    left: 100,
+    top: 30,
+    width: 200,
+    height: 50,
+  });
 
   if (!pf.banner_url) {
     return (
@@ -49,12 +55,6 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
       </div>
     );
   }
-  const isDark = useImageTextColor(bannerSrc, {
-    left: 100,
-    top: 30,
-    width: 200,
-    height: 50,
-  });
 
   return (
     <div className={"w-full h-50 relative flex"}>

@@ -445,15 +445,6 @@ export default function CreateStudosetForm() {
                   label={t("delete_draft")}
                 />
               )}
-              <BaseButton
-                type="submit"
-                disabled={mutation.isPending}
-                variant={"submit"}
-                textSize={"sm"}
-                data-cy="submit_studyset_top"
-                className={"max-h-10"}
-                label={mutation.isPending ? t("saving") : t("create")}
-              />
             </div>
           </div>
 
@@ -483,7 +474,7 @@ export default function CreateStudosetForm() {
 
           <div className="flex w-full mb-3 sm:mb-4 md:mb-5 group relative">
             <BaseButton
-              onClick={() => addCard}
+              onClick={() => addCard()}
               type="button"
               className="w-full"
               variant={"approve"}

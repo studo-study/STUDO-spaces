@@ -3,9 +3,11 @@ import ProfileHeader from "@/components/ui/public/profile/ProfileHeader";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import { useProfile } from "@/hooks/app/profile/useProfiles";
 import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
-import { RiAiGenerate } from "react-icons/ri";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import Image from "next/image";
+import { Link } from "@/i18n/routing";
+import { StudysetResponse, VisualsetResponse } from "@studo/types";
 
 interface viewProps {
   id: string;
@@ -43,11 +45,78 @@ export default function ProfileView({ id }: viewProps) {
           />
         </div>
         {tab === "ss" ? (
-          <div className={"w-full h-fit flex flex-col"}></div>
+          <div className={"w-full h-fit flex flex-col mt-5 gap-3"}>
+            {profile.studysets.map((set, i) => (
+              <StudosetItem item={set} key={i} />
+            ))}
+          </div>
         ) : (
-          <div className={"w-full h-fit flex flex-col"}></div>
+          <div className={"w-full h-fit flex flex-col mt-5 gap-3"}>
+            {profile.visualsets.map((set, i) => (
+              <VisualsetItem item={set} key={i} />
+            ))}
+          </div>
         )}
       </div>
     </PageContainer>
   );
 }
+
+interface StudosetItemProps {
+  item: StudysetResponse;
+}
+const StudosetItem = ({ item }: StudosetItemProps) => {
+  return (
+    <Link
+      href={"/studoset/" + item.id}
+      className={
+        "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
+      }
+    >
+      <div className={"flex flex-row gap-2"}>
+        <Image
+          alt="settype"
+          src={"/icons/studyset.svg"}
+          width={5}
+          height={5}
+          className={"w-4 dark:invert dark:brightness-0"}
+        />
+        <div>
+          <span className={"font-bold dark:text-white text-studodarkblue"}>
+            {item.title}
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+interface VisualsetItemProps {
+  item: VisualsetResponse;
+}
+
+const VisualsetItem = ({ item }: VisualsetItemProps) => {
+  return (
+    <Link
+      href={"/visualset/" + item.id}
+      className={
+        "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
+      }
+    >
+      <div className={"flex flex-row gap-2"}>
+        <Image
+          alt="settype"
+          src={"/icons/visualset.svg"}
+          width={5}
+          height={5}
+          className={"w-4 dark:invert dark:brightness-0"}
+        />
+        <div>
+          <span className={"font-bold dark:text-white text-studodarkblue"}>
+            {item.title}
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+};

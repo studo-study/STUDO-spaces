@@ -84,7 +84,7 @@ const BaseTooltip = ({
           <div
             role="tooltip"
             className={`fixed z-[9999] whitespace-nowrap rounded-full border border-studoborder/30
-              bg-black/50 px-3 py-1.5 text-sm font-medium text-white shadow-lg
+              bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg
               pointer-events-none backdrop-blur-sm
               transition-all duration-150 ease-out
               ${visible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
@@ -99,7 +99,7 @@ const BaseTooltip = ({
           >
             {content}
             <span
-              className={`absolute h-2 w-2 rotate-45 bg-black/50
+              className={`absolute h-2 w-2 rotate-45 bg-zinc-900
                 border-studoborder/30 ${arrowMap[position]}`}
             />
           </div>,

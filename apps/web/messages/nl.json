@@ -1489,5 +1489,9 @@
   "profile": {
     "ss": "Studosets",
     "vs": "Visualsets"
+  },
+  "offline": {
+    "offline": "Je bent offline",
+    "progress_explanation": "Progressie wordt niet opgeslagen"
   }
 }

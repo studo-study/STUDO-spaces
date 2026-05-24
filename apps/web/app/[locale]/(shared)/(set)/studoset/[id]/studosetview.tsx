@@ -27,8 +27,6 @@ interface viewProps {
 export default function StudosetView({ id }: viewProps) {
   const t = useTranslations("studoset");
   const userId = useUser().user?.id;
-  const speedy = false;
-  const learn = false;
   const { setLoaded } = useSplash();
   const { data } = useStudoset(id);
   useEffect(() => {
