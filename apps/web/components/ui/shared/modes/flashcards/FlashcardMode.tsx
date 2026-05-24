@@ -12,6 +12,9 @@ import { GrPowerReset } from "react-icons/gr";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useRouter } from "@/i18n/routing";
 import { TbClick } from "react-icons/tb";
+import katex from "katex";
+import "katex/dist/katex.min.css";
+import "katex/dist/contrib/mhchem.mjs";
 
 interface Card {
   id: string;
@@ -22,6 +25,7 @@ interface Card {
   updated_at: string;
   set_id: string;
   owner_id: string;
+  term_is_latex: boolean;
 }
 
 interface FlashcardProps {
@@ -254,8 +258,12 @@ function Card({ card, termMode }: CardProps) {
             {t("click_turn")}
           </span>
           {termMode ? (
-            <span className="text-lg sm:text-xl md:text-2xl font-georgia text-center select-none font-bold px-4">
-              {card.term}
+            <span className="text-xl select-none font-bold font-georgia">
+              {card.term_is_latex ? (
+                <SafeKaTeX value={card.term} fallback={card.term} />
+              ) : (
+                card.term
+              )}
             </span>
           ) : (
             <span className="block text-base sm:text-lg md:text-xl text-center text-balance leading-relaxed select-none px-4">
@@ -273,8 +281,12 @@ function Card({ card, termMode }: CardProps) {
               {card.definition}
             </span>
           ) : (
-            <span className="text-lg sm:text-xl md:text-2xl text-center select-none font-bold px-4">
-              {card.term}
+            <span className="text-xl select-none font-bold font-georgia">
+              {card.term_is_latex ? (
+                <SafeKaTeX value={card.term} fallback={card.term} />
+              ) : (
+                card.term
+              )}
             </span>
           )}
           <span
@@ -304,3 +316,12 @@ function shuffle(array: Card[]): Card[] {
   }
   return arr;
 }
+
+const SafeKaTeX = ({ value }: { value: string; fallback: string }) => {
+  const html = useMemo(
+    () =>
+      katex.renderToString(value, { throwOnError: false, displayMode: false }),
+    [value],
+  );
+  return <span dangerouslySetInnerHTML={{ __html: html }} />;
+};

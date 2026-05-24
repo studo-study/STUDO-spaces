@@ -333,6 +333,7 @@ export async function seedStudo(
         term: 'Mitochondria',
         definition: 'The powerhouse of the cell',
         number: 1,
+        term_is_latex: false,
         created_at: '2024-09-01T10:15:00.000Z',
         updated_at: '2024-09-01T10:15:00.000Z',
         set_id: studySetId1,
@@ -343,6 +344,7 @@ export async function seedStudo(
         term: 'Nucleus',
         definition: 'Contains genetic material (DNA)',
         number: 2,
+        term_is_latex: false,
         created_at: '2024-09-01T10:20:00.000Z',
         updated_at: '2024-09-01T10:20:00.000Z',
         set_id: studySetId1,
@@ -354,6 +356,7 @@ export async function seedStudo(
         definition:
           'A data structure that stores elements in contiguous memory',
         number: 1,
+        term_is_latex: false,
         created_at: '2024-08-15T09:15:00.000Z',
         updated_at: '2024-08-15T09:15:00.000Z',
         set_id: studySetId2,
@@ -365,6 +368,7 @@ export async function seedStudo(
         definition:
           'A linear data structure where elements are linked using pointers',
         number: 2,
+        term_is_latex: false,
         created_at: '2024-08-15T09:20:00.000Z',
         updated_at: '2024-08-15T09:20:00.000Z',
         set_id: studySetId2,

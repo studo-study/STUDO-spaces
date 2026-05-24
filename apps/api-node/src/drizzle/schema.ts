@@ -242,6 +242,7 @@ export const cards = pgTable('cards', {
   owner_id: varchar('owner_id', { length: 64 })
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
+  term_is_latex: boolean('term_is_latex').notNull(),
 });
 
 export const setlikes = pgTable('setlikes', {

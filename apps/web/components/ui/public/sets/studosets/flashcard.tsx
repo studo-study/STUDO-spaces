@@ -1,6 +1,6 @@
 "use client";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "animate.css";
 import { IoShuffleOutline } from "react-icons/io5";
 import { RxEnterFullScreen } from "react-icons/rx";
@@ -9,6 +9,9 @@ import { useTranslations } from "next-intl";
 import ProgressBar from "@/components/ui/public/profile/(modes)/learn/progressbar";
 import { TbClick } from "react-icons/tb";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
+import katex from "katex";
+import "katex/dist/katex.min.css";
+import "katex/dist/contrib/mhchem.mjs";
 
 interface Card {
   id: string;
@@ -19,6 +22,7 @@ interface Card {
   updated_at: string;
   set_id: string;
   owner_id: string;
+  term_is_latex: boolean;
 }
 
 interface FlashcardProps {
@@ -192,7 +196,11 @@ function Card({ card, shuffleMode, toggleShuffle, id }: CardProps) {
             {t("Term")}
           </span>
           <span className="text-xl select-none font-bold font-georgia">
-            {card.term}
+            {card.term_is_latex ? (
+              <SafeKaTeX value={card.term} fallback={card.term} />
+            ) : (
+              card.term
+            )}
           </span>
           <span
             className={
@@ -295,3 +303,12 @@ function shuffle(array: Card[]): Card[] {
   }
   return arr;
 }
+
+const SafeKaTeX = ({ value }: { value: string; fallback: string }) => {
+  const html = useMemo(
+    () =>
+      katex.renderToString(value, { throwOnError: false, displayMode: false }),
+    [value],
+  );
+  return <span dangerouslySetInnerHTML={{ __html: html }} />;
+};

@@ -1,9 +1,11 @@
 "use client";
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState } from "react";
 import { MdCheck, MdEdit } from "react-icons/md";
 import { Card } from "@/types/types";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useToast } from "@/components/providers/app/ToastProvider";
+import LaTeXInput from "@/components/ui/design_system/input/LaTeXInput";
+import SafeKaTeX from "@/components/ui/design_system/input/SafeKaTeX";
 
 interface CarditemProps {
   index: number;
@@ -30,34 +32,39 @@ export default function CardItem({
   } = useStudosetStore();
 
   const toast = useToast();
-  const termRef = useRef<HTMLInputElement>(null);
-  const definitionRef = useRef<HTMLInputElement>(null);
   const blurTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const currentCard = studosetCards.find((c) => c.id === card.id) ?? card;
   const isEditing = editingCardId === card.id;
   const isSaving = savingCardIds.includes(card.id);
 
+  const [editTerm, setEditTerm] = useState(currentCard.term);
+  const [editDefinition, setEditDefinition] = useState(currentCard.definition);
+  const [isLatex, setIsLatex] = useState(currentCard.term_is_latex);
+
   const enterEdit = () => {
+    setEditTerm(currentCard.term);
+    setEditDefinition(currentCard.definition);
+    setIsLatex(currentCard.term_is_latex);
     setEditingCardId(card.id);
-    requestAnimationFrame(() => termRef.current?.focus());
   };
 
   const save = useCallback(async () => {
-    const term = termRef.current?.value?.trim() ?? currentCard.term;
-    const definition =
-      definitionRef.current?.value?.trim() ?? currentCard.definition;
+    const term = editTerm.trim();
+    const definition = editDefinition.trim();
 
     setEditingCardId(null);
 
-    // No change — skip the network call
-    if (term === currentCard.term && definition === currentCard.definition) {
+    if (
+      term === currentCard.term &&
+      definition === currentCard.definition &&
+      isLatex === currentCard.term_is_latex
+    )
       return;
-    }
 
     if (!term || !definition || !setId) return;
 
-    const oldCard = updateCardOptimistic(card.id, term, definition);
+    const oldCard = updateCardOptimistic(card.id, term, definition, isLatex);
     addSavingCard(card.id);
 
     try {
@@ -65,7 +72,7 @@ export default function CardItem({
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          cards: [{ id: card.id, term, definition }],
+          cards: [{ id: card.id, term, definition, term_is_latex: isLatex }],
         }),
       });
 
@@ -77,6 +84,9 @@ export default function CardItem({
       removeSavingCard(card.id);
     }
   }, [
+    editTerm,
+    editDefinition,
+    isLatex,
     card.id,
     currentCard,
     setId,
@@ -88,7 +98,6 @@ export default function CardItem({
     toast,
   ]);
 
-  // Auto-save when focus leaves the entire card container
   const handleContainerBlur = useCallback(() => {
     blurTimer.current = setTimeout(() => {
       if (editingCardId === card.id) save();
@@ -112,7 +121,7 @@ export default function CardItem({
       className={`w-full overflow-hidden rounded-3xl border bg-studogrey/30 flex flex-col items-center
         transition-all duration-200
         ${isEditing ? "border-emerald-400/40 shadow-lg shadow-emerald-400/5" : "border-studoborder/30"}
-        ${isEditing ? "min-h-36 h-fit" : "h-36"}`}
+        ${isEditing ? "min-h-26 h-fit" : "h-fit min-h-26"}`}
       onBlur={handleContainerBlur}
       onFocus={handleContainerFocus}
     >
@@ -140,48 +149,43 @@ export default function CardItem({
       </div>
 
       {/* Card body */}
-      <div className="w-full flex-1 flex px-5 gap-5 py-3 items-center">
-        {/* Term — 1/3 */}
-        <div className="w-1/3 h-full flex items-center">
+      <div
+        className={`w-full flex px-5 gap-5 py-5 ${isEditing ? "items-start" : "items-center"}`}
+      >
+        <div className="w-1/2 flex">
           {isEditing ? (
-            <input
-              ref={termRef}
-              defaultValue={currentCard.term}
-              maxLength={128}
+            <LaTeXInput
+              value={editTerm}
+              onChange={setEditTerm}
+              isLatex={isLatex}
+              setIsLatex={setIsLatex}
               placeholder="Term..."
-              onKeyDown={handleKeyDown}
-              className="w-full px-4 h-11 border border-emerald-400/40 rounded-full
-                bg-studogrey/10 focus:outline-none focus:border-emerald-400
-                text-sm transition-colors dark:text-white"
+              onKeyDown={(e) => handleKeyDown(e)}
             />
+          ) : currentCard.term_is_latex ? (
+            <span className="w-full flex items-center overflow-hidden">
+              <SafeKaTeX value={currentCard.term} />
+            </span>
           ) : (
-            <span
-              className="w-full px-5 h-11 flex truncate items-center border
-                border-studoborder/30 rounded-full bg-studogrey/10 overflow-hidden text-sm"
-            >
+            <span className="w-full px-5 h-10 flex truncate items-center border border-studoborder/30 rounded-full bg-studogrey/10 overflow-hidden text-sm">
               {currentCard.term}
             </span>
           )}
         </div>
 
-        {/* Definition — 2/3 */}
-        <div className="w-2/3 h-full flex items-center">
+        <div className="w-1/2 flex">
           {isEditing ? (
-            <input
-              ref={definitionRef}
-              defaultValue={currentCard.definition}
-              maxLength={128}
+            <LaTeXInput
+              value={editDefinition}
+              onChange={setEditDefinition}
+              isLatex={isLatex}
+              setIsLatex={setIsLatex}
+              hidden
               placeholder="Definitie..."
-              onKeyDown={handleKeyDown}
-              className="w-full px-4 h-11 border border-emerald-400/40 rounded-full
-                bg-studogrey/10 focus:outline-none focus:border-emerald-400
-                text-sm transition-colors dark:text-white"
+              onKeyDown={(e) => handleKeyDown(e)}
             />
           ) : (
-            <span
-              className="w-full px-5 h-11 flex truncate items-center border
-                border-studoborder/30 rounded-full overflow-hidden bg-studogrey/10 text-sm"
-            >
+            <span className="w-full px-5 h-10 flex truncate items-center border border-studoborder/30 rounded-full overflow-hidden bg-studogrey/10 text-sm">
               {currentCard.definition}
             </span>
           )}

@@ -161,6 +161,7 @@ export interface Card {
   term: string;
   definition: string;
   number: number;
+  term_is_latex: boolean;
   created_at: string;
   updated_at: string;
   set_id: string;
@@ -719,6 +720,7 @@ export interface CardData {
   definition: string;
   image: string;
   isDouble: boolean;
+  isLatex: boolean;
 }
 
 export interface Issue {

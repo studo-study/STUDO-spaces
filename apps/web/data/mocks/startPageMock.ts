@@ -144,6 +144,7 @@ export const mockCardsStudyset1: Card[] = [
     updated_at: "2026-01-02T14:30:00.000Z",
     set_id: "studyset-001-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-001-002",
@@ -155,6 +156,7 @@ export const mockCardsStudyset1: Card[] = [
     updated_at: "2026-01-02T14:31:00.000Z",
     set_id: "studyset-001-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-001-003",
@@ -165,6 +167,7 @@ export const mockCardsStudyset1: Card[] = [
     updated_at: "2026-01-02T14:32:00.000Z",
     set_id: "studyset-001-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-001-004",
@@ -176,6 +179,7 @@ export const mockCardsStudyset1: Card[] = [
     updated_at: "2026-01-02T14:33:00.000Z",
     set_id: "studyset-001-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-001-005",
@@ -187,6 +191,7 @@ export const mockCardsStudyset1: Card[] = [
     updated_at: "2026-01-02T14:34:00.000Z",
     set_id: "studyset-001-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
 ];
 
@@ -200,6 +205,7 @@ export const mockCardsStudyset2: Card[] = [
     updated_at: "2026-01-05T09:15:00.000Z",
     set_id: "studyset-002-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-002-002",
@@ -210,6 +216,7 @@ export const mockCardsStudyset2: Card[] = [
     updated_at: "2026-01-05T09:16:00.000Z",
     set_id: "studyset-002-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-002-003",
@@ -220,6 +227,7 @@ export const mockCardsStudyset2: Card[] = [
     updated_at: "2026-01-05T09:17:00.000Z",
     set_id: "studyset-002-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-002-004",
@@ -230,6 +238,7 @@ export const mockCardsStudyset2: Card[] = [
     updated_at: "2026-01-05T09:18:00.000Z",
     set_id: "studyset-002-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-002-005",
@@ -240,6 +249,7 @@ export const mockCardsStudyset2: Card[] = [
     updated_at: "2026-01-05T09:19:00.000Z",
     set_id: "studyset-002-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-002-006",
@@ -250,6 +260,7 @@ export const mockCardsStudyset2: Card[] = [
     updated_at: "2026-01-05T09:20:00.000Z",
     set_id: "studyset-002-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
 ];
 
@@ -264,6 +275,7 @@ export const mockCardsStudyset3: Card[] = [
     updated_at: "2025-12-20T11:00:00.000Z",
     set_id: "studyset-003-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-003-002",
@@ -274,6 +286,7 @@ export const mockCardsStudyset3: Card[] = [
     updated_at: "2025-12-20T11:01:00.000Z",
     set_id: "studyset-003-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-003-003",
@@ -284,6 +297,7 @@ export const mockCardsStudyset3: Card[] = [
     updated_at: "2025-12-20T11:02:00.000Z",
     set_id: "studyset-003-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-003-004",
@@ -294,6 +308,7 @@ export const mockCardsStudyset3: Card[] = [
     updated_at: "2025-12-20T11:03:00.000Z",
     set_id: "studyset-003-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
 ];
 
@@ -307,6 +322,7 @@ export const mockCardsStudyset4: Card[] = [
     updated_at: "2026-01-08T16:45:00.000Z",
     set_id: "studyset-004-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-004-002",
@@ -317,6 +333,7 @@ export const mockCardsStudyset4: Card[] = [
     updated_at: "2026-01-08T16:46:00.000Z",
     set_id: "studyset-004-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-004-003",
@@ -327,6 +344,7 @@ export const mockCardsStudyset4: Card[] = [
     updated_at: "2026-01-08T16:47:00.000Z",
     set_id: "studyset-004-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-004-004",
@@ -337,6 +355,7 @@ export const mockCardsStudyset4: Card[] = [
     updated_at: "2026-01-08T16:48:00.000Z",
     set_id: "studyset-004-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
   {
     id: "card-004-005",
@@ -347,6 +366,7 @@ export const mockCardsStudyset4: Card[] = [
     updated_at: "2026-01-08T16:49:00.000Z",
     set_id: "studyset-004-uuid",
     owner_id: mockUser.id,
+    term_is_latex: false,
   },
 ];
 
