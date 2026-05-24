@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useCreateStudyset } from "@/hooks/app/sets/useCreateStudoset";
 import SetImporter from "@/components/ui/app/create-studoset/SetImporter";
 import CardItem from "@/components/ui/app/create-studoset/CardItem";
@@ -40,6 +40,7 @@ const firstCard = (): CardData => ({
   definition: "",
   image: "",
   isDouble: false,
+  isLatex: false,
 });
 
 export default function CreateStudosetForm() {
@@ -59,10 +60,8 @@ export default function CreateStudosetForm() {
     }
   };
 
-  const [hasDraft, setHasDraft] = useState(() => !!savedDraft());
-  const [cardArray, setCardArray] = useState<CardData[]>(
-    () => savedDraft()?.cardArray ?? [firstCard()],
-  );
+  const [hasDraft, setHasDraft] = useState(false);
+  const [cardArray, setCardArray] = useState<CardData[]>([firstCard()]);
 
   const titleRef = useRef<HTMLInputElement>(null);
   const courseRef = useRef<HTMLInputElement>(null);
@@ -113,10 +112,12 @@ export default function CreateStudosetForm() {
     }
   };
 
-  // Restore ref-based fields from draft on mount
+  // Restore draft from localStorage on mount (client-only)
   useEffect(() => {
     const d = savedDraft();
     if (!d) return;
+    setHasDraft(true);
+    if (d.cardArray.length > 0) setCardArray(d.cardArray);
     if (titleRef.current) titleRef.current.value = d.title;
     if (courseRef.current) courseRef.current.value = d.course;
     if (folderRef.current) folderRef.current.value = d.folder_id;
@@ -200,6 +201,7 @@ export default function CreateStudosetForm() {
         definition: card.definition.trim(),
         number: card.index,
         image: card.image || null,
+        term_is_latex: card.isLatex,
       })),
     };
 
@@ -224,6 +226,7 @@ export default function CreateStudosetForm() {
         definition: "",
         image: "",
         isDouble: false,
+        isLatex: false,
       },
     ]);
   };
@@ -247,6 +250,7 @@ export default function CreateStudosetForm() {
           definition: "",
           image: "",
           isDouble: false,
+          isLatex: false,
         },
         ...prev.slice(index),
       ];
@@ -271,11 +275,16 @@ export default function CreateStudosetForm() {
     });
   };
 
-  const updateCard = (id: string, field: string, value: string) => {
-    setCardArray((prev) =>
-      prev.map((card) => (card.id === id ? { ...card, [field]: value } : card)),
-    );
-  };
+  const updateCard = useCallback(
+    (id: string, field: string, value: string | boolean) => {
+      setCardArray((prev) =>
+        prev.map((card) =>
+          card.id === id ? { ...card, [field]: value } : card,
+        ),
+      );
+    },
+    [],
+  );
 
   const duplicates = cardArray
     .filter((card, i) =>
@@ -460,6 +469,7 @@ export default function CreateStudosetForm() {
                 index={card.index}
                 term={card.term}
                 definition={card.definition}
+                isLatex={card.isLatex}
                 isDouble={duplicates.includes(card.id)}
                 deleteCard={deleteCard}
                 updateCard={updateCard}

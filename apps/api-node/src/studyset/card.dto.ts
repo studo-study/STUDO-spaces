@@ -45,6 +45,13 @@ export class CreateCardDto {
   @IsNumber({ name: 'number' })
   @IsNotEmpty()
   number: number;
+
+  @ApiProperty({
+    example: false,
+    description: 'boolean die aantoont of term LaTeX is van een kaart',
+  })
+  @IsNotEmpty()
+  term_is_latex: boolean;
 }
 
 export class CreateCardListDto {
@@ -99,6 +106,13 @@ export class UpdateCardDto {
   @IsString({ name: 'updated_at', maxLength: 24 })
   @IsOptional()
   updated_at?: string;
+
+  @ApiPropertyOptional({
+    example: false,
+    description: 'boolean die aantoont of term LaTeX is van een kaart',
+  })
+  @IsOptional()
+  term_is_latex: boolean;
 }
 
 export class CardResponseDto {
@@ -158,6 +172,13 @@ export class CardResponseDto {
   })
   @Expose()
   owner_id: string;
+
+  @ApiProperty({
+    example: false,
+    description: 'boolean die aantoont of term LaTeX is van een kaart',
+  })
+  @Expose()
+  term_is_latex: boolean;
 }
 
 export class CardListResponseDto {

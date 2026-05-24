@@ -113,6 +113,7 @@ export class StudysetService {
         times_relearned: 0,
         set_id: setId,
         owner_id: user_id,
+        term_is_latex: c.term_is_latex,
       };
       CARDS.push(card);
     });
@@ -171,6 +172,7 @@ export class StudysetService {
       times_relearned: 0,
       set_id,
       owner_id: user_id,
+      term_is_latex: data.term_is_latex,
     };
 
     await this.db.insert(cards).values(card);
@@ -184,6 +186,7 @@ export class StudysetService {
       updated_at: card.updated_at,
       set_id: card.set_id,
       owner_id: card.owner_id,
+      term_is_latex: card.term_is_latex,
     };
   }
 

@@ -719,6 +719,7 @@ export interface CardData {
   definition: string;
   image: string;
   isDouble: boolean;
+  isLatex: boolean;
 }
 
 export interface Issue {

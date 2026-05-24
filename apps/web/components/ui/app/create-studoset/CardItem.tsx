@@ -1,16 +1,17 @@
 import { useTranslations } from "next-intl";
 import { IoIosAdd } from "react-icons/io";
-import React from "react";
+import React, { useState } from "react";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
-import InputField from "@/components/ui/design_system/input/InputField";
+import LaTexInput from "@/components/ui/design_system/input/LaTeXInput";
 
 interface CardProps {
   index: number;
   id: string;
   insertCard: () => void;
   deleteCard: (id: string) => void;
-  updateCard: (id: string, term: string, definitie: string) => void;
+  updateCard: (id: string, field: string, value: string | boolean) => void;
   isDouble: boolean;
+  isLatex: boolean;
   length: number;
   term: string;
   definition: string;
@@ -23,6 +24,7 @@ export default function CardItem({
   id,
   deleteCard,
   isDouble,
+  isLatex: isLatexProp,
   updateCard,
   length,
   term,
@@ -33,6 +35,12 @@ export default function CardItem({
   onEnterDefinition,
 }: CardProps) {
   const t = useTranslations("card");
+  const [isLatex, setIsLatex] = useState<boolean>(isLatexProp);
+
+  const handleSetIsLatex = (value: boolean) => {
+    setIsLatex(value);
+    updateCard(id, "isLatex", value);
+  };
 
   return (
     <div className={"w-full h-fit relative mb-5"}>
@@ -58,37 +66,36 @@ export default function CardItem({
         </div>
 
         <div className="flex flex-col lg:flex-row w-full gap-3 px-5 pb-4 sm:pb-6">
-          <div className="flex flex-col p-3 w-full gap-3 justify-between">
-            <InputField
-              variant={"cardInput"}
-              ref={termRef}
-              value={term}
-              onChange={(e) => updateCard(id, "term", e.target.value)}
-              placeholder={t("Term")}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  defRef?.current?.focus();
-                }
-              }}
-            />
-          </div>
+          <LaTexInput
+            ref={termRef}
+            isLatex={isLatex}
+            setIsLatex={handleSetIsLatex}
+            value={term}
+            onChange={(value) => updateCard(id, "term", value)}
+            placeholder={t("Term")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                defRef?.current?.focus();
+              }
+            }}
+          />
 
-          <div className="flex flex-col p-3 w-full gap-3 justify-between">
-            <InputField
-              variant={"cardInput"}
-              ref={defRef}
-              value={definition}
-              onChange={(e) => updateCard(id, "definition", e.target.value)}
-              placeholder={t("Definition")}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  onEnterDefinition?.();
-                }
-              }}
-            />
-          </div>
+          <LaTexInput
+            ref={defRef}
+            value={definition}
+            isLatex={isLatex}
+            setIsLatex={handleSetIsLatex}
+            hidden
+            onChange={(value) => updateCard(id, "definition", value)}
+            placeholder={t("Definition")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                onEnterDefinition?.();
+              }
+            }}
+          />
         </div>
       </div>
       <div className="absolute min-w-full flex group items-center justify-center -bottom-2.5">
