@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, forwardRef } from "react";
+import { useState, useMemo, forwardRef } from "react";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 import "katex/dist/contrib/mhchem.mjs";
@@ -33,18 +33,15 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
     } = props;
     const t = useTranslations("latex");
 
-    const [isPreview, setIsPreview] = useState(
-      () => isLatex && value.trim().length > 0,
+    const [isEditing, setIsEditing] = useState(
+      () => !(isLatex && value.trim().length > 0),
     );
 
-    useEffect(() => {
-      if (isLatex && value.trim()) setIsPreview(true);
-      else if (!isLatex) setIsPreview(false);
-    }, [isLatex]);
+    const isPreview = isLatex && !isEditing && value.trim().length > 0;
 
     const handleBlur = () => {
       if (isLatex && value.trim()) {
-        setIsPreview(true);
+        setIsEditing(false);
       }
     };
 
@@ -79,7 +76,7 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
               type="button"
               onClick={() => {
                 setIsLatex(!isLatex);
-                setIsPreview(false);
+                setIsEditing(true);
               }}
               iconLeft={
                 isLatex ? <FaCheck className={"text-emerald-500"} /> : null
