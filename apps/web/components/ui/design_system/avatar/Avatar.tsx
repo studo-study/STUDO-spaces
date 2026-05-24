@@ -106,7 +106,7 @@ const Avatar = ({ img_url, displayName, id, size = 36, link }: AvatarProps) => {
         className="font-bold uppercase text-emerald-950"
         style={{ fontSize }}
       >
-        <PiStudent size={20} />
+        <PiStudent size={fontSize} />
       </span>
     </div>
   );

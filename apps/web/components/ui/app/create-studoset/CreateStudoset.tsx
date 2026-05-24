@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCreateStudyset } from "@/hooks/app/sets/useCreateStudoset";
 import SetImporter from "@/components/ui/app/create-studoset/SetImporter";
 import CardItem from "@/components/ui/app/create-studoset/CardItem";
@@ -71,6 +71,27 @@ export default function CreateStudosetForm() {
   const defLangRef = useRef<HTMLSelectElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
+  const cardRefsMap = useRef<
+    Map<
+      string,
+      {
+        term: React.RefObject<HTMLInputElement | null>;
+        def: React.RefObject<HTMLInputElement | null>;
+      }
+    >
+  >(new Map());
+  const focusAfterAdd = useRef(false);
+
+  const getCardRefs = (id: string) => {
+    if (!cardRefsMap.current.has(id)) {
+      cardRefsMap.current.set(id, {
+        term: React.createRef<HTMLInputElement>(),
+        def: React.createRef<HTMLInputElement>(),
+      });
+    }
+    return cardRefsMap.current.get(id)!;
+  };
+
   const saveDraft = () => {
     const d: Draft = {
       title: titleRef.current?.value ?? "",
@@ -103,9 +124,14 @@ export default function CreateStudosetForm() {
     if (defLangRef.current) defLangRef.current.value = d.defLang;
   }, []);
 
-  // Save draft whenever cardArray changes
+  // Save draft whenever cardArray changes; focus new card after add
   useEffect(() => {
     saveDraft();
+    if (focusAfterAdd.current && cardArray.length > 0) {
+      focusAfterAdd.current = false;
+      const lastCard = cardArray[cardArray.length - 1];
+      getCardRefs(lastCard.id).term.current?.focus();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardArray]);
 
@@ -187,7 +213,8 @@ export default function CreateStudosetForm() {
     }
   };
 
-  const addCard = () => {
+  const addCard = (focus = false) => {
+    if (focus) focusAfterAdd.current = true;
     setCardArray((prev) => [
       ...prev,
       {
@@ -199,6 +226,14 @@ export default function CreateStudosetForm() {
         isDouble: false,
       },
     ]);
+  };
+
+  const handleEnterDefinition = (index: number) => {
+    if (index < cardArray.length - 1) {
+      getCardRefs(cardArray[index + 1].id).term.current?.focus();
+    } else {
+      addCard(true);
+    }
   };
 
   const insertCard = (index: number) => {
@@ -220,6 +255,7 @@ export default function CreateStudosetForm() {
   };
 
   const deleteCard = (id: string) => {
+    cardRefsMap.current.delete(id);
     setCardArray((prev) => {
       if (prev.length === 1) return prev;
       return prev
@@ -275,7 +311,11 @@ export default function CreateStudosetForm() {
     ctrl: true,
     always: true,
   });
-  useKeyboardShortcut("a", addCard, { ctrl: true, always: true });
+  useKeyboardShortcut("a", () => addCard(true), {
+    ctrl: true,
+    shift: true,
+    always: true,
+  });
   useKeyboardShortcut("s", () => handleSubmit(), { ctrl: true, always: true });
   useKeyboardShortcut("backspace", deleteLatestCard, {
     ctrl: true,
@@ -288,6 +328,11 @@ export default function CreateStudosetForm() {
         onSubmit={handleSubmit}
         className="w-full scroll-hidden text-studodarkblue dark:text-white h-fit mt-10 md:mt-0 flex text-sm sm:text-base flex-col items-center justify-baseline pt-20 px-10"
         data-cy="studyset_form"
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+          }
+        }}
       >
         <div className="flex w-full flex-col items-center justify-center gap-3">
           <div className="w-full text-2xl sm:text-3xl flex flex-row gap-2 items-end text-studodarkblue font-bold dark:text-white">
@@ -305,6 +350,12 @@ export default function CreateStudosetForm() {
                 placeholder={t("title_placeholder")}
                 data-cy="title_input"
                 onChange={saveDraft}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    courseRef.current?.focus();
+                  }
+                }}
               />
             </div>
 
@@ -316,6 +367,14 @@ export default function CreateStudosetForm() {
                   placeholder={t("course_placeholder")}
                   data-cy="course_input"
                   onChange={saveDraft}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      if (cardArray.length > 0) {
+                        getCardRefs(cardArray[0].id).term.current?.focus();
+                      }
+                    }
+                  }}
                 />
               </div>
 
@@ -415,13 +474,16 @@ export default function CreateStudosetForm() {
                 updateCard={updateCard}
                 length={cardArray.length}
                 insertCard={() => insertCard(index + 1)}
+                termRef={getCardRefs(card.id).term}
+                defRef={getCardRefs(card.id).def}
+                onEnterDefinition={() => handleEnterDefinition(index)}
               />
             ))}
           </div>
 
           <div className="flex w-full mb-3 sm:mb-4 md:mb-5 group relative">
             <BaseButton
-              onClick={addCard}
+              onClick={() => addCard}
               type="button"
               className="w-full"
               variant={"approve"}

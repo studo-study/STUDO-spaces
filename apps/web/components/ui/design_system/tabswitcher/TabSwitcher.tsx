@@ -77,7 +77,7 @@ export const TabSwitcher = <T extends string = string>({
     <div className="flex justify-center">
       <div
         ref={containerRef}
-        className={`relative flex gap-1 bg-gray-300/30 border border-gray-300/30 rounded-full shadow-sm ${styles.padding}`}
+        className={`relative flex gap-1 bg-studogrey/30 border border-studoborder/30 rounded-full ${styles.padding}`}
       >
         {indicator && (
           <div
@@ -104,7 +104,7 @@ export const TabSwitcher = <T extends string = string>({
             className={`relative z-10 flex items-center gap-1 rounded-full font-bold transition-colors duration-300 cursor-pointer ${styles.button} ${
               value === t.key
                 ? "dark:text-white text-studodarkblue"
-                : "text-zinc-500 hover:text-studodarkblue"
+                : "text-studodarkblue/50 dark:text-studogrey hover:text-zinc-400"
             }`}
           >
             {t.icon}

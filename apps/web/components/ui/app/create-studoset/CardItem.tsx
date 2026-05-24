@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { IoIosAdd } from "react-icons/io";
-import { useRef } from "react";
+import React from "react";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
 import InputField from "@/components/ui/design_system/input/InputField";
 
@@ -14,6 +14,9 @@ interface CardProps {
   length: number;
   term: string;
   definition: string;
+  termRef?: React.RefObject<HTMLInputElement | null>;
+  defRef?: React.RefObject<HTMLInputElement | null>;
+  onEnterDefinition?: () => void;
 }
 export default function CardItem({
   index,
@@ -25,9 +28,11 @@ export default function CardItem({
   term,
   definition,
   insertCard,
+  termRef,
+  defRef,
+  onEnterDefinition,
 }: CardProps) {
   const t = useTranslations("card");
-  const defRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className={"w-full h-fit relative mb-5"}>
@@ -56,9 +61,16 @@ export default function CardItem({
           <div className="flex flex-col p-3 w-full gap-3 justify-between">
             <InputField
               variant={"cardInput"}
+              ref={termRef}
               value={term}
               onChange={(e) => updateCard(id, "term", e.target.value)}
               placeholder={t("Term")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  defRef?.current?.focus();
+                }
+              }}
             />
           </div>
 
@@ -69,6 +81,12 @@ export default function CardItem({
               value={definition}
               onChange={(e) => updateCard(id, "definition", e.target.value)}
               placeholder={t("Definition")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  onEnterDefinition?.();
+                }
+              }}
             />
           </div>
         </div>
