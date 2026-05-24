@@ -53,19 +53,16 @@ export const mockFolders: Folder[] = [
     id: "folder-001-uuid",
     name: "Biologie",
     owner_id: mockUser.id,
-    term_is_latex: false,
   },
   {
     id: "folder-002-uuid",
     name: "Geschiedenis",
     owner_id: mockUser.id,
-    term_is_latex: false,
   },
   {
     id: "folder-003-uuid",
     name: "Talen",
     owner_id: mockUser.id,
-    term_is_latex: false,
   },
 ];
 
