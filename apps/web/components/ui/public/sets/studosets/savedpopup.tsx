@@ -54,8 +54,9 @@ export default function SavedPopup({ setId }: SavedPopupProps) {
         {folders.map((folder, key) => (
           <div
             key={key}
+            onClick={() => toggleSave(folder.id, folder.name)}
             className={
-              "w-full h-10 rounded-lg flex p-2 gap-2 items-center justify-baseline bg-studogrey/20 border border-studoborder/30"
+              "w-full h-10 rounded-lg flex p-2 gap-2 cursor-pointer items-center justify-baseline transition-all duration-300  bg-studogrey/20 border hover:border-studoborder border-studoborder/30"
             }
           >
             <label className="relative inline-flex items-center justify-center cursor-pointer">

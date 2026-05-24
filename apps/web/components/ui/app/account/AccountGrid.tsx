@@ -1,16 +1,35 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { IoIosAdd } from "react-icons/io";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import ListItems from "@/components/ui/app/your-files/sets/listitems";
 import Image from "next/image";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import { useSets } from "@/hooks/app/sets/useSets";
+import { StudysetResponse, type VisualsetResponse } from "@studo/types";
+import { StudySetItem } from "@/components/ui/app/your-files/sets/grid";
 
 export default function AccountGrid() {
   const t = useTranslations("account");
   const containerRef = useRef(null);
   const [AddIsOpen, setAddIsOpen] = useState(false);
+  const sets = useSets();
+  const allSets: StudySetItem[] = useMemo(
+    () => [
+      ...sets.sets.map((s: StudysetResponse) => ({
+        ...s,
+        type: "studyset" as const,
+      })),
+      ...sets.visualsets.map((s: VisualsetResponse) => ({
+        ...s,
+        type: "visualset" as const,
+      })),
+    ],
+    [sets],
+  );
+
   const togglePopUp = () => {
     setAddIsOpen((prev) => !prev);
   };
@@ -47,22 +66,24 @@ export default function AccountGrid() {
         </div>
       </div>
       <div className={"w-full h-fit gap-2 flex flex-col"}>
-        <div
-          className={`flex-1 overflow-y-scroll scroll-hidden min-h-45 max-h-95 mb-10 flex flex-col gap-5"`}
-        >
-          <ListItems items={[]} />
+        <div className={`flex-1 min-h-0 h-fit mb-10 flex flex-col gap-5"`}>
+          {allSets.length === 0 ? (
+            <div
+              className={"w-full min-h-30 flex items-center justify-center"}
+            ></div>
+          ) : (
+            <ListItems items={allSets.splice(0, 3)} />
+          )}
         </div>
       </div>
 
-      <div className={"w-full h-15 flex justify-end"}>
-        <button
+      <div className={"w-full h-10 flex justify-end"}>
+        <BaseButton
+          variant={"submit"}
           onClick={() => signOut({ callbackUrl: "/" })}
-          className={
-            "w-fit px-5 py-2 h-10 cursor-pointer font-bold lowercase rounded-full bg-blue-500 border border-studoborder/50 text-white"
-          }
         >
           {t("log_out")}
-        </button>
+        </BaseButton>
       </div>
     </div>
   );

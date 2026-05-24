@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
 import { GrPowerReset } from "react-icons/gr";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useRouter } from "@/i18n/routing";
+import { TbClick } from "react-icons/tb";
 
 interface Card {
   id: string;
@@ -131,7 +132,7 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
 
   const Router = useRouter();
   return (
-    <div className="w-full h-full flex flex-col gap-3 sm:gap-5 px-4 sm:px-8 md:px-12 lg:px-16">
+    <div className="w-full h-full flex flex-col gap-3 sm:gap-5  px-10">
       <div className="w-full flex">
         <BaseButton
           size="sm"
@@ -192,22 +193,26 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
 
       {/* Navigatie — altijd onderaan, in de flow */}
       <div className="flex flex-row gap-3 sm:gap-5 items-center justify-center pb-4 sm:pb-6">
-        <button
-          onClick={goBack}
-          className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer border border-studoborder/30 bg-studogrey/30 rounded-full shadow-xl flex items-center justify-center"
+        <div
+          className={
+            "w-fit flex flex-row gap-3 px-2 items-center border border-studoborder/30 rounded-full shadow-xl bg-studogrey/30 "
+          }
         >
-          <IoIosArrowBack />
-        </button>
-        <div className="w-24 sm:w-32 h-10 sm:h-12 border border-studoborder/30 bg-studogrey/30 rounded-full flex items-center justify-center text-sm sm:text-base">
-          <span className="w-1/3 text-center">{index + 1}</span>|
-          <span className="w-1/3 text-center">{cards.length}</span>
+          <button
+            onClick={goBack}
+            className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer rounded-full flex items-center justify-center"
+          >
+            <IoIosArrowBack />
+          </button>
+          <span className={"w-1/3 text-center"}>{index + 1}</span>|
+          <span className={"w-1/3 text-center"}>{cards.length}</span>
+          <button
+            onClick={goForward}
+            className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer rounded-full flex items-center justify-center"
+          >
+            <IoIosArrowForward />
+          </button>
         </div>
-        <button
-          onClick={goForward}
-          className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer border border-studoborder/30 bg-studogrey/30 rounded-full shadow-xl flex items-center justify-center"
-        >
-          <IoIosArrowForward />
-        </button>
       </div>
     </div>
   );
@@ -219,8 +224,11 @@ interface CardProps {
 }
 function Card({ card, termMode }: CardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const t = useTranslations("card");
 
   useKeyboardShortcut(" ", () => setIsFlipped((f) => !f));
+  useKeyboardShortcut("ArrowUp", () => setIsFlipped((f) => !f));
+  useKeyboardShortcut("ArrowDown", () => setIsFlipped((f) => !f));
 
   return (
     <div
@@ -234,11 +242,19 @@ function Card({ card, termMode }: CardProps) {
       >
         <div
           className={
-            "side-a backface-hidden top-0 left-0 absolute  w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30 "
+            "side-a backface-hidden top-0 left-0 absolute  w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20"
           }
         >
+          <span
+            className={
+              "absolute bottom-3 left-1/2 -translate-1/2 flex flex-row gap-1 items-center opacity-30"
+            }
+          >
+            <TbClick />
+            {t("click_turn")}
+          </span>
           {termMode ? (
-            <span className="text-lg sm:text-xl md:text-2xl text-center select-none font-bold px-4">
+            <span className="text-lg sm:text-xl md:text-2xl font-georgia text-center select-none font-bold px-4">
               {card.term}
             </span>
           ) : (
@@ -249,7 +265,7 @@ function Card({ card, termMode }: CardProps) {
         </div>
         <div
           className={
-            "side-b backface-hidden top-0 left-0 absolute px-5 w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
+            "side-b backface-hidden top-0 left-0 absolute px-10 w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
           }
         >
           {termMode ? (
@@ -261,6 +277,14 @@ function Card({ card, termMode }: CardProps) {
               {card.term}
             </span>
           )}
+          <span
+            className={
+              "absolute bottom-3 left-1/2 -translate-1/2 flex flex-row gap-1 items-center opacity-30"
+            }
+          >
+            <TbClick />
+            {t("click_flip_back")}
+          </span>
         </div>
       </div>
     </div>

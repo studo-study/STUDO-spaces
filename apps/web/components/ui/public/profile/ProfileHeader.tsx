@@ -1,57 +1,88 @@
-import Link from "next/link";
-import Image from "next/image";
-import { User } from "next-auth";
+"use client";
+
+import Banner from "@/components/ui/design_system/banner/Banner";
+import { ProfileResponse } from "@studo/types";
+import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import { MdVerified } from "react-icons/md";
+import { useImageTextColor } from "@/hooks/overige/useImageTextColor";
+import BaseToolTip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import { useTranslations } from "next-intl";
+import { FaHashtag } from "react-icons/fa";
 
 interface ProfileHeaderProps {
-  user: User;
+  profile: ProfileResponse;
 }
-export default function ProfileHeader({ user }: ProfileHeaderProps) {
-  return (
-    <div
-      className={
-        "w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-30 bg-gray-700 rounded-3xl border border-studoborder/30"
-      }
-    >
+
+const FALLBACK_BANNER =
+  "https://static.vecteezy.com/ti/gratis-fotos/p2/3279132-panorama-lucht-met-wolk-op-een-zonnige-dag-gratis-foto.jpg";
+
+export default function ProfileHeader({ profile }: ProfileHeaderProps) {
+  const pf = profile.profile;
+  const bannerSrc = pf.banner_url || FALLBACK_BANNER;
+  const t = useTranslations("account");
+  const isDark = useImageTextColor(bannerSrc, {
+    left: 100,
+    top: 30,
+    width: 200,
+    height: 50,
+  });
+
+  if (!pf.banner_url) {
+    return (
       <div
         className={
-          "w-full h-fit  items-center justify-baseline flex flex-row gap-10"
+          "w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-30 bg-studogrey/30 rounded-3xl border border-studoborder/30"
         }
       >
-        <div
-          className={
-            "max-w-25 max-h-25 overflow-hidden min-w-25 min-h-25 rounded-full flex items-center justify-center bg-gray-500"
-          }
-        >
-          <Image
-            src={user?.img_url ?? ""}
-            alt=""
-            width={100}
-            height={100}
-            className="object-cover w-full h-full"
-          />
-        </div>
-        <div className={"w-full h-fit flex flex-col gap-5"}>
-          <div
-            className={
-              "w-full h-fit text-2xl flex flex-row gap-3 font-bold dark:text-white text-studodarkblue justify-between"
-            }
-          >
-            <div className="flex items-center gap-2">
-              <span>{user?.displayName}</span>
-              <span className={"text-base cursor-pointer"}>#</span>
-              <Link href={"/streak"}>
-                <Image
-                  src="/icons/streak.svg"
-                  alt="streak-icon"
-                  width={16}
-                  height={16}
-                  className="w-4 h-4 cursor-pointer"
-                />
-              </Link>
-            </div>
+        <div className={"w-full h-fit relative flex gap-5"}>
+          <Avatar size={80} id={pf.user_id} displayName={pf.displayName} />
+          <div className={"w-fit flex items-center justify-center gap-2"}>
+            <span
+              className={`text-xl truncate dark:text-white text-studodarkblue`}
+            >
+              {pf?.displayName}
+            </span>
+            <BaseToolTip content={t("verified")}>
+              <span className={"text-blue-500"}>
+                {!pf.verified && <MdVerified />}
+              </span>
+            </BaseToolTip>
+            <BaseToolTip content={pf.joinNumber}>
+              <FaHashtag />
+            </BaseToolTip>
           </div>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div className={"w-full h-50 relative flex"}>
+      <Banner banner={bannerSrc}>
+        <div
+          className={
+            "absolute bottom-0 z-40 md:w-1/2 w-full md:h-25 flex md:flex-row flex-col items-center p-5 gap-2"
+          }
+        >
+          <Avatar size={80} id={pf.user_id} displayName={pf.displayName} />
+          <div
+            className={
+              "w-fit flex flex-col backdrop-blur-2xl gap-2 items-center justify-center rounded-full px-3 "
+            }
+          >
+            <div className={"w-fit flex items-center justify-center gap-2"}>
+              <span
+                className={`text-xl truncate ${isDark ? "text-white" : "text-studodarkblue"}`}
+              >
+                {pf?.displayName}
+              </span>
+              <span className={"text-blue-500"}>
+                {!pf.verified && <MdVerified />}
+              </span>
+            </div>
+          </div>
+        </div>
+      </Banner>
     </div>
   );
 }

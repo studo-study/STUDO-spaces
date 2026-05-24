@@ -1,5 +1,6 @@
 import FlashcardMode from "@/components/ui/shared/modes/flashcards/FlashcardMode";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
+import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 
 export default async function FlashCardPage({
   params,
@@ -10,7 +11,9 @@ export default async function FlashCardPage({
 
   return (
     <PageContainer>
-      <FlashcardMode id={id} />
+      <AnimateOnMount className={"w-full h-full flex-1"}>
+        <FlashcardMode id={id} />
+      </AnimateOnMount>
     </PageContainer>
   );
 }

@@ -53,6 +53,8 @@ const variantMap = {
     "bg-emerald-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
   danger:
     "bg-rose-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
+  danger_outline:
+    "bg-studogrey/30 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100 border-rose-500  border",
   outline: "border border-gray-300 text-black dark:text-white",
   outline_link:
     "border border-studoborder dark:bg-studogrey/30 text-studodarkblue dark:text-white w-full",

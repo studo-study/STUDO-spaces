@@ -44,7 +44,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
 
   return (
     <AppLayoutContext.Provider value={{ toggleCreate }}>
-      <div className="h-screen min-w-screen h-fit flex flex-col overflow-hidden">
+      <div className="h-screen min-w-screen flex flex-col overflow-hidden">
         <MemoizedHeader
           burgerOpen={sidebarOpen}
           Search={Search}

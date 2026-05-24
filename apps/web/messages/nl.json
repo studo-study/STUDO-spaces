@@ -906,7 +906,7 @@
     "Smartschool": "Smartschool",
     "Don't have an account?": "Nog geen account?",
     "sign up": "registreren",
-    "succesful_login": "Succesvol ingelogd"
+    "successful_login": "Succesvol ingelogd"
   },
   "register": {
     "Create account": "Creër account",
@@ -1020,7 +1020,9 @@
   },
   "card": {
     "Definition": "Definitie",
-    "Term": "Term"
+    "Term": "Term",
+    "click_turn": "klik om te draaien",
+    "click_flip_back": "klik om terug te draaien"
   },
   "notfound": {
     "return": "terug",
@@ -1483,5 +1485,13 @@
     "answer_with": "antwoord met",
     "shuffle": "shuffle",
     "reset": "reset"
+  },
+  "profile": {
+    "ss": "Studosets",
+    "vs": "Visualsets"
+  },
+  "offline": {
+    "offline": "Je bent offline",
+    "progress_explanation": "Progressie wordt niet opgeslagen"
   }
 }
