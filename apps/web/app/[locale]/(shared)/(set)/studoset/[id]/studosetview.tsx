@@ -1,5 +1,4 @@
 "use client";
-import Flashcard from "@/components/ui/public/sets/studosets/flashcard";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
@@ -20,6 +19,7 @@ import { useUser } from "@/components/providers/auth/UserProvider";
 import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
 import { useEffect, useMemo } from "react";
+import FlashcardMode from "@/components/ui/shared/modes/flashcards/FlashcardMode";
 
 interface viewProps {
   id: string;
@@ -32,7 +32,7 @@ export default function StudosetView({ id }: viewProps) {
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
-
+  const beta = false;
   console.log(data);
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
@@ -136,38 +136,42 @@ export default function StudosetView({ id }: viewProps) {
       <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center pt-5 items-center">
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
-          <LinkButton
-            href={`/learn/` + id}
-            icon={
-              <Image
-                width={20}
-                height={20}
-                src={"/icons/pencil.svg"}
-                alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
-              />
-            }
-            label="learn"
-            type="button"
-            variant="outline_link"
-          />
+          {beta && (
+            <LinkButton
+              href={`/learn/` + id}
+              icon={
+                <Image
+                  width={20}
+                  height={20}
+                  src={"/icons/pencil.svg"}
+                  alt=""
+                  className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+                />
+              }
+              label="learn"
+              type="button"
+              variant="outline_link"
+            />
+          )}
 
-          <LinkButton
-            href={`/speedy/` + id}
-            className="w-full"
-            icon={
-              <Image
-                width={20}
-                height={20}
-                src={"/icons/clock.svg"}
-                alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
-              />
-            }
-            label="speedy"
-            type="button"
-            variant="outline_link"
-          />
+          {beta && (
+            <LinkButton
+              href={`/speedy/` + id}
+              className="w-full"
+              icon={
+                <Image
+                  width={20}
+                  height={20}
+                  src={"/icons/clock.svg"}
+                  alt=""
+                  className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+                />
+              }
+              label="speedy"
+              type="button"
+              variant="outline_link"
+            />
+          )}
 
           <LinkButton
             href={`/flashcards/${id}`}
@@ -186,8 +190,9 @@ export default function StudosetView({ id }: viewProps) {
           />
         </div>
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
-
-        <Flashcard id={id} cards={data?.cards} />
+        <div className={"w-full max-h-300 min-h-130 h-165 "}>
+          <FlashcardMode id={id} isHome />
+        </div>
 
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <span className="w-full h-fit font-bold text-sm sm:text-base">

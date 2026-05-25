@@ -1,9 +1,8 @@
 "use client";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import "animate.css";
 import { IoArrowBackOutline, IoShuffleOutline } from "react-icons/io5";
-import ProgressBar from "@/components/ui/public/profile/(modes)/learn/progressbar";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
@@ -16,6 +15,10 @@ import katex from "katex";
 import "katex/dist/katex.min.css";
 import "katex/dist/contrib/mhchem.mjs";
 import { codeToHtml } from "shiki";
+import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
+import Image from "next/image";
+import { FaCheck } from "react-icons/fa";
+import { AiOutlineRise } from "react-icons/ai";
 
 interface Card {
   id: string;
@@ -32,27 +35,48 @@ interface Card {
 
 interface FlashcardProps {
   id: string;
+  isHome?: boolean;
 }
 
 const storageKey = (id: string) => `studo-fc-${id}`;
+
+function persistState(id: string, s: FCState) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(
+    storageKey(id),
+    JSON.stringify({
+      index: s.index,
+      termMode: s.termMode,
+      shuffleMode: s.shuffleMode,
+      shuffledIds: s.shuffled.map((c) => c.id),
+      learntIds: s.learntIds,
+    } satisfies PersistedState),
+  );
+}
 
 interface PersistedState {
   index: number;
   termMode: boolean;
   shuffleMode: boolean;
   shuffledIds: string[];
+  learntIds: string[];
 }
 
 function loadState(id: string): PersistedState {
-  if (typeof window === "undefined")
-    return { index: 0, termMode: true, shuffleMode: false, shuffledIds: [] };
+  const defaults = {
+    index: 0,
+    termMode: true,
+    shuffleMode: false,
+    shuffledIds: [],
+    learntIds: [],
+  };
+  if (typeof window === "undefined") return defaults;
   try {
     const raw = localStorage.getItem(storageKey(id));
-    if (!raw)
-      return { index: 0, termMode: true, shuffleMode: false, shuffledIds: [] };
-    return JSON.parse(raw) as PersistedState;
+    if (!raw) return defaults;
+    return { ...defaults, ...JSON.parse(raw) } as PersistedState;
   } catch {
-    return { index: 0, termMode: true, shuffleMode: false, shuffledIds: [] };
+    return defaults;
   }
 }
 
@@ -61,106 +85,180 @@ interface FCState {
   termMode: boolean;
   shuffleMode: boolean;
   shuffled: Card[];
+  learntIds: string[];
 }
 
-// Outer: wacht op cards, geeft ze door aan inner
-export default function FlashcardMode({ id }: FlashcardProps) {
+export default function FlashcardMode({ id, isHome }: FlashcardProps) {
   const data = useStudoset(id)?.data;
   const cards = useMemo<Card[]>(() => data?.cards ?? [], [data]);
 
   if (cards.length === 0) return null;
-  return <FlashcardModeInner id={id} cards={cards} />;
+  return (
+    <FlashcardModeInner
+      id={id}
+      cards={cards}
+      isHome={isHome ? isHome : false}
+    />
+  );
 }
 
 // Inner: cards zijn gegarandeerd beschikbaar, lazy initialisers werken hier
-function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
+function FlashcardModeInner({
+  id,
+  cards,
+  isHome,
+}: {
+  id: string;
+  cards: Card[];
+  isHome: boolean;
+}) {
   const t = useTranslations("flashcards");
 
   const [state, setState] = useState<FCState>(() => {
     const saved = loadState(id);
+    const learntIds = saved.learntIds.filter((lid) =>
+      cards.some((c) => c.id === lid),
+    );
+    const remaining = cards.filter((c) => !learntIds.includes(c.id));
     const restoredShuffled =
-      saved.shuffleMode && saved.shuffledIds.length > 0
+      saved.shuffledIds.length > 0
         ? (() => {
             const ordered = saved.shuffledIds
               .map((sid) => cards.find((c) => c.id === sid))
               .filter(Boolean) as Card[];
-            return ordered.length === cards.length ? ordered : cards;
+            // valid als alle huidige remaining cards erin zitten
+            const validIds = new Set(remaining.map((c) => c.id));
+            const filtered = ordered.filter((c) => validIds.has(c.id));
+            return filtered.length === remaining.length ? filtered : remaining;
           })()
-        : cards;
+        : remaining;
     return {
-      index: saved.index < cards.length ? saved.index : 0,
+      index: saved.index <= restoredShuffled.length ? saved.index : 0,
       termMode: saved.termMode,
       shuffleMode: saved.shuffleMode,
       shuffled: restoredShuffled,
+      learntIds,
     };
   });
 
-  // Persist naar localStorage — sla over als cards nog niet geladen zijn
+  const idRef = useRef(id);
+  const stateRef = useRef(state);
+
+  // Keep refs in sync outside of render
   useEffect(() => {
-    if (state.shuffled.length === 0) return;
-    const persisted: PersistedState = {
-      index: state.index,
-      termMode: state.termMode,
-      shuffleMode: state.shuffleMode,
-      shuffledIds: state.shuffled.map((c) => c.id),
-    };
-    localStorage.setItem(storageKey(id), JSON.stringify(persisted));
-  }, [id, state]);
+    idRef.current = id;
+  });
+  useEffect(() => {
+    stateRef.current = state;
+  });
 
-  const goForward = () =>
-    setState((s) => ({
-      ...s,
-      index: s.index + 1 > s.shuffled.length - 1 ? 0 : s.index + 1,
-    }));
+  useEffect(() => {
+    persistState(idRef.current, stateRef.current);
+  }, [state]);
 
-  const goBack = () =>
-    setState((s) => ({
+  const update = (next: FCState) => {
+    persistState(id, next);
+    setState(next);
+  };
+
+  const goForward = () => {
+    const s = stateRef.current;
+    if (s.shuffled.length === 0) return;
+    update({ ...s, index: s.index + 1 > s.shuffled.length ? 0 : s.index + 1 });
+  };
+
+  const goBack = () => {
+    const s = stateRef.current;
+    if (s.shuffled.length === 0) return;
+    update({
       ...s,
       index: s.index - 1 < 0 ? s.shuffled.length - 1 : s.index - 1,
-    }));
-
-  const toggleShuffle = () =>
-    setState((s) => {
-      const newMode = !s.shuffleMode;
-      return {
-        ...s,
-        shuffleMode: newMode,
-        index: 0,
-        shuffled: newMode ? shuffle(cards) : cards,
-      };
     });
+  };
 
-  const toggleReset = () => setState((s) => ({ ...s, index: 0 }));
+  const toggleShuffle = () => {
+    const s = stateRef.current;
+    const newMode = !s.shuffleMode;
+    update({
+      ...s,
+      shuffleMode: newMode,
+      index: 0,
+      shuffled: newMode ? shuffle(cards) : cards,
+    });
+  };
 
-  const { index, termMode, shuffleMode, shuffled } = state;
-  useKeyboardShortcut("ArrowRight", goForward);
-  useKeyboardShortcut("ArrowLeft", goBack);
+  const toggleResetProgress = () => {
+    const s = stateRef.current;
+    update({
+      ...s,
+      shuffled: s.shuffleMode ? shuffle(cards) : cards,
+      learntIds: [],
+      index: 0,
+    });
+  };
+
+  const toggleReset = () => {
+    const s = stateRef.current;
+    update({ ...s, index: 0 });
+  };
+
+  const toggleLearnt = (card: Card) => {
+    const s = stateRef.current;
+    const newShuffled = s.shuffled.filter((c) => c.id !== card.id);
+    const newLearntIds = [...s.learntIds, card.id];
+    const newIndex =
+      s.index >= newShuffled.length ? newShuffled.length : s.index;
+    update({
+      ...s,
+      shuffled: newShuffled,
+      learntIds: newLearntIds,
+      index: newIndex,
+    });
+  };
+
+  const { index, termMode, shuffleMode, shuffled, learntIds } = state;
+
+  const isFinished = index >= shuffled.length;
+  useKeyboardShortcut("ArrowRight", isFinished ? () => {} : goForward);
+  useKeyboardShortcut("ArrowLeft", isFinished ? () => {} : goBack);
 
   const Router = useRouter();
   return (
-    <div className="w-full h-full flex flex-col gap-3 sm:gap-5  px-10">
-      <div className="w-full flex">
-        <BaseButton
-          size="sm"
-          variant="icon"
-          onClick={() => Router.push("/studoset/" + id)}
-        >
-          <IoArrowBackOutline />
-        </BaseButton>
-      </div>
+    <div className="w-full min-h-170 h-full flex flex-col gap-3 sm:gap-5  px-10">
+      {!isHome && (
+        <div className="w-full flex">
+          <BaseButton
+            size="sm"
+            variant="icon"
+            onClick={() => Router.push("/studoset/" + id)}
+          >
+            <IoArrowBackOutline />
+          </BaseButton>
+        </div>
+      )}
 
       {/* Toolbar */}
       <div className="w-full flex flex-row gap-2 sm:gap-5 items-center">
-        <ProgressBar
-          cardIndex={index}
-          cardLength={cards.length}
-          queueIndex={0}
-          queueLength={0}
-          queueMode={false}
-        />
+        <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-studoborder/30">
+          <div
+            style={{
+              width: `${isFinished ? 100 : (learntIds.length / cards.length) * 100}%`,
+            }}
+            className="h-full bg-linear-90 from-emerald-400 to-emerald-500 transition-all duration-500"
+          />
+          {!isFinished && (
+            <div
+              style={{
+                width: `${shuffled.length > 0 ? (index / cards.length) * 100 : 0}%`,
+              }}
+              className="h-full bg-linear-90 from-orange-400 to-orange-500 transition-all duration-300"
+            />
+          )}
+        </div>
         <BaseTooltip content={t("answer_with")}>
           <BaseButton
             variant="icon"
+            className={"min-h-full"}
             onClick={() => setState((s) => ({ ...s, termMode: !s.termMode }))}
           >
             <p className="text-xs sm:text-sm">
@@ -171,7 +269,7 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
         <BaseTooltip content={t("shuffle")}>
           <BaseButton variant="icon" onClick={toggleShuffle}>
             <IoShuffleOutline
-              size={18}
+              size={19}
               className={
                 shuffleMode
                   ? "dark:text-studoblue transition-all duration-300 text-emerald-400"
@@ -182,19 +280,33 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
         </BaseTooltip>
         <BaseTooltip content={t("reset")}>
           <BaseButton variant="icon" onClick={toggleReset}>
-            <GrPowerReset size={16} />
+            <GrPowerReset size={19} />
+          </BaseButton>
+        </BaseTooltip>
+        <BaseTooltip content={t("progress")}>
+          <BaseButton variant="icon" onClick={toggleResetProgress}>
+            <AiOutlineRise size={19} />
           </BaseButton>
         </BaseTooltip>
       </div>
 
-      <div className="flex-1 pb-10 min-h-0 max-h-130 h-1/6">
-        {shuffled[index] ? (
+      <div className="flex-1 pb-10 min-h-0 max-h-130">
+        {index >= shuffled.length ? (
+          <FinishedScreen
+            progress={toggleResetProgress}
+            reset={toggleReset}
+            back={() => Router.push("/studoset/" + id)}
+            cardlength={shuffled.length}
+            isHome={isHome}
+          />
+        ) : (
           <Card
             card={shuffled[index]}
             key={shuffled[index].id}
             termMode={termMode}
+            onLearnt={toggleLearnt}
           />
-        ) : null}
+        )}
       </div>
 
       {/* Navigatie — altijd onderaan, in de flow */}
@@ -210,8 +322,10 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
           >
             <IoIosArrowBack />
           </button>
-          <span className={"w-1/3 text-center"}>{index + 1}</span>|
-          <span className={"w-1/3 text-center"}>{cards.length}</span>
+          <span className={"w-1/3 text-center"}>
+            {index >= shuffled.length ? shuffled.length : index + 1}
+          </span>
+          |<span className={"w-1/3 text-center"}>{shuffled.length}</span>
           <button
             onClick={goForward}
             className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer rounded-full flex items-center justify-center"
@@ -227,8 +341,9 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
 interface CardProps {
   card: Card;
   termMode: boolean;
+  onLearnt: (value: Card) => void;
 }
-function Card({ card, termMode }: CardProps) {
+function Card({ card, termMode, onLearnt }: CardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const t = useTranslations("card");
 
@@ -241,16 +356,23 @@ function Card({ card, termMode }: CardProps) {
       className={`animate__fadeInLeft animate__animate w-full h-full card--container ${isFlipped ? "flip" : ""}`}
       onClick={() => setIsFlipped((prev) => !prev)}
     >
-      <div
-        className={
-          "relative transform-3d w-full h-full card--flipper transition-all duration-300"
-        }
-      >
+      <div className="relative transform-3d w-full h-full card--flipper transition-all duration-300">
+        {/*term*/}
         <div
           className={
-            "side-a backface-hidden top-0 left-0 absolute  w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20"
+            "side-a shadow-lg backface-hidden top-0 left-0 absolute w-full cursor-pointer h-full flex items-center justify-center rounded-3xl border hover:border-studoborder transition-all duration-300 border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20"
           }
         >
+          <div
+            className="absolute right-3 top-3 z-20 flex flex-row gap-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <BaseButton
+              iconLeft={<FaCheck />}
+              label={t("learnt")}
+              onClick={() => onLearnt(card)}
+            />
+          </div>
           <span
             className={
               "absolute bottom-3 left-1/2 -translate-1/2 flex flex-row gap-1 items-center opacity-30"
@@ -347,5 +469,90 @@ const CodeBlock = ({ value, lang }: { value: string; lang: string }) => {
       className="text-xl w-full overflow-auto [&>pre]:!bg-transparent [&>pre]:p-0 [&>pre]:font-mono"
       dangerouslySetInnerHTML={{ __html: html }}
     />
+  );
+};
+
+interface FinishedScreenProps {
+  reset: () => void;
+  back: () => void;
+  progress: () => void;
+  cardlength: number;
+  isHome: boolean;
+}
+const FinishedScreen = ({
+  reset,
+  back,
+  progress,
+  cardlength,
+  isHome,
+}: FinishedScreenProps) => {
+  const t = useTranslations("flashcards");
+
+  return (
+    <div
+      className={`animate__fadeInLeft animate__animate w-full h-full card--container`}
+    >
+      <div
+        className={
+          "side-a backface-hidden top-0 left-0 absolute w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20"
+        }
+      >
+        {!isHome && (
+          <>
+            <div className={"firework"} />
+            <div className={"firework"} />
+            <div className={"firework"} />
+          </>
+        )}
+
+        <AnimateOnMount
+          className={"w-fit flex flex-col gap-5 items-center justify-center"}
+        >
+          <div className={"gap-2 flex-col flex items-center justify-center"}>
+            <Image
+              src={"/images/fallbacks/finish.png"}
+              width={200}
+              height={200}
+              alt={"finish"}
+              className={"w-auto h-30"}
+            />
+            <span className={"font-georgia font-bold text-xl"}>
+              {t("all_set")}
+            </span>
+          </div>
+
+          <div className={"w-fit flex flex-row gap-2"}>
+            {!isHome && (
+              <BaseButton
+                size={"sm"}
+                type={"button"}
+                variant={"submit"}
+                iconLeft={<IoArrowBackOutline />}
+                label={t("back")}
+                onClick={back}
+              />
+            )}
+            {cardlength > 0 && (
+              <BaseButton
+                size={"sm"}
+                type={"button"}
+                variant={"primary"}
+                iconLeft={<GrPowerReset />}
+                label={t("restart")}
+                onClick={reset}
+              />
+            )}
+            <BaseButton
+              size={"sm"}
+              type={"button"}
+              variant={"danger"}
+              iconLeft={<AiOutlineRise />}
+              label={t("progress")}
+              onClick={progress}
+            />
+          </div>
+        </AnimateOnMount>
+      </div>
+    </div>
   );
 };

@@ -120,7 +120,7 @@ export default function Flashcard({ cards = [], id }: FlashcardProps) {
         queueMode={false}
         subtle
       />
-      <div className={"z-10 w-full h-full pb-5"}>
+      <div className={"z-10 w-full h-full py-5"}>
         <Card
           card={shuffled[index]}
           key={shuffled[index]?.id}
