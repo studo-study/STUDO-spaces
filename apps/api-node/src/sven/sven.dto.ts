@@ -51,4 +51,11 @@ export class ImageImportResponseDTO {
   })
   @Expose()
   isDouble: boolean;
+
+  @ApiProperty({
+    example: 'text',
+    description: 'content type van de content',
+  })
+  @Expose()
+  special_content_type: 'text' | 'latex' | 'code';
 }

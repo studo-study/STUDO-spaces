@@ -65,13 +65,19 @@ export default function SvenImport({
       const data = await res.json().catch(() => null);
       if (!res.ok)
         throw new Error(data?.message ?? `Server error ${res.status}`);
-      const cards = data.map((card: Partial<CardData>, index: number) => ({
-        ...card,
-        id: crypto.randomUUID(),
-        index: cardArray.length + index,
-        image: "",
-        isDouble: false,
-      }));
+      const cards = data.map(
+        (
+          card: Partial<CardData> & { special_content_type?: string },
+          index: number,
+        ) => ({
+          ...card,
+          contentType: card.special_content_type ?? "text",
+          id: crypto.randomUUID(),
+          index: cardArray.length + index,
+          image: "",
+          isDouble: false,
+        }),
+      );
 
       setCardArray((prev) => [...prev, ...cards]);
       onClose(); // pas hier

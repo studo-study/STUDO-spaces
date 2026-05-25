@@ -4,11 +4,12 @@ import {
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import { ImageImportResponseDTO } from './sven.dto';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 
 @Injectable()
 export class SvenService {
   genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+
   prompt =
     'Extract all terms and their definitions from this image.\n' +
     'Rules:\n' +
@@ -17,22 +18,42 @@ export class SvenService {
     '- Preserve order from top to bottom\n' +
     '- Do NOT merge multiple terms\n' +
     '- Do NOT invent content\n' +
-    'Return ONLY valid JSON in this exact format:\n' +
-    '[\n' +
-    '  {\n' +
-    '    "id": "string",\n' +
-    '    "index": 0,\n' +
-    '    "term": "string",\n' +
-    '    "definition": "string"\n' +
-    '  }\n' +
-    ']';
+    '- If the term is a mathematical formula, set term_content_type to "latex" ' +
+    'and put the LaTeX in the term field WITHOUT $$ or $ delimiters (e.g. ' +
+    'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a})\n' +
+    '- If the term is source code, set term_content_type to "code" ' +
+    'and put the code in the term field\n' +
+    '- The definition is always plain text, never latex or code\n' +
+    '- The default term_content_type is "text"- Read the card naturally: the label/name is the term, the explanation is the definition\n' +
+    '- If either side is a mathematical formula, set special_content_type to "latex" and special_side to whichever side ("term" or "definition") contains the formula\n' +
+    '- If either side is source code, set special_content_type to "code" and special_side accordingly\n' +
+    '- Write latex WITHOUT $$ or $ delimiters\n' +
+    '- Otherwise special_content_type is "text" and special_side is "none"';
+
+  responseSchema = {
+    type: SchemaType.ARRAY,
+    items: {
+      type: SchemaType.OBJECT,
+      properties: {
+        term: { type: SchemaType.STRING },
+        definition: { type: SchemaType.STRING },
+        special_content_type: {
+          type: SchemaType.STRING,
+          enum: ['text', 'latex', 'code'],
+        },
+        special_side: {
+          type: SchemaType.STRING,
+          enum: ['none', 'term', 'definition'],
+        },
+      },
+      required: ['term', 'definition', 'special_content_type', 'special_side'],
+    },
+  };
 
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
   ) {}
-
-  // IMPORT naar gemini sturen -------------------------------------------------
 
   async import(
     files: Express.Multer.File[],
@@ -46,6 +67,7 @@ export class SvenService {
           definition: '',
           image: '',
           isDouble: false,
+          special_content_type: 'text',
         },
       ];
     }
@@ -57,15 +79,15 @@ export class SvenService {
     return flat;
   }
 
-  // UPLOAD images uploaden -------------------------------------------------
-
   async uploadImage(
     file: Express.Multer.File,
   ): Promise<ImageImportResponseDTO[]> {
     const model = this.genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
       generationConfig: {
-        // @ts-expect-error thinkingConfig is not yet in the type definitions
+        responseMimeType: 'application/json',
+        // @ts-expect-error responseSchema typing lags behind the API
+        responseSchema: this.responseSchema,
         thinkingConfig: { thinkingBudget: 0 },
       },
     });
@@ -78,8 +100,41 @@ export class SvenService {
     };
 
     const result = await model.generateContent([this.prompt, imagePart]);
-    const text = result.response.text();
-    const clean = text.replace(/```json|```/g, '').trim();
-    return JSON.parse(clean);
+    type GeminiCard = {
+      term: string;
+      definition: string;
+      special_content_type: 'text' | 'latex' | 'code';
+      special_side: 'none' | 'term' | 'definition';
+    };
+    const parsed = JSON.parse(result.response.text()) as GeminiCard[];
+
+    return parsed.map((card, i) => {
+      let { term, definition } = card;
+      const contentType = card.special_content_type;
+
+      if (card.special_side === 'definition' && contentType !== 'text') {
+        [term, definition] = [definition, term];
+      }
+
+      return {
+        id: crypto.randomUUID(),
+        index: i,
+        term: this.stripMathDelimiters(term),
+        definition,
+        image: '',
+        isDouble: false,
+        special_content_type: contentType,
+      };
+    });
+  }
+
+  private stripMathDelimiters(value: string): string {
+    return value
+      .trim()
+      .replace(/^\${1,2}/, '')
+      .replace(/\${1,2}$/, '')
+      .replace(/^\\\[|\\\]$/g, '')
+      .replace(/^\\\(|\\\)$/g, '')
+      .trim();
   }
 }
