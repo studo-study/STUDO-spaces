@@ -1179,7 +1179,8 @@
     "popular": "populair",
     "korting_school": "Studo biedt kortingen aan voor scholen, bedrijven en families",
     "try_edu": "Probeer Studo for Education",
-    "group": "Wil je bestellen voor een grotere groep?"
+    "group": "Wil je bestellen voor een grotere groep?",
+    "options": "opties"
   },
   "phrases": {
     "Nice work": "Lekker bezig",
@@ -1495,6 +1496,7 @@
     "progress_explanation": "Progressie wordt niet opgeslagen"
   },
   "latex": {
-    "LaTeX": "LaTeX"
+    "LaTeX": "LaTeX",
+    "Code": "Code"
   }
 }

@@ -11,7 +11,8 @@ interface CardProps {
   deleteCard: (id: string) => void;
   updateCard: (id: string, field: string, value: string | boolean) => void;
   isDouble: boolean;
-  isLatex: boolean;
+  contentType: "text" | "latex" | "code";
+  codeLanguage: string;
   length: number;
   term: string;
   definition: string;
@@ -24,7 +25,8 @@ export default function CardItem({
   id,
   deleteCard,
   isDouble,
-  isLatex: isLatexProp,
+  contentType: contentTypeProp,
+  codeLanguage: codeLanguageProp,
   updateCard,
   length,
   term,
@@ -35,20 +37,28 @@ export default function CardItem({
   onEnterDefinition,
 }: CardProps) {
   const t = useTranslations("card");
-  const [isLatex, setIsLatex] = useState<boolean>(isLatexProp);
+  const [contentType, setContentType] = useState<"text" | "latex" | "code">(
+    contentTypeProp,
+  );
+  const [codeLanguage, setCodeLanguage] = useState<string>(codeLanguageProp);
 
-  const handleSetIsLatex = (value: boolean) => {
-    setIsLatex(value);
-    updateCard(id, "isLatex", value);
+  const handleSetContentType = (value: "text" | "latex" | "code") => {
+    setContentType(value);
+    updateCard(id, "contentType", value);
+  };
+
+  const handleSetCodeLanguage = (value: string) => {
+    setCodeLanguage(value);
+    updateCard(id, "codeLanguage", value);
   };
 
   return (
     <div className={"w-full h-fit relative mb-5"}>
       <div
-        className={`flex flex-col justify-around items-baseline relative h-fit overflow-hidden w-full gap-3 sm:gap-4 md:gap-5 border  ${isDouble ? "border-emerald-400 dark:border-studoblue" : "border-studoborder/30"} rounded-2xl sm:rounded-4xl`}
+        className={`flex flex-col justify-around items-baseline relative h-fit w-full gap-3 sm:gap-4 md:gap-5 border  ${isDouble ? "border-emerald-400 dark:border-studoblue" : "border-studoborder/30"} rounded-2xl sm:rounded-4xl`}
       >
         {/* Header */}
-        <div className="w-full h-10 sm:h-[52px] rounded-t-3xl dark:bg-gray-700/50 bg-zinc-300/20 flex justify-between items-center p-2 px-4 sm:p-3 sm:px-6 md:px-8 overflow-hidden">
+        <div className="w-full h-10 sm:h-[52px] rounded-t-3xl dark:bg-gray-700/50 bg-zinc-300/20 flex justify-between items-center p-2 px-4 sm:p-3 sm:px-6 md:px-8">
           <span className="text-sm sm:text-base text-studodarkblue dark:text-white">
             {index + 1}
           </span>
@@ -66,36 +76,50 @@ export default function CardItem({
         </div>
 
         <div className="flex flex-col lg:flex-row w-full gap-3 px-5 pb-4 sm:pb-6">
-          <LaTexInput
-            ref={termRef}
-            isLatex={isLatex}
-            setIsLatex={handleSetIsLatex}
-            value={term}
-            onChange={(value) => updateCard(id, "term", value)}
-            placeholder={t("Term")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                defRef?.current?.focus();
-              }
-            }}
-          />
-
-          <LaTexInput
-            ref={defRef}
-            value={definition}
-            isLatex={isLatex}
-            setIsLatex={handleSetIsLatex}
-            hidden
-            onChange={(value) => updateCard(id, "definition", value)}
-            placeholder={t("Definition")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                onEnterDefinition?.();
-              }
-            }}
-          />
+          <div
+            className={
+              "h-full flex-1 lg:max-w-1/2 lg:w-1/2 lg:min-w-1/2  w-full"
+            }
+          >
+            <LaTexInput
+              ref={termRef}
+              contentType={contentType}
+              setContentType={handleSetContentType}
+              codeLanguage={codeLanguage}
+              onCodeLanguageChange={handleSetCodeLanguage}
+              value={term}
+              onChange={(value) => updateCard(id, "term", value)}
+              placeholder={t("Term")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  defRef?.current?.focus();
+                }
+              }}
+            />
+          </div>
+          <div
+            className={
+              "h-full flex-1 lg:max-w-1/2 lg:w-1/2 lg:min-w-1/2 w-full"
+            }
+          >
+            <LaTexInput
+              ref={defRef}
+              value={definition}
+              contentType={contentType}
+              setContentType={handleSetContentType}
+              codeLanguage={codeLanguage}
+              hidden
+              onChange={(value) => updateCard(id, "definition", value)}
+              placeholder={t("Definition")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  onEnterDefinition?.();
+                }
+              }}
+            />
+          </div>
         </div>
       </div>
       <div className="absolute min-w-full flex group items-center justify-center -bottom-2.5">

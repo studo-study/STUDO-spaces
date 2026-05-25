@@ -34,6 +34,7 @@ import * as argon2 from 'argon2';
 import { ConfigService } from '@nestjs/config';
 import {
   AllsetsResponse,
+  CardResponse,
   LastStudied,
   SessionCardResponse,
   SessionPinResponse,
@@ -344,9 +345,9 @@ export class UserService {
     const sesh = { ...session, cards: seshcards, pins: null };
     return {
       ...set,
-      cards: await this.db.query.cards.findMany({
+      cards: (await this.db.query.cards.findMany({
         where: eq(cards.set_id, set_id),
-      }),
+      })) as CardResponse[],
       likes: await this.db.query.setlikes.findMany({
         where: eq(setlikes.set_id, set_id),
       }),

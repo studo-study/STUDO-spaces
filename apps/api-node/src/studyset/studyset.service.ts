@@ -113,7 +113,8 @@ export class StudysetService {
         times_relearned: 0,
         set_id: setId,
         owner_id: user_id,
-        term_is_latex: c.term_is_latex ?? false,
+        term_content_type: c.term_content_type ?? 'text',
+        code_language: c.code_language ?? 'typescript',
       };
       CARDS.push(card);
     });
@@ -172,7 +173,8 @@ export class StudysetService {
       times_relearned: 0,
       set_id,
       owner_id: user_id,
-      term_is_latex: data.term_is_latex ?? false,
+      term_content_type: data.term_content_type ?? 'text',
+      code_language: data.code_language ?? 'typescript',
     };
 
     await this.db.insert(cards).values(card);
@@ -186,7 +188,8 @@ export class StudysetService {
       updated_at: card.updated_at,
       set_id: card.set_id,
       owner_id: card.owner_id,
-      term_is_latex: card.term_is_latex,
+      term_content_type: card.term_content_type,
+      code_language: card.code_language,
     };
   }
 
@@ -409,7 +412,7 @@ export class StudysetService {
     return {
       ...set,
       folder_id: folderEntry?.folder_id ?? null,
-      cards: kaarten.sort((a, b) => a.number - b.number),
+      cards: kaarten.sort((a, b) => a.number - b.number) as CardResponseDto[],
       likes: likes,
       session: sesh,
       folders: foldrs,
@@ -505,6 +508,12 @@ export class StudysetService {
               term: card.term,
               definition: card.definition,
               updated_at: isoNow,
+              ...(card.term_content_type !== undefined && {
+                term_content_type: card.term_content_type,
+              }),
+              ...(card.code_language !== undefined && {
+                code_language: card.code_language,
+              }),
             })
             .where(eq(cards.id, card.id));
         }),

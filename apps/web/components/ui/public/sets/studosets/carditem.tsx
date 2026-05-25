@@ -1,11 +1,13 @@
 "use client";
-import { useRef, useCallback, useState } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { MdCheck, MdEdit } from "react-icons/md";
 import { Card } from "@/types/types";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useToast } from "@/components/providers/app/ToastProvider";
+import { useUpdateCards } from "@/hooks/app/sets/useUpdateCards";
 import LaTeXInput from "@/components/ui/design_system/input/LaTeXInput";
 import SafeKaTeX from "@/components/ui/design_system/input/SafeKaTeX";
+import { codeToHtml } from "shiki";
 
 interface CarditemProps {
   index: number;
@@ -32,6 +34,7 @@ export default function CardItem({
   } = useStudosetStore();
 
   const toast = useToast();
+  const { updateCards } = useUpdateCards(setId ?? "");
   const blurTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const currentCard = studosetCards.find((c) => c.id === card.id) ?? card;
@@ -40,12 +43,13 @@ export default function CardItem({
 
   const [editTerm, setEditTerm] = useState(currentCard.term);
   const [editDefinition, setEditDefinition] = useState(currentCard.definition);
-  const [isLatex, setIsLatex] = useState(currentCard.term_is_latex);
+  const [contentType, setContentType] = useState(currentCard.term_content_type);
+  const [codeLanguage, setCodeLanguage] = useState(currentCard.code_language);
 
   const enterEdit = () => {
     setEditTerm(currentCard.term);
     setEditDefinition(currentCard.definition);
-    setIsLatex(currentCard.term_is_latex);
+    setContentType(currentCard.term_content_type);
     setEditingCardId(card.id);
   };
 
@@ -58,25 +62,31 @@ export default function CardItem({
     if (
       term === currentCard.term &&
       definition === currentCard.definition &&
-      isLatex === currentCard.term_is_latex
+      contentType === currentCard.term_content_type &&
+      codeLanguage === currentCard.code_language
     )
       return;
 
     if (!term || !definition || !setId) return;
 
-    const oldCard = updateCardOptimistic(card.id, term, definition, isLatex);
+    const oldCard = updateCardOptimistic(
+      card.id,
+      term,
+      definition,
+      contentType,
+    );
     addSavingCard(card.id);
 
     try {
-      const res = await fetch(`/api/studysets/${setId}/cards`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          cards: [{ id: card.id, term, definition, term_is_latex: isLatex }],
-        }),
-      });
-
-      if (!res.ok) throw new Error();
+      await updateCards([
+        {
+          id: card.id,
+          term,
+          definition,
+          term_content_type: contentType,
+          code_language: codeLanguage,
+        },
+      ]);
     } catch {
       if (oldCard) rollbackCard(oldCard);
       toast.error("Kaart kon niet worden opgeslagen");
@@ -86,16 +96,21 @@ export default function CardItem({
   }, [
     editTerm,
     editDefinition,
-    isLatex,
-    card.id,
-    currentCard,
+    setEditingCardId,
+    currentCard.term,
+    currentCard.definition,
+    currentCard.term_content_type,
+    currentCard.code_language,
+    contentType,
+    codeLanguage,
     setId,
     updateCardOptimistic,
-    rollbackCard,
+    card.id,
     addSavingCard,
-    removeSavingCard,
-    setEditingCardId,
+    updateCards,
+    rollbackCard,
     toast,
+    removeSavingCard,
   ]);
 
   const handleContainerBlur = useCallback(() => {
@@ -157,15 +172,24 @@ export default function CardItem({
             <LaTeXInput
               value={editTerm}
               onChange={setEditTerm}
-              isLatex={isLatex}
-              setIsLatex={setIsLatex}
+              contentType={contentType}
+              setContentType={setContentType}
+              codeLanguage={codeLanguage}
+              onCodeLanguageChange={setCodeLanguage}
               placeholder="Term..."
               onKeyDown={(e) => handleKeyDown(e)}
             />
-          ) : currentCard.term_is_latex ? (
+          ) : currentCard.term_content_type === "latex" ? (
             <span className="w-full flex items-center overflow-hidden">
               <SafeKaTeX value={currentCard.term} />
             </span>
+          ) : currentCard.term_content_type === "code" ? (
+            <div className="w-full px-3 h-10 flex items-center border border-studoborder/30 rounded-full bg-studogrey/10 overflow-hidden">
+              <CodeBlock
+                value={currentCard.term}
+                lang={currentCard.code_language}
+              />
+            </div>
           ) : (
             <span className="w-full px-5 h-10 flex truncate items-center border border-studoborder/30 rounded-full bg-studogrey/10 overflow-hidden text-sm">
               {currentCard.term}
@@ -178,8 +202,9 @@ export default function CardItem({
             <LaTeXInput
               value={editDefinition}
               onChange={setEditDefinition}
-              isLatex={isLatex}
-              setIsLatex={setIsLatex}
+              contentType={contentType}
+              setContentType={setContentType}
+              codeLanguage={codeLanguage}
               hidden
               placeholder="Definitie..."
               onKeyDown={(e) => handleKeyDown(e)}
@@ -194,3 +219,21 @@ export default function CardItem({
     </div>
   );
 }
+
+const CodeBlock = ({ value, lang }: { value: string; lang: string }) => {
+  const [html, setHtml] = useState("");
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    const theme = isDark ? "github-dark" : "github-light";
+    codeToHtml(value, { lang, theme })
+      .catch(() => codeToHtml(value, { lang: "text", theme }))
+      .then(setHtml);
+  }, [value, lang]);
+  if (!html) return <span className="font-mono text-xs truncate">{value}</span>;
+  return (
+    <div
+      className="text-xs w-full overflow-hidden [&>pre]:!bg-transparent [&>pre]:p-0 [&>pre]:font-mono [&>pre]:truncate"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+};

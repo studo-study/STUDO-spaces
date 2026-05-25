@@ -20,7 +20,7 @@ export const CARDS_SEED = [
     updated_at: '2024-09-01T10:15:00.000Z',
     set_id: studySetId1,
     owner_id: userId1,
-    term_is_latex: false,
+    term_content_type: 'text',
   },
   {
     id: cardId2,
@@ -31,7 +31,7 @@ export const CARDS_SEED = [
     updated_at: '2024-09-01T10:20:00.000Z',
     set_id: studySetId1,
     owner_id: userId1,
-    term_is_latex: false,
+    term_content_type: 'text',
   },
   {
     id: cardId3,
@@ -42,7 +42,7 @@ export const CARDS_SEED = [
     updated_at: '2024-08-15T09:15:00.000Z',
     set_id: studySetId2,
     owner_id: userId2,
-    term_is_latex: false,
+    term_content_type: 'text',
   },
   {
     id: cardId4,
@@ -54,7 +54,7 @@ export const CARDS_SEED = [
     updated_at: '2024-08-15T09:20:00.000Z',
     set_id: studySetId2,
     owner_id: userId2,
-    term_is_latex: false,
+    term_content_type: 'text',
   },
 ];
 

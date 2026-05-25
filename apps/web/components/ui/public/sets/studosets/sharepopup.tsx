@@ -44,6 +44,7 @@ export default function SharePopup() {
             type="text"
             className={"w-full h-full flex-1 truncate outline-none"}
             value={buildLink}
+            readOnly
           />
           <MdCopyAll
             onClick={toggleCopy}

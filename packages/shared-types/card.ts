@@ -1,9 +1,12 @@
+export type CardContentType = "text" | "latex" | "code";
+
 export interface CreateCard {
   term: string;
   definition: string;
   image?: string | null;
   number: number;
-  term_is_latex: boolean;
+  term_content_type: CardContentType;
+  code_language?: string;
 }
 
 export interface CreateCardList {
@@ -16,7 +19,8 @@ export interface UpdateCard {
   definition?: string;
   number?: number;
   updated_at?: string;
-  term_is_latex?: boolean;
+  term_content_type?: CardContentType;
+  code_language?: string;
 }
 
 export interface CardResponse {
@@ -28,7 +32,8 @@ export interface CardResponse {
   updated_at: string;
   set_id: string;
   owner_id: string;
-  term_is_latex: boolean;
+  term_content_type: CardContentType;
+  code_language: string;
 }
 
 export interface CardListResponse {

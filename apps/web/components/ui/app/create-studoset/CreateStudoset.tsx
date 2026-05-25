@@ -40,7 +40,8 @@ const firstCard = (): CardData => ({
   definition: "",
   image: "",
   isDouble: false,
-  isLatex: false,
+  contentType: "text" as const,
+  codeLanguage: "typescript",
 });
 
 export default function CreateStudosetForm() {
@@ -201,7 +202,8 @@ export default function CreateStudosetForm() {
         definition: card.definition.trim(),
         number: card.index,
         image: card.image || null,
-        term_is_latex: card.isLatex,
+        term_content_type: card.contentType,
+        code_language: card.codeLanguage,
       })),
     };
 
@@ -226,7 +228,8 @@ export default function CreateStudosetForm() {
         definition: "",
         image: "",
         isDouble: false,
-        isLatex: false,
+        contentType: "text" as const,
+        codeLanguage: "typescript",
       },
     ]);
   };
@@ -250,7 +253,8 @@ export default function CreateStudosetForm() {
           definition: "",
           image: "",
           isDouble: false,
-          isLatex: false,
+          contentType: "text" as const,
+          codeLanguage: "typescript",
         },
         ...prev.slice(index),
       ];
@@ -469,7 +473,8 @@ export default function CreateStudosetForm() {
                 index={card.index}
                 term={card.term}
                 definition={card.definition}
-                isLatex={card.isLatex}
+                contentType={card.contentType}
+                codeLanguage={card.codeLanguage}
                 isDouble={duplicates.includes(card.id)}
                 deleteCard={deleteCard}
                 updateCard={updateCard}
