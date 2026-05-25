@@ -42,11 +42,11 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
             >
               {pf?.displayName}
             </span>
-            <BaseToolTip content={t("verified")}>
-              <span className={"text-blue-500"}>
-                {!pf.verified && <MdVerified />}
-              </span>
-            </BaseToolTip>
+            {pf.verified && (
+              <BaseToolTip content={t("verified")}>
+                <span className={"text-blue-500"}>{<MdVerified />}</span>
+              </BaseToolTip>
+            )}
             <BaseToolTip content={pf.joinNumber}>
               <FaHashtag />
             </BaseToolTip>
