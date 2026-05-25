@@ -36,6 +36,41 @@
       "when": 1779640346870,
       "tag": "0004_wet_scrambler",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779655008106,
+      "tag": "0005_living_ravenous",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1779655215217,
+      "tag": "0006_living_dark_phoenix",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1779660000000,
+      "tag": "0007_add_code_language",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1779663842732,
+      "tag": "0008_minor_shaman",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1779670000000,
+      "tag": "0009_fix_card_content_type",
+      "breakpoints": true
     }
   ]
 }

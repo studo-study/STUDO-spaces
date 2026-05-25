@@ -15,6 +15,7 @@ import { TbClick } from "react-icons/tb";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 import "katex/dist/contrib/mhchem.mjs";
+import { codeToHtml } from "shiki";
 
 interface Card {
   id: string;
@@ -25,7 +26,8 @@ interface Card {
   updated_at: string;
   set_id: string;
   owner_id: string;
-  term_is_latex: boolean;
+  term_content_type: "text" | "latex" | "code";
+  code_language: string;
 }
 
 interface FlashcardProps {
@@ -259,8 +261,10 @@ function Card({ card, termMode }: CardProps) {
           </span>
           {termMode ? (
             <span className="text-xl select-none font-bold font-georgia">
-              {card.term_is_latex ? (
+              {card.term_content_type === "latex" ? (
                 <SafeKaTeX value={card.term} fallback={card.term} />
+              ) : card.term_content_type === "code" ? (
+                <CodeBlock value={card.term} lang={card.code_language} />
               ) : (
                 card.term
               )}
@@ -282,8 +286,10 @@ function Card({ card, termMode }: CardProps) {
             </span>
           ) : (
             <span className="text-xl select-none font-bold font-georgia">
-              {card.term_is_latex ? (
+              {card.term_content_type === "latex" ? (
                 <SafeKaTeX value={card.term} fallback={card.term} />
+              ) : card.term_content_type === "code" ? (
+                <CodeBlock value={card.term} lang={card.code_language} />
               ) : (
                 card.term
               )}
@@ -324,4 +330,22 @@ const SafeKaTeX = ({ value }: { value: string; fallback: string }) => {
     [value],
   );
   return <span dangerouslySetInnerHTML={{ __html: html }} />;
+};
+
+const CodeBlock = ({ value, lang }: { value: string; lang: string }) => {
+  const [html, setHtml] = useState("");
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    const theme = isDark ? "github-dark" : "github-light";
+    codeToHtml(value, { lang, theme })
+      .catch(() => codeToHtml(value, { lang: "text", theme }))
+      .then(setHtml);
+  }, [value, lang]);
+  if (!html) return <span className="font-mono text-sm">{value}</span>;
+  return (
+    <div
+      className="text-xl w-full overflow-auto [&>pre]:!bg-transparent [&>pre]:p-0 [&>pre]:font-mono"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 };

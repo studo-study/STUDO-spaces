@@ -10,7 +10,7 @@ interface StudosetStore {
     id: string,
     term: string,
     definition: string,
-    term_is_latex?: boolean,
+    term_content_type?: "text" | "latex" | "code",
   ) => Card | undefined;
   rollbackCard: (card: Card) => void;
   setEditingCardId: (id: string | null) => void;
@@ -25,7 +25,7 @@ export const useStudosetStore = create<StudosetStore>()((set, get) => ({
 
   setStudosetCards: (cards) => set({ studosetCards: cards }),
 
-  updateCardOptimistic: (id, term, definition, term_is_latex) => {
+  updateCardOptimistic: (id, term, definition, term_content_type) => {
     const old = get().studosetCards.find((c) => c.id === id);
     set((state) => ({
       studosetCards: state.studosetCards.map((c) =>
@@ -34,7 +34,7 @@ export const useStudosetStore = create<StudosetStore>()((set, get) => ({
               ...c,
               term,
               definition,
-              ...(term_is_latex !== undefined && { term_is_latex }),
+              ...(term_content_type !== undefined && { term_content_type }),
             }
           : c,
       ),

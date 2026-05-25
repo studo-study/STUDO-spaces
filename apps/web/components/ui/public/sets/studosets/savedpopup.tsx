@@ -61,6 +61,7 @@ export default function SavedPopup({ setId }: SavedPopupProps) {
           >
             <label className="relative inline-flex items-center justify-center cursor-pointer">
               <input
+                onChange={() => null}
                 checked={saved === folder.id}
                 onInput={() => toggleSave(folder.id, folder.name)}
                 type="checkbox"

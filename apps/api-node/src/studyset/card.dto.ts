@@ -6,6 +6,7 @@ import {
   IsArray,
   ValidateNested,
   ArrayMinSize,
+  IsIn,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Expose } from 'class-transformer';
@@ -47,11 +48,21 @@ export class CreateCardDto {
   number: number;
 
   @ApiPropertyOptional({
-    example: false,
-    description: 'boolean die aantoont of term LaTeX is van een kaart',
+    example: 'text',
+    description: 'Content type van de term: text, latex of code',
+    enum: ['text', 'latex', 'code'],
   })
   @IsOptional()
-  term_is_latex?: boolean;
+  @IsIn(['text', 'latex', 'code'])
+  term_content_type?: 'text' | 'latex' | 'code';
+
+  @ApiPropertyOptional({
+    example: 'typescript',
+    description: 'Programmeertaal voor code cards',
+  })
+  @IsString({ name: 'code_language', maxLength: 32 })
+  @IsOptional()
+  code_language?: string;
 }
 
 export class CreateCardListDto {
@@ -108,11 +119,21 @@ export class UpdateCardDto {
   updated_at?: string;
 
   @ApiPropertyOptional({
-    example: false,
-    description: 'boolean die aantoont of term LaTeX is van een kaart',
+    example: 'text',
+    description: 'Content type van de term: text, latex of code',
+    enum: ['text', 'latex', 'code'],
   })
   @IsOptional()
-  term_is_latex: boolean;
+  @IsIn(['text', 'latex', 'code'])
+  term_content_type?: 'text' | 'latex' | 'code';
+
+  @ApiPropertyOptional({
+    example: 'typescript',
+    description: 'Programmeertaal voor code cards',
+  })
+  @IsString({ name: 'code_language', maxLength: 32 })
+  @IsOptional()
+  code_language?: string;
 }
 
 export class CardResponseDto {
@@ -174,11 +195,19 @@ export class CardResponseDto {
   owner_id: string;
 
   @ApiProperty({
-    example: false,
-    description: 'boolean die aantoont of term LaTeX is van een kaart',
+    example: 'text',
+    description: 'Content type van de term: text, latex of code',
+    enum: ['text', 'latex', 'code'],
   })
   @Expose()
-  term_is_latex: boolean;
+  term_content_type: 'text' | 'latex' | 'code';
+
+  @ApiProperty({
+    example: 'typescript',
+    description: 'Programmeertaal voor code cards',
+  })
+  @Expose()
+  code_language: string;
 }
 
 export class CardListResponseDto {
