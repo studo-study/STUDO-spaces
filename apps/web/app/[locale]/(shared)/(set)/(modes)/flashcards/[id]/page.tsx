@@ -11,7 +11,7 @@ export default async function FlashCardPage({
 
   return (
     <PageContainer>
-      <AnimateOnMount className={"w-full h-full flex-1"}>
+      <AnimateOnMount className={"w-full flex-1 min-h-1/5"}>
         <FlashcardMode id={id} />
       </AnimateOnMount>
     </PageContainer>

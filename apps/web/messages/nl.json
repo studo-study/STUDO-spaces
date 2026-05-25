@@ -1022,7 +1022,8 @@
     "Definition": "Definitie",
     "Term": "Term",
     "click_turn": "klik om te draaien",
-    "click_flip_back": "klik om terug te draaien"
+    "click_flip_back": "klik om terug te draaien",
+    "learnt": "Geleerd"
   },
   "notfound": {
     "return": "terug",
@@ -1363,6 +1364,7 @@
     "student": "Student",
     "teacher": "Leerkracht",
     "professor": "Professor",
+    "verified": "Geverifieerd",
     "owner": "Eigenaar",
     "stats": {
       "subtitle_stats": "Jouw statistieken",
@@ -1485,7 +1487,11 @@
     "term": "Term",
     "answer_with": "antwoord met",
     "shuffle": "shuffle",
-    "reset": "reset"
+    "reset": "reset",
+    "all_set": "De set is helemaal doorlopen!",
+    "back": "terug naar set",
+    "restart": "oefen nog eens",
+    "progress": "reset vooruigang"
   },
   "profile": {
     "ss": "Studosets",

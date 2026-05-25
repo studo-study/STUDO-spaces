@@ -16,10 +16,10 @@ export default function ProgressBar({
 }: ProgressBarProps) {
   const index = queueMode ? queueIndex : cardIndex;
   const length = queueMode ? queueLength : cardLength;
-  const perc = length > 0 ? Math.floor(((index + 1) / length) * 100) : 0;
+  const perc = length > 0 ? Math.floor((index / length) * 100) : 0;
   console.log(perc);
   return (
-    <div className={`w-full ${subtle ? "h-15" : "h-fit"} gap-2 flex flex-col`}>
+    <div className={`w-full ${subtle ? "h-fit" : "h-15"} gap-2 flex flex-col`}>
       {!subtle && (
         <div className={"w-full flex items-center justify-between"}>
           <span>{queueMode ? queueIndex + 1 : index + 1}</span>
