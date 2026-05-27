@@ -451,3 +451,38 @@ export class StartPaginaDto {
   @Expose()
   stats: TotalStatsDto;
 }
+
+export class SyncResponseDto {
+  @ApiProperty({
+    description: 'Alle studysets van de gebruiker',
+  })
+  @Expose()
+  studysets: object[];
+
+  @ApiProperty({
+    description: 'Alle visualsets van de gebruiker',
+  })
+  @Expose()
+  visualsets: object[];
+
+  @ApiProperty({
+    description: 'Alle mappen van de gebruiker',
+  })
+  @Expose()
+  folders: object[];
+
+  @ApiProperty({
+    type: [String],
+    example: ['Biology', 'Math'],
+    description: 'Unieke vakken',
+  })
+  @Expose()
+  courses: string[];
+
+  @ApiProperty({
+    type: StartPaginaDto,
+    description: 'Startpagina data',
+  })
+  @Expose()
+  start: StartPaginaDto;
+}

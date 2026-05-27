@@ -55,6 +55,8 @@ import {
   StartPagina,
   ClassActivities,
   Boards,
+  SyncResponse,
+  FolderResponse,
 } from '@studo/types';
 import { UserResponseDto, UserResponseStatsDto } from './users.dto';
 
@@ -497,6 +499,24 @@ export class UserService {
       class: await this.getClassmateActivity(user_id),
       stats: await this.getTotalStats(user_id),
       boards: await this.getBoards(user_id),
+    };
+  }
+
+  async sync(user_id: string): Promise<SyncResponse> {
+    const [allSets, userFolders, start] = await Promise.all([
+      this.getAllSetsById(user_id),
+      this.db.query.folders.findMany({
+        where: eq(folders.owner_id, user_id),
+      }),
+      this.startPagina(user_id),
+    ]);
+
+    return {
+      studysets: allSets.studysets,
+      visualsets: allSets.visualsets,
+      folders: userFolders as FolderResponse[],
+      courses: start.courses,
+      start,
     };
   }
 

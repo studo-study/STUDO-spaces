@@ -112,3 +112,11 @@ export interface StartPagina {
   class: ClassActivities[];
   stats: TotalStats;
 }
+
+export interface SyncResponse {
+  studysets: import("./studyset").StudysetResponse[];
+  visualsets: import("./visualset").VisualsetResponse[];
+  folders: import("./folder").FolderResponse[];
+  courses: string[];
+  start: StartPagina;
+}

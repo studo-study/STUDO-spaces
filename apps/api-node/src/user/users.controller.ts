@@ -39,6 +39,7 @@ import {
   HeaderResposneDto,
   RegisterUserRequestDto,
   StartPaginaDto,
+  SyncResponseDto,
   TotalStatsDto,
   UpdateUserDTO,
   UserListResponseDto,
@@ -228,6 +229,30 @@ export class UserController {
       throw new ForbiddenException('You are not allow to see this');
     }
     return this.userService.startPagina(user_id);
+  }
+
+  // SYNC ------------------------------------------------------------
+
+  @ApiOperation({
+    summary: 'Haal alle data op die een user nodig heeft bij het laden.',
+  })
+  @ApiParam({ name: 'user_id', type: String })
+  @ApiResponse({
+    status: 200,
+    description: 'Sync data opgehaald',
+    type: SyncResponseDto,
+  })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.USER)
+  @Get(':user_id/sync')
+  async sync(
+    @Param('user_id', ParseUserIdPipe) user_id: string,
+    @Request() req: AuthenticatedRequest,
+  ): Promise<types.SyncResponse> {
+    if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
+      throw new ForbiddenException('You are not allow to see this');
+    }
+    return this.userService.sync(user_id);
   }
 
   // UPDATE USER ----------------------------------------------------

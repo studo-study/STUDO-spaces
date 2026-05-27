@@ -146,11 +146,15 @@ pnpm build:api
 ### Docker Deployment
 
 ```bash
+# Dev workspace
+docker compose up
+
 # Volledige backend stack
 docker compose -f docker-compose-backend.yml up
 
 # Met seeding
 docker compose -f docker-compose-backend.yml --profile seed up
+
 ```
 
 ---
