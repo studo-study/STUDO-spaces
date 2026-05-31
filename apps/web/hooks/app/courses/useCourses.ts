@@ -1,13 +1,6 @@
-import { useSets } from "../sets/useSets";
+import { useSync } from "../useSync";
 
 export function useCourses() {
-  const { sets, visualsets, isLoading, error } = useSets();
-  const courses = [
-    ...new Set(
-      [...(sets ?? []), ...(visualsets ?? [])]
-        .map((s: { course: string }) => s.course)
-        .filter(Boolean),
-    ),
-  ];
+  const { courses, isLoading, error } = useSync();
   return { courses, isLoading, error };
 }

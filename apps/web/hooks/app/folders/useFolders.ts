@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import type { FolderListResponse } from "@studo/types";
+import { useSync } from "../useSync";
 
 export function useFolders() {
-  return useQuery<FolderListResponse>({
-    queryKey: ["folders"],
-    queryFn: () => fetch("/api/folders/me").then((r) => r.json()),
-  });
+  const query = useSync();
+
+  return {
+    ...query,
+    data: { folders: query.folders },
+  };
 }

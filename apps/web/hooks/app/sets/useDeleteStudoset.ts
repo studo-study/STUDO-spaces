@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { MyStudysetsResponse } from "@studo/types";
+import type { SyncResponse } from "@studo/types";
 
 export function useDeleteStudoset() {
   const queryClient = useQueryClient();
@@ -12,13 +12,10 @@ export function useDeleteStudoset() {
       }),
 
     onSuccess: (id) => {
-      queryClient.setQueryData(
-        ["studosets"],
-        (old: MyStudysetsResponse | undefined) => {
-          if (!old) return old;
-          return { ...old, sets: old.sets.filter((s) => s.id !== id) };
-        },
-      );
+      queryClient.setQueryData(["sync"], (old: SyncResponse | undefined) => {
+        if (!old) return old;
+        return { ...old, studysets: old.studysets.filter((s) => s.id !== id) };
+      });
     },
   });
 }

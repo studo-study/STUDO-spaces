@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MyStudysetsResponse } from "@studo/types";
+import { SyncResponse } from "@studo/types";
 import { CreateStudyset } from "@/types/types";
 
 export function useCreateStudyset() {
@@ -17,13 +17,10 @@ export function useCreateStudyset() {
       }),
 
     onSuccess: (newSet) => {
-      queryClient.setQueryData(
-        ["studosets"],
-        (old: MyStudysetsResponse | undefined) => {
-          if (!old) return old;
-          return { ...old, sets: [newSet, ...old.sets] };
-        },
-      );
+      queryClient.setQueryData(["sync"], (old: SyncResponse | undefined) => {
+        if (!old) return old;
+        return { ...old, studysets: [newSet, ...old.studysets] };
+      });
     },
   });
 }

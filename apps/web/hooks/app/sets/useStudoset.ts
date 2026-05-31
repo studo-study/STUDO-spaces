@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { FullStudysetResponse, MyStudysetsResponse } from "@studo/types";
+import type { FullStudysetResponse, SyncResponse } from "@studo/types";
 
 export function useStudoset(id: string) {
   const queryClient = useQueryClient();
@@ -8,8 +8,8 @@ export function useStudoset(id: string) {
     queryKey: ["studosets", id],
     queryFn: () => fetch(`/api/studysets/${id}`).then((r) => r.json()),
     placeholderData: () => {
-      const list = queryClient.getQueryData<MyStudysetsResponse>(["studosets"]);
-      return list?.sets.find((s) => s.id === id) as
+      const sync = queryClient.getQueryData<SyncResponse>(["sync"]);
+      return sync?.studysets.find((s) => s.id === id) as
         | FullStudysetResponse
         | undefined;
     },

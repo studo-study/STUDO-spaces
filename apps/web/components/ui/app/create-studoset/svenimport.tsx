@@ -5,6 +5,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
+import { useSession } from "next-auth/react";
 import { CardData } from "@/types/types";
 import { RxShare2 } from "react-icons/rx";
 
@@ -26,6 +27,7 @@ export default function SvenImport({
   cardArray,
   setCardArray,
 }: importerProps) {
+  const { data: session } = useSession();
   const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -58,10 +60,16 @@ export default function SvenImport({
     files.forEach((file) => formData.append("file", file));
 
     try {
-      const res = await fetch("/api/import", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sven/import_studoset`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+          },
+          body: formData,
+        },
+      );
       const data = await res.json().catch(() => null);
       if (!res.ok)
         throw new Error(data?.message ?? `Server error ${res.status}`);
