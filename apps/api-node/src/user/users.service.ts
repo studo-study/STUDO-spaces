@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -8,6 +9,8 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
+import type { Redis } from 'ioredis';
+import { REDIS_CLIENT } from '../redis/redis.provider';
 import { and, eq, gte, inArray, ne, sql } from 'drizzle-orm';
 import {
   cards,
@@ -60,13 +63,25 @@ import {
 } from '@studo/types';
 import { UserResponseDto, UserResponseStatsDto } from './users.dto';
 
+const SYNC_TTL_SECONDS = 60;
+
 @Injectable()
 export class UserService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
     private readonly configService: ConfigService<ServerConfig>,
+    @Inject(REDIS_CLIENT)
+    private readonly redis: Redis,
   ) {}
+
+  private syncKey(user_id: string) {
+    return `sync:${user_id}`;
+  }
+
+  async invalidateSyncCache(user_id: string) {
+    await this.redis.del(this.syncKey(user_id));
+  }
 
   async existsById(user_id: string): Promise<boolean> {
     const result = await this.db
@@ -503,6 +518,10 @@ export class UserService {
   }
 
   async sync(user_id: string): Promise<SyncResponse> {
+    const key = this.syncKey(user_id);
+    const cached = await this.redis.get(key);
+    if (cached) return JSON.parse(cached) as SyncResponse;
+
     const [allSets, userFolders, start] = await Promise.all([
       this.getAllSetsById(user_id),
       this.db.query.folders.findMany({
@@ -511,13 +530,16 @@ export class UserService {
       this.startPagina(user_id),
     ]);
 
-    return {
+    const result: SyncResponse = {
       studysets: allSets.studysets,
       visualsets: allSets.visualsets,
       folders: userFolders as FolderResponse[],
       courses: start.courses,
       start,
     };
+
+    await this.redis.set(key, JSON.stringify(result), 'EX', SYNC_TTL_SECONDS);
+    return result;
   }
 
   async getCourses(user_id: string): Promise<string[]> {

@@ -5,6 +5,7 @@ export function useSync() {
   const query = useQuery<SyncResponse>({
     queryKey: ["sync"],
     queryFn: () => fetch("/api/sync").then((r) => r.json()),
+    staleTime: 30_000,
   });
 
   return {

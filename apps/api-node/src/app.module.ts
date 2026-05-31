@@ -25,6 +25,7 @@ import { SvenModule } from './sven/sven.module';
 import { AdminModule } from './admin/admin.module';
 import { FlowModule } from './flow/flow.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { RedisModule } from './redis/redis.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import Redis from 'ioredis';
@@ -48,6 +49,7 @@ import Redis from 'ioredis';
       isGlobal: true,
     }),
     CacheModule.register(),
+    RedisModule,
     UserModule,
     StudysetModule,
     StudysessionModule,

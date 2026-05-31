@@ -1,9 +1,12 @@
 import {
   BadRequestException,
   ForbiddenException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import type { Redis } from 'ioredis';
+import { REDIS_CLIENT } from '../redis/redis.provider';
 import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 import {
   CreateStudysetDto,
@@ -45,7 +48,13 @@ export class StudysetService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
+    @Inject(REDIS_CLIENT)
+    private readonly redis: Redis,
   ) {}
+
+  private async invalidateSyncCache(user_id: string) {
+    await this.redis.del(`sync:${user_id}`);
+  }
 
   async create(
     user_id: string,
@@ -141,6 +150,7 @@ export class StudysetService {
     if (CARDS.length > 0) {
       await this.db.insert(cards).values(CARDS);
     }
+    await this.invalidateSyncCache(user_id);
     return { ...set, folder_id: data.folder_id ?? null };
   }
 
@@ -588,6 +598,7 @@ export class StudysetService {
         throw new NotFoundException('Failed to delete studoset');
       }
     });
+    await this.invalidateSyncCache(user_id);
   }
 
   async switchFolder(
