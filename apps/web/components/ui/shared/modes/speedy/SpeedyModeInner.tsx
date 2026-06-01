@@ -81,7 +81,7 @@ export default function SpeedyModeInner({
       <SpeedyInput
         correct={false}
         incorrect={false}
-        inputRef={null}
+        inputRef={inputRef}
         disabled={false}
         checkInput={function (): void {
           throw new Error("Function not implemented.");
