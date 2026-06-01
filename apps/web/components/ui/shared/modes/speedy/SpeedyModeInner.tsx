@@ -30,7 +30,7 @@ export default function SpeedyModeInner({
   sessionCards.forEach((sc) => {
     if (sc.mastered) initialCounts[sc.card_id] = 2;
   });
-  const [state, dispatch] = useReducer(learnReducer, {
+  const [state] = useReducer(learnReducer, {
     index: startIndex >= cards.length ? 0 : startIndex,
     queue: [],
     queueIndex: 0,
