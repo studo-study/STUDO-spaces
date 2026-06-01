@@ -1493,6 +1493,17 @@
     "restart": "oefen nog eens",
     "progress": "reset vooruigang"
   },
+  "speedy": {
+    "modal_title": "Ben je er klaar voor?",
+    "modal_expl": "Beantwoord vragen zo snel mogelijk, \nmaar let op: foute antwoorden komen later terug.",
+    "return": "terug naar set",
+    "start": "begin je ronde",
+    "pause": "pauzeer",
+    "continue": "ga verder",
+    "answer_with": "antwoord met",
+    "definition": "Definitie",
+    "term": "Term"
+  },
   "profile": {
     "ss": "Studosets",
     "vs": "Visualsets"

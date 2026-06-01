@@ -20,7 +20,7 @@ const SpeedyInput = ({
 }: SpeedyInputProps) => {
   return (
     <div
-      className={`bg-gray-300/20 min-h-12 dark:bg-studogrey/20 px-5 flex items-center max-w-2/3 rounded-3xl w-full h-fit py-2 border ${
+      className={`bg-gray-300/20 min-h-12 dark:bg-studogrey/20 px-5 flex items-center w-full rounded-3xl w-full h-fit py-2 border ${
         correct
           ? "border-emerald-400"
           : incorrect
