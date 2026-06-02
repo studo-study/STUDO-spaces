@@ -92,7 +92,7 @@ function SpeedyModeContent({ id }: { id: string }) {
           back={returnToSet}
         />
       )}
-      {!gameStarted && (
+      {!gameStarted && !isOpen && (
         <PauseModal
           isOpen={!gameStarted}
           setIsOpen={handleStart}
