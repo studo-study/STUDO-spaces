@@ -11,7 +11,7 @@ import ConsoleEasterEgg from "@/components/ui/overige/easteregg/console";
 import CreateFolder from "@/components/ui/app/create-folder/CreateFolder";
 import AppLayoutContext from "@/components/context/AppLayoutContext";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
 
 const MemoizedHeader = memo(AppHeader);
@@ -23,6 +23,8 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
   const [createOpen, setCreateOpen] = useState(false);
   const router = useRouter();
   const sidebarOpen = useAppStore((s) => s.sidebarOpen);
+  const pathname = usePathname();
+  const inMode = /\/(speedy|learn|flashcards)\//.test(pathname);
   const toggleSearch = () => setSearch(true);
   const toggleCreate = () => {
     requestAnimationFrame(() => {
@@ -37,10 +39,13 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
     router.push("/create-visualset");
   };
 
-  useKeyboardShortcut("f", () => toggleCreate());
-  useKeyboardShortcut("s", () => newStudoset());
-  useKeyboardShortcut("v", () => newVisualset());
-  useKeyboardShortcut("m", () => toggleSearch(), { ctrl: true, always: true });
+  useKeyboardShortcut("f", () => !inMode && toggleCreate());
+  useKeyboardShortcut("s", () => !inMode && newStudoset());
+  useKeyboardShortcut("v", () => !inMode && newVisualset());
+  useKeyboardShortcut("m", () => !inMode && toggleSearch(), {
+    ctrl: true,
+    always: true,
+  });
 
   return (
     <AppLayoutContext.Provider value={{ toggleCreate }}>

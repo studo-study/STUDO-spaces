@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { FolderListResponse } from "@studo/types";
+import type { SyncResponse } from "@studo/types";
 
 export function useDeleteFolder() {
   const queryClient = useQueryClient();
@@ -12,13 +12,10 @@ export function useDeleteFolder() {
       }),
 
     onSuccess: (id) => {
-      queryClient.setQueryData(
-        ["folders"],
-        (old: FolderListResponse | undefined) => {
-          if (!old) return old;
-          return { ...old, folders: old.folders.filter((f) => f.id !== id) };
-        },
-      );
+      queryClient.setQueryData(["sync"], (old: SyncResponse | undefined) => {
+        if (!old) return old;
+        return { ...old, folders: old.folders.filter((f) => f.id !== id) };
+      });
     },
   });
 }

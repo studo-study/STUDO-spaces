@@ -72,14 +72,6 @@ export default function Hero() {
 
       <div className="relative z-10 flex flex-col 3xl:min-h-screen items-center text-center pt-15 sm:pt-15 lg:pt-20 3xl:pt-30 overflow-visible gap-8 3xl:w-2/3 max-w-screen">
         <AnimateOnMount delay={100}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-400/20 dark:bg-studoblue/20 border border-emerald-400 dark:border-studoblue/30">
-            <span className="text-sm font-medium text-emerald-400 dark:text-studoblue">
-              {t("NewStudyTool")}
-            </span>
-          </div>
-        </AnimateOnMount>
-
-        <AnimateOnMount delay={200}>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
             <span className="block text-studodarkblue dark:text-white">
               {t("Quote1")}
@@ -90,13 +82,13 @@ export default function Hero() {
           </h1>
         </AnimateOnMount>
 
-        <AnimateOnMount delay={300}>
+        <AnimateOnMount delay={200}>
           <p className="text-lg text-xl md:text-2xl text-studodarkblue/70 dark:text-white/70 max-w-2xl">
             {t("Subtitle")}
           </p>
         </AnimateOnMount>
 
-        <AnimateOnMount delay={400}>
+        <AnimateOnMount delay={300}>
           <ul className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 text-sm sm:text-base list-none">
             {features.map((feature, i) => (
               <li
@@ -113,7 +105,7 @@ export default function Hero() {
         </AnimateOnMount>
 
         <AnimateOnMount
-          delay={500}
+          delay={400}
           className={"w-full flex items-center flex-col gap-5"}
         >
           <SearchSets />

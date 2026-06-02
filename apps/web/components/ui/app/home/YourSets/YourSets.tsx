@@ -9,38 +9,10 @@ import { useSets } from "@/hooks/app/sets/useSets";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 
 const YourSets = () => {
-  const { sets, visualsets } = useSets();
+  const { lastTen } = useSets();
   const t = useTranslations("home");
 
-  const items: LastStudied[] = [
-    ...sets
-      .filter((s) => s.last_studied)
-      .map((s) => ({
-        set_id: s.id,
-        last_studied: s.last_studied!,
-        title: s.title,
-        Course: s.course,
-        type: "studyset" as const,
-        progress: s.progress ?? 0,
-        length: s.card_count ?? 0,
-      })),
-    ...visualsets
-      .filter((vs) => vs.last_studied)
-      .map((vs) => ({
-        set_id: vs.id,
-        last_studied: vs.last_studied!,
-        title: vs.title,
-        Course: vs.course,
-        type: "visualset" as const,
-        progress: vs.progress ?? 0,
-        length: vs.pin_count ?? 0,
-      })),
-  ]
-    .sort(
-      (a, b) =>
-        new Date(b.last_studied).getTime() - new Date(a.last_studied).getTime(),
-    )
-    .slice(0, 10);
+  const items: LastStudied[] = lastTen.slice(0, 10);
 
   if (items.length === 0) return null;
 

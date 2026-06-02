@@ -110,15 +110,15 @@ function MethodsPopUp({
       ref={popupRef}
       className={`absolute top-full left-1/2 -translate-x-1/2 mt-4
         z-[9999] w-56 p-2 truncate
-        rounded-2xl
-        bg-white/80 dark:bg-[#1e293b]/90
-        glass-rgb backdrop-blur-2xl
+        rounded-2xl  glass-rgb
+        border-b-zinc-500/25
         border border-white/50 dark:border-white/10
         shadow-xl shadow-black/10 dark:shadow-black/30
+
         transition-all duration-300 ease-out origin-top
         ${
           MethodsOpen
-            ? "opacity-100 scale-100 translate-y-0 visible pointer-events-auto"
+            ? "opacity-100 scale-100 translate-y-0 visible pointer-events-auto backdrop-blur-2xl"
             : "opacity-0 scale-95 -translate-y-2 invisible pointer-events-none"
         }
       `}

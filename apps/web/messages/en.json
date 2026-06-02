@@ -1483,5 +1483,65 @@
       "pop_title": "Share set",
       "copy_message": "Added to clipboard"
     }
+  },
+
+  "speedy": {
+    "modal_title": "Ben je er klaar voor?",
+    "pause_title": "Even pauze...",
+    "modal_expl": "Beantwoord vragen zo snel mogelijk, \nmaar let op: foute antwoorden komen later terug.",
+    "return": "terug naar set",
+    "start": "begin je ronde",
+    "pause": "pauzeer",
+    "continue": "ga verder",
+    "answer_with": "antwoord met",
+    "definition": "Definitie",
+    "term": "Term"
+  },
+  "profile": {
+    "ss": "Studosets",
+    "vs": "Visualsets"
+  },
+  "offline": {
+    "offline": "Je bent offline",
+    "progress_explanation": "Progressie wordt niet opgeslagen"
+  },
+  "latex": {
+    "LaTeX": "LaTeX",
+    "Code": "Code"
+  },
+  "flashcards": {
+    "definition": "Definition",
+    "term": "Term",
+    "answer_with": "answer with",
+    "shuffle": "shuffle",
+    "reset": "reset",
+    "all_set": "You've completed the entire set!",
+    "back": "back to set",
+    "restart": "practice again",
+    "progress": "reset progress"
+  },
+  "speedy": {
+    "modal_title": "Are you ready?",
+    "pause_title": "Taking a break...",
+    "modal_expl": "Answer questions as quickly as possible,\nbut be careful: incorrect answers will come back later.",
+    "return": "back to set",
+    "start": "start your round",
+    "pause": "pause",
+    "continue": "continue",
+    "answer_with": "answer with",
+    "definition": "Definition",
+    "term": "Term"
+  },
+  "profile": {
+    "ss": "Studosets",
+    "vs": "Visualsets"
+  },
+  "offline": {
+    "offline": "You are offline",
+    "progress_explanation": "Progress will not be saved"
+  },
+  "latex": {
+    "LaTeX": "LaTeX",
+    "Code": "Code"
   }
 }

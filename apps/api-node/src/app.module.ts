@@ -24,13 +24,32 @@ import { StudoprofileModule } from './studoprofile/studoprofile.module';
 import { SvenModule } from './sven/sven.module';
 import { AdminModule } from './admin/admin.module';
 import { FlowModule } from './flow/flow.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { RedisModule } from './redis/redis.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
+import Redis from 'ioredis';
 
 @Module({
   imports: [
+    ThrottlerModule.forRootAsync({
+      useFactory: () => ({
+        throttlers: [{ ttl: 60_000, limit: 100 }],
+        storage: new ThrottlerStorageRedisService(
+          new Redis({
+            host: process.env.REDIS_HOST ?? 'localhost',
+            port: Number(process.env.REDIS_PORT ?? 6379),
+            password: process.env.REDIS_PASSWORD,
+          }),
+        ),
+      }),
+    }),
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
     }),
+    CacheModule.register(),
+    RedisModule,
     UserModule,
     StudysetModule,
     StudysessionModule,
@@ -58,6 +77,10 @@ import { FlowModule } from './flow/flow.module';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
     AppService,
   ],

@@ -134,7 +134,7 @@ export default function LandingHeader() {
   return (
     <>
       <header
-        className={`w-full flex flex-col fixed top-0 left-0 border-b border-transparent right-0 z-[999] ${scrolled ? "bg-white/90 dark:bg-bg-dark border-b border-studoborder" : null}`}
+        className={`w-full flex flex-col fixed top-0 left-0 border-b border-transparent right-0 z-[999] ${scrolled ? "backdrop-blur-2xl" : null}`}
       >
         <div className={"w-screen h-0.5 overflow-hidden"}>
           <div

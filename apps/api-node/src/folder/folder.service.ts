@@ -1,4 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import type { Redis } from 'ioredis';
+import { REDIS_CLIENT } from '../redis/redis.provider';
 import {
   CreateFolderDto,
   FolderListResponseDto,
@@ -19,7 +21,13 @@ export class FolderService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
+    @Inject(REDIS_CLIENT)
+    private readonly redis: Redis,
   ) {}
+
+  private async invalidateSyncCache(user_id: string) {
+    await this.redis.del(`sync:${user_id}`);
+  }
 
   async create(
     user_id: string,
@@ -32,6 +40,7 @@ export class FolderService {
       owner_id: user_id,
     };
     await this.db.insert(folders).values(f);
+    await this.invalidateSyncCache(user_id);
     return f;
   }
 
@@ -116,5 +125,6 @@ export class FolderService {
     if (result.length === 0) {
       throw new NotFoundException('No folder with this id exists');
     }
+    await this.invalidateSyncCache(result[0].owner_id);
   }
 }

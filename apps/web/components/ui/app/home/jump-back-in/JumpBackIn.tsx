@@ -19,7 +19,7 @@ const FADE_BASE =
   "dark:from-bg-dark from-bg-white";
 
 const JumpBackIn = () => {
-  const { sets, visualsets } = useSets();
+  const { lastTen } = useSets();
   const t = useTranslations("home");
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useState({
@@ -28,35 +28,7 @@ const JumpBackIn = () => {
     activeIndex: 0,
   });
 
-  const items: LastStudied[] = [
-    ...sets
-      .filter((s) => s.last_studied)
-      .map((s) => ({
-        set_id: s.id,
-        last_studied: s.last_studied!,
-        title: s.title,
-        Course: s.course,
-        type: "studyset" as const,
-        progress: s.progress ?? 0,
-        length: s.card_count ?? 0,
-      })),
-    ...visualsets
-      .filter((vs) => vs.last_studied)
-      .map((vs) => ({
-        set_id: vs.id,
-        last_studied: vs.last_studied!,
-        title: vs.title,
-        Course: vs.course,
-        type: "visualset" as const,
-        progress: vs.progress ?? 0,
-        length: vs.pin_count ?? 0,
-      })),
-  ]
-    .sort(
-      (a, b) =>
-        new Date(b.last_studied).getTime() - new Date(a.last_studied).getTime(),
-    )
-    .slice(0, 3);
+  const items: LastStudied[] = lastTen.slice(0, 3);
 
   useEffect(() => {
     const container = scrollRef.current;

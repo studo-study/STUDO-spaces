@@ -28,11 +28,10 @@ export default function StudosetView({ id }: viewProps) {
   const t = useTranslations("studoset");
   const userId = useUser().user?.id;
   const { setLoaded } = useSplash();
-  const { data } = useStudoset(id);
+  const { data, isPlaceholderData } = useStudoset(id);
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
-  const beta = false;
   console.log(data);
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
@@ -45,20 +44,34 @@ export default function StudosetView({ id }: viewProps) {
     else like.mutate(data?.id);
   };
   if (!data?.cards) return null;
-  const not_studied =
-    data?.session?.cards?.reduce((sum: number, card: SessionCardResponse) => {
-      return card.card_viewcount === 0 ? sum + 1 : sum;
-    }, 0) ?? 0;
+  const totalCards = data.cards.length;
+  const sessionCards = isPlaceholderData
+    ? null
+    : (data?.session?.cards ?? null);
 
-  const reviewed =
-    data?.session?.cards?.reduce((sum: number, card: SessionCardResponse) => {
-      return card.card_viewcount === 1 ? sum + 1 : sum;
-    }, 0) ?? 0;
+  const not_studied = sessionCards
+    ? sessionCards.reduce(
+        (sum: number, card: SessionCardResponse) =>
+          card.card_viewcount === 0 ? sum + 1 : sum,
+        0,
+      )
+    : totalCards;
 
-  const studied =
-    data?.session?.cards?.reduce((sum: number, card: SessionCardResponse) => {
-      return card.card_viewcount > 1 ? sum + 1 : sum;
-    }, 0) ?? 0;
+  const reviewed = sessionCards
+    ? sessionCards.reduce(
+        (sum: number, card: SessionCardResponse) =>
+          card.card_viewcount === 1 ? sum + 1 : sum,
+        0,
+      )
+    : 0;
+
+  const studied = sessionCards
+    ? sessionCards.reduce(
+        (sum: number, card: SessionCardResponse) =>
+          card.card_viewcount > 1 ? sum + 1 : sum,
+        0,
+      )
+    : 0;
 
   const isOwner = !!userId && userId === data?.user_id;
 
@@ -136,43 +149,37 @@ export default function StudosetView({ id }: viewProps) {
       <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center pt-5 items-center">
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
-          {beta && (
-            <LinkButton
-              href={`/learn/` + id}
-              icon={
-                <Image
-                  width={20}
-                  height={20}
-                  src={"/icons/pencil.svg"}
-                  alt=""
-                  className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
-                />
-              }
-              label="learn"
-              type="button"
-              variant="outline_link"
-            />
-          )}
-
-          {beta && (
-            <LinkButton
-              href={`/speedy/` + id}
-              className="w-full"
-              icon={
-                <Image
-                  width={20}
-                  height={20}
-                  src={"/icons/clock.svg"}
-                  alt=""
-                  className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
-                />
-              }
-              label="speedy"
-              type="button"
-              variant="outline_link"
-            />
-          )}
-
+          <LinkButton
+            href={`/learn/` + id}
+            icon={
+              <Image
+                width={20}
+                height={20}
+                src={"/icons/pencil.svg"}
+                alt=""
+                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+              />
+            }
+            label="learn"
+            type="button"
+            variant="outline_link"
+          />
+          <LinkButton
+            href={`/speedy/` + id}
+            className="w-full"
+            icon={
+              <Image
+                width={20}
+                height={20}
+                src={"/icons/clock.svg"}
+                alt=""
+                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+              />
+            }
+            label="speedy"
+            type="button"
+            variant="outline_link"
+          />
           <LinkButton
             href={`/flashcards/${id}`}
             icon={
@@ -205,7 +212,7 @@ export default function StudosetView({ id }: viewProps) {
             }
           >
             <span className={"font-bold"}>{t("not_learned")}</span>
-            <Progress length={data?.cards?.length} progress={not_studied} />
+            <Progress length={totalCards} progress={not_studied} />
           </div>
           <div
             className={
@@ -213,7 +220,7 @@ export default function StudosetView({ id }: viewProps) {
             }
           >
             <span className={"font-bold"}>{t("reviewed")}</span>
-            <Progress length={data?.cards?.length} progress={reviewed} />
+            <Progress length={totalCards} progress={reviewed} />
           </div>
           <div
             className={
@@ -221,7 +228,7 @@ export default function StudosetView({ id }: viewProps) {
             }
           >
             <span className={"font-bold"}>{t("studied")}</span>
-            <Progress length={data?.cards?.length} progress={studied} />
+            <Progress length={totalCards} progress={studied} />
           </div>
         </div>
 

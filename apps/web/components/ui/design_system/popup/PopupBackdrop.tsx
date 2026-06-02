@@ -1,20 +1,25 @@
+"use client";
+import { createPortal } from "react-dom";
+
 interface PopupBackdropProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   children: React.ReactNode;
+  blur?: boolean;
 }
 
 const PopupBackdrop = (props: PopupBackdropProps) => {
-  const { isOpen, setIsOpen, children } = props;
+  const { isOpen, setIsOpen, children, blur } = props;
 
-  return (
+  return createPortal(
     <div
       onClick={() => setIsOpen(false)}
-      className={`fixed inset-0 flex items-baseline justify-center pt-80 w-full bg-black/50 h-full z-[9999] 
+      className={`fixed inset-0 flex items-baseline justify-center pt-80 w-screen bg-black/50 h-screen z-[99999] ${blur && "backdrop-blur-xl"}
         ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
     >
       {children}
-    </div>
+    </div>,
+    document.body,
   );
 };
 

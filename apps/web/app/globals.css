@@ -304,9 +304,8 @@ body::-webkit-scrollbar {
 
 .glass-rgb {
     background: rgba(255, 255, 255, 0.12);
-    /* backdrop-filter verwijderd */
-    will-change: auto;
-    contain: layout style paint;
+    backdrop-filter: blur(200px);
+    -webkit-backdrop-filter: blur(200px);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
 

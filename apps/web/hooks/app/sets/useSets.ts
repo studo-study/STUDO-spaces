@@ -1,16 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import type { MyStudysetsResponse } from "@studo/types";
+import { useSync } from "../useSync";
 
 export function useSets() {
-  const query = useQuery<MyStudysetsResponse>({
-    queryKey: ["studosets"],
-    queryFn: () => fetch("/api/studysets/me").then((r) => r.json()),
-  });
+  const query = useSync();
 
   return {
     ...query,
-    sets: query.data?.sets ?? [],
-    visualsets: query.data?.visualsets ?? [],
-    stats: query.data?.stats ?? null,
+    sets: query.studysets,
+    visualsets: query.visualsets,
+    stats: query.start?.stats ?? null,
+    lastTen: query.lastTen,
   };
 }
