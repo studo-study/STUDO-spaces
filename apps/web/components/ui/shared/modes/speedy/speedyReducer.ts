@@ -36,15 +36,18 @@ export default function learnReducer(state: State, action: Action): State {
     case "SUBMIT_ANSWER": {
       const isCorrect = action.input === action.correctAnswer;
       const newCounts = { ...state.correctCounts };
+      const current = newCounts[action.card.id] ?? 0;
 
       if (isCorrect) {
-        newCounts[action.card.id] = (newCounts[action.card.id] || 0) + 1;
+        newCounts[action.card.id] = Math.min(current + 1, 2);
+      } else if (current >= 2) {
+        newCounts[action.card.id] = 1;
       }
+      // wrong at 0 or 1: count stays the same
 
-      // Check meteen of alles gemasterd is na deze update
       const allMastered =
         isCorrect &&
-        action.cards.every((card) => (newCounts[card.id] || 0) >= 2);
+        action.cards.every((card) => (newCounts[card.id] ?? 0) >= 2);
 
       if (allMastered) {
         return {

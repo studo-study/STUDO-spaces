@@ -1,26 +1,37 @@
 "use client";
-import { Ref } from "react";
+import { useEffect, useRef } from "react";
+import { useSpeedyContext } from "./SpeedyContext";
 
-interface SpeedyInputProps {
-  correct: boolean;
-  incorrect: boolean;
-  inputRef: Ref<HTMLInputElement>;
-  disabled: boolean;
-  checkInput: () => void;
-  termMode: boolean;
-}
+const SpeedyInput = () => {
+  const { state, dispatch, currentCard, cards } = useSpeedyContext();
+  const inputRef = useRef<HTMLInputElement>(null!);
 
-const SpeedyInput = ({
-  correct,
-  incorrect,
-  inputRef,
-  disabled,
-  checkInput,
-  termMode,
-}: SpeedyInputProps) => {
+  useEffect(() => {
+    if (state.phase === "answering") inputRef.current?.focus();
+  }, [state.phase]);
+
+  const correct = state.phase === "correct";
+  const incorrect = state.phase === "incorrect";
+  const disabled = state.phase !== "answering";
+
+  const checkInput = () => {
+    const input = inputRef.current?.value ?? "";
+    const correctAnswer = state.termMode
+      ? currentCard.card.definition
+      : currentCard.card.term;
+    dispatch({
+      type: "SUBMIT_ANSWER",
+      input,
+      correctAnswer,
+      card: currentCard.card,
+      cards,
+    });
+    if (inputRef.current) inputRef.current.value = "";
+  };
+
   return (
     <div
-      className={`bg-gray-300/20 min-h-12 dark:bg-studogrey/20 px-5 flex items-center w-full rounded-3xl w-full h-fit py-2 border ${
+      className={`bg-gray-300/20 min-h-12 dark:bg-studogrey/20 px-5 flex items-center w-full rounded-3xl h-fit py-2 border ${
         correct
           ? "border-emerald-400"
           : incorrect
@@ -30,12 +41,12 @@ const SpeedyInput = ({
     >
       <input
         ref={inputRef}
-        disabled={disabled} // ← React beheert dit nu
+        disabled={disabled}
         autoFocus={true}
         onKeyDown={(e) => e.key === "Enter" && !disabled && checkInput()}
         type="text"
-        placeholder={termMode ? `typ definitie` : `typ term`}
-        className={"w-full group h-full outline-none"}
+        placeholder={state.termMode ? "typ definitie" : "typ term"}
+        className="w-full group h-full outline-none"
       />
     </div>
   );

@@ -1495,6 +1495,7 @@
   },
   "speedy": {
     "modal_title": "Ben je er klaar voor?",
+    "pause_title": "Even pauze...",
     "modal_expl": "Beantwoord vragen zo snel mogelijk, \nmaar let op: foute antwoorden komen later terug.",
     "return": "terug naar set",
     "start": "begin je ronde",
