@@ -6,7 +6,6 @@ import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
 import { useRouter } from "@/i18n/routing";
 import CheckboxField from "@/components/ui/design_system/input/CheckBox";
 import { useUpdateStudyset } from "@/hooks/app/sets/useUpdateStudoset";
-import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/components/providers/app/ToastProvider";
 
 interface SettingsPopupProps {
