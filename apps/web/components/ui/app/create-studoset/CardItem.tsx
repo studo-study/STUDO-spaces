@@ -4,6 +4,12 @@ import React, { useState } from "react";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
 import LaTexInput from "@/components/ui/design_system/input/LaTeXInput";
 
+function focusRef(ref: React.Ref<HTMLInputElement | null> | undefined) {
+  if (ref && typeof ref === "object" && "current" in ref) {
+    ref.current?.focus();
+  }
+}
+
 interface CardProps {
   index: number;
   id: string;
@@ -89,7 +95,7 @@ export default function CardItem({
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  defRef?.current?.focus();
+                  focusRef(defRef);
                 }
               }}
             />
