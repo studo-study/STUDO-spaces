@@ -1503,7 +1503,10 @@
       "copy_message": "Naar klembord gekopieerd"
     },
     "settings": {
-      "pop_title": "Instellingen"
+      "pop_title": "Instellingen",
+      "reset_progress": "Reset vooruitgang",
+      "make_private": "Privéset",
+      "delete_set": "Verwijder set"
     }
   },
   "flashcards": {

@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Card } from "@/types/types";
 import CardItem from "@/components/ui/public/sets/studosets/carditem";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
 import { MdEdit } from "react-icons/md";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";

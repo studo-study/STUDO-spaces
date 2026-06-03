@@ -10,10 +10,10 @@ import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import InputField from "@/components/ui/design_system/input/InputField";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { useFolders } from "@/hooks/app/folders/useFolders";
 import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/create-studoset/JumpToBottom";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 interface EditsetProps {
   id: string;
@@ -43,11 +43,10 @@ export default function EditStudosetForm({ id }: EditsetProps) {
   const mutation = useUpdateStudyset(id);
   const set = useStudoset(id).data;
   const toast = useToast();
-  const folders = useFolders().data?.folders ?? [];
   const { ref, inView } = useInView();
-  const topRef = useRef<HTMLFormElement>(null);
+  const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-
+  const Router = useRouter();
   const jumpToTop = () => {
     topRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -66,37 +65,60 @@ export default function EditStudosetForm({ id }: EditsetProps) {
 
   const titleRef = useRef<HTMLInputElement>(null);
   const courseRef = useRef<HTMLInputElement>(null);
-  const folderRef = useRef<HTMLSelectElement>(null);
   const termLangRef = useRef<HTMLSelectElement>(null);
   const defLangRef = useRef<HTMLSelectElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
-  const cardRefsMap = useRef<
+  const cardNodesRef = useRef<
+    Map<string, { term: HTMLInputElement | null; def: HTMLInputElement | null }>
+  >(new Map());
+  const focusAfterAdd = useRef<string | null>(null);
+  const seeded = useRef(false);
+
+  const setTermNode = useCallback(
+    (id: string) => (node: HTMLInputElement | null) => {
+      const entry = cardNodesRef.current.get(id) ?? { term: null, def: null };
+      cardNodesRef.current.set(id, { ...entry, term: node });
+    },
+    [],
+  );
+
+  const setDefNode = useCallback(
+    (id: string) => (node: HTMLInputElement | null) => {
+      const entry = cardNodesRef.current.get(id) ?? { term: null, def: null };
+      cardNodesRef.current.set(id, { ...entry, def: node });
+    },
+    [],
+  );
+
+  const originalCardsRef = useRef<
     Map<
       string,
       {
-        term: React.RefObject<HTMLInputElement | null>;
-        def: React.RefObject<HTMLInputElement | null>;
+        term: string;
+        definition: string;
+        contentType: string;
+        codeLanguage: string;
       }
     >
   >(new Map());
-  const focusAfterAdd = useRef(false);
-  const seeded = useRef(false);
-
-  const getCardRefs = (id: string) => {
-    if (!cardRefsMap.current.has(id)) {
-      cardRefsMap.current.set(id, {
-        term: React.createRef<HTMLInputElement>(),
-        def: React.createRef<HTMLInputElement>(),
-      });
-    }
-    return cardRefsMap.current.get(id)!;
-  };
 
   useEffect(() => {
     if (!set || seeded.current) return;
     if (!set.cards?.length) return;
     seeded.current = true;
+    originalCardsRef.current = new Map(
+      set.cards.map((card) => [
+        card.id,
+        {
+          term: card.term,
+          definition: card.definition,
+          contentType: card.term_content_type,
+          codeLanguage: card.code_language,
+        },
+      ]),
+    );
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCardArray(
       set.cards.map((card, i) => ({
         id: card.id,
@@ -115,7 +137,14 @@ export default function EditStudosetForm({ id }: EditsetProps) {
       termLangRef.current.value = set.global_term_language;
     if (defLangRef.current)
       defLangRef.current.value = set.global_definition_language;
-  });
+  }, [set]);
+
+  useEffect(() => {
+    const id = focusAfterAdd.current;
+    if (!id) return;
+    focusAfterAdd.current = null;
+    cardNodesRef.current.get(id)?.term?.focus();
+  }, [cardArray]);
 
   const validate = (): boolean => {
     const title = titleRef.current?.value?.trim();
@@ -161,23 +190,62 @@ export default function EditStudosetForm({ id }: EditsetProps) {
     if (mutation.isPending) return;
     if (!validate()) return;
 
+    const origIds = new Set(originalCardsRef.current.keys());
+    const currIds = new Set(cardArray.map((c) => c.id));
+    const structureChanged =
+      cardArray.some((c) => !origIds.has(c.id)) ||
+      [...origIds].some((id) => !currIds.has(id));
+
+    const cardPayload = structureChanged
+      ? {
+          cardlist: cardArray.map((card, i) => ({
+            term: card.term.trim().slice(0, 500),
+            definition: card.definition.trim().slice(0, 500),
+            number: !isNaN(card.index) ? card.index : i,
+            ...(card.image ? { image: card.image } : {}),
+            ...(card.contentType &&
+            ["text", "latex", "code"].includes(card.contentType)
+              ? { term_content_type: card.contentType }
+              : {}),
+            ...(card.codeLanguage ? { code_language: card.codeLanguage } : {}),
+          })),
+        }
+      : (() => {
+          const changed = cardArray.filter((card) => {
+            const orig = originalCardsRef.current.get(card.id);
+            if (!orig) return false;
+            return (
+              card.term.trim() !== orig.term ||
+              card.definition.trim() !== orig.definition ||
+              card.contentType !== orig.contentType ||
+              card.codeLanguage !== orig.codeLanguage
+            );
+          });
+          return changed.length === 0
+            ? {}
+            : {
+                cards: changed.map((card, i) => ({
+                  id: card.id,
+                  term: card.term.trim().slice(0, 500),
+                  definition: card.definition.trim().slice(0, 500),
+                  number: !isNaN(card.index) ? card.index : i,
+                  ...(card.contentType &&
+                  ["text", "latex", "code"].includes(card.contentType)
+                    ? { term_content_type: card.contentType }
+                    : {}),
+                  ...(card.codeLanguage
+                    ? { code_language: card.codeLanguage }
+                    : {}),
+                })),
+              };
+        })();
+
     const body = {
       title: titleRef.current!.value.trim(),
       course: courseRef.current!.value.trim(),
       global_term_language: termLangRef.current!.value,
       global_definition_language: defLangRef.current!.value,
-      cardlist: cardArray.map((card, i) => ({
-        term: card.term.trim().slice(0, 500),
-        definition: card.definition.trim().slice(0, 500),
-        number:
-          typeof card.index === "number" && !isNaN(card.index) ? card.index : i,
-        ...(card.image ? { image: card.image } : {}),
-        ...(card.contentType &&
-        ["text", "latex", "code"].includes(card.contentType)
-          ? { term_content_type: card.contentType }
-          : {}),
-        ...(card.codeLanguage ? { code_language: card.codeLanguage } : {}),
-      })),
+      ...cardPayload,
     };
 
     try {
@@ -189,11 +257,12 @@ export default function EditStudosetForm({ id }: EditsetProps) {
   };
 
   const addCard = (focus = false) => {
-    if (focus) focusAfterAdd.current = true;
+    const newId = crypto.randomUUID();
+    if (focus) focusAfterAdd.current = newId;
     setCardArray((prev) => [
       ...prev,
       {
-        id: crypto.randomUUID(),
+        id: newId,
         index: prev.length,
         term: "",
         definition: "",
@@ -207,7 +276,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
 
   const handleEnterDefinition = (index: number) => {
     if (index < cardArray.length - 1) {
-      getCardRefs(cardArray[index + 1].id).term.current?.focus();
+      cardNodesRef.current.get(cardArray[index + 1].id)?.term?.focus();
     } else {
       addCard(true);
     }
@@ -234,7 +303,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
   };
 
   const deleteCard = (id: string) => {
-    cardRefsMap.current.delete(id);
+    cardNodesRef.current.delete(id);
     setCardArray((prev) => {
       if (prev.length === 1) return prev;
       return prev
@@ -303,9 +372,17 @@ export default function EditStudosetForm({ id }: EditsetProps) {
   });
 
   return (
-    <>
+    <div className={"w-full flex flex-col"}>
+      <div ref={topRef} className="w-full flex">
+        <BaseButton
+          size="sm"
+          variant="icon"
+          onClick={() => Router.push("/studoset/" + id)}
+        >
+          <IoArrowBackOutline />
+        </BaseButton>
+      </div>
       <form
-        ref={topRef}
         onSubmit={handleSubmit}
         className="w-full scroll-hidden text-studodarkblue dark:text-white h-fit mt-10 md:mt-0 flex text-sm sm:text-base flex-col items-center justify-baseline pt-20 px-10"
         data-cy="studyset_form"
@@ -321,22 +398,21 @@ export default function EditStudosetForm({ id }: EditsetProps) {
           </div>
 
           <div className="w-full gap-3 sm:gap-4 md:gap-5 flex-col flex">
-            <div className="flex flex-col gap-1">
-              <InputField
-                ref={titleRef}
-                variant={"cardInput"}
-                placeholder={t("title_placeholder")}
-                data-cy="title_input"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    courseRef.current?.focus();
-                  }
-                }}
-              />
-            </div>
-
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
+              <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
+                <InputField
+                  ref={titleRef}
+                  variant={"cardInput"}
+                  placeholder={t("title_placeholder")}
+                  data-cy="title_input"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      courseRef.current?.focus();
+                    }
+                  }}
+                />
+              </div>
               <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
                 <InputField
                   ref={courseRef}
@@ -347,26 +423,13 @@ export default function EditStudosetForm({ id }: EditsetProps) {
                     if (e.key === "Enter") {
                       e.preventDefault();
                       if (cardArray.length > 0) {
-                        getCardRefs(cardArray[0].id).term.current?.focus();
+                        cardNodesRef.current
+                          .get(cardArray[0].id)
+                          ?.term?.focus();
                       }
                     }
                   }}
                 />
-              </div>
-
-              <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-                <select
-                  ref={folderRef}
-                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
-                  data-cy="folder_select"
-                >
-                  <option value="">{t("folder_placeholder")}</option>
-                  {folders?.map((item) => (
-                    <option value={item.id} key={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
 
@@ -427,8 +490,8 @@ export default function EditStudosetForm({ id }: EditsetProps) {
                 updateCard={updateCard}
                 length={cardArray.length}
                 insertCard={() => insertCard(index + 1)}
-                termRef={getCardRefs(card.id).term}
-                defRef={getCardRefs(card.id).def}
+                termRef={setTermNode(card.id)}
+                defRef={setDefNode(card.id)}
                 onEnterDefinition={() => handleEnterDefinition(index)}
               />
             ))}
@@ -466,6 +529,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
           <JumpToBottom jumpToTop={jumpToTop} jumpToBottom={jumpToBottom} />
         )}
       </form>
-    </>
+    </div>
   );
 }

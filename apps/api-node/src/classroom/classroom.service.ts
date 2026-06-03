@@ -105,11 +105,8 @@ export class ClassroomService {
       added_by: user_id,
     };
 
-    try {
-      await this.db.insert(classroomsets).values(cset);
-    } catch (err: any) {
-      throw err;
-    }
+    await this.db.insert(classroomsets).values(cset);
+
     return cset;
   }
 
@@ -396,7 +393,6 @@ export class ClassroomService {
   }
 
   async getActivity(id: string): Promise<ClassActivitiesDto[]> {
-    //classroomcheck
     const classroom = await this.db.query.classrooms.findFirst({
       where: eq(classrooms.id, id),
     });
@@ -404,11 +400,9 @@ export class ClassroomService {
       throw new NotFoundException(`Classroom doesn't exist`);
     }
 
-    const activities: ClassActivitiesDto[] =
-      await this.db.query.classroomactivities.findMany({
-        where: eq(classroomactivities.classroom_id, id),
-      });
-    return activities;
+    return this.db.query.classroomactivities.findMany({
+      where: eq(classroomactivities.classroom_id, id),
+    });
   }
 
   async promoteUser(classroom_id: string, user_id: string) {

@@ -6,6 +6,7 @@ interface UpdateStudysetBody {
   global_term_language?: string;
   global_definition_language?: string;
   folder_id?: string;
+  public_set?: boolean;
   cardlist?: {
     term: string;
     definition: string;

@@ -16,8 +16,8 @@ interface CardProps {
   length: number;
   term: string;
   definition: string;
-  termRef?: React.RefObject<HTMLInputElement | null>;
-  defRef?: React.RefObject<HTMLInputElement | null>;
+  termRef?: React.Ref<HTMLInputElement | null>;
+  defRef?: React.Ref<HTMLInputElement | null>;
   onEnterDefinition?: () => void;
 }
 export default function CardItem({

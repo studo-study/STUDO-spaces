@@ -30,7 +30,7 @@ main()
   .then(async () => {
     await sql.end();
   })
-  .catch(async (err) => {
+  .catch(async () => {
     await sql.end();
     process.exit(1);
   });

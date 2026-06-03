@@ -4,7 +4,7 @@ import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/public/sets/studosets/CardList";
 import { Progress } from "@/components/ui/marketing/progress/progress";
-import { IoFilter, IoFolderOpenOutline } from "react-icons/io5";
+import { IoFolderOpenOutline } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import SavedPopup from "@/components/ui/public/sets/studosets/savedpopup";
 import ClassroomPopup from "@/components/ui/public/sets/studosets/classroompopup";
@@ -20,11 +20,10 @@ import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import FlashcardMode from "@/components/ui/shared/modes/flashcards/FlashcardMode";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
-import CardFilter from "@/components/ui/shared/studoset/CardFilter";
 import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/create-studoset/JumpToBottom";
+import EditToggle from "@/components/ui/public/sets/studosets/EditToggle";
 
 interface viewProps {
   id: string;
@@ -59,7 +58,6 @@ export default function StudosetView({ id }: viewProps) {
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
-  console.log(data);
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
   const liked = useMemo(
@@ -116,7 +114,7 @@ export default function StudosetView({ id }: viewProps) {
                              bg-studogrey/30 border border-studoborder/30 shadow-2x
                             dark:text-white min-w-0"
         >
-          <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full flex-shrink-0">
+          <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full shrink-0">
             <Avatar
               id={data?.user_id}
               displayName={data?.displayName}
@@ -133,10 +131,15 @@ export default function StudosetView({ id }: viewProps) {
           {(data && data.title) || t("set_title")}
         </span>
         <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
+          <EditToggle id={id} />
           <SavedPopup setId={id} />
           <ClassroomPopup />
           <SharePopup />
-          <SettingsPopup />
+          <SettingsPopup
+            isOwner={isOwner}
+            id={id}
+            isPrivateSet={data.public_set}
+          />
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
@@ -187,7 +190,7 @@ export default function StudosetView({ id }: viewProps) {
                 height={20}
                 src={"/icons/pencil.svg"}
                 alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
               />
             }
             label={t("learn")}
@@ -203,7 +206,7 @@ export default function StudosetView({ id }: viewProps) {
                 height={20}
                 src={"/icons/clock.svg"}
                 alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
               />
             }
             label={t("speedy")}
@@ -218,7 +221,7 @@ export default function StudosetView({ id }: viewProps) {
                 height={20}
                 src="/icons/cards.svg"
                 alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
               />
             }
             label={t("flashcards")}
