@@ -1480,6 +1480,9 @@
     "share": {
       "pop_title": "Deel set",
       "copy_message": "Naar klembord gekopieerd"
+    },
+    "settings": {
+      "pop_title": "Instellingen"
     }
   },
   "flashcards": {

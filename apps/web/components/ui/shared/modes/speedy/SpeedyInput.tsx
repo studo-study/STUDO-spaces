@@ -3,12 +3,21 @@ import { useEffect, useRef } from "react";
 import { useSpeedyContext } from "./SpeedyContext";
 
 const SpeedyInput = () => {
-  const { state, dispatch, currentCard, cards } = useSpeedyContext();
+  const { state, dispatch, currentCard, cards, gameStarted } =
+    useSpeedyContext();
   const inputRef = useRef<HTMLInputElement>(null!);
 
   useEffect(() => {
-    if (state.phase === "answering") inputRef.current?.focus();
-  }, [state.phase]);
+    if (state.phase === "answering" || gameStarted) inputRef.current?.focus();
+  }, [gameStarted, state.phase]);
+
+  useEffect(() => {
+    if (!state.wrongAttempt) return;
+    if (inputRef.current) inputRef.current.value = "";
+    inputRef.current?.focus();
+    const t = setTimeout(() => dispatch({ type: "RESET_WRONG_ATTEMPT" }), 300);
+    return () => clearTimeout(t);
+  }, [state.wrongAttempt, dispatch]);
 
   const correct = state.phase === "correct";
   const incorrect = state.phase === "incorrect";
@@ -34,8 +43,8 @@ const SpeedyInput = () => {
       className={`bg-gray-300/20 min-h-12 dark:bg-studogrey/20 px-5 flex items-center w-full rounded-3xl h-fit py-2 border ${
         correct
           ? "border-emerald-400"
-          : incorrect
-            ? "border-rose-600"
+          : incorrect || state.wrongAttempt
+            ? "border-rose-400"
             : "border-transparent focus-within:border-gray-300 focus-within:dark:border-studoborder/30"
       }`}
     >

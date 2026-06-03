@@ -16,6 +16,7 @@ export interface State {
   termMode: boolean;
   progressMode: boolean;
   correctCounts: Record<string, number>;
+  wrongAttempt: boolean;
 }
 
 export type Action =
@@ -29,21 +30,24 @@ export type Action =
   | { type: "SHOW_ANSWER" }
   | { type: "ADVANCE"; cards: Card[] }
   | { type: "TOGGLE_TERM_MODE" }
-  | { type: "TOGGLE_PROGRESS" };
+  | { type: "TOGGLE_PROGRESS" }
+  | { type: "RESET_WRONG_ATTEMPT" };
 
 export default function learnReducer(state: State, action: Action): State {
   switch (action.type) {
     case "SUBMIT_ANSWER": {
       const isCorrect = action.input === action.correctAnswer;
+      // Timer expiry dispatches with empty input; typed wrong answers have non-empty input
+      const isTimerExpiry = !isCorrect && action.input === "";
+
       const newCounts = { ...state.correctCounts };
       const current = newCounts[action.card.id] ?? 0;
 
       if (isCorrect) {
         newCounts[action.card.id] = Math.min(current + 1, 2);
-      } else if (current >= 2) {
+      } else if (isTimerExpiry && current >= 2) {
         newCounts[action.card.id] = 1;
       }
-      // wrong at 0 or 1: count stays the same
 
       const allMastered =
         isCorrect &&
@@ -55,14 +59,35 @@ export default function learnReducer(state: State, action: Action): State {
           correctCounts: newCounts,
           phase: "showProgress",
           progressMode: true,
+          wrongAttempt: false,
         };
       }
 
+      if (isCorrect) {
+        return {
+          ...state,
+          phase: "correct",
+          correctCounts: newCounts,
+          wrongAttempt: false,
+        };
+      }
+
+      if (isTimerExpiry) {
+        // Timer ran out: add to queue and advance
+        return {
+          ...state,
+          phase: "incorrect",
+          queue: [...state.queue, action.card],
+          correctCounts: newCounts,
+          wrongAttempt: false,
+        };
+      }
+
+      // Typed wrong answer: stay on same card, let user retry
       return {
         ...state,
-        phase: isCorrect ? "correct" : "incorrect",
-        queue: isCorrect ? state.queue : [...state.queue, action.card],
-        correctCounts: newCounts,
+        phase: "answering",
+        wrongAttempt: true,
       };
     }
 
@@ -96,7 +121,7 @@ export default function learnReducer(state: State, action: Action): State {
       }
 
       console.log("final idx:", idx);
-      return { ...state, index: idx, phase: "answering" };
+      return { ...state, index: idx, phase: "answering", wrongAttempt: false };
     }
 
     case "TOGGLE_TERM_MODE":
@@ -104,6 +129,9 @@ export default function learnReducer(state: State, action: Action): State {
 
     case "TOGGLE_PROGRESS":
       return { ...state, progressMode: !state.progressMode };
+
+    case "RESET_WRONG_ATTEMPT":
+      return { ...state, wrongAttempt: false };
 
     default:
       return state;

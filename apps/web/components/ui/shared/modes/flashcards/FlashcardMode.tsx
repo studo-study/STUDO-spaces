@@ -94,11 +94,13 @@ export default function FlashcardMode({ id, isHome }: FlashcardProps) {
 
   if (cards.length === 0) return null;
   return (
-    <FlashcardModeInner
-      id={id}
-      cards={cards}
-      isHome={isHome ? isHome : false}
-    />
+    <div className={"w-full h-full flex flex-col items-center justify-center"}>
+      <FlashcardModeInner
+        id={id}
+        cards={cards}
+        isHome={isHome ? isHome : false}
+      />
+    </div>
   );
 }
 
@@ -224,7 +226,7 @@ function FlashcardModeInner({
 
   const Router = useRouter();
   return (
-    <div className="w-full min-h-170 h-full flex flex-col gap-3 sm:gap-5  px-10">
+    <div className="w-full min-h-170 h-full max-h-190 flex flex-col gap-3 sm:gap-5  px-10">
       {!isHome && (
         <div className="w-full flex">
           <BaseButton

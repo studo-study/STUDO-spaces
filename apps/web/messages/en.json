@@ -1020,7 +1020,10 @@
   },
   "card": {
     "Definition": "Definition",
-    "Term": "Term"
+    "Term": "Term",
+    "click_turn": "click to flip",
+    "click_flip_back": "click to flip back",
+    "learnt": "Learned"
   },
   "notfound": {
     "return": "back",
@@ -1482,6 +1485,9 @@
     "share": {
       "pop_title": "Share set",
       "copy_message": "Added to clipboard"
+    },
+    "settings": {
+      "pop_title": "Settings"
     }
   },
 

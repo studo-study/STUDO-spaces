@@ -58,6 +58,7 @@ export function SpeedyProvider({
     termMode: true,
     progressMode: startIndex >= cards.length,
     correctCounts: initialCounts,
+    wrongAttempt: false,
   });
 
   const currentCard = useMemo(() => {
