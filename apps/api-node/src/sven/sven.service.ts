@@ -119,8 +119,8 @@ export class SvenService {
       return {
         id: crypto.randomUUID(),
         index: i,
-        term: this.stripMathDelimiters(term),
-        definition,
+        term: this.stripMathDelimiters(term).slice(0, 500),
+        definition: definition.slice(0, 500),
         image: '',
         isDouble: false,
         special_content_type: contentType,

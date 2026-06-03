@@ -4,6 +4,12 @@ import React, { useState } from "react";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
 import LaTexInput from "@/components/ui/design_system/input/LaTeXInput";
 
+function focusRef(ref: React.Ref<HTMLInputElement | null> | undefined) {
+  if (ref && typeof ref === "object" && "current" in ref) {
+    ref.current?.focus();
+  }
+}
+
 interface CardProps {
   index: number;
   id: string;
@@ -16,8 +22,8 @@ interface CardProps {
   length: number;
   term: string;
   definition: string;
-  termRef?: React.RefObject<HTMLInputElement | null>;
-  defRef?: React.RefObject<HTMLInputElement | null>;
+  termRef?: React.Ref<HTMLInputElement | null>;
+  defRef?: React.Ref<HTMLInputElement | null>;
   onEnterDefinition?: () => void;
 }
 export default function CardItem({
@@ -76,11 +82,7 @@ export default function CardItem({
         </div>
 
         <div className="flex flex-col lg:flex-row w-full gap-3 px-5 pb-4 sm:pb-6">
-          <div
-            className={
-              "h-full flex-1 lg:max-w-1/2 lg:w-1/2 lg:min-w-1/2  w-full"
-            }
-          >
+          <div className={"h-full w-full lg:w-1/2 min-w-0"}>
             <LaTexInput
               ref={termRef}
               contentType={contentType}
@@ -93,16 +95,12 @@ export default function CardItem({
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  defRef?.current?.focus();
+                  focusRef(defRef);
                 }
               }}
             />
           </div>
-          <div
-            className={
-              "h-full flex-1 lg:max-w-1/2 lg:w-1/2 lg:min-w-1/2 w-full"
-            }
-          >
+          <div className={"h-full w-full lg:w-1/2 min-w-0"}>
             <LaTexInput
               ref={defRef}
               value={definition}

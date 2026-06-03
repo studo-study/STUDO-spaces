@@ -54,13 +54,13 @@ const variantMap = {
   danger:
     "bg-rose-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
   danger_outline:
-    "bg-studogrey/30 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100 border-rose-500  border",
+    "bg-rose-500/30 text-white shadow-2xl px-5 min-h-full h-10 rounded-lg max-w-fit disabled:cursor-not-allowed disabled:active:scale-100 border-rose-500",
   outline: "border border-gray-300 text-black dark:text-white",
   outline_link:
     "border border-studoborder dark:bg-studogrey/30 text-studodarkblue dark:text-white w-full",
   prompt: "border border-zinc-300 text-zinc-500",
   ghost:
-    "text-studodarkblue dark:text-white border-none hover:text-studoblue transition-colors duration-200",
+    "text-studodarkblue dark:text-white border-none hover:text-studoblue transition-colors duration-200 active:scale-100",
   approve: "text-white bg-emerald-500",
   submit:
     "bg-blue-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",

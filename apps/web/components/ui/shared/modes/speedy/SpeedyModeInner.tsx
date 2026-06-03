@@ -33,12 +33,14 @@ function SpeedyModeContent({ id }: { id: string }) {
   };
 
   useEffect(() => {
-    if (state.phase !== "correct" && state.phase !== "incorrect") return;
-    const delay = state.phase === "correct" ? 400 : 600;
-    const timeout = setTimeout(() => {
+    if (state.phase === "correct") {
       dispatch({ type: "ADVANCE", cards });
-    }, delay);
-    return () => clearTimeout(timeout);
+    } else if (state.phase === "incorrect") {
+      const timeout = setTimeout(() => {
+        dispatch({ type: "ADVANCE", cards });
+      }, 600);
+      return () => clearTimeout(timeout);
+    }
   }, [cards, dispatch, state.phase]);
   const t = useTranslations("speedy");
   const Router = useRouter();

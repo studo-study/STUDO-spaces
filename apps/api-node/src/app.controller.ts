@@ -19,7 +19,6 @@ export class AppController {
   })
   @Get()
   getHello(): string {
-    console.log('server is opgestart op poort 3000');
     return this.appService.getHello();
   }
 }

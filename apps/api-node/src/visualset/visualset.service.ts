@@ -106,9 +106,6 @@ export class VisualsetService {
         scale: String(image.scale),
         set_id: setId,
       };
-      console.log('Image object:', Image);
-      console.log('Scale type:', typeof Image.scale);
-      console.log('Scale value:', Image.scale);
       IMAGES.push(Image);
       //pins creeeren
       data.pins

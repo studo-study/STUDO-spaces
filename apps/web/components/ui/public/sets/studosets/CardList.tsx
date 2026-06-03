@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import { Card } from "@/types/types";
 import CardItem from "@/components/ui/public/sets/studosets/carditem";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
+import { useTranslations } from "next-intl";
+import { MdEdit } from "react-icons/md";
+import LinkButton from "@/components/ui/design_system/button/LinkButton";
 
 interface CardListProps {
   cards: Card[];
@@ -11,6 +14,7 @@ interface CardListProps {
 }
 
 export default function CardList({ cards, isOwner, setId }: CardListProps) {
+  const t = useTranslations("studoset");
   const setStudosetCards = useStudosetStore((s) => s.setStudosetCards);
   const studosetCards = useStudosetStore((s) => s.studosetCards);
 
@@ -32,6 +36,14 @@ export default function CardList({ cards, isOwner, setId }: CardListProps) {
           setId={setId}
         />
       ))}
+
+      <LinkButton
+        href={setId + "/edit"}
+        variant={"primary"}
+        className={"min-w-full flex-1 w-full"}
+        iconLeft={<MdEdit />}
+        label={t("edit_set")}
+      />
     </div>
   );
 }

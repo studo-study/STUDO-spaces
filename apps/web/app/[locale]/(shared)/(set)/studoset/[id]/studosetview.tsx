@@ -4,7 +4,7 @@ import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/public/sets/studosets/CardList";
 import { Progress } from "@/components/ui/marketing/progress/progress";
-import { IoFilter, IoFolderOpenOutline } from "react-icons/io5";
+import { IoFolderOpenOutline } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import SavedPopup from "@/components/ui/public/sets/studosets/savedpopup";
 import ClassroomPopup from "@/components/ui/public/sets/studosets/classroompopup";
@@ -18,21 +18,46 @@ import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import FlashcardMode from "@/components/ui/shared/modes/flashcards/FlashcardMode";
+import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
+import { useInView } from "react-intersection-observer";
+import JumpToBottom from "@/components/ui/app/create-studoset/JumpToBottom";
+import EditToggle from "@/components/ui/public/sets/studosets/EditToggle";
 
 interface viewProps {
   id: string;
 }
+
+type Tab = "learned" | "reviewed" | "not_learned" | "all";
+
 export default function StudosetView({ id }: viewProps) {
   const t = useTranslations("studoset");
   const userId = useUser().user?.id;
   const { setLoaded } = useSplash();
   const { data, isPlaceholderData } = useStudoset(id);
+  const [tab, setTab] = useState<Tab>("all");
+  const { ref, inView } = useInView();
+  const topRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const jumpToTop = () => {
+    topRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const jumpToBottom = () => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
-  console.log(data);
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
   const liked = useMemo(
@@ -76,8 +101,11 @@ export default function StudosetView({ id }: viewProps) {
   const isOwner = !!userId && userId === data?.user_id;
 
   return (
-    <div className={"w-full h-full px-10"}>
-      <div className="w-full h-fit flex flex-row items-center mb-3 justify-baseline gap-2 sm:gap-3 text-xs sm:text-sm flex-wrap">
+    <div className={"relative w-full h-full px-10"}>
+      <div
+        ref={topRef}
+        className="w-full h-fit flex flex-row items-center mb-3 justify-baseline gap-2 sm:gap-3 text-xs sm:text-sm flex-wrap"
+      >
         <span>{t("created")}</span>
         <Link
           href={isOwner ? "/account" : `/profile/` + data?.user_id}
@@ -86,7 +114,7 @@ export default function StudosetView({ id }: viewProps) {
                              bg-studogrey/30 border border-studoborder/30 shadow-2x
                             dark:text-white min-w-0"
         >
-          <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full flex-shrink-0">
+          <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full shrink-0">
             <Avatar
               id={data?.user_id}
               displayName={data?.displayName}
@@ -103,10 +131,15 @@ export default function StudosetView({ id }: viewProps) {
           {(data && data.title) || t("set_title")}
         </span>
         <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
+          <EditToggle id={id} />
           <SavedPopup setId={id} />
           <ClassroomPopup />
           <SharePopup />
-          <SettingsPopup />
+          <SettingsPopup
+            isOwner={isOwner}
+            id={id}
+            isPrivateSet={data.public_set}
+          />
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
@@ -157,10 +190,10 @@ export default function StudosetView({ id }: viewProps) {
                 height={20}
                 src={"/icons/pencil.svg"}
                 alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
               />
             }
-            label="learn"
+            label={t("learn")}
             type="button"
             variant="outline_link"
           />
@@ -173,10 +206,10 @@ export default function StudosetView({ id }: viewProps) {
                 height={20}
                 src={"/icons/clock.svg"}
                 alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
               />
             }
-            label="speedy"
+            label={t("speedy")}
             type="button"
             variant="outline_link"
           />
@@ -188,16 +221,16 @@ export default function StudosetView({ id }: viewProps) {
                 height={20}
                 src="/icons/cards.svg"
                 alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 flex-shrink-0"
+                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
               />
             }
-            label="flashcards"
+            label={t("flashcards")}
             type="button"
             variant="outline_link"
           />
         </div>
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
-        <div className={"w-full max-h-300 min-h-130 h-165 "}>
+        <div ref={ref} className={"w-full max-h-300 min-h-130 h-165 "}>
           <FlashcardMode id={id} isHome />
         </div>
 
@@ -237,17 +270,33 @@ export default function StudosetView({ id }: viewProps) {
           <span className="w-full h-fit font-bold text-sm sm:text-base">
             {t("cards_title")}:
           </span>
-          <button
-            className={
-              "w-8 h-8 bg-studogrey/30 border-studoborder/30 border rounded-full items-center justify-center flex cursor-pointer"
-            }
-          >
-            <IoFilter />
-          </button>
+          <div className={"flex flex-row gap-2 items-center justify-center"}>
+            <TabSwitcher
+              size={"sm"}
+              tabs={[
+                {
+                  key: "all",
+                  label: t("all"),
+                },
+                {
+                  key: "not_learned",
+                  label: t("ns"),
+                },
+              ]}
+              value={tab}
+              onChange={(key) => {
+                setTab(key as Tab);
+              }}
+            />
+          </div>
         </div>
         <CardList cards={data?.cards ?? []} isOwner={isOwner} setId={id} />
         <BottomCredits />
+        <div ref={bottomRef} />
       </div>
+      {!inView && (
+        <JumpToBottom jumpToTop={jumpToTop} jumpToBottom={jumpToBottom} />
+      )}
     </div>
   );
 }

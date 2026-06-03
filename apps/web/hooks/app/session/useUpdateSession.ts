@@ -17,8 +17,6 @@ export function useUpdateSession(sessionId: string, setId: string) {
       }
       return r.json();
     },
-    onSuccess: () => console.log("[useUpdateSession] session updated"),
-    onError: (err) => console.error("[useUpdateSession] error:", err),
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["studosets", setId] }),
   });

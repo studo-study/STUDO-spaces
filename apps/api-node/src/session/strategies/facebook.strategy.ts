@@ -15,7 +15,6 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
       profileFields: ['id', 'displayName', 'emails', 'name', 'photos'], // data die je wilt ophalen
       scope: ['email'],
     });
-    console.log('✅ FacebookStrategy initialized');
   }
 
   validate(accessToken: string, refreshToken: string, profile: Profile) {

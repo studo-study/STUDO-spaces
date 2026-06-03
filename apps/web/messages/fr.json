@@ -607,6 +607,26 @@
   "notfound": {
     "return": "retournée",
     "404": "404"
-
+  },
+  "card": {
+    "Definition": "Définition",
+    "Term": "Terme",
+    "click_turn": "cliquer pour retourner",
+    "click_flip_back": "cliquer pour revenir",
+    "learnt": "Appris"
+  },
+  "popup": {
+    "folders": {
+      "pop_title": "Ajouter au dossier",
+      "added_to_folder": "Ajouté à",
+      "removed_from_folder": "Retiré de"
+    },
+    "share": {
+      "pop_title": "Partager le set",
+      "copy_message": "Copié dans le presse-papiers"
+    },
+    "settings": {
+      "pop_title": "Paramètres"
+    }
   }
 }

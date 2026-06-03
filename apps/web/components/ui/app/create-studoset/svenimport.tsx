@@ -51,11 +51,9 @@ export default function SvenImport({
   };
 
   const handleUpload = async () => {
-    console.log("UPLOAD TRIGGERED");
     if (files.length === 0 || isUploading) return;
     setIsUploading(true);
 
-    console.log("files:", files);
     const formData = new FormData();
     files.forEach((file) => formData.append("file", file));
 
@@ -73,24 +71,34 @@ export default function SvenImport({
       const data = await res.json().catch(() => null);
       if (!res.ok)
         throw new Error(data?.message ?? `Server error ${res.status}`);
+      const VALID_CONTENT_TYPES = ["text", "latex", "code"] as const;
       const cards = data.map(
         (
           card: Partial<CardData> & { special_content_type?: string },
           index: number,
-        ) => ({
-          ...card,
-          contentType: card.special_content_type ?? "text",
-          id: crypto.randomUUID(),
-          index: cardArray.length + index,
-          image: "",
-          isDouble: false,
-        }),
+        ) => {
+          const rawType = card.special_content_type ?? card.contentType;
+          const contentType: "text" | "latex" | "code" =
+            rawType &&
+            (VALID_CONTENT_TYPES as readonly string[]).includes(rawType)
+              ? (rawType as "text" | "latex" | "code")
+              : "text";
+          return {
+            ...card,
+            contentType,
+            codeLanguage: card.codeLanguage ?? "typescript",
+            id: crypto.randomUUID(),
+            index: cardArray.length + index,
+            image: "",
+            isDouble: false,
+          };
+        },
       );
 
       setCardArray((prev) => [...prev, ...cards]);
       onClose(); // pas hier
-    } catch (err) {
-      console.error("Upload failed:", err);
+    } catch {
+      // upload failed silently
     } finally {
       setIsUploading(false);
     }

@@ -47,16 +47,26 @@ async function bootstrap() {
       transform: true,
 
       exceptionFactory: (errors: ValidationError[] = []) => {
-        const formattedErrors = errors.reduce(
-          (acc, err) => {
-            acc[err.property] = Object.values(err.constraints || {});
-            return acc;
-          },
-          {} as Record<string, string[]>,
-        );
+        const flatten = (
+          errs: ValidationError[],
+          prefix = '',
+        ): Record<string, string[]> =>
+          errs.reduce(
+            (acc, err) => {
+              const key = prefix ? `${prefix}.${err.property}` : err.property;
+              if (err.constraints) {
+                acc[key] = Object.values(err.constraints);
+              }
+              if (err.children?.length) {
+                Object.assign(acc, flatten(err.children, key));
+              }
+              return acc;
+            },
+            {} as Record<string, string[]>,
+          );
 
         return new BadRequestException({
-          details: { body: formattedErrors },
+          details: { body: flatten(errors) },
         });
       },
     }),
@@ -72,7 +82,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document);
   await app.listen(port);
-  console.log('Joehoe, server is opgestart op poort 3000');
 }
 
 void bootstrap();

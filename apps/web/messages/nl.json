@@ -992,6 +992,24 @@
     "draft": "(draft)",
     "delete_draft": "Verwijder Draft"
   },
+  "editstudoset": {
+    "edit": "Bewerk Studoset",
+    "title_placeholder": "Vul een titel in...",
+    "course_placeholder": "Vul een vak in...",
+    "term_language": "Taal term...",
+    "def_language": "Taal definitie...",
+    "create": "Bewerk Set",
+    "add_card": "Voeg kaart toe",
+    "title_error": "titel is verplicht",
+    "course_error": "vak is verplicht",
+    "term_lang_error": "selecteer een taal",
+    "def_lang_error": "selecteer een taal",
+    "card_error": "er zijn lege kaarten",
+    "saving": "Opslaan...",
+    "submit_error": "Er is iets misgegaan, probeer opnieuw",
+    "draft": "(draft)",
+    "delete_draft": "Verwijder Draft"
+  },
   "createvisualset": {
     "title": "Creëer nieuwe Visualset",
     "title_placeholder": "Vul een titel in...",
@@ -1389,7 +1407,10 @@
     "saved_in": "Opgeslagen in",
     "added_to": "Toegevoegd aan",
     "rights": "Alle rechten voorbehouden.",
-    "edit": "bewerken"
+    "edit": "bewerken",
+    "all": "Alle",
+    "ns": "Niet geleerd",
+    "edit_set": "bewerk set"
   },
   "trackview": {
     "tracks": "Tracks",
@@ -1480,6 +1501,12 @@
     "share": {
       "pop_title": "Deel set",
       "copy_message": "Naar klembord gekopieerd"
+    },
+    "settings": {
+      "pop_title": "Instellingen",
+      "reset_progress": "Reset vooruitgang",
+      "make_private": "Privéset",
+      "delete_set": "Verwijder set"
     }
   },
   "flashcards": {

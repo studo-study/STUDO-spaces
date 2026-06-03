@@ -1,21 +1,23 @@
 "use client";
 import { useTranslations } from "next-intl";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useCreateStudyset } from "@/hooks/app/sets/useCreateStudoset";
-import SetImporter from "@/components/ui/app/create-studoset/SetImporter";
+import { useUpdateStudyset } from "@/hooks/app/sets/useUpdateStudoset";
 import CardItem from "@/components/ui/app/create-studoset/CardItem";
 import Sortable from "sortablejs";
-import ImportButton from "@/components/ui/app/create-studoset/importButton";
 import { useRouter } from "@/i18n/routing";
 import { CardData } from "@/types/types";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import InputField from "@/components/ui/design_system/input/InputField";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { useFolders } from "@/hooks/app/folders/useFolders";
-import JumpToBottom from "./JumpToBottom";
 import { useInView } from "react-intersection-observer";
+import JumpToBottom from "@/components/ui/app/create-studoset/JumpToBottom";
+import { useStudoset } from "@/hooks/app/sets/useStudoset";
+import { IoArrowBackOutline } from "react-icons/io5";
 
+interface EditsetProps {
+  id: string;
+}
 const LANGUAGES = [
   { code: "en", name: "English" },
   { code: "nl", name: "Dutch" },
@@ -23,17 +25,6 @@ const LANGUAGES = [
   { code: "de", name: "German" },
   { code: "es", name: "Spanish" },
 ];
-
-const DRAFT_KEY = "create-studoset-draft";
-
-type Draft = {
-  title: string;
-  course: string;
-  folder_id: string;
-  termLang: string;
-  defLang: string;
-  cardArray: CardData[];
-};
 
 const firstCard = (): CardData => ({
   id: crypto.randomUUID(),
@@ -46,17 +37,16 @@ const firstCard = (): CardData => ({
   codeLanguage: "typescript",
 });
 
-export default function CreateStudosetForm() {
-  const t = useTranslations("createstudoset");
-  const [showImporter, setShowImporter] = useState(false);
+export default function EditStudosetForm({ id }: EditsetProps) {
+  const t = useTranslations("editstudoset");
   const router = useRouter();
-  const mutation = useCreateStudyset();
+  const mutation = useUpdateStudyset(id);
+  const set = useStudoset(id).data;
   const toast = useToast();
-  const folders = useFolders().data?.folders ?? [];
   const { ref, inView } = useInView();
-  const topRef = useRef<HTMLFormElement>(null);
+  const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-
+  const Router = useRouter();
   const jumpToTop = () => {
     topRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -71,101 +61,91 @@ export default function CreateStudosetForm() {
     });
   };
 
-  const savedDraft = (): Draft | null => {
-    try {
-      const raw = localStorage.getItem(DRAFT_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  };
-
-  const [hasDraft, setHasDraft] = useState(false);
   const [cardArray, setCardArray] = useState<CardData[]>([firstCard()]);
 
   const titleRef = useRef<HTMLInputElement>(null);
   const courseRef = useRef<HTMLInputElement>(null);
-  const folderRef = useRef<HTMLSelectElement>(null);
   const termLangRef = useRef<HTMLSelectElement>(null);
   const defLangRef = useRef<HTMLSelectElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
-  const cardRefsMap = useRef<
+  const cardNodesRef = useRef<
+    Map<string, { term: HTMLInputElement | null; def: HTMLInputElement | null }>
+  >(new Map());
+  const focusAfterAdd = useRef<string | null>(null);
+  const seeded = useRef(false);
+
+  const setTermNode = useCallback(
+    (id: string) => (node: HTMLInputElement | null) => {
+      const entry = cardNodesRef.current.get(id) ?? { term: null, def: null };
+      cardNodesRef.current.set(id, { ...entry, term: node });
+    },
+    [],
+  );
+
+  const setDefNode = useCallback(
+    (id: string) => (node: HTMLInputElement | null) => {
+      const entry = cardNodesRef.current.get(id) ?? { term: null, def: null };
+      cardNodesRef.current.set(id, { ...entry, def: node });
+    },
+    [],
+  );
+
+  const originalCardsRef = useRef<
     Map<
       string,
       {
-        term: React.RefObject<HTMLInputElement | null>;
-        def: React.RefObject<HTMLInputElement | null>;
+        term: string;
+        definition: string;
+        contentType: string;
+        codeLanguage: string;
       }
     >
   >(new Map());
-  const focusAfterAdd = useRef(false);
 
-  const getCardRefs = (id: string) => {
-    if (!cardRefsMap.current.has(id)) {
-      cardRefsMap.current.set(id, {
-        term: React.createRef<HTMLInputElement>(),
-        def: React.createRef<HTMLInputElement>(),
-      });
-    }
-    return cardRefsMap.current.get(id)!;
-  };
-
-  const saveDraft = () => {
-    const d: Draft = {
-      title: titleRef.current?.value ?? "",
-      course: courseRef.current?.value ?? "",
-      folder_id: folderRef.current?.value ?? "",
-      termLang: termLangRef.current?.value ?? "",
-      defLang: defLangRef.current?.value ?? "",
-      cardArray,
-    };
-    const hasContent =
-      d.title.trim() !== "" ||
-      d.course.trim() !== "" ||
-      d.cardArray.some(
-        (c) => c.term.trim() !== "" || c.definition.trim() !== "",
-      );
-    if (hasContent) {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
-      setHasDraft(true);
-    }
-  };
-
-  // Restore draft from localStorage on mount (client-only)
   useEffect(() => {
-    const d = savedDraft();
-    if (!d) return;
-    setHasDraft(true);
-    if (d.cardArray.length > 0) setCardArray(d.cardArray);
-    if (titleRef.current) titleRef.current.value = d.title;
-    if (courseRef.current) courseRef.current.value = d.course;
-    if (folderRef.current) folderRef.current.value = d.folder_id;
-    if (termLangRef.current) termLangRef.current.value = d.termLang;
-    if (defLangRef.current) defLangRef.current.value = d.defLang;
-  }, []);
+    if (!set || seeded.current) return;
+    if (!set.cards?.length) return;
+    seeded.current = true;
+    originalCardsRef.current = new Map(
+      set.cards.map((card) => [
+        card.id,
+        {
+          term: card.term,
+          definition: card.definition,
+          contentType: card.term_content_type,
+          codeLanguage: card.code_language,
+        },
+      ]),
+    );
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCardArray(
+      set.cards.map((card, i) => ({
+        id: card.id,
+        index: i,
+        term: card.term,
+        definition: card.definition,
+        image: "",
+        isDouble: false,
+        contentType: card.term_content_type,
+        codeLanguage: card.code_language,
+      })),
+    );
+    if (titleRef.current) titleRef.current.value = set.title;
+    if (courseRef.current) courseRef.current.value = set.course;
+    if (termLangRef.current)
+      termLangRef.current.value = set.global_term_language;
+    if (defLangRef.current)
+      defLangRef.current.value = set.global_definition_language;
+  }, [set]);
 
-  // Save draft whenever cardArray changes; focus new card after add
   useEffect(() => {
-    saveDraft();
-    if (focusAfterAdd.current && cardArray.length > 0) {
-      focusAfterAdd.current = false;
-      const lastCard = cardArray[cardArray.length - 1];
-      getCardRefs(lastCard.id).term.current?.focus();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const id = focusAfterAdd.current;
+    if (!id) return;
+    focusAfterAdd.current = null;
+    cardNodesRef.current.get(id)?.term?.focus();
   }, [cardArray]);
 
-  const deleteDraft = () => {
-    localStorage.removeItem(DRAFT_KEY);
-    setHasDraft(false);
-    setCardArray([firstCard()]);
-    if (titleRef.current) titleRef.current.value = "";
-    if (courseRef.current) courseRef.current.value = "";
-    if (folderRef.current) folderRef.current.value = "";
-    if (termLangRef.current) termLangRef.current.value = "";
-    if (defLangRef.current) defLangRef.current.value = "";
-  };
   const validate = (): boolean => {
     const title = titleRef.current?.value?.trim();
     const course = courseRef.current?.value?.trim();
@@ -210,42 +190,79 @@ export default function CreateStudosetForm() {
     if (mutation.isPending) return;
     if (!validate()) return;
 
+    const origIds = new Set(originalCardsRef.current.keys());
+    const currIds = new Set(cardArray.map((c) => c.id));
+    const structureChanged =
+      cardArray.some((c) => !origIds.has(c.id)) ||
+      [...origIds].some((id) => !currIds.has(id));
+
+    const cardPayload = structureChanged
+      ? {
+          cardlist: cardArray.map((card, i) => ({
+            term: card.term.trim().slice(0, 500),
+            definition: card.definition.trim().slice(0, 500),
+            number: !isNaN(card.index) ? card.index : i,
+            ...(card.image ? { image: card.image } : {}),
+            ...(card.contentType &&
+            ["text", "latex", "code"].includes(card.contentType)
+              ? { term_content_type: card.contentType }
+              : {}),
+            ...(card.codeLanguage ? { code_language: card.codeLanguage } : {}),
+          })),
+        }
+      : (() => {
+          const changed = cardArray.filter((card) => {
+            const orig = originalCardsRef.current.get(card.id);
+            if (!orig) return false;
+            return (
+              card.term.trim() !== orig.term ||
+              card.definition.trim() !== orig.definition ||
+              card.contentType !== orig.contentType ||
+              card.codeLanguage !== orig.codeLanguage
+            );
+          });
+          return changed.length === 0
+            ? {}
+            : {
+                cards: changed.map((card, i) => ({
+                  id: card.id,
+                  term: card.term.trim().slice(0, 500),
+                  definition: card.definition.trim().slice(0, 500),
+                  number: !isNaN(card.index) ? card.index : i,
+                  ...(card.contentType &&
+                  ["text", "latex", "code"].includes(card.contentType)
+                    ? { term_content_type: card.contentType }
+                    : {}),
+                  ...(card.codeLanguage
+                    ? { code_language: card.codeLanguage }
+                    : {}),
+                })),
+              };
+        })();
+
     const body = {
       title: titleRef.current!.value.trim(),
       course: courseRef.current!.value.trim(),
       global_term_language: termLangRef.current!.value,
       global_definition_language: defLangRef.current!.value,
-      folder_id: folderRef.current!.value,
-      cardlist: cardArray.map((card, i) => ({
-        term: card.term.trim().slice(0, 500),
-        definition: card.definition.trim().slice(0, 500),
-        number:
-          typeof card.index === "number" && !isNaN(card.index) ? card.index : i,
-        ...(card.image ? { image: card.image } : {}),
-        ...(card.contentType &&
-        ["text", "latex", "code"].includes(card.contentType)
-          ? { term_content_type: card.contentType }
-          : {}),
-        ...(card.codeLanguage ? { code_language: card.codeLanguage } : {}),
-      })),
+      ...cardPayload,
     };
 
     try {
-      const data = await mutation.mutateAsync(body);
-      localStorage.removeItem(DRAFT_KEY);
-      setHasDraft(false);
-      router.push(`/studoset/${data.id}`);
+      await mutation.mutateAsync(body);
+      router.push(`/studoset/${id}`);
     } catch {
       toast.error(t("submit_error"));
     }
   };
 
   const addCard = (focus = false) => {
-    if (focus) focusAfterAdd.current = true;
+    const newId = crypto.randomUUID();
+    if (focus) focusAfterAdd.current = newId;
     setCardArray((prev) => [
       ...prev,
       {
-        id: crypto.randomUUID(),
+        id: newId,
         index: prev.length,
         term: "",
         definition: "",
@@ -259,7 +276,7 @@ export default function CreateStudosetForm() {
 
   const handleEnterDefinition = (index: number) => {
     if (index < cardArray.length - 1) {
-      getCardRefs(cardArray[index + 1].id).term.current?.focus();
+      cardNodesRef.current.get(cardArray[index + 1].id)?.term?.focus();
     } else {
       addCard(true);
     }
@@ -286,7 +303,7 @@ export default function CreateStudosetForm() {
   };
 
   const deleteCard = (id: string) => {
-    cardRefsMap.current.delete(id);
+    cardNodesRef.current.delete(id);
     setCardArray((prev) => {
       if (prev.length === 1) return prev;
       return prev
@@ -343,10 +360,6 @@ export default function CreateStudosetForm() {
     return () => sortable.destroy();
   }, []);
 
-  useKeyboardShortcut("i", () => setShowImporter((p) => !p), {
-    ctrl: true,
-    always: true,
-  });
   useKeyboardShortcut("a", () => addCard(true), {
     ctrl: true,
     shift: true,
@@ -359,9 +372,17 @@ export default function CreateStudosetForm() {
   });
 
   return (
-    <>
+    <div className={"w-full flex flex-col"}>
+      <div ref={topRef} className="w-full flex">
+        <BaseButton
+          size="sm"
+          variant="icon"
+          onClick={() => Router.push("/studoset/" + id)}
+        >
+          <IoArrowBackOutline />
+        </BaseButton>
+      </div>
       <form
-        ref={topRef}
         onSubmit={handleSubmit}
         className="w-full scroll-hidden text-studodarkblue dark:text-white h-fit mt-10 md:mt-0 flex text-sm sm:text-base flex-col items-center justify-baseline pt-20 px-10"
         data-cy="studyset_form"
@@ -373,62 +394,42 @@ export default function CreateStudosetForm() {
       >
         <div className="flex w-full flex-col items-center justify-center gap-3">
           <div className="w-full text-2xl sm:text-3xl flex flex-row gap-2 items-end text-studodarkblue font-bold dark:text-white">
-            {t("title")}
-            <span className={"text-lg opacity-50"}>
-              {hasDraft && t("draft")}
-            </span>
+            {t("edit")}
           </div>
 
           <div className="w-full gap-3 sm:gap-4 md:gap-5 flex-col flex">
-            <div className="flex flex-col gap-1">
-              <InputField
-                ref={titleRef}
-                variant={"cardInput"}
-                placeholder={t("title_placeholder")}
-                data-cy="title_input"
-                onChange={saveDraft}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    courseRef.current?.focus();
-                  }
-                }}
-              />
-            </div>
-
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
+              <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
+                <InputField
+                  ref={titleRef}
+                  variant={"cardInput"}
+                  placeholder={t("title_placeholder")}
+                  data-cy="title_input"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      courseRef.current?.focus();
+                    }
+                  }}
+                />
+              </div>
               <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
                 <InputField
                   ref={courseRef}
                   variant={"cardInput"}
                   placeholder={t("course_placeholder")}
                   data-cy="course_input"
-                  onChange={saveDraft}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
                       if (cardArray.length > 0) {
-                        getCardRefs(cardArray[0].id).term.current?.focus();
+                        cardNodesRef.current
+                          .get(cardArray[0].id)
+                          ?.term?.focus();
                       }
                     }
                   }}
                 />
-              </div>
-
-              <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-                <select
-                  ref={folderRef}
-                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
-                  data-cy="folder_select"
-                  onChange={saveDraft}
-                >
-                  <option value="">{t("folder_placeholder")}</option>
-                  {folders?.map((item) => (
-                    <option value={item.id} key={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
 
@@ -438,7 +439,6 @@ export default function CreateStudosetForm() {
                   ref={termLangRef}
                   className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
                   data-cy="term_language_select"
-                  onChange={saveDraft}
                 >
                   <option value="">{t("term_language")}</option>
                   {LANGUAGES.map((lang) => (
@@ -454,7 +454,6 @@ export default function CreateStudosetForm() {
                   ref={defLangRef}
                   className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
                   data-cy="definition_language_select"
-                  onChange={saveDraft}
                 >
                   <option value="">{t("def_language")}</option>
                   {LANGUAGES.map((lang) => (
@@ -470,23 +469,7 @@ export default function CreateStudosetForm() {
           <div
             ref={ref}
             className="w-full h-fit flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between items-stretch sm:items-end mt-4"
-          >
-            <ImportButton setShowImporter={setShowImporter} />
-            <div className={"w-fit flex flex-row gap-2 items-center"}>
-              {hasDraft && (
-                <BaseButton
-                  type="button"
-                  disabled={mutation.isPending}
-                  variant={"danger"}
-                  textSize={"sm"}
-                  data-cy="submit_studyset_top"
-                  className={"max-h-10"}
-                  onClick={deleteDraft}
-                  label={t("delete_draft")}
-                />
-              )}
-            </div>
-          </div>
+          ></div>
 
           <div
             ref={cardsContainerRef}
@@ -507,8 +490,8 @@ export default function CreateStudosetForm() {
                 updateCard={updateCard}
                 length={cardArray.length}
                 insertCard={() => insertCard(index + 1)}
-                termRef={getCardRefs(card.id).term}
-                defRef={getCardRefs(card.id).def}
+                termRef={setTermNode(card.id)}
+                defRef={setDefNode(card.id)}
                 onEnterDefinition={() => handleEnterDefinition(index)}
               />
             ))}
@@ -545,14 +528,7 @@ export default function CreateStudosetForm() {
         {!inView && (
           <JumpToBottom jumpToTop={jumpToTop} jumpToBottom={jumpToBottom} />
         )}
-        {showImporter && (
-          <SetImporter
-            cardArray={cardArray}
-            setCardArray={setCardArray}
-            onClose={() => setShowImporter(false)}
-          />
-        )}
       </form>
-    </>
+    </div>
   );
 }

@@ -10,6 +10,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { SetLikeResponseDto } from './setlike.dto';
 import {
+  ArrayMaxSize,
   ArrayMinSize,
   IsArray,
   IsBoolean,
@@ -69,6 +70,7 @@ export class CreateStudysetDto {
   @ValidateNested({ each: true })
   @Type(() => CreateCardDto)
   @ArrayMinSize(1)
+  @ArrayMaxSize(500)
   cardlist: CreateCardDto[];
 }
 
@@ -128,6 +130,19 @@ export class UpdateStudysetDto {
   @Type(() => UpdateCardDto)
   @IsOptional()
   cards?: UpdateCardDto[];
+
+  @ApiProperty({
+    description: 'Full card replacement list (replaces all existing cards)',
+    type: [CreateCardDto],
+    required: false,
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateCardDto)
+  @ArrayMinSize(1)
+  @ArrayMaxSize(500)
+  @IsOptional()
+  cardlist?: CreateCardDto[];
 }
 
 export class StudysetResponseDto {

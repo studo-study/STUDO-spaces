@@ -16,7 +16,7 @@ const WordTimer = () => {
     const length = state.termMode
       ? currentCard.card.term.length
       : currentCard.card.definition.length;
-    const duration = length * 100 + 5000;
+    const duration = length * 1000 + 5000;
 
     const animation = progressRef.current.animate(
       [{ strokeDashoffset: 0 }, { strokeDashoffset: CIRCUMFERENCE }],
@@ -66,7 +66,7 @@ const WordTimer = () => {
           d="M 100 10 A 90 90 0 0 1 190 100 A 90 90 0 0 1 100 190 A 90 90 0 0 1 10 100 A 90 90 0 0 1 100 10"
           fill="none"
           strokeWidth="3"
-          className="stroke-emerald-500 rounded-3xl"
+          className={`${state.wrongAttempt ? "stroke-rose-400" : "stroke-emerald-500"} rounded-3xl`}
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={0}
         />

@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 interface SimpleMenuProps {
   trigger: React.ReactNode;
   children?: React.ReactNode;
+  width?: string | number;
 }
 
 const SimpleMenu = (props: SimpleMenuProps) => {
-  const { trigger, children } = props;
+  const { trigger, children, width } = props;
   const [isOpen, setIsopen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
@@ -41,9 +42,9 @@ const SimpleMenu = (props: SimpleMenuProps) => {
       <div
         ref={popupRef}
         className={`absolute top-full right-0 mt-4
-        z-[9999] w-55 p-2 truncate
+        z-9999 ${width ? width : "w-55"} p-2 truncate
         rounded-2xl
-        bg-white/80 dark:bg-[#1e293b]/90
+bg-white/80 dark:bg-[#1e293b]/90
         backdrop-blur-xl
         border border-white/50 dark:border-white/10
         shadow-xl shadow-black/10 dark:shadow-black/30
