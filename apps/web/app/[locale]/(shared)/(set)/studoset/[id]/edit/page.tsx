@@ -1,4 +1,10 @@
-// app/[locale]/(app)/(set)/[challenge_id]/studoset/edit/layout.tsx
-export default function EditSetPage() {
-  return <div>Edit Set Page</div>;
+import EditStudosetForm from "@/components/ui/shared/studoset/edit/EditStudosetForm";
+
+export default async function EditSetPage({
+  params,
+}: {
+  params: Promise<{ locale: string; id: string }>;
+}) {
+  const { id } = await params;
+  return <EditStudosetForm id={id} />;
 }

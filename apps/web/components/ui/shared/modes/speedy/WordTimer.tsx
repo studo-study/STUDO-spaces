@@ -16,7 +16,7 @@ const WordTimer = () => {
     const length = state.termMode
       ? currentCard.card.term.length
       : currentCard.card.definition.length;
-    const duration = length * 100 + 5000;
+    const duration = length * 1000 + 5000;
 
     const animation = progressRef.current.animate(
       [{ strokeDashoffset: 0 }, { strokeDashoffset: CIRCUMFERENCE }],

@@ -70,15 +70,12 @@ export class SessionController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
-    console.log('🔍 Google callback - User:', req.user);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const token = await this.authService.validateGoogleUser(req.user as any);
 
     const frontendUrl =
       this.configService.get<string>('url.url') || 'http://localhost:5173';
     const redirectUrl = `${frontendUrl}/auth/callback?token=${token}`;
-
-    console.log('🔍 Full redirect URL:', redirectUrl);
 
     return res.redirect(redirectUrl);
   }

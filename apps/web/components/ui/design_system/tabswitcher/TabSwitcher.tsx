@@ -101,7 +101,7 @@ export const TabSwitcher = <T extends string = string>({
             }}
             type={"button"}
             onClick={() => onChange(t.key)}
-            className={`relative z-10 flex items-center gap-1 rounded-full font-bold transition-colors duration-300 cursor-pointer ${styles.button} ${
+            className={`relative z-10 flex truncate items-center gap-1 rounded-full font-bold transition-colors duration-300 cursor-pointer ${styles.button} ${
               value === t.key
                 ? "dark:text-white text-studodarkblue"
                 : "text-studodarkblue/50 dark:text-studogrey hover:text-zinc-400"

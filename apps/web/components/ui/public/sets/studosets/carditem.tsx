@@ -8,6 +8,7 @@ import { useUpdateCards } from "@/hooks/app/sets/useUpdateCards";
 import LaTeXInput from "@/components/ui/design_system/input/LaTeXInput";
 import SafeKaTeX from "@/components/ui/design_system/input/SafeKaTeX";
 import { codeToHtml } from "shiki";
+import { useTranslations } from "next-intl";
 
 interface CarditemProps {
   index: number;
@@ -33,6 +34,7 @@ export default function CardItem({
     removeSavingCard,
   } = useStudosetStore();
 
+  const t = useTranslations("studoset");
   const toast = useToast();
   const { updateCards } = useUpdateCards(setId ?? "");
   const blurTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -157,13 +159,12 @@ export default function CardItem({
             ) : isEditing ? (
               <MdCheck className="text-emerald-400" size={16} />
             ) : (
-              <MdEdit size={16} />
+              <MdEdit size={16} title={t("edit")} />
             )}
           </button>
         )}
       </div>
 
-      {/* Card body */}
       <div
         className={`w-full flex px-5 gap-5 py-5 ${isEditing ? "items-start" : "items-center"}`}
       >

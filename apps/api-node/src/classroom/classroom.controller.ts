@@ -221,7 +221,6 @@ export class ClassroomController {
     @Param('classroom_id', ParseUUIDPipe) classroom_id: string,
     @Body() set: UpdateClassroomDto,
   ) {
-    console.log(set instanceof UpdateClassroomDto);
     return this.classService.updateById(classroom_id, set);
   }
 

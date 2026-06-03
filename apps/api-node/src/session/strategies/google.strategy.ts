@@ -14,8 +14,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         'http://localhost:3000/sessions/google/callback',
       scope: ['email', 'profile'],
     });
-    console.log('✅ GoogleStrategy initialized'); // 👈 Debug
-    console.log('ClientID:', configService.get<string>('GOOGLE_CLIENT_ID')); // 👈 Debug
   }
 
   validate(
@@ -24,7 +22,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: VerifyCallback,
   ): void {
-    console.log('🔍 Google validate called'); // 👈 Debug
     const { name, emails, photos } = profile;
     const user = {
       email: emails?.[0]?.value || '',

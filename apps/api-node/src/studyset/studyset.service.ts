@@ -448,8 +448,6 @@ export class StudysetService {
     const seshcards = await this.db.query.sessioncards.findMany({
       where: eq(sessioncards.session_id, session.id),
     });
-    console.log('session id:', session.id);
-    console.log('seshcards:', seshcards);
 
     return {
       ...session,
@@ -493,7 +491,30 @@ export class StudysetService {
       throw new NotFoundException('Studyset not found');
     }
 
-    if (body.cards && body.cards.length > 0) {
+    if (body.cardlist && body.cardlist.length > 0) {
+      await this.db.delete(cards).where(eq(cards.set_id, set_id));
+
+      await this.db.insert(cards).values(
+        body.cardlist.map((card) => ({
+          id: uuidv6(),
+          term: card.term,
+          definition: card.definition,
+          image: card.image ?? null,
+          number: card.number,
+          created_at: isoNow,
+          updated_at: isoNow,
+          card_viewcount: 0,
+          card_total_viewcount: 0,
+          inQueue: false,
+          mastered: false,
+          times_relearned: 0,
+          set_id,
+          owner_id: user_id,
+          term_content_type: card.term_content_type ?? 'text',
+          code_language: card.code_language ?? 'typescript',
+        })),
+      );
+    } else if (body.cards && body.cards.length > 0) {
       await Promise.all(
         body.cards.map(async (card) => {
           if (!card.id) {

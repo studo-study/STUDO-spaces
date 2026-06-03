@@ -123,10 +123,12 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
 
     return (
       <div className={"w-full h-fit flex flex-col gap-1"}>
-        <div className="relative min-h-10 w-full items-center flex">
+        <div className="relative min-h-10 w-full max-w-full flex-1 items-center flex">
           {showLatexPreview ? (
             <div
-              className={"text-xs cursor-pointer"}
+              className={
+                "text-xs cursor-pointer  min-h-10.5 flex items-center pl-5 "
+              }
               onClick={() => setIsLatexPreview(false)}
             >
               <SafeKaTeX value={value} fallback={value} />
@@ -134,7 +136,7 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
           ) : showCodePreview ? (
             <div
               className={
-                "text-xs w-full rounded-full h-10 border border-studoborder/30 overflow-hidden px-1 overflow-x-scroll scroll-hidden dark:invert cursor-pointer [&>pre]:p-3 [&>pre]:rounded-xl [&>pre]:text-xs [&>pre]:!bg-transparent"
+                "text-xs w-full rounded-full h-10.5 border border-studoborder/30 overflow-hidden px-1 overflow-x-scroll scroll-hidden dark:invert cursor-pointer [&>pre]:p-3 [&>pre]:rounded-xl [&>pre]:text-xs [&>pre]:!bg-transparent"
               }
               onClick={() => {
                 isTypingRef.current = true;
@@ -147,11 +149,13 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
               ref={ref}
               variant="cardInput"
               value={value}
+              initialValue={value}
               onChange={(e) => onChange(e.target.value)}
               onBlur={handleBlur}
               onKeyDown={onKeyDown}
               placeholder={placeholder}
               error={error}
+              maxLength={500}
             />
           )}
         </div>

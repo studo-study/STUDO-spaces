@@ -95,21 +95,15 @@ export default function learnReducer(state: State, action: Action): State {
       return { ...state, phase: "showAnswer" };
 
     case "ADVANCE": {
-      console.log("ADVANCE from index:", state.index);
-      console.log("cards length:", action.cards.length);
-      console.log("correctCounts:", state.correctCounts);
-
       const allMastered = action.cards.every(
         (card) => (state.correctCounts[card.id] || 0) >= 2,
       );
-      console.log("allMastered:", allMastered);
 
       if (allMastered) {
         return { ...state, phase: "showProgress", progressMode: true };
       }
 
       let idx = (state.index + 1) % action.cards.length;
-      console.log("next idx:", idx, "card:", action.cards[idx]?.id);
 
       let attempts = 0;
       while ((state.correctCounts[action.cards[idx]?.id] || 0) >= 2) {
@@ -119,8 +113,6 @@ export default function learnReducer(state: State, action: Action): State {
           return { ...state, phase: "showProgress", progressMode: true };
         }
       }
-
-      console.log("final idx:", idx);
       return { ...state, index: idx, phase: "answering", wrongAttempt: false };
     }
 

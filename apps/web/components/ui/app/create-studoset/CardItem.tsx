@@ -76,11 +76,7 @@ export default function CardItem({
         </div>
 
         <div className="flex flex-col lg:flex-row w-full gap-3 px-5 pb-4 sm:pb-6">
-          <div
-            className={
-              "h-full flex-1 lg:max-w-1/2 lg:w-1/2 lg:min-w-1/2  w-full"
-            }
-          >
+          <div className={"h-full w-full lg:w-1/2 min-w-0"}>
             <LaTexInput
               ref={termRef}
               contentType={contentType}
@@ -98,11 +94,7 @@ export default function CardItem({
               }}
             />
           </div>
-          <div
-            className={
-              "h-full flex-1 lg:max-w-1/2 lg:w-1/2 lg:min-w-1/2 w-full"
-            }
-          >
+          <div className={"h-full w-full lg:w-1/2 min-w-0"}>
             <LaTexInput
               ref={defRef}
               value={definition}

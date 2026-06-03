@@ -20,8 +20,6 @@ async function hashPassword(password: string): Promise<string> {
 }
 
 async function resetDatabase() {
-  console.log('🗑️ Resetting database...');
-
   await db.delete(schema.flowresources);
   await db.delete(schema.flowrows);
   await db.delete(schema.flowcourses);
@@ -48,14 +46,10 @@ async function resetDatabase() {
   await db.delete(schema.studoprofiles);
   await db.delete(schema.profiles);
   await db.delete(schema.users);
-
-  console.log('✅ Database reset completed\n');
 }
 
 async function seedStudo() {
   try {
-    console.log('Starting seed process...\n');
-
     // === IDs ===
     const userId1 = '1f0c076e-f30c-64b0-a0f3-d5a021c6a9cb';
     const userId2 = uuidv6();
@@ -95,7 +89,6 @@ async function seedStudo() {
     const sessionId5 = uuidv6();
 
     // === 1. Users ===
-    console.log('Seeding users...');
     await db.insert(schema.users).values([
       {
         id: userId1,
@@ -166,10 +159,8 @@ async function seedStudo() {
         banned: false,
       },
     ]);
-    console.log('Users seeded\n');
 
     // === 2. Profiles ===
-    console.log('Seeding profiles...');
     await db.insert(schema.profiles).values([
       {
         user_id: userId1,
@@ -202,7 +193,6 @@ async function seedStudo() {
         tags: ['Carol Williams'],
       },
     ]);
-    console.log('Profiles seeded\n');
 
     // === 3. Studoprofiles ===
     const trackId1 = uuidv6();
@@ -211,7 +201,6 @@ async function seedStudo() {
     const trackId4 = uuidv6();
     const trackId5 = uuidv6();
 
-    console.log('Seeding studoprofiles...');
     await db.insert(schema.studoprofiles).values([
       {
         id: userId1,
@@ -222,7 +211,6 @@ async function seedStudo() {
       },
     ]);
 
-    console.log('Seeding studotracks...');
     await db.insert(schema.studotracks).values([
       {
         id: trackId1,
@@ -262,15 +250,12 @@ async function seedStudo() {
     ]);
 
     // === 4. Folders ===
-    console.log('Seeding folders...');
     await db.insert(schema.folders).values([
       { id: folderId1, name: 'Biology Notes', owner_id: userId1 },
       { id: folderId2, name: 'Computer Science', owner_id: userId2 },
     ]);
-    console.log('Folders seeded\n');
 
     // === 5. Studysets ===
-    console.log('Seeding studosets...');
     await db.insert(schema.studysets).values([
       {
         id: studySetId1,
@@ -301,10 +286,8 @@ async function seedStudo() {
         displayName: 'Paul ALlan',
       },
     ]);
-    console.log('Studysets seeded\n');
 
     // === 6. Visualsets ===
-    console.log('Seeding visualsets...');
     await db.insert(schema.visualsets).values([
       {
         id: visualSetId1,
@@ -319,10 +302,8 @@ async function seedStudo() {
         img_url: 'https://i.pravatar.cc/150?img=1',
       },
     ]);
-    console.log('Visualsets seeded\n');
 
     // === folder_sets ===
-    console.log('Seeding folder_sets...');
     await db.insert(schema.folder_sets).values([
       {
         id: uuidv6(),
@@ -346,10 +327,8 @@ async function seedStudo() {
         folder_id: folderId1,
       },
     ]);
-    console.log('Visualsets seeded\n');
 
     // === 7. Cards ===
-    console.log('Seeding cards...');
     await db.insert(schema.cards).values([
       {
         id: cardId1,
@@ -398,10 +377,8 @@ async function seedStudo() {
         term_content_type: 'text',
       },
     ]);
-    console.log('Cards seeded\n');
 
     // === 8. Images & Pins ===
-    console.log('Seeding images...');
     await db.insert(schema.images).values([
       {
         id: imageId1,
@@ -414,9 +391,7 @@ async function seedStudo() {
         set_id: visualSetId1,
       },
     ]);
-    console.log('Images seeded\n');
 
-    console.log('Seeding pins...');
     await db.insert(schema.pins).values([
       {
         id: pinId1,
@@ -443,10 +418,8 @@ async function seedStudo() {
         owner_id: userId1,
       },
     ]);
-    console.log('Pins seeded\n');
 
     // === 9. Setlikes ===
-    console.log('Seeding setlikes...');
     await db.insert(schema.setlikes).values([
       {
         id: setLike1,
@@ -470,9 +443,7 @@ async function seedStudo() {
         created_at: '2024-10-22T14:00:00.000Z',
       },
     ]);
-    console.log('Setlikes seeded\n');
 
-    console.log('Seeding tracksets...');
     await db.insert(schema.tracksets).values([
       {
         set_id: visualSetId1,
@@ -487,7 +458,6 @@ async function seedStudo() {
     ]);
 
     // === 10. Studysessions ===
-    console.log('Seeding studysessions...');
     await db.insert(schema.studysessions).values([
       {
         id: sessionId1,
@@ -565,10 +535,8 @@ async function seedStudo() {
         last_studied: '2024-10-30T09:10:00.000Z',
       },
     ]);
-    console.log('Studysessions seeded\n');
 
     // === 11. SessionCards ===
-    console.log('Seeding sessioncards...');
     await db.insert(schema.sessioncards).values([
       {
         id: uuidv6(),
@@ -643,10 +611,8 @@ async function seedStudo() {
         owner_id: userId2,
       },
     ]);
-    console.log('SessionCards seeded\n');
 
     // === 12. SessionPins ===
-    console.log('Seeding sessionpins...');
     await db.insert(schema.sessionpins).values([
       {
         id: uuidv6(),
@@ -697,10 +663,8 @@ async function seedStudo() {
         owner_id: userId2,
       },
     ]);
-    console.log('SessionPins seeded\n');
 
     // === 13. Classrooms ===
-    console.log('Seeding classrooms...');
     await db.insert(schema.classrooms).values([
       {
         id: classroomId1,
@@ -748,10 +712,8 @@ async function seedStudo() {
         school: `Ugent`,
       },
     ]);
-    console.log('Classrooms seeded\n');
 
     // === 14. Classroomusers ===
-    console.log('Seeding classroomusers...');
     await db.insert(schema.classroomusers).values([
       {
         user_id: userId3,
@@ -796,10 +758,8 @@ async function seedStudo() {
         position: 3,
       },
     ]);
-    console.log('Classroomusers seeded\n');
 
     // === 15. Classroomsets ===
-    console.log('Seeding classroomsets...');
     await db.insert(schema.classroomsets).values([
       {
         set_id: studySetId1,
@@ -814,10 +774,8 @@ async function seedStudo() {
         added_by: userId1,
       },
     ]);
-    console.log('Classroomsets seeded\n');
 
     // === 16. Classroomactivities ===
-    console.log('Seeding classroomactivities...');
     await db.insert(schema.classroomactivities).values([
       {
         id: classAct1,
@@ -831,10 +789,8 @@ async function seedStudo() {
         last_seen: '2024-10-29T14:30:00.000Z',
       },
     ]);
-    console.log('Classroomactivities seeded\n');
 
     // === 17. Studoprofile Communities ===
-    console.log('Seeding studoprofilecommunities...');
     await db.insert(schema.studoprofilecommunities).values([
       {
         classroom_id: classroomId3,
@@ -852,10 +808,8 @@ async function seedStudo() {
         studoprofile_id: userId1,
       },
     ]);
-    console.log('Studoprofilecommunities seeded\n');
 
     // === 18. Flowboards ===
-    console.log('Seeding flowboards...');
 
     const flowboardId1 = uuidv6();
     const flowcourseId1 = uuidv6();
@@ -872,10 +826,8 @@ async function seedStudo() {
         school_id: null,
       },
     ]);
-    console.log('Flowboards seeded\n');
 
     // === 19. Flowcourses ===
-    console.log('Seeding flowcourses...');
     await db.insert(schema.flowcourses).values([
       {
         id: flowcourseId1,
@@ -889,10 +841,8 @@ async function seedStudo() {
         lesson_days: 'Ma, Wo',
       },
     ]);
-    console.log('Flowcourses seeded\n');
 
     // === 20. Flowrows ===
-    console.log('Seeding flowrows...');
 
     const flowrowId1 = uuidv6();
     const flowrowId2 = uuidv6();
@@ -960,10 +910,8 @@ async function seedStudo() {
         status: 'not_started',
       },
     ]);
-    console.log('Flowrows seeded\n');
 
     // === 21. Flowresources ===
-    console.log('Seeding flowresources...');
     await db.insert(schema.flowresources).values([
       {
         flowresource_id: uuidv6(),
@@ -1022,22 +970,14 @@ async function seedStudo() {
         resource_type: 'course',
       },
     ]);
-    console.log('Flowresources seeded\n');
-
-    console.log('All data seeded successfully!');
   } catch (error) {
-    console.error('Error seeding database:', error);
     throw error;
   }
 }
 
 async function main() {
-  console.log('🌱 Starting database seeding...\n');
-
   await resetDatabase();
   await seedStudo();
-
-  console.log('🎉 Database seeding completed successfully!');
 }
 
 main()
@@ -1045,7 +985,6 @@ main()
     await connection.end();
   })
   .catch(async (e) => {
-    console.error(e);
     await connection.end();
     process.exit(1);
   });

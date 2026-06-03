@@ -23,7 +23,6 @@ export class MicrosoftStrategy extends PassportStrategy(Strategy, 'microsoft') {
       scope: ['user.read'],
       tenant: 'common', // 'common', 'organizations', 'consumers', of je tenant ID
     });
-    console.log('✅ MicrosoftStrategy initialized');
   }
 
   validate(

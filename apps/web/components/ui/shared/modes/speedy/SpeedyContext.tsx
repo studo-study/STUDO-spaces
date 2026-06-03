@@ -76,14 +76,6 @@ export function SpeedyProvider({
     if (state.phase !== "correct" && state.phase !== "incorrect") return;
 
     const viewcount = state.correctCounts[currentCard.card.id] ?? 0;
-    console.log(
-      "[SpeedyContext] saving card",
-      currentCard.sessionCard.id,
-      "viewcount:",
-      viewcount,
-      "phase:",
-      state.phase,
-    );
 
     updateSession.mutate({
       user_id: session.user_id,

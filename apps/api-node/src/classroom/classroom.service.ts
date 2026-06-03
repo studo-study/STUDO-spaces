@@ -108,8 +108,6 @@ export class ClassroomService {
     try {
       await this.db.insert(classroomsets).values(cset);
     } catch (err: any) {
-      console.error('DB ERROR:', err);
-      console.error('CAUSE:', err?.cause);
       throw err;
     }
     return cset;
@@ -323,9 +321,6 @@ export class ClassroomService {
       });
 
       if (!user) {
-        console.warn(
-          `User ${classroomset.added_by} not found, skipping set ${classroomset.set_id}`,
-        );
         continue; // Skip deze set in plaats van error throwen
       }
 
@@ -345,8 +340,6 @@ export class ClassroomService {
             title: set.title,
             added_by: user.displayName,
           });
-        } else {
-          console.warn(`Studyset ${classroomset.set_id} not found`);
         }
       }
 
@@ -366,8 +359,6 @@ export class ClassroomService {
             title: set.title,
             added_by: user.displayName,
           });
-        } else {
-          console.warn(`Visualset ${classroomset.set_id} not found`);
         }
       }
     }
