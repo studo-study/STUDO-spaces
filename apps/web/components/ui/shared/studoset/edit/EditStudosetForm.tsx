@@ -14,6 +14,7 @@ import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/create-studoset/JumpToBottom";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { SuggestionImage } from "@studo/types";
 
 interface EditsetProps {
   id: string;
@@ -31,7 +32,7 @@ const firstCard = (): CardData => ({
   index: 0,
   term: "",
   definition: "",
-  image: "",
+  image: null,
   isDouble: false,
   contentType: "text" as const,
   codeLanguage: "typescript",
@@ -125,7 +126,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
         index: i,
         term: card.term,
         definition: card.definition,
-        image: "",
+        image: card.suggestion_image ?? null,
         isDouble: false,
         contentType: card.term_content_type,
         codeLanguage: card.code_language,
@@ -202,7 +203,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
             term: card.term.trim().slice(0, 500),
             definition: card.definition.trim().slice(0, 500),
             number: !isNaN(card.index) ? card.index : i,
-            ...(card.image ? { image: card.image } : {}),
+            ...(card.image ? { suggestion_image_id: card.image.id } : {}),
             ...(card.contentType &&
             ["text", "latex", "code"].includes(card.contentType)
               ? { term_content_type: card.contentType }
@@ -266,7 +267,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
         index: prev.length,
         term: "",
         definition: "",
-        image: "",
+        image: null,
         isDouble: false,
         contentType: "text" as const,
         codeLanguage: "typescript",
@@ -291,7 +292,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
           index,
           term: "",
           definition: "",
-          image: "",
+          image: null,
           isDouble: false,
           contentType: "text" as const,
           codeLanguage: "typescript",
@@ -320,7 +321,11 @@ export default function EditStudosetForm({ id }: EditsetProps) {
   };
 
   const updateCard = useCallback(
-    (id: string, field: string, value: string | boolean) => {
+    (
+      id: string,
+      field: string,
+      value: string | boolean | SuggestionImage | null,
+    ) => {
       setCardArray((prev) =>
         prev.map((card) =>
           card.id === id ? { ...card, [field]: value } : card,
@@ -485,6 +490,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
                 definition={card.definition}
                 contentType={card.contentType}
                 codeLanguage={card.codeLanguage}
+                image={card.image}
                 isDouble={duplicates.includes(card.id)}
                 deleteCard={deleteCard}
                 updateCard={updateCard}
