@@ -38,11 +38,7 @@ import {
 } from '@nestjs/swagger';
 import { Request as ExpressRequest } from 'express';
 import { ParseStudySetIdPipe } from '../auth/pipes/parseSetId.pipe';
-import {
-  SetCardImageDto,
-  SuggestionImagesResponse,
-  TermSuggestionDTO,
-} from './image.dto';
+import { SetCardImageDto, SuggestionImagesResponse } from './image.dto';
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {
@@ -108,6 +104,19 @@ export class StudysetsController {
   ) {
     const user_id = req.user.id;
     return this.studysetService.getBySetId(user_id, set_id);
+  }
+
+  // SUGGEST image ---------------------------------------------------------
+  @ApiOperation({ summary: 'Suggereer afbeeldingen bij een term (Pexels).' })
+  @ApiResponse({ status: 200, type: SuggestionImagesResponse })
+  @UseGuards(CheckUserAccessGuard)
+  @Roles(Role.USER, Role.ADMIN)
+  @Get('/suggest-image')
+  async suggestImage(
+    @Query('term') term: string,
+    @Query('lang') lang?: string,
+  ): Promise<SuggestionImagesResponse> {
+    return this.studysetService.suggestImage({ term, lang });
   }
 
   //GET specifieke studosets ---------------------------------------------------
@@ -336,19 +345,6 @@ export class StudysetsController {
     const user_id = req.user.id;
     return this.studysetService.removeLike(user_id, id);
   }
-  // SUGGEST image ---------------------------------------------------------
-  @ApiOperation({ summary: 'Suggereer afbeeldingen bij een term (Pexels).' })
-  @ApiResponse({ status: 200, type: SuggestionImagesResponse })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get('/suggest-image')
-  async suggestImage(
-    @Query('term') term: string,
-    @Query('lang') lang?: string,
-  ): Promise<SuggestionImagesResponse> {
-    return this.studysetService.suggestImage({ term, lang });
-  }
-
   // SET card image ---------------------------------------------------------
   @ApiOperation({ summary: 'Koppel een suggestion image aan een kaart.' })
   @ApiParam({ name: 'card_id', type: 'string' })

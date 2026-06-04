@@ -816,10 +816,12 @@ export class StudysetService {
     }
 
     const res = await fetch(
-      `https://api.pexels.com/v1/search?query=${encodeURIComponent(normalized)}&per_page=5`,
+      `https://api.pexels.com/v1/search?query=${encodeURIComponent(normalized)}&per_page=4`,
       { headers: { Authorization: process.env.PEXELS_API_KEY ?? '' } },
     );
     if (!res.ok) {
+      const errBody = await res.text();
+      console.error(`Pexels ${res.status}:`, errBody);
       throw new BadRequestException('Failed to fetch images from Pexels');
     }
     const data = await res.json();
