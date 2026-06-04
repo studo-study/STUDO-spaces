@@ -129,6 +129,7 @@ export default function CardItem({
                 }}
               />
               <ImageTrigger
+                image={image}
                 imageTabOpen={imageTabOpen}
                 setImageTabOpen={setImageTabOpen}
               />
@@ -136,7 +137,13 @@ export default function CardItem({
           </div>
           {imageTabOpen && (
             <div className={"min-h-50 w-full h-50"}>
-              <ImageSuggestionTab term={term} />
+              <ImageSuggestionTab
+                selected={image}
+                term={term}
+                selectImage={(value: SuggestionImage | null) =>
+                  updateCard(id, "image", value)
+                }
+              />
             </div>
           )}
         </div>

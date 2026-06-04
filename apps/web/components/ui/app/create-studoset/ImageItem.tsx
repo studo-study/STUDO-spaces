@@ -4,14 +4,19 @@ import { SuggestionImage } from "@studo/types";
 
 interface ImageItemProps {
   image: SuggestionImage;
+  selectImage: (value: SuggestionImage | null) => void;
+  selected: SuggestionImage | null;
 }
 
-const ImageItem = ({ image }: ImageItemProps) => {
+const ImageItem = ({ image, selectImage, selected }: ImageItemProps) => {
+  const isSelected = selected?.id === image.id;
+  const onSelect = () => {
+    selectImage(isSelected ? null : image);
+  };
   return (
     <div
-      className={
-        "rounded-2xl relative hover:border-studoblue overflow-hidden cursor-pointer w-full min-h-full bg-studogrey/30 border border-studoborder/30"
-      }
+      onClick={() => onSelect()}
+      className={`rounded-2xl relative border-2 hover:border-studoblue ${isSelected ? "border-studoblue" : "border-studoborder/30"} overflow-hidden cursor-pointer w-full min-h-full bg-studogrey/30 `}
     >
       <Image
         src={image.display_url}

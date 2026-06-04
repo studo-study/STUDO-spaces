@@ -5,13 +5,21 @@ import { useImageSuggestions } from "@/hooks/app/sets/useImageSuggestions";
 import { IoMdRefresh } from "react-icons/io";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import ImageItem from "@/components/ui/app/create-studoset/ImageItem";
+import { SuggestionImage } from "@studo/types";
 
 interface ImageSuggestionTabProps {
   term: string | undefined;
   lang?: string;
+  selectImage: (value: SuggestionImage | null) => void;
+  selected: SuggestionImage | null;
 }
 
-const ImageSuggestionTab = ({ term, lang }: ImageSuggestionTabProps) => {
+const ImageSuggestionTab = ({
+  term,
+  lang,
+  selectImage,
+  selected,
+}: ImageSuggestionTabProps) => {
   const t = useTranslations("card");
   const [queryTerm, setQueryTerm] = useState(term);
   const { isPending, data, refetch } = useImageSuggestions(queryTerm, lang);
@@ -69,7 +77,12 @@ const ImageSuggestionTab = ({ term, lang }: ImageSuggestionTabProps) => {
       {data?.images?.length !== 0 && (
         <div className={"w-full flex-1 overflow-hidden grid grid-cols-4 gap-5"}>
           {data?.images?.map((image) => (
-            <ImageItem key={image.id} image={image} />
+            <ImageItem
+              key={image.id}
+              image={image}
+              selected={selected}
+              selectImage={selectImage}
+            />
           ))}
         </div>
       )}
