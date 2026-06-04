@@ -227,6 +227,17 @@ export class CardResponseDto {
   })
   @Expose()
   suggestion_image_id?: string | null;
+
+  @ApiPropertyOptional({ description: 'Volledig suggestion image object' })
+  @Expose()
+  suggestion_image?: {
+    id: string;
+    pexels_id: string;
+    display_url: string;
+    source: string;
+    photographer: string;
+    source_page_url: string;
+  } | null;
 }
 
 export class CardListResponseDto {

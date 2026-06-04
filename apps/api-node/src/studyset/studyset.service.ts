@@ -410,6 +410,9 @@ export class StudysetService {
     // Get cards
     const kaarten = await this.db.query.cards.findMany({
       where: eq(cards.set_id, set_id),
+      with: {
+        suggestionImage: true,
+      },
     });
 
     // Get likes
@@ -429,7 +432,12 @@ export class StudysetService {
     return {
       ...set,
       folder_id: folderEntry?.folder_id ?? null,
-      cards: kaarten.sort((a, b) => a.number - b.number) as CardResponseDto[],
+      cards: kaarten
+        .sort((a, b) => a.number - b.number)
+        .map(({ suggestionImage, ...card }) => ({
+          ...card,
+          suggestion_image: suggestionImage ?? null,
+        })) as unknown as CardResponseDto[],
       likes: likes,
       session: sesh,
       folders: foldrs,

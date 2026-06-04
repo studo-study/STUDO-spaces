@@ -5,6 +5,7 @@ import { MdDelete, MdDragIndicator } from "react-icons/md";
 import LaTexInput from "@/components/ui/design_system/input/LaTeXInput";
 import ImageTrigger from "@/components/ui/app/create-studoset/ImageTrigger";
 import ImageSuggestionTab from "@/components/ui/app/create-studoset/ImageSuggestionTab";
+import { SuggestionImage } from "@studo/types";
 
 function focusRef(ref: React.Ref<HTMLInputElement | null> | undefined) {
   if (ref && typeof ref === "object" && "current" in ref) {
@@ -17,7 +18,11 @@ interface CardProps {
   id: string;
   insertCard: () => void;
   deleteCard: (id: string) => void;
-  updateCard: (id: string, field: string, value: string | boolean) => void;
+  updateCard: (
+    id: string,
+    field: string,
+    value: string | boolean | SuggestionImage | null,
+  ) => void;
   isDouble: boolean;
   contentType: "text" | "latex" | "code";
   codeLanguage: string;
@@ -27,6 +32,7 @@ interface CardProps {
   termRef?: React.Ref<HTMLInputElement | null>;
   defRef?: React.Ref<HTMLInputElement | null>;
   onEnterDefinition?: () => void;
+  image: SuggestionImage | null;
 }
 export default function CardItem({
   index,
@@ -43,6 +49,7 @@ export default function CardItem({
   termRef,
   defRef,
   onEnterDefinition,
+  image,
 }: CardProps) {
   const t = useTranslations("card");
   const [contentType, setContentType] = useState<"text" | "latex" | "code">(

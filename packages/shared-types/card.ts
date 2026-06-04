@@ -1,3 +1,5 @@
+import { SuggestionImage } from "./suggestionimage";
+
 export type CardContentType = "text" | "latex" | "code";
 
 export interface CreateCard {
@@ -36,6 +38,7 @@ export interface CardResponse {
   term_content_type: CardContentType;
   code_language: string;
   suggestion_image_id?: string | null;
+  suggestion_image?: SuggestionImage | null;
 }
 
 export interface CardListResponse {
