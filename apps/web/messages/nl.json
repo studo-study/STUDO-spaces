@@ -1041,7 +1041,10 @@
     "Term": "Term",
     "click_turn": "klik om te draaien",
     "click_flip_back": "klik om terug te draaien",
-    "learnt": "Geleerd"
+    "learnt": "Geleerd",
+    "image_suggestion": "Suggesties",
+    "no_term": "geen term",
+    "no_suggestions": "geen suggesties gevonden"
   },
   "notfound": {
     "return": "terug",

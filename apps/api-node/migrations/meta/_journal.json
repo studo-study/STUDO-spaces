@@ -71,6 +71,41 @@
       "when": 1779670000000,
       "tag": "0009_fix_card_content_type",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1780580058830,
+      "tag": "0010_redundant_scarlet_spider",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1780581549451,
+      "tag": "0011_whole_microbe",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1780582032908,
+      "tag": "0012_stiff_pepper_potts",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1780584041863,
+      "tag": "0013_lazy_infant_terrible",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1780587222315,
+      "tag": "0014_acoustic_scrambler",
+      "breakpoints": true
     }
   ]
 }

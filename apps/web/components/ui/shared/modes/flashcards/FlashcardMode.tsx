@@ -20,6 +20,13 @@ import Image from "next/image";
 import { FaCheck } from "react-icons/fa";
 import { AiOutlineRise } from "react-icons/ai";
 
+interface SuggestionImage {
+  id: string;
+  display_url: string;
+  photographer: string;
+  source_page_url: string;
+}
+
 interface Card {
   id: string;
   term: string;
@@ -31,6 +38,7 @@ interface Card {
   owner_id: string;
   term_content_type: "text" | "latex" | "code";
   code_language: string;
+  suggestion_image?: SuggestionImage | null;
 }
 
 interface FlashcardProps {
@@ -377,27 +385,46 @@ function Card({ card, termMode, onLearnt }: CardProps) {
           </div>
           <span
             className={
-              "absolute bottom-3 left-1/2 -translate-1/2 flex flex-row gap-1 items-center opacity-30"
+              "absolute bottom-3 left-1/2 -translate-1/2 flex flex-row gap-3 items-center opacity-30"
             }
           >
             <TbClick />
             {t("click_turn")}
           </span>
-          {termMode ? (
-            <span className="text-xl select-none font-bold font-georgia">
-              {card.term_content_type === "latex" ? (
-                <SafeKaTeX value={card.term} fallback={card.term} />
-              ) : card.term_content_type === "code" ? (
-                <CodeBlock value={card.term} lang={card.code_language} />
+          <div
+            className={`flex flex-row gap-3 items-center w-full px-5 ${card.suggestion_image ? "justify-between" : "justify-center"}`}
+          >
+            <div
+              className={`flex h-full items-center justify-center ${card.suggestion_image ? "w-1/2" : "w-full"}`}
+            >
+              {termMode ? (
+                <span className="text-xl select-none font-bold font-georgia">
+                  {card.term_content_type === "latex" ? (
+                    <SafeKaTeX value={card.term} fallback={card.term} />
+                  ) : card.term_content_type === "code" ? (
+                    <CodeBlock value={card.term} lang={card.code_language} />
+                  ) : (
+                    card.term
+                  )}
+                </span>
               ) : (
-                card.term
+                <span className="block text-base sm:text-lg md:text-xl text-center text-balance leading-relaxed select-none px-4">
+                  {card.definition}
+                </span>
               )}
-            </span>
-          ) : (
-            <span className="block text-base sm:text-lg md:text-xl text-center text-balance leading-relaxed select-none px-4">
-              {card.definition}
-            </span>
-          )}
+            </div>
+            {card.suggestion_image && (
+              <div className="max-h-1/3 rounded-lg overflow-hidden">
+                <Image
+                  src={card.suggestion_image.display_url}
+                  width={300}
+                  height={300}
+                  alt={card.suggestion_image.photographer}
+                  className=""
+                />
+              </div>
+            )}
+          </div>
         </div>
         <div
           className={

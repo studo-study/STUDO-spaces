@@ -5,6 +5,8 @@
 // NEXTAUTH TYPE EXTENSIONS
 // ============================================
 
+import { SuggestionImage } from "@studo/types";
+
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: StudoUser;
@@ -167,6 +169,8 @@ export interface Card {
   updated_at: string;
   set_id: string;
   owner_id: string;
+  suggestion_image_id?: string | null;
+  suggestion_image?: SuggestionImage | null;
 }
 
 export interface CardListResponse {
@@ -719,7 +723,7 @@ export interface CardData {
   index: number;
   term: string;
   definition: string;
-  image: string;
+  image: SuggestionImage | null;
   isDouble: boolean;
   contentType: "text" | "latex" | "code";
   codeLanguage: string;

@@ -38,10 +38,17 @@ import {
   setlikes,
   studysessions,
   studysets,
+  suggestion_images,
+  suggestion_terms_cards,
   users,
   visualsets,
 } from '../drizzle/schema';
 import { and, count, eq, inArray, sql } from 'drizzle-orm';
+import {
+  SetCardImageDto,
+  SuggestionImagesResponse,
+  TermSuggestionDTO,
+} from './image.dto';
 
 @Injectable()
 export class StudysetService {
@@ -111,7 +118,7 @@ export class StudysetService {
         id: uuidv6(),
         term: c.term,
         definition: c.definition,
-        image: c.image ?? null,
+        suggestion_image_id: c.suggestion_image_id ?? null,
         number: c.number,
         created_at: date.toISOString(),
         updated_at: '',
@@ -172,7 +179,7 @@ export class StudysetService {
       id: uuidv6(),
       term: data.term,
       definition: data.definition,
-      image: data.image ?? null,
+      suggestion_image_id: data.suggestion_image_id ?? null,
       number: data.number,
       created_at: date.toISOString(),
       updated_at: date.toISOString(),
@@ -403,6 +410,9 @@ export class StudysetService {
     // Get cards
     const kaarten = await this.db.query.cards.findMany({
       where: eq(cards.set_id, set_id),
+      with: {
+        suggestionImage: true,
+      },
     });
 
     // Get likes
@@ -422,7 +432,12 @@ export class StudysetService {
     return {
       ...set,
       folder_id: folderEntry?.folder_id ?? null,
-      cards: kaarten.sort((a, b) => a.number - b.number) as CardResponseDto[],
+      cards: kaarten
+        .sort((a, b) => a.number - b.number)
+        .map(({ suggestionImage, ...card }) => ({
+          ...card,
+          suggestion_image: suggestionImage ?? null,
+        })) as unknown as CardResponseDto[],
       likes: likes,
       session: sesh,
       folders: foldrs,
@@ -499,7 +514,7 @@ export class StudysetService {
           id: uuidv6(),
           term: card.term,
           definition: card.definition,
-          image: card.image ?? null,
+          suggestion_image_id: card.suggestion_image_id ?? null,
           number: card.number,
           created_at: isoNow,
           updated_at: isoNow,
@@ -795,5 +810,100 @@ export class StudysetService {
     }
 
     return { ...session, cards: seshcards, pins: null };
+  }
+
+  async suggestImage(
+    term: TermSuggestionDTO,
+  ): Promise<SuggestionImagesResponse> {
+    const normalized = term.term.trim().toLowerCase();
+    const cacheKey = `img-suggest:${normalized}`;
+
+    const cached = await this.redis.get(cacheKey);
+    if (cached) {
+      return { images: JSON.parse(cached) };
+    }
+
+    const res = await fetch(
+      `https://api.pexels.com/v1/search?query=${encodeURIComponent(normalized)}&per_page=4`,
+      { headers: { Authorization: process.env.PEXELS_API_KEY ?? '' } },
+    );
+    if (!res.ok) {
+      const errBody = await res.text();
+      console.error(`Pexels ${res.status}:`, errBody);
+      throw new BadRequestException('Failed to fetch images from Pexels');
+    }
+    const data = await res.json();
+
+    const images = await Promise.all(
+      data.photos.map(async (p: any) => {
+        const existing = await this.db.query.suggestion_images.findFirst({
+          where: eq(suggestion_images.pexels_id, String(p.id)),
+        });
+        if (existing) return existing;
+
+        const newImage = {
+          id: uuidv4(),
+          pexels_id: String(p.id),
+          display_url: p.src.large,
+          photographer: p.photographer,
+          source_page_url: p.url,
+          source: 'pexels',
+        };
+        await this.db.insert(suggestion_images).values(newImage);
+        return newImage;
+      }),
+    );
+
+    await this.redis.set(cacheKey, JSON.stringify(images), 'EX', 60 * 60 * 24);
+
+    return { images };
+  }
+
+  async setCardImage(
+    user_id: string,
+    card_id: string,
+    dto: SetCardImageDto,
+  ): Promise<void> {
+    const card = await this.db.query.cards.findFirst({
+      where: eq(cards.id, card_id),
+    });
+    if (!card) throw new NotFoundException('Card not found');
+    if (card.owner_id !== user_id)
+      throw new ForbiddenException('You do not own this card');
+
+    const image = await this.db.query.suggestion_images.findFirst({
+      where: eq(suggestion_images.id, dto.image_id),
+    });
+    if (!image) throw new NotFoundException('Suggestion image not found');
+
+    await this.db
+      .update(cards)
+      .set({ suggestion_image_id: dto.image_id })
+      .where(eq(cards.id, card_id));
+
+    const existing = await this.db.query.suggestion_terms_cards.findFirst({
+      where: and(
+        eq(suggestion_terms_cards.card_id, card_id),
+        eq(suggestion_terms_cards.image_id, dto.image_id),
+      ),
+    });
+
+    if (existing) {
+      await this.db
+        .update(suggestion_terms_cards)
+        .set({ selected_count: existing.selected_count + 1 })
+        .where(
+          and(
+            eq(suggestion_terms_cards.card_id, card_id),
+            eq(suggestion_terms_cards.image_id, dto.image_id),
+          ),
+        );
+    } else {
+      await this.db.insert(suggestion_terms_cards).values({
+        card_id,
+        image_id: dto.image_id,
+        selected_count: 1,
+      });
+    }
   }
 }

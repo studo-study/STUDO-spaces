@@ -13,3 +13,4 @@ export * from "./user";
 export * from "./visualset";
 export * from "./admin";
 export * from "./flow";
+export * from "./suggestionimage";

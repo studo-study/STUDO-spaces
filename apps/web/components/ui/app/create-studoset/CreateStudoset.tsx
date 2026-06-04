@@ -15,6 +15,7 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useFolders } from "@/hooks/app/folders/useFolders";
 import JumpToBottom from "./JumpToBottom";
 import { useInView } from "react-intersection-observer";
+import { SuggestionImage } from "@studo/types";
 
 const LANGUAGES = [
   { code: "en", name: "English" },
@@ -40,7 +41,7 @@ const firstCard = (): CardData => ({
   index: 0,
   term: "",
   definition: "",
-  image: "",
+  image: null,
   isDouble: false,
   contentType: "text" as const,
   codeLanguage: "typescript",
@@ -221,7 +222,7 @@ export default function CreateStudosetForm() {
         definition: card.definition.trim().slice(0, 500),
         number:
           typeof card.index === "number" && !isNaN(card.index) ? card.index : i,
-        ...(card.image ? { image: card.image } : {}),
+        ...(card.image ? { suggestion_image_id: card.image.id } : {}),
         ...(card.contentType &&
         ["text", "latex", "code"].includes(card.contentType)
           ? { term_content_type: card.contentType }
@@ -249,7 +250,7 @@ export default function CreateStudosetForm() {
         index: prev.length,
         term: "",
         definition: "",
-        image: "",
+        image: null,
         isDouble: false,
         contentType: "text" as const,
         codeLanguage: "typescript",
@@ -274,7 +275,7 @@ export default function CreateStudosetForm() {
           index,
           term: "",
           definition: "",
-          image: "",
+          image: null,
           isDouble: false,
           contentType: "text" as const,
           codeLanguage: "typescript",
@@ -303,7 +304,11 @@ export default function CreateStudosetForm() {
   };
 
   const updateCard = useCallback(
-    (id: string, field: string, value: string | boolean) => {
+    (
+      id: string,
+      field: string,
+      value: string | boolean | SuggestionImage | null,
+    ) => {
       setCardArray((prev) =>
         prev.map((card) =>
           card.id === id ? { ...card, [field]: value } : card,
@@ -509,6 +514,7 @@ export default function CreateStudosetForm() {
                 insertCard={() => insertCard(index + 1)}
                 termRef={getCardRefs(card.id).term}
                 defRef={getCardRefs(card.id).def}
+                image={card.image}
                 onEnterDefinition={() => handleEnterDefinition(index)}
               />
             ))}
