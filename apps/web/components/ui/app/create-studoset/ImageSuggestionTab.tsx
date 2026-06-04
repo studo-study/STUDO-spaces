@@ -1,3 +1,5 @@
+import { Link } from "@/i18n/routing";
+
 interface ImageSuggestionTabProps {
   term: string;
 }
@@ -8,24 +10,18 @@ const ImageSuggestionTab = ({ term }: ImageSuggestionTabProps) => {
     >
       <div
         className={
-          "rounded-2xl w-full min-h-full bg-studogrey/30 border border-studoborder/30 animate-pulse"
+          "rounded-2xl relative hover:border-studoblue overflow-hidden object-cover cursor-pointer w-full min-h-full bg-studogrey/30 border border-studoborder/30"
         }
-      />
-      <div
-        className={
-          "rounded-2xl w-full min-h-full bg-studogrey/30 border border-studoborder/30 animate-pulse"
-        }
-      />
-      <div
-        className={
-          "rounded-2xl w-full min-h-full bg-studogrey/30 border border-studoborder/30 animate-pulse"
-        }
-      />
-      <div
-        className={
-          "rounded-2xl w-full min-h-full bg-studogrey/30 border border-studoborder/30 animate-pulse"
-        }
-      />
+      >
+        <Link
+          href={"https://pixabay.com"}
+          className={
+            "absolute bottom-1 right-2 backdrop-blur-2xl p-0.5 h-fit w-fit truncate opacity-50 text-[6px]"
+          }
+        >
+          Via Pixabay
+        </Link>
+      </div>
     </div>
   );
 };

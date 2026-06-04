@@ -10,8 +10,8 @@ import {
   timestamp,
   text,
   pgEnum,
+  primaryKey,
 } from 'drizzle-orm/pg-core';
-// timestamp columns are always stored as UTC, no timezone offset
 import { relations, sql } from 'drizzle-orm';
 
 export const users = pgTable(
@@ -248,6 +248,7 @@ export const cards = pgTable('cards', {
   code_language: varchar('code_language', { length: 32 })
     .notNull()
     .default('typescript'),
+  suggestion_image_id: varchar('suggestion_image_id', { length: 64 }),
 });
 
 export const setlikes = pgTable('setlikes', {
@@ -438,17 +439,17 @@ export const popular_sets = pgTable('popular_sets', {
 
 export const reports = pgTable('reports', {
   report_id: varchar('report_id').primaryKey(),
-  filled_by: integer('filled_by').notNull(),
+  filled_by: varchar('filled_by').notNull(),
   report_type: varchar('report_type', { length: 50 }).notNull(),
   description: text('description'),
   target_id: varchar('target_id').notNull(),
   target_type: varchar('target_type', { length: 20 }).notNull(),
-  reported_user_id: integer('reported_user_id'),
+  reported_user_id: varchar('reported_user_id'),
   status: varchar('status', { length: 20 }).default('to_do').notNull(),
   priority: varchar('priority').default('no_priority').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull(),
   resolved_at: timestamp('resolved_at'),
-  reviewed_by: integer('reviewed_by'),
+  reviewed_by: varchar('reviewed_by'),
   moderator_note: text('moderator_note'),
   assignee_id: varchar('assignee_id'),
   assignee_displayName: varchar('assignee_displayName'),
@@ -543,6 +544,31 @@ export const flowresources = pgTable('flowresources', {
   resource_type: resourceTypeEnum('resource_type').default('task'),
 });
 
+export const suggestion_images = pgTable('suggestion_images', {
+  id: varchar('id').primaryKey(),
+  pexels_id: varchar('pexels_id').notNull().unique(),
+  display_url: varchar('display_url').notNull(),
+  source: varchar('source').notNull().default('pexels'),
+  photographer: varchar('photographer').notNull(),
+  source_page_url: varchar('source_page_url').notNull(),
+});
+
+export const suggestion_terms_cards = pgTable(
+  'suggestion_terms_cards',
+  {
+    card_id: varchar('card_id')
+      .notNull()
+      .references(() => cards.id, { onDelete: 'cascade' }),
+    image_id: varchar('image_id')
+      .notNull()
+      .references(() => suggestion_images.id, { onDelete: 'cascade' }),
+    selected_count: integer('selected_count').notNull().default(1),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.card_id, t.image_id] }),
+  }),
+);
+
 // ============================================================
 // RELATIONS
 // ============================================================
@@ -565,6 +591,7 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   sessionpins: many(sessionpins),
   flowboards: many(flowboards),
   flowcourses: many(flowcourses),
+  reports: many(reports),
 }));
 
 export const profilesRelations = relations(profiles, ({ one }) => ({
@@ -644,6 +671,11 @@ export const cardsRelations = relations(cards, ({ one, many }) => ({
     references: [users.id],
   }),
   sessioncards: many(sessioncards),
+  suggestionImage: one(suggestion_images, {
+    fields: [cards.suggestion_image_id],
+    references: [suggestion_images.id],
+  }),
+  suggestionTermsCards: many(suggestion_terms_cards),
 }));
 
 export const setlikesRelations = relations(setlikes, ({ one }) => ({
@@ -764,6 +796,12 @@ export const studocommunitiesRelations = relations(
   }),
 );
 
+export const reportsRelations = relations(reports, ({ one }) => ({
+  filled_by: one(users, {
+    fields: [reports.filled_by],
+    references: [users.id],
+  }),
+}));
 export const flowboardsRelations = relations(flowboards, ({ one, many }) => ({
   owner: one(users, { fields: [flowboards.owner_id], references: [users.id] }),
   courses: many(flowcourses),
@@ -803,3 +841,25 @@ export const flowresourcesRelations = relations(flowresources, ({ one }) => ({
     references: [flowrows.id],
   }),
 }));
+
+export const suggestionImagesRelations = relations(
+  suggestion_images,
+  ({ many }) => ({
+    cards: many(cards),
+    suggestionTermsCards: many(suggestion_terms_cards),
+  }),
+);
+
+export const suggestionTermsCardsRelations = relations(
+  suggestion_terms_cards,
+  ({ one }) => ({
+    card: one(cards, {
+      fields: [suggestion_terms_cards.card_id],
+      references: [cards.id],
+    }),
+    image: one(suggestion_images, {
+      fields: [suggestion_terms_cards.image_id],
+      references: [suggestion_images.id],
+    }),
+  }),
+);

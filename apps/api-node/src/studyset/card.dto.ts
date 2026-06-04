@@ -30,14 +30,14 @@ export class CreateCardDto {
   definition: string;
 
   @ApiProperty({
-    example: 'https://example.com/image.jpg',
-    description: 'Afbeelding URL',
+    example: 'abc123',
+    description: 'ID van de geselecteerde suggestion image',
     nullable: true,
     required: false,
   })
-  @IsString({ name: 'image', maxLength: 256 })
+  @IsString({ name: 'suggestion_image_id', maxLength: 64 })
   @IsOptional()
-  image?: string | null;
+  suggestion_image_id?: string | null;
 
   @ApiProperty({
     example: 1,
@@ -109,6 +109,16 @@ export class UpdateCardDto {
   @IsNumber({ name: 'number' })
   @IsOptional()
   number?: number;
+
+  @ApiProperty({
+    example: 'abc123',
+    description: 'ID van de geselecteerde suggestion image',
+    nullable: true,
+    required: false,
+  })
+  @IsString({ name: 'suggestion_image_id', maxLength: 64 })
+  @IsOptional()
+  suggestion_image_id?: string | null;
 
   @ApiPropertyOptional({
     example: '2024-01-20T14:45:00.000Z',
@@ -208,6 +218,15 @@ export class CardResponseDto {
   })
   @Expose()
   code_language: string;
+
+  @ApiProperty({
+    example: 'abc123',
+    description: 'ID van de geselecteerde suggestion image',
+    nullable: true,
+    required: false,
+  })
+  @Expose()
+  suggestion_image_id?: string | null;
 }
 
 export class CardListResponseDto {
