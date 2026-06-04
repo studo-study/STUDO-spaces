@@ -31,7 +31,7 @@ const ImageItem = ({ image, selectImage, selected }: ImageItemProps) => {
           "absolute bottom-1 right-2 backdrop-blur-2xl p-0.5 h-fit w-fit truncate opacity-50 text-[6px]"
         }
       >
-        Via Pexels
+        Via {image.source === "wikimedia" ? "Wikimedia" : "Pexels"}
       </Link>
     </div>
   );

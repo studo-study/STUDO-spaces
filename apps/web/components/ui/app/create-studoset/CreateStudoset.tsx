@@ -16,6 +16,7 @@ import { useFolders } from "@/hooks/app/folders/useFolders";
 import JumpToBottom from "./JumpToBottom";
 import { useInView } from "react-intersection-observer";
 import { SuggestionImage } from "@studo/types";
+import InputSelect from "@/components/ui/design_system/select/InputSelect";
 
 const LANGUAGES = [
   { code: "en", name: "English" },
@@ -84,11 +85,11 @@ export default function CreateStudosetForm() {
   const [hasDraft, setHasDraft] = useState(false);
   const [cardArray, setCardArray] = useState<CardData[]>([firstCard()]);
 
+  const [folderId, setFolderId] = useState<string>("");
+  const [termLang, setTermLang] = useState<string>("");
+  const [defLang, setDefLang] = useState<string>("");
   const titleRef = useRef<HTMLInputElement>(null);
   const courseRef = useRef<HTMLInputElement>(null);
-  const folderRef = useRef<HTMLSelectElement>(null);
-  const termLangRef = useRef<HTMLSelectElement>(null);
-  const defLangRef = useRef<HTMLSelectElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   const cardRefsMap = useRef<
@@ -116,9 +117,9 @@ export default function CreateStudosetForm() {
     const d: Draft = {
       title: titleRef.current?.value ?? "",
       course: courseRef.current?.value ?? "",
-      folder_id: folderRef.current?.value ?? "",
-      termLang: termLangRef.current?.value ?? "",
-      defLang: defLangRef.current?.value ?? "",
+      folder_id: folderId,
+      termLang,
+      defLang,
       cardArray,
     };
     const hasContent =
@@ -141,9 +142,9 @@ export default function CreateStudosetForm() {
     if (d.cardArray.length > 0) setCardArray(d.cardArray);
     if (titleRef.current) titleRef.current.value = d.title;
     if (courseRef.current) courseRef.current.value = d.course;
-    if (folderRef.current) folderRef.current.value = d.folder_id;
-    if (termLangRef.current) termLangRef.current.value = d.termLang;
-    if (defLangRef.current) defLangRef.current.value = d.defLang;
+    setFolderId(d.folder_id);
+    setTermLang(d.termLang);
+    setDefLang(d.defLang);
   }, []);
 
   // Save draft whenever cardArray changes; focus new card after add
@@ -163,15 +164,13 @@ export default function CreateStudosetForm() {
     setCardArray([firstCard()]);
     if (titleRef.current) titleRef.current.value = "";
     if (courseRef.current) courseRef.current.value = "";
-    if (folderRef.current) folderRef.current.value = "";
-    if (termLangRef.current) termLangRef.current.value = "";
-    if (defLangRef.current) defLangRef.current.value = "";
+    setFolderId("");
+    setTermLang("");
+    setDefLang("");
   };
   const validate = (): boolean => {
     const title = titleRef.current?.value?.trim();
     const course = courseRef.current?.value?.trim();
-    const termLang = termLangRef.current?.value;
-    const defLang = defLangRef.current?.value;
 
     if (!title) {
       toast.error(t("title_error"));
@@ -214,9 +213,9 @@ export default function CreateStudosetForm() {
     const body = {
       title: titleRef.current!.value.trim(),
       course: courseRef.current!.value.trim(),
-      global_term_language: termLangRef.current!.value,
-      global_definition_language: defLangRef.current!.value,
-      folder_id: folderRef.current!.value,
+      global_term_language: termLang,
+      global_definition_language: defLang,
+      folder_id: folderId,
       cardlist: cardArray.map((card, i) => ({
         term: card.term.trim().slice(0, 500),
         definition: card.definition.trim().slice(0, 500),
@@ -421,53 +420,62 @@ export default function CreateStudosetForm() {
               </div>
 
               <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-                <select
-                  ref={folderRef}
-                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
-                  data-cy="folder_select"
-                  onChange={saveDraft}
-                >
-                  <option value="">{t("folder_placeholder")}</option>
-                  {folders?.map((item) => (
-                    <option value={item.id} key={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
+                <InputSelect
+                  options={[
+                    { value: "", label: t("folder_placeholder") },
+                    ...(folders?.map((item) => ({
+                      value: item.id,
+                      label: item.name,
+                    })) ?? []),
+                  ]}
+                  value={folderId}
+                  onChange={(value) => {
+                    setFolderId(String(value));
+                    saveDraft();
+                  }}
+                  dataCy="folder_select"
+                  size="lg"
+                />
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
               <div className="w-full sm:w-1/2 gap-1 flex flex-col">
-                <select
-                  ref={termLangRef}
-                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
-                  data-cy="term_language_select"
-                  onChange={saveDraft}
-                >
-                  <option value="">{t("term_language")}</option>
-                  {LANGUAGES.map((lang) => (
-                    <option value={lang.code} key={lang.code}>
-                      {lang.name}
-                    </option>
-                  ))}
-                </select>
+                <InputSelect
+                  options={[
+                    { value: "", label: t("term_language") },
+                    ...LANGUAGES.map((lang) => ({
+                      value: lang.code,
+                      label: lang.name,
+                    })),
+                  ]}
+                  value={termLang}
+                  onChange={(value) => {
+                    setTermLang(String(value));
+                    saveDraft();
+                  }}
+                  dataCy="term_language_select"
+                  size="lg"
+                />
               </div>
 
               <div className="w-full sm:w-1/2 gap-1 flex flex-col">
-                <select
-                  ref={defLangRef}
-                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
-                  data-cy="definition_language_select"
-                  onChange={saveDraft}
-                >
-                  <option value="">{t("def_language")}</option>
-                  {LANGUAGES.map((lang) => (
-                    <option value={lang.code} key={lang.code}>
-                      {lang.name}
-                    </option>
-                  ))}
-                </select>
+                <InputSelect
+                  options={[
+                    { value: "", label: t("def_language") },
+                    ...LANGUAGES.map((lang) => ({
+                      value: lang.code,
+                      label: lang.name,
+                    })),
+                  ]}
+                  value={defLang}
+                  onChange={(value) => {
+                    setDefLang(String(value));
+                    saveDraft();
+                  }}
+                  dataCy="definition_language_select"
+                  size="lg"
+                />
               </div>
             </div>
           </div>

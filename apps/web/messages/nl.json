@@ -1426,7 +1426,7 @@
     "vakken": "vakken"
   },
   "import": {
-    "excel": "Excel-import",
+    "text": "Tekst import",
     "sven": "SVEN import",
     "import": "importeer"
   },
