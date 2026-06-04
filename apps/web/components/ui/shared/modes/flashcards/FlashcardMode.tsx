@@ -19,7 +19,6 @@ import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import Image from "next/image";
 import { FaCheck } from "react-icons/fa";
 import { AiOutlineRise } from "react-icons/ai";
-import { useKey } from "@dnd-kit/core/dist/components/DragOverlay/hooks";
 
 interface Card {
   id: string;

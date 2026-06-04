@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { IoIosAdd } from "react-icons/io";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
 import LaTexInput from "@/components/ui/design_system/input/LaTeXInput";
 import ImageTrigger from "@/components/ui/app/create-studoset/ImageTrigger";
@@ -10,11 +10,6 @@ function focusRef(ref: React.Ref<HTMLInputElement | null> | undefined) {
   if (ref && typeof ref === "object" && "current" in ref) {
     ref.current?.focus();
   }
-}
-
-function getRefElement(ref: React.Ref<HTMLInputElement | null> | undefined) {
-  if (ref && typeof ref === "object" && "current" in ref) return ref.current;
-  return null;
 }
 
 interface CardProps {
