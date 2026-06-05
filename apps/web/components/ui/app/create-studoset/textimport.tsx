@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import CheckBox from "@/components/ui/design_system/input/CheckBox";
 import { CardData } from "@/types/types";
 
-type ValueSeperator = "komma" | "tab";
+type ValueSeperator = "komma" | "tab" | "dash";
 type LineSeperator = "puntkomma" | "enter";
 
 interface importerProps {
@@ -20,10 +20,8 @@ export default function Textimport(props: importerProps) {
   const [valueSeperator, setValueSeperator] = useState<ValueSeperator>("komma");
   const [lineSeperator, seLineSeperator] = useState<LineSeperator>("puntkomma");
 
-  const toggleValueSeperator = () => {
-    if (valueSeperator === "tab") {
-      setValueSeperator("komma");
-    } else setValueSeperator("tab");
+  const toggleValueSeperator = (value: string) => {
+    setValueSeperator(value as ValueSeperator);
   };
   const toggleLineSepereator = () => {
     if (lineSeperator === "enter") {
@@ -112,14 +110,21 @@ export default function Textimport(props: importerProps) {
                   <span>{t("by_comma")}</span>
                   <CheckBox
                     checked={valueSeperator === "komma"}
-                    onChange={toggleValueSeperator}
+                    onChange={() => toggleValueSeperator("komma")}
                   />
                 </div>
                 <div className={"w-full flex justify-between items-center"}>
                   <span className={""}>{t("by_tab")}</span>
                   <CheckBox
                     checked={valueSeperator === "tab"}
-                    onChange={toggleValueSeperator}
+                    onChange={() => toggleValueSeperator("tab")}
+                  />
+                </div>
+                <div className={"w-full flex justify-between items-center"}>
+                  <span className={""}>{t("by_dash")}</span>
+                  <CheckBox
+                    checked={valueSeperator === "dash"}
+                    onChange={() => toggleValueSeperator("dash")}
                   />
                 </div>
               </div>

@@ -12,7 +12,8 @@
     "analyze": "pnpm next experimental-analyze",
     "type-check": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --coverage"
+    "test": "vitest run --coverage",
+    "clean": "rm -rf .next"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

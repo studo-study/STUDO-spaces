@@ -40,39 +40,52 @@ export default function SetImporter({
             className="cursor-pointer text-gray-700 dark:text-white hover:text-gray-500 sm:w-[35px] sm:h-[35px]"
           />
         </div>
-        <TabSwitcher
-          tabs={[
-            {
-              key: "sven",
-              label: t("sven"),
-              icon: <RiAiGenerate />,
-            },
-            {
-              key: "text",
-              label: t("text"),
-              icon: <LuScanText />,
-            },
-          ]}
-          value={tab}
-          onChange={(key) => {
-            setTab(key as Tab);
-          }}
-        />
+        <div>
+          <TabSwitcher
+            tabs={[
+              {
+                key: "sven",
+                label: t("sven"),
+                icon: <RiAiGenerate />,
+              },
+              {
+                key: "text",
+                label: t("text"),
+                icon: <LuScanText />,
+              },
+            ]}
+            value={tab}
+            onChange={(key) => {
+              setTab(key as Tab);
+            }}
+          />
+        </div>
       </div>
-      <div className={"w-3/4 h-full"}>
-        {tab === "sven" ? (
+      <div className="min-w-full relative flex overflow-hidden h-full mt-5">
+        <div
+          className={`absolute inset-0 flex items-center justify-center transition-transform duration-500 ${
+            tab === "sven" ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
           <SvenImport
             onClose={onClose}
             cardArray={cardArray}
             setCardArray={setCardArray}
           />
-        ) : (
-          <Textimport
-            onClose={onClose}
-            cardArray={cardArray}
-            setCardArray={setCardArray}
-          />
-        )}
+        </div>
+        <div
+          className={`absolute inset-0 flex items-center justify-center transition-transform duration-500 ${
+            tab === "sven" ? "translate-x-full" : "translate-x-0"
+          }`}
+        >
+          <div className="h-full w-2/3">
+            <Textimport
+              onClose={onClose}
+              cardArray={cardArray}
+              setCardArray={setCardArray}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
