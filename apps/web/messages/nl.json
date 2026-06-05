@@ -65,8 +65,8 @@
       "ssBlock2": "Studosets",
       "vsBlock1": "Creëer Visualset",
       "vsBlock2": "Visualsets",
-      "loveGreen": "Gebouwd met \uD83D\uDC9A met React",
-      "loveBlue": "Gebouwd met \uD83D\uDC99 met React",
+      "loveGreen": "Gebouwd met 💚 met React",
+      "loveBlue": "Gebouwd met 💙 met React",
       "Version": "Versie",
       "rights": "STUDO inc. Alle Rechten Voorbehouden.",
       "select": "STUDO select",
@@ -1491,8 +1491,7 @@
         "add_set": "Gekoppelde sets",
         "due_date": "Deadline",
         "not_started": "te doen",
-        "doing": "bezig",
-        "done": "klaar"
+        "doing": "bezig"
       }
     }
   },
@@ -1561,5 +1560,19 @@
   "latex": {
     "LaTeX": "LaTeX",
     "Code": "Code"
+  },
+  "svenimport": {
+    "title": "Laat SVEN het werk doen",
+    "files_label": "Bestanden",
+    "max_files": "Max {max} bestanden per upload",
+    "selected": "Geselecteerd ({count}/{max})",
+    "no_files": "Nog geen bestanden gekozen",
+    "drop_here": "Laat los om toe te voegen…",
+    "drag_or_click": "Sleep een bestand hierheen of klik om te kiezen",
+    "error_file_types": "Ongeldig bestandstype",
+    "sum_wrong": "Er ging iets mis",
+    "loading": "Verwerken…",
+    "upload": "Importeer",
+    "server_error": "Server gaf een fout ({status})"
   }
 }
