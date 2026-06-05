@@ -18,6 +18,21 @@ export default function Page() {
             </p>
           </header>
         </AnimateOnMount>
+        <AnimateOnMount delay={200} className="w-full">
+          <div>
+            <span className={"text-[30px] text-orange-500"}>tekst</span>
+            <hr />
+          </div>
+        </AnimateOnMount>
+        <div
+          className={
+            "border border-2 rounded-xl border-studoborder flex flex-row gap-4 justify-between items-center h-20 w-full"
+          }
+        >
+          <div className={"h-14 w-14 bg-yellow-500"} />
+          <div className={"h-14 w-14 bg-blue-600"} />
+          <div className={"h-14 w-14 bg-orange-300"} />
+        </div>
       </div>
     </main>
   );
