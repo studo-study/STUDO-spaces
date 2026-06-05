@@ -20,6 +20,7 @@ type SelectProps = {
   disabled?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   dataCy?: string;
+  title?: string;
 };
 
 const sizeMap = {
@@ -65,6 +66,7 @@ const InputSelect = ({
   disabled,
   size = "lg",
   dataCy,
+  title,
 }: SelectProps) => {
   const [open, setOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -102,7 +104,7 @@ const InputSelect = ({
   const t = useTranslations("select");
 
   return (
-    <div ref={containerRef} className={"relative"}>
+    <div title={title} ref={containerRef} className={"relative"}>
       {label && (
         <label htmlFor={id} className={`text-zinc-400 ${s.label}`}>
           {label}
@@ -130,9 +132,9 @@ const InputSelect = ({
 
       <div
         className={`absolute left-0 right-0 top-full mt-2
-          z-[9999] p-3 border border-studoborder
+          z-[9999] p-3 border border-studoborder/30
           rounded-2xl backdrop-blur-2xl min-w-30
-          bg-bg-dark gap-2 flex flex-col h-fit
+          glass-rgb gap-2 flex flex-col h-fit
           shadow-xl shadow-black/10 dark:shadow-black/30
           transition-all duration-300 ease-out origin-top
           ${
@@ -159,9 +161,9 @@ const InputSelect = ({
                   key={String(option.value)}
                   type={"button"}
                   onClick={() => handleSelect(option.value)}
-                  className={`w-full hover:bg-zinc-400/20 rounded-lg flex flex-row items-center justify-between cursor-pointer ${
+                  className={`w-full hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50 rounded-lg flex flex-row items-center justify-between cursor-pointer ${
                     s.item
-                  } ${isSelected ? "bg-zinc-400/20" : ""}`}
+                  } ${isSelected ? "dark:bg-zinc-400/20 bg-zinc-200/50" : ""}`}
                 >
                   <span>{option.label}</span>
                   {isSelected && (

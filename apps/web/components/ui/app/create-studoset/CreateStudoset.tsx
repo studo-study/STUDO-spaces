@@ -421,6 +421,7 @@ export default function CreateStudosetForm() {
 
               <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
                 <InputSelect
+                  title={t("select_folder")}
                   options={[
                     { value: "", label: t("folder_placeholder") },
                     ...(folders?.map((item) => ({
@@ -442,6 +443,7 @@ export default function CreateStudosetForm() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
               <div className="w-full sm:w-1/2 gap-1 flex flex-col">
                 <InputSelect
+                  title={t("select_language_term")}
                   options={[
                     { value: "", label: t("term_language") },
                     ...LANGUAGES.map((lang) => ({
@@ -461,6 +463,7 @@ export default function CreateStudosetForm() {
 
               <div className="w-full sm:w-1/2 gap-1 flex flex-col">
                 <InputSelect
+                  title={t("select_language_def")}
                   options={[
                     { value: "", label: t("def_language") },
                     ...LANGUAGES.map((lang) => ({
@@ -488,6 +491,7 @@ export default function CreateStudosetForm() {
             <div className={"w-fit flex flex-row gap-2 items-center"}>
               {hasDraft && (
                 <BaseButton
+                  title={t("delete_draft")}
                   type="button"
                   disabled={mutation.isPending}
                   variant={"danger"}

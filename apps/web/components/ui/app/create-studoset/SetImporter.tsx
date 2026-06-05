@@ -67,7 +67,11 @@ export default function SetImporter({
             setCardArray={setCardArray}
           />
         ) : (
-          <Textimport />
+          <Textimport
+            onClose={onClose}
+            cardArray={cardArray}
+            setCardArray={setCardArray}
+          />
         )}
       </div>
     </div>
