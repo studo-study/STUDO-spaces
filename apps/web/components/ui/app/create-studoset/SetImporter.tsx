@@ -2,17 +2,18 @@ import { useTranslations } from "next-intl";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import SvenImport from "@/components/ui/app/create-studoset/svenimport";
-import ExcelImport from "@/components/ui/app/create-studoset/excelimport";
+import Textimport from "@/components/ui/app/create-studoset/textimport";
 import { CardData } from "@/types/types";
 import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
 import { RiAiGenerate } from "react-icons/ri";
+import { LuScanText } from "react-icons/lu";
 interface importerProps {
   onClose: () => void;
   cardArray: CardData[];
   setCardArray: React.Dispatch<React.SetStateAction<CardData[]>>;
 }
 
-type Tab = "sven" | "excel";
+type Tab = "sven" | "text";
 
 export default function SetImporter({
   onClose,
@@ -46,6 +47,11 @@ export default function SetImporter({
               label: t("sven"),
               icon: <RiAiGenerate />,
             },
+            {
+              key: "text",
+              label: t("text"),
+              icon: <LuScanText />,
+            },
           ]}
           value={tab}
           onChange={(key) => {
@@ -61,7 +67,11 @@ export default function SetImporter({
             setCardArray={setCardArray}
           />
         ) : (
-          <ExcelImport />
+          <Textimport
+            onClose={onClose}
+            cardArray={cardArray}
+            setCardArray={setCardArray}
+          />
         )}
       </div>
     </div>

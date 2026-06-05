@@ -990,7 +990,10 @@
     "saving": "Opslaan...",
     "submit_error": "Er is iets misgegaan, probeer opnieuw",
     "draft": "(draft)",
-    "delete_draft": "Verwijder Draft"
+    "delete_draft": "Verwijder Draft",
+    "select_folder": "Kies een map",
+    "select_language_term": "Kies een taal voor termen",
+    "select_language_def": "Kies een taal voor definities"
   },
   "editstudoset": {
     "edit": "Bewerk Studoset",
@@ -1426,9 +1429,20 @@
     "vakken": "vakken"
   },
   "import": {
-    "excel": "Excel-import",
+    "text": "Tekst import",
     "sven": "SVEN import",
-    "import": "importeer"
+    "import": "Importeer",
+    "paste_here": "Plak je tekst hier",
+    "text_import_title": "Instellingen",
+    "result": "Resultaat",
+    "term_definition_separator": "Scheiding tussen term en definitie",
+    "card_separator": "Scheiding tussen kaarten",
+    "by_comma": "Komma",
+    "by_tab": "Tab",
+    "by_newline": "Nieuwe regel",
+    "by_semicolon": "Puntkomma",
+    "result_empty": "Plak tekst om een voorbeeld te zien",
+    "cards_found": "{count} kaarten gevonden"
   },
   "flow": {
     "title": "Jouw Flow Boards",

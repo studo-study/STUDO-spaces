@@ -19,6 +19,8 @@ type SelectProps = {
   id?: string;
   disabled?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
+  dataCy?: string;
+  title?: string;
 };
 
 const sizeMap = {
@@ -29,32 +31,32 @@ const sizeMap = {
     label: "text-xs px-2",
   },
   sm: {
-    trigger: "px-3 py-1.5 text-sm",
+    trigger: "px-3 py-1.5 text-sm gap-3",
     chevron: 12,
     item: "p-1.5 text-xs",
     label: "text-xs px-2",
   },
   md: {
-    trigger: "px-4 py-2 text-base",
+    trigger: "px-4 py-2 text-base gap-4",
     chevron: 14,
     item: "p-2 text-sm",
     label: "text-xs px-2",
   },
   lg: {
-    trigger: "px-5 py-3 text-base",
+    trigger: "h-10 px-5 text-sm gap-5",
     chevron: 14,
     item: "p-2 text-sm",
     label: "text-sm px-3",
   },
   xl: {
-    trigger: "px-6 py-4 text-lg",
+    trigger: "px-6 py-4 text-lg gap-5",
     chevron: 16,
     item: "p-3 text-base",
     label: "text-sm px-3",
   },
 } as const;
 
-const Select = ({
+const InputSelect = ({
   options,
   value,
   onChange,
@@ -63,6 +65,8 @@ const Select = ({
   id,
   disabled,
   size = "lg",
+  dataCy,
+  title,
 }: SelectProps) => {
   const [open, setOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -100,7 +104,7 @@ const Select = ({
   const t = useTranslations("select");
 
   return (
-    <div ref={containerRef} className={"relative"}>
+    <div title={title} ref={containerRef} className={"relative"}>
       {label && (
         <label htmlFor={id} className={`text-zinc-400 ${s.label}`}>
           {label}
@@ -110,8 +114,9 @@ const Select = ({
         type={"button"}
         id={id}
         disabled={disabled}
+        data-cy={dataCy}
         onClick={() => !disabled && setOpen((prev) => !prev)}
-        className={`w-full rounded-full flex flex-row cursor-pointer items-center justify-between outline-none ring-0 border border-studoborder/30  bg-studogrey/30 text-left disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
+        className={`w-full flex flex-row items-center justify-between cursor-pointer rounded-4xl glass-rgb border border-studoborder/30 shadow-2xl text-studodarkblue dark:text-white text-left transition-all duration-300 outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
       >
         <span className={selected ? "" : "text-zinc-400"}>
           {selected ? selected.label : placeholder}
@@ -174,6 +179,6 @@ const Select = ({
   );
 };
 
-Select.displayName = "Select";
+InputSelect.displayName = "InputSelect";
 
-export default Select;
+export default InputSelect;

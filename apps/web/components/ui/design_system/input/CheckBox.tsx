@@ -19,7 +19,7 @@ const ToggleField = ({
   className,
   width = 50,
   height = 28,
-  activeColor = "#76cea0",
+  activeColor = "oklch(69.6% 0.17 162.48)",
 }: ToggleFieldProps) => {
   const id = useId();
   const knob = height - 8; // 20px bij default
