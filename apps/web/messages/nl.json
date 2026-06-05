@@ -1441,6 +1441,7 @@
     "by_tab": "Tab",
     "by_newline": "Nieuwe regel",
     "by_semicolon": "Puntkomma",
+    "by_dash": "Horizontaal streepje",
     "result_empty": "Plak tekst om een voorbeeld te zien",
     "cards_found": "{count} kaarten gevonden"
   },

@@ -61,19 +61,17 @@ export default function SetImporter({
           />
         </div>
       </div>
-      <div className="min-w-full relative flex overflow-hidden h-full">
+      <div className="min-w-full relative flex overflow-hidden h-full mt-5">
         <div
           className={`absolute inset-0 flex items-center justify-center transition-transform duration-500 ${
             tab === "sven" ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="h-full w-2/3">
-            <SvenImport
-              onClose={onClose}
-              cardArray={cardArray}
-              setCardArray={setCardArray}
-            />
-          </div>
+          <SvenImport
+            onClose={onClose}
+            cardArray={cardArray}
+            setCardArray={setCardArray}
+          />
         </div>
         <div
           className={`absolute inset-0 flex items-center justify-center transition-transform duration-500 ${
