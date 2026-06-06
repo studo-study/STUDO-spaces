@@ -37,8 +37,8 @@ import Redis from 'ioredis';
         throttlers: [{ ttl: 60_000, limit: 100 }],
         storage: new ThrottlerStorageRedisService(
           new Redis({
-            host: process.env.REDIS_HOST ?? 'localhost',
-            port: Number(process.env.REDIS_PORT ?? 6379),
+            host: process.env.REDISHOST ?? 'localhost',
+            port: Number(process.env.REDISPORT ?? 6379),
             password: process.env.REDIS_PASSWORD,
           }),
         ),
