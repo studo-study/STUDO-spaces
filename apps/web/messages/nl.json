@@ -1573,6 +1573,8 @@
     "sum_wrong": "Er ging iets mis",
     "loading": "Verwerken…",
     "upload": "Importeer",
-    "server_error": "Server gaf een fout ({status})"
+    "server_error": "Server gaf een fout ({status})",
+    "rate_limit": "Je hebt de dagelijkse limiet van 3 imports bereikt. Probeer morgen opnieuw.",
+    "aborted": "Import geannuleerd"
   }
 }

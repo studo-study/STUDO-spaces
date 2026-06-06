@@ -2,6 +2,7 @@ import React, {
   useState,
   useRef,
   useCallback,
+  useEffect,
   Dispatch,
   SetStateAction,
 } from "react";
@@ -17,6 +18,8 @@ import { IoClose } from "react-icons/io5";
 import { RiAiGenerate } from "react-icons/ri";
 
 const MAX_FILES = 3;
+const MAX_DAILY_USES = 3;
+const RATE_LIMIT_KEY = "sven_import_usage";
 const ACCEPTED = [
   "image/png",
   "image/jpeg",
@@ -42,16 +45,53 @@ export default function SvenImport({
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
   const toast = useToast();
 
-  const addFiles = useCallback((incoming: FileList | File[]) => {
-    const valid = Array.from(incoming).filter((f) => ACCEPTED.includes(f.type));
-    if (valid.length === 0) {
-      toast.error(t("error_file_types"));
-      return;
-    }
-    setFiles((prev) => [...prev, ...valid].slice(0, MAX_FILES));
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
   }, []);
+
+  const getRateLimitData = () => {
+    try {
+      const stored = localStorage.getItem(RATE_LIMIT_KEY);
+      if (!stored) return { count: 0, date: "" };
+      return JSON.parse(stored) as { count: number; date: string };
+    } catch {
+      return { count: 0, date: "" };
+    }
+  };
+
+  const checkRateLimit = () => {
+    const { count, date } = getRateLimitData();
+    if (date !== new Date().toDateString()) return true;
+    return count < MAX_DAILY_USES;
+  };
+
+  const incrementRateLimit = () => {
+    const { count, date } = getRateLimitData();
+    const today = new Date().toDateString();
+    localStorage.setItem(
+      RATE_LIMIT_KEY,
+      JSON.stringify({ count: date === today ? count + 1 : 1, date: today }),
+    );
+  };
+
+  const addFiles = useCallback(
+    (incoming: FileList | File[]) => {
+      const valid = Array.from(incoming).filter((f) =>
+        ACCEPTED.includes(f.type),
+      );
+      if (valid.length === 0) {
+        toast.error(t("error_file_types"));
+        return;
+      }
+      setFiles((prev) => [...prev, ...valid].slice(0, MAX_FILES));
+    },
+    [t, toast],
+  );
 
   const removeFile = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
@@ -65,6 +105,14 @@ export default function SvenImport({
 
   const handleUpload = async () => {
     if (files.length === 0 || isUploading) return;
+
+    if (!checkRateLimit()) {
+      toast.error(t("rate_limit"));
+      return;
+    }
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
     setIsUploading(true);
 
     const formData = new FormData();
@@ -77,6 +125,7 @@ export default function SvenImport({
           method: "POST",
           headers: { Authorization: `Bearer ${session?.accessToken}` },
           body: formData,
+          signal: controller.signal,
         },
       );
       const data = await res.json().catch(() => null);
@@ -110,9 +159,11 @@ export default function SvenImport({
         },
       );
 
+      incrementRateLimit();
       setCardArray((prev) => [...prev, ...cards]);
       onClose();
-    } catch {
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") return;
       toast.error(t("sum_wrong"));
     } finally {
       setIsUploading(false);
@@ -153,30 +204,50 @@ export default function SvenImport({
             onDrop={handleDrop}
             onClick={() => !isUploading && inputRef.current?.click()}
             className={`
-              w-full h-full rounded-4xl border cursor-pointer
+              w-full h-full rounded-4xl border
               flex flex-col items-center justify-center p-5
               transition-all duration-500
-              ${isUploading ? "pointer-events-none opacity-60" : ""}
+              ${isUploading ? "pointer-events-none border-studoborder" : "cursor-pointer"}
               ${
-                isDragging
+                !isUploading && isDragging
                   ? "border-blue-400/50 shadow-[0_0_60px_-10px_rgba(96,165,250,0.3)]"
-                  : "border-studoborder hover:border-studoborder/80"
+                  : !isUploading
+                    ? "border-studoborder hover:border-studoborder/80"
+                    : ""
               }
               bg-studogrey/10
             `}
           >
-            <div className="flex flex-col items-center justify-center gap-5 select-none">
-              <div className="relative flex items-center justify-center">
-                <div className="absolute w-28 h-28 rounded-full dark:bg-white/[0.03] bg-black/[0.03] animate-pulse" />
-                <div className="absolute w-20 h-20 rounded-full dark:bg-white/[0.04] bg-black/[0.04] animate-pulse [animation-delay:0.4s]" />
-                <div className="relative w-14 h-14 rounded-2xl glass-rgb flex items-center justify-center dark:text-white/50 text-studodarkblue/50">
-                  <RiAiGenerate size={26} />
+            {isUploading ? (
+              <div className="flex flex-col items-center justify-center gap-5 select-none">
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute w-32 h-32 rounded-full dark:bg-white/[0.04] bg-black/[0.04] animate-pulse" />
+                  <div className="absolute w-22 h-22 rounded-full dark:bg-white/[0.05] bg-black/[0.05] animate-pulse [animation-delay:0.3s]" />
+                  <div className="relative w-14 h-14 rounded-2xl glass-rgb flex items-center justify-center dark:text-white/70 text-studodarkblue/70">
+                    <RiAiGenerate
+                      size={26}
+                      className="animate-spin [animation-duration:2.5s]"
+                    />
+                  </div>
                 </div>
+                <p className="text-sm dark:text-white/40 text-studodarkblue/50 text-center">
+                  {t("loading")}
+                </p>
               </div>
-              <p className="text-sm dark:text-white/35 text-studodarkblue/40 text-center leading-relaxed max-w-[180px]">
-                {isDragging ? t("drop_here") : t("drag_or_click")}
-              </p>
-            </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-5 select-none">
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute w-28 h-28 rounded-full dark:bg-white/[0.03] bg-black/[0.03] animate-pulse" />
+                  <div className="absolute w-20 h-20 rounded-full dark:bg-white/[0.04] bg-black/[0.04] animate-pulse [animation-delay:0.4s]" />
+                  <div className="relative w-14 h-14 rounded-2xl glass-rgb flex items-center justify-center dark:text-white/50 text-studodarkblue/50">
+                    <RiAiGenerate size={26} />
+                  </div>
+                </div>
+                <p className="text-sm dark:text-white/35 text-studodarkblue/40 text-center leading-relaxed max-w-[180px]">
+                  {isDragging ? t("drop_here") : t("drag_or_click")}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -186,23 +257,28 @@ export default function SvenImport({
               {t("title")}
             </span>
             <span className="text-sm dark:text-white/40 text-studodarkblue/50">
-              PDF, PNG, JPG, WEBP · max {MAX_FILES}
+              pdf, png, jpg, webp
             </span>
           </div>
 
           {files.length === 0 ? (
-            <span className="text-sm w-full flex items-center justify-center flex-1 dark:text-white/25 text-studodarkblue/30">
+            <div className="text-sm w-full rounded-3xl bg-studogrey/5 flex items-center justify-center flex-1 dark:text-white/25 text-studodarkblue/30">
               {t("no_files")}
-            </span>
+            </div>
           ) : (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 flex-1">
+              <div className={"w-full h-fit flex justify-end text-xs"}>
+                <span>
+                  {files.length} / {MAX_FILES}
+                </span>
+              </div>
               {files.map((file, i) => (
                 <div
                   key={`${file.name}-${i}`}
-                  className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl border border-studoborder bg-studogrey/10"
+                  className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl border cursor-pointer hover:border-studogrey transition-all duration-300 border-studoborder/30 bg-studogrey/30"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-studoborder/10 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-studoborder/60 flex items-center justify-center shrink-0">
                       {file.type === "application/pdf" ? (
                         <BsFilePdf size={14} className="text-red-400" />
                       ) : (

@@ -641,6 +641,8 @@
     "sum_wrong": "Une erreur s'est produite",
     "loading": "Traitement…",
     "upload": "Importer",
-    "server_error": "Le serveur a retourné une erreur ({status})"
+    "server_error": "Le serveur a retourné une erreur ({status})",
+    "rate_limit": "Tu as atteint la limite quotidienne de 3 imports. Réessaie demain.",
+    "aborted": "Import annulé"
   }
 }

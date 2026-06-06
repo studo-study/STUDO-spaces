@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, TooManyRequestsException } from '@nestjs/common';
 import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import { ImageImportResponseDTO } from './sven.dto';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
+import type Redis from 'ioredis';
+import { REDIS_CLIENT } from '../redis/redis.provider';
 
 @Injectable()
 export class SvenService {
@@ -53,11 +55,41 @@ export class SvenService {
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
+    @Inject(REDIS_CLIENT)
+    private readonly redis: Redis,
   ) {}
 
+  private getDailyImportKey(userId: string): string {
+    const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    return `sven:import:${userId}:${date}`;
+  }
+
+  private secondsUntilMidnight(): number {
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0);
+    return Math.ceil((midnight.getTime() - now.getTime()) / 1000);
+  }
+
+  async checkAndIncrementDailyImport(userId: string): Promise<void> {
+    const key = this.getDailyImportKey(userId);
+    const count = await this.redis.incr(key);
+    if (count === 1) {
+      await this.redis.expire(key, this.secondsUntilMidnight());
+    }
+    if (count > 3) {
+      throw new TooManyRequestsException(
+        'Je hebt vandaag het maximale aantal imports (3) bereikt.',
+      );
+    }
+  }
+
   async import(
+    userId: string,
     files: Express.Multer.File[],
   ): Promise<ImageImportResponseDTO[]> {
+    await this.checkAndIncrementDailyImport(userId);
+
     if (!files || files.length === 0) {
       return [
         {

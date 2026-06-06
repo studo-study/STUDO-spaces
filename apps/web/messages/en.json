@@ -1529,6 +1529,8 @@
     "sum_wrong": "Something went wrong",
     "loading": "Processing…",
     "upload": "Import",
-    "server_error": "Server returned an error ({status})"
+    "server_error": "Server returned an error ({status})",
+    "rate_limit": "You've reached the daily limit of 3 imports. Try again tomorrow.",
+    "aborted": "Import cancelled"
   }
 }
