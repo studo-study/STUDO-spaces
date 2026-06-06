@@ -65,8 +65,8 @@
       "ssBlock2": "Studosets",
       "vsBlock1": "Create Visualset",
       "vsBlock2": "Visualsets",
-      "loveGreen": "Built with \uD83D\uDC9A with React",
-      "loveBlue": "Built with \uD83D\uDC99 with React",
+      "loveGreen": "Built with 💚 with React",
+      "loveBlue": "Built with 💙 with React",
       "Version": "Version",
       "rights": "STUDO inc. All Rights Reserved.",
       "select": "STUDO select",
@@ -1450,8 +1450,7 @@
         "add_set": "Linked sets",
         "due_date": "Deadline",
         "not_started": "to do",
-        "doing": "in progress",
-        "done": "done"
+        "doing": "in progress"
       }
     }
   },
@@ -1474,7 +1473,11 @@
     "term": "Term",
     "answer_with": "answer with",
     "shuffle": "shuffle",
-    "reset": "reset"
+    "reset": "reset",
+    "all_set": "You've completed the entire set!",
+    "back": "back to set",
+    "restart": "practice again",
+    "progress": "reset progress"
   },
   "popup": {
     "folders": {
@@ -1489,42 +1492,6 @@
     "settings": {
       "pop_title": "Settings"
     }
-  },
-
-  "speedy": {
-    "modal_title": "Ben je er klaar voor?",
-    "pause_title": "Even pauze...",
-    "modal_expl": "Beantwoord vragen zo snel mogelijk, \nmaar let op: foute antwoorden komen later terug.",
-    "return": "terug naar set",
-    "start": "begin je ronde",
-    "pause": "pauzeer",
-    "continue": "ga verder",
-    "answer_with": "antwoord met",
-    "definition": "Definitie",
-    "term": "Term"
-  },
-  "profile": {
-    "ss": "Studosets",
-    "vs": "Visualsets"
-  },
-  "offline": {
-    "offline": "Je bent offline",
-    "progress_explanation": "Progressie wordt niet opgeslagen"
-  },
-  "latex": {
-    "LaTeX": "LaTeX",
-    "Code": "Code"
-  },
-  "flashcards": {
-    "definition": "Definition",
-    "term": "Term",
-    "answer_with": "answer with",
-    "shuffle": "shuffle",
-    "reset": "reset",
-    "all_set": "You've completed the entire set!",
-    "back": "back to set",
-    "restart": "practice again",
-    "progress": "reset progress"
   },
   "speedy": {
     "modal_title": "Are you ready?",
@@ -1549,5 +1516,21 @@
   "latex": {
     "LaTeX": "LaTeX",
     "Code": "Code"
+  },
+  "svenimport": {
+    "title": "Let SVEN do the work",
+    "files_label": "Files",
+    "max_files": "Max {max} files per upload",
+    "selected": "Selected ({count}/{max})",
+    "no_files": "No files selected yet",
+    "drop_here": "Drop to add…",
+    "drag_or_click": "Drag a file here or click to choose",
+    "error_file_types": "Invalid file type",
+    "sum_wrong": "Something went wrong",
+    "loading": "Processing…",
+    "upload": "Import",
+    "server_error": "Server returned an error ({status})",
+    "rate_limit": "You've reached the daily limit of 3 imports. Try again tomorrow.",
+    "aborted": "Import cancelled"
   }
 }

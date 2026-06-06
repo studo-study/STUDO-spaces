@@ -10,10 +10,12 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import type { Request } from 'express';
 import { SvenService } from './sven.service';
 import {
   CreateStudysetDto,
@@ -57,8 +59,9 @@ export class SvenController {
     }),
   )
   importImage(
+    @Req() req: Request,
     @UploadedFiles() files: Express.Multer.File[],
   ): Promise<ImageImportResponseDTO[]> {
-    return this.svenService.import(files);
+    return this.svenService.import((req.user as { id: string }).id, files);
   }
 }

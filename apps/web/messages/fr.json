@@ -628,5 +628,21 @@
     "settings": {
       "pop_title": "Paramètres"
     }
+  },
+  "svenimport": {
+    "title": "Laisse SVEN faire le travail",
+    "files_label": "Fichiers",
+    "max_files": "Max {max} fichiers par upload",
+    "selected": "Sélectionnés ({count}/{max})",
+    "no_files": "Aucun fichier sélectionné",
+    "drop_here": "Relâche pour ajouter…",
+    "drag_or_click": "Glisse un fichier ici ou clique pour choisir",
+    "error_file_types": "Type de fichier invalide",
+    "sum_wrong": "Une erreur s'est produite",
+    "loading": "Traitement…",
+    "upload": "Importer",
+    "server_error": "Le serveur a retourné une erreur ({status})",
+    "rate_limit": "Tu as atteint la limite quotidienne de 3 imports. Réessaie demain.",
+    "aborted": "Import annulé"
   }
 }

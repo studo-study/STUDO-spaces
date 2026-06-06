@@ -2,13 +2,24 @@ import React, {
   useState,
   useRef,
   useCallback,
+  useEffect,
   Dispatch,
   SetStateAction,
 } from "react";
 import { useSession } from "next-auth/react";
 import { CardData } from "@/types/types";
+import { useToast } from "@/components/providers/app/ToastProvider";
+import { useTranslations } from "next-intl";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import { HiSparkles } from "react-icons/hi";
+import { LuImage } from "react-icons/lu";
+import { BsFilePdf } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
+import { RiAiGenerate } from "react-icons/ri";
 
 const MAX_FILES = 3;
+const MAX_DAILY_USES = 3;
+const RATE_LIMIT_KEY = "sven_import_usage";
 const ACCEPTED = [
   "image/png",
   "image/jpeg",
@@ -28,22 +39,59 @@ export default function SvenImport({
   cardArray,
   setCardArray,
 }: importerProps) {
+  const t = useTranslations("svenimport");
   const { data: session } = useSession();
   const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const toast = useToast();
 
-  const addFiles = useCallback((incoming: FileList | File[]) => {
-    const valid = Array.from(incoming).filter((f) => ACCEPTED.includes(f.type));
-    if (valid.length === 0) {
-      setError("Alleen afbeeldingen en PDF's worden ondersteund.");
-      return;
-    }
-    setError(null);
-    setFiles((prev) => [...prev, ...valid].slice(0, MAX_FILES));
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
   }, []);
+
+  const getRateLimitData = () => {
+    try {
+      const stored = localStorage.getItem(RATE_LIMIT_KEY);
+      if (!stored) return { count: 0, date: "" };
+      return JSON.parse(stored) as { count: number; date: string };
+    } catch {
+      return { count: 0, date: "" };
+    }
+  };
+
+  const checkRateLimit = () => {
+    const { count, date } = getRateLimitData();
+    if (date !== new Date().toDateString()) return true;
+    return count < MAX_DAILY_USES;
+  };
+
+  const incrementRateLimit = () => {
+    const { count, date } = getRateLimitData();
+    const today = new Date().toDateString();
+    localStorage.setItem(
+      RATE_LIMIT_KEY,
+      JSON.stringify({ count: date === today ? count + 1 : 1, date: today }),
+    );
+  };
+
+  const addFiles = useCallback(
+    (incoming: FileList | File[]) => {
+      const valid = Array.from(incoming).filter((f) =>
+        ACCEPTED.includes(f.type),
+      );
+      if (valid.length === 0) {
+        toast.error(t("error_file_types"));
+        return;
+      }
+      setFiles((prev) => [...prev, ...valid].slice(0, MAX_FILES));
+    },
+    [t, toast],
+  );
 
   const removeFile = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
@@ -57,8 +105,15 @@ export default function SvenImport({
 
   const handleUpload = async () => {
     if (files.length === 0 || isUploading) return;
+
+    if (!checkRateLimit()) {
+      toast.error(t("rate_limit"));
+      return;
+    }
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
     setIsUploading(true);
-    setError(null);
 
     const formData = new FormData();
     files.forEach((file) => formData.append("file", file));
@@ -70,11 +125,17 @@ export default function SvenImport({
           method: "POST",
           headers: { Authorization: `Bearer ${session?.accessToken}` },
           body: formData,
+          signal: controller.signal,
         },
       );
       const data = await res.json().catch(() => null);
-      if (!res.ok)
-        throw new Error(data?.message ?? `Server gaf een fout (${res.status})`);
+
+      if (!res.ok) {
+        toast.error(
+          t(data?.message) ?? t("server_error", { status: res.status }),
+        );
+        return;
+      }
 
       const VALID_CONTENT_TYPES = ["text", "latex", "code"] as const;
       const cards = data.map(
@@ -100,14 +161,12 @@ export default function SvenImport({
         },
       );
 
+      incrementRateLimit();
       setCardArray((prev) => [...prev, ...cards]);
       onClose();
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Er ging iets mis. Probeer opnieuw.",
-      );
+      if (err instanceof DOMException && err.name === "AbortError") return;
+      toast.error(t("sum_wrong"));
     } finally {
       setIsUploading(false);
     }
@@ -122,35 +181,7 @@ export default function SvenImport({
   const canUpload = files.length > 0 && !isUploading;
 
   return (
-    <div
-      onDragOver={(e) => {
-        e.preventDefault();
-        if (!isUploading) setIsDragging(true);
-      }}
-      onDragLeave={(e) => {
-        if (e.currentTarget.contains(e.relatedTarget as Node)) return;
-        setIsDragging(false);
-      }}
-      onDrop={handleDrop}
-      className={`
-        relative w-full h-full overflow-hidden rounded-3xl border
-        flex flex-col items-center justify-center px-6
-        transition-all duration-300
-        ${isDragging ? "border-blue-400/50" : "border-studoborder"}
-        bg-studogrey/10
-      `}
-    >
-      {/* glow orb bovenaan, jouw merk-blur */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[420px] h-[420px] -z-10 transition-opacity duration-700 pointer-events-none"
-        style={{
-          opacity: isDragging || files.length > 0 ? 0.9 : 0.5,
-          background:
-            "radial-gradient(circle at 50% 45%, #fb7185 0%, #f97316 30%, #fbbf24 50%, transparent 70%)",
-          filter: "blur(60px)",
-        }}
-      />
-
+    <div className="w-2/3 h-full relative min-h-[80vh] flex flex-col items-center justify-center gap-6 px-4 py-10">
       <input
         ref={inputRef}
         type="file"
@@ -160,71 +191,106 @@ export default function SvenImport({
         className="hidden"
       />
 
-      <div className="w-full max-w-xl flex flex-col items-center gap-8">
-        {/* titel */}
-        <div className="flex flex-col items-center gap-2 text-center">
-          <h2 className="text-3xl font-semibold tracking-tight dark:text-white text-studodarkblue">
-            Laat SVEN het werk doen
-          </h2>
-          <p className="text-sm text-white/40">
-            Upload je notities. SVEN maakt er flashcards van.
-          </p>
+      <div className="w-full h-full grid grid-cols-2 gap-10">
+        <div className="w-full h-full flex flex-col gap-5">
+          <div
+            onDragOver={(e) => {
+              e.preventDefault();
+              if (!isUploading) setIsDragging(true);
+            }}
+            onDragLeave={(e) => {
+              if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+              setIsDragging(false);
+            }}
+            onDrop={handleDrop}
+            onClick={() => !isUploading && inputRef.current?.click()}
+            className={`
+              w-full h-full rounded-4xl border
+              flex flex-col items-center justify-center p-5
+              transition-all duration-500
+              ${isUploading ? "pointer-events-none border-studoborder" : "cursor-pointer"}
+              ${
+                !isUploading && isDragging
+                  ? "border-blue-400/50 shadow-[0_0_60px_-10px_rgba(96,165,250,0.3)]"
+                  : !isUploading
+                    ? "border-studoborder hover:border-studoborder/80"
+                    : ""
+              }
+              bg-studogrey/10
+            `}
+          >
+            {isUploading ? (
+              <div className="flex flex-col items-center justify-center gap-5 select-none">
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute w-32 h-32 rounded-full dark:bg-white/[0.04] bg-black/[0.04] animate-pulse" />
+                  <div className="absolute w-22 h-22 rounded-full dark:bg-white/[0.05] bg-black/[0.05] animate-pulse [animation-delay:0.3s]" />
+                  <div className="relative w-14 h-14 rounded-2xl glass-rgb flex items-center justify-center dark:text-white/70 text-studodarkblue/70">
+                    <RiAiGenerate
+                      size={26}
+                      className="animate-spin [animation-duration:2.5s]"
+                    />
+                  </div>
+                </div>
+                <p className="text-sm dark:text-white/40 text-studodarkblue/50 text-center">
+                  {t("loading")}
+                </p>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-5 select-none">
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute w-28 h-28 rounded-full dark:bg-white/[0.03] bg-black/[0.03] animate-pulse" />
+                  <div className="absolute w-20 h-20 rounded-full dark:bg-white/[0.04] bg-black/[0.04] animate-pulse [animation-delay:0.4s]" />
+                  <div className="relative w-14 h-14 rounded-2xl glass-rgb flex items-center justify-center dark:text-white/50 text-studodarkblue/50">
+                    <RiAiGenerate size={26} />
+                  </div>
+                </div>
+                <p className="text-sm dark:text-white/35 text-studodarkblue/40 text-center leading-relaxed max-w-[180px]">
+                  {isDragging ? t("drop_here") : t("drag_or_click")}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* centrale glass invoerbalk */}
-        <div
-          onClick={() => !isUploading && inputRef.current?.click()}
-          className={`
-            glass-rgb w-full rounded-[28px] cursor-pointer
-            transition-all duration-300 p-5
-            ${isDragging ? "scale-[1.02] shadow-2xl" : "hover:scale-[1.01]"}
-            ${isUploading ? "pointer-events-none opacity-70" : ""}
-          `}
-        >
-          {/* bestanden als chips binnenin, zoals attachments in een chatinput */}
-          {files.length > 0 && (
-            <div className="flex flex-col gap-2 mb-4">
+        <div className="w-full h-full flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <span className="text-xl font-bold dark:text-white text-studodarkblue">
+              {t("title")}
+            </span>
+            <span className="text-sm dark:text-white/40 text-studodarkblue/50">
+              pdf, png, jpg, webp
+            </span>
+          </div>
+
+          {files.length === 0 ? (
+            <div className="text-sm w-full rounded-3xl bg-studogrey/5 flex items-center justify-center flex-1 dark:text-white/25 text-studodarkblue/30">
+              {t("no_files")}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2 flex-1">
+              <div className={"w-full h-fit flex justify-end text-xs"}>
+                <span>
+                  {files.length} / {MAX_FILES}
+                </span>
+              </div>
               {files.map((file, i) => (
                 <div
                   key={`${file.name}-${i}`}
-                  className="flex items-center justify-between gap-3 px-3 py-2 rounded-2xl glass-rgb"
+                  className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl border cursor-pointer hover:border-studogrey transition-all duration-300 border-studoborder/30 bg-studogrey/30"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 rounded-lg bg-studoborder/10 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-studoborder/60 flex items-center justify-center shrink-0">
                       {file.type === "application/pdf" ? (
-                        <svg
-                          width="15"
-                          height="15"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          className="text-red-400"
-                        >
-                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                          <polyline points="14 2 14 8 20 8" />
-                        </svg>
+                        <BsFilePdf size={14} className="text-red-400" />
                       ) : (
-                        <svg
-                          width="15"
-                          height="15"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          className="text-blue-400"
-                        >
-                          <rect x="3" y="3" width="18" height="18" rx="2" />
-                          <circle cx="8.5" cy="8.5" r="1.5" />
-                          <polyline points="21 15 16 10 5 21" />
-                        </svg>
+                        <LuImage size={14} className="text-blue-400" />
                       )}
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm truncate dark:text-white/80 text-studodarkblue">
                         {file.name}
                       </p>
-                      <p className="text-white/30 text-xs">
+                      <p className="dark:text-white/30 text-studodarkblue/40 text-xs">
                         {formatSize(file.size)}
                       </p>
                     </div>
@@ -234,133 +300,26 @@ export default function SvenImport({
                       e.stopPropagation();
                       removeFile(i);
                     }}
-                    className="text-white/30 hover:text-red-400 transition-colors shrink-0 p-1 cursor-pointer"
+                    className="dark:text-white/30 text-studodarkblue/30 hover:text-red-400 transition-colors shrink-0 p-1 cursor-pointer"
                   >
-                    <svg
-                      width="15"
-                      height="15"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
+                    <IoClose size={16} />
                   </button>
                 </div>
               ))}
             </div>
           )}
 
-          {/* placeholder-regel als er nog niks is, zoals "Ask anything" */}
-          {files.length === 0 && (
-            <p className="text-white/35 px-1 pb-6 text-base">
-              {isDragging
-                ? "Laat los om toe te voegen…"
-                : "Sleep een bestand hierheen of klik om te kiezen"}
-            </p>
-          )}
-
-          {/* onderbalk met icoon links en send-knop rechts, net als de referenties */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-white/40">
-              <div className="w-9 h-9 rounded-full bg-studoborder/10 flex items-center justify-center">
-                <svg
-                  width="17"
-                  height="17"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-                </svg>
-              </div>
-              <span className="text-xs">
-                {files.length}/{MAX_FILES} · PDF, PNG, JPG
-              </span>
-            </div>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleUpload();
-              }}
+          <div className="mt-auto min-w-full">
+            <BaseButton
+              onClick={handleUpload}
               disabled={!canUpload}
-              type="button"
-              className={`
-                relative w-11 h-11 rounded-full overflow-hidden
-                flex items-center justify-center transition-all duration-300
-                ${canUpload ? "cursor-pointer active:scale-95" : "cursor-not-allowed"}
-              `}
-            >
-              <div
-                className={`absolute inset-0 aiBorderAnimation transition-opacity duration-300 ${
-                  canUpload ? "opacity-100" : "opacity-0"
-                }`}
-              />
-              <div
-                className={`
-                  relative z-10 w-full h-full rounded-full flex items-center justify-center
-                  ${
-                    canUpload
-                      ? "bg-linear-to-br from-blue-400 to-blue-500 text-white"
-                      : "bg-gray-700/60 text-white/25"
-                  }
-                `}
-              >
-                {isUploading ? (
-                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      fill="none"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 19V5M5 12l7-7 7 7" />
-                  </svg>
-                )}
-              </div>
-            </button>
+              type={"button"}
+              variant={"submit"}
+              label={isUploading ? t("loading") : t("upload")}
+              className={"min-w-full"}
+              iconLeft={<HiSparkles />}
+            />
           </div>
-        </div>
-
-        {/* status onder de balk: fout of SVEN-bezig, zoals suggestie-rijen */}
-        <div className="w-full min-h-[20px] text-center">
-          {error ? (
-            <p className="text-sm text-red-300">{error}</p>
-          ) : isUploading ? (
-            <p className="text-sm text-white/40 animate-pulse">
-              SVEN leest je bestand en maakt kaarten…
-            </p>
-          ) : (
-            <p className="text-xs text-white/25">
-              Werkt het best met heldere, leesbare notities
-            </p>
-          )}
         </div>
       </div>
     </div>
