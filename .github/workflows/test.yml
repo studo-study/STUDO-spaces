@@ -102,8 +102,8 @@ jobs:
           --health-retries 5
     env:
       TESTCONTAINERS_RYUK_DISABLED: true
-      REDIS_HOST: localhost
-      REDIS_PORT: 6379
+      REDISHOST: localhost
+      REDISPORT: 6379
 
     steps:
       - name: Checkout code
