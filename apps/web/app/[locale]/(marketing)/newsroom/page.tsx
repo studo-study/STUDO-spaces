@@ -2,6 +2,10 @@ import { useTranslations } from "next-intl";
 import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
 import BlogItemBanner from "../../../../components/ui/marketing/blog/BlogItemBanner";
 
+import Afbeelding1 from "@/components/ui/marketing/blog/Afbeelding1-studo.jpg";
+import Afbeelding2 from "@/components/ui/marketing/blog/afbeelding2-studo.jpg";
+import Afbeelding3 from "@/components/ui/marketing/blog/afbeelding3-studo.jpg";
+
 export default function Page() {
   const t = useTranslations("landing.blog");
   return (
@@ -24,16 +28,34 @@ export default function Page() {
           <div className={"text-xl "}>Updates</div>
         </AnimateOnMount>
 
-        <AnimateOnMount delay={200} className="w-full">
-          <div
-            className={
-              "border border-2 rounded-xl border-studoborder flex flex-row gap-4 justify-between items-center h-20 w-full"
-            }
-          ></div>
-        </AnimateOnMount>
-        <AnimateOnMount delay={200} className="w-full">
+        <AnimateOnMount delay={400} className="w-full">
           <div>
-            <BlogItemBanner />
+            <BlogItemBanner
+              afbeelding={Afbeelding1}
+              categorie={"Wat is er allemaal al aangepast?"}
+              titel={"update"}
+            />
+          </div>
+        </AnimateOnMount>
+
+        <AnimateOnMount delay={500} className="w-full">
+          <div>
+            <BlogItemBanner
+              reverse={true}
+              afbeelding={Afbeelding2}
+              titel={"Aanpassingen"}
+              categorie={"Ik kan echt niets meer verzinnen!"}
+            />
+          </div>
+        </AnimateOnMount>
+
+        <AnimateOnMount delay={600} className="w-full">
+          <div>
+            <BlogItemBanner
+              afbeelding={Afbeelding3}
+              titel={"Testen"}
+              categorie={"Als dit werkt ga ik zooo blij zijn!!!"}
+            />
           </div>
         </AnimateOnMount>
       </div>
