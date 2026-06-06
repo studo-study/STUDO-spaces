@@ -40,7 +40,13 @@ export default function Textimport(props: importerProps) {
     if (input.trim().length === 0) return [];
 
     const sep = valueSeperator === "komma" ? "," : "\t";
-    return (lineSeperator === "enter" ? input.split(/\r?\n/) : input.split(";"))
+    return (
+      lineSeperator === "enter"
+        ? input.split(/\r?\n/)
+        : lineSeperator === "puntkomma"
+          ? input.split(";")
+          : input.split("-")
+    )
       .map((line) => line.trim())
       .filter((line) => line.length > 0)
       .map((card, i) => {

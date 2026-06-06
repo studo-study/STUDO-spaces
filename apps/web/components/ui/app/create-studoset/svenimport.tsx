@@ -220,10 +220,10 @@ export default function SvenImport({
             `}
           >
             {isUploading ? (
-              <div className="flex flex-col items-center justify-center gap-5 select-none">
+              <div className="flex flex-col items-center justify-center gap-10 select-none">
                 <div className="relative flex items-center justify-center">
-                  <div className="absolute w-32 h-32 rounded-full dark:bg-white/[0.04] bg-black/[0.04] animate-pulse" />
-                  <div className="absolute w-22 h-22 rounded-full dark:bg-white/[0.05] bg-black/[0.05] animate-pulse [animation-delay:0.3s]" />
+                  <div className="absolute w-32 h-32 rounded-full dark:bg-white/4 bg-black/4 animate-pulse" />
+                  <div className="absolute w-22 h-22 rounded-full dark:bg-white/5 bg-black/5 animate-pulse [animation-delay:0.3s]" />
                   <div className="relative w-14 h-14 rounded-2xl glass-rgb flex items-center justify-center dark:text-white/70 text-studodarkblue/70">
                     <RiAiGenerate
                       size={26}
@@ -236,10 +236,10 @@ export default function SvenImport({
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center gap-5 select-none">
+              <div className="flex flex-col items-center justify-center gap-10 select-none">
                 <div className="relative flex items-center justify-center">
-                  <div className="absolute w-28 h-28 rounded-full dark:bg-white/[0.03] bg-black/[0.03] animate-pulse" />
-                  <div className="absolute w-20 h-20 rounded-full dark:bg-white/[0.04] bg-black/[0.04] animate-pulse [animation-delay:0.4s]" />
+                  <div className="absolute w-28 h-28 rounded-full dark:bg-white/3 bg-black/3 animate-pulse" />
+                  <div className="absolute w-20 h-20 rounded-full dark:bg-white/4 bg-black/4 animate-pulse [animation-delay:0.4s]" />
                   <div className="relative w-14 h-14 rounded-2xl glass-rgb flex items-center justify-center dark:text-white/50 text-studodarkblue/50">
                     <RiAiGenerate size={26} />
                   </div>
