@@ -162,7 +162,12 @@ export default function SvenImport({
       );
 
       incrementRateLimit();
-      setCardArray((prev) => [...prev, ...cards]);
+      setCardArray((prev) => {
+        const nonEmpty = prev.filter(
+          (c) => c.term.trim() !== "" || c.definition.trim() !== "",
+        );
+        return [...nonEmpty, ...cards];
+      });
       onClose();
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
@@ -204,7 +209,7 @@ export default function SvenImport({
             }}
             onDrop={handleDrop}
             onClick={() => !isUploading && inputRef.current?.click()}
-            className={`
+            className={` ${files.length === 3 && !isUploading && "opacity-30 cursor-not-allowed pointer-events-none"}
               w-full h-full rounded-4xl border
               flex flex-col items-center justify-center p-5
               transition-all duration-500
@@ -296,6 +301,7 @@ export default function SvenImport({
                     </div>
                   </div>
                   <button
+                    type={"button"}
                     onClick={(e) => {
                       e.stopPropagation();
                       removeFile(i);

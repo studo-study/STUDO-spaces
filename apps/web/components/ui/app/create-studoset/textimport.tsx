@@ -31,6 +31,7 @@ export default function Textimport(props: importerProps) {
 
   const checkSettings = (text: string) => {
     if (text.includes("\t")) setValueSeperator("tab");
+    if (text.includes("-")) setValueSeperator("dash");
     else setValueSeperator("komma");
     if (text.includes("\n")) seLineSeperator("enter");
     else if (text.includes(";")) seLineSeperator("puntkomma");
@@ -39,14 +40,9 @@ export default function Textimport(props: importerProps) {
   const parsedCards = useMemo<CardData[]>(() => {
     if (input.trim().length === 0) return [];
 
-    const sep = valueSeperator === "komma" ? "," : "\t";
-    return (
-      lineSeperator === "enter"
-        ? input.split(/\r?\n/)
-        : lineSeperator === "puntkomma"
-          ? input.split(";")
-          : input.split("-")
-    )
+    const sep =
+      valueSeperator === "komma" ? "," : valueSeperator === "tab" ? "\t" : "-";
+    return (lineSeperator === "enter" ? input.split(/\r?\n/) : input.split(";"))
       .map((line) => line.trim())
       .filter((line) => line.length > 0)
       .map((card, i) => {
@@ -67,7 +63,12 @@ export default function Textimport(props: importerProps) {
   }, [input, valueSeperator, lineSeperator, cardArray.length]);
 
   const importCards = () => {
-    setCardArray((prev) => [...prev, ...parsedCards]);
+    setCardArray((prev) => {
+      const nonEmpty = prev.filter(
+        (c) => c.term.trim() !== "" || c.definition.trim() !== "",
+      );
+      return [...nonEmpty, ...parsedCards];
+    });
     setInput("");
     onClose();
   };
