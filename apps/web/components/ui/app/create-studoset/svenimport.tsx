@@ -11,9 +11,10 @@ import { useToast } from "@/components/providers/app/ToastProvider";
 import { useTranslations } from "next-intl";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { HiSparkles } from "react-icons/hi";
-import { LuUpload, LuImage } from "react-icons/lu";
+import { LuImage } from "react-icons/lu";
 import { BsFilePdf } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
+import { RiAiGenerate } from "react-icons/ri";
 
 const MAX_FILES = 3;
 const ACCEPTED = [
@@ -152,89 +153,84 @@ export default function SvenImport({
             onDrop={handleDrop}
             onClick={() => !isUploading && inputRef.current?.click()}
             className={`
-              w-full h-full overflow-hidden rounded-4xl border cursor-pointer
+              w-full h-full rounded-4xl border cursor-pointer
               flex flex-col items-center justify-center p-5
-              transition-all duration-300
-              ${isDragging ? "border-blue-500 scale-[1.01] shadow-2xl" : "border-studoborder hover:scale-[1.005]"}
+              transition-all duration-500
               ${isUploading ? "pointer-events-none opacity-60" : ""}
-              bg-studogrey/30
+              ${
+                isDragging
+                  ? "border-blue-400/50 shadow-[0_0_60px_-10px_rgba(96,165,250,0.3)]"
+                  : "border-studoborder hover:border-studoborder/80"
+              }
+              bg-studogrey/10
             `}
           >
-            <div className="flex flex-col items-center justify-center gap-4 select-none">
-              <div className="w-16 h-16 rounded-2xl glass-rgb flex items-center justify-center text-white/40">
-                <LuUpload size={28} />
+            <div className="flex flex-col items-center justify-center gap-5 select-none">
+              <div className="relative flex items-center justify-center">
+                <div className="absolute w-28 h-28 rounded-full dark:bg-white/[0.03] bg-black/[0.03] animate-pulse" />
+                <div className="absolute w-20 h-20 rounded-full dark:bg-white/[0.04] bg-black/[0.04] animate-pulse [animation-delay:0.4s]" />
+                <div className="relative w-14 h-14 rounded-2xl glass-rgb flex items-center justify-center dark:text-white/50 text-studodarkblue/50">
+                  <RiAiGenerate size={26} />
+                </div>
               </div>
-              <p className="text-white/35 text-base text-center leading-relaxed max-w-[200px]">
+              <p className="text-sm dark:text-white/35 text-studodarkblue/40 text-center leading-relaxed max-w-[180px]">
                 {isDragging ? t("drop_here") : t("drag_or_click")}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Rechter kolom */}
-        <div className="w-full h-full flex flex-col gap-5">
-          <span className="text-xl font-bold dark:text-white text-studodarkblue">
-            {t("title")}
-          </span>
-          <div className="flex flex-col gap-3">
-            <span className="font-bold opacity-50">{t("files_label")}</span>
-            <span className="text-sm dark:text-white/60 text-studodarkblue/70">
-              PDF, PNG, JPG, WEBP, HEIC
+        <div className="w-full h-full flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <span className="text-xl font-bold dark:text-white text-studodarkblue">
+              {t("title")}
             </span>
             <span className="text-sm dark:text-white/40 text-studodarkblue/50">
-              {t("max_files", { max: MAX_FILES })}
+              PDF, PNG, JPG, WEBP · max {MAX_FILES}
             </span>
           </div>
 
-          <hr className="border-studoborder/30" />
-
-          {/* Bestandenlijst */}
-          <div className="flex flex-col gap-3">
-            <span className="font-bold opacity-50">
-              {t("selected", { count: files.length, max: MAX_FILES })}
+          {files.length === 0 ? (
+            <span className="text-sm w-full flex items-center justify-center flex-1 dark:text-white/25 text-studodarkblue/30">
+              {t("no_files")}
             </span>
-            {files.length === 0 ? (
-              <span className="text-sm dark:text-white/30 text-studodarkblue/40">
-                {t("no_files")}
-              </span>
-            ) : (
-              <div className="flex flex-col gap-2">
-                {files.map((file, i) => (
-                  <div
-                    key={`${file.name}-${i}`}
-                    className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl border border-studoborder bg-studogrey/10"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-8 h-8 rounded-xl bg-studoborder/10 flex items-center justify-center shrink-0">
-                        {file.type === "application/pdf" ? (
-                          <BsFilePdf size={14} className="text-red-400" />
-                        ) : (
-                          <LuImage size={14} className="text-blue-400" />
-                        )}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-sm truncate dark:text-white/80 text-studodarkblue">
-                          {file.name}
-                        </p>
-                        <p className="text-white/30 text-xs">
-                          {formatSize(file.size)}
-                        </p>
-                      </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {files.map((file, i) => (
+                <div
+                  key={`${file.name}-${i}`}
+                  className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl border border-studoborder bg-studogrey/10"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-8 h-8 rounded-xl bg-studoborder/10 flex items-center justify-center shrink-0">
+                      {file.type === "application/pdf" ? (
+                        <BsFilePdf size={14} className="text-red-400" />
+                      ) : (
+                        <LuImage size={14} className="text-blue-400" />
+                      )}
                     </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeFile(i);
-                      }}
-                      className="text-white/30 hover:text-red-400 transition-colors shrink-0 p-1 cursor-pointer"
-                    >
-                      <IoClose size={16} />
-                    </button>
+                    <div className="min-w-0">
+                      <p className="text-sm truncate dark:text-white/80 text-studodarkblue">
+                        {file.name}
+                      </p>
+                      <p className="dark:text-white/30 text-studodarkblue/40 text-xs">
+                        {formatSize(file.size)}
+                      </p>
+                    </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeFile(i);
+                    }}
+                    className="dark:text-white/30 text-studodarkblue/30 hover:text-red-400 transition-colors shrink-0 p-1 cursor-pointer"
+                  >
+                    <IoClose size={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="mt-auto min-w-full">
             <BaseButton
