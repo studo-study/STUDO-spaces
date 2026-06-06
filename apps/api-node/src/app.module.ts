@@ -39,7 +39,7 @@ import Redis from 'ioredis';
           new Redis({
             host: process.env.REDISHOST ?? 'localhost',
             port: Number(process.env.REDISPORT ?? 6379),
-            password: process.env.REDIS_PASSWORD,
+            password: process.env.REDISPASSWORD,
           }),
         ),
       }),
