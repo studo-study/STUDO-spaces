@@ -15,6 +15,7 @@ interface CarditemProps {
   card: Card;
   isOwner?: boolean;
   setId?: string;
+  isPublic?: boolean;
 }
 
 export default function CardItem({
@@ -22,6 +23,7 @@ export default function CardItem({
   card,
   isOwner = false,
   setId,
+  isPublic,
 }: CarditemProps) {
   const {
     studosetCards,
@@ -211,9 +213,15 @@ export default function CardItem({
               onKeyDown={(e) => handleKeyDown(e)}
             />
           ) : (
-            <span className="w-full px-5 h-10 flex truncate items-center border border-studoborder/30 rounded-full overflow-hidden bg-studogrey/10 text-sm">
-              {currentCard.definition}
-            </span>
+            <div
+              className={`w-full flex truncate items-center border border-studoborder/30 rounded-full overflow-hidden bg-studogrey/10 text-sm`}
+            >
+              <span
+                className={`${isPublic && "blur-xs pointer-events-none select-none"} w-full flex truncate items-center px-5 h-10`}
+              >
+                {currentCard.definition}
+              </span>
+            </div>
           )}
         </div>
       </div>

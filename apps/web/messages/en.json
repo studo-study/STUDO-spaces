@@ -1477,7 +1477,10 @@
     "all_set": "You've completed the entire set!",
     "back": "back to set",
     "restart": "practice again",
-    "progress": "reset progress"
+    "progress": "reset progress",
+    "login_wall_title": "Log in to continue",
+    "login_wall_subtitle": "You've reached the free preview of 5 cards. Create a free account to study the full set.",
+    "login_wall_cta": "Log in"
   },
   "popup": {
     "folders": {

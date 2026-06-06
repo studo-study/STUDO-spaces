@@ -1535,7 +1535,10 @@
     "all_set": "De set is helemaal doorlopen!",
     "back": "terug naar set",
     "restart": "oefen nog eens",
-    "progress": "reset vooruigang"
+    "progress": "reset vooruigang",
+    "login_wall_title": "Log in om verder te gaan",
+    "login_wall_subtitle": "Je hebt de gratis preview van 5 kaarten bereikt. Maak een gratis account aan om de volledige set te bestuderen.",
+    "login_wall_cta": "Log in"
   },
   "speedy": {
     "modal_title": "Ben je er klaar voor?",

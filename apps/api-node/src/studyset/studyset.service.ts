@@ -210,6 +210,40 @@ export class StudysetService {
     };
   }
 
+  async getPublicById(
+    set_id: string,
+  ): Promise<
+    Omit<fullSetResponseDto, 'session' | 'folders' | 'classrooms' | 'folder_id'>
+  > {
+    const set = await this.db.query.studysets.findFirst({
+      where: and(eq(studysets.id, set_id), eq(studysets.public_set, true)),
+    });
+
+    if (!set) {
+      throw new NotFoundException('No public studoset with this id exists');
+    }
+
+    const kaarten = await this.db.query.cards.findMany({
+      where: eq(cards.set_id, set_id),
+      with: { suggestionImage: true },
+    });
+
+    const likes = await this.db.query.setlikes.findMany({
+      where: eq(setlikes.set_id, set_id),
+    });
+
+    return {
+      ...set,
+      cards: kaarten
+        .sort((a, b) => a.number - b.number)
+        .map(({ suggestionImage, ...card }) => ({
+          ...card,
+          suggestion_image: suggestionImage ?? null,
+        })) as unknown as CardResponseDto[],
+      likes,
+    };
+  }
+
   async getAll(): Promise<StudysetListResponseDto> {
     return { sets: await this.db.query.studysets.findMany() };
   }

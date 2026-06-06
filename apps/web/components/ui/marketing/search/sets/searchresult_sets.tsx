@@ -47,8 +47,8 @@ function SetResult({ item, t }: SetResultProps) {
           ? "visualset/" + item.id
           : "studoset/" + item.id
       }
-      className={`w-full min-h-40 rounded-2xl border border-gray-300 dark:border-studogrey dark:bg-transparent 
-                 bg-studogrey/30 drop-shadow-3xl p-5 flex flex-col gap-2`}
+      className={`w-full min-h-40 rounded-2xl border border-studogrey/30
+                 glass-rgb drop-shadow-3xl p-5 flex flex-col gap-2`}
     >
       <div className={"w-full h-fit flex items-center justify-baseline gap-2"}>
         <Image

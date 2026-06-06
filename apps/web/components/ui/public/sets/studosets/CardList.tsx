@@ -11,9 +11,15 @@ interface CardListProps {
   cards: Card[];
   isOwner: boolean;
   setId: string;
+  isPublic?: boolean;
 }
 
-export default function CardList({ cards, isOwner, setId }: CardListProps) {
+export default function CardList({
+  cards,
+  isOwner,
+  setId,
+  isPublic,
+}: CardListProps) {
   const t = useTranslations("studoset");
   const setStudosetCards = useStudosetStore((s) => s.setStudosetCards);
   const studosetCards = useStudosetStore((s) => s.studosetCards);
@@ -34,16 +40,21 @@ export default function CardList({ cards, isOwner, setId }: CardListProps) {
           card={card}
           isOwner={isOwner}
           setId={setId}
+          isPublic={isPublic}
         />
       ))}
 
-      <LinkButton
-        href={setId + "/edit"}
-        variant={"primary"}
-        className={"min-w-full flex-1 w-full"}
-        iconLeft={<MdEdit />}
-        label={t("edit_set")}
-      />
+      {isOwner && (
+        <>
+          <LinkButton
+            href={setId + "/edit"}
+            variant={"primary"}
+            className={"min-w-full flex-1 w-full"}
+            iconLeft={<MdEdit />}
+            label={t("edit_set")}
+          />
+        </>
+      )}
     </div>
   );
 }

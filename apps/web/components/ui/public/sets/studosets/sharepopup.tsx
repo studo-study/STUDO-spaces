@@ -1,6 +1,6 @@
 "use client";
 import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { PiExport } from "react-icons/pi";
 import { MdCopyAll } from "react-icons/md";
 import { useToast } from "@/components/providers/app/ToastProvider";
@@ -10,7 +10,8 @@ export default function SharePopup() {
   const t = useTranslations("popup.share");
 
   const pathname = usePathname();
-  const buildLink = window.location.origin + pathname;
+  const locale = useLocale();
+  const buildLink = window.location.origin + "/" + locale + "/" + pathname;
   const toast = useToast();
   const toggleCopy = () => {
     navigator.clipboard.writeText(buildLink);

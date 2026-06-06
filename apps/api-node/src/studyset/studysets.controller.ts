@@ -28,6 +28,7 @@ import { CreateSetLikeDto, SetLikeResponseDto } from './setlike.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
 import { CheckUserAccessGuard } from '../auth/guards/userAccess.guard';
+import { Public } from '../auth/decorators/public.decorator';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -117,6 +118,20 @@ export class StudysetsController {
     @Query('lang') lang?: string,
   ): Promise<SuggestionImagesResponse> {
     return this.studysetService.suggestImage({ term, lang });
+  }
+
+  //GET publieke studoset (geen auth vereist) -----------------------------------
+
+  @ApiOperation({ summary: 'Haal publieke studoset op zonder authenticatie.' })
+  @ApiParam({ name: 'set_id', type: 'uuid' })
+  @ApiResponse({
+    status: 200,
+    description: 'Publieke studyset gevonden',
+  })
+  @Public()
+  @Get('public/:set_id')
+  async getPublicSetById(@Param('set_id', ParseStudySetIdPipe) set_id: string) {
+    return this.studysetService.getPublicById(set_id);
   }
 
   //GET specifieke studosets ---------------------------------------------------
