@@ -183,6 +183,7 @@ export default function StudosetView({ id }: viewProps) {
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
           <LinkButton
+            className={"hidden"}
             href={`/learn/` + id}
             icon={
               <Image
@@ -190,7 +191,7 @@ export default function StudosetView({ id }: viewProps) {
                 height={20}
                 src={"/icons/pencil.svg"}
                 alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
+                className="h-4  sm:h-5 dark:invert dark:brightness-0 shrink-0"
               />
             }
             label={t("learn")}
@@ -199,7 +200,7 @@ export default function StudosetView({ id }: viewProps) {
           />
           <LinkButton
             href={`/speedy/` + id}
-            className="w-full"
+            className="w-full hidden"
             icon={
               <Image
                 width={20}
