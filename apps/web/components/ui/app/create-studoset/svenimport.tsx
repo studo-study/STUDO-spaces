@@ -131,7 +131,9 @@ export default function SvenImport({
       const data = await res.json().catch(() => null);
 
       if (!res.ok) {
-        toast.error(data?.message ?? t("server_error", { status: res.status }));
+        toast.error(
+          t(data?.message) ?? t("server_error", { status: res.status }),
+        );
         return;
       }
 
@@ -190,7 +192,6 @@ export default function SvenImport({
       />
 
       <div className="w-full h-full grid grid-cols-2 gap-10">
-        {/* Linker kolom: dropzone */}
         <div className="w-full h-full flex flex-col gap-5">
           <div
             onDragOver={(e) => {

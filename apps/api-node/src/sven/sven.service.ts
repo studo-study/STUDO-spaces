@@ -1,4 +1,4 @@
-import { Inject, Injectable, TooManyRequestsException } from '@nestjs/common';
+import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import {
   type DatabaseProvider,
   InjectDrizzle,
@@ -14,23 +14,51 @@ export class SvenService {
 
   prompt =
     'Extract all terms and their definitions from this image.\n' +
+    '\n' +
     'Rules:\n' +
-    '- Each term has a corresponding definition\n' +
-    '- Keep definitions complete (can be multiple sentences)\n' +
-    '- Preserve order from top to bottom\n' +
-    '- Do NOT merge multiple terms\n' +
-    '- Do NOT invent content\n' +
-    '- If the term is a mathematical formula, set term_content_type to "latex" ' +
-    'and put the LaTeX in the term field WITHOUT $$ or $ delimiters (e.g. ' +
-    'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a})\n' +
-    '- If the term is source code, set term_content_type to "code" ' +
-    'and put the code in the term field\n' +
-    '- The definition is always plain text, never latex or code\n' +
-    '- The default term_content_type is "text"- Read the card naturally: the label/name is the term, the explanation is the definition\n' +
-    '- If either side is a mathematical formula, set special_content_type to "latex" and special_side to whichever side ("term" or "definition") contains the formula\n' +
-    '- If either side is source code, set special_content_type to "code" and special_side accordingly\n' +
-    '- Write latex WITHOUT $$ or $ delimiters\n' +
-    '- Otherwise special_content_type is "text" and special_side is "none"';
+    '- Each term has exactly one corresponding definition.\n' +
+    '- Keep definitions complete (they may contain multiple sentences).\n' +
+    '- Preserve the order from top to bottom.\n' +
+    '- Do NOT merge multiple terms.\n' +
+    '- Do NOT invent content.\n' +
+    '- Read the card naturally: the label/name is the term, the explanation is the definition.\n' +
+    '\n' +
+    'Content types:\n' +
+    '- term_content_type: "text" | "latex" | "code"\n' +
+    '- special_content_type: "text" | "latex" | "code"\n' +
+    '- special_side: "term" | "definition" | "none"\n' +
+    '\n' +
+    'LaTeX rules:\n' +
+    '- Use term_content_type="latex" ONLY when the entire term is a mathematical expression.\n' +
+    '- When term_content_type="latex", the term field MUST contain ONLY valid LaTeX.\n' +
+    '- The term field MUST NOT contain any explanatory text, labels, units, punctuation, or natural language when term_content_type="latex".\n' +
+    '- Do NOT wrap LaTeX in $, $$, \\( \\), or \\[ \\].\n' +
+    '- Examples of valid latex terms:\n' +
+    '  - x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\n' +
+    '  - \\int_0^1 x^2\\,dx\n' +
+    '  - E = mc^2\n' +
+    '- Examples of INVALID latex terms:\n' +
+    '  - Formula: E = mc^2\n' +
+    '  - The equation E = mc^2\n' +
+    '  - E = mc^2 where E is energy\n' +
+    '\n' +
+    'Code rules:\n' +
+    '- Use term_content_type="code" ONLY when the entire term is source code.\n' +
+    '- When term_content_type="code", the term field MUST contain ONLY code.\n' +
+    '\n' +
+    'Definition rules:\n' +
+    '- Definitions must always be plain natural language text.\n' +
+    '- Definitions must NEVER contain LaTeX.\n' +
+    '- Definitions must NEVER contain source code.\n' +
+    '- If the original definition contains a formula, rewrite the formula as plain text if possible.\n' +
+    '- If a definition is primarily a formula, move the formula to the side indicated by special_side and keep the definition text-only.\n' +
+    '\n' +
+    'Special content detection:\n' +
+    '- If the term contains a mathematical formula, set special_content_type="latex" and special_side="term".\n' +
+    '- If the definition contains a mathematical formula, set special_content_type="latex" and special_side="definition".\n' +
+    '- If the term contains source code, set special_content_type="code" and special_side="term".\n' +
+    '- If the definition contains source code, set special_content_type="code" and special_side="definition".\n' +
+    '- Otherwise set special_content_type="text" and special_side="none".';
 
   responseSchema = {
     type: SchemaType.ARRAY,
@@ -78,9 +106,7 @@ export class SvenService {
       await this.redis.expire(key, this.secondsUntilMidnight());
     }
     if (count > 3) {
-      throw new TooManyRequestsException(
-        'Je hebt vandaag het maximale aantal imports (3) bereikt.',
-      );
+      throw new BadRequestException('rate_limit');
     }
   }
 
