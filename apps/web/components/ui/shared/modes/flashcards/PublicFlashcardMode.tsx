@@ -84,7 +84,7 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
 
   const update = (next: FCState) => setState(next);
 
-  const { index, termMode, shuffleMode, shuffled, learntIds } = state;
+  const { index, termMode, shuffled, learntIds } = state;
 
   const hitLimit = index >= freeLimit;
   const isFinished = index >= shuffled.length;
