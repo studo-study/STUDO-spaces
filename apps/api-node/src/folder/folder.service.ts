@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import type { Redis } from 'ioredis';
 import { REDIS_CLIENT } from '../redis/redis.provider';
 import {
@@ -116,15 +121,20 @@ export class FolderService {
     return { studysets: ss, visualsets: vs };
   }
 
-  async deleteById(folder_id: string): Promise<void> {
-    const result = await this.db
-      .delete(folders)
-      .where(eq(folders.id, folder_id))
-      .returning();
+  async deleteById(folder_id: string, user_id: string): Promise<void> {
+    const folder = await this.db.query.folders.findFirst({
+      where: eq(folders.id, folder_id),
+    });
 
-    if (result.length === 0) {
+    if (!folder) {
       throw new NotFoundException('No folder with this id exists');
     }
-    await this.invalidateSyncCache(result[0].owner_id);
+
+    if (folder.owner_id !== user_id) {
+      throw new ForbiddenException('You do not own this folder');
+    }
+
+    await this.db.delete(folders).where(eq(folders.id, folder_id));
+    await this.invalidateSyncCache(user_id);
   }
 }

@@ -1,4 +1,4 @@
-import ChallengeGrid from "@/components/ui/app/classroom/challenges/ChallengeGrid";
+import ChallengeGrid from "@/components/ui/app/private/classroom/challenges/ChallengeGrid";
 
 export default function ClassroomChallenges() {
   return (

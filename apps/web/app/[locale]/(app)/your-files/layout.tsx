@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import FileHeader from "@/components/ui/app/your-files/header";
+import FileHeader from "@/components/ui/app/private/your-files/header";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

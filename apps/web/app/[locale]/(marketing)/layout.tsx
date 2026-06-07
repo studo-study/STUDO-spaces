@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import LandingHeader from "@/components/ui/marketing/landing_header/header";
-import LandingFooter from "@/components/ui/marketing/landing_footer/footer";
+import LandingHeader from "@/components/ui/app/public/marketing/landing_header/header";
+import LandingFooter from "@/components/ui/app/public/marketing/landing_footer/footer";
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (

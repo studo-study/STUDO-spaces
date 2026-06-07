@@ -1,10 +1,10 @@
 "use client";
 
 import { useReducer, useEffect, useRef, useMemo } from "react";
-import ProgressBar from "@/components/ui/public/profile/(modes)/learn/progressbar";
-import LearnCard from "@/components/ui/public/profile/(modes)/learn/card";
-import SettingsTrigger from "@/components/ui/public/profile/(modes)/learn/settings";
-import ProgressScreen from "@/components/ui/public/profile/(modes)/learn/progressscreen";
+import ProgressBar from "@/components/ui/app/public/profile/(modes)/learn/progressbar";
+import LearnCard from "@/components/ui/app/public/profile/(modes)/learn/card";
+import SettingsTrigger from "@/components/ui/app/public/profile/(modes)/learn/settings";
+import ProgressScreen from "@/components/ui/app/public/profile/(modes)/learn/progressscreen";
 import { Card, FullStudyset } from "@/types/types";
 
 interface LearnProps {

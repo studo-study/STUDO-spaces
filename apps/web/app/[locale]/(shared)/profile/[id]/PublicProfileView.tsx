@@ -1,0 +1,123 @@
+"use client";
+import ProfileHeader from "@/components/ui/app/public/profile/ProfileHeader";
+import PageContainer from "@/components/ui/design_system/page/PageContainer";
+import { useProfile } from "@/hooks/app/profile/useProfiles";
+import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import Image from "next/image";
+import { Link } from "@/i18n/routing";
+import { StudysetResponse, VisualsetResponse } from "@studo/types";
+import { usePublicProfile } from "@/hooks/app/profile/usePublicProfile";
+
+interface viewProps {
+  id: string;
+}
+
+type Tab = "ss" | "vs";
+
+export default function PublicProfileView({ id }: viewProps) {
+  const profile = usePublicProfile(id)?.data;
+  const t = useTranslations("profile");
+  const [tab, setTab] = useState<Tab>("ss");
+  console.log(profile);
+  if (!profile) return null;
+  console.log(profile);
+  return (
+    <PageContainer>
+      <ProfileHeader profile={profile} />
+      <div className={"w-full flex flex-col gap-3"}>
+        <div className={"h-10 w-full flex flex-row"}>
+          <TabSwitcher
+            tabs={[
+              {
+                key: "ss",
+                label: t("ss"),
+              },
+              {
+                key: "vs",
+                label: t("vs"),
+              },
+            ]}
+            value={tab}
+            onChange={(key) => {
+              setTab(key as Tab);
+            }}
+          />
+        </div>
+        {tab === "ss" ? (
+          <div className={"w-full h-fit flex flex-col mt-5 gap-3"}>
+            {profile.studysets.map((set, i) => (
+              <StudosetItem item={set} key={i} />
+            ))}
+          </div>
+        ) : (
+          <div className={"w-full h-fit flex flex-col mt-5 gap-3"}>
+            {profile.visualsets.map((set, i) => (
+              <VisualsetItem item={set} key={i} />
+            ))}
+          </div>
+        )}
+      </div>
+    </PageContainer>
+  );
+}
+
+interface StudosetItemProps {
+  item: StudysetResponse;
+}
+const StudosetItem = ({ item }: StudosetItemProps) => {
+  return (
+    <Link
+      href={"/studoset/" + item.id}
+      className={
+        "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
+      }
+    >
+      <div className={"flex flex-row gap-2"}>
+        <Image
+          alt="settype"
+          src={"/icons/studyset.svg"}
+          width={5}
+          height={5}
+          className={"w-4 dark:invert dark:brightness-0"}
+        />
+        <div>
+          <span className={"font-bold dark:text-white text-studodarkblue"}>
+            {item.title}
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+interface VisualsetItemProps {
+  item: VisualsetResponse;
+}
+
+const VisualsetItem = ({ item }: VisualsetItemProps) => {
+  return (
+    <Link
+      href={"/visualset/" + item.id}
+      className={
+        "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
+      }
+    >
+      <div className={"flex flex-row gap-2"}>
+        <Image
+          alt="settype"
+          src={"/icons/visualset.svg"}
+          width={5}
+          height={5}
+          className={"w-4 dark:invert dark:brightness-0"}
+        />
+        <div>
+          <span className={"font-bold dark:text-white text-studodarkblue"}>
+            {item.title}
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+};

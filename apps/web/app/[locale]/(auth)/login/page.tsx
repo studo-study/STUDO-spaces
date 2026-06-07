@@ -1,9 +1,9 @@
-import HeroBackground from "@/components/ui/marketing/landing_welcome/hero_background";
+import HeroBackground from "@/components/ui/app/public/marketing/landing_welcome/hero_background";
 import { useTranslations } from "next-intl";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import Link from "next/link";
-import DesktopForm from "@/components/ui/auth/login/desktopform";
-import MobileForm from "@/components/ui/auth/login/mobileform";
+import DesktopForm from "@/components/ui/app/auth/login/desktopform";
+import MobileForm from "@/components/ui/app/auth/login/mobileform";
 import Image from "next/image";
 
 export async function generateMetadata({

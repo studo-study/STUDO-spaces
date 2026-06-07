@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
-import BlogItem from "@/components/ui/marketing/blog/BlogItem";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
+import BlogItem from "@/components/ui/app/public/marketing/blog/BlogItem";
 
 export async function generateMetadata({
   params,

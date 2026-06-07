@@ -1,4 +1,4 @@
-import EditStudosetForm from "@/components/ui/shared/studoset/edit/EditStudosetForm";
+import EditStudosetForm from "@/components/ui/app/shared/studoset/edit/EditStudosetForm";
 
 export default async function EditSetPage({
   params,

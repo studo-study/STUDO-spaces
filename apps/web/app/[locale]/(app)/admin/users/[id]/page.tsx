@@ -1,4 +1,4 @@
-import AdminUserDetail from "@/components/ui/admin/AdminUserDetail";
+import AdminUserDetail from "@/components/ui/app/admin/AdminUserDetail";
 
 export default async function AdminUserPage({
   params,

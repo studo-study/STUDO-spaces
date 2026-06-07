@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import UserSearch from "@/components/ui/admin/UserSearch";
+import UserSearch from "@/components/ui/app/admin/UserSearch";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard | Studo",

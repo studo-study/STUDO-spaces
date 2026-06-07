@@ -1,4 +1,4 @@
-import ClassroomUserGrid from "@/components/ui/app/classroom/users/ClassroomUserGrid";
+import ClassroomUserGrid from "@/components/ui/app/private/classroom/users/ClassroomUserGrid";
 import { mockClassroomUsers } from "@/data/mocks/classroomsMock";
 
 const Users = mockClassroomUsers;

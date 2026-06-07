@@ -474,6 +474,10 @@ export class VisualsetService {
       throw new NotFoundException('Visualset not found');
     }
 
+    if (set.user_id !== user_id) {
+      throw new ForbiddenException('You do not own this visualset');
+    }
+
     const existing = await this.db.query.folder_sets.findFirst({
       where: and(
         eq(folder_sets.user_id, user_id),

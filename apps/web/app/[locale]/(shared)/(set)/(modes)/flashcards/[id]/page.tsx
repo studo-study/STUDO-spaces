@@ -1,6 +1,6 @@
-import FlashcardMode from "@/components/ui/shared/modes/flashcards/FlashcardMode";
+import FlashcardMode from "@/components/ui/app/shared/modes/flashcards/FlashcardMode";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 
 export default async function FlashCardPage({
   params,

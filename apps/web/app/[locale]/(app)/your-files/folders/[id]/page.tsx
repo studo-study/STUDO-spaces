@@ -1,4 +1,4 @@
-import FolderSets from "@/components/ui/app/your-files/folders/page/FolderSets";
+import FolderSets from "@/components/ui/app/private/your-files/folders/page/FolderSets";
 
 export default async function FolderPage({
   params,

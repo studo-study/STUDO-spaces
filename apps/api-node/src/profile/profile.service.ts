@@ -6,7 +6,7 @@ import {
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import { profiles, studysets, visualsets } from '../drizzle/schema';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { VisualsetResponseDto } from '../visualset/visualset.dto';
 
 @Injectable()
@@ -48,6 +48,34 @@ export class ProfileService {
     });
     const vs: VisualsetResponseDto[] = await this.db.query.visualsets.findMany({
       where: eq(visualsets.user_id, user_id),
+    });
+
+    return {
+      profile: this.serializeProfile(profile),
+      studysets: ss,
+      visualsets: vs,
+    };
+  }
+
+  async getPublicById(user_id: string): Promise<ProfileResponseDto> {
+    const profile = await this.db.query.profiles.findFirst({
+      where: eq(profiles.user_id, user_id),
+    });
+    if (!profile) {
+      throw new NotFoundException();
+    }
+
+    const ss: StudysetResponseDto[] = await this.db.query.studysets.findMany({
+      where: and(
+        eq(studysets.user_id, user_id),
+        eq(studysets.public_set, true),
+      ),
+    });
+    const vs: VisualsetResponseDto[] = await this.db.query.visualsets.findMany({
+      where: and(
+        eq(visualsets.user_id, user_id),
+        eq(visualsets.public_set, true),
+      ),
     });
 
     return {

@@ -1,8 +1,8 @@
 "use client";
 import { Link } from "@/i18n/routing";
-import CardList from "@/components/ui/public/sets/studosets/CardList";
+import CardList from "@/components/ui/app/public/sets/studosets/CardList";
 import { FaRegHeart } from "react-icons/fa";
-import SharePopup from "@/components/ui/public/sets/studosets/sharepopup";
+import SharePopup from "@/components/ui/app/public/sets/studosets/sharepopup";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { useTranslations } from "next-intl";
@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePublicStudoset } from "@/hooks/app/sets/usePublicStudoset";
-import PublicFlashcardMode from "@/components/ui/shared/modes/flashcards/PublicFlashcardMode";
+import PublicFlashcardMode from "@/components/ui/app/shared/modes/flashcards/PublicFlashcardMode";
 
 interface viewProps {
   id: string;
@@ -28,20 +28,6 @@ export default function PublicStudosetView({ id }: viewProps) {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  const jumpToTop = () => {
-    topRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
-  const jumpToBottom = () => {
-    bottomRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
@@ -52,7 +38,7 @@ export default function PublicStudosetView({ id }: viewProps) {
     const is403 = (error as { status?: number })?.status === 403;
     toast.error(is403 ? t("set_private") : t("cant_load"));
     router.push("/home");
-  }, [isError]);
+  }, [error, isError, router, setLoaded, t, toast]);
   const likes = useMemo(() => data?.likes ?? [], [data]);
   if (!data?.cards) return null;
 

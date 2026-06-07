@@ -1,0 +1,35 @@
+"use client";
+import { useTranslations } from "next-intl";
+import TriggerClassroom from "@/components/ui/app/private/classrooms/CreateClassroom";
+import { useState } from "react";
+import CreateClassroom from "@/components/ui/app/private/classrooms/CreateClassroomPopup";
+
+export default function ClassroomsHeader() {
+  const t = useTranslations("classrooms");
+  const [classroomIsOpen, setClassroomIsOpen] = useState(false);
+  const togglePopUp = () => {
+    setClassroomIsOpen((prev) => !prev);
+  };
+
+  return (
+    <div
+      className={
+        "w-full h-15 flex flex-col justify-between items-center max-h-100"
+      }
+    >
+      <div className={"w-full h-fit flex items-center justify-between"}>
+        <span
+          className={"w-full font-bold dark:text-white text-2xl font-georgia"}
+        >
+          {t("title")}
+        </span>
+        <TriggerClassroom togglePopUp={togglePopUp} />
+      </div>
+      <div className={"w-full z-10 bottom-0 h-0.5 bg-studogrey"} />
+      <CreateClassroom
+        createOpen={classroomIsOpen}
+        setCreateOpen={setClassroomIsOpen}
+      />
+    </div>
+  );
+}

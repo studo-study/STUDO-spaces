@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { auth } from "@/auth";
 import { AllsetsResponse } from "@studo/types";
-import CourseGrid from "@/components/ui/app/your-files/courses/CourseGrid";
+import CourseGrid from "@/components/ui/app/private/your-files/courses/CourseGrid";
 
 export const metadata: Metadata = {
   title: "courses | Studo",
