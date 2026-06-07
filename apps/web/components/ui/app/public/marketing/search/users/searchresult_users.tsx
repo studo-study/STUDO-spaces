@@ -42,7 +42,7 @@ function UserResult({ item }: SetResultProps) {
   console.log("img_url:", JSON.stringify(item.img_url));
   return (
     <Link
-      href={"/profile" + item.id}
+      href={"/profile/" + item.id}
       className={`w-full min-h-40 rounded-2xl border border-studogrey/30 bg-studogrey/30 drop-shadow-3xl flex flex-col gap-5`}
     >
       <div

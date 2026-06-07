@@ -1,13 +1,16 @@
+"use client";
 import { useTranslations } from "next-intl";
 import { FaAngleRight } from "react-icons/fa6";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { SearchResults, StudoProfileSearchResult } from "@studo/types";
+import { StudoProfileSearchResult } from "@studo/types";
+import { useSearchParams } from "next/navigation";
+import { useSearchResult } from "@/hooks/app/search/useSearchResult";
 
-interface ResultStudoProps {
-  result: SearchResults;
-}
-export default function SearchResultStudo({ result }: ResultStudoProps) {
+export default function SearchResultStudo() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q");
+  const result = useSearchResult(query ?? "").data;
   const users = result && result.data[3].data.slice(0, 4);
   const empty = users && users.length === 0;
   const t = useTranslations("landing.search_result.studo");
@@ -17,16 +20,17 @@ export default function SearchResultStudo({ result }: ResultStudoProps) {
     >
       <div className={"w-full flex py-1 flex-row justify-between items-center"}>
         <span className={"font-bold"}>{t("users")}</span>
-        <span
-          className={`flex ${result && users.length != 0 ? "flex" : "hidden"} flex-row items-center justify-end gap-2`}
+        <Link
+          href={"/search-result/sets?q=" + query}
+          className={`flex ${result && users?.length != 0 ? "flex" : "hidden"} cursor-pointer flex-row items-center justify-end gap-2`}
         >
           {t("more")}
           <FaAngleRight />
-        </span>
+        </Link>
       </div>
       <div className={"w-full min-h-30 h-fit grid grid-cols-3 gap-5"}>
         {result &&
-          users.map((item: StudoProfileSearchResult, i: number) => (
+          users?.map((item: StudoProfileSearchResult, i: number) => (
             <UserResult key={i} item={item} />
           ))}
       </div>
@@ -54,11 +58,11 @@ function UserResult({ item }: SetResultProps) {
       />
 
       {/* Gradient overlay */}
-      <div className="absolute inset-x-0 bottom-0 z-10 h-1/2 bg-gradient-to-t from-gray-900/90 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-10 h-1/2 bg-linear-to-t from-gray-900/90 to-transparent" />
 
       {/* Profile info */}
       <div className="absolute inset-x-0 bottom-0 z-20 flex flex-row items-center gap-3 px-4 pb-3">
-        <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0">
+        <div className="relative w-9 h-9 rounded-full overflow-hidden shrink-0">
           <Image
             src="/icons/icon2.png"
             alt="pfp"
@@ -74,7 +78,7 @@ function UserResult({ item }: SetResultProps) {
           alt="verified"
           width={20}
           height={20}
-          className="flex-shrink-0"
+          className="shrink-0"
         />
       </div>
     </Link>

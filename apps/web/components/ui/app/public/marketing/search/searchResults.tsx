@@ -7,6 +7,7 @@ import SearchResultSets from "@/components/ui/app/public/marketing/search/sets/s
 import SearchResultUsers from "@/components/ui/app/public/marketing/search/users/searchresult_users";
 import SearchResultStudo from "@/components/ui/app/public/marketing/search/studo/searchresult_studo";
 import NoResult from "@/components/ui/app/public/marketing/search/noresult";
+import { useSearchResult } from "@/hooks/app/search/useSearchResult";
 
 interface SearchResults {
   data: [
@@ -32,36 +33,13 @@ interface SearchResults {
 export default function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
-  const [result, setResult] = useState<SearchResults>();
-
-  useEffect(() => {
-    if (!query) return;
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/public/${query}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setResult(data);
-      });
-  }, [query]);
-
-  const size =
-    result &&
-    result.data[0].data.length +
-      result.data[1].data.length +
-      result.data[2].data.length +
-      result.data[3].data.length;
-  console.log(result);
-
+  const result = useSearchResult(query ?? "").data;
   return (
-    <div className={"w-1/2 flex flex-col justify-center items-center gap-5"}>
-      <div className={"w-full flex flex-col gap-5"}>
-        <SearchHeader query={query} size={size} />
-      </div>
-
-      {result && <SearchResultStudo result={result} />}
-      {result && <SearchResultSets result={result} />}
+    <div className={"flex flex-col justify-center items-center gap-5"}>
+      {result && <SearchResultStudo />}
+      {result && <SearchResultSets />}
       {result && <SearchResultUsers result={result} />}
       {result && <SearchResultClassroom result={result} />}
-      {size === 0 && <NoResult />}
     </div>
   );
 }

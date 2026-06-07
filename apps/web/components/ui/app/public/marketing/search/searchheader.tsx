@@ -1,13 +1,14 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 
 const header = [
   { url: "/search-result", label: "all" },
   { url: "/search-result/sets", label: "sets" },
   { url: "/search-result/classrooms", label: "classrooms" },
   { url: "/search-result/users", label: "users" },
-  { url: "/search-result/users", label: "tracks" },
+  { url: "/search-result/tracks", label: "tracks" },
 ];
 
 interface SearchHeaderProps {
@@ -18,8 +19,9 @@ export default function SearchHeader({ query, size }: SearchHeaderProps) {
   const t = useTranslations("landing.search_result");
   const pathname = usePathname();
   const isActive = (link: string) => {
-    return pathname === link || pathname.startsWith(link + "/");
+    return pathname === link;
   };
+
   return (
     <div className={"w-full h-30 flex flex-col justify-between items-center "}>
       <div className={"w-full h-fit flex flex-col gap-2"}>
@@ -37,12 +39,13 @@ export default function SearchHeader({ query, size }: SearchHeaderProps) {
           }
         >
           {header.map((item, i) => (
-            <div
+            <Link
+              href={item.url + "?q=" + query}
               key={i}
               className={`dark:text-white cursor-pointer h font-bold py-2 transition-all duration-400 hover:border-blue-500/75 border-b-2 ${isActive(item.url) ? " border-blue-500" : "border-transparent"}`}
             >
               {t(item.label)}
-            </div>
+            </Link>
           ))}
         </div>
         <div className={"absolute z-10 bottom-0 w-full h-0.5 bg-studogrey"} />

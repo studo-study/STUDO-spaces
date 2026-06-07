@@ -410,7 +410,7 @@ export class StudysetService {
         ? this.db.query.classrooms.findMany({
             where: inArray(classrooms.id, classroomIds),
           })
-        : Promise.resolve([]),
+        : Promise.resolve([] as (typeof classrooms.$inferSelect)[]),
       classroomIds.length > 0
         ? this.db.query.classroomsets.findMany({
             where: and(
@@ -418,7 +418,7 @@ export class StudysetService {
               inArray(classroomsets.classroom_id, classroomIds),
             ),
           })
-        : Promise.resolve([]),
+        : Promise.resolve([] as (typeof classroomsets.$inferSelect)[]),
     ]);
 
     const classroomIdsWithSet = new Set(

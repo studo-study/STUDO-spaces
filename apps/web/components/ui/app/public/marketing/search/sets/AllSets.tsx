@@ -1,13 +1,12 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { FaAngleRight } from "react-icons/fa6";
 import Image from "next/image";
-import Link from "next/link";
 import { SetSearchResult } from "@studo/types";
 import { useSearchResult } from "@/hooks/app/search/useSearchResult";
 import { useSearchParams } from "next/navigation";
+import { Link } from "@/i18n/routing";
 
-export default function SearchResultSets() {
+export default function AllSets() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const result = useSearchResult(query ?? "").data;
@@ -18,16 +17,6 @@ export default function SearchResultSets() {
     <div
       className={`w-full h-full flex flex-col gap-5 ${empty ? "hidden" : "flex"}`}
     >
-      <div className={"w-full flex py-1 flex-row justify-between items-center"}>
-        <span className={"font-bold"}>{t("sets")}</span>
-        <Link
-          href={"search-result/sets?q=" + query}
-          className={`flex ${result && sets?.length != 0 ? "flex" : "hidden"} flex-row cursor-pointer items-center justify-end gap-2`}
-        >
-          {t("more")}
-          <FaAngleRight />
-        </Link>
-      </div>
       <div className={"w-full min-h-30 h-fit grid grid-cols-4 gap-5"}>
         {result &&
           sets?.map((item: SetSearchResult, i: number) => (
@@ -48,8 +37,8 @@ function SetResult({ item, t }: SetResultProps) {
     <Link
       href={
         item.type === "visualset"
-          ? "visualset/" + item.id
-          : "studoset/" + item.id
+          ? "/visualset/" + item.id
+          : "/studoset/" + item.id
       }
       className={`w-full min-h-40 rounded-2xl border border-studogrey/30
                  glass-rgb drop-shadow-3xl p-5 flex flex-col gap-2`}

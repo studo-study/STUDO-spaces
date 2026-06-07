@@ -2,6 +2,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 import { NextConfig } from "next";
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import path from "path";
+import type { Configuration } from "webpack";
 
 const withNextIntl = createNextIntlPlugin();
 const withBundleAnalyzer = createBundleAnalyzer({
@@ -53,6 +54,25 @@ const nextConfig: NextConfig = {
   },
   compiler: {
     //removeConsole: process.env.NODE_ENV === "production",
+  },
+  webpack: (config: Configuration, { dev }: { dev: boolean }) => {
+    if (dev) {
+      config.watchOptions = {
+        ignored: [
+          "**/node_modules/**",
+          "**/.pnpm/**",
+          "**/.git/**",
+          "**/.next/**",
+          "**/apps/api-node/**",
+          "**/apps/mobile/**",
+          "**/apps/legacy/**",
+          "**/packages/*/node_modules/**",
+        ],
+        aggregateTimeout: 300,
+        poll: false,
+      };
+    }
+    return config;
   },
 };
 
