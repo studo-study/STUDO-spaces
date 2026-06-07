@@ -7,6 +7,8 @@ import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCr
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { useTranslations } from "next-intl";
 import { useSplash } from "@/components/providers/app/SplashProvider";
+import { useToast } from "@/components/providers/app/ToastProvider";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePublicStudoset } from "@/hooks/app/sets/usePublicStudoset";
@@ -19,7 +21,9 @@ interface viewProps {
 export default function PublicStudosetView({ id }: viewProps) {
   const t = useTranslations("studoset");
   const { setLoaded } = useSplash();
-  const { data } = usePublicStudoset(id);
+  const toast = useToast();
+  const router = useRouter();
+  const { data, isError, error } = usePublicStudoset(id);
   const { ref } = useInView();
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -41,6 +45,14 @@ export default function PublicStudosetView({ id }: viewProps) {
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
+
+  useEffect(() => {
+    if (!isError) return;
+    setLoaded(true);
+    const is403 = (error as { status?: number })?.status === 403;
+    toast.error(is403 ? t("set_private") : t("cant_load"));
+    router.push("/home");
+  }, [isError]);
   const likes = useMemo(() => data?.likes ?? [], [data]);
   if (!data?.cards) return null;
 
@@ -90,7 +102,7 @@ export default function PublicStudosetView({ id }: viewProps) {
       </div>
       <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center pt-5 items-center">
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
-        <div ref={ref} className={"relative w-full max-h-300 min-h-130 h-135 "}>
+        <div ref={ref} className={"relative w-full max-h-300 min-h-150 h-150 "}>
           <PublicFlashcardMode id={id} />
         </div>
 

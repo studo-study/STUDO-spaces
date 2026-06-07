@@ -4,7 +4,14 @@ import type { PublicStudysetResponse } from "@studo/types";
 export function usePublicStudoset(id: string) {
   return useQuery<PublicStudysetResponse>({
     queryKey: ["studosets", "public", id],
-    queryFn: () => fetch(`/api/studosets/public/${id}`).then((r) => r.json()),
+    queryFn: () =>
+      fetch(`/api/studosets/public/${id}`).then((r) => {
+        if (!r.ok)
+          throw Object.assign(new Error("Failed to load"), {
+            status: r.status,
+          });
+        return r.json();
+      }),
     enabled: !!id,
   });
 }

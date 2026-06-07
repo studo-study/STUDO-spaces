@@ -1387,7 +1387,9 @@
     "saved_in": "Saved in",
     "added_to": "Added to",
     "rights": "All rights reserved.",
-    "edit": "edit"
+    "edit": "edit",
+    "set_private": "Studoset is private",
+    "cant_load": "Can't load set"
   },
   "trackview": {
     "tracks": "Tracks",

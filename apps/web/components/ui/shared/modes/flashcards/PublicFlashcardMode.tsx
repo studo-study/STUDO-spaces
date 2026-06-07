@@ -2,10 +2,8 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useState, useEffect, useMemo, useRef } from "react";
 import "animate.css";
-import { IoShuffleOutline } from "react-icons/io5";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { useTranslations } from "next-intl";
 import { GrPowerReset } from "react-icons/gr";
 import { usePublicStudoset } from "@/hooks/app/sets/usePublicStudoset";
@@ -68,9 +66,7 @@ export default function PublicFlashcardMode({ id }: FlashcardProps) {
 }
 
 function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
-  const t = useTranslations("flashcards");
   const router = useRouter();
-
   const freeLimit = Math.min(FREE_LIMIT, cards.length);
 
   const [state, setState] = useState<FCState>(() => ({
@@ -105,17 +101,6 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
     update({
       ...s,
       index: s.index - 1 < 0 ? s.shuffled.length - 1 : s.index - 1,
-    });
-  };
-
-  const toggleShuffle = () => {
-    const s = stateRef.current;
-    const newMode = !s.shuffleMode;
-    update({
-      ...s,
-      shuffleMode: newMode,
-      index: 0,
-      shuffled: newMode ? shuffle(cards) : cards,
     });
   };
 
@@ -155,9 +140,9 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
   useKeyboardShortcut("ArrowLeft", hitLimit || isFinished ? () => {} : goBack);
 
   return (
-    <div className="w-full min-h-170 h-full max-h-190 flex flex-col gap-3 sm:gap-5 px-10">
+    <div className="relative w-full min-h-150 h-full  flex flex-col gap-3 sm:gap-5">
       {/* Toolbar */}
-      <div className="w-full flex flex-row gap-2 sm:gap-5 items-center">
+      <div className="w-full h-fit flex flex-row gap-2 sm:gap-5 items-center">
         <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-studoborder/30">
           <div
             style={{
@@ -174,44 +159,16 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
             />
           )}
         </div>
-        <BaseTooltip content={t("answer_with")}>
-          <BaseButton
-            variant="icon"
-            className={"min-h-full"}
-            onClick={() => setState((s) => ({ ...s, termMode: !s.termMode }))}
-          >
-            <p className="text-xs sm:text-sm">
-              {termMode ? t("definition") : t("term")}
-            </p>
-          </BaseButton>
-        </BaseTooltip>
-        <BaseTooltip content={t("shuffle")}>
-          <BaseButton variant="icon" onClick={toggleShuffle}>
-            <IoShuffleOutline
-              size={19}
-              className={
-                shuffleMode
-                  ? "dark:text-studoblue transition-all duration-300 text-emerald-400"
-                  : ""
-              }
-            />
-          </BaseButton>
-        </BaseTooltip>
-        <BaseTooltip content={t("reset")}>
-          <BaseButton variant="icon" onClick={toggleReset}>
-            <GrPowerReset size={19} />
-          </BaseButton>
-        </BaseTooltip>
-        <BaseTooltip content={t("progress")}>
-          <BaseButton variant="icon" onClick={toggleResetProgress}>
-            <AiOutlineRise size={19} />
-          </BaseButton>
-        </BaseTooltip>
       </div>
 
-      <div className="flex-1 pb-10 min-h-0 max-h-130">
+      <div className="flex-1 min-h-0 max-h-130">
         {hitLimit ? (
-          <LoginWall onLogin={() => router.push("/login")} />
+          <LoginWall
+            onLogin={() => router.push("/login?callbackUrl=studoset/" + id)}
+            onRegsiter={() =>
+              router.push("/register?callbackUrl=studoset/" + id)
+            }
+          />
         ) : isFinished ? (
           <FinishedScreen
             progress={toggleResetProgress}
@@ -259,7 +216,13 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
   );
 }
 
-function LoginWall({ onLogin }: { onLogin: () => void }) {
+function LoginWall({
+  onLogin,
+  onRegsiter,
+}: {
+  onLogin: () => void;
+  onRegsiter: () => void;
+}) {
   const t = useTranslations("flashcards");
 
   return (
@@ -267,27 +230,27 @@ function LoginWall({ onLogin }: { onLogin: () => void }) {
       <div className="side-a backface-hidden top-0 left-0 absolute w-full shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20">
         <AnimateOnMount className="w-fit flex flex-col gap-5 items-center justify-center">
           <div className="gap-2 flex-col flex items-center justify-center text-center">
-            <Image
-              src="/images/fallbacks/finish.png"
-              width={200}
-              height={200}
-              alt="login"
-              className="w-auto h-30"
-            />
-            <span className="font-georgia font-bold text-xl">
+            <span className="font-georgia font-bold text-2xl">
               {t("login_wall_title")}
             </span>
             <p className="text-sm opacity-60 max-w-xs">
               {t("login_wall_subtitle")}
             </p>
           </div>
-          <BaseButton
-            size="sm"
-            type="button"
-            variant="submit"
-            label={t("login_wall_cta")}
-            onClick={onLogin}
-          />
+          <div className={"flex flex-row gap-3 items-center justify-center"}>
+            <BaseButton
+              type="button"
+              variant="primary"
+              label={t("register_wall_cta")}
+              onClick={onRegsiter}
+            />
+            <BaseButton
+              type="button"
+              variant="submit"
+              label={t("login_wall_cta")}
+              onClick={onLogin}
+            />
+          </div>
         </AnimateOnMount>
       </div>
     </div>
@@ -368,7 +331,6 @@ function CardView({ card, termMode, onLearnt }: CardProps) {
           </div>
         </div>
 
-        {/* achterzijde */}
         <div
           className={
             "side-b backface-hidden top-0 left-0 absolute px-10 w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"

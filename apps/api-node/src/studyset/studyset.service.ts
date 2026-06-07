@@ -84,7 +84,7 @@ export class StudysetService {
       global_definition_language: data.global_definition_language,
       created_at: date.toISOString(),
       last_updated: '',
-      public_set: false,
+      public_set: true,
       user_id: user_id,
       displayName: name.displayName,
       img_url: name.img_url,

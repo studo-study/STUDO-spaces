@@ -17,6 +17,8 @@ import { useTranslations } from "next-intl";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useSplash } from "@/components/providers/app/SplashProvider";
+import { useToast } from "@/components/providers/app/ToastProvider";
+import { useRouter } from "next/navigation";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import FlashcardMode from "@/components/ui/shared/modes/flashcards/FlashcardMode";
@@ -35,7 +37,9 @@ export default function StudosetView({ id }: viewProps) {
   const t = useTranslations("studoset");
   const userId = useUser().user?.id;
   const { setLoaded } = useSplash();
-  const { data, isPlaceholderData } = useStudoset(id);
+  const toast = useToast();
+  const router = useRouter();
+  const { data, isPlaceholderData, isError, error } = useStudoset(id);
   const [tab, setTab] = useState<Tab>("all");
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLDivElement>(null);
@@ -58,6 +62,15 @@ export default function StudosetView({ id }: viewProps) {
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
+
+  useEffect(() => {
+    if (!isError) return;
+    setLoaded(true);
+    const is403 = (error as { status?: number })?.status === 403;
+    toast.error(is403 ? t("set_private") : t("cant_load"));
+    router.push("/home");
+  }, [isError]);
+
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
   const liked = useMemo(
