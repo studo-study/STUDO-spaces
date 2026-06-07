@@ -3,18 +3,32 @@ import { useEffect, useRef, useState } from "react";
 
 interface SimpleMenuProps {
   trigger: React.ReactNode;
-  children?: React.ReactNode;
+  children?: React.ReactNode | ((isOpen: boolean) => React.ReactNode);
   width?: string | number;
+  clickOutside?: () => void;
+  isOpenProp?: boolean;
 }
 
 const SimpleMenu = (props: SimpleMenuProps) => {
-  const { trigger, children, width } = props;
-  const [isOpen, setIsopen] = useState<boolean>(false);
+  const { trigger, children, width, clickOutside, isOpenProp } = props;
+  const [isOpen, setIsopen] = useState<boolean>(isOpenProp ?? false);
+  const [isAnimated, setIsAnimated] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (isOpen) {
+      requestAnimationFrame(() => setIsAnimated(true));
+    } else {
+      setIsAnimated(false);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      if (clickOutside) {
+        clickOutside();
+      }
       if (
         popupRef.current &&
         !popupRef.current.contains(e.target as Node) &&
@@ -34,7 +48,7 @@ const SimpleMenu = (props: SimpleMenuProps) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen]);
+  }, [clickOutside, isOpen]);
 
   return (
     <div className={"relative w-fit h-fit"} ref={containerRef}>
@@ -57,7 +71,9 @@ bg-white/80 dark:bg-[#1e293b]/90
       `}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative flex flex-col gap-1">{children}</div>
+        <div className="relative flex flex-col gap-1">
+          {typeof children === "function" ? children(isAnimated) : children}
+        </div>
       </div>
     </div>
   );

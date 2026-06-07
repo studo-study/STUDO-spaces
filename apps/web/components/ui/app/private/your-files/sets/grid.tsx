@@ -77,7 +77,7 @@ export default function Grid() {
   const t = useTranslations("y_f.your_sets");
 
   return (
-    <div className="relative w-full h-full flex flex-col gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">
+    <div className="relative w-full flex-1 flex flex-col gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">
       <div className="sticky top-0 w-full h-20 z-20 backdrop-blur-2xl py-8 flex overflow-visible flex-row items-center justify-between gap-3">
         <div className="w-fit flex flex-row gap-5 items-center">
           <select

@@ -20,7 +20,7 @@ export default function FileHeader() {
   return (
     <div
       className={
-        "w-full min-h-30 flex flex-col justify-between items-center max-h-100"
+        "relative max-w-full min-h-30 flex flex-col justify-between items-center max-h-100"
       }
     >
       <div className={"flex flex-col gap-1 w-full"}>

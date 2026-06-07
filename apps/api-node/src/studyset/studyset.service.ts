@@ -424,6 +424,7 @@ export class StudysetService {
     const classroomIdsWithSet = new Set(
       classroomSetsForThisSet.map((cs) => cs.classroom_id),
     );
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const setclasses = classes.filter((c) => classroomIdsWithSet.has(c.id));
 
     // Get user's folders

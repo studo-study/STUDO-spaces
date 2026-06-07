@@ -3,9 +3,11 @@ import FileHeader from "@/components/ui/app/private/your-files/header";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <section className="w-full min-h-full flex flex-col scroll-hidden">
-      <FileHeader />
-      <div className="flex-1 h-full">{children}</div>
+    <section className="relative w-full flex-1 flex flex-col overflow-hidden">
+      <div className={"w-full h-fit flex-shrink-0"}>
+        <FileHeader />
+      </div>
+      <div className="relative flex-1 min-h-0 overflow-hidden">{children}</div>
     </section>
   );
 }
