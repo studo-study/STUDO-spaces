@@ -16,7 +16,7 @@ body::-webkit-scrollbar {
 /* Voor dark mode */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: rgb(31, 41, 55); /* dark mode: bg-gray-800 */
+        background: #1f2938;
     }
 }
 
@@ -303,10 +303,57 @@ body::-webkit-scrollbar {
 }
 
 .glass-rgb {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(250px);
-    -webkit-backdrop-filter: blur(200px);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Liquid Glass System ──────────────────────────────────── */
+
+/* Frosted glass surface — pills, bars, panels */
+.liquid-glass {
+    background: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 0.5px solid rgba(255, 255, 255, 0.28);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Glass card — frosted panel with thin specular line */
+.glass-card {
+    position: relative;
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 0.5px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Thin specular line at top — zoals echt glas in zonlicht */
+.glass-card::before {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.55) 30%,
+        rgba(255, 255, 255, 0.55) 70%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
 }
 
 

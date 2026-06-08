@@ -72,6 +72,7 @@ export default function LandingHeader() {
   const [ClassOpen, setClassOpen] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
   const launched = true;
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
 
@@ -102,9 +103,11 @@ export default function LandingHeader() {
 
   useEffect(() => {
     const handleScroll = () => {
+      const progress = Math.min(window.scrollY / 80, 1);
+      setScrollProgress(progress);
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -133,18 +136,37 @@ export default function LandingHeader() {
 
   return (
     <>
-      <header
-        className={`w-full flex flex-col fixed top-0 left-0 border-b border-transparent right-0 z-[999] ${scrolled ? "backdrop-blur-2xl" : null}`}
-      >
-        <div className={"w-screen h-0.5 overflow-hidden"}>
+      <header className="w-full flex flex-col fixed top-0 left-0 right-0 z-[999]">
+        {/* Haze — blur + tint die onderaan uitvloeit */}
+        <div
+          className="absolute inset-x-0 top-0 h-32 backdrop-blur-xl pointer-events-none"
+          style={{
+            opacity: scrollProgress,
+            transition: "opacity 150ms ease",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 50%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 50%, transparent 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-x-0 top-0 h-32 bg-white/70 dark:bg-[#1f2938]/80 pointer-events-none"
+          style={{
+            opacity: scrollProgress,
+            transition: "opacity 150ms ease",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 50%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 50%, transparent 100%)",
+          }}
+        />
+        <div className={"relative z-10 w-screen h-0.5 overflow-hidden"}>
           <div
             className={`w-screen h-0.5 ${loading ? "bg-studoblue searchAnimation" : ""}`}
           />
         </div>
         <div
-          className={`w-screen h-20 md:h-20 transition-all duration-300
-              bg-transparent 
-              flex items-center justify-between px-4 sm:px-8 lg:px-20`}
+          className={`relative z-10 w-screen h-20 md:h-20 flex items-center justify-between px-4 sm:px-8 lg:px-20`}
         >
           <div className="flex items-center justify-start gap-4 lg:gap-10 min-w-0 flex-1">
             <Link
@@ -212,9 +234,9 @@ export default function LandingHeader() {
                   className="inline-flex font-semibold text-white truncate
                     flex-row gap-2 justify-center items-center p-2 pl-7 pr-7 rounded-4xl cursor-pointer
                     active:scale-105 transition-transform z-[2]
-                    border-[0.5px] border-solid border-[#8181812f]
-                    shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
-                    dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
+                    border-[0.5px] border-solid border-studoborder
+
+
                     bg-emerald-400 dark:bg-white dark:text-studodarkblue"
                 >
                   {t("LogIn")}
@@ -233,7 +255,7 @@ export default function LandingHeader() {
                     flex-row gap-2 justify-center items-center p-2 xl:px-7 px-3 rounded-4xl cursor-pointer
                     active:scale-105 transition-transform z-[2] lg:text-base text-sm text-center
                     border-[0.5px] border-solid border-[#8181812f]
-                    shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
+
                     dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
                     bg-emerald-400 dark:bg-white dark:text-studodarkblue"
               >

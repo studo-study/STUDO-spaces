@@ -11,10 +11,9 @@ const floatingItems = [
   { src: "/animations/animation_assets/book.svg", size: "w-22", seed: 6 },
 ];
 
-// Genereer vaste waarden BUITEN de component
 const randomValues = floatingItems.map((item) => ({
   ...item,
-  startX: `${((item.seed * 13.7) % 80) + 10}%`, // pseudo-random gebaseerd op seed
+  startX: `${((item.seed * 13.7) % 80) + 10}%`,
   startY: `${((item.seed * 17.3) % 80) + 10}%`,
   duration: `${80 + ((item.seed * 23.1) % 200)}s`,
   rotate: `${item.seed % 2 === 0 ? "" : "-"}${((item.seed * 97.3) % 720) + 180}deg`,
@@ -36,6 +35,10 @@ export default function HeroBackground({ paused, color }: HeroBackgroundProps) {
 
   return (
     <section className="fixed max-w-screen w-full inset-0 overflow-hidden pointer-events-none">
+      {/* Subtiele achtergrondlichten — enkel zichtbaar als ambiance */}
+      <div className="absolute -top-[15%] -right-[5%] w-[800px] h-[800px] rounded-full bg-blue-400/8 dark:bg-blue-400/6 blur-[160px]" />
+      <div className="absolute -bottom-[10%] -left-[5%] w-[700px] h-[700px] rounded-full bg-emerald-400/7 dark:bg-emerald-400/5 blur-[140px]" />
+
       <div
         className={`absolute max-w-screen w-full inset-0 bg-gradient-to-b from-transparent via-transparent ${paused ? "animation-paused" : ""} ${color}`}
       />
@@ -57,7 +60,7 @@ export default function HeroBackground({ paused, color }: HeroBackgroundProps) {
               "--rotate": item.rotate,
               "--scale-min": item.scaleMin,
               "--scale-max": item.scaleMax,
-              opacity: mounted ? 0.2 : 0,
+              opacity: mounted ? 0.15 : 0,
               left: "var(--start-x)",
               top: "var(--start-y)",
             } as React.CSSProperties

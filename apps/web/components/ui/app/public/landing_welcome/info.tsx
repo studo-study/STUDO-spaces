@@ -10,7 +10,7 @@ interface Feature {
   image: string;
   imageAlt: string;
   color: string;
-  bgColor: string;
+  colorOverlay: string;
   direction: string;
   showCTA: boolean | null;
 }
@@ -22,8 +22,7 @@ const features: Feature[] = [
     image: "/icons/start/studysmart.svg",
     imageAlt: "Smart studying illustration",
     color: "from-orange-400 to-amber-500",
-    bgColor:
-      "bg-gradient-to-br from-orange-400 to-amber-50 dark:from-orange-400 dark:to-amber-400",
+    colorOverlay: "from-orange-400/20 to-amber-300/12",
     direction: "normal",
     showCTA: null,
   },
@@ -33,8 +32,7 @@ const features: Feature[] = [
     image: "/icons/laptop.svg",
     imageAlt: "Student using laptop illustration",
     color: "from-blue-400 to-cyan-500",
-    bgColor:
-      "bg-gradient-to-br from-blue-400 to-cyan-50 dark:from-blue-400 dark:to-cyan-400",
+    colorOverlay: "from-blue-400/20 to-cyan-300/12",
     direction: "reverse",
     showCTA: null,
   },
@@ -44,8 +42,7 @@ const features: Feature[] = [
     image: "/icons/start/classroom-desk.svg",
     imageAlt: "Classroom collaboration illustration",
     color: "from-emerald-400 to-teal-500",
-    bgColor:
-      "bg-gradient-to-br from-emerald-400 to-teal-50 dark:from-emerald-400 dark:to-teal-400",
+    colorOverlay: "from-emerald-400/20 to-teal-300/12",
     direction: "normal",
     showCTA: null,
   },
@@ -55,8 +52,7 @@ const features: Feature[] = [
     image: "/icons/start/ready.svg",
     imageAlt: "Ready for challenges illustration",
     color: "from-purple-400 to-violet-500",
-    bgColor:
-      "bg-gradient-to-br from-purple-400 to-violet-50 dark:from-purple-400 dark:to-violet-400",
+    colorOverlay: "from-purple-400/20 to-violet-300/12",
     direction: "reverse",
     showCTA: true,
   },
@@ -134,7 +130,7 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
         {/* Image column */}
         <figure className={`${isReverse ? "lg:order-1" : "lg:order-2"}`}>
           <div
-            className={`rounded-3xl ${feature.bgColor} p-8 lg:p-12 overflow-hidden border border-white/50 dark:border-white/10 h-full w-full shadow-xl shadow-black/5 dark:shadow-black/20 group hover:scale-[1.02] transition-transform duration-500`}
+            className={`rounded-3xl liquid-glass bg-gradient-to-br ${feature.colorOverlay} p-8 lg:p-12 overflow-hidden h-full w-full group hover:scale-[1.02] transition-transform duration-500`}
           >
             <Image
               src={feature.image}
@@ -163,7 +159,7 @@ export default function Info() {
         {/* Header */}
         <AnimateOnScroll>
           <div className="text-center mb-16 lg:mb-24">
-            <span className="inline-block px-4 py-2 rounded-full text-sm font-medium bg-emerald-100 dark:bg-studoblue/20 text-emerald-700 dark:text-studoblue border border-emerald-200 dark:border-studoblue/30 mb-6">
+            <span className="inline-block px-4 py-2 rounded-full text-sm font-medium liquid-glass text-emerald-600 dark:text-blue-300 mb-6">
               {t("why")}
             </span>
             <h2

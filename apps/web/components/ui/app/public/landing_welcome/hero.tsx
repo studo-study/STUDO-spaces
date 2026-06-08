@@ -15,31 +15,36 @@ const studyModes = [
     to: "/tools/learn",
     label: "Learn",
     icon: "/icons/start/learn.svg",
-    color: "from-emerald-500 to-emerald-400",
+    color: "from-emerald-400 to-emerald-300",
+    glow: "hover:shadow-emerald-400/15",
   },
   {
     to: "/tools/flashcards",
     label: "Flashcards",
     icon: "/icons/start/flashcards.svg",
-    color: "from-blue-500 to-blue-400",
+    color: "from-blue-400 to-blue-300",
+    glow: "hover:shadow-blue-400/15",
   },
   {
     to: "/tools/speedy",
     label: "Speedy",
     icon: "/icons/start/speedy.svg",
-    color: "from-amber-500 to-orange-400",
+    color: "from-amber-400 to-orange-300",
+    glow: "hover:shadow-amber-400/15",
   },
   {
     to: "/tools/identify",
     label: "Identify",
     icon: "/icons/start/point.svg",
-    color: "from-rose-500 to-red-400",
+    color: "from-rose-400 to-red-300",
+    glow: "hover:shadow-rose-400/15",
   },
   {
     to: "/tools/point",
     label: "Point",
     icon: "/icons/start/hero-pin.svg",
-    color: "from-violet-500 to-purple-400",
+    color: "from-violet-400 to-purple-300",
+    glow: "hover:shadow-violet-400/15",
   },
 ];
 
@@ -63,8 +68,9 @@ export default function Hero() {
 
   return (
     <section className="relative w-full max-w-screen overflow-visible h-fit xxl:h-3/4 flex flex-col items-center justify-start pt-10 px-4">
+      {/* Background visible in both light and dark mode */}
       <div
-        className="absolute max-w-screen w-full inset-0 hidden dark:flex select-none pointer-events-none z-0"
+        className="absolute max-w-screen w-full inset-0 flex select-none pointer-events-none z-0"
         aria-hidden="true"
       >
         <HeroBackground paused={heroPaused} color="to-white/10" />
@@ -73,7 +79,7 @@ export default function Hero() {
       <div className="relative z-10 flex flex-col 3xl:min-h-screen items-center text-center pt-15 sm:pt-15 lg:pt-20 3xl:pt-30 overflow-visible gap-8 3xl:w-2/3 max-w-screen">
         <AnimateOnMount delay={100}>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-            <span className="block text-studodarkblue dark:text-white">
+            <span className="block text-studodarkblue dark:text-white ">
               {t("Quote1")}
             </span>
             <span className="block bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400 dark:from-studoblue dark:via-blue-500 dark:to-studoblue bg-clip-text text-transparent">
@@ -83,7 +89,7 @@ export default function Hero() {
         </AnimateOnMount>
 
         <AnimateOnMount delay={200}>
-          <p className="text-lg text-xl md:text-2xl text-studodarkblue/70 dark:text-white/70 max-w-2xl">
+          <p className="text-lg text-xl font-georgia md:text-2xl text-studodarkblue/70 dark:text-white/70 max-w-2xl">
             {t("Subtitle")}
           </p>
         </AnimateOnMount>
@@ -139,9 +145,9 @@ export default function Hero() {
             >
               <Link
                 href={item.to}
-                className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br ${item.color} flex flex-col justify-between w-full md:min-h-90 xl:min-h-58 sm:min-w-full sm:h-64 md:w-52 md:h-72 lg:w-56 lg:h-80 hover:scale-105 transition-all duration-700`}
+                className={`group relative overflow-hidden rounded-3xl glass-card bg-gradient-to-br ${item.color} flex flex-col justify-between w-full md:min-h-90 xl:min-h-58 sm:min-w-full sm:h-64 md:w-52 md:h-72 lg:w-56 lg:h-80 hover:scale-105 hover:shadow-2xl ${item.glow} transition-all duration-700`}
               >
-                <span className="text-xl sm:text-2xl font-bold text-studodarkblue text-center pt-5 sm:pt-6">
+                <span className="relative z-20 text-xl sm:text-2xl font-bold text-studodarkblue dark:text-white text-center pt-5 sm:pt-6 drop-shadow-sm">
                   {t(item.label)}
                 </span>
                 <Image
@@ -149,7 +155,7 @@ export default function Hero() {
                   alt=""
                   width={200}
                   height={200}
-                  className="w-full object-cover object-bottom"
+                  className="relative z-20 w-full object-cover object-bottom"
                 />
               </Link>
             </AnimateOnMount>
