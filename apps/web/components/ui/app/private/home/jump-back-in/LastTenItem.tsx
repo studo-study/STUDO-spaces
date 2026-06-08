@@ -4,7 +4,7 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
 import { FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
-import { Progress } from "@/components/ui/app/public/marketing/progress/progress";
+import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
 import Link from "next/link";
 
 interface LastTenItemProps {

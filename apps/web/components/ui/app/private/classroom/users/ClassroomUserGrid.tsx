@@ -89,7 +89,7 @@ function JoinRequestItem({
       <div className={"w-fit flex flex-row gap-5 items-center"}>
         <Avatar id={request.id} displayName={request.displayName} />
         <Link
-          href={"/profile" + request.id}
+          href={"/apps/web/components/ui/app/shared/profile" + request.id}
           className={"dark:text-white hover:underline text-studodarkblue"}
         >
           {" "}
@@ -125,7 +125,7 @@ function JoinRequestItem({
 function UserItem({ t, user }: UserItemProps) {
   return (
     <Link
-      href={"/profile" + user.user_id}
+      href={"/apps/web/components/ui/app/shared/profile" + user.user_id}
       className={`max-h-15 min-h-15 flex-col sm:flex-row px-3 py-4 sm:py-0 max-w-full min-w-full cursor-pointer
                  flex gap-3 items-center w-full rounded-full bg-studogrey/30 border border-studoborder/30 
                  hover:border-studoborder transition-all duration-300 overflow-hidden`}

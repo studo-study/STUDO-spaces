@@ -6,7 +6,7 @@ import { IoShuffleOutline } from "react-icons/io5";
 import { RxEnterFullScreen } from "react-icons/rx";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import ProgressBar from "@/components/ui/app/public/profile/(modes)/learn/progressbar";
+import ProgressBar from "@/components/ui/app/shared/profile/(modes)/learn/progressbar";
 import { TbClick } from "react-icons/tb";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import katex from "katex";

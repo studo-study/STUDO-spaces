@@ -5,18 +5,20 @@ import { SetSearchResult } from "@studo/types";
 import { useSearchResult } from "@/hooks/app/search/useSearchResult";
 import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/routing";
+import NoResult from "@/components/ui/app/shared/search/noresult";
 
-export default function AllSets() {
+export default function All_sets() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const result = useSearchResult(query ?? "").data;
-  const sets = result && result.data[0].data.slice(0, 3);
+  const sets = result && result.data[0].data;
   const empty = sets && sets.length === 0;
   const t = useTranslations("landing.search_result.set");
+
+  if (empty) return <NoResult />;
+
   return (
-    <div
-      className={`w-full h-full flex flex-col gap-5 ${empty ? "hidden" : "flex"}`}
-    >
+    <div className={"w-full h-full flex flex-col gap-5"}>
       <div className={"w-full min-h-30 h-fit grid grid-cols-4 gap-5"}>
         {result &&
           sets?.map((item: SetSearchResult, i: number) => (
@@ -71,7 +73,7 @@ function SetResult({ item, t }: SetResultProps) {
         </span>
       </div>
       <Link
-        href={"/profile/" + item.owner_id}
+        href={"/apps/web/components/ui/app/shared/profile" + item.owner_id}
         className={"w-full h-fit group flex flex-row gap-2 items-center"}
       >
         <Image

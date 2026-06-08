@@ -1,10 +1,10 @@
 "use client";
 import { ReactNode } from "react";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
-import SearchHeader from "@/components/ui/app/public/marketing/search/searchheader";
+import SearchHeader from "@/components/ui/app/shared/search/searchheader";
 import { useSearchParams } from "next/navigation";
 import { useSearchResult } from "@/hooks/app/search/useSearchResult";
-import NoResult from "@/components/ui/app/public/marketing/search/noresult";
+import NoResult from "@/components/ui/app/shared/search/noresult";
 
 export default function SearchResultLayout({
   children,

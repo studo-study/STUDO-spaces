@@ -1,12 +1,12 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import SearchHeader from "@/components/ui/app/public/marketing/search/searchheader";
-import SearchResultClassroom from "@/components/ui/app/public/marketing/search/classrooms/searchresult_classroom";
-import SearchResultSets from "@/components/ui/app/public/marketing/search/sets/searchresult_sets";
-import SearchResultUsers from "@/components/ui/app/public/marketing/search/users/searchresult_users";
-import SearchResultStudo from "@/components/ui/app/public/marketing/search/studo/searchresult_studo";
-import NoResult from "@/components/ui/app/public/marketing/search/noresult";
+import SearchHeader from "@/components/ui/app/shared/search/searchheader";
+import SearchResultClassroom from "@/components/ui/app/shared/search/classrooms/searchresult_classroom";
+import SearchResultSets from "@/components/ui/app/shared/search/sets/searchresult_sets";
+import SearchResultUsers from "@/components/ui/app/shared/search/users/searchresult_users";
+import SearchResultStudo from "@/components/ui/app/shared/search/studo/searchresult_studo";
+import NoResult from "@/components/ui/app/shared/search/noresult";
 import { useSearchResult } from "@/hooks/app/search/useSearchResult";
 
 interface SearchResults {
@@ -38,8 +38,8 @@ export default function SearchResults() {
     <div className={"flex flex-col justify-center items-center gap-5"}>
       {result && <SearchResultStudo />}
       {result && <SearchResultSets />}
-      {result && <SearchResultUsers result={result} />}
-      {result && <SearchResultClassroom result={result} />}
+      {result && <SearchResultUsers />}
+      {result && <SearchResultClassroom />}
     </div>
   );
 }

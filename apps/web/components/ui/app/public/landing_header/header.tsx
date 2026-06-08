@@ -4,11 +4,11 @@ import { Link, usePathname } from "@/i18n/routing";
 
 import { useLocale, useTranslations } from "next-intl";
 import { FiMenu, FiX } from "react-icons/fi";
-import TriggerTools from "@/components/ui/app/public/marketing/landing_header/dropdowntools";
-import TriggerMethods from "@/components/ui/app/public/marketing/landing_header/dropdownmethods";
+import TriggerTools from "@/components/ui/app/public/landing_header/dropdowntools";
+import TriggerMethods from "@/components/ui/app/public/landing_header/dropdownmethods";
 import Image from "next/image";
-import TriggerClassrooms from "@/components/ui/app/public/marketing/landing_header/dropdownclassrooms";
-import Searchbar from "@/components/ui/app/public/marketing/landing_header/searchbar";
+import TriggerClassrooms from "@/components/ui/app/public/landing_header/dropdownclassrooms";
+import Searchbar from "@/components/ui/app/public/landing_header/searchbar";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import { useLoadingStore } from "@/store/slices/loading/loadingStore";
 

@@ -82,7 +82,7 @@ function SetResult({ item, t }: SetResultProps) {
         </span>
       </div>
       <Link
-        href={"/profile/" + item.owner_id}
+        href={"/apps/web/components/ui/app/shared/profile" + item.owner_id}
         className={"w-full h-fit group flex flex-row gap-2 items-center"}
       >
         <Image

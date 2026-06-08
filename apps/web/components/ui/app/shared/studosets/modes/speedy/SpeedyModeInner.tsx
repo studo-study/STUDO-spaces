@@ -5,15 +5,15 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { IoArrowBackOutline } from "react-icons/io5";
-import ProgressBar from "@/components/ui/app/public/profile/(modes)/learn/progressbar";
-import WordTimer from "@/components/ui/app/shared/modes/speedy/WordTimer";
-import SpeedyInput from "@/components/ui/app/shared/modes/speedy/SpeedyInput";
-import StartModal from "@/components/ui/app/shared/modes/speedy/StartModal";
+import ProgressBar from "@/components/ui/app/shared/profile/(modes)/learn/progressbar";
+import WordTimer from "@/components/ui/app/shared/studosets/modes/speedy/WordTimer";
+import SpeedyInput from "@/components/ui/app/shared/studosets/modes/speedy/SpeedyInput";
+import StartModal from "@/components/ui/app/shared/studosets/modes/speedy/StartModal";
 import { IoIosPause } from "react-icons/io";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { useTranslations } from "next-intl";
 import { SpeedyProvider, useSpeedyContext } from "./SpeedyContext";
-import PauseModal from "@/components/ui/app/shared/modes/speedy/PauseModal";
+import PauseModal from "@/components/ui/app/shared/studosets/modes/speedy/PauseModal";
 
 interface SpeedyModeInnerProps {
   id: string;

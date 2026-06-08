@@ -1,60 +1,53 @@
+"use client";
 import { useTranslations } from "next-intl";
-import { FaAngleRight } from "react-icons/fa6";
 import Image from "next/image";
 import { IoSchoolOutline } from "react-icons/io5";
 import { FaUniversity, FaUserFriends } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
 import { Link } from "@/i18n/routing";
-import { ClassroomSearchResult, SearchResults } from "@studo/types";
+import { ClassroomSearchResult } from "@studo/types";
+import { useSearchParams } from "next/navigation";
+import { useSearchResult } from "@/hooks/app/search/useSearchResult";
+import NoResult from "@/components/ui/app/shared/search/noresult";
 
-interface ResultClassroomProps {
-  result: SearchResults;
-}
-export default function SearchResultClassroom({
-  result,
-}: ResultClassroomProps) {
-  const klassen = result && result.data[2].data.slice(0, 2);
-  const empty = klassen && klassen.length === 0;
+export default function AllClassrooms() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q");
+  const result = useSearchResult(query ?? "").data;
+  const classrooms = result && result.data[2].data;
+  const empty = classrooms && classrooms.length === 0;
   const t = useTranslations("landing.search_result.classroom");
+
+  if (empty) return <NoResult />;
+
   return (
-    <div
-      className={`w-full h-full flex flex-col gap-5 ${empty ? "hidden" : "flex"}`}
-    >
-      <div className={"w-full flex py-1 flex-row justify-between items-center"}>
-        <span className={"font-bold"}>{t("classroom")}</span>
-        <span
-          className={`flex ${result && klassen.length != 0 ? "flex" : "hidden"} flex-row items-center justify-end gap-2`}
-        >
-          {t("more")}
-          <FaAngleRight />
-        </span>
-      </div>
+    <div className={"w-full h-full flex flex-col gap-5"}>
       <div
         className={
           "w-full min-h-30 h-fit grid xl:grid-cols-3 grid-cols-2 gap-5"
         }
       >
         {result &&
-          klassen.map((item: ClassroomSearchResult, i: number) => (
-            <SetResult t={t} key={i} item={item} />
+          classrooms?.map((item: ClassroomSearchResult, i: number) => (
+            <ClassroomResult t={t} key={i} item={item} />
           ))}
       </div>
     </div>
   );
 }
 
-interface SetResultProps {
+interface ClassroomResultProps {
   item: ClassroomSearchResult;
   t: ReturnType<typeof useTranslations>;
 }
 
-function SetResult({ item, t }: SetResultProps) {
+function ClassroomResult({ item, t }: ClassroomResultProps) {
   const isColOrUn = item.type === "university" || item.type === "college";
   return (
     <Link
-      href={"/apps/web/components/ui/app/app/classroom/" + item.id}
-      className={`w-full min-h-40 rounded-2xl border-1  border-gray-300 dark:border-studogrey dark:bg-transparent 
-                 bg-studogrey/30 drop-shadow-4xl drop-shadow-4xl drop-shadow-black p-5 flex flex-col gap-2`}
+      href={"classroom/" + item.id}
+      className={`w-full min-h-40 rounded-2xl border-1 border-gray-300 dark:border-studogrey glass-rgb
+                drop-shadow-4xl drop-shadow-black p-5 flex flex-col gap-2`}
     >
       <div className={"w-full h-fit flex items-center justify-baseline gap-2"}>
         {getClassroomIcon(item.type)}

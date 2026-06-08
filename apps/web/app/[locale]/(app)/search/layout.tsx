@@ -1,5 +1,5 @@
 "use client";
-import SearchHeader from "@/components/ui/app/public/marketing/search/searchheader";
+import SearchHeader from "@/components/ui/app/shared/search/searchheader";
 import { useSearchParams } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { SearchResults } from "@studo/types";

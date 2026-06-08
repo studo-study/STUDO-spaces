@@ -1,4 +1,4 @@
-import HeroBackground from "@/components/ui/app/public/marketing/landing_welcome/hero_background";
+import HeroBackground from "@/components/ui/app/public/landing_welcome/hero_background";
 import { useTranslations } from "next-intl";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import Link from "next/link";

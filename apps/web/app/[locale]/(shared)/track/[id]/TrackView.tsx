@@ -3,8 +3,8 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import Tracks from "@/components/ui/app/public/track/Tracks";
-import Communities from "@/components/ui/app/public/track/Communities";
+import Tracks from "@/components/ui/app/shared/track/Tracks";
+import Communities from "@/components/ui/app/shared/track/Communities";
 import { StudoProfileResponse } from "@studo/types";
 
 export default function TrackView() {

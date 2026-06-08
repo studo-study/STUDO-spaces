@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Progress } from "@/components/ui/app/public/marketing/progress/progress";
+import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
 import { LastStudied } from "@/types/types";
 import { useTranslations } from "next-intl";
 import Image from "next/image";

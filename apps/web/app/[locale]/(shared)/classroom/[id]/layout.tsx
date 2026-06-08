@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
-import LandingHeader from "@/components/ui/app/public/marketing/landing_header/header";
-import LandingFooter from "@/components/ui/app/public/marketing/landing_footer/footer";
+import LandingHeader from "@/components/ui/app/public/landing_header/header";
+import LandingFooter from "@/components/ui/app/public/landing_footer/footer";
 import AppLayoutClient from "@/components/ui/app/private/AppLayoutClient";
 import { ReactNode } from "react";
 import PrivateClassroomHeader from "@/components/ui/app/private/classroom/PrivateClassroomHeader";

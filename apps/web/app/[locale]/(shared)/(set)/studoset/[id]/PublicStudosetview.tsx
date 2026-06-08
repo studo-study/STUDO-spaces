@@ -1,8 +1,8 @@
 "use client";
 import { Link } from "@/i18n/routing";
-import CardList from "@/components/ui/app/public/sets/studosets/CardList";
+import CardList from "@/components/ui/app/shared/studosets/CardList";
 import { FaRegHeart } from "react-icons/fa";
-import SharePopup from "@/components/ui/app/public/sets/studosets/sharepopup";
+import SharePopup from "@/components/ui/app/shared/studosets/sharepopup";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { useTranslations } from "next-intl";
@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePublicStudoset } from "@/hooks/app/sets/usePublicStudoset";
-import PublicFlashcardMode from "@/components/ui/app/shared/modes/flashcards/PublicFlashcardMode";
+import PublicFlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/PublicFlashcardMode";
 
 interface viewProps {
   id: string;

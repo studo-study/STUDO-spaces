@@ -1,33 +1,22 @@
 "use client";
-import { useTranslations } from "next-intl";
-import { FaAngleRight } from "react-icons/fa6";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { StudoProfileSearchResult } from "@studo/types";
 import { useSearchParams } from "next/navigation";
 import { useSearchResult } from "@/hooks/app/search/useSearchResult";
+import NoResult from "@/components/ui/app/shared/search/noresult";
 
-export default function SearchResultStudo() {
+export default function AllStudoResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const result = useSearchResult(query ?? "").data;
-  const users = result && result.data[3].data.slice(0, 4);
+  const users = result && result.data[3].data;
   const empty = users && users.length === 0;
-  const t = useTranslations("landing.search_result.studo");
+
+  if (empty) return <NoResult />;
+
   return (
-    <div
-      className={`w-full h-full flex flex-col gap-5 ${empty ? "hidden" : "flex"}`}
-    >
-      <div className={"w-full flex py-1 flex-row justify-between items-center"}>
-        <span className={"font-bold"}>{t("users")}</span>
-        <Link
-          href={"/search-result/sets?q=" + query}
-          className={`flex ${result && users?.length != 0 ? "flex" : "hidden"} cursor-pointer flex-row items-center justify-end gap-2`}
-        >
-          {t("more")}
-          <FaAngleRight />
-        </Link>
-      </div>
+    <div className={"w-full h-full flex flex-col gap-5"}>
       <div className={"w-full min-h-30 h-fit grid grid-cols-3 gap-5"}>
         {result &&
           users?.map((item: StudoProfileSearchResult, i: number) => (
@@ -43,7 +32,6 @@ interface SetResultProps {
 }
 
 function UserResult({ item }: SetResultProps) {
-  console.log("img_url:", JSON.stringify(item.img_url));
   return (
     <Link
       href={`/track/${item.id}`}

@@ -2,7 +2,7 @@
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useMemo } from "react";
 import { Card } from "@/types/types";
-import SpeedyModeInner from "@/components/ui/app/shared/modes/speedy/SpeedyModeInner";
+import SpeedyModeInner from "@/components/ui/app/shared/studosets/modes/speedy/SpeedyModeInner";
 
 interface SpeedyModeProps {
   id: string;

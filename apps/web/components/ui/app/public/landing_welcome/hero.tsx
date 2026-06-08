@@ -5,9 +5,9 @@ import { FaArrowDownLong, FaArrowRightLong } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
-import HeroBackground from "@/components/ui/app/public/marketing/landing_welcome/hero_background";
+import HeroBackground from "@/components/ui/app/public/landing_welcome/hero_background";
 import { Link } from "@/i18n/routing";
-import SearchSets from "@/components/ui/app/public/marketing/landing_welcome/search";
+import SearchSets from "@/components/ui/app/public/landing_welcome/search";
 import { useEffect, useState } from "react";
 
 const studyModes = [

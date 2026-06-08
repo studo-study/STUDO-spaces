@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { Card } from "@/types/types";
-import CardItem from "@/components/ui/app/public/sets/studosets/carditem";
+import CardItem from "@/components/ui/app/shared/studosets/carditem";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useTranslations } from "next-intl";
 import { MdEdit } from "react-icons/md";

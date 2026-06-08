@@ -1,5 +1,5 @@
 "use client";
-import ProfileHeader from "@/components/ui/app/public/profile/ProfileHeader";
+import ProfileHeader from "@/components/ui/app/shared/profile/ProfileHeader";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import { useProfile } from "@/hooks/app/profile/useProfiles";
 import { usePublicProfile } from "@/hooks/app/profile/usePublicProfile";
