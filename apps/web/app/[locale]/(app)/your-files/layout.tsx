@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import FileHeader from "@/components/ui/app/private/your-files/header";
-import NoResult from "@/components/ui/app/shared/search/noresult";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

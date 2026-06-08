@@ -17,14 +17,6 @@ const SimpleMenu = (props: SimpleMenuProps) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      requestAnimationFrame(() => setIsAnimated(true));
-    } else {
-      setIsAnimated(false);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (clickOutside) {
         clickOutside();
@@ -52,7 +44,19 @@ const SimpleMenu = (props: SimpleMenuProps) => {
 
   return (
     <div className={"relative w-fit h-fit"} ref={containerRef}>
-      <div onClick={() => setIsopen((prev) => !prev)}>{trigger}</div>
+      <div
+        onClick={() => {
+          const next = !isOpen;
+          setIsopen(next);
+          if (next) {
+            requestAnimationFrame(() => setIsAnimated(true));
+          } else {
+            setIsAnimated(false);
+          }
+        }}
+      >
+        {trigger}
+      </div>
       <div
         ref={popupRef}
         className={`absolute top-full right-0 mt-4

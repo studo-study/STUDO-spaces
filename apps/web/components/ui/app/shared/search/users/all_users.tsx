@@ -1,5 +1,4 @@
 "use client";
-import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { ProfileSearchResult } from "@studo/types";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";

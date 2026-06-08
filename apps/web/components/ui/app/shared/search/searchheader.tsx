@@ -1,7 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
-import { useSearchParams } from "next/navigation";
 
 const header = [
   { url: "/search-result", label: "all" },
