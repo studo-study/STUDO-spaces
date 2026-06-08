@@ -32,6 +32,7 @@ interface CardProps {
   termRef?: React.Ref<HTMLInputElement | null>;
   defRef?: React.Ref<HTMLInputElement | null>;
   onEnterDefinition?: () => void;
+  onShiftTabTerm?: () => void;
   image: SuggestionImage | null;
 }
 export default function CardItem({
@@ -49,6 +50,7 @@ export default function CardItem({
   termRef,
   defRef,
   onEnterDefinition,
+  onShiftTabTerm,
   image,
 }: CardProps) {
   const t = useTranslations("card");
@@ -102,9 +104,12 @@ export default function CardItem({
                 onChange={(value) => updateCard(id, "term", value)}
                 placeholder={t("Term")}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === "Tab" && !e.shiftKey) {
                     e.preventDefault();
                     focusRef(defRef);
+                  } else if (e.key === "Tab" && e.shiftKey) {
+                    e.preventDefault();
+                    onShiftTabTerm?.();
                   }
                 }}
               />
@@ -122,9 +127,12 @@ export default function CardItem({
                 onChange={(value) => updateCard(id, "definition", value)}
                 placeholder={t("Definition")}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === "Tab" && !e.shiftKey) {
                     e.preventDefault();
                     onEnterDefinition?.();
+                  } else if (e.key === "Tab" && e.shiftKey) {
+                    e.preventDefault();
+                    focusRef(termRef);
                   }
                 }}
               />

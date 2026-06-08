@@ -124,7 +124,7 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
 
     return (
       <div className={"w-full h-fit flex flex-col gap-1"}>
-        <div className="relative min-h-10 w-full max-w-full flex-1 items-center flex">
+        <div className="relative min-h-10 w-full max-w-full flex-1 items-stretch flex">
           {showLatexPreview ? (
             <div
               className={
@@ -137,7 +137,7 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
           ) : showCodePreview ? (
             <div
               className={
-                "text-xs w-full rounded-full h-10.5 border border-studoborder/30 overflow-hidden px-1 overflow-x-scroll scroll-hidden dark:invert cursor-pointer [&>pre]:p-3 [&>pre]:rounded-xl [&>pre]:text-xs [&>pre]:!bg-transparent"
+                "text-xs w-full rounded-3xl min-h-10 border border-studoborder/30 overflow-hidden px-1 overflow-x-auto scroll-hidden dark:invert cursor-pointer [&>pre]:p-3 [&>pre]:rounded-xl [&>pre]:text-xs [&>pre]:!bg-transparent [&>pre]:whitespace-pre-wrap"
               }
               onClick={() => {
                 isTypingRef.current = true;
@@ -147,6 +147,7 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
             />
           ) : (
             <InputField
+              textarea
               ref={ref}
               variant="cardInput"
               value={value}

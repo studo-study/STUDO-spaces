@@ -326,10 +326,15 @@ const CodeBlock = ({ value, lang }: { value: string; lang: string }) => {
       .catch(() => codeToHtml(value, { lang: "text", theme }))
       .then(setHtml);
   }, [value, lang]);
-  if (!html) return <span className="font-mono text-sm">{value}</span>;
+  if (!html)
+    return (
+      <span className="font-mono text-sm whitespace-pre-wrap break-words">
+        {value}
+      </span>
+    );
   return (
     <div
-      className="text-xl w-full overflow-auto [&>pre]:!bg-transparent [&>pre]:p-0 [&>pre]:font-mono"
+      className="text-sm w-full [&>pre]:!bg-transparent [&>pre]:p-0 [&>pre]:font-mono [&>pre]:!whitespace-pre-wrap [&>pre]:!break-words [&>pre_span]:!whitespace-pre-wrap"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

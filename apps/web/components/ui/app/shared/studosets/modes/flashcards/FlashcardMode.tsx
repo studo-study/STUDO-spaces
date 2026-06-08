@@ -398,7 +398,7 @@ function Card({ card, termMode, onLearnt }: CardProps) {
               className={`flex h-full items-center justify-center ${card.suggestion_image ? "w-1/2" : "w-full"}`}
             >
               {termMode ? (
-                <span className="text-xl select-none font-bold font-georgia">
+                <span className="text-xl scroll-hidden max-w-full select-none font-bold font-georgia">
                   {card.term_content_type === "latex" ? (
                     <SafeKaTeX value={card.term} fallback={card.term} />
                   ) : card.term_content_type === "code" ? (
@@ -428,32 +428,34 @@ function Card({ card, termMode, onLearnt }: CardProps) {
         </div>
         <div
           className={
-            "side-b backface-hidden top-0 left-0 absolute px-10 w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
+            "side-b backface-hidden  top-0 left-0 absolute px-10 w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
           }
         >
-          {termMode ? (
-            <span className="block text-base sm:text-lg md:text-xl text-center text-balance leading-relaxed select-none px-4">
-              {card.definition}
+          <div>
+            {termMode ? (
+              <span className="block  text-base sm:text-lg md:text-xl text-center text-balance leading-relaxed select-none px-4">
+                {card.definition}
+              </span>
+            ) : (
+              <span className="text-xl select-none font-bold font-georgia scroll-hidden max-w-full overflow-hidden">
+                {card.term_content_type === "latex" ? (
+                  <SafeKaTeX value={card.term} fallback={card.term} />
+                ) : card.term_content_type === "code" ? (
+                  <CodeBlock value={card.term} lang={card.code_language} />
+                ) : (
+                  card.term
+                )}
+              </span>
+            )}
+            <span
+              className={
+                "absolute bottom-3 left-1/2 -translate-1/2 flex flex-row gap-1 items-center opacity-30"
+              }
+            >
+              <TbClick />
+              {t("click_flip_back")}
             </span>
-          ) : (
-            <span className="text-xl select-none font-bold font-georgia">
-              {card.term_content_type === "latex" ? (
-                <SafeKaTeX value={card.term} fallback={card.term} />
-              ) : card.term_content_type === "code" ? (
-                <CodeBlock value={card.term} lang={card.code_language} />
-              ) : (
-                card.term
-              )}
-            </span>
-          )}
-          <span
-            className={
-              "absolute bottom-3 left-1/2 -translate-1/2 flex flex-row gap-1 items-center opacity-30"
-            }
-          >
-            <TbClick />
-            {t("click_flip_back")}
-          </span>
+          </div>
         </div>
       </div>
     </div>
@@ -494,8 +496,8 @@ const CodeBlock = ({ value, lang }: { value: string; lang: string }) => {
   }, [value, lang]);
   if (!html) return <span className="font-mono text-sm">{value}</span>;
   return (
-    <div
-      className="text-xl w-full overflow-auto [&>pre]:!bg-transparent [&>pre]:p-0 [&>pre]:font-mono"
+    <p
+      className="text-lg px-5 flex-1 max-w-full scroll-hidden overflow-auto [&>pre]:bg-transparent! [&>pre]:p-0 [&>pre]:font-mono [&>pre]:!whitespace-pre-wrap [&>pre]:wrap-break-word! [&>pre_span]:whitespace-pre-wrap!"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
