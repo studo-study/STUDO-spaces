@@ -9,9 +9,6 @@ const withBundleAnalyzer = createBundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    root: path.join(__dirname, "../.."),
-  },
   outputFileTracingRoot: path.join(__dirname, "../.."),
   experimental: {
     optimizePackageImports: [
@@ -56,6 +53,25 @@ const nextConfig: NextConfig = {
   },
   compiler: {
     //removeConsole: process.env.NODE_ENV === "production",
+  },
+  webpack: (config, { dev }: { dev: boolean }) => {
+    if (dev) {
+      config.watchOptions = {
+        ignored: [
+          "**/node_modules/**",
+          "**/.pnpm/**",
+          "**/.git/**",
+          "**/.next/**",
+          "**/apps/api-node/**",
+          "**/apps/mobile/**",
+          "**/apps/legacy/**",
+          "**/packages/*/node_modules/**",
+        ],
+        aggregateTimeout: 300,
+        poll: false,
+      };
+    }
+    return config;
   },
 };
 

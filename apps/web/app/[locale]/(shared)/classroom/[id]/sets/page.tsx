@@ -1,4 +1,4 @@
-import RecentlyAdded from "@/components/ui/app/classroom/sets/RecentlyAdded";
+import RecentlyAdded from "@/components/ui/app/private/classroom/sets/RecentlyAdded";
 import { mockFullClassrooms } from "@/data/mocks/classroomsMock";
 
 export default function ClassroomSetsPage() {

@@ -1,6 +1,6 @@
-import Hero from "@/components/ui/marketing/landing_welcome/hero";
-import Info from "@/components/ui/marketing/landing_welcome/info";
-import Stats from "@/components/ui/marketing/landing_welcome/stats";
+import Hero from "@/components/ui/app/public/landing_welcome/hero";
+import Info from "@/components/ui/app/public/landing_welcome/info";
+import Stats from "@/components/ui/app/public/landing_welcome/stats";
 import { getLocale } from "next-intl/server";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";

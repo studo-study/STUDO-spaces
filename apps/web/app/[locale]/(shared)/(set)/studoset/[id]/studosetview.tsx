@@ -2,14 +2,14 @@
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
-import CardList from "@/components/ui/public/sets/studosets/CardList";
-import { Progress } from "@/components/ui/marketing/progress/progress";
+import CardList from "@/components/ui/app/shared/studosets/CardList";
+import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
 import { IoFolderOpenOutline } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import SavedPopup from "@/components/ui/public/sets/studosets/savedpopup";
-import ClassroomPopup from "@/components/ui/public/sets/studosets/classroompopup";
-import SharePopup from "@/components/ui/public/sets/studosets/sharepopup";
-import SettingsPopup from "@/components/ui/public/sets/studosets/settingspopup";
+import SavedPopup from "@/components/ui/app/shared/studosets/savedpopup";
+import ClassroomPopup from "@/components/ui/app/shared/studosets/classroompopup";
+import SharePopup from "@/components/ui/app/shared/studosets/sharepopup";
+import SettingsPopup from "@/components/ui/app/shared/studosets/settingspopup";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
@@ -17,13 +17,15 @@ import { useTranslations } from "next-intl";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useSplash } from "@/components/providers/app/SplashProvider";
+import { useToast } from "@/components/providers/app/ToastProvider";
+import { useRouter } from "next/navigation";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import FlashcardMode from "@/components/ui/shared/modes/flashcards/FlashcardMode";
+import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
 import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
 import { useInView } from "react-intersection-observer";
-import JumpToBottom from "@/components/ui/app/create-studoset/JumpToBottom";
-import EditToggle from "@/components/ui/public/sets/studosets/EditToggle";
+import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBottom";
+import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
 
 interface viewProps {
   id: string;
@@ -35,7 +37,9 @@ export default function StudosetView({ id }: viewProps) {
   const t = useTranslations("studoset");
   const userId = useUser().user?.id;
   const { setLoaded } = useSplash();
-  const { data, isPlaceholderData } = useStudoset(id);
+  const toast = useToast();
+  const router = useRouter();
+  const { data, isPlaceholderData, isError, error } = useStudoset(id);
   const [tab, setTab] = useState<Tab>("all");
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLDivElement>(null);
@@ -58,6 +62,15 @@ export default function StudosetView({ id }: viewProps) {
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
+
+  useEffect(() => {
+    if (!isError) return;
+    setLoaded(true);
+    const is403 = (error as { status?: number })?.status === 403;
+    toast.error(is403 ? t("set_private") : t("cant_load"));
+    router.push("/home");
+  }, [error, isError, router, setLoaded, t, toast]);
+
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
   const liked = useMemo(

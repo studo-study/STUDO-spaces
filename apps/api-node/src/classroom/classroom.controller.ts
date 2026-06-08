@@ -123,7 +123,7 @@ export class ClassroomController {
   async getUsersFromClassroom(
     @Param('classroom_id', ParseUUIDPipe) classroom_id: string,
   ) {
-    return this.classService.getSetsById(classroom_id);
+    return this.classService.getUsersById(classroom_id);
   }
 
   //CREËEREN VAN CLASSROOM
@@ -233,9 +233,10 @@ export class ClassroomController {
   @Roles(Role.USER)
   @Delete(':classroom_id')
   async deleteClassroom(
+    @Request() req: AuthenticatedRequest,
     @Param('classroom_id', ParseUUIDPipe) classroom_id: string,
   ) {
-    return this.classService.deleteById(classroom_id);
+    return this.classService.deleteById(classroom_id, req.user.id);
   }
 
   //classroom_user verwijderen
@@ -268,9 +269,10 @@ export class ClassroomController {
   @Delete(':classroom_id/sets/:set_id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async removeSetClassroom(
+    @Request() req: AuthenticatedRequest,
     @Param('classroom_id', ParseUUIDPipe) classroom_id: string,
     @Param('set_id', ParseUUIDPipe) set_id: string,
   ) {
-    return this.classService.remove(classroom_id, set_id);
+    return this.classService.remove(classroom_id, set_id, req.user.id);
   }
 }

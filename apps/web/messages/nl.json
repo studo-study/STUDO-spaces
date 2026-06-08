@@ -1416,7 +1416,9 @@
     "edit": "bewerken",
     "all": "Alle",
     "ns": "Niet geleerd",
-    "edit_set": "bewerk set"
+    "edit_set": "bewerk set",
+    "set_private": "Studoset is privé",
+    "cant_load": "Set kan niet geladen worden"
   },
   "trackview": {
     "tracks": "Tracks",
@@ -1522,7 +1524,7 @@
     "settings": {
       "pop_title": "Instellingen",
       "reset_progress": "Reset vooruitgang",
-      "make_private": "Privéset",
+      "make_private": "Publieke set",
       "delete_set": "Verwijder set"
     }
   },
@@ -1535,7 +1537,11 @@
     "all_set": "De set is helemaal doorlopen!",
     "back": "terug naar set",
     "restart": "oefen nog eens",
-    "progress": "reset vooruigang"
+    "progress": "reset vooruigang",
+    "login_wall_title": "Meld je \bgratis\b aan om verder te gaan",
+    "login_wall_subtitle": "Maak een gratis account aan om de volledige set te bestuderen.",
+    "register_wall_cta": "Registreer",
+    "login_wall_cta": "Log in"
   },
   "speedy": {
     "modal_title": "Ben je er klaar voor?",

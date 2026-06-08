@@ -3,14 +3,14 @@ import { Metadata } from "next";
 import { auth } from "@/auth";
 import { getTranslations } from "next-intl/server";
 
-import CTABlock from "@/components/ui/app/home/CTABlock";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
-import JumpBackIn from "@/components/ui/app/home/jump-back-in/JumpBackIn";
-import QuickStats from "@/components/ui/app/home/quick_stats/QuickStats";
-import YourSets from "@/components/ui/app/home/YourSets/YourSets";
-import Courses from "@/components/ui/app/home/courses/Courses";
-import EmptyFallback from "@/components/ui/app/home/EmptyFallback/EmptyFallback";
-import Flow from "@/components/ui/app/home/flows/Flow";
+import CTABlock from "@/components/ui/app/private/home/CTABlock";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
+import JumpBackIn from "@/components/ui/app/private/home/jump-back-in/JumpBackIn";
+import QuickStats from "@/components/ui/app/private/home/quick_stats/QuickStats";
+import YourSets from "@/components/ui/app/private/home/YourSets/YourSets";
+import Courses from "@/components/ui/app/private/home/courses/Courses";
+import EmptyFallback from "@/components/ui/app/private/home/EmptyFallback/EmptyFallback";
+import Flow from "@/components/ui/app/private/home/flows/Flow";
 export const metadata: Metadata = {
   title: "Home | Studo",
 };

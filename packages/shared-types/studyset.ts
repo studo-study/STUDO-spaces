@@ -49,6 +49,14 @@ export interface FullStudysetResponse extends StudysetResponse {
   folders?: FolderResponse[];
 }
 
+export interface PublicStudysetResponse extends Omit<
+  StudysetResponse,
+  "folder_id"
+> {
+  cards: CardResponse[];
+  likes: SetLikeResponse[];
+}
+
 export interface StudysetListResponse {
   sets: StudysetResponse[];
 }

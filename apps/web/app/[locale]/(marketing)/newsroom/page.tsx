@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 
 export default function Page() {
   const t = useTranslations("landing.blog");

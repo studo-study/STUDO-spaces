@@ -37,6 +37,7 @@ interface LaTexInputProps {
   setContentType: (value: "text" | "latex" | "code") => void;
   codeLanguage?: string;
   onCodeLanguageChange?: (lang: string) => void;
+  isPublic?: boolean;
 }
 
 const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(

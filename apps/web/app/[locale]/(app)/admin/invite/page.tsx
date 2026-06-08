@@ -1,4 +1,4 @@
-import Invite from "@/components/ui/admin/Invite";
+import Invite from "@/components/ui/app/admin/Invite";
 
 export default function Page() {
   return (

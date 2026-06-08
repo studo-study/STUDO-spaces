@@ -43,7 +43,7 @@ import {
   users,
   visualsets,
 } from '../drizzle/schema';
-import { and, count, eq, inArray, sql } from 'drizzle-orm';
+import { and, count, eq, gte, inArray, sql } from 'drizzle-orm';
 import {
   SetCardImageDto,
   SuggestionImagesResponse,
@@ -84,7 +84,7 @@ export class StudysetService {
       global_definition_language: data.global_definition_language,
       created_at: date.toISOString(),
       last_updated: '',
-      public_set: false,
+      public_set: true,
       user_id: user_id,
       displayName: name.displayName,
       img_url: name.img_url,
@@ -210,6 +210,40 @@ export class StudysetService {
     };
   }
 
+  async getPublicById(
+    set_id: string,
+  ): Promise<
+    Omit<fullSetResponseDto, 'session' | 'folders' | 'classrooms' | 'folder_id'>
+  > {
+    const set = await this.db.query.studysets.findFirst({
+      where: and(eq(studysets.id, set_id), eq(studysets.public_set, true)),
+    });
+
+    if (!set) {
+      throw new NotFoundException('No public studoset with this id exists');
+    }
+
+    const kaarten = await this.db.query.cards.findMany({
+      where: eq(cards.set_id, set_id),
+      with: { suggestionImage: true },
+    });
+
+    const likes = await this.db.query.setlikes.findMany({
+      where: eq(setlikes.set_id, set_id),
+    });
+
+    return {
+      ...set,
+      cards: kaarten
+        .sort((a, b) => a.number - b.number)
+        .map(({ suggestionImage, ...card }) => ({
+          ...card,
+          suggestion_image: suggestionImage ?? null,
+        })) as unknown as CardResponseDto[],
+      likes,
+    };
+  }
+
   async getAll(): Promise<StudysetListResponseDto> {
     return { sets: await this.db.query.studysets.findMany() };
   }
@@ -260,9 +294,21 @@ export class StudysetService {
           })
         : [];
 
-    const userSessionCards = await this.db.query.sessioncards.findMany({
-      where: eq(sessioncards.owner_id, user_id),
-    });
+    const [totalCardsResult, learnedCardsResult] = await Promise.all([
+      this.db
+        .select({ count: count() })
+        .from(sessioncards)
+        .where(eq(sessioncards.owner_id, user_id)),
+      this.db
+        .select({ count: count() })
+        .from(sessioncards)
+        .where(
+          and(
+            eq(sessioncards.owner_id, user_id),
+            gte(sessioncards.card_viewcount, 2),
+          ),
+        ),
+    ]);
 
     const sets = allSets.map((set) => ({
       ...set,
@@ -336,9 +382,8 @@ export class StudysetService {
         (sum, s) => sum + s.duration_min,
         0,
       ),
-      totalCards: userSessionCards.length,
-      cardsLearned: userSessionCards.filter((c) => c.card_viewcount >= 2)
-        .length,
+      totalCards: totalCardsResult[0]?.count ?? 0,
+      cardsLearned: learnedCardsResult[0]?.count ?? 0,
     };
 
     return { sets, visualsets: visualsetsMapped, stats };
@@ -358,29 +403,29 @@ export class StudysetService {
       where: eq(classroomusers.user_id, user_id),
     });
 
-    const classes = [];
-    for (const u of classusers) {
-      const classroom = await this.db.query.classrooms.findFirst({
-        where: eq(classrooms.id, u.classroom_id),
-      });
-      if (classroom) {
-        classes.push(classroom);
-      }
-    }
+    const classroomIds = classusers.map((u) => u.classroom_id);
 
-    //sets zoeken
-    const setclasses = [];
-    for (const c of classes) {
-      const class_set = await this.db.query.classroomsets.findFirst({
-        where: and(
-          eq(classroomsets.set_id, set_id),
-          eq(classroomsets.classroom_id, c.id),
-        ),
-      });
-      if (class_set) {
-        setclasses.push(c);
-      }
-    }
+    const [classes, classroomSetsForThisSet] = await Promise.all([
+      classroomIds.length > 0
+        ? this.db.query.classrooms.findMany({
+            where: inArray(classrooms.id, classroomIds),
+          })
+        : Promise.resolve([] as (typeof classrooms.$inferSelect)[]),
+      classroomIds.length > 0
+        ? this.db.query.classroomsets.findMany({
+            where: and(
+              eq(classroomsets.set_id, set_id),
+              inArray(classroomsets.classroom_id, classroomIds),
+            ),
+          })
+        : Promise.resolve([] as (typeof classroomsets.$inferSelect)[]),
+    ]);
+
+    const classroomIdsWithSet = new Set(
+      classroomSetsForThisSet.map((cs) => cs.classroom_id),
+    );
+
+    const setclasses = classes.filter((c) => classroomIdsWithSet.has(c.id));
 
     // Get user's folders
     const foldrs = await this.db.query.folders.findMany({

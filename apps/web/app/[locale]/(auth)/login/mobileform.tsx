@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 
 export default function MobileForm() {
   const [open, setOpen] = useState(false);

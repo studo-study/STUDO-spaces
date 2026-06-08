@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -34,7 +35,7 @@ import {
   users,
   visualsets,
 } from '../drizzle/schema';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { ClassActivitiesDto } from '../user/users.dto';
 
 @Injectable()
@@ -204,7 +205,23 @@ export class ClassroomService {
     await this.db.insert(classroomactivities).values(newActivity);
     return newActivity;
   }
-  async remove(classroom_id: string, set: string): Promise<void> {
+  async remove(
+    classroom_id: string,
+    set: string,
+    user_id: string,
+  ): Promise<void> {
+    const classroom = await this.db.query.classrooms.findFirst({
+      where: eq(classrooms.id, classroom_id),
+    });
+
+    if (!classroom) {
+      throw new NotFoundException('No classroom with this id exists');
+    }
+
+    if (classroom.owner_id !== user_id) {
+      throw new ForbiddenException('You do not own this classroom');
+    }
+
     const result = await this.db
       .delete(classroomsets)
       .where(
@@ -238,34 +255,61 @@ export class ClassroomService {
   }
 
   async leave(user_id: string, classroom_id: string): Promise<void> {
-    const user = await this.db.query.classroomusers.findFirst({
-      where: and(
-        eq(classroomusers.classroom_id, classroom_id),
-        eq(classroomusers.user_id, user_id),
-      ),
-    });
+    await this.db.transaction(async (tx) => {
+      const user = await tx.query.classroomusers.findFirst({
+        where: and(
+          eq(classroomusers.classroom_id, classroom_id),
+          eq(classroomusers.user_id, user_id),
+        ),
+      });
 
-    if (!user) {
-      throw new NotFoundException('No user with this id exists');
-    }
-
-    if (user.role === 'owner') {
-      const users = (await this.getUsersById(classroom_id)).sort(
-        (a, b) =>
-          new Date(a.joined_at).getTime() - new Date(b.joined_at).getTime(),
-      );
-
-      if (users.length < 2) {
-        throw new BadRequestException('Cannot leave: you are the only member');
+      if (!user) {
+        throw new NotFoundException('No user with this id exists');
       }
 
-      await this.promoteUser(classroom_id, users[1].user_id);
-    }
+      if (user.role === 'owner') {
+        const members = await tx.query.classroomusers.findMany({
+          where: eq(classroomusers.classroom_id, classroom_id),
+        });
 
-    await this.db
-      .delete(classroomusers)
-      .where(eq(classroomusers.user_id, user_id))
-      .returning();
+        if (members.length < 2) {
+          throw new BadRequestException(
+            'Cannot leave: you are the only member',
+          );
+        }
+
+        const nextOwner = members
+          .filter((m) => m.user_id !== user_id)
+          .sort(
+            (a, b) =>
+              new Date(a.joined_at).getTime() - new Date(b.joined_at).getTime(),
+          )[0];
+
+        await tx
+          .update(classroomusers)
+          .set({ role: 'owner' })
+          .where(
+            and(
+              eq(classroomusers.classroom_id, classroom_id),
+              eq(classroomusers.user_id, nextOwner.user_id),
+            ),
+          );
+
+        await tx
+          .update(classrooms)
+          .set({ owner_id: nextOwner.user_id })
+          .where(eq(classrooms.id, classroom_id));
+      }
+
+      await tx
+        .delete(classroomusers)
+        .where(
+          and(
+            eq(classroomusers.user_id, user_id),
+            eq(classroomusers.classroom_id, classroom_id),
+          ),
+        );
+    });
   }
 
   async getAll(): Promise<ClassroomListResponseDto> {
@@ -309,54 +353,54 @@ export class ClassroomService {
       where: eq(classroomsets.classroom_id, id),
     });
 
+    if (classRoomSets.length === 0) return [];
+
+    const userIds = [...new Set(classRoomSets.map((cs) => cs.added_by))];
+    const studysetIds = classRoomSets
+      .filter((cs) => cs.set_type === 'studyset')
+      .map((cs) => cs.set_id);
+    const visualsetIds = classRoomSets
+      .filter((cs) => cs.set_type === 'visualset')
+      .map((cs) => cs.set_id);
+
+    const [usersMap, studysetsMap, visualsetsMap] = await Promise.all([
+      this.db.query.users
+        .findMany({ where: inArray(users.id, userIds) })
+        .then((rows) => new Map(rows.map((u) => [u.id, u]))),
+      studysetIds.length > 0
+        ? this.db.query.studysets
+            .findMany({ where: inArray(studysets.id, studysetIds) })
+            .then((rows) => new Map(rows.map((s) => [s.id, s])))
+        : Promise.resolve(new Map()),
+      visualsetIds.length > 0
+        ? this.db.query.visualsets
+            .findMany({ where: inArray(visualsets.id, visualsetIds) })
+            .then((rows) => new Map(rows.map((vs) => [vs.id, vs])))
+        : Promise.resolve(new Map()),
+    ]);
+
     const lijst: FullClassroomSetDto[] = [];
 
     for (const classroomset of classRoomSets) {
-      // Check of de gebruiker bestaat
-      const user = await this.db.query.users.findFirst({
-        where: eq(users.id, classroomset.added_by),
-      });
+      const user = usersMap.get(classroomset.added_by);
+      if (!user) continue;
 
-      if (!user) {
-        continue; // Skip deze set in plaats van error throwen
-      }
+      const set =
+        classroomset.set_type === 'studyset'
+          ? studysetsMap.get(classroomset.set_id)
+          : visualsetsMap.get(classroomset.set_id);
 
-      if (classroomset.set_type === 'studyset') {
-        const set = await this.db.query.studysets.findFirst({
-          where: eq(studysets.id, classroomset.set_id),
+      if (set) {
+        lijst.push({
+          set_id: classroomset.set_id,
+          set_type: classroomset.set_type,
+          classroom_id: classroomset.classroom_id,
+          owner: set.user_id,
+          course: set.course,
+          created_at: set.created_at,
+          title: set.title,
+          added_by: user.displayName,
         });
-
-        if (set) {
-          lijst.push({
-            set_id: classroomset.set_id,
-            set_type: classroomset.set_type,
-            classroom_id: classroomset.classroom_id,
-            owner: set.user_id,
-            course: set.course,
-            created_at: set.created_at,
-            title: set.title,
-            added_by: user.displayName,
-          });
-        }
-      }
-
-      if (classroomset.set_type === 'visualset') {
-        const set = await this.db.query.visualsets.findFirst({
-          where: eq(visualsets.id, classroomset.set_id),
-        });
-
-        if (set) {
-          lijst.push({
-            set_id: classroomset.set_id,
-            set_type: classroomset.set_type,
-            classroom_id: classroomset.classroom_id,
-            owner: set.user_id,
-            course: set.course,
-            created_at: set.created_at,
-            title: set.title,
-            added_by: user.displayName,
-          });
-        }
       }
     }
 
@@ -368,15 +412,19 @@ export class ClassroomService {
       where: eq(classroomusers.classroom_id, id),
     });
 
-    const lijst: ClassroomUserDto[] = [];
+    if (ClassroomUsers.length === 0) return [];
 
-    for (const User of ClassroomUsers) {
-      const u = await this.db.query.profiles.findFirst({
-        where: eq(profiles.user_id, User.user_id),
-      });
+    const userIds = ClassroomUsers.map((u) => u.user_id);
+    const profileRows = await this.db.query.profiles.findMany({
+      where: inArray(profiles.user_id, userIds),
+    });
+    const profileMap = new Map(profileRows.map((p) => [p.user_id, p]));
 
-      if (u) {
-        lijst.push({
+    return ClassroomUsers.flatMap((User) => {
+      const u = profileMap.get(User.user_id);
+      if (!u) return [];
+      return [
+        {
           user_id: User.user_id,
           classroom_id: User.classroom_id,
           role: User.role,
@@ -386,10 +434,9 @@ export class ClassroomService {
           verified: u.verified,
           img_url: u.img_url,
           position: 0,
-        });
-      }
-    }
-    return lijst;
+        },
+      ];
+    });
   }
 
   async getActivity(id: string): Promise<ClassActivitiesDto[]> {
@@ -437,14 +484,19 @@ export class ClassroomService {
     }
   }
 
-  async deleteById(id: string) {
-    const result = await this.db
-      .delete(classrooms)
-      .where(eq(classrooms.id, id))
-      .returning();
+  async deleteById(id: string, user_id: string) {
+    const classroom = await this.db.query.classrooms.findFirst({
+      where: eq(classrooms.id, id),
+    });
 
-    if (result.length === 0) {
+    if (!classroom) {
       throw new NotFoundException('No classroom with this id exists');
     }
+
+    if (classroom.owner_id !== user_id) {
+      throw new ForbiddenException('You do not own this classroom');
+    }
+
+    await this.db.delete(classrooms).where(eq(classrooms.id, id));
   }
 }

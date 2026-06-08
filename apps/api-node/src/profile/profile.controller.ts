@@ -72,6 +72,6 @@ export class ProfileController {
   async getPublicProfileById(
     @Param('profile_id', ParseUUIDPipe) profile_id: string,
   ): Promise<ProfileResponseDto> {
-    return this.profileService.getById(profile_id);
+    return this.profileService.getPublicById(profile_id);
   }
 }

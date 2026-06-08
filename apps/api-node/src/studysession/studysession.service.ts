@@ -147,10 +147,7 @@ export class StudysessionService {
             owner_id: pin.owner_id,
           })
           .where(
-            and(
-              eq(sessioncards.id, pin.id),
-              eq(sessioncards.owner_id, user_id),
-            ),
+            and(eq(sessionpins.id, pin.id), eq(sessionpins.owner_id, user_id)),
           )
           .returning();
         if (updatePin.length === 0) {

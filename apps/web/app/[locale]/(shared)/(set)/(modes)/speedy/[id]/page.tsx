@@ -1,6 +1,6 @@
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
-import SpeedyMode from "@/components/ui/shared/modes/speedy/SpeedyMode";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
+import SpeedyMode from "@/components/ui/app/shared/studosets/modes/speedy/SpeedyMode";
 
 export default async function SpeedyPage({
   params,

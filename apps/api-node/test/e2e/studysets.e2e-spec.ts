@@ -230,7 +230,7 @@ describe('Studysets', () => {
       expect(response.body).toHaveProperty('course', 'Test Course');
       expect(response.body).toHaveProperty('user_id', userId2);
       expect(response.body).toHaveProperty('folder_id', folderId2);
-      expect(response.body.public_set).toBe(false);
+      expect(response.body.public_set).toBe(true);
 
       // Cleanup - delete the created set
       if (response.body.id) {

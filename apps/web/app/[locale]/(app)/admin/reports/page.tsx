@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import TicketingGrid from "@/components/ui/app/admin/reports/TicketingGrid";
+import TicketingGrid from "@/components/ui/app/private/admin/reports/TicketingGrid";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard | Studo",

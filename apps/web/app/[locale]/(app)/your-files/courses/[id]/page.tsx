@@ -1,4 +1,4 @@
-import CourseSets from "@/components/ui/app/your-files/courses/page/CourseSets";
+import CourseSets from "@/components/ui/app/private/your-files/courses/page/CourseSets";
 
 export default async function CoursePage({
   params,

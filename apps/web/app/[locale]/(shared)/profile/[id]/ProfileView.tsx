@@ -1,7 +1,8 @@
 "use client";
-import ProfileHeader from "@/components/ui/public/profile/ProfileHeader";
+import ProfileHeader from "@/components/ui/app/shared/profile/ProfileHeader";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import { useProfile } from "@/hooks/app/profile/useProfiles";
+import { usePublicProfile } from "@/hooks/app/profile/usePublicProfile";
 import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -11,17 +12,20 @@ import { StudysetResponse, VisualsetResponse } from "@studo/types";
 
 interface viewProps {
   id: string;
+  isPublic?: boolean;
 }
 
 type Tab = "ss" | "vs";
 
-export default function ProfileView({ id }: viewProps) {
-  const profile = useProfile(id)?.data;
+export default function ProfileView({ id, isPublic = false }: viewProps) {
+  const authenticatedResult = useProfile(id);
+  const publicResult = usePublicProfile(id);
+  const profile = (isPublic ? publicResult : authenticatedResult)?.data;
   const t = useTranslations("profile");
   const [tab, setTab] = useState<Tab>("ss");
-  console.log(profile);
+
   if (!profile) return null;
-  console.log(profile);
+
   return (
     <PageContainer>
       <ProfileHeader profile={profile} />

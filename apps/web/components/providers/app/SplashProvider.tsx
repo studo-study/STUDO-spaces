@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/providers/app/ToastProvider";
-import Splash from "@/components/ui/overige/ui/Splash";
+import Splash from "@/components/ui/overige/effects/Splash";
 
 type SplashContextValue = {
   isLoaded: boolean;

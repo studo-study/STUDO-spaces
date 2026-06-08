@@ -13,7 +13,7 @@ export const drizzleProvider = [
     inject: [ConfigService],
     useFactory: (configService: ConfigService<ServerConfig>) => {
       const databaseConfig = configService.get<DatabaseConfig>('database')!;
-      const client = postgres(databaseConfig.url, { max: 5 });
+      const client = postgres(databaseConfig.url, { max: 30 });
       return drizzle(client, { schema }) as PostgresJsDatabase<typeof schema>;
     },
   },

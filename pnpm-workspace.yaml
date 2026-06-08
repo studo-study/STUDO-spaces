@@ -3,11 +3,11 @@ packages:
   - "apps/web"
   - "packages/*"
 allowBuilds:
-  '@firebase/util': false
-  '@nestjs/core': false
-  '@parcel/watcher': false
-  '@scarf/scarf': false
-  '@swc/core': false
+  "@firebase/util": false
+  "@nestjs/core": false
+  "@parcel/watcher": true
+  "@scarf/scarf": false
+  "@swc/core": false
   argon2: false
   core-js: false
   cpu-features: false

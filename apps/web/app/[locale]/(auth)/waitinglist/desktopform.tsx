@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import AnimateOnMount from "@/components/ui/overige/ui/AnimateOnMount";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase/firebase";
 

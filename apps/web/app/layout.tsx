@@ -1,7 +1,7 @@
 //app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import IcoSwitcher from "@/components/ui/overige/ui/IcoSwitcher";
+import IcoSwitcher from "@/components/ui/overige/effects/IcoSwitcher";
 import { Montserrat } from "next/font/google";
 import { ToastProvider } from "@/components/providers/app/ToastProvider";
 import { QueryClientProvider } from "@/components/providers/QueryClientProvider";

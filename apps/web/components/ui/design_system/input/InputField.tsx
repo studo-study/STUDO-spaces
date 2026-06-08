@@ -46,7 +46,6 @@ const InputField = (props: InputFieldProps) => {
           {...rest}
           className={`h-10 px-5 w-full
           relative outline-none
-
           ${error ? "border-b-rose-500" : ""}
           ${fontBold ? "font-bold" : ""}
           ${textSize ? `text-${textSize}` : ""}

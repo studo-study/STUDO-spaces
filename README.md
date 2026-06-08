@@ -80,8 +80,7 @@ Gemanaged met **pnpm workspaces** en **Turborepo**.
 
 - Node.js ≥ 20
 - pnpm ≥ 10
-- PostgreSQL
-- Docker _(optioneel, voor database)_
+- Docker
 
 ### Installatie
 
@@ -101,7 +100,7 @@ pnpm env:sync
 ### Docker
 
 ```bash
-# PostgreSQL container starten
+# PostgreSQL & Redis container starten
 docker compose up
 ```
 
@@ -199,7 +198,7 @@ docker compose -f docker-compose-backend.yml --profile seed up
 # aantal lijnen checken
 cloc . \
   --exclude-dir=node_modules,.next,dist,build,Pods \
-  --exclude-ext=json,svg,txt
+  --exclude-ext=json,svg,txt, yaml, swift, ASM, php
 ```
 
 ## Licentie

@@ -110,9 +110,10 @@ export class FolderController {
   @Delete('/:folder_id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteFolder(
+    @Request() req: AuthenticatedRequest,
     @Param('folder_id', ParseUUIDPipe) folder_id: string,
   ): Promise<void> {
-    return this.foldersService.deleteById(folder_id);
+    return this.foldersService.deleteById(folder_id, req.user.id);
   }
 
   // POST FOLDER --------------------------------------------------
