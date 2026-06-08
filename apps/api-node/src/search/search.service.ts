@@ -41,8 +41,6 @@ interface CacheEntry<T> {
   data: T;
 }
 
-type SearchResult = ReturnType<SearchService['buildResult']>;
-
 @Injectable()
 export class SearchService {
   constructor(
@@ -89,7 +87,7 @@ export class SearchService {
       if (!cached.stale) return cached.data;
 
       // Stale: serve immediately and revalidate in background.
-      this.backgroundRefresh(cacheKey, compute);
+      void this.backgroundRefresh(cacheKey, compute);
       return cached.data;
     }
 
@@ -124,12 +122,12 @@ export class SearchService {
     if (!acquired) return; // another instance is already refreshing
 
     // Fire-and-forget; errors are swallowed so stale data keeps being served.
-    compute()
+    void compute()
       .then((data) => this.writeCache(cacheKey, data))
       .catch(() => {
         /* stale data remains valid */
       })
-      .finally(() => this.releaseLock(lockKey));
+      .finally(() => void this.releaseLock(lockKey));
   }
 
   // ─── Redis primitives ─────────────────────────────────────────────────────────
@@ -156,8 +154,7 @@ export class SearchService {
   }
 
   private async acquireLock(key: string): Promise<boolean> {
-    // @ts-ignore
-    const result = await this.redis.set(key, '1', 'NX', 'PX', LOCK_TTL_MS);
+    const result = await this.redis.set(key, '1', 'PX', LOCK_TTL_MS, 'NX');
     return result === 'OK';
   }
 
