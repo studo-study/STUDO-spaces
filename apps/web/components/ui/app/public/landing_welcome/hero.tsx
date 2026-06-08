@@ -22,28 +22,28 @@ const studyModes = [
     to: "/tools/flashcards",
     label: "Flashcards",
     icon: "/icons/start/flashcards.svg",
-    color: "from-blue-400 to-blue-300",
+    color: "from-blue-500 to-blue-400",
     glow: "hover:shadow-blue-400/15",
   },
   {
     to: "/tools/speedy",
     label: "Speedy",
     icon: "/icons/start/speedy.svg",
-    color: "from-amber-400 to-orange-300",
+    color: "from-amber-500 to-orange-400",
     glow: "hover:shadow-amber-400/15",
   },
   {
     to: "/tools/identify",
     label: "Identify",
     icon: "/icons/start/point.svg",
-    color: "from-rose-400 to-red-300",
+    color: "from-rose-500 to-red-400",
     glow: "hover:shadow-rose-400/15",
   },
   {
     to: "/tools/point",
     label: "Point",
     icon: "/icons/start/hero-pin.svg",
-    color: "from-violet-400 to-purple-300",
+    color: "from-violet-500 to-purple-400",
     glow: "hover:shadow-violet-400/15",
   },
 ];
@@ -145,18 +145,27 @@ export default function Hero() {
             >
               <Link
                 href={item.to}
-                className={`group relative overflow-hidden rounded-3xl glass-card bg-gradient-to-br ${item.color} flex flex-col justify-between w-full md:min-h-90 xl:min-h-58 sm:min-w-full sm:h-64 md:w-52 md:h-72 lg:w-56 lg:h-80 hover:scale-105 hover:shadow-2xl ${item.glow} transition-all duration-700`}
+                className={`group relative overflow-hidden rounded-3xl flex flex-col justify-between w-full md:min-h-90 xl:min-h-58 sm:min-w-full sm:h-64 md:w-52 md:h-72 lg:w-56 lg:h-80 hover:scale-105 ${item.glow} transition-all  hover:shadow-2xl duration-700`}
               >
-                <span className="relative z-20 text-xl sm:text-2xl font-bold text-studodarkblue dark:text-white text-center pt-5 sm:pt-6 drop-shadow-sm">
-                  {t(item.label)}
-                </span>
-                <Image
-                  src={item.icon}
-                  alt=""
-                  width={200}
-                  height={200}
-                  className="relative z-20 w-full object-cover object-bottom"
+                <div
+                  className={`absolute z-5 flex-1 glass-card bg-linear-to-br ${item.color} w-full min-h-full `}
                 />
+                <div
+                  className={
+                    "absolute z-20 h-full w-full flex flex-col min-h-full justify-between"
+                  }
+                >
+                  <span className="relative z-20 text-xl sm:text-2xl font-bold text-studodarkblue dark:text-white text-center pt-5 sm:pt-6 drop-shadow-sm">
+                    {t(item.label)}
+                  </span>
+                  <Image
+                    src={item.icon}
+                    alt=""
+                    width={200}
+                    height={200}
+                    className="relative z-20 w-full object-cover object-bottom"
+                  />
+                </div>
               </Link>
             </AnimateOnMount>
           ))}

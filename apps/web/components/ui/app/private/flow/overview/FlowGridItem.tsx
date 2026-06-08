@@ -31,7 +31,7 @@ export default function FlowGridItem(props: FlowGridItemProps) {
     <div
       onClick={() => router.push(`/flow/${item.id}/overview`)}
       className={
-        "relative w-full flex flex-col cursor-pointer hover:border-studoborder transition-all h-50 p-5 rounded-3xl text-studodarkblue dark:text-white border border-studoborder/30 bg-studogrey/30"
+        "relative w-full flex flex-col cursor-pointer transition-all h-50 p-5 rounded-3xl text-studodarkblue dark:text-white studo-surface hover:brightness-110"
       }
     >
       <div className={"flex h-fit flex-row gap-5 items-center"}>

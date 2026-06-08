@@ -15,7 +15,7 @@ const FlowItem = (props: FlowItemProps) => {
     <Link
       href={"/flow/" + board.id + "/overview"}
       className={
-        "w-50 h-30 p-3 rounded-2xl flex flex-col gap-2 border border-studoborder/30 bg-studogrey/30 hover:border-studoborder transition-all duration-300"
+        "w-50 h-30 p-3 rounded-2xl flex flex-col gap-2 studo-surface hover:brightness-110 transition-all duration-300"
       }
     >
       <div className={"flex flex-row gap-3"}>

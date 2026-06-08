@@ -78,18 +78,6 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
         <div
           className={`flex overflow-visible flex-col w-full gap-6 ${isReverse ? "lg:order-2 items-end text-right" : "lg:order-1 items-start text-left"}`}
         >
-          <div className="inline-flex overflow-visible items-center gap-2">
-            <span
-              className={`w-8 h-8 rounded-full bg-gradient-to-r ${feature.color} flex items-center justify-center text-white font-bold text-sm`}
-              aria-hidden="true"
-            >
-              {index + 1}
-            </span>
-            <span className="text-xs uppercase tracking-wider text-studodarkblue/40 dark:text-white/40 font-medium">
-              {t("feature")} {index + 1}
-            </span>
-          </div>
-
           <h3
             id={`feature-title-${index}`}
             className="text-2xl w-full sm:text-3xl overflow-visible lg:text-4xl font-bold text-studodarkblue dark:text-white leading-tight"
