@@ -26,11 +26,11 @@ export default function DesktopForm() {
       <AnimateOnMount delay={100}>
         <div
           className={`w-3/5 xl:w-full h-full flex flex-row overflow-hidden
-                    rounded-4xl 3xl:h-fit 3xl:max-w-full 
+                    rounded-4xl 3xl:h-fit 3xl:max-w-full
                     shadow-2xl shadow-black/20
                     transition-all duration-700`}
         >
-          <div className="w-full backdrop-blur-2xl flex flex-col gap-10 justify-center px-12 py-15 relative overflow-hidden overflow-y-scroll scroll-hidden">
+          <div className="w-full liquid-glass flex flex-col gap-10 justify-center px-12 py-15 relative overflow-hidden overflow-y-scroll scroll-hidden">
             <div className="h-full justify-baseline relative gap-8 z-10 flex flex-col">
               <AnimateOnMount delay={200}>
                 <div className="flex flex-col gap-2 transition-all duration-500 delay-200">
@@ -59,11 +59,7 @@ export default function DesktopForm() {
                       {/* Email field */}
                       <div className="flex flex-col gap-1">
                         <div
-                          className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
-                                                    rounded-full text-sm sm:text-base border-0
-                                                    bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-                                                    border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-                                                    dark:text-white ${errors.email ? "ring-2 ring-red-400" : ""}`}
+                          className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white ${errors.email ? "ring-2 ring-red-400" : ""}`}
                         >
                           <input
                             type="email"
@@ -84,11 +80,7 @@ export default function DesktopForm() {
                       {/* Display name field */}
                       <div className="flex flex-col gap-1">
                         <div
-                          className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
-                                                    rounded-full text-sm sm:text-base border-0
-                                                    bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-                                                    border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-                                                    dark:text-white ${errors.displayName ? "ring-2 ring-red-400" : ""}`}
+                          className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white ${errors.displayName ? "ring-2 ring-red-400" : ""}`}
                         >
                           <input
                             type="text"
@@ -116,11 +108,7 @@ export default function DesktopForm() {
                       {/* Password field */}
                       <div className="flex flex-col gap-1">
                         <div
-                          className={`flex flex-row justify-between items-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
-                                                    rounded-full text-sm sm:text-base border-0
-                                                    bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-                                                    border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-                                                    dark:text-white overflow-hidden gap-2 ${errors.password ? "ring-2 ring-red-400" : ""}`}
+                          className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white items-center overflow-hidden gap-2 ${errors.password ? "ring-2 ring-red-400" : ""}`}
                         >
                           <input
                             type={open ? "text" : "password"}
@@ -154,11 +142,7 @@ export default function DesktopForm() {
                       {/* Confirm password field */}
                       <div className="flex flex-col gap-1">
                         <div
-                          className={`flex flex-row justify-between items-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
-                                                    rounded-full text-sm sm:text-base border-0
-                                                    bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-                                                    border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-                                                    dark:text-white overflow-hidden gap-2 ${errors.confirmPassword ? "ring-2 ring-red-400" : ""}`}
+                          className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white items-center overflow-hidden gap-2 ${errors.confirmPassword ? "ring-2 ring-red-400" : ""}`}
                         >
                           <input
                             type={open ? "text" : "password"}
@@ -197,11 +181,7 @@ export default function DesktopForm() {
                         {t("role_title")}
                       </span>
                       <div
-                        className={`flex flex-col justify-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
-                                                rounded-full text-sm sm:text-base border-0
-                                                bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-                                                border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-                                                dark:text-white ${errors.role ? "ring-2 ring-red-400" : ""}`}
+                        className={`flex flex-col justify-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white ${errors.role ? "ring-2 ring-red-400" : ""}`}
                       >
                         <select
                           {...register("role")}
@@ -245,8 +225,8 @@ export default function DesktopForm() {
                     type="submit"
                     disabled={isSubmitting}
                     className={`w-full h-13 mt-2 rounded-full font-semibold text-white
-                                            bg-emerald-400 
-                                            hover:bg-emerald-500 
+                                            bg-emerald-400
+                                            hover:bg-emerald-500
                                             active:scale-[0.98] cursor-pointer
                                             disabled:opacity-50 disabled:cursor-not-allowed
                                             shadow-lg shadow-emerald-500/25

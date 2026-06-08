@@ -70,11 +70,11 @@ export default function DesktopForm() {
       <AnimateOnMount delay={100}>
         <div
           className={`w-3/5 xl:w-full h-full flex flex-row overflow-hidden
-					rounded-4xl 3xl:h-fit 3xl:max-w-full< 
+					rounded-4xl 3xl:h-fit 3xl:max-w-full<
 					shadow-2xl shadow-black/20
 					transition-all duration-700`}
         >
-          <div className="w-full backdrop-blur-2xl flex flex-col gap-10 justify-center px-12 py-15 relative overflow-hidden">
+          <div className="w-full liquid-glass flex flex-col gap-10 justify-center px-12 py-15 relative overflow-hidden">
             <div className="h-full justify-baseline relative gap-8 z-10 flex flex-col ">
               <AnimateOnMount delay={200}>
                 <div
@@ -100,11 +100,7 @@ export default function DesktopForm() {
                   >
                     <div className="flex flex-col gap-1">
                       <div
-                        className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
-										  rounded-full text-sm sm:text-base border-0
-										  bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-										  border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-										  dark:text-white ${errors ? "ring-2 ring-red-400" : ""}`}
+                        className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white ${errors ? "ring-2 ring-red-400" : ""}`}
                       >
                         <input
                           type="text"
@@ -124,11 +120,7 @@ export default function DesktopForm() {
                     </div>
                     <div className="flex flex-col gap-1">
                       <div
-                        className={`flex flex-row justify-between items-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
-											  rounded-full text-sm sm:text-base border-0
-											  bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
-											  border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
-											  dark:text-white overflow-hidden gap-2 ${errors ? "ring-2 ring-red-400" : ""}`}
+                        className={`flex flex-row justify-between items-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white overflow-hidden gap-2 ${errors ? "ring-2 ring-red-400" : ""}`}
                       >
                         <input
                           type={open ? "text" : "password"}
@@ -178,7 +170,7 @@ export default function DesktopForm() {
                     disabled={loading}
                     className={`w-full h-13 mt-2 rounded-full font-semibold text-white
 										bg-gradient-to-r from-studoblue to-blue-400
-										hover:from-blue-500 
+										hover:from-blue-500
 										active:scale-[0.98] cursor-pointer
 										disabled:opacity-50 disabled:cursor-not-allowed
 										shadow-lg shadow-blue-500/25
@@ -209,7 +201,7 @@ export default function DesktopForm() {
                         onClick={loginGoogle}
                         className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
-											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
+											liquid-glass hover:brightness-110
 											transition-all duration-300 cursor-pointer"
                         data-cy="login_google"
                       >
@@ -229,7 +221,7 @@ export default function DesktopForm() {
                         onClick={loginMicrosoft}
                         className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
-											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
+											liquid-glass hover:brightness-110
 											transition-all duration-300 cursor-pointer"
                         data-cy="login_microsoft"
                       >
@@ -250,7 +242,7 @@ export default function DesktopForm() {
                           onClick={loginSmartschool}
                           className="flex-1 min-h-13 flex items-center justify-center gap-2 rounded-full
 											bg-studodarkblue/5 border-studodarkblue/5
-											dark:bg-white/5 border dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20
+											liquid-glass hover:brightness-110
 											transition-all duration-300 cursor-pointer"
                           data-cy="login_smartschool"
                         >

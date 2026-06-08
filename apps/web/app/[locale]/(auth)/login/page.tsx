@@ -119,7 +119,7 @@ export default function LoginPage() {
   return (
     <div className={"w-full h-full"}>
       <div className="flex relative min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 sm:px-6">
-        <div className="absolute inset-0 hidden md:flex select-none pointer-events-none z-0">
+        <div className="absolute inset-0 flex select-none pointer-events-none z-0">
           <HeroBackground color="to-blue-400/10" paused={false} />
         </div>
 
@@ -127,10 +127,8 @@ export default function LoginPage() {
           href={"/welcome"}
           className="absolute top-4 left-4 sm:top-6 sm:left-6 z-50
           flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full
-          bg-white dark:bg-gray-700 border-2 border-studogrey/30
-          text-studodarkblue dark:text-white shadow-md hover:shadow-lg
-          transition-all duration-200 active:scale-105 focus:outline-none
-          focus:ring-2 focus:ring-studogrey/50 cursor-pointer"
+          liquid-glass text-studodarkblue dark:text-white
+          hover:brightness-110 transition-all duration-200 active:scale-105 cursor-pointer"
           aria-label="Go back"
         >
           <Image
