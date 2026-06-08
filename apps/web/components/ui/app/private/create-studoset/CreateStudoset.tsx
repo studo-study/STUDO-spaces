@@ -370,7 +370,10 @@ export default function CreateStudosetForm() {
         className="w-full scroll-hidden text-studodarkblue dark:text-white h-fit mt-10 md:mt-0 flex text-sm sm:text-base flex-col items-center justify-baseline pt-20 px-10"
         data-cy="studyset_form"
         onKeyDown={(event) => {
-          if (event.key === "Enter") {
+          if (
+            event.key === "Enter" &&
+            (event.target as HTMLElement).tagName !== "TEXTAREA"
+          ) {
             event.preventDefault();
           }
         }}
@@ -392,7 +395,7 @@ export default function CreateStudosetForm() {
                 data-cy="title_input"
                 onChange={saveDraft}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === "Tab") {
                     e.preventDefault();
                     courseRef.current?.focus();
                   }
@@ -409,7 +412,7 @@ export default function CreateStudosetForm() {
                   data-cy="course_input"
                   onChange={saveDraft}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") {
+                    if (e.key === "Tab" && !e.shiftKey) {
                       e.preventDefault();
                       if (cardArray.length > 0) {
                         getCardRefs(cardArray[0].id).term.current?.focus();
@@ -436,6 +439,7 @@ export default function CreateStudosetForm() {
                   }}
                   dataCy="folder_select"
                   size="lg"
+                  tabIndex={-1}
                 />
               </div>
             </div>
@@ -458,6 +462,7 @@ export default function CreateStudosetForm() {
                   }}
                   dataCy="term_language_select"
                   size="lg"
+                  tabIndex={-1}
                 />
               </div>
 
@@ -478,6 +483,7 @@ export default function CreateStudosetForm() {
                   }}
                   dataCy="definition_language_select"
                   size="lg"
+                  tabIndex={-1}
                 />
               </div>
             </div>
@@ -528,6 +534,11 @@ export default function CreateStudosetForm() {
                 defRef={getCardRefs(card.id).def}
                 image={card.image}
                 onEnterDefinition={() => handleEnterDefinition(index)}
+                onShiftTabTerm={() => {
+                  if (index > 0) {
+                    getCardRefs(cardArray[index - 1].id).def.current?.focus();
+                  }
+                }}
               />
             ))}
           </div>

@@ -21,6 +21,7 @@ type SelectProps = {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   dataCy?: string;
   title?: string;
+  tabIndex?: number;
 };
 
 const sizeMap = {
@@ -67,6 +68,7 @@ const InputSelect = ({
   size = "lg",
   dataCy,
   title,
+  tabIndex,
 }: SelectProps) => {
   const [open, setOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -115,6 +117,7 @@ const InputSelect = ({
         id={id}
         disabled={disabled}
         data-cy={dataCy}
+        tabIndex={tabIndex}
         onClick={() => !disabled && setOpen((prev) => !prev)}
         className={`w-full flex flex-row items-center justify-between cursor-pointer rounded-4xl glass-rgb border border-studoborder/30 shadow-2xl text-studodarkblue dark:text-white text-left transition-all duration-300 outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
       >
