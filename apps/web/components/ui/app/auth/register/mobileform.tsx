@@ -3,15 +3,11 @@ import Image from "next/image";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import Link from "next/link";
 import { useRegisterForm } from "@/hooks/overige/useRegisterForm";
-import InputField from "@/components/ui/design_system/input/InputField";
-import InputSelect from "@/components/ui/design_system/select/InputSelect";
 
 export default function MobileForm() {
   const {
     form: {
       register,
-      watch,
-      setValue,
       formState: { errors, isSubmitting },
     },
     t,
@@ -24,7 +20,6 @@ export default function MobileForm() {
     loginMicrosoft,
     loginSmartschool,
   } = useRegisterForm();
-  const roleValue = watch("role");
 
   const otherRegister = false;
 
@@ -63,19 +58,18 @@ export default function MobileForm() {
 
                         {/* Email field */}
                         <div className="flex flex-col gap-1">
-                          <InputField
-                            variant="cardInput"
-                            type="email"
-                            placeholder={t("email")}
-                            {...register("email")}
-                            error={
-                              errors.email?.message
-                                ? t(errors.email.message)
-                                : undefined
-                            }
-                            data-cy="email_input"
-                            autoComplete="off"
-                          />
+                          <div
+                            className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white ${errors.email ? "ring-2 ring-red-400" : ""}`}
+                          >
+                            <input
+                              type="email"
+                              placeholder={t("email")}
+                              autoComplete="none"
+                              {...register("email")}
+                              className="transition-all w-full duration-500 focus:outline-none bg-transparent"
+                              data-cy="email_input"
+                            />
+                          </div>
                           {errors.email?.message && (
                             <span className="px-4 text-red-400 text-xs">
                               {t(errors.email.message)}
@@ -85,18 +79,18 @@ export default function MobileForm() {
 
                         {/* Display name field */}
                         <div className="flex flex-col gap-1">
-                          <InputField
-                            variant="cardInput"
-                            placeholder={t("name")}
-                            {...register("displayName")}
-                            error={
-                              errors.displayName?.message
-                                ? t(errors.displayName.message)
-                                : undefined
-                            }
-                            data-cy="name_input"
-                            autoComplete="off"
-                          />
+                          <div
+                            className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white ${errors.displayName ? "ring-2 ring-red-400" : ""}`}
+                          >
+                            <input
+                              type="text"
+                              placeholder={t("name")}
+                              {...register("displayName")}
+                              autoComplete="none"
+                              className="transition-all w-full duration-500 focus:outline-none bg-transparent"
+                              data-cy="name_input"
+                            />
+                          </div>
                           {errors.displayName?.message && (
                             <span className="px-4 text-red-400 text-xs">
                               {t(errors.displayName.message)}
@@ -113,39 +107,30 @@ export default function MobileForm() {
 
                         {/* Password field */}
                         <div className="flex flex-col gap-1">
-                          <div className="relative">
-                            <InputField
-                              variant="cardInput"
+                          <div
+                            className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white items-center overflow-hidden gap-2 ${errors.password ? "ring-2 ring-red-400" : ""}`}
+                          >
+                            <input
                               type={showPassword ? "text" : "password"}
                               placeholder={t("password")}
+                              autoComplete="none"
                               {...register("password")}
-                              error={
-                                errors.password?.message
-                                  ? t(errors.password.message)
-                                  : undefined
-                              }
+                              className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
                               data-cy="password_input"
-                              autoComplete="off"
                             />
-                            <button
-                              type="button"
-                              tabIndex={-1}
+                            <Image
+                              src={
+                                showPassword
+                                  ? "/icons/eye-open.svg"
+                                  : "/icons/eye-closed.svg"
+                              }
                               onClick={toggleShowPassword}
-                              className="absolute right-4 inset-y-0 flex items-center cursor-pointer opacity-50 hover:opacity-80 transition-opacity"
+                              width={20}
+                              height={20}
+                              alt="Toggle password visibility"
+                              className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${showPassword ? "" : "pt-0.5 sm:pt-1"}`}
                               data-cy="toggle_password_visibility"
-                            >
-                              <Image
-                                src={
-                                  showPassword
-                                    ? "/icons/eye-open.svg"
-                                    : "/icons/eye-closed.svg"
-                                }
-                                width={20}
-                                height={20}
-                                alt="Toggle password visibility"
-                                className="w-4 sm:w-5 dark:invert dark:brightness-0"
-                              />
-                            </button>
+                            />
                           </div>
                           {errors.password?.message && (
                             <span className="px-4 text-red-400 text-xs">
@@ -156,39 +141,30 @@ export default function MobileForm() {
 
                         {/* Confirm password field */}
                         <div className="flex flex-col gap-1">
-                          <div className="relative">
-                            <InputField
-                              variant="cardInput"
+                          <div
+                            className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white items-center overflow-hidden gap-2 ${errors.confirmPassword ? "ring-2 ring-red-400" : ""}`}
+                          >
+                            <input
                               type={showPassword ? "text" : "password"}
                               placeholder={t("repeat password")}
+                              autoComplete="none"
                               {...register("confirmPassword")}
-                              error={
-                                errors.confirmPassword?.message
-                                  ? t(errors.confirmPassword.message)
-                                  : undefined
-                              }
+                              className="transition-all duration-500 focus:outline-none bg-transparent flex-1 min-w-0"
                               data-cy="confirm_password_input"
-                              autoComplete="off"
                             />
-                            <button
-                              type="button"
-                              tabIndex={-1}
+                            <Image
+                              src={
+                                showPassword
+                                  ? "/icons/eye-open.svg"
+                                  : "/icons/eye-closed.svg"
+                              }
                               onClick={toggleShowPassword}
-                              className="absolute right-4 inset-y-0 flex items-center cursor-pointer opacity-50 hover:opacity-80 transition-opacity"
+                              width={20}
+                              height={20}
+                              alt="Toggle password visibility"
+                              className={`w-4 sm:w-5 flex-shrink-0 cursor-pointer dark:invert dark:brightness-0 dark:opacity-50 ${showPassword ? "" : "pt-0.5 sm:pt-1"}`}
                               data-cy="toggle_password_visibility"
-                            >
-                              <Image
-                                src={
-                                  showPassword
-                                    ? "/icons/eye-open.svg"
-                                    : "/icons/eye-closed.svg"
-                                }
-                                width={20}
-                                height={20}
-                                alt="Toggle password visibility"
-                                className="w-4 sm:w-5 dark:invert dark:brightness-0"
-                              />
-                            </button>
+                            />
                           </div>
                           {errors.confirmPassword?.message && (
                             <span className="px-4 text-red-400 text-xs">
@@ -203,19 +179,25 @@ export default function MobileForm() {
                         <span className="w-full dark:text-white text-studodarkblue text-sm opacity-50">
                           {t("role_title")}
                         </span>
-                        <InputSelect
-                          options={[
-                            { value: "student", label: t("student") },
-                            { value: "teacher", label: t("teacher") },
-                            { value: "professor", label: t("professor") },
-                          ]}
-                          value={roleValue}
-                          onChange={(value) =>
-                            setValue("role", value as string)
-                          }
-                          dataCy="role_select"
-                          size="lg"
-                        />
+                        <div
+                          className={`flex flex-col justify-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13 rounded-full text-sm sm:text-base auth-input w-full outline-0 text-studodarkblue dark:text-white ${errors.role ? "ring-2 ring-red-400" : ""}`}
+                        >
+                          <select
+                            {...register("role")}
+                            className="w-full bg-transparent focus:outline-none"
+                            data-cy="role_select"
+                          >
+                            <option value="student" className="bg-slate-800">
+                              {t("student")}
+                            </option>
+                            <option value="teacher" className="bg-slate-800">
+                              {t("teacher")}
+                            </option>
+                            <option value="professor" className="bg-slate-800">
+                              {t("professor")}
+                            </option>
+                          </select>
+                        </div>
                         {errors.role?.message && (
                           <span className="px-4 text-red-400 text-xs">
                             {t(errors.role.message)}

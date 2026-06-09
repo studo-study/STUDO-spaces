@@ -48,7 +48,7 @@ export default function BurgerMenu({
   const t = useTranslations("header");
   const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === "true";
   const pathname = usePathname();
-  const extraFeatures = false;
+  const extraFeatures = true;
   const isActive = (link: string) => {
     const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, "");
     return (

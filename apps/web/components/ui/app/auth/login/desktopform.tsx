@@ -7,6 +7,8 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/components/providers/app/ToastProvider";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import InputField from "@/components/ui/design_system/input/InputField";
 
 export default function DesktopForm() {
   const [open, setOpen] = useState(false);
@@ -165,7 +167,7 @@ export default function DesktopForm() {
                   <div className={"h-5 w-full"}></div>
                 )}
                 <AnimateOnMount delay={400}>
-                  <button
+                  <BaseButton
                     type="submit"
                     disabled={loading}
                     className={`w-full h-13 mt-2 rounded-full font-semibold text-white
@@ -178,7 +180,7 @@ export default function DesktopForm() {
                     data-cy="submit_login"
                   >
                     {loading ? t("Loading") : t("Log In")}
-                  </button>
+                  </BaseButton>
                 </AnimateOnMount>
               </form>
 
