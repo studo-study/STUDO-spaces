@@ -160,9 +160,9 @@ export default function LoginPage() {
                     className={`flex items-end gap-6 min-h-full transition-all duration-700 delay-900`}
                   >
                     <div className="flex -space-x-3">
-                      {array.map((item, i) => (
+                      {array.map((item) => (
                         <div
-                          key={i}
+                          key={item.color}
                           className={`min-w-10 min-h-10 rounded-full border border-studoborder text-white
             flex items-center justify-center bg-gradient-to-br ${item.color}`}
                         >

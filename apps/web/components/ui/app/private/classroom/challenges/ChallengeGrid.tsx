@@ -34,8 +34,11 @@ export default function ChallengeGrid() {
           <div className={"w-full h-fit grid grid-cols-2 grid-rows-3 gap-5"}>
             {challenges
               .filter((challenge) => challenge.classroom_id === classroom)
-              .map((challenge, i) => (
-                <ChallengeItem challenge={challenge} key={i} />
+              .map((challenge) => (
+                <ChallengeItem
+                  challenge={challenge}
+                  key={challenge.challenge_id}
+                />
               ))}
           </div>
         </div>
@@ -63,8 +66,8 @@ export default function ChallengeGrid() {
                 .filter((cs) => cs.id === classroom)
                 .flatMap((cs) => cs.users)
                 .sort((a, b) => a.position - b.position)
-                .map((user, i) => (
-                  <UserItem key={i} user={user} />
+                .map((user) => (
+                  <UserItem key={user.user_id} user={user} />
                 ))}
             </div>
           </div>

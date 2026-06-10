@@ -89,12 +89,12 @@ export default function AddSet({ addOpen, setAddOpen }: InvitePeopleProps) {
           </div>
 
           <div className={"w-full h-80 flex flex-col gap-3 overflow-y-auto"}>
-            {userSets.map((u, i) => (
+            {userSets.map((u) => (
               <SetItem
                 importedClassrooms={importedClassrooms}
                 setImportedClassrooms={setImportedClassrooms}
                 set={u}
-                key={i}
+                key={u.id}
               />
             ))}
           </div>

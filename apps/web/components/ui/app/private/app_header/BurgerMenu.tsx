@@ -62,10 +62,10 @@ export default function BurgerMenu({
             transition-[width] duration-300 flex flex-col gap-3 py-10 pb-20
             ${burgerOpen ? "w-57" : "w-30"}`}
     >
-      {main.map((item, index) => (
+      {main.map((item) => (
         <Link
           href={item.link}
-          key={index}
+          key={item.label}
           className={`w-full h-10 ${isActive(item.link) ? "opacity-75" : "opacity-50"} px-5`}
         >
           <div
@@ -88,10 +88,10 @@ export default function BurgerMenu({
         <div className="w-full h-0.5 rounded-4xl dark:bg-white bg-studodarkblue" />
       </div>
 
-      {folders.map((item, index) => (
+      {folders.map((item) => (
         <Link
           href={item.link}
-          key={index}
+          key={item.label}
           className={`w-full h-10 ${isActive(item.link) ? "opacity-75" : "opacity-50"} px-5`}
         >
           <div
@@ -133,10 +133,10 @@ export default function BurgerMenu({
             <div className="w-full h-0.5 rounded-4xl dark:bg-white bg-studodarkblue" />
           </div>
 
-          {classrooms.map((item, index) => (
+          {classrooms.map((item) => (
             <Link
               href={item.link}
-              key={index}
+              key={item.label}
               className={`w-full h-10 ${isActive(item.link) ? "opacity-75" : "opacity-50"} px-5`}
             >
               <div

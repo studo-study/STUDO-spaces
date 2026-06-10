@@ -29,9 +29,9 @@ export default function AdminHeader() {
         {t("title")}
       </span>
       <div className={"w-full flex text-sm flex-row items-center gap-5"}>
-        {items.map((item, i) => (
+        {items.map((item) => (
           <Link
-            key={i}
+            key={item.label}
             className={`w-fit min-w-20 text-center ${isActive(item.link) ? "font-bold" : null} dark:text-white text-studodarkblue`}
             href={item.link}
           >

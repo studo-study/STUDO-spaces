@@ -81,7 +81,7 @@ export default function SelectPage() {
           <div className={"w-ful h-60 flex flex-col gap-5"}>
             {free.map((item, i) => (
               <span
-                key={i}
+                key={item.feature}
                 className={
                   "w-full flex items-center gap-3 dark:text-white font-bold"
                 }
@@ -120,9 +120,9 @@ export default function SelectPage() {
           </div>
           <p className={"text-white/50 text-lg h-10"}>{t("select_expl")}</p>
           <div className={"w-ful h-60 flex flex-col gap-5"}>
-            {select.map((item, i) => (
+            {select.map((item) => (
               <span
-                key={i}
+                key={item.feature}
                 className={
                   "w-full flex items-center gap-3 dark:text-white font-bold"
                 }

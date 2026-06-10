@@ -7,8 +7,8 @@ export default async function Page({
 }: {
   params: Promise<{ id: string; course_id: string }>;
 }) {
-  const { course_id } = await params;
-  const session = await auth();
+  const [{ course_id }, session] = await Promise.all([params, auth()]);
+
   const token = session?.accessToken;
   const res = await fetch(
     `${process.env.AUTH_API_URL}/flows/course/${course_id}`,

@@ -65,7 +65,7 @@ function SearchSuggestions({ searches }: SearchSuggestions) {
           className={
             "w-full px-3 rounded-xl py-2 bg-gray-700 flex justify-between items-center"
           }
-          key={index}
+          key={search}
         >
           {search}
           <div onClick={() => remove(index)}>x</div>

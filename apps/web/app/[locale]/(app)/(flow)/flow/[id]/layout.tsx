@@ -10,8 +10,7 @@ export default async function FlowOverviewLayout({
   params: Promise<{ id: string }>;
   children: ReactNode;
 }) {
-  const { id } = await params;
-  const session = await auth();
+  const [{ id }, session] = await Promise.all([params, auth()]);
   const token = session?.accessToken;
   const res = await fetch(`${process.env.AUTH_API_URL}/flows/board/${id}`, {
     headers: { Authorization: `Bearer ${token}` },

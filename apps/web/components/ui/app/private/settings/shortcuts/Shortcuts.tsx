@@ -33,8 +33,8 @@ export function Shortcuts() {
       <span className="w-full text-base font-bold h-fit">{t("shortcuts")}</span>
 
       <div className="flex flex-col divide-y divide-studoborder p-5 rounded-3xl border border-studoborder">
-        {shortcuts.map((s, i) => (
-          <ShortcutItem key={i} shortcut={s} isMac={isMac} />
+        {shortcuts.map((s) => (
+          <ShortcutItem key={"key-" + s.title} shortcut={s} isMac={isMac} />
         ))}
       </div>
     </section>
@@ -75,8 +75,8 @@ function ShortcutItem({
       <span className="font-bold">{t(shortcut.title)}</span>
       <div className="flex gap-2 items-center text-sm">
         {shortcut.premium && <Select />}
-        {shortcut.keys.map((key, i) => (
-          <span key={i}>{renderKey(key)}</span>
+        {shortcut.keys.map((key) => (
+          <span key={"key-" + key}>{renderKey(key)}</span>
         ))}
       </div>
     </div>

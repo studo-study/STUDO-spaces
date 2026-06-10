@@ -98,10 +98,10 @@ export default function PrivateClassroomHeader() {
       <div className="relative w-full mt-4">
         <div className="relative z-20 w-full flex items-center justify-between">
           <div className="flex items-center gap-10">
-            {items.map((item, i) => (
+            {items.map((item) => (
               <Link
                 href={item.link}
-                key={i}
+                key={item.label}
                 className={`dark:text-white font-bold py-4 transition-all duration-400 hover:border-blue-500/75 border-b-2 ${
                   isActive(item.link, pathname)
                     ? "border-blue-500"
@@ -112,10 +112,10 @@ export default function PrivateClassroomHeader() {
               </Link>
             ))}
             {classroom.type !== "communtiy" &&
-              rest.map((item, i) => (
+              rest.map((item) => (
                 <Link
                   href={item.link}
-                  key={i}
+                  key={item.label}
                   className={`dark:text-white font-bold py-4 transition-all duration-400 hover:border-blue-500/75 border-b-2 ${
                     isActive(item.link, pathname)
                       ? "border-blue-500"

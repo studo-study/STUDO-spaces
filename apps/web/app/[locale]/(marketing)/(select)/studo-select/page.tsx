@@ -47,7 +47,7 @@ export default function SelectPage() {
             >
               <span
                 className={
-                  "font-akira text-5xl truncate dark:bg-gradient-to-r  dark:from-white  dark:to-blue-200 bg-clip-text dark:text-transparent text-blue-500 "
+                  "font-georgia text-5xl truncate dark:bg-linear-to-r  dark:from-white  dark:to-blue-200 bg-clip-text dark:text-transparent text-blue-500 "
                 }
               >
                 STUDO
@@ -103,9 +103,9 @@ export default function SelectPage() {
                 {t("free_expl")}
               </p>
               <div className={"w-full h-60 flex flex-col gap-5"}>
-                {free.map((item, i) => (
+                {free.map((item) => (
                   <span
-                    key={i}
+                    key={item.feature}
                     className={
                       "w-full flex items-center gap-3 text-studodarkblue dark:text-white font-bold"
                     }
@@ -154,9 +154,9 @@ export default function SelectPage() {
                 {t("select_expl")}
               </p>
               <div className={"w-full h-60 flex flex-col gap-5"}>
-                {select.map((item, i) => (
+                {select.map((item) => (
                   <span
-                    key={i}
+                    key={item.feature}
                     className={
                       "w-full flex items-center gap-3 dark:text-white font-bold"
                     }

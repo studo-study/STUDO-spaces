@@ -50,14 +50,14 @@ export default function ProfileView({ id, isPublic = false }: viewProps) {
         </div>
         {tab === "ss" ? (
           <div className={"w-full h-fit flex flex-col mt-5 gap-3"}>
-            {profile.studysets.map((set, i) => (
-              <StudosetItem item={set} key={i} />
+            {profile.studysets.map((set) => (
+              <StudosetItem item={set} key={set.id} />
             ))}
           </div>
         ) : (
           <div className={"w-full h-fit flex flex-col mt-5 gap-3"}>
-            {profile.visualsets.map((set, i) => (
-              <VisualsetItem item={set} key={i} />
+            {profile.visualsets.map((set) => (
+              <VisualsetItem item={set} key={set.id} />
             ))}
           </div>
         )}

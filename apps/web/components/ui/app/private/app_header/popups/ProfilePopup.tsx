@@ -191,7 +191,7 @@ function ProfilePopup({
             return (
               <Link
                 href={item.link}
-                key={index}
+                key={item.label}
                 className={`group p-2 flex w-full items-center h-18
                                     transition-all duration-200 ease-out
                          ${ProfileIsOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
