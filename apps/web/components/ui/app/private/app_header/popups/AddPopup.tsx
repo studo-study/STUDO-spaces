@@ -26,7 +26,10 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
   return (
     <SimpleMenu
       trigger={
-        <button className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
+        <button
+          type={"button"}
+          className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
+        >
           <div className="absolute bg-blue-500/50 h-10 w-10 rounded-full blur-sm" />
           <div className="relative z-10 shadow-2xl bg-blue-500 h-10 min-w-10 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
             <IoIosAdd />

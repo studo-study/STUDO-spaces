@@ -106,6 +106,7 @@ export default function Grid() {
         <div className="w-fit flex flex-row gap-5 items-center">
           <SetSearch sets={allSets} setSearchQuery={setSearchQuery} />
           <button
+            type={"button"}
             onClick={togglePopUp}
             ref={containerRef}
             className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"

@@ -109,6 +109,7 @@ export default function DesktopForm() {
 										  dark:text-white ${errors ? "ring-2 ring-red-400" : ""}`}
                       >
                         <input
+                          aria-label={"email-input"}
                           type="text"
                           placeholder={t("email")}
                           autoComplete="none"
@@ -133,6 +134,7 @@ export default function DesktopForm() {
 											  dark:text-white overflow-hidden gap-2 ${errors ? "ring-2 ring-red-400" : ""}`}
                       >
                         <input
+                          aria-label={"password-input"}
                           type={open ? "text" : "password"}
                           placeholder={t("password")}
                           autoComplete="none"

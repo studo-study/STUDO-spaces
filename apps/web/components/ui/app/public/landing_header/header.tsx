@@ -242,6 +242,7 @@ export default function LandingHeader() {
             )}
 
             <button
+              type={"button"}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden text-studodarkblue dark:text-white p-2"
               aria-label="Toggle menu"

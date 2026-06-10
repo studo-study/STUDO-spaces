@@ -9,6 +9,7 @@ const ToggleGroupBase = ({ view, setView, options }: ToggleGroupProps) => {
     <div className="flex flex-row bg-studogrey/30 border border-studoborder/30 rounded-full p-1 gap-1">
       {options.map((item) => (
         <button
+          type={"button"}
           key={item}
           onClick={() => setView(item)}
           className={`px-3 py-1.5 rounded-full cursor-pointer border text-sm capitalize transition-all

@@ -10,6 +10,7 @@ export default function StreakPage() {
       <div className="w-full h-full overflow-hidden flex flex-col gap-10 justify-center items-center">
         <div className=" h-40 border-none flex justify-center items-center">
           <video
+            aria-label={"streak-animation"}
             autoPlay
             loop
             muted

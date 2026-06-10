@@ -102,6 +102,7 @@ function JoinRequestItem({
         }
       >
         <button
+          type={"button"}
           onClick={toggleRemove}
           className={
             "cursor-pointer hover:bg-emerald-400 active:scale-95 transition-all duration-300 w-10 h-10 rounded-full bg-studogrey items-center justify-center flex"
@@ -110,6 +111,7 @@ function JoinRequestItem({
           <FaCheck size={18} />
         </button>
         <button
+          type={"button"}
           onClick={toggleRemove}
           className={
             "cursor-pointer hover:bg-rose-400  active:scale-95 transition-all duration-300 w-10 h-10 rounded-full bg-studogrey items-center justify-center flex"

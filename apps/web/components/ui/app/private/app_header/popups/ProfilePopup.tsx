@@ -25,7 +25,8 @@ export default function TriggerProfile({
     setProfileIsOpen((prev) => !prev);
   };
   return (
-    <div
+    <button
+      type={"button"}
       ref={containerRef}
       onClick={togglePopUp}
       className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
@@ -38,7 +39,7 @@ export default function TriggerProfile({
         containerRef={containerRef}
         user={user}
       />
-    </div>
+    </button>
   );
 }
 
@@ -236,6 +237,7 @@ function ProfilePopup({
             );
           })}
           <button
+            type={"button"}
             onClick={() => {
               signOut({ callbackUrl: "/" });
               toast.success("logged out");

@@ -91,6 +91,7 @@ export default function AccountPrivacy() {
               <span className={"text-sm"}>{t("request_subt")}</span>
             </div>
             <button
+              type={"button"}
               className={
                 "font-bold cursor-pointer px-5 py-2 rounded-4xl bg-gray-500"
               }
@@ -108,6 +109,7 @@ export default function AccountPrivacy() {
               <span className={"text-sm"}>{t("delete_info")}</span>
             </div>
             <button
+              type={"button"}
               className={
                 "font-bold cursor-pointer px-5 py-2 rounded-4xl bg-rose-500"
               }

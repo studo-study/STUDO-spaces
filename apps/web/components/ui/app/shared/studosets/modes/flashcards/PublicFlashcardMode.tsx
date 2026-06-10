@@ -189,6 +189,7 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
       <div className="flex flex-row gap-3 sm:gap-5 items-center justify-center pb-4 sm:pb-6">
         <div className="w-fit flex flex-row gap-3 px-2 items-center border border-studoborder/30 rounded-full shadow-xl bg-studogrey/30">
           <button
+            type={"button"}
             onClick={goBack}
             disabled={hitLimit}
             className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer rounded-full flex items-center justify-center disabled:opacity-30"
@@ -204,6 +205,7 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
           </span>
           |<span className={"w-1/3 text-center"}>{shuffled.length}</span>
           <button
+            type={"button"}
             onClick={goForward}
             disabled={hitLimit}
             className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer rounded-full flex items-center justify-center disabled:opacity-30"

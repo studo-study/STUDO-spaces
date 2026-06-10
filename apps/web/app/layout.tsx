@@ -25,7 +25,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={montserrat.variable}>
       <head>
-        <link rel="stylesheet" href="https://use.typekit.net/fmn3jvz.css" />
         <IcoSwitcher />
       </head>
 

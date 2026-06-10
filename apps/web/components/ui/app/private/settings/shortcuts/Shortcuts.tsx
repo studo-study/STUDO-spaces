@@ -58,30 +58,35 @@ function ShortcutItem({
 }) {
   const t = useTranslations("settings.shortcut_titles");
 
-  const renderKey = (key: string) => {
-    if (key === "command")
-      return <KeyCap>{isMac ? <FiCommand /> : "ctrl"}</KeyCap>;
-    if (key === "delete")
-      return (
-        <KeyCap>
-          <LuDelete size={14} />
-        </KeyCap>
-      );
-    return <KeyCap>{key}</KeyCap>;
-  };
-
   return (
     <div className="w-full flex flex-row px-5 py-2 justify-between items-center">
       <span className="font-bold">{t(shortcut.title)}</span>
       <div className="flex gap-2 items-center text-sm">
         {shortcut.premium && <Select />}
         {shortcut.keys.map((key) => (
-          <span key={"key-" + key}>{renderKey(key)}</span>
+          <span key={"key-" + key}>
+            <RenderKey isMac={isMac} key={key} />
+          </span>
         ))}
       </div>
     </div>
   );
 }
+interface RenderKeyProps {
+  isMac: boolean;
+  key: string;
+}
+const RenderKey = ({ key, isMac }: RenderKeyProps) => {
+  if (key === "command")
+    return <KeyCap>{isMac ? <FiCommand /> : "ctrl"}</KeyCap>;
+  if (key === "delete")
+    return (
+      <KeyCap>
+        <LuDelete size={14} />
+      </KeyCap>
+    );
+  return <KeyCap>{key}</KeyCap>;
+};
 
 function Select() {
   return (

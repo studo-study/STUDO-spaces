@@ -74,6 +74,7 @@ const CoursePageHeader = () => {
                 const isActive = course.id === data.id;
                 return (
                   <button
+                    type={"button"}
                     key={course.id}
                     onClick={() => {
                       router.push(`/flow/${data.board_id}/${course.id}`);

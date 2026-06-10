@@ -49,7 +49,7 @@ export default function ClassSearch({
         type="text"
         className={" w-full h-full outline-none focus:ring-0"}
       />
-      <button className={"w-fit cursor-pointer"}>
+      <button type={"button"} className={"w-fit cursor-pointer"}>
         <IoSearch />
       </button>
     </div>

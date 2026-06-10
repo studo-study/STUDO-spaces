@@ -17,7 +17,13 @@ export default function Draggable({ id, children }: Props) {
     : undefined;
 
   return (
-    <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <button
+      type={"button"}
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+    >
       {children}
     </button>
   );

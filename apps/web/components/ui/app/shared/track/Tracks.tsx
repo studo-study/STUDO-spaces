@@ -69,7 +69,10 @@ function TrackContainer({ group }: TrackContainerProps) {
             {group.tracks.length}{" "}
             {group.tracks.length === 1 ? t("vak") : t("vakken")}
           </span>
-          <button className="w-10 h-10 cursor-pointer rounded-full hover:bg-studogrey transition-colors duration-300 flex items-center justify-center">
+          <button
+            type={"button"}
+            className="w-10 h-10 cursor-pointer rounded-full hover:bg-studogrey transition-colors duration-300 flex items-center justify-center"
+          >
             <IoIosArrowDown
               className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
             />
@@ -107,6 +110,7 @@ function TrackItem({ track }: TrackItemProps) {
         </div>
         {track.studysets.length > 0 || track.visualsets.length > 0 ? (
           <button
+            type={"button"}
             onClick={toggleOpen}
             className="w-10 h-10 cursor-pointer rounded-full hover:bg-studogrey transition-colors duration-300 flex items-center justify-center"
           >
@@ -150,42 +154,40 @@ function TrackItem({ track }: TrackItemProps) {
       )}
     </div>
   );
+}
 
-  interface SetItemProps {
-    type: string;
-    set: StudysetResponse | VisualsetResponse;
-  }
+interface SetItemProps {
+  type: string;
+  set: StudysetResponse | VisualsetResponse;
+}
 
-  function SetItem({ type, set }: SetItemProps) {
-    return (
-      <Link
-        className={
-          "w-full flex gap-3 flex-row items-center hover:bg-gray-200 dark:hover:bg-studogrey/30 group justify-between h-fit min-h-10 px-5 border border-b-gray-300 last:border-b-transparent border-transparent rounded-4xl"
-        }
-        href={type === "ss" ? "/studoset/" + set.id : "/visualset/" + set.id}
-      >
-        <div className={"w-full flex flex-col justify-center gap-2"}>
-          <div className={"w-full flex items-center gap-3"}>
-            <Image
-              src={
-                type === "ss" ? "/icons/studyset.svg" : "/icons/visualset.svg"
-              }
-              width={15}
-              height={15}
-              alt={"item_icon"}
-              className={"dark:invert dark:brightness-0"}
-            />
-            <span className={"truncate"}>{set.title}</span>
-            <span></span>
-          </div>
+function SetItem({ type, set }: SetItemProps) {
+  return (
+    <Link
+      className={
+        "w-full flex gap-3 flex-row items-center hover:bg-gray-200 dark:hover:bg-studogrey/30 group justify-between h-fit min-h-10 px-5 border border-b-gray-300 last:border-b-transparent border-transparent rounded-4xl"
+      }
+      href={type === "ss" ? "/studoset/" + set.id : "/visualset/" + set.id}
+    >
+      <div className={"w-full flex flex-col justify-center gap-2"}>
+        <div className={"w-full flex items-center gap-3"}>
+          <Image
+            src={type === "ss" ? "/icons/studyset.svg" : "/icons/visualset.svg"}
+            width={15}
+            height={15}
+            alt={"item_icon"}
+            className={"dark:invert dark:brightness-0"}
+          />
+          <span className={"truncate"}>{set.title}</span>
+          <span></span>
         </div>
+      </div>
 
-        <FaArrowRightLong
-          className={
-            "group-hover:opacity-100 transition-opacity duration-300 opacity-0"
-          }
-        />
-      </Link>
-    );
-  }
+      <FaArrowRightLong
+        className={
+          "group-hover:opacity-100 transition-opacity duration-300 opacity-0"
+        }
+      />
+    </Link>
+  );
 }

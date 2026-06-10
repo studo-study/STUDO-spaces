@@ -111,7 +111,8 @@ export default function BurgerMenu({
       ))}
 
       <div className="w-full h-10 px-5">
-        <div
+        <button
+          type={"button"}
           onClick={toggleCreate}
           className="transition-colors duration-200 flex gap-5 select-none rounded-4xl opacity-50 cursor-pointer dark:hover:bg-studogrey hover:bg-slate-200 flex-row justify-baseline px-5 items-center w-full h-10"
         >
@@ -124,7 +125,7 @@ export default function BurgerMenu({
           >
             {t("create")}
           </span>
-        </div>
+        </button>
       </div>
 
       {extraFeatures && (

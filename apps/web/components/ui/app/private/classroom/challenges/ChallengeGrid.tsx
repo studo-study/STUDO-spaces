@@ -86,7 +86,8 @@ function ChallengeItem({ challenge }: ChallengeItemProps) {
 
   return (
     <div className={"w-full min-h-full relative"}>
-      <div
+      <button
+        type={"button"}
         onClick={() => setPopupChallenge((prev) => !prev)}
         className={`w-full h-10 rounded-full bg-studoblue/30 cursor-pointer
                     flex items-center dark:text-white text-studodarkblue justify-center gap-3
@@ -102,7 +103,7 @@ function ChallengeItem({ challenge }: ChallengeItemProps) {
         <span className={"font-bold truncate text-sm max-w-[60%]"}>
           {challenge.title}
         </span>
-      </div>
+      </button>
       <ChallengePopup
         challenge={challenge}
         popupChallenge={popupChallenge}

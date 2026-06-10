@@ -48,6 +48,7 @@ export default function PersonalInfo() {
               <span>username</span>
             )}
             <button
+              type={"button"}
               onClick={toggleEditName}
               className={"font-bold text-blue-500 cursor-pointer"}
             >
@@ -75,6 +76,7 @@ export default function PersonalInfo() {
               <span>email</span>
             )}
             <button
+              type={"button"}
               onClick={toggleEditMail}
               className={"font-bold text-blue-500 cursor-pointer"}
             >
@@ -101,6 +103,7 @@ export default function PersonalInfo() {
               <span>student</span>
             )}
             <button
+              type={"button"}
               onClick={toggleEditRole}
               className={"font-bold text-blue-500 cursor-pointer"}
             >
@@ -124,6 +127,7 @@ export default function PersonalInfo() {
               <span>password</span>
             )}
             <button
+              type={"button"}
               onClick={toggleEditName}
               className={"font-bold text-blue-500 cursor-pointer"}
             >

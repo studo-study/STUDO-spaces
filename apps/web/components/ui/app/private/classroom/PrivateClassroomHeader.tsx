@@ -72,6 +72,7 @@ export default function PrivateClassroomHeader() {
         </div>
         <div className="w-fit flex flex-row items-center text-xl justify-center gap-5">
           <button
+            type={"button"}
             onClick={toggleAddPopUp}
             className="relative flex z-10 items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
           >

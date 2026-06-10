@@ -8,9 +8,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const messages = (
-    await import(`../../../../../messages/seo/ai/${locale}.json`)
-  ).default;
+  const messages = (await import(`/messages/seo/ai/${locale}.json`)).default;
 
   const baseUrl = "https://studo.study";
   const localeUrl = `${baseUrl}/${locale}`;

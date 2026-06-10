@@ -86,6 +86,7 @@ export default function MobileForm() {
                                               dark:text-white ${errors ? "ring-2 ring-red-400" : ""}`}
                       >
                         <input
+                          aria-label={"email-input"}
                           type="text"
                           placeholder={t("email")}
                           autoComplete="none"

@@ -101,11 +101,12 @@ export default function MobileForm() {
                       <div
                         className={`flex flex-row justify-between px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
                                           rounded-full text-sm sm:text-base border-0
-                                          bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
+                                          bg-inputcolor w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
                                           border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
                                           dark:text-white ${errors ? "ring-2 ring-red-400" : ""}`}
                       >
                         <input
+                          aria-label={"email-input"}
                           type="text"
                           placeholder={t("email")}
                           autoComplete="none"
@@ -128,7 +129,7 @@ export default function MobileForm() {
                       <div
                         className={`flex flex-row justify-between items-center px-4 sm:px-[2vh] h-11 sm:h-12 md:h-13
                                               rounded-full text-sm sm:text-base border-0
-                                              bg-[rgba(255,255,255,0.175)] w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
+                                              bg-inputcolor w-full shadow-[inset_0_3px_5px_rgba(0,0,0,0.15)]
                                               border-b-[1.3px] border-b-[rgba(255,255,255,0.352)] outline-0 text-studodarkblue
                                               dark:text-white overflow-hidden gap-2 ${errors ? "ring-2 ring-red-400" : ""}`}
                       >

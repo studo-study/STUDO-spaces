@@ -93,6 +93,7 @@ const JumpBackIn = () => {
             <>
               <div className={`${FADE_BASE} left-0 bg-linear-90`} />
               <button
+                type={"button"}
                 onClick={handleBackward}
                 aria-label={t("jump-back-in_previous")}
                 className={`${ARROW_BASE} left-3`}
@@ -114,6 +115,7 @@ const JumpBackIn = () => {
           {!atEnd && (
             <>
               <button
+                type={"button"}
                 onClick={handleForward}
                 aria-label={t("jump-back-in_next")}
                 className={`${ARROW_BASE} right-3`}
@@ -129,6 +131,7 @@ const JumpBackIn = () => {
           <div className="w-full flex items-center justify-center gap-3">
             {items.map((_, i) => (
               <button
+                type={"button"}
                 key={i}
                 onClick={() => scrollToIndex(i)}
                 aria-label={t("jump-back-in_goto", { index: i + 1 })}

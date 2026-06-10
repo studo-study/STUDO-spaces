@@ -327,6 +327,7 @@ function FlashcardModeInner({
           }
         >
           <button
+            type={"button"}
             onClick={goBack}
             className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer rounded-full flex items-center justify-center"
           >
@@ -337,6 +338,7 @@ function FlashcardModeInner({
           </span>
           |<span className={"w-1/3 text-center"}>{shuffled.length}</span>
           <button
+            type={"button"}
             onClick={goForward}
             className="w-12 h-10 sm:w-15 sm:h-12 cursor-pointer rounded-full flex items-center justify-center"
           >

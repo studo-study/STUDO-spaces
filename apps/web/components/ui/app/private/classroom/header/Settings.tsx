@@ -22,6 +22,7 @@ export default function TriggerSettings({
 
   return (
     <button
+      type={"button"}
       onClick={togglePopUp}
       ref={containerRef}
       className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
@@ -112,6 +113,7 @@ function SettingsPopup({
       {/* Menu Items */}
       <div className="relative flex flex-col gap-2">
         <button
+          type={"button"}
           onClick={(e) => e.stopPropagation()}
           className={`group relative flex items-center px-4 py-3 rounded-xl
               text-xs sm:text-sm font-medium text-white min-h-15
@@ -132,6 +134,7 @@ function SettingsPopup({
           {t("mute")}
         </button>
         <button
+          type={"button"}
           onClick={(e) => e.stopPropagation()}
           className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl
               text-studodarkblue dark:text-white min-h-15

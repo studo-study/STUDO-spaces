@@ -83,6 +83,7 @@ export default function CreateFolder({
         className={`relative w-1/5 p-7 rounded-2xl bg-white/80 dark:bg-[#1e293b] border border-white/50 dark:border-white/10 shadow-xl transition-all duration-300 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}`}
       >
         <button
+          type={"button"}
           onClick={close}
           className="absolute top-2 right-2 p-1 rounded-full hover:bg-studogrey transition-colors cursor-pointer"
         >
@@ -110,9 +111,10 @@ export default function CreateFolder({
         />
 
         <button
+          type={"button"}
           onClick={handleSubmit}
           disabled={mutation.isPending}
-          className="w-full h-12 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 text-white font-bold border border-studoborder active:scale-95 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full h-12 rounded-full bg-linear-to-br from-violet-400 to-purple-500 text-white font-bold border border-studoborder active:scale-95 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {mutation.isPending ? "..." : t("button")}
         </button>

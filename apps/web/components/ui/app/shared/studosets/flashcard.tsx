@@ -140,6 +140,7 @@ export default function Flashcard({ cards = [], id }: FlashcardProps) {
           }
         >
           <button
+            type={"button"}
             onClick={goBack}
             className={
               "w-15 h-12 cursor-pointer flex flex-row items-center justify-center"
@@ -156,6 +157,7 @@ export default function Flashcard({ cards = [], id }: FlashcardProps) {
             <span className={"w-1/3 text-center"}>{cards.length}</span>
           </div>
           <button
+            type={"button"}
             onClick={goForward}
             className={
               "w-15 h-12 cursor-pointer rounded-full shadow-3xl flex flex-row items-center justify-center"
@@ -241,6 +243,7 @@ function Card({ card, shuffleMode, toggleShuffle, id }: CardProps) {
           onClick={(e) => e.stopPropagation()}
         >
           <button
+            type={"button"}
             onClick={(e) => {
               e.stopPropagation();
               toggleShuffle();
@@ -268,6 +271,7 @@ function Card({ card, shuffleMode, toggleShuffle, id }: CardProps) {
           onClick={(e) => e.stopPropagation()}
         >
           <button
+            type={"button"}
             onClick={(e) => {
               e.stopPropagation();
               toggleShuffle();

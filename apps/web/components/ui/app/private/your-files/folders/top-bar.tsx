@@ -12,6 +12,7 @@ export default function FolderTopBar() {
         }
       >
         <button
+          type={"button"}
           onClick={toggleCreate}
           className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
         >

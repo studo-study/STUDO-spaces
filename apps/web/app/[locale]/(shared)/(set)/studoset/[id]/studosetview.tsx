@@ -179,14 +179,15 @@ export default function StudosetView({ id }: viewProps) {
           </div>
         )}
         <div className={"w-full flex flex-row gap-2 items-center"}>
-          <div
+          <button
+            type={"button"}
             onClick={() => {
               toggleLike();
             }}
             className={`${isOwner ? "pointer-events-none opacity-40" : "cursor-pointer active:scale-95 transition-all duration-300"}`}
           >
             {liked ? <FaHeart className={"text-rose-500"} /> : <FaRegHeart />}
-          </div>
+          </button>
           <span>
             {likes?.length} {likes?.length != 1 ? t("likes") : t("like")}
           </span>

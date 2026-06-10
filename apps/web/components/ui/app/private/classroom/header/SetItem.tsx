@@ -51,7 +51,8 @@ export default function SetItem({
   };
 
   return (
-    <div
+    <button
+      type={"button"}
       onClick={toggleCheck}
       className={
         "w-full h-15 cursor-pointer rounded-full bg-studogrey/30 flex flex-row items-center justify-between px-2.5 pr-5"
@@ -97,7 +98,7 @@ export default function SetItem({
     transition duration-150 ease-in-out cursor-pointer"
         />
       </div>
-    </div>
+    </button>
   );
 }
 

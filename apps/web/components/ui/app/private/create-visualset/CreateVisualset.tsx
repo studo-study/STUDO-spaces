@@ -52,7 +52,7 @@ export default function CreateVisualsetForm() {
       const data = await res.json();
       setFolders(data);
     };
-    fetchFolders();
+    fetchFolders().then();
   }, []);
 
   const handleFileUpload = useCallback(
@@ -144,7 +144,7 @@ export default function CreateVisualsetForm() {
       if (images.length > 1) {
         setImages((prev) => prev.filter((_, i) => i !== index));
         if (activeImageIndex >= index && activeImageIndex > 0) {
-          setActiveImageIndex(activeImageIndex - 1);
+          setActiveImageIndex((prev) => prev - 1);
         }
       }
     },

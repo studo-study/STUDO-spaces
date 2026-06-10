@@ -20,6 +20,7 @@ export default function TriggerNotif({
 
   return (
     <button
+      type={"button"}
       onClick={() => {
         togglePopUp();
       }}

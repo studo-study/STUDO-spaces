@@ -81,6 +81,7 @@ export default function AppHeader({
         {/* Left section */}
         <div className="flex items-center gap-8 min-w-1/4">
           <button
+            type={"button"}
             onClick={toggleSidebar}
             className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb"
           >

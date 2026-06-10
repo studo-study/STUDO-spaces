@@ -23,7 +23,8 @@ export default function IssueItem({ item, status }: IssueProps) {
     setIsOpen(!isOpen);
   };
   return (
-    <div
+    <button
+      type={"button"}
       onClick={toggleOpen}
       className={
         "relative w-full handle min-h-fit flex cursor-pointer active:cursor-grabbing flex-col gap-2 border border-studoborder/30 bg-studogrey/30 rounded-2xl p-3"
@@ -83,7 +84,7 @@ export default function IssueItem({ item, status }: IssueProps) {
       <PopupBackdrop isOpen={isOpen} setIsOpen={toggleOpen}>
         <IssueDetails />
       </PopupBackdrop>
-    </div>
+    </button>
   );
 }
 
