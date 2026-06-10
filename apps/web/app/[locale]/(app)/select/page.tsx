@@ -42,7 +42,7 @@ export default function SelectPage() {
         >
           <span
             className={
-              "font-akira text-5xl truncate bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent "
+              "font-akira text-5xl truncate bg-linear-to-r from-white to-blue-200 bg-clip-text text-transparent "
             }
           >
             STUDO
@@ -79,7 +79,7 @@ export default function SelectPage() {
           <h2 className={"text-3xl text-white font-bold h-fit "}>Free</h2>
           <p className={"text-white/50 text-lg h-10"}>{t("free_expl")}</p>
           <div className={"w-ful h-60 flex flex-col gap-5"}>
-            {free.map((item, i) => (
+            {free.map((item) => (
               <span
                 key={item.feature}
                 className={
