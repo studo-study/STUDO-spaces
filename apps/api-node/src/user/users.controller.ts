@@ -347,27 +347,4 @@ export class UserController {
 
     return this.userService.headerInfo(user_id);
   }
-
-  // GET COURSE ----------------------------------------------------
-
-  @ApiOperation({ summary: 'Haal user vakken op.' })
-  @ApiParam({ name: 'user_id', type: String })
-  @ApiResponse({
-    status: 200,
-    description: 'Course informatie opgehaald',
-    type: HeaderResposneDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get('/:user_id/course/:course_id')
-  async getCourse(
-    @Param('user_id', ParseUserIdPipe) user_id: string,
-    @Param('course_id', ParseUserIdPipe) course_id: string,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<types.AllsetsResponse> {
-    if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
-      throw new NotFoundException('Course not found');
-    }
-    return this.userService.getCourse(user_id, course_id);
-  }
 }

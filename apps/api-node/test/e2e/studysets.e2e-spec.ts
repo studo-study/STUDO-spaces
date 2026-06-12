@@ -14,7 +14,6 @@ import { seedStudysessions, clearStudysessions } from '../seeds/studysessions';
 import { clearSessioncards, seedSessioncards } from '../seeds/sessioncards';
 import { login, loginAdmin } from '../helpers/login';
 import { clearUsers, seedUsers } from '../seeds/users';
-import { clearFolders, seedFolders } from '../seeds/folders';
 import { clearProfiles, seedProfiles } from '../seeds/profiles';
 import { clearCards, seedCards } from '../seeds/cards';
 
@@ -47,14 +46,12 @@ describe('Studysets', () => {
     await clearSetlikes(db);
     await clearCards(db);
     await clearStudysets(db);
-    await clearFolders(db);
     await clearProfiles(db);
     await clearUsers(db);
 
     // Seed in correct order
     await seedUsers(app, db);
     await seedProfiles(db);
-    await seedFolders(db);
     await seedStudysets(db);
     await seedStudysessions(db);
     await seedCards(db);
@@ -73,7 +70,6 @@ describe('Studysets', () => {
     await clearSetlikes(db);
     await clearCards(db);
     await clearStudysets(db);
-    await clearFolders(db);
     await clearProfiles(db);
     await clearUsers(db);
     await app.close();

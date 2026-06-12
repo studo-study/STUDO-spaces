@@ -523,10 +523,6 @@ export class UserService {
     return result;
   }
 
-  async getCourses(_user_id: string): Promise<string[]> {
-    return [];
-  }
-
   async getClassmateActivity(user_id: string): Promise<ClassActivities[]> {
     const userClassrooms = await this.db.query.classroomusers.findMany({
       where: eq(classroomusers.user_id, user_id),
@@ -552,55 +548,6 @@ export class UserService {
 
     return userArray;
   }
-
-  async getCourse(
-    user_id: string,
-    course_id: string,
-  ): Promise<AllsetsResponse> {
-    //er kunnen ook geen sessies zijn
-    const sessies: Studysession[] = await this.db.query.studysessions.findMany({
-      where: eq(studysessions.user_id, user_id),
-    });
-
-    // Gebruik Set om duplicaten te voorkomen
-    const ssids = [
-      ...new Set(
-        sessies
-          .filter((sess) => sess.set_type === 'studyset')
-          .map((sess) => sess.set_id),
-      ),
-    ];
-
-    const vsids = [
-      ...new Set(
-        sessies
-          .filter((sess) => sess.set_type === 'visualset')
-          .map((sess) => sess.set_id),
-      ),
-    ];
-
-    // Gebruik inArray() om alle sets in één query op te halen
-    let ss: StudysetResponse[] = [];
-    let vs: VisualsetResponse[] = [];
-
-    if (ssids.length > 0) {
-      ss = await this.db.query.studysets.findMany({
-        where: inArray(studysets.id, ssids),
-      });
-    }
-
-    if (vsids.length > 0) {
-      vs = await this.db.query.visualsets.findMany({
-        where: inArray(visualsets.id, vsids),
-      });
-    }
-
-    return {
-      studysets: ss,
-      visualsets: vs,
-    };
-  }
-
   async getBoards(user_id: string): Promise<Boards[]> {
     const owner = await this.db.query.users.findFirst({
       where: eq(users.id, user_id),

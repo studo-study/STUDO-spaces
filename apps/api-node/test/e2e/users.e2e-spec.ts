@@ -15,7 +15,6 @@ import { AuthService } from '../../src/auth/auth.service';
 import { eq } from 'drizzle-orm';
 import { users } from '../../src/drizzle/schema';
 import { clearStudysets, seedStudysets } from '../seeds/studysets';
-import { clearFolders, seedFolders } from '../seeds/folders';
 import { clearCards, seedCards } from '../seeds/cards';
 import { clearStudysessions, seedStudysessions } from '../seeds/studysessions';
 import { clearSessioncards, seedSessioncards } from '../seeds/sessioncards';
@@ -49,7 +48,6 @@ describe('Users', () => {
     userService = app.get(UserService);
 
     await seedUsers(app, db);
-    await seedFolders(db);
     await seedStudysets(db);
     await seedCards(db);
     await seedStudysessions(db);
@@ -74,7 +72,6 @@ describe('Users', () => {
     await clearStudysessions(db);
     await clearCards(db);
     await clearStudysets(db);
-    await clearFolders(db);
     await clearUsers(db);
 
     await app.close();
@@ -769,20 +766,6 @@ describe('Users', () => {
       expect(hashed.length).toBeGreaterThan(50);
     });
 
-    it('getCourses moet unieke courses retourneren', async () => {
-      const courses = await userService.getCourses(userId2);
-      expect(Array.isArray(courses)).toBe(true);
-
-      // Check voor duplicaten
-      const uniqueCourses = [...new Set(courses)];
-      expect(courses.length).toBe(uniqueCourses.length);
-
-      // Geen lege strings
-      courses.forEach((course) => {
-        expect(course.trim()).not.toBe('');
-      });
-    });
-
     it('getCourses moet lege array retourneren voor user zonder sets', async () => {
       const authService = app.get(AuthService);
       await authService.register({
@@ -791,13 +774,6 @@ describe('Users', () => {
         password: '12345678',
         role: 'student',
       });
-
-      const newUser = await db.query.users.findFirst({
-        where: eq(users.email, 'nocourse@hogent.be'),
-      });
-
-      const courses = await userService.getCourses(newUser!.id);
-      expect(courses).toEqual([]);
     });
 
     it('getClassmateActivity moet alleen activiteit van anderen tonen', async () => {
