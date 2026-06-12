@@ -56,7 +56,7 @@ export interface FlowBoardOverview {
 }
 
 export interface CreateFlowCourse {
-  board_id: string;
+  board_id?: string;
   title: string;
   icon: string;
   description?: string;
@@ -75,7 +75,7 @@ export interface UpdateFlowCourse {
 
 export interface FlowCourseResponse {
   id: string;
-  board_id: string;
+  board_id: string | null;
   added_by_display_name: string;
   added_by_id: string;
   title: string;

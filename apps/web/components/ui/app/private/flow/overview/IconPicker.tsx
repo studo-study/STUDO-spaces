@@ -60,7 +60,7 @@ import { IconType } from "react-icons";
 import { CiViewTable } from "react-icons/ci";
 import { useTranslations } from "next-intl";
 
-const ICONS: Record<string, IconType> = {
+export const ICONS: Record<string, IconType> = {
   default: CiViewTable,
   book: FiBook,
   code: FiCode,
@@ -99,7 +99,7 @@ const ICONS: Record<string, IconType> = {
   wind: FiWind,
 };
 
-const COURSES: Record<string, IconType> = {
+export const COURSES: Record<string, IconType> = {
   ...ICONS,
   // extra course-specifieke iconen
   percent: FiPercent,
@@ -131,7 +131,7 @@ interface FlowColor {
   ring: string;
 }
 
-const COLORS: FlowColor[] = [
+export const COLORS: FlowColor[] = [
   {
     name: "emerald",
     bg: "bg-emerald-400/20",

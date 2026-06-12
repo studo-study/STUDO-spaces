@@ -3,8 +3,8 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { type FullClassroom, type FullClassroomSet } from "@/types/types";
 import Image from "next/image";
-import CourseIcons from "@/data";
 import { useState } from "react";
+import CourseIcons from "@/data";
 
 interface ListItemProps {
   items: FullClassroom;
@@ -145,8 +145,8 @@ function ListItem({ set, t }: SetItemProps) {
             width={0}
             height={0}
             className={"w-8"}
-            src={getCoverImage(set.course)}
-            alt={set.course}
+            src={getCoverImage(set.title)}
+            alt={set.title}
           />
         </div>
         <div className={"w-fit flex flex-col pt-1"}>
@@ -173,11 +173,10 @@ function ListItem({ set, t }: SetItemProps) {
   );
 }
 
-function getCoverImage(course: string): string {
+function getCoverImage(title: string): string {
   const key = Object.keys(CourseIcons).find((k) =>
-    course.toLowerCase().includes(k),
+    title.toLowerCase().includes(k),
   ) as keyof typeof CourseIcons | undefined;
-
   return key
     ? `/icons/courses/${CourseIcons[key]}`
     : "/icons/courses/default.svg";

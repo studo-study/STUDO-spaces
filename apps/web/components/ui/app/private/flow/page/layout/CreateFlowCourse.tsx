@@ -22,8 +22,8 @@ import { LuLink } from "react-icons/lu";
 interface CreateFlowBoardProps {
   createOpen: boolean;
   setCreateOpen: (open: boolean) => void;
-  board_title: string;
-  board_id: string;
+  board_title?: string;
+  board_id?: string;
 }
 
 const CreateFlowBoard = (props: CreateFlowBoardProps) => {
@@ -117,7 +117,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
       icon: selectedIcon,
       description: description,
       exam_date: examDate,
-      board_id: board_id,
+      board_id: board_id ?? null,
       resource: link,
       lesson_days: days.join("-"),
     };
@@ -157,24 +157,37 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
         className={"p-0"}
       >
         <div className="w-full gap-1 dark:text-blue-400 text-emerald-400 absolute top-2 left-2 flex flex-row items-center">
-          <span
-            className={
-              "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
-            }
-          >
-            {" "}
-            {board_title}
-          </span>
-          <FaChevronRight size={12} />
-          <span
-            className={
-              "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
-            }
-          >
-            {" "}
-            {t("create_title")}
-          </span>
+          {board_title ? (
+            <div>
+              <span
+                className={
+                  "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
+                }
+              >
+                {" "}
+                {board_title}
+              </span>
+              <FaChevronRight size={12} />
+              <span
+                className={
+                  "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
+                }
+              >
+                {" "}
+                {t("create_title")}
+              </span>
+            </div>
+          ) : (
+            <span
+              className={
+                "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
+              }
+            >
+              {t("create_course")}
+            </span>
+          )}
         </div>
+
         <div className={"w-fit absolute top-2 right-2 flex flex-row gap-2"}>
           <IconButton
             onSubmit={onClose}

@@ -8,11 +8,12 @@ import {
   useUser,
 } from "@/components/providers/auth/UserProvider";
 import ConsoleEasterEgg from "@/components/ui/overige/easteregg/console";
-import CreateFolder from "@/components/ui/app/private/create-folder/CreateFolder";
+import CreateFlowcourse from "@/components/ui/app/private/create-flowcourse/CreateFlowcourse";
 import AppLayoutContext from "@/components/context/AppLayoutContext";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
+import CreateFlowCourse from "@/components/ui/app/private/flow/page/layout/CreateFlowCourse";
 
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
@@ -83,7 +84,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
           </div>
         </div>
       </div>
-      <CreateFolder createOpen={createOpen} setCreateOpen={setCreateOpen} />
+      <CreateFlowCourse createOpen={createOpen} setCreateOpen={setCreateOpen} />
       <ConsoleEasterEgg />
     </AppLayoutContext.Provider>
   );

@@ -99,7 +99,6 @@ export interface LastStudied {
   id: string;
   last_studied: string;
   title: string;
-  course: string;
   type: string;
   progress: number;
   length: number;
@@ -135,7 +134,6 @@ export interface ClassActivity {
 
 export interface StartPage {
   lastTen: LastStudied[];
-  courses: string[];
   class: ClassActivity[];
 }
 
@@ -203,16 +201,14 @@ export interface SetLikeListResponse {
 
 export interface CreateStudyset {
   title: string;
-  course: string;
   global_term_language: string;
   global_definition_language: string;
-  folder_id?: string;
+  flowcourse_id?: string;
   cardlist: CreateCard[];
 }
 
 export interface UpdateStudyset {
   title?: string;
-  course?: string;
   global_term_language?: string;
   global_definition_language?: string;
   public_set?: boolean;
@@ -222,7 +218,6 @@ export interface UpdateStudyset {
 export interface Studyset {
   id: string;
   title: string;
-  course: string;
   global_term_language: string;
   global_definition_language: string;
   created_at: string;
@@ -231,7 +226,6 @@ export interface Studyset {
   displayName: string;
   img_url: string;
   user_id: string;
-  folder_id: string;
 }
 
 export interface FullStudyset extends Studyset {
@@ -239,7 +233,6 @@ export interface FullStudyset extends Studyset {
   likes: SetLike[];
   session: StudySession | null;
   classrooms?: Classroom[];
-  folders?: Folder[];
 }
 
 export interface StudysetListResponse {
@@ -285,8 +278,6 @@ export interface ImageWithPins extends Image {
 
 export interface CreateVisualset {
   title: string;
-  subject: string;
-  folder_id: string;
   images: CreateImage[];
   pins: CreatePin[];
 }
@@ -294,8 +285,6 @@ export interface CreateVisualset {
 export interface UpdateVisualset {
   title?: string;
   public_set?: boolean;
-  course?: string;
-  folder_id?: string;
   images?: UpdateImage[];
   pins?: UpdatePin[];
 }
@@ -303,14 +292,12 @@ export interface UpdateVisualset {
 export interface Visualset {
   id: string;
   title: string;
-  course: string;
   created_at: string;
   last_updated: string;
   public_set: boolean;
   user_id: string;
   displayName: string;
   img_url: string;
-  folder_id: string;
 }
 
 export interface FullVisualset extends Visualset {
@@ -430,7 +417,6 @@ export interface ClassroomSet {
 
 export interface FullClassroomSet extends ClassroomSet {
   title: string;
-  course: string;
   owner: string;
   created_at: string;
 }
@@ -651,7 +637,6 @@ interface RecentSet {
   set_id: string;
   last_studied: string;
   title: string;
-  course: string;
   type: "studyset" | "visualset";
   progress: number;
   length: number;

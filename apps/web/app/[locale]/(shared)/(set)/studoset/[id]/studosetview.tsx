@@ -4,7 +4,6 @@ import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/app/shared/studosets/CardList";
 import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
-import { IoFolderOpenOutline } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import SavedPopup from "@/components/ui/app/shared/studosets/savedpopup";
 import ClassroomPopup from "@/components/ui/app/shared/studosets/classroompopup";
@@ -156,14 +155,6 @@ export default function StudosetView({ id }: viewProps) {
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
-        {data?.folder_id && (
-          <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
-            <IoFolderOpenOutline />
-            <span>
-              {t("saved_in")}: {data?.folders?.[0]?.name}
-            </span>
-          </div>
-        )}
         {data?.classrooms?.[0] && (
           <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
             <Image

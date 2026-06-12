@@ -12,7 +12,6 @@ import { StudysetResponse, type VisualsetResponse } from "@studo/types";
 export interface StudySetItem {
   id: string;
   title: string;
-  course: string;
   studoset?: boolean;
   global_term_language?: string;
   global_definition_language?: string;
@@ -22,8 +21,8 @@ export interface StudySetItem {
   displayName: string;
   img_url: string;
   user_id: string;
-  folder_id?: string | null;
   type: "studyset" | "visualset";
+  flowcourse_icon?: string;
 }
 
 export default function Grid() {
@@ -51,11 +50,7 @@ export default function Grid() {
     let result = allSets;
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(
-        (s) =>
-          s.title.toLowerCase().includes(q) ||
-          s.course.toLowerCase().includes(q),
-      );
+      result = result.filter((s) => s.title.toLowerCase().includes(q));
     }
     if (sortMode === "recent")
       return [...result].sort(

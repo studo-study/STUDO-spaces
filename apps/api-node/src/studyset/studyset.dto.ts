@@ -15,6 +15,7 @@ import {
   IsBoolean,
   IsOptional,
   ValidateNested,
+  IsString as IsStringValidator,
 } from 'class-validator';
 
 export class CreateStudysetDto {
@@ -38,6 +39,15 @@ export class CreateStudysetDto {
   })
   @IsString({ name: 'global_definition_language', maxLength: 2 })
   global_definition_language: string;
+
+  @ApiProperty({
+    example: 'abc-123',
+    description: 'Optional flowcourse ID to link this set to',
+    required: false,
+  })
+  @IsStringValidator()
+  @IsOptional()
+  flowcourse_id?: string;
 
   @IsArray()
   @ValidateNested({ each: true })
@@ -191,6 +201,10 @@ export class StudysetResponseDto {
   @ApiProperty({ example: 75, required: false })
   @Expose()
   progress?: number;
+
+  @ApiProperty({ example: 'blue:bookopen', required: false })
+  @Expose()
+  flowcourse_icon?: string;
 }
 
 export class fullSetResponseDto extends StudysetResponseDto {

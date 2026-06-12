@@ -12,11 +12,12 @@ import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import InputField from "@/components/ui/design_system/input/InputField";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { useFolders } from "@/hooks/app/folders/useFolders";
+import { useFlowcourses } from "@/hooks/app/flow/useFlowcourses";
 import JumpToBottom from "./JumpToBottom";
 import { useInView } from "react-intersection-observer";
 import { SuggestionImage } from "@studo/types";
 import InputSelect from "@/components/ui/design_system/select/InputSelect";
+import ComboBox from "@/components/ui/design_system/select/ComboBox";
 
 const LANGUAGES = [
   { code: "en", name: "English" },
@@ -30,8 +31,7 @@ const DRAFT_KEY = "create-studoset-draft";
 
 type Draft = {
   title: string;
-  course: string;
-  folder_id: string;
+  flowcourse_id: string;
   termLang: string;
   defLang: string;
   cardArray: CardData[];
@@ -54,7 +54,7 @@ export default function CreateStudosetForm() {
   const router = useRouter();
   const mutation = useCreateStudyset();
   const toast = useToast();
-  const folders = useFolders().data?.folders ?? [];
+  const { data: flowcourses = [] } = useFlowcourses();
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLFormElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -85,11 +85,10 @@ export default function CreateStudosetForm() {
   const [hasDraft, setHasDraft] = useState(false);
   const [cardArray, setCardArray] = useState<CardData[]>([firstCard()]);
 
-  const [folderId, setFolderId] = useState<string>("");
+  const [flowcourseId, setFlowcourseId] = useState<string>("");
   const [termLang, setTermLang] = useState<string>("");
   const [defLang, setDefLang] = useState<string>("");
   const titleRef = useRef<HTMLInputElement>(null);
-  const courseRef = useRef<HTMLInputElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   const cardRefsMap = useRef<
@@ -116,15 +115,13 @@ export default function CreateStudosetForm() {
   const saveDraft = () => {
     const d: Draft = {
       title: titleRef.current?.value ?? "",
-      course: courseRef.current?.value ?? "",
-      folder_id: folderId,
+      flowcourse_id: flowcourseId,
       termLang,
       defLang,
       cardArray,
     };
     const hasContent =
       d.title.trim() !== "" ||
-      d.course.trim() !== "" ||
       d.cardArray.some(
         (c) => c.term.trim() !== "" || c.definition.trim() !== "",
       );
@@ -141,8 +138,7 @@ export default function CreateStudosetForm() {
     setHasDraft(true);
     if (d.cardArray.length > 0) setCardArray(d.cardArray);
     if (titleRef.current) titleRef.current.value = d.title;
-    if (courseRef.current) courseRef.current.value = d.course;
-    setFolderId(d.folder_id);
+    if (d.flowcourse_id) setFlowcourseId(d.flowcourse_id);
     setTermLang(d.termLang);
     setDefLang(d.defLang);
   }, []);
@@ -163,21 +159,15 @@ export default function CreateStudosetForm() {
     setHasDraft(false);
     setCardArray([firstCard()]);
     if (titleRef.current) titleRef.current.value = "";
-    if (courseRef.current) courseRef.current.value = "";
-    setFolderId("");
+    setFlowcourseId("");
     setTermLang("");
     setDefLang("");
   };
   const validate = (): boolean => {
     const title = titleRef.current?.value?.trim();
-    const course = courseRef.current?.value?.trim();
 
     if (!title) {
       toast.error(t("title_error"));
-      return false;
-    }
-    if (!course) {
-      toast.error(t("course_error"));
       return false;
     }
 
@@ -212,10 +202,9 @@ export default function CreateStudosetForm() {
 
     const body = {
       title: titleRef.current!.value.trim(),
-      course: courseRef.current!.value.trim(),
       global_term_language: termLang,
       global_definition_language: defLang,
-      folder_id: folderId,
+      ...(flowcourseId ? { flowcourse_id: flowcourseId } : {}),
       cardlist: cardArray.map((card, i) => ({
         term: card.term.trim().slice(0, 500),
         definition: card.definition.trim().slice(0, 500),
@@ -397,49 +386,28 @@ export default function CreateStudosetForm() {
                 onKeyDown={(e) => {
                   if (e.key === "Tab") {
                     e.preventDefault();
-                    courseRef.current?.focus();
                   }
                 }}
               />
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
-              <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-                <InputField
-                  ref={courseRef}
-                  variant={"cardInput"}
-                  placeholder={t("course_placeholder")}
-                  data-cy="course_input"
-                  onChange={saveDraft}
-                  onKeyDown={(e) => {
-                    if (e.key === "Tab" && !e.shiftKey) {
-                      e.preventDefault();
-                      if (cardArray.length > 0) {
-                        getCardRefs(cardArray[0].id).term.current?.focus();
-                      }
-                    }
-                  }}
-                />
-              </div>
-
-              <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-                <InputSelect
-                  title={t("select_folder")}
-                  options={[
-                    { value: "", label: t("folder_placeholder") },
-                    ...(folders?.map((item) => ({
-                      value: item.id,
-                      label: item.name,
-                    })) ?? []),
-                  ]}
-                  value={folderId}
+              <div className="w-full gap-1 flex flex-col h-fit">
+                <ComboBox
+                  title={t("course_placeholder")}
+                  options={flowcourses.map((c) => ({
+                    value: c.id,
+                    label: c.title,
+                  }))}
+                  value={flowcourseId}
                   onChange={(value) => {
-                    setFolderId(String(value));
+                    setFlowcourseId(String(value));
                     saveDraft();
                   }}
-                  dataCy="folder_select"
+                  dataCy="course_input"
                   size="lg"
                   tabIndex={-1}
+                  searchable
                 />
               </div>
             </div>

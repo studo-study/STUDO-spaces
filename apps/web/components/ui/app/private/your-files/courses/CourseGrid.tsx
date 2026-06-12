@@ -1,17 +1,14 @@
 "use client";
 import Image from "next/image";
 import CourseItem from "@/components/ui/app/private/your-files/courses/courseItem";
-import { useSets } from "@/hooks/app/sets/useSets";
+import { useFlowcourses } from "@/hooks/app/flow/useFlowcourses";
 import { useTranslations } from "next-intl";
 
 const CourseGrid = () => {
   const t = useTranslations("courses");
-  const { sets, visualsets } = useSets();
-  const courses = new Set<string>();
-  sets?.forEach((item: { course: string }) => courses.add(item.course));
-  visualsets?.forEach((item: { course: string }) => courses.add(item.course));
+  const { data: courses = [] } = useFlowcourses();
 
-  if ([...courses].length === 0) {
+  if (courses.length === 0) {
     return (
       <div className="w-full h-fit flex-1 flex-col gap-2 flex dark:text-white text-studodarkblue font-bold items-center pt-40">
         <Image
@@ -37,8 +34,8 @@ const CourseGrid = () => {
 
   return (
     <div className="w-full grid grid-cols-5 gap-5 scroll-hidden py-5">
-      {[...courses].map((item) => (
-        <CourseItem key={item} course={item} options />
+      {courses.map((course) => (
+        <CourseItem key={course.id} course={course} options />
       ))}
     </div>
   );

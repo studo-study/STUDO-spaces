@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import { Folder, Pin } from "@/types/types";
+import { Pin } from "@/types/types";
 import VsInput from "@/components/ui/app/private/create-visualset/VsInput";
 import VsFooter from "@/components/ui/app/private/create-visualset/VsFooter";
 
@@ -34,26 +34,12 @@ export default function CreateVisualsetForm() {
 
   const [isMutating, setIsMutating] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [folders, setFolders] = useState<{ folders: Folder[] }>({
-    folders: [],
-  });
   const [images, setImages] = useState<VisualsetImage[]>([createEmptyImage()]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const titleRef = useRef<HTMLInputElement>(null);
-  const courseRef = useRef<HTMLInputElement>(null);
-  const folderRef = useRef<HTMLSelectElement>(null);
 
   const currentImage = images[activeImageIndex];
-
-  useEffect(() => {
-    const fetchFolders = async () => {
-      const res = await fetch("/api/folders");
-      const data = await res.json();
-      setFolders(data);
-    };
-    fetchFolders();
-  }, []);
 
   const handleFileUpload = useCallback(
     (file: File) => {
@@ -169,8 +155,6 @@ export default function CreateVisualsetForm() {
   const validate = () => {
     const newErrors: Record<string, string> = {};
     if (!titleRef.current?.value) newErrors.title = "title_error";
-    if (!courseRef.current?.value) newErrors.course = "course_error";
-    if (!folderRef.current?.value) newErrors.folder = "folder_error";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -183,8 +167,6 @@ export default function CreateVisualsetForm() {
 
     const formData = new FormData();
     formData.append("title", titleRef.current!.value);
-    formData.append("subject", courseRef.current!.value);
-    formData.append("folder_id", folderRef.current!.value);
 
     const imagesMetadata = images.map((img, index) => ({
       title: img.title || `Image ${index + 1}`,
@@ -247,46 +229,6 @@ export default function CreateVisualsetForm() {
                   {t(errors.title)}
                 </span>
               )}
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
-            <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-              <input
-                ref={courseRef}
-                type="text"
-                autoComplete="off"
-                placeholder={t("course_placeholder")}
-                className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
-              />
-              <div className="h-5">
-                {errors.course && (
-                  <span className="w-full h-fit text-rose-500 px-5 flex">
-                    {t(errors.course)}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-              <select
-                ref={folderRef}
-                className="h-12 px-5 gap-5 text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
-              >
-                <option value="">{t("folder_placeholder")}</option>
-                {folders?.folders?.map((item) => (
-                  <option value={item.id} key={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-              <div className="h-5">
-                {errors.folder && (
-                  <span className="w-full h-fit text-rose-500 px-5 flex">
-                    {t(errors.folder)}
-                  </span>
-                )}
-              </div>
             </div>
           </div>
         </div>

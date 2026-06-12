@@ -102,7 +102,7 @@ export class FlowService {
 
     const base: FlowCourseResponse = {
       id: course.id,
-      board_id: course?.board_id ?? '',
+      board_id: course?.board_id ?? null,
       added_by_display_name: addedBy?.displayName ?? '',
       added_by_id: course.added_by,
       title: course.title,
@@ -227,6 +227,21 @@ export class FlowService {
     return Promise.all(boards.map((b) => this.mapBoardOverview(b, owner)));
   }
 
+  async getCoursesByUserId(userId: string): Promise<FlowCourseResponse[]> {
+    const boards = await this.db.query.flowboards.findMany({
+      where: eq(flowboards.owner_id, userId),
+    });
+    const courseRows = await Promise.all(
+      boards.map((b) =>
+        this.db.query.flowcourses.findMany({
+          where: eq(flowcourses.board_id, b.id),
+        }),
+      ),
+    );
+    const allCourses = courseRows.flat();
+    return Promise.all(allCourses.map((c) => this.mapCourse(c)));
+  }
+
   async createFlowboard(
     userId: string,
     body: CreateFlowBoard,
@@ -319,16 +334,18 @@ export class FlowService {
     userId: string,
     body: CreateFlowCourse,
   ): Promise<FlowCourseResponse> {
-    const board = await this.db.query.flowboards.findFirst({
-      where: eq(flowboards.id, body.board_id),
-    });
-    if (!board) throw new NotFoundException('Flowboard not found');
+    if (body.board_id) {
+      const board = await this.db.query.flowboards.findFirst({
+        where: eq(flowboards.id, body.board_id),
+      });
+      if (!board) throw new NotFoundException('Flowboard not found');
+    }
 
     const id = crypto.randomUUID();
 
     await this.db.insert(flowcourses).values({
       id,
-      board_id: body.board_id,
+      board_id: body.board_id ?? null,
       added_by: userId,
       title: body.title,
       icon: body.icon,
@@ -342,7 +359,7 @@ export class FlowService {
 
     return {
       id,
-      board_id: body.board_id,
+      board_id: body.board_id ?? null,
       added_by_display_name: addedBy?.displayName ?? '',
       added_by_id: userId,
       title: body.title,

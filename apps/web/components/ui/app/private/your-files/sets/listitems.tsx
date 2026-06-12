@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CourseIcons from "@/data";
 import { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
+import FlowIcon from "@/components/ui/app/private/flow/overview/FlowIcon";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { FiTrash2 } from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
@@ -59,24 +60,25 @@ function ListItem({ set, t, locale }: SetItemProps) {
     >
       <div className="flex flex-row gap-3 items-center w-full sm:w-1/2 sm:flex-1">
         <div className="w-17 h-17 rounded-2xl dark:bg-studogrey/30 bg-white flex items-center justify-center">
-          <Image
-            width={32}
-            height={32}
-            className="w-8"
-            src={getCoverImage(set.course)}
-            alt={set.course}
-          />
+          {set.flowcourse_icon ? (
+            <FlowIcon
+              icon={set.flowcourse_icon}
+              size={22}
+              className="w-10 h-10 rounded-lg"
+            />
+          ) : (
+            <Image
+              width={32}
+              height={32}
+              className="w-8"
+              src={getCoverImage(set.title)}
+              alt={set.title}
+            />
+          )}
         </div>
 
         <div className={"w-fit flex flex-col gap-1"}>
           <div className={"w-fit flex flex-row gap-2 items-center"}>
-            <Image
-              src={iconSrc}
-              width={20}
-              height={20}
-              className="dark:invert dark:opacity-50 dark:brightness-0 w-5 flex-shrink-0"
-              alt=""
-            />
             <span className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
               {set.title}
             </span>
@@ -86,8 +88,6 @@ function ListItem({ set, t, locale }: SetItemProps) {
               "w-full flex flex-row gap-2 items-center opacity-50 dark:text-white text-xs"
             }
           >
-            <span>{set.course}</span>
-            {set.last_updated && <span>•</span>}
             <span>{set.last_updated && date}</span>
           </div>
         </div>
@@ -122,9 +122,9 @@ function ListItem({ set, t, locale }: SetItemProps) {
   );
 }
 
-function getCoverImage(course: string): string {
+function getCoverImage(title: string): string {
   const key = Object.keys(CourseIcons).find((k) =>
-    course.toLowerCase().includes(k),
+    title.toLowerCase().includes(k),
   ) as keyof typeof CourseIcons | undefined;
   return key
     ? `/icons/courses/${CourseIcons[key]}`

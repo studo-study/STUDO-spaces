@@ -74,7 +74,7 @@ export default function Overview() {
               </span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{set.title}</p>
-                <p className="truncate text-xs opacity-50">{set.course}</p>
+                <p className="truncate text-xs opacity-50">{set.displayName}</p>
               </div>
               <p className="shrink-0 text-xs opacity-40">{set.displayName}</p>
             </div>

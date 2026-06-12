@@ -28,7 +28,7 @@ const CourseSets = (props: CourseSetsProps) => {
       ...s,
       type: "visualset" as const,
     })),
-  ].filter((set) => set.course === course);
+  ];
 
   const router = useRouter();
   return (

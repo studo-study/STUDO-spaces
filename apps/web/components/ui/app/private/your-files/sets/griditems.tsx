@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
+import FlowIcon from "@/components/ui/app/private/flow/overview/FlowIcon";
 
 interface GridItemProps {
   items: StudySetItem[];
@@ -39,20 +40,24 @@ function GridItem({ set, locale }: SetItemProps) {
       <div className="h-0.5 w-full mb-3" />
 
       <div className="flex flex-row gap-3 items-center w-full px-7">
-        <Image
-          src={iconSrc}
-          width={20}
-          height={20}
-          className="invert opacity-50 brightness-0 w-5 flex-shrink-0"
-          alt=""
-        />
+        {set.flowcourse_icon ? (
+          <FlowIcon
+            icon={set.flowcourse_icon}
+            size={14}
+            className="w-6 h-6 rounded-md flex-shrink-0"
+          />
+        ) : (
+          <Image
+            src={iconSrc}
+            width={20}
+            height={20}
+            className="invert opacity-50 brightness-0 w-5 flex-shrink-0"
+            alt=""
+          />
+        )}
         <span className="dark:text-white text-studodarkblue font-bold text-base overflow-hidden truncate">
           {set.title}
         </span>
-      </div>
-
-      <div className="w-full px-7 flex flex-col gap-1">
-        <span className="text-white/30 text-sm">{set.course}</span>
       </div>
 
       <div className="w-full px-7 flex flex-row justify-between sm:gap-6">

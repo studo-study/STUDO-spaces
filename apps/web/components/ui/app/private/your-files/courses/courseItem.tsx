@@ -1,24 +1,22 @@
 "use client";
-import { useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import CourseIcons from "@/data";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
 import { useTranslations } from "next-intl";
+import type { FlowCourseResponse } from "@studo/types";
+import FlowIcon from "@/components/ui/app/private/flow/overview/FlowIcon";
 
 interface CourseCardProps {
-  course: string;
+  course: FlowCourseResponse;
   options?: boolean;
 }
 
 export default function CourseItem({ course, options }: CourseCardProps) {
-  const coverImage = useMemo(() => getCoverImage(course), [course]);
   const t = useTranslations("y_f.your_sets");
   return (
     <Link
-      href={`/apps/web/components/ui/app/app/your-files/courses/${course.replace(" ", "-")}`}
+      href={`/course/${course.id}`}
       className="relative min-w-35 group p-5 rounded-2xl bg-studogrey/30 border  border-studoborder/30 hover:border-studoborder transition-all duration-300 text-center"
     >
       {options && (
@@ -40,28 +38,16 @@ export default function CourseItem({ course, options }: CourseCardProps) {
           />
         </div>
       )}
-      <div className="min-w-12 min-h-12 w-12 h-12 max-w-12 mx-auto mb-3 rounded-full bg-white dark:bg-studogrey/30 flex items-center justify-center text-studodarkblue dark:text-white group-hover:scale-110 transition-transform duration-300">
-        <Image
-          src={coverImage}
-          alt=""
-          width={28}
-          height={28}
-          className="w-7 shadow-2xl"
+      <div className="mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 w-fit">
+        <FlowIcon
+          icon={course.icon}
+          size={22}
+          className="w-12 h-12 rounded-xl"
         />
       </div>
       <h3 className="font-medium dark:text-white text-studodarkblue mb-1">
-        {course}
+        {course.title}
       </h3>
     </Link>
   );
-}
-
-function getCoverImage(course: string): string {
-  const key = Object.keys(CourseIcons).find((k) =>
-    course.toLowerCase().includes(k),
-  ) as keyof typeof CourseIcons | undefined;
-
-  return key
-    ? `/icons/courses/${CourseIcons[key]}`
-    : "/icons/courses/default.svg";
 }

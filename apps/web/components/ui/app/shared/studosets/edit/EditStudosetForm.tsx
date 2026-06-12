@@ -65,7 +65,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
   const [cardArray, setCardArray] = useState<CardData[]>([firstCard()]);
 
   const titleRef = useRef<HTMLInputElement>(null);
-  const courseRef = useRef<HTMLInputElement>(null);
   const termLangRef = useRef<HTMLSelectElement>(null);
   const defLangRef = useRef<HTMLSelectElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
@@ -133,7 +132,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
       })),
     );
     if (titleRef.current) titleRef.current.value = set.title;
-    if (courseRef.current) courseRef.current.value = set.course;
     if (termLangRef.current)
       termLangRef.current.value = set.global_term_language;
     if (defLangRef.current)
@@ -149,16 +147,11 @@ export default function EditStudosetForm({ id }: EditsetProps) {
 
   const validate = (): boolean => {
     const title = titleRef.current?.value?.trim();
-    const course = courseRef.current?.value?.trim();
     const termLang = termLangRef.current?.value;
     const defLang = defLangRef.current?.value;
 
     if (!title) {
       toast.error(t("title_error"));
-      return false;
-    }
-    if (!course) {
-      toast.error(t("course_error"));
       return false;
     }
 
@@ -243,7 +236,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
 
     const body = {
       title: titleRef.current!.value.trim(),
-      course: courseRef.current!.value.trim(),
       global_term_language: termLangRef.current!.value,
       global_definition_language: defLangRef.current!.value,
       ...cardPayload,
@@ -413,25 +405,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      courseRef.current?.focus();
-                    }
-                  }}
-                />
-              </div>
-              <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-                <InputField
-                  ref={courseRef}
-                  variant={"cardInput"}
-                  placeholder={t("course_placeholder")}
-                  data-cy="course_input"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      if (cardArray.length > 0) {
-                        cardNodesRef.current
-                          .get(cardArray[0].id)
-                          ?.term?.focus();
-                      }
                     }
                   }}
                 />

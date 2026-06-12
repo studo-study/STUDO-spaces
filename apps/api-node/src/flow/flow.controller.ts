@@ -120,6 +120,17 @@ export class FlowController {
 
   // ─── FLOWCOURSES ──────────────────────────────────────────
 
+  @ApiOperation({ summary: 'Haal alle flowcourses op van een user.' })
+  @ApiParam({ name: 'user_id', type: String })
+  @ApiResponse({ status: 200, description: 'Flowcourses van user opgehaald' })
+  @Roles(Role.USER)
+  @Get('courses/user/:user_id')
+  async getCoursesByUserId(
+    @Param('user_id', ParseUserIdPipe) userId: string,
+  ): Promise<FlowCourseResponse[]> {
+    return this.flowService.getCoursesByUserId(userId);
+  }
+
   @ApiOperation({ summary: 'Haal een flowcourse op met rows.' })
   @ApiParam({ name: 'course_id', type: String })
   @ApiResponse({ status: 200, description: 'Flowcourse opgehaald' })

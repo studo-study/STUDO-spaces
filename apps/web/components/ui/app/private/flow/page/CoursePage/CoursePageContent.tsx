@@ -11,7 +11,7 @@ export default function CoursePageContent() {
   if (!activeCourse) return null;
 
   return (
-    <div className={"pt-8 px-2 flex flex-col gap-2 h-full"}>
+    <div className={"pt-8 px-2 flex flex-col gap-2 h-full w-full"}>
       <CoursePageHeader />
       {courseView === "table" && <CourseTable />}
       {courseView === "kanban" && <CourseKanban />}

@@ -30,6 +30,8 @@ import {
   classrooms,
   classroomsets,
   classroomusers,
+  flowcourse_sets,
+  flowcourses,
   pins,
   sessioncards,
   setlikes,
@@ -143,6 +145,13 @@ export class StudysetService {
       .where(eq(users.id, user_id));
     if (CARDS.length > 0) {
       await this.db.insert(cards).values(CARDS);
+    }
+    if (data.flowcourse_id) {
+      await this.db.insert(flowcourse_sets).values({
+        id: uuidv4(),
+        set_id: setId,
+        course_id: data.flowcourse_id,
+      });
     }
     await this.invalidateSyncCache(user_id);
     return set;
@@ -284,12 +293,29 @@ export class StudysetService {
         ),
     ]);
 
+    const flowcourseLinks =
+      allSetIds.length > 0
+        ? await this.db
+            .select({
+              set_id: flowcourse_sets.set_id,
+              icon: flowcourses.icon,
+            })
+            .from(flowcourse_sets)
+            .innerJoin(
+              flowcourses,
+              eq(flowcourse_sets.course_id, flowcourses.id),
+            )
+            .where(inArray(flowcourse_sets.set_id, allSetIds))
+        : [];
+
     const sets = allSets.map((set) => ({
       ...set,
       card_count: cardCounts.find((c) => c.set_id === set.id)?.count ?? 0,
       last_studied:
         allSessions.find((s) => s.set_id === set.id)?.last_studied ?? null,
       progress: allSessions.find((s) => s.set_id === set.id)?.accuracy ?? 0,
+      flowcourse_icon:
+        flowcourseLinks.find((f) => f.set_id === set.id)?.icon ?? undefined,
     }));
 
     // --- Visualsets ---
