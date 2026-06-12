@@ -3,7 +3,6 @@ import { VisualsetResponseDto } from '../visualset/visualset.dto';
 
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { ClassroomResponseDto } from '../classroom/classroom.dto';
-import { FolderResponseDto } from '../folder/folder.dto';
 import { IsString } from 'nestjs-swagger-dto';
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -18,16 +17,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-export class SaveToFolderDto {
-  @ApiProperty({
-    description: 'UUID van de doelfolder',
-    example: '550e8400-e29b-41d4-a716-446655440000',
-    format: 'uuid',
-  })
-  @IsString({ name: 'folder_id', minLength: 20 })
-  folder_id: string;
-}
-
 export class CreateStudysetDto {
   @ApiProperty({
     example: 'Heart Diagram',
@@ -35,13 +24,6 @@ export class CreateStudysetDto {
   })
   @IsString({ name: 'title', maxLength: 200 })
   title: string;
-
-  @ApiProperty({
-    example: 'English',
-    description: 'Course of the studoset',
-  })
-  @IsString({ name: 'course', maxLength: 100 })
-  course: string;
 
   @ApiProperty({
     example: 'en',
@@ -56,15 +38,6 @@ export class CreateStudysetDto {
   })
   @IsString({ name: 'global_definition_language', maxLength: 2 })
   global_definition_language: string;
-
-  @ApiProperty({
-    example: 'f45cd674-73a5-4d4f-abdb-b405981cd2b3',
-    description: 'Folder ID where the studoset belongs',
-    required: false,
-  })
-  @IsString({ name: 'folder_id', maxLength: 64 })
-  @IsOptional()
-  folder_id?: string;
 
   @IsArray()
   @ValidateNested({ each: true })
@@ -83,15 +56,6 @@ export class UpdateStudysetDto {
   @IsString({ name: 'title', maxLength: 200 })
   @IsOptional()
   title?: string;
-
-  @ApiProperty({
-    example: 'Biology',
-    description: 'Updated course of the studoset',
-    required: false,
-  })
-  @IsString({ name: 'course', maxLength: 100 })
-  @IsOptional()
-  course?: string;
 
   @ApiProperty({
     example: 'en',
@@ -161,13 +125,6 @@ export class StudysetResponseDto {
   title: string;
 
   @ApiProperty({
-    example: 'English',
-    description: 'Course name',
-  })
-  @Expose()
-  course: string;
-
-  @ApiProperty({
     example: 'en',
     description: 'Language code of the terms',
   })
@@ -223,14 +180,6 @@ export class StudysetResponseDto {
   @Expose()
   user_id: string;
 
-  @ApiProperty({
-    example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
-    description: 'Folder ID where the studoset belongs',
-    required: false,
-  })
-  @Expose()
-  folder_id?: string | null;
-
   @ApiProperty({ example: 12, required: false })
   @Expose()
   card_count?: number;
@@ -274,14 +223,6 @@ export class fullSetResponseDto extends StudysetResponseDto {
   })
   @Expose()
   classrooms: ClassroomResponseDto[] | undefined;
-
-  @ApiProperty({
-    description: 'Folders containing this studoset',
-    type: [FolderResponseDto],
-    required: false,
-  })
-  @Expose()
-  folders: FolderResponseDto[] | undefined;
 }
 
 export class UserStatsDto {

@@ -15,10 +15,7 @@ export class CheckUserAccessGuard implements CanActivate {
     }
 
     const id =
-      request.params.user_id ||
-      request.params.profile_id ||
-      request.params.folder_id ||
-      request.params.id;
+      request.params.user_id || request.params.profile_id || request.params.id;
 
     // "me" mag altijd (pipe handelt dit af)
     if (id === 'me') {

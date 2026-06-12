@@ -5,8 +5,7 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const session = await auth();
+  const [{ id }, session] = await Promise.all([params, auth()]);
   if (!session?.accessToken) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }

@@ -29,13 +29,6 @@ export class VisualsetResponseDto {
   title: string;
 
   @ApiProperty({
-    example: 'Biology',
-    description: 'Course name',
-  })
-  @Expose()
-  course: string;
-
-  @ApiProperty({
     description: 'tells if the set is created by studo',
   })
   @Expose()
@@ -83,14 +76,6 @@ export class VisualsetResponseDto {
   @Expose()
   img_url: string;
 
-  @ApiProperty({
-    example: 'folder123',
-    description: 'Folder ID',
-    required: false,
-  })
-  @Expose()
-  folder_id?: string | null;
-
   @ApiProperty({ example: 8, required: false })
   @Expose()
   pin_count?: number;
@@ -118,13 +103,6 @@ export class PublicVisualsetResponseDto {
   })
   @Expose()
   title: string;
-
-  @ApiProperty({
-    example: 'Biology',
-    description: 'Course name',
-  })
-  @Expose()
-  course: string;
 
   @ApiProperty({
     example: '2024-01-01T10:00:00.000Z',
@@ -401,20 +379,6 @@ export class CreateVisualsetDto {
   title: string;
 
   @ApiProperty({
-    example: 'Biology',
-    description: 'Subject of the ((visualset))',
-  })
-  @IsString({ name: 'subject', maxLength: 100 })
-  subject: string;
-
-  @ApiProperty({
-    example: 'folder123',
-    description: 'Folder ID',
-  })
-  @IsString({ name: 'folder_id', maxLength: 64 })
-  folder_id: string;
-
-  @ApiProperty({
     type: [CreateImageDto],
     description: 'Images in the ((visualset))',
   })
@@ -446,26 +410,6 @@ export class UpdateVisualsetDto {
   @IsBoolean()
   @IsOptional()
   public_set?: boolean;
-
-  @ApiProperty({
-    example: 'Chemistry',
-    description: 'Updated course',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  @MaxLength(100)
-  course?: string;
-
-  @ApiProperty({
-    example: 'folder123',
-    description: 'Folder ID',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  @MaxLength(64)
-  folder_id?: string;
 
   @ApiProperty({
     type: [UpdateImgDto],

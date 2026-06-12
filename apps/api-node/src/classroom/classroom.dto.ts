@@ -222,12 +222,6 @@ export class FullClassroomSetDto {
   title: string;
 
   @ApiProperty({
-    description: 'onderwerp van de set',
-    example: 'biology',
-  })
-  course: string;
-
-  @ApiProperty({
     description: 'UUID van de classroom',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',

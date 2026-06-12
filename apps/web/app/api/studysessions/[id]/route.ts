@@ -5,13 +5,14 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const session = await auth();
+  const [{ id }, session, body] = await Promise.all([
+    params,
+    auth(),
+    req.json(),
+  ]);
   if (!session?.accessToken) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-
-  const body = await req.json();
   const response = await fetch(
     `${process.env.AUTH_API_URL}/studysessions/${id}`,
     {

@@ -13,7 +13,6 @@ import {
   classroomactivities,
   classroomusers,
   classrooms,
-  folders,
   popular_sets,
   profiles,
   studoprofiles,
@@ -150,7 +149,6 @@ export class AdminService {
             .select({
               id: studysets.id,
               title: studysets.title,
-              course: studysets.course,
               displayName: studysets.displayName,
               img_url: studysets.img_url,
               user_id: studysets.user_id,
@@ -164,7 +162,6 @@ export class AdminService {
             .select({
               id: visualsets.id,
               title: visualsets.title,
-              course: visualsets.course,
               displayName: visualsets.displayName,
               img_url: visualsets.img_url,
               user_id: visualsets.user_id,
@@ -185,7 +182,6 @@ export class AdminService {
               rank: row.rank,
               type: 'studyset' as const,
               title: s.title,
-              course: s.course,
               displayName: s.displayName,
               img_url: s.img_url,
               user_id: s.user_id,
@@ -199,7 +195,6 @@ export class AdminService {
               rank: row.rank,
               type: 'visualset' as const,
               title: v.title,
-              course: v.course,
               displayName: v.displayName,
               img_url: v.img_url,
               user_id: v.user_id,
@@ -238,7 +233,6 @@ export class AdminService {
       recentStudysets,
       recentVisualsets,
       recentSessions,
-      userFolders,
       userClassrooms,
     ] = await Promise.all([
       this.db.query.profiles.findFirst({
@@ -261,9 +255,6 @@ export class AdminService {
         where: eq(studysessions.user_id, userId),
         orderBy: [desc(studysessions.started_at)],
         limit: 10,
-      }),
-      this.db.query.folders.findMany({
-        where: eq(folders.owner_id, userId),
       }),
       this.db
         .select({
@@ -336,7 +327,6 @@ export class AdminService {
       recentStudysets: recentStudysets.map((s) => ({ ...s, card_count: 0 })),
       recentVisualsets: recentVisualsets.map((v) => ({ ...v, pin_count: 0 })),
       recentSessions,
-      folders: userFolders,
       classrooms: userClassrooms,
       stats: {
         totalSessions: recentSessions.length,
@@ -344,7 +334,6 @@ export class AdminService {
         averageAccuracy: avgAccuracy,
         totalStudysets: recentStudysets.length,
         totalVisualsets: recentVisualsets.length,
-        totalFolders: userFolders.length,
         totalClassrooms: userClassrooms.length,
       },
     };

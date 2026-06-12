@@ -6,8 +6,7 @@ export default async function LearnPage({
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { id } = await params;
-  const session = await auth();
+  const [{ id }, session] = await Promise.all([params, auth()]);
   const token = session?.accessToken;
   const data = await fetch(`${process.env.AUTH_API_URL}/studysets/${id}`, {
     headers: { Authorization: `Bearer ${token}` },

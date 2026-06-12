@@ -6,14 +6,6 @@ export class CreateVisualsetWithFilesDto {
   @IsString()
   title: string;
 
-  @ApiProperty({ example: 'Biology' })
-  @IsString()
-  subject: string;
-
-  @ApiProperty({ example: 'folder123' })
-  @IsString()
-  folder_id: string;
-
   @ApiProperty({
     type: 'string',
     description: 'JSON string van images metadata (zonder URLs)',

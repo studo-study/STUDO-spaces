@@ -1,6 +1,5 @@
 import type { StudysetResponse } from "./studyset";
 import type { VisualsetResponse } from "./visualset";
-import type { FolderResponse } from "./folder";
 import type { Studysession } from "./studysession";
 
 export interface AdminRecentUser {
@@ -30,7 +29,6 @@ export interface AdminPopularSet {
   rank: number;
   type: "studyset" | "visualset";
   title: string;
-  course: string;
   displayName: string;
   img_url: string;
   user_id: string;
@@ -89,7 +87,6 @@ export interface AdminUserDetailStats {
   averageAccuracy: number;
   totalStudysets: number;
   totalVisualsets: number;
-  totalFolders: number;
   totalClassrooms: number;
 }
 
@@ -114,7 +111,6 @@ export interface AdminUserDetail {
   recentStudysets: StudysetResponse[];
   recentVisualsets: VisualsetResponse[];
   recentSessions: Studysession[];
-  folders: FolderResponse[];
   classrooms: AdminUserDetailClassroom[];
   stats: AdminUserDetailStats;
 }

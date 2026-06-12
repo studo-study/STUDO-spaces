@@ -40,7 +40,6 @@ export interface FullClassroomSet {
   set_id: string;
   set_type: string;
   title: string;
-  course: string;
   classroom_id: string;
   owner: string;
   added_by: string;

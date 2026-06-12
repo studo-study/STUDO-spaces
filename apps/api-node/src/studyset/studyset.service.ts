@@ -17,7 +17,6 @@ import {
   UpdateStudysetDto,
 } from './studyset.dto';
 
-import { SwitchFolderDto } from '../folder/folder.dto';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { CardResponseDto, CreateCardDto } from './card.dto';
 import { SetLikeResponseDto } from './setlike.dto';
@@ -31,8 +30,6 @@ import {
   classrooms,
   classroomsets,
   classroomusers,
-  folder_sets,
-  folders,
   pins,
   sessioncards,
   setlikes,
@@ -79,7 +76,6 @@ export class StudysetService {
     const set = {
       id: setId,
       title: data.title,
-      course: data.course,
       global_term_language: data.global_term_language,
       global_definition_language: data.global_definition_language,
       created_at: date.toISOString(),
@@ -138,15 +134,6 @@ export class StudysetService {
     await this.db.insert(studysets).values(set);
     await this.db.insert(studysessions).values(session);
 
-    if (data.folder_id) {
-      await this.db.insert(folder_sets).values({
-        id: uuidv6(),
-        user_id: user_id,
-        set_id: setId,
-        set_type: 'studyset',
-        folder_id: data.folder_id,
-      });
-    }
     await this.db
       .update(users)
       .set({
@@ -158,7 +145,7 @@ export class StudysetService {
       await this.db.insert(cards).values(CARDS);
     }
     await this.invalidateSyncCache(user_id);
-    return { ...set, folder_id: data.folder_id ?? null };
+    return set;
   }
 
   async createCard(
@@ -212,9 +199,7 @@ export class StudysetService {
 
   async getPublicById(
     set_id: string,
-  ): Promise<
-    Omit<fullSetResponseDto, 'session' | 'folders' | 'classrooms' | 'folder_id'>
-  > {
+  ): Promise<Omit<fullSetResponseDto, 'session' | 'classrooms'>> {
     const set = await this.db.query.studysets.findFirst({
       where: and(eq(studysets.id, set_id), eq(studysets.public_set, true)),
     });
@@ -283,17 +268,6 @@ export class StudysetService {
             .groupBy(cards.set_id)
         : [];
 
-    const folderEntries =
-      allSetIds.length > 0
-        ? await this.db.query.folder_sets.findMany({
-            where: and(
-              eq(folder_sets.user_id, user_id),
-              eq(folder_sets.set_type, 'studyset'),
-              inArray(folder_sets.set_id, allSetIds),
-            ),
-          })
-        : [];
-
     const [totalCardsResult, learnedCardsResult] = await Promise.all([
       this.db
         .select({ count: count() })
@@ -316,8 +290,6 @@ export class StudysetService {
       last_studied:
         allSessions.find((s) => s.set_id === set.id)?.last_studied ?? null,
       progress: allSessions.find((s) => s.set_id === set.id)?.accuracy ?? 0,
-      folder_id:
-        folderEntries.find((f) => f.set_id === set.id)?.folder_id ?? null,
     }));
 
     // --- Visualsets ---
@@ -355,25 +327,12 @@ export class StudysetService {
             .groupBy(pins.set_id)
         : [];
 
-    const vsFolderEntries =
-      allVSIds.length > 0
-        ? await this.db.query.folder_sets.findMany({
-            where: and(
-              eq(folder_sets.user_id, user_id),
-              eq(folder_sets.set_type, 'visualset'),
-              inArray(folder_sets.set_id, allVSIds),
-            ),
-          })
-        : [];
-
     const visualsetsMapped = allVisualsets.map((vs) => ({
       ...vs,
       pin_count: pinCounts.find((p) => p.set_id === vs.id)?.count ?? 0,
       last_studied:
         allVSSessions.find((s) => s.set_id === vs.id)?.last_studied ?? null,
       progress: allVSSessions.find((s) => s.set_id === vs.id)?.accuracy ?? 0,
-      folder_id:
-        vsFolderEntries.find((f) => f.set_id === vs.id)?.folder_id ?? null,
     }));
 
     const stats = {
@@ -427,11 +386,6 @@ export class StudysetService {
 
     const setclasses = classes.filter((c) => classroomIdsWithSet.has(c.id));
 
-    // Get user's folders
-    const foldrs = await this.db.query.folders.findMany({
-      where: eq(folders.owner_id, user_id),
-    });
-
     const session = await this.db.query.studysessions.findFirst({
       where: and(
         eq(studysessions.set_id, set_id),
@@ -465,18 +419,8 @@ export class StudysetService {
       where: eq(setlikes.set_id, set_id),
     });
 
-    // Get folder_id for this user/set combination
-    const folderEntry = await this.db.query.folder_sets.findFirst({
-      where: and(
-        eq(folder_sets.user_id, user_id),
-        eq(folder_sets.set_id, set_id),
-        eq(folder_sets.set_type, 'studyset'),
-      ),
-    });
-
     return {
       ...set,
-      folder_id: folderEntry?.folder_id ?? null,
       cards: kaarten
         .sort((a, b) => a.number - b.number)
         .map(({ suggestionImage, ...card }) => ({
@@ -485,7 +429,6 @@ export class StudysetService {
         })) as unknown as CardResponseDto[],
       likes: likes,
       session: sesh,
-      folders: foldrs,
       classrooms: setclasses,
     };
   }
@@ -539,7 +482,6 @@ export class StudysetService {
       .update(studysets)
       .set({
         title: body.title,
-        course: body.course,
         global_term_language: body.global_term_language,
         global_definition_language: body.global_definition_language,
         last_updated: isoNow,
@@ -680,88 +622,6 @@ export class StudysetService {
       }
     });
     await this.invalidateSyncCache(user_id);
-  }
-
-  async switchFolder(
-    user_id: string,
-    dto: SwitchFolderDto,
-  ): Promise<fullSetResponseDto> {
-    const checkset = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, dto.set_id),
-    });
-    if (!checkset) {
-      throw new NotFoundException('Studyset not found');
-    }
-
-    if (checkset.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this studoset');
-    }
-
-    const existing = await this.db.query.folder_sets.findFirst({
-      where: and(
-        eq(folder_sets.user_id, user_id),
-        eq(folder_sets.set_id, dto.set_id),
-        eq(folder_sets.set_type, 'studyset'),
-      ),
-    });
-
-    if (existing) {
-      await this.db
-        .update(folder_sets)
-        .set({ folder_id: dto.destinationFolder_id })
-        .where(eq(folder_sets.id, existing.id));
-    } else {
-      await this.db.insert(folder_sets).values({
-        id: uuidv6(),
-        user_id: user_id,
-        set_id: dto.set_id,
-        set_type: 'studyset',
-        folder_id: dto.destinationFolder_id,
-      });
-    }
-
-    return this.getById(user_id, dto.set_id);
-  }
-
-  async saveToFolder(
-    user_id: string,
-    set_id: string,
-    folder_id: string,
-  ): Promise<void> {
-    const existing = await this.db.query.folder_sets.findFirst({
-      where: and(
-        eq(folder_sets.user_id, user_id),
-        eq(folder_sets.set_id, set_id),
-        eq(folder_sets.set_type, 'studyset'),
-      ),
-    });
-
-    if (existing) {
-      await this.db
-        .update(folder_sets)
-        .set({ folder_id })
-        .where(eq(folder_sets.id, existing.id));
-    } else {
-      await this.db.insert(folder_sets).values({
-        id: uuidv6(),
-        user_id,
-        set_id,
-        set_type: 'studyset',
-        folder_id,
-      });
-    }
-  }
-
-  async removeFromFolder(user_id: string, set_id: string): Promise<void> {
-    await this.db
-      .delete(folder_sets)
-      .where(
-        and(
-          eq(folder_sets.user_id, user_id),
-          eq(folder_sets.set_id, set_id),
-          eq(folder_sets.set_type, 'studyset'),
-        ),
-      );
   }
 
   async likeSet(user_id: string, set_id: string): Promise<SetLikeResponseDto> {

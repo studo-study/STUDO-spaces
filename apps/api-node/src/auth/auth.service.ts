@@ -7,7 +7,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginRequest, RegisterUserRequest } from '@studo/types';
-import { folders, profiles, users } from '../drizzle/schema';
+import { profiles, users } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -144,17 +144,9 @@ export class AuthService {
         tags: [`${googleUser.firstName} ${googleUser.lastName}`],
       };
 
-      // Root folder
-      const rootFolder = {
-        id: uuidv4(),
-        name: `${googleUser.firstName}'s folder`,
-        owner_id: uid,
-      };
-
       // Insert all records
       await this.db.insert(users).values(newUser);
       await this.db.insert(profiles).values(newProfile);
-      await this.db.insert(folders).values(rootFolder);
 
       // Fetch de nieuwe user
       user = await this.db.query.users.findFirst({
@@ -221,17 +213,9 @@ export class AuthService {
         tags: [microsoftUser.displayName],
       };
 
-      // Root folder
-      const rootFolder = {
-        id: uuidv4(),
-        name: `${microsoftUser.firstName}'s folder`,
-        owner_id: uid,
-      };
-
       // Insert all records
       await this.db.insert(users).values(newUser);
       await this.db.insert(profiles).values(newProfile);
-      await this.db.insert(folders).values(rootFolder);
 
       // Fetch de nieuwe user
       user = await this.db.query.users.findFirst({
@@ -298,17 +282,9 @@ export class AuthService {
         tags: [smartschoolUser.displayName],
       };
 
-      // Root folder
-      const rootFolder = {
-        id: uuidv4(),
-        name: `${smartschoolUser.firstName}'s folder`,
-        owner_id: uid,
-      };
-
       // Insert all records
       await this.db.insert(users).values(newUser);
       await this.db.insert(profiles).values(newProfile);
-      await this.db.insert(folders).values(rootFolder);
 
       // Fetch de nieuwe user
       user = await this.db.query.users.findFirst({
@@ -378,17 +354,9 @@ export class AuthService {
       tags: [displayName],
     };
 
-    // Root folder
-    const rootFolder = {
-      id: uuidv4(), // ✅ Functie uitvoeren
-      name: `${displayName}'s folder`,
-      owner_id: uid,
-    };
-
     // Insert all records
     await this.db.insert(users).values(newUser);
     await this.db.insert(profiles).values(newProfile);
-    await this.db.insert(folders).values(rootFolder);
 
     // Fetch the created user
     const user = await this.db.query.users.findFirst({
@@ -444,15 +412,8 @@ export class AuthService {
         tags: [socialUser.displayName],
       };
 
-      const rootFolder = {
-        id: uuidv4(),
-        name: `${socialUser.displayName}'s folder`,
-        owner_id: uid,
-      };
-
       await this.db.insert(users).values(newUser);
       await this.db.insert(profiles).values(newProfile);
-      await this.db.insert(folders).values(rootFolder);
 
       user = await this.db.query.users.findFirst({
         where: eq(users.id, uid),

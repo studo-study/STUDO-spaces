@@ -38,7 +38,6 @@ import {
 } from './visualset.dto';
 import * as types from '@studo/types';
 import { SetLikeResponseDto } from '../studyset/setlike.dto';
-import { SwitchFolderDto } from '../folder/folder.dto';
 import * as types_1 from '@studo/types';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 
@@ -121,8 +120,6 @@ export class VisualsetController {
       type: 'object',
       properties: {
         title: { type: 'string' },
-        subject: { type: 'string' },
-        folder_id: { type: 'string' },
         images_metadata: {
           type: 'string',
           description: 'JSON array van image metadata',
@@ -196,8 +193,6 @@ export class VisualsetController {
 
     const createDto: types.CreateVisualset = {
       title: body.title,
-      subject: body.subject,
-      folder_id: body.folder_id,
       images: imagesWithUrls,
       pins: pinsWithUrls,
     };
@@ -246,28 +241,6 @@ export class VisualsetController {
   ): Promise<types_1.FullVisualsetResponse> {
     const user_id = req.user.id;
     return this.VsService.updateById(user_id, id, update);
-  }
-
-  // SWITCH FOLDER --------------------------------------------------
-
-  @ApiOperation({ summary: 'Verplaats een ((visualset)) naar andere folder.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiBody({ type: SwitchFolderDto })
-  @ApiResponse({
-    status: 200,
-    description: 'Visualset verplaatst naar andere folder',
-    type: FullVSResponseListDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Put(':set_id/folder')
-  async switchFolder(
-    @Param('set_id', ParseUUIDPipe) set_id: string,
-    @Body() switchbody: SwitchFolderDto,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<FullVSResponseListDto> {
-    const user_id = req.user.id;
-    return this.VsService.switchFolder(user_id, switchbody);
   }
 
   // DELETE VISUALSET -----------------------------------------------

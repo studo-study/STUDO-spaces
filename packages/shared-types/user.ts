@@ -47,7 +47,6 @@ export interface LastStudied {
   set_id: string;
   last_studied: string;
   title: string;
-  Course: string;
   type: string;
   progress: number;
   length: number;
@@ -107,7 +106,6 @@ export interface Boards {
 
 export interface StartPagina {
   lastTen: LastStudied[];
-  courses: string[];
   boards: Boards[];
   class: ClassActivities[];
   stats: TotalStats;
@@ -116,7 +114,5 @@ export interface StartPagina {
 export interface SyncResponse {
   studysets: import("./studyset").StudysetResponse[];
   visualsets: import("./visualset").VisualsetResponse[];
-  folders: import("./folder").FolderResponse[];
-  courses: string[];
   start: StartPagina;
 }

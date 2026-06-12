@@ -4,7 +4,6 @@ import { UserModule } from './user/user.module';
 import { StudysetModule } from './studyset/studyset.module';
 import { StudysessionModule } from './studysession/studysession.module';
 import { ProfileModule } from './profile/profile.module';
-import { FolderModule } from './folder/folder.module';
 import { ClassroomModule } from './classroom/classroom.module';
 import { PinModule } from './pin/pin.module';
 import { VisualsetModule } from './visualset/visualset.module';
@@ -54,7 +53,6 @@ import Redis from 'ioredis';
     StudysetModule,
     StudysessionModule,
     ProfileModule,
-    FolderModule,
     ClassroomModule,
     PinModule,
     VisualsetModule,

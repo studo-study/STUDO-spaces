@@ -396,7 +396,6 @@ export class ClassroomService {
           set_type: classroomset.set_type,
           classroom_id: classroomset.classroom_id,
           owner: set.user_id,
-          course: set.course,
           created_at: set.created_at,
           title: set.title,
           added_by: user.displayName,

@@ -102,7 +102,7 @@ export class FlowService {
 
     const base: FlowCourseResponse = {
       id: course.id,
-      board_id: course.board_id,
+      board_id: course?.board_id ?? '',
       added_by_display_name: addedBy?.displayName ?? '',
       added_by_id: course.added_by,
       title: course.title,

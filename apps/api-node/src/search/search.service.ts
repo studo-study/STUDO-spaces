@@ -309,7 +309,7 @@ export class SearchService {
       SetArray.push({
         id: ss.id,
         title: ss.title,
-        subject: ss.course,
+        subject: '',
         owner: owner.displayName,
         img_url: owner.img_url,
         owner_id: ss.user_id,
@@ -347,7 +347,7 @@ export class SearchService {
       SetArray.push({
         id: vs.id,
         title: vs.title,
-        subject: vs.course,
+        subject: '',
         owner: owner.displayName,
         img_url: owner.img_url,
         owner_id: vs.user_id,

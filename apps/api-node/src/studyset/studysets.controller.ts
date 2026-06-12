@@ -11,19 +11,16 @@ import {
   Query,
   UseGuards,
   Request,
-  BadRequestException,
 } from '@nestjs/common';
 import {
   CreateStudysetDto,
   fullSetResponseDto,
   MyStudysetsResponseDto,
-  SaveToFolderDto,
   StudysetListResponseDto,
   StudysetResponseDto,
   UpdateStudysetDto,
 } from './studyset.dto';
 import { StudysetService } from './studyset.service';
-import { SwitchFolderDto } from '../folder/folder.dto';
 import { CreateSetLikeDto, SetLikeResponseDto } from './setlike.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
@@ -257,68 +254,6 @@ export class StudysetsController {
   ): Promise<StudysetResponseDto> {
     const user_id = req.user.id;
     return this.studysetService.updateById(user_id, id, update);
-  }
-
-  // POST set opslaan in folder (voor elke user) ----------------------------
-
-  @ApiOperation({ summary: 'Sla een set op in een folder.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiBody({ type: SaveToFolderDto })
-  @ApiResponse({ status: 204, description: 'Set opgeslagen in folder' })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Post(':set_id/folder')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async saveToFolder(
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Body() body: SaveToFolderDto,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<void> {
-    return this.studysetService.saveToFolder(
-      req.user.id,
-      set_id,
-      body.folder_id,
-    );
-  }
-
-  // DELETE set verwijderen uit folder (voor elke user) --------------------
-
-  @ApiOperation({ summary: 'Verwijder een set uit een folder.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiResponse({ status: 204, description: 'Set verwijderd uit folder' })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Delete(':set_id/folder')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async removeFromFolder(
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<void> {
-    return this.studysetService.removeFromFolder(req.user.id, set_id);
-  }
-
-  // PUT studoset van folder -------------------------------------------------
-
-  @ApiOperation({ summary: 'Verplaats studoset naar andere folder.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiBody({ type: SwitchFolderDto })
-  @ApiResponse({
-    status: 200,
-    description: 'Studyset verplaatst naar andere folder',
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Put(':set_id/folder')
-  async switchFolder(
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Body() switchbody: SwitchFolderDto,
-    @Request() req: AuthenticatedRequest,
-  ) {
-    if (switchbody.set_id !== set_id) {
-      throw new BadRequestException('Set ID mismatch');
-    }
-    const user_id = req.user.id;
-    return this.studysetService.switchFolder(user_id, switchbody);
   }
 
   // DELETE studoset ---------------------------------------------------------

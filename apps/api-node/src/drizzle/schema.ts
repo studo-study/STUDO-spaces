@@ -109,32 +109,11 @@ export const studotracks = pgTable(
   ],
 );
 
-export const folders = pgTable('folders', {
-  id: varchar('id', { length: 64 }).primaryKey(),
-  name: varchar('name', { length: 100 }).notNull(),
-  owner_id: varchar('owner_id', { length: 64 })
-    .references(() => users.id, { onDelete: 'cascade' })
-    .notNull(),
-});
-
-export const folder_sets = pgTable('folder_sets', {
-  id: varchar('id', { length: 64 }).primaryKey(),
-  user_id: varchar('user_id', { length: 64 })
-    .references(() => users.id, { onDelete: 'cascade' })
-    .notNull(),
-  set_id: varchar('set_id', { length: 64 }).notNull(),
-  set_type: varchar('set_type', { length: 20 }).notNull(), // 'studyset' | 'visualset'
-  folder_id: varchar('folder_id', { length: 64 })
-    .references(() => folders.id, { onDelete: 'cascade' })
-    .notNull(),
-});
-
 export const studysets = pgTable(
   'studysets',
   {
     id: varchar('id', { length: 64 }).primaryKey(),
     title: varchar('title', { length: 200 }).notNull(),
-    course: varchar('course', { length: 100 }).notNull(),
     studoset: boolean(`studoset`).notNull(),
     global_term_language: varchar('global_term_language', {
       length: 2,
@@ -157,10 +136,6 @@ export const studysets = pgTable(
       sql`to_tsvector
       ('simple',
       ${table.title}
-      ||
-      ' '
-      ||
-      ${table.course}
       )`,
     ),
   ],
@@ -171,7 +146,6 @@ export const visualsets = pgTable(
   {
     id: varchar('id', { length: 64 }).primaryKey(),
     title: varchar('title', { length: 200 }).notNull(),
-    course: varchar('course', { length: 100 }).notNull(),
     studoset: boolean(`studoset`).notNull(),
     created_at: varchar('created_at', { length: 24 }).notNull(),
     last_updated: varchar('last_updated', { length: 24 }).notNull(),
@@ -188,10 +162,6 @@ export const visualsets = pgTable(
       sql`to_tsvector
       ('simple',
       ${table.title}
-      ||
-      ' '
-      ||
-      ${table.course}
       )`,
     ),
   ],
@@ -261,61 +231,94 @@ export const setlikes = pgTable('setlikes', {
   created_at: varchar('created_at', { length: 24 }).notNull(),
 });
 
-export const studysessions = pgTable('studysessions', {
-  id: varchar('id', { length: 64 }).primaryKey(),
-  user_id: varchar('user_id', { length: 64 })
-    .references(() => users.id, { onDelete: 'cascade' })
-    .notNull(),
-  set_id: varchar('set_id', { length: 64 }).notNull(),
-  set_type: varchar('set_type', { length: 30 }).notNull(),
-  started_at: varchar('started_at', { length: 24 }).notNull(),
-  duration_min: integer('duration_min').notNull(),
-  ended_at: varchar('ended_at', { length: 24 }).notNull(),
-  index: integer('set_index').notNull(),
-  accuracy: integer('accuracy').notNull(),
-  average_response_time: integer('average_response_time').notNull(),
-  longest_focus_streak: integer('longest_focus_streak').notNull(),
-  last_seen: varchar('last_seen', { length: 64 }).notNull(),
-  last_studied: varchar('last_studied').notNull(),
-});
+export const studysessions = pgTable(
+  'studysessions',
+  {
+    id: varchar('id', { length: 64 }).primaryKey(),
+    user_id: varchar('user_id', { length: 64 })
+      .references(() => users.id, { onDelete: 'cascade' })
+      .notNull(),
+    set_id: varchar('set_id', { length: 64 }).notNull(),
+    set_type: varchar('set_type', { length: 30 }).notNull(),
+    started_at: varchar('started_at', { length: 24 }).notNull(),
+    duration_min: integer('duration_min').notNull(),
+    ended_at: varchar('ended_at', { length: 24 }).notNull(),
+    index: integer('set_index').notNull(),
+    accuracy: integer('accuracy').notNull(),
+    average_response_time: integer('average_response_time').notNull(),
+    longest_focus_streak: integer('longest_focus_streak').notNull(),
+    last_seen: varchar('last_seen', { length: 64 }).notNull(),
+    last_studied: varchar('last_studied').notNull(),
+  },
+  (table) => [
+    uniqueIndex('idx_studysessions_users_unique').on(
+      table.user_id,
+      table.set_id,
+    ),
+  ],
+);
 
-export const sessioncards = pgTable('sessioncards', {
-  id: varchar('id', { length: 64 }).primaryKey(),
-  number: integer('number').notNull(),
-  card_viewcount: integer('card_viewcount').notNull(),
-  card_total_viewcount: integer('card_total_viewcount').notNull(),
-  inQueue: boolean('inQueue').notNull(),
-  mastered: boolean('mastered').notNull(),
-  times_relearned: integer('times_relearned').notNull(),
-  card_id: varchar('card_id', { length: 64 })
-    .references(() => cards.id, { onDelete: 'cascade' })
-    .notNull(),
-  session_id: varchar('session_id', { length: 64 })
-    .references(() => studysessions.id, { onDelete: 'cascade' })
-    .notNull(),
-  owner_id: varchar('owner_id', { length: 64 })
-    .references(() => users.id, { onDelete: 'cascade' })
-    .notNull(),
-});
+export const sessioncards = pgTable(
+  'sessioncards',
+  {
+    id: varchar('id', { length: 64 }).primaryKey(),
+    number: integer('number').notNull(),
+    card_viewcount: integer('card_viewcount').notNull(),
+    card_total_viewcount: integer('card_total_viewcount').notNull(),
+    inQueue: boolean('inQueue').notNull(),
+    mastered: boolean('mastered').notNull(),
+    times_relearned: integer('times_relearned').notNull(),
+    card_id: varchar('card_id', { length: 64 })
+      .references(() => cards.id, { onDelete: 'cascade' })
+      .notNull(),
+    session_id: varchar('session_id', { length: 64 })
+      .references(() => studysessions.id, { onDelete: 'cascade' })
+      .notNull(),
+    owner_id: varchar('owner_id', { length: 64 })
+      .references(() => users.id, { onDelete: 'cascade' })
+      .notNull(),
+  },
+  (table) => [
+    index('sessioncards_search_index').using(
+      'gin',
+      sql`to_tsvector
+      ('simple',
+      ${table.session_id}
+      )`,
+    ),
+  ],
+);
 
-export const sessionpins = pgTable('sessionpins', {
-  id: varchar('id', { length: 64 }).primaryKey(),
-  number: integer('number').notNull(),
-  pin_viewcount: integer('pin_viewcount').notNull(),
-  pin_total_viewcount: integer('pin_total_viewcount').notNull(),
-  inQueue: boolean('inQueue').notNull(),
-  mastered: boolean('mastered').notNull(),
-  times_relearned: integer('times_relearned').notNull(),
-  pin_id: varchar('pin_id', { length: 64 })
-    .references(() => pins.id, { onDelete: 'cascade' }) // ✅ CHANGED: consistent gedrag
-    .notNull(),
-  session_id: varchar('session_id', { length: 64 })
-    .references(() => studysessions.id, { onDelete: 'cascade' })
-    .notNull(),
-  owner_id: varchar('owner_id', { length: 64 })
-    .references(() => users.id, { onDelete: 'cascade' })
-    .notNull(),
-});
+export const sessionpins = pgTable(
+  'sessionpins',
+  {
+    id: varchar('id', { length: 64 }).primaryKey(),
+    number: integer('number').notNull(),
+    pin_viewcount: integer('pin_viewcount').notNull(),
+    pin_total_viewcount: integer('pin_total_viewcount').notNull(),
+    inQueue: boolean('inQueue').notNull(),
+    mastered: boolean('mastered').notNull(),
+    times_relearned: integer('times_relearned').notNull(),
+    pin_id: varchar('pin_id', { length: 64 })
+      .references(() => pins.id, { onDelete: 'cascade' }) // ✅ CHANGED: consistent gedrag
+      .notNull(),
+    session_id: varchar('session_id', { length: 64 })
+      .references(() => studysessions.id, { onDelete: 'cascade' })
+      .notNull(),
+    owner_id: varchar('owner_id', { length: 64 })
+      .references(() => users.id, { onDelete: 'cascade' })
+      .notNull(),
+  },
+  (table) => [
+    index('sessionpins_search_index').using(
+      'gin',
+      sql`to_tsvector
+      ('simple',
+      ${table.session_id}
+      )`,
+    ),
+  ],
+);
 
 export const classrooms = pgTable(
   'classrooms',
@@ -473,9 +476,9 @@ export const flowboards = pgTable('flowboards', {
 
 export const flowcourses = pgTable('flowcourses', {
   id: varchar('flowcourse_id').primaryKey(),
-  board_id: varchar('board_id')
-    .references(() => flowboards.id, { onDelete: 'cascade' })
-    .notNull(),
+  board_id: varchar('board_id').references(() => flowboards.id, {
+    onDelete: 'cascade',
+  }),
   added_by: varchar('added_by')
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
@@ -485,6 +488,16 @@ export const flowcourses = pgTable('flowcourses', {
   resource: varchar('resource'),
   exam_date: varchar('exam_date'),
   lesson_days: varchar('lesson_days'),
+});
+
+export const flowcourse_sets = pgTable('flowcourse_sets', {
+  id: varchar('id').primaryKey(),
+  set_id: varchar('set_id')
+    .references(() => studysets.id || visualsets.id, { onDelete: 'cascade' })
+    .notNull(),
+  course_id: varchar('course_id')
+    .references(() => flowcourses.id)
+    .notNull(),
 });
 
 export const statusEnum = pgEnum('status', ['not_started', 'doing', 'done']);
@@ -578,7 +591,6 @@ export const usersRelations = relations(users, ({ many, one }) => ({
     fields: [users.id],
     references: [profiles.user_id],
   }),
-  folders: many(folders),
   studysets: many(studysets),
   visualsets: many(visualsets),
   pins: many(pins),
@@ -598,25 +610,6 @@ export const profilesRelations = relations(profiles, ({ one }) => ({
   user: one(users, {
     fields: [profiles.user_id],
     references: [users.id],
-  }),
-}));
-
-export const foldersRelations = relations(folders, ({ one, many }) => ({
-  owner: one(users, {
-    fields: [folders.owner_id],
-    references: [users.id],
-  }),
-  folder_sets: many(folder_sets),
-}));
-
-export const folderSetsRelations = relations(folder_sets, ({ one }) => ({
-  user: one(users, {
-    fields: [folder_sets.user_id],
-    references: [users.id],
-  }),
-  folder: one(folders, {
-    fields: [folder_sets.folder_id],
-    references: [folders.id],
   }),
 }));
 

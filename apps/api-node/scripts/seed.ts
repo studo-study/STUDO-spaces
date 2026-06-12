@@ -40,7 +40,6 @@ async function resetDatabase() {
   await db.delete(schema.images);
   await db.delete(schema.visualsets);
   await db.delete(schema.studysets);
-  await db.delete(schema.folders);
   await db.delete(schema.studoprofilecommunities);
   await db.delete(schema.tracksets);
   await db.delete(schema.tracksets);
@@ -54,7 +53,7 @@ async function resetDatabase() {
 
 export async function seedStudo(
   db: PostgresJsDatabase<typeof schema> & {
-    $client: postgres.Sql<{}>;
+    $client: postgres.Sql;
   },
 ) {
   try {
@@ -65,8 +64,6 @@ export async function seedStudo(
     const userId2 = uuidv6();
     const userId3 = uuidv6();
     const userId4 = uuidv6();
-    const folderId1 = uuidv6();
-    const folderId2 = uuidv6();
 
     const studySetId1 = uuidv6();
     const studySetId2 = uuidv6();
@@ -265,21 +262,12 @@ export async function seedStudo(
       },
     ]);
 
-    // === 4. Folders ===
-    console.log('Seeding folders...');
-    await db.insert(schema.folders).values([
-      { id: folderId1, name: 'Biology Notes', owner_id: userId1 },
-      { id: folderId2, name: 'Computer Science', owner_id: userId2 },
-    ]);
-    console.log('Folders seeded\n');
-
     // === 5. Studysets ===
     console.log('Seeding studosets...');
     await db.insert(schema.studysets).values([
       {
         id: studySetId1,
         title: 'Cell Biology Basics',
-        course: 'Biology 101',
         studoset: false,
         global_term_language: 'en',
         global_definition_language: 'en',
@@ -293,7 +281,6 @@ export async function seedStudo(
       {
         id: studySetId2,
         title: 'Data Structures',
-        course: 'CS 201',
         studoset: false,
         global_term_language: 'en',
         global_definition_language: 'en',
@@ -313,7 +300,6 @@ export async function seedStudo(
       {
         id: visualSetId1,
         title: 'Human Anatomy',
-        course: 'Anatomy 101',
         studoset: true,
         created_at: '2024-09-10T11:00:00.000Z',
         last_updated: '2024-09-10T11:00:00.000Z',

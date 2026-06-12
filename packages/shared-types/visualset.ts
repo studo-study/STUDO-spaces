@@ -6,7 +6,6 @@ import type { ClassroomResponse } from "./classroom";
 export interface VisualsetResponse {
   id: string;
   title: string;
-  course: string;
   studoset: boolean;
   created_at: string;
   last_updated: string;
@@ -14,7 +13,6 @@ export interface VisualsetResponse {
   user_id: string;
   displayName: string;
   img_url: string;
-  folder_id?: string | null;
   pin_count?: number;
   last_studied?: string | null;
   progress?: number;
@@ -23,7 +21,6 @@ export interface VisualsetResponse {
 export interface PublicVisualsetResponse {
   id: string;
   title: string;
-  course: string;
   created_at: string;
   last_updated: string;
   user_id: string;
@@ -79,8 +76,6 @@ export interface VisualsetResponseList {
 
 export interface CreateVisualset {
   title: string;
-  subject: string;
-  folder_id: string;
   images: CreateImage[];
   pins: CreatePin[];
 }
@@ -88,16 +83,12 @@ export interface CreateVisualset {
 export interface UpdateVisualset {
   title?: string;
   public_set?: boolean;
-  course?: string;
-  folder_id?: string;
   images?: UpdateImage[];
   pins?: UpdatePin[];
 }
 
 export interface CreateVisualsetWithFiles {
   title: string;
-  subject: string;
-  folder_id: string;
   images_metadata: string;
   pins_data: string;
 }

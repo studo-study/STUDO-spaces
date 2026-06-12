@@ -20,7 +20,6 @@ import {
   flowboards,
   flowcourses,
   flowrows,
-  folders,
   images,
   sessioncards,
   sessionpins,
@@ -59,7 +58,6 @@ import {
   ClassActivities,
   Boards,
   SyncResponse,
-  FolderResponse,
 } from '@studo/types';
 import { UserResponseDto, UserResponseStatsDto } from './users.dto';
 
@@ -223,7 +221,6 @@ export class UserService {
           set_id: studyset.id,
           last_studied: sesh.last_studied,
           title: studyset.title,
-          Course: studyset.course,
           type: sesh.set_type,
           progress: seshCards.reduce(
             (pv: number, card: SessionCardResponse) =>
@@ -253,7 +250,6 @@ export class UserService {
           set_id: vs.id,
           last_studied: sesh.last_studied,
           title: vs.title,
-          Course: vs.course,
           type: sesh.set_type,
           progress: seshPins.reduce(
             (pv: number, pin: SessionPinResponse) =>
@@ -339,14 +335,6 @@ export class UserService {
       }
     }
 
-    const foldrs = await this.db.query.folders.findMany({
-      where: eq(folders.owner_id, user_id),
-    });
-
-    if (!foldrs) {
-      throw new NotFoundException('No folders');
-    }
-
     const session = await this.db.query.studysessions.findFirst({
       where: eq(studysessions.set_id, set_id),
     });
@@ -370,7 +358,6 @@ export class UserService {
       }),
 
       session: sesh,
-      folders: foldrs,
       classrooms: classes,
     };
   }
@@ -510,7 +497,6 @@ export class UserService {
   async startPagina(user_id: string): Promise<StartPagina> {
     return {
       lastTen: await this.getLastTen(user_id),
-      courses: await this.getCourses(user_id),
       class: await this.getClassmateActivity(user_id),
       stats: await this.getTotalStats(user_id),
       boards: await this.getBoards(user_id),
@@ -522,19 +508,14 @@ export class UserService {
     const cached = await this.redis.get(key);
     if (cached) return JSON.parse(cached) as SyncResponse;
 
-    const [allSets, userFolders, start] = await Promise.all([
+    const [allSets, start] = await Promise.all([
       this.getAllSetsById(user_id),
-      this.db.query.folders.findMany({
-        where: eq(folders.owner_id, user_id),
-      }),
       this.startPagina(user_id),
     ]);
 
     const result: SyncResponse = {
       studysets: allSets.studysets,
       visualsets: allSets.visualsets,
-      folders: userFolders as FolderResponse[],
-      courses: start.courses,
       start,
     };
 
@@ -542,27 +523,8 @@ export class UserService {
     return result;
   }
 
-  async getCourses(user_id: string): Promise<string[]> {
-    const courseSet: Set<string> = new Set();
-    const sets = await this.getAllSetsById(user_id);
-
-    if (!sets) {
-      return [];
-    }
-
-    sets.visualsets.forEach((set: VisualsetResponse) => {
-      if (set?.course && set.course.trim() !== '') {
-        courseSet.add(set.course);
-      }
-    });
-
-    sets.studysets.forEach((set: StudysetResponse) => {
-      if (set?.course && set.course.trim() !== '') {
-        courseSet.add(set.course);
-      }
-    });
-
-    return Array.from(courseSet);
+  async getCourses(_user_id: string): Promise<string[]> {
+    return [];
   }
 
   async getClassmateActivity(user_id: string): Promise<ClassActivities[]> {
@@ -634,8 +596,8 @@ export class UserService {
     }
 
     return {
-      studysets: ss.filter((ss) => ss.course === course_id),
-      visualsets: vs.filter((vs) => vs.course === course_id),
+      studysets: ss,
+      visualsets: vs,
     };
   }
 

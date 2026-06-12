@@ -22,6 +22,7 @@ async function hashPassword(password: string): Promise<string> {
 async function resetDatabase() {
   await db.delete(schema.flowresources);
   await db.delete(schema.flowrows);
+  await db.delete(schema.flowcourse_sets);
   await db.delete(schema.flowcourses);
   await db.delete(schema.flowboards);
   await db.delete(schema.classroomactivities);
@@ -35,12 +36,9 @@ async function resetDatabase() {
   await db.delete(schema.pins);
   await db.delete(schema.cards);
   await db.delete(schema.images);
-  await db.delete(schema.folder_sets);
   await db.delete(schema.visualsets);
   await db.delete(schema.studysets);
-  await db.delete(schema.folders);
   await db.delete(schema.studoprofilecommunities);
-  await db.delete(schema.tracksets);
   await db.delete(schema.tracksets);
   await db.delete(schema.studotracks);
   await db.delete(schema.studoprofiles);
@@ -54,8 +52,6 @@ async function seedStudo() {
   const userId2 = uuidv6();
   const userId3 = uuidv6();
   const userId4 = uuidv6();
-  const folderId1 = uuidv6();
-  const folderId2 = uuidv6();
 
   const studySetId1 = uuidv6();
   const studySetId2 = uuidv6();
@@ -248,18 +244,11 @@ async function seedStudo() {
     },
   ]);
 
-  // === 4. Folders ===
-  await db.insert(schema.folders).values([
-    { id: folderId1, name: 'Biology Notes', owner_id: userId1 },
-    { id: folderId2, name: 'Computer Science', owner_id: userId2 },
-  ]);
-
   // === 5. Studysets ===
   await db.insert(schema.studysets).values([
     {
       id: studySetId1,
       title: 'Cell Biology Basics',
-      course: 'Biology 101',
       studoset: false,
       global_term_language: 'en',
       global_definition_language: 'en',
@@ -273,7 +262,6 @@ async function seedStudo() {
     {
       id: studySetId2,
       title: 'Data Structures',
-      course: 'CS 201',
       studoset: false,
       global_term_language: 'en',
       global_definition_language: 'en',
@@ -291,7 +279,6 @@ async function seedStudo() {
     {
       id: visualSetId1,
       title: 'Human Anatomy',
-      course: 'Anatomy 101',
       studoset: true,
       created_at: '2024-09-10T11:00:00.000Z',
       last_updated: '2024-09-10T11:00:00.000Z',
@@ -299,31 +286,6 @@ async function seedStudo() {
       user_id: userId4,
       displayName: 'geneeskunde',
       img_url: 'https://i.pravatar.cc/150?img=1',
-    },
-  ]);
-
-  // === folder_sets ===
-  await db.insert(schema.folder_sets).values([
-    {
-      id: uuidv6(),
-      user_id: userId1,
-      set_id: studySetId1,
-      set_type: 'studyset',
-      folder_id: folderId1,
-    },
-    {
-      id: uuidv6(),
-      user_id: userId2,
-      set_id: studySetId2,
-      set_type: 'studyset',
-      folder_id: folderId2,
-    },
-    {
-      id: uuidv6(),
-      user_id: userId4,
-      set_id: visualSetId1,
-      set_type: 'visualset',
-      folder_id: folderId1,
     },
   ]);
 
@@ -909,7 +871,21 @@ async function seedStudo() {
     },
   ]);
 
-  // === 21. Flowresources ===
+  // === 21. Flowcourse sets ===
+  await db.insert(schema.flowcourse_sets).values([
+    {
+      id: uuidv6(),
+      set_id: studySetId1,
+      course_id: flowcourseId1,
+    },
+    {
+      id: uuidv6(),
+      set_id: studySetId2,
+      course_id: flowcourseId1,
+    },
+  ]);
+
+  // === 23. Flowresources ===
   await db.insert(schema.flowresources).values([
     {
       flowresource_id: uuidv6(),
