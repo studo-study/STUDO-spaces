@@ -345,42 +345,6 @@ export interface PinListResponse {
 }
 
 // ============================================================
-// FOLDERS
-// ============================================================
-
-export interface CreateFolder {
-  name: string;
-}
-
-export interface UpdateFolder {
-  name?: string;
-}
-
-export interface Folder {
-  id: string;
-  name: string;
-  owner_id: string;
-}
-
-export interface FolderSets {
-  studysets: Studyset[];
-  visualsets: Visualset[];
-}
-
-export interface FullFolder extends Folder {
-  sets: FolderSets;
-}
-
-export interface FolderListResponse {
-  folders: Folder[];
-}
-
-export interface SwitchFolderRequest {
-  user_id: string;
-  set_id: string;
-  destinationFolder_id: string;
-}
-
 // ============================================================
 // CLASSROOMS
 // ============================================================

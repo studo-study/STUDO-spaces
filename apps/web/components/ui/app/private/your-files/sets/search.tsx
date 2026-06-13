@@ -6,9 +6,13 @@ import { useTranslations } from "next-intl";
 interface SetSearchProps {
   sets: unknown[];
   setSearchQuery: (query: string) => void;
+  placeholder?: string;
 }
 
-export default function SetSearch({ setSearchQuery }: SetSearchProps) {
+export default function SetSearch({
+  setSearchQuery,
+  placeholder,
+}: SetSearchProps) {
   const t = useTranslations("y_f.your_sets");
   const [search, setSearch] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -25,7 +29,7 @@ export default function SetSearch({ setSearchQuery }: SetSearchProps) {
         onBlur={() => setSearch(false)}
         onChange={() => setSearchQuery(searchRef.current?.value ?? "")}
         ref={searchRef}
-        placeholder={t("search")}
+        placeholder={placeholder ?? t("search")}
         type="text"
         className="w-full h-full outline-none focus:ring-0"
       />

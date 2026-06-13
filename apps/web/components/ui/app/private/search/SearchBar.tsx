@@ -27,7 +27,7 @@ export default function AppSearchbar() {
       .then((r) => r.json())
       .then(() => {
         setLoading(false);
-        router.push(`/${locale}/search?q=${query}`);
+        router.push(`/${locale}/search-result?q=${query}`);
       });
     if (inputFieldRef.current) {
       inputFieldRef.current.value = "";

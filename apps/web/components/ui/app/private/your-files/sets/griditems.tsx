@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
-import FlowIcon from "@/components/ui/app/private/flow/overview/FlowIcon";
+import FlowIcon from "@/components/ui/app/private/course/overview/FlowIcon";
 
 interface GridItemProps {
   items: StudySetItem[];

@@ -5,7 +5,7 @@ import { FiTrash2 } from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
 import { useTranslations } from "next-intl";
 import type { FlowCourseResponse } from "@studo/types";
-import FlowIcon from "@/components/ui/app/private/flow/overview/FlowIcon";
+import FlowIcon from "@/components/ui/app/private/course/overview/FlowIcon";
 
 interface CourseCardProps {
   course: FlowCourseResponse;

@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useSets } from "@/hooks/app/sets/useSets";
-import { useBoards } from "@/hooks/app/flow/useBoards";
+import { useBoards } from "@/hooks/app/courses/useBoards";
 
 const EmptyFallback = () => {
   const { sets, isLoading: setsLoading } = useSets();

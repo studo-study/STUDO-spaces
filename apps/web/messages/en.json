@@ -931,7 +931,7 @@
   "header": {
     "create_ss": "Create Studoset",
     "create_vs": "Create Visualset",
-    "create_f": "Create Folder",
+    "create_c": "Create Course",
     "notifs": "notifications",
     "day streak": "day streak",
     "studied": "You've studied ",
@@ -942,7 +942,7 @@
     "ad": "Admin",
     "home": "Home",
     "sets": "Sets",
-    "courses": "Subjects",
+    "courses": "Courses",
     "planner": "Planner",
     "flow": "Flow",
     "folders": "Folders",
@@ -951,7 +951,8 @@
     "account": "Account",
     "nonotif": "no notifications",
     "allup": "all up to date",
-    "search": "search..."
+    "search": "search...",
+    "search_btn": "Search"
   },
   "createfolder": {
     "title": "create a folder",
@@ -1084,7 +1085,7 @@
     "jump-back-in_next": "Next",
     "jump-back-in_previous": "Previous",
     "jump-back-in_goto": "Go to item {index}",
-    "courses_overview_title": "Your subjects",
+    "courses_overview_title": "Your Courses",
     "flow_overview_title": "Your boards",
     "getstarted_overview_title": "Start creating",
     "pinned_title": "Pinned",
@@ -1105,7 +1106,7 @@
     "Continue": "Sets",
     "checkAll": "all sets",
     "studied": "studied",
-    "checkCourse": "all subjects",
+    "checkCourse": "all courses",
     "act": "Friends",
     "CheckAct": "all activity",
     "create_ss": "Create Studoset",
@@ -1124,7 +1125,7 @@
     "sets_studied": "sets studied",
     "lets_go": "Start here",
     "set_overview_title": "Your sets",
-    "all_courses": "All subjects",
+    "all_courses": "All courses",
     "all_sets": "All sets",
     "flows_overview_title": "Your flowboards",
     "visualset_btn_lbl": "Create a Visualset",
@@ -1135,15 +1136,14 @@
     },
     "flow": {
       "course": "subject",
-      "courses": "subjects"
+      "courses": "courses"
     }
   },
   "y_f": {
     "title": "Your files",
     "subtitle": "Manage your study material",
     "sets": "Sets",
-    "folders": "Folders",
-    "courses": "Subjects",
+    "courses": "Courses",
     "your_sets": {
       "title": "Your sets",
       "cards": "cards",
@@ -1438,12 +1438,16 @@
       "cancel_btn": "cancel",
       "add_metadata": "add details",
       "add_later": "hide details",
+      "slightly_behind": "Slightly Behind",
       "semester": "semester",
       "exam_date": "Exam date",
       "exam_status": "Exam status",
       "link": "Resource link",
       "add_link": "add a resource link...",
+      "flow_title": "material",
+      "more_sets": "all sets",
       "row": {
+        "flow_title": "flow",
         "done": "done",
         "in_prog": "in progress",
         "cta_add_t": "add task...",

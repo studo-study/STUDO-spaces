@@ -8,12 +8,9 @@ import {
   useUser,
 } from "@/components/providers/auth/UserProvider";
 import ConsoleEasterEgg from "@/components/ui/overige/easteregg/console";
-import CreateFlowcourse from "@/components/ui/app/private/create-flowcourse/CreateFlowcourse";
+import CreateFlowCourse from "@/components/ui/app/private/course/page/layout/CreateFlowCourse";
 import AppLayoutContext from "@/components/context/AppLayoutContext";
-import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
-import { usePathname, useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
-import CreateFlowCourse from "@/components/ui/app/private/flow/page/layout/CreateFlowCourse";
 
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
@@ -22,16 +19,16 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
   const { user, isLoading } = useUser();
   const [Search, setSearch] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
-  const router = useRouter();
   const sidebarOpen = useAppStore((s) => s.sidebarOpen);
-  const pathname = usePathname();
-  const inMode = /\/(speedy|learn|flashcards)\//.test(pathname);
-  const toggleSearch = () => setSearch(true);
   const toggleCreate = () => {
     requestAnimationFrame(() => {
       setCreateOpen(true);
     });
   };
+
+  /*
+  const pathname = usePathname();
+  const inMode = /\/(speedy|learn|flashcards)\//.test(pathname);
   const newStudoset = () => {
     router.push("/create-studoset");
   };
@@ -40,13 +37,10 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
     router.push("/create-visualset");
   };
 
-  useKeyboardShortcut("f", () => !inMode && toggleCreate());
-  useKeyboardShortcut("s", () => !inMode && newStudoset());
-  useKeyboardShortcut("v", () => !inMode && newVisualset());
-  useKeyboardShortcut("m", () => !inMode && toggleSearch(), {
-    ctrl: true,
-    always: true,
-  });
+  //useKeyboardShortcut("f", () => !inMode && toggleCreate());
+  //useKeyboardShortcut("s", () => !inMode && newStudoset());
+  //useKeyboardShortcut("v", () => !inMode && newVisualset());
+  */
 
   return (
     <AppLayoutContext.Provider value={{ toggleCreate }}>
@@ -66,7 +60,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
           <div className={"min-w-57 h-full"}>
             <MemoizedBurger
               burgerOpen={sidebarOpen}
-              toggleSearch={toggleSearch}
+              toggleSearch={() => setSearch(true)}
               toggleCreate={toggleCreate}
             />
           </div>

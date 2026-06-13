@@ -14,6 +14,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { StudoUser } from "@/types/types";
 import { useAppStore } from "@/store/useAppStore";
 import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection";
+import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
 
 interface HeaderProps {
   burgerOpen: boolean;
@@ -122,15 +123,13 @@ export default function AppHeader({
           )}
         </div>
 
-        {/*center*/}
-        {/*
-        <div className={"w-full h-fit flex justify-end items-center"}>
+        <div className={"w-full h-fit flex justify-end items-center gap-2"}>
+          <OnlineScanner />
           <AppSearchbar />
-        </div>*/}
+        </div>
 
         {/* Right section */}
         <div className="flex items-center gap-5 ml-5 justify-end">
-          <OnlineScanner />
           {/* Add button */}
           <TriggerAddPopup
             AddIsOpen={AddIsOpen}
@@ -138,13 +137,11 @@ export default function AppHeader({
             toggleCreate={toggleCreate}
           />
 
-          {/* Notifications */}
           <TriggerNotif
             NotifIsOpen={NotifIsOpen}
             setNotifIsOpen={setNotifIsOpen}
           />
 
-          {/* Profile */}
           {isLoading ? (
             <div className="h-10 w-10 rounded-full bg-studogrey/30 animate-pulse" />
           ) : (
@@ -155,7 +152,6 @@ export default function AppHeader({
             />
           )}
 
-          {/* Streak */}
           {isLoading ? (
             <div className="min-w-20 h-8 rounded-4xl bg-studogrey/30 animate-pulse" />
           ) : (

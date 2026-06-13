@@ -12,7 +12,7 @@ import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import InputField from "@/components/ui/design_system/input/InputField";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { useFlowcourses } from "@/hooks/app/flow/useFlowcourses";
+import { useCourses } from "@/hooks/app/courses/useCourses";
 import JumpToBottom from "./JumpToBottom";
 import { useInView } from "react-intersection-observer";
 import { SuggestionImage } from "@studo/types";
@@ -54,7 +54,7 @@ export default function CreateStudosetForm() {
   const router = useRouter();
   const mutation = useCreateStudyset();
   const toast = useToast();
-  const { data: flowcourses = [] } = useFlowcourses();
+  const { data: flowcourses = [] } = useCourses();
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLFormElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);

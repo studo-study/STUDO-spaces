@@ -4,7 +4,7 @@ import Container from "@/components/ui/design_system/container/Container";
 import { useTranslations } from "next-intl";
 import { FaRegClipboard } from "react-icons/fa";
 import FlowItem from "@/components/ui/app/private/home/flows/FlowItem";
-import { useBoards } from "@/hooks/app/flow/useBoards";
+import { useBoards } from "@/hooks/app/courses/useBoards";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 
 const Flow = () => {

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 import { useSets } from "@/hooks/app/sets/useSets";
-import { useBoards } from "@/hooks/app/flow/useBoards";
+import { useBoards } from "@/hooks/app/courses/useBoards";
 
 export default function CTABlock() {
   const { sets, isLoading: setsLoading } = useSets();

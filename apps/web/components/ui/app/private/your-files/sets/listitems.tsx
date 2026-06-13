@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CourseIcons from "@/data";
 import { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
-import FlowIcon from "@/components/ui/app/private/flow/overview/FlowIcon";
+import FlowIcon from "@/components/ui/app/private/course/overview/FlowIcon";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { FiTrash2 } from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
@@ -88,6 +88,13 @@ function ListItem({ set, t, locale }: SetItemProps) {
               "w-full flex flex-row gap-2 items-center opacity-50 dark:text-white text-xs"
             }
           >
+            <Image
+              src={iconSrc}
+              alt={"type"}
+              height={15}
+              width={15}
+              className={"dark:invert dark:brightness-0 h-4"}
+            />
             <span>{set.last_updated && date}</span>
           </div>
         </div>

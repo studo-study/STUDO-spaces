@@ -7,7 +7,7 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useSets } from "@/hooks/app/sets/useSets";
-import { useBoards } from "@/hooks/app/flow/useBoards";
+import { useBoards } from "@/hooks/app/courses/useBoards";
 
 const GetStarted = () => {
   const { sets, isLoading: setsLoading } = useSets();

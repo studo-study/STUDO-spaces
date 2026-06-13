@@ -1,10 +1,11 @@
 "use client";
-import Image from "next/image";
 import { IoIosAdd } from "react-icons/io";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
 import { FaChevronRight } from "react-icons/fa";
+import { FiBookOpen } from "react-icons/fi";
+import { TbCards } from "react-icons/tb";
 
 interface TriggerAddProps {
   AddIsOpen: boolean;
@@ -58,13 +59,7 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
                   group-hover:scale-110 group-hover:shadow-lg
                   transition-all duration-200`}
                 >
-                  <Image
-                    src={item.icon}
-                    alt=""
-                    width={16}
-                    height={16}
-                    className="h-4 w-4 brightness-0 invert"
-                  />
+                  {item.icon}
                 </div>
                 <div className="font-medium text-sm flex flex-row items-center justify-between w-full">
                   <span>{t(item.label)}</span>
@@ -94,15 +89,9 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
                 group-hover:scale-110 group-hover:shadow-lg
                 transition-all duration-200`}
               >
-                <Image
-                  width={10}
-                  height={10}
-                  src={"/icons/folder.svg"}
-                  alt=""
-                  className="h-4 w-4 brightness-0 invert"
-                />
+                <FiBookOpen />
               </div>
-              <span className="font-medium text-sm">{t("create_f")}</span>
+              <span className="font-medium text-sm">{t("create_c")}</span>
               <FaChevronRight
                 size={10}
                 className="ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
@@ -118,7 +107,7 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
 const menuItems = [
   {
     to: "/create-studoset",
-    icon: "/icons/studyset.svg",
+    icon: <TbCards />,
     label: "create_ss",
     color: "from-emerald-400 to-teal-500",
     key: "s",

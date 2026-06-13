@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { Pin } from "@/types/types";
 import VsInput from "@/components/ui/app/private/create-visualset/VsInput";

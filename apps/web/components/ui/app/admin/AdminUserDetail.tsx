@@ -6,7 +6,6 @@ import { GoDotFill } from "react-icons/go";
 import { TbFlameFilled } from "react-icons/tb";
 import {
   TbBook,
-  TbFolder,
   TbPhoto,
   TbSchool,
   TbClock,
@@ -153,11 +152,6 @@ const AdminUserDetail = ({ userId }: Props) => {
             value={data.stats.totalVisualsets}
           />
           <StatCard
-            icon={<TbFolder size={18} />}
-            label="folders"
-            value={data.stats.totalFolders}
-          />
-          <StatCard
             icon={<TbSchool size={18} />}
             label="klassen"
             value={data.stats.totalClassrooms}
@@ -230,7 +224,6 @@ const AdminUserDetail = ({ userId }: Props) => {
                     set_id: s.id,
                     last_studied: s.last_studied ?? s.created_at,
                     title: s.title,
-                    Course: "",
                     type: "studoset",
                     progress: s.card_count ?? 0,
                     length: s.card_count ?? 0,
@@ -257,7 +250,6 @@ const AdminUserDetail = ({ userId }: Props) => {
                     set_id: v.id,
                     last_studied: v.last_studied ?? v.created_at,
                     title: v.title,
-                    Course: "",
                     type: "visualset",
                     progress: v.pin_count ?? 0,
                     length: v.pin_count ?? 0,
@@ -291,26 +283,6 @@ const AdminUserDetail = ({ userId }: Props) => {
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Folders */}
-        <div>
-          <SectionTitle>Folders</SectionTitle>
-          <div className="mt-3 flex flex-col gap-2">
-            {data.folders.length === 0 ? (
-              <p className="text-sm opacity-40">Geen folders</p>
-            ) : (
-              data.folders.map((f) => (
-                <div
-                  key={f.id}
-                  className="flex items-center gap-3 rounded-xl border border-studoborder/20 px-4 py-3"
-                >
-                  <TbFolder size={16} className="shrink-0 opacity-40" />
-                  <p className="text-sm font-medium">{f.name}</p>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
         {/* Klassen */}
         <div>
           <SectionTitle>Klassen</SectionTitle>
