@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
 import BasePopup from "@/components/ui/design_system/popup/BasePopup";
 import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
 import InputField from "@/components/ui/design_system/input/InputField";
@@ -10,6 +9,7 @@ import IconPicker from "@/components/ui/app/private/flow/overview/IconPicker";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import IconButton from "@/components/ui/design_system/button/IconButton";
 import { IoClose } from "react-icons/io5";
+import { useCreateFlowcourse } from "@/hooks/app/flow/useCreateFlowcourse";
 
 interface CreateFlowcourseProps {
   createOpen: boolean;
@@ -21,25 +21,21 @@ export default function CreateFlowcourse({
   setCreateOpen,
 }: CreateFlowcourseProps) {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const popupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const t = useTranslations("flow.course");
+  const { mutateAsync: createCourse } = useCreateFlowcourse();
 
   const [selectedIcon, setSelectedIcon] = useState("blue:bookopen");
   const [title, setTitle] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const resetForm = () => {
+  const onClose = useCallback(() => {
     setTitle("");
     setSelectedIcon("blue:bookopen");
     setErrors({});
-  };
-
-  const onClose = () => {
-    resetForm();
     setCreateOpen(false);
-  };
+  }, [setCreateOpen]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -54,7 +50,7 @@ export default function CreateFlowcourse({
       );
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [createOpen]);
+  }, [createOpen, onClose]);
 
   useEffect(() => {
     if (createOpen) inputRef.current?.focus();
@@ -72,18 +68,9 @@ export default function CreateFlowcourse({
     e?.preventDefault();
     if (!validate()) return;
 
-    const res = await fetch("/api/flows/course", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, icon: selectedIcon }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      await queryClient.invalidateQueries({ queryKey: ["flowcourses"] });
-      router.push(`/course/${data.id}`);
-      onClose();
-    }
+    const data = await createCourse({ title, icon: selectedIcon });
+    router.push(`/course/${data.id}`);
+    onClose();
   };
 
   return (

@@ -18,6 +18,7 @@ import TextArea from "@/components/ui/design_system/input/TextArea";
 import { FiMinus } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
 import { LuLink } from "react-icons/lu";
+import { useCreateFlowcourse } from "@/hooks/app/flow/useCreateFlowcourse";
 
 interface CreateFlowBoardProps {
   createOpen: boolean;
@@ -43,6 +44,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
   const [days, setDays] = useState<string[]>([]);
   const t = useTranslations("flow.course");
   const { addCourse } = useFlowStore();
+  const { mutateAsync: createCourse } = useCreateFlowcourse();
 
   //helper functions
   const resetForm = () => {
@@ -109,33 +111,25 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
   //submit
   const onSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    console.log("icon", selectedIcon);
     if (!validate()) return;
 
-    const body = {
-      title: title,
+    const data = await createCourse({
+      title,
       icon: selectedIcon,
-      description: description,
+      description,
       exam_date: examDate,
-      board_id: board_id ?? null,
+      board_id: board_id ?? undefined,
       resource: link,
       lesson_days: days.join("-"),
-    };
-
-    console.log("body", body);
-
-    const res = await fetch("/api/flows/course", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
     });
 
-    if (res.ok) {
-      const data = await res.json();
-      addCourse(data);
+    addCourse(data);
+    if (board_id) {
       router.push("/flow/" + board_id + "/" + data.id);
-      onClose();
+    } else {
+      router.push("/course/" + data.id);
     }
+    onClose();
   };
 
   useKeyboardShortcut("n", () => setCreateOpen(true));

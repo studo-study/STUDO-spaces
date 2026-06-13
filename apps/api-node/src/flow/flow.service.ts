@@ -228,17 +228,9 @@ export class FlowService {
   }
 
   async getCoursesByUserId(userId: string): Promise<FlowCourseResponse[]> {
-    const boards = await this.db.query.flowboards.findMany({
-      where: eq(flowboards.owner_id, userId),
+    const allCourses = await this.db.query.flowcourses.findMany({
+      where: eq(flowcourses.added_by, userId),
     });
-    const courseRows = await Promise.all(
-      boards.map((b) =>
-        this.db.query.flowcourses.findMany({
-          where: eq(flowcourses.board_id, b.id),
-        }),
-      ),
-    );
-    const allCourses = courseRows.flat();
     return Promise.all(allCourses.map((c) => this.mapCourse(c)));
   }
 
