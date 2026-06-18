@@ -116,19 +116,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Bij MICROSOFT login (nieuw)
       if (account?.provider === "microsoft-entra-id") {
         try {
-          let imgUrl = "default";
-          try {
-            const photoRes = await fetch(
-              "https://graph.microsoft.com/v1.0/me/photo/$value",
-              {
-                headers: { Authorization: `Bearer ${account.access_token}` },
-              },
-            );
-            if (photoRes.ok) {
-              const buffer = await photoRes.arrayBuffer();
-              imgUrl = `data:image/jpeg;base64,${Buffer.from(buffer).toString("base64")}`;
-            }
-          } catch {}
+          const imgUrl = profile?.picture || "default";
 
           const res = await fetch(
             `${process.env.AUTH_API_URL}/sessions/social-login`,

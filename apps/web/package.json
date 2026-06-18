@@ -37,6 +37,7 @@
     "feather-icons": "^4.29.2",
     "firebase": "^12.9.0",
     "glin-profanity": "^3.1.5",
+    "heapdump": "^0.3.15",
     "i18n": "^0.15.3",
     "katex": "^0.17.0",
     "lucide-react": "^0.562.0",

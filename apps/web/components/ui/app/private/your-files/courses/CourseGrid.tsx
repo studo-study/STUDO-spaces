@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import SetSearch from "@/components/ui/app/private/your-files/sets/search";
 import { IoIosAdd } from "react-icons/io";
 import { useMemo, useState } from "react";
+import CourseAdd from "@/components/ui/app/private/course/overview/AddPopup";
 
 const CourseGrid = () => {
   const t = useTranslations("courses");
@@ -54,12 +55,7 @@ const CourseGrid = () => {
             setSearchQuery={setSearchQuery}
             placeholder={t("search_course")}
           />
-          <button className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
-            <div className="absolute bg-purple-500/50 h-8 w-8 rounded-full blur-sm" />
-            <div className="relative z-10 shadow-2xl bg-purple-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
-              <IoIosAdd />
-            </div>
-          </button>
+          <CourseAdd />
         </div>
       </div>
       <div className="w-full grid grid-cols-5 gap-5 scroll-hidden py-5">

@@ -9,7 +9,6 @@ const intlMiddleware = createMiddleware(routing);
 const locales = ["en", "nl", "fr"]; // Pas aan naar jouw locales
 
 export default auth((request) => {
-  console.log("MIDDLEWARE HIT:", request.nextUrl.pathname);
   const { pathname } = request.nextUrl;
 
   // ========================================
@@ -98,20 +97,6 @@ export default auth((request) => {
     pathWithoutLocale.startsWith("/visualset/") ||
     pathWithoutLocale.startsWith("/profile/") ||
     pathWithoutLocale.startsWith("/track/");
-  if (pathWithoutLocale.includes("classroom")) {
-    console.log("CLASSROOM DEBUG:", {
-      pathWithoutLocale,
-      exactMatch: pathWithoutLocale === "/classroom",
-      startsWithSlash: pathWithoutLocale.startsWith("/classroom/"),
-      segments,
-      locale,
-    });
-  }
-  console.log({
-    pathname,
-    pathWithoutLocale,
-    isPublicRoute,
-  });
   const authRoutes = ["/login", "/register"];
   const isAuthRoute = authRoutes.some(
     (route) =>
@@ -155,16 +140,6 @@ export default auth((request) => {
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
-  console.log(
-    "PATH:",
-    pathname,
-    "WITHOUT LOCALE:",
-    pathWithoutLocale,
-    "PUBLIC:",
-    isPublicRoute,
-    "LOGGED IN:",
-    isLoggedIn,
-  );
   return intlMiddleware(request);
 });
 
