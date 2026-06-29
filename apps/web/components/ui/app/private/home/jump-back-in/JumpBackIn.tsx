@@ -8,15 +8,7 @@ import LastTenItem from "@/components/ui/app/private/home/jump-back-in/LastTenIt
 import { useSets } from "@/hooks/app/sets/useSets";
 import { LastStudied } from "@studo/types";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
-
-const ARROW_BASE =
-  "absolute z-20 top-1/2 -translate-y-1/2 h-7 w-7 flex justify-center items-center " +
-  "rounded-full border border-studoborder bg-studogrey/30 cursor-pointer " +
-  "active:scale-95 transition-all duration-300 dark:text-white text-studodarkblue";
-
-const FADE_BASE =
-  "absolute z-10 h-full w-8 pointer-events-none to-transparent " +
-  "dark:from-bg-dark from-bg-white";
+import classNames from "@/utils/classnames";
 
 const JumpBackIn = () => {
   const { lastTen } = useSets();
@@ -39,8 +31,17 @@ const JumpBackIn = () => {
       const atStart = scrollLeft <= 1;
       const atEnd = scrollLeft + clientWidth >= scrollWidth - 1;
 
-      let activeIndex = 0;
+      if (atEnd) {
+        setScrollState({
+          atStart,
+          atEnd,
+          activeIndex: Array.from(container.children).length - 1,
+        });
+        return;
+      }
+
       let closest = Infinity;
+      let activeIndex = 0;
       Array.from(container.children).forEach((child, i) => {
         const el = child as HTMLElement;
         const distance = Math.abs(el.offsetLeft - scrollLeft);
@@ -72,7 +73,9 @@ const JumpBackIn = () => {
     const container = scrollRef.current;
     const item = container?.children[index] as HTMLElement | undefined;
     if (!container || !item) return;
-    container.scrollTo({ left: item.offsetLeft, behavior: "smooth" });
+    const centerOffset =
+      item.offsetLeft - (container.clientWidth - item.clientWidth) / 2;
+    container.scrollTo({ left: centerOffset, behavior: "smooth" });
   };
 
   const handleForward = () =>
@@ -82,47 +85,58 @@ const JumpBackIn = () => {
 
   return (
     <AnimateOnMount delay={0}>
-      <section className="flex flex-col gap-5 overflow-visible">
+      <section className="flex flex-col gap-5">
         <SectionHeader
           sectionIcon={<MdReplay />}
           title={t("jump-back-in_title")}
         />
 
-        <div className="relative w-full h-50 flex flex-row gap-2 overflow-visible">
-          {!atStart && (
-            <>
-              <div className={`${FADE_BASE} left-0 bg-linear-90`} />
-              <button
-                onClick={handleBackward}
-                aria-label={t("jump-back-in_previous")}
-                className={`${ARROW_BASE} left-3`}
-              >
-                <IoChevronBack />
-              </button>
-            </>
-          )}
+        <div className="relative w-full h-50">
+          {/* Left fade + arrow */}
+          <div
+            className={classNames(
+              "absolute inset-y-0 left-0 z-10 flex items-center transition-opacity duration-300",
+              atStart ? "opacity-0 pointer-events-none" : "opacity-100",
+            )}
+          >
+            <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-bg-white dark:from-bg-dark to-transparent" />
+            <button
+              onClick={handleBackward}
+              aria-label={t("jump-back-in_previous")}
+              className="relative z-10 ml-2 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-sm border border-studoborder shadow-sm cursor-pointer active:scale-95 transition-transform duration-150 dark:text-white text-studodarkblue"
+            >
+              <IoChevronBack size={14} />
+            </button>
+          </div>
 
+          {/* Scroll container */}
           <div
             ref={scrollRef}
-            className="relative w-full h-full flex flex-row gap-5 overflow-x-scroll overflow-y-visible scroll-hidden"
+            className="w-full h-full flex flex-row gap-5 overflow-x-scroll scroll-hidden snap-x snap-mandatory"
           >
             {items.map((item, i) => (
-              <LastTenItem data={item} key={i} />
+              <div key={i} className="snap-center shrink-0">
+                <LastTenItem data={item} />
+              </div>
             ))}
           </div>
 
-          {!atEnd && (
-            <>
-              <button
-                onClick={handleForward}
-                aria-label={t("jump-back-in_next")}
-                className={`${ARROW_BASE} right-3`}
-              >
-                <IoChevronForward />
-              </button>
-              <div className={`${FADE_BASE} right-0 bg-linear-270`} />
-            </>
-          )}
+          {/* Right fade + arrow */}
+          <div
+            className={classNames(
+              "absolute inset-y-0 right-0 z-10 flex items-center transition-opacity duration-300",
+              atEnd ? "opacity-0 pointer-events-none" : "opacity-100",
+            )}
+          >
+            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-bg-white dark:from-bg-dark to-transparent" />
+            <button
+              onClick={handleForward}
+              aria-label={t("jump-back-in_next")}
+              className="relative z-10 mr-2 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-sm border border-studoborder shadow-sm cursor-pointer active:scale-95 transition-transform duration-150 dark:text-white text-studodarkblue"
+            >
+              <IoChevronForward size={14} />
+            </button>
+          </div>
         </div>
 
         {items.length > 1 && (
@@ -132,9 +146,10 @@ const JumpBackIn = () => {
                 key={i}
                 onClick={() => scrollToIndex(i)}
                 aria-label={t("jump-back-in_goto", { index: i + 1 })}
-                className={`w-2.5 h-2.5 rounded-full border border-studoborder cursor-pointer transition-colors ${
-                  activeIndex === i ? "bg-studoblue" : ""
-                }`}
+                className={classNames(
+                  "h-2 rounded-full cursor-pointer transition-all duration-300",
+                  activeIndex === i ? "bg-studoblue w-6" : "w-2 bg-studoborder",
+                )}
               />
             ))}
           </div>

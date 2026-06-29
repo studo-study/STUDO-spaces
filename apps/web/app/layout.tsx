@@ -29,7 +29,7 @@ export default function RootLayout({
         <IcoSwitcher />
       </head>
 
-      <body>
+      <body className="h-screen">
         <QueryClientProvider>
           <ToastProvider>{children}</ToastProvider>
         </QueryClientProvider>

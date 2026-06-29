@@ -1,8 +1,8 @@
-import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
+import SpeedyMode from "@/components/ui/app/shared/studosets/modes/speedy/SpeedyMode";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 
-export default async function FlashCardPage({
+export default async function SpeedyPage({
   params,
 }: {
   params: Promise<{ locale: string; id: string }>;
@@ -11,8 +11,8 @@ export default async function FlashCardPage({
 
   return (
     <PageContainer>
-      <AnimateOnMount className={"w-full flex-1 min-h-1/5"}>
-        <FlashcardMode id={id} />
+      <AnimateOnMount className="w-full flex-1 min-h-1/5">
+        <SpeedyMode id={id} />
       </AnimateOnMount>
     </PageContainer>
   );

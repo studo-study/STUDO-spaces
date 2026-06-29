@@ -951,7 +951,10 @@
     "account": "Account",
     "nonotif": "geen meldingen",
     "allup": "alles up-to-date",
-    "search": "zoeken..."
+    "search": "zoeken...",
+    "search_btn": "Zoeken",
+    "create_c": "Creëer vak",
+    "create_b": "Creëer board"
   },
   "createfolder": {
     "title": "maak een map",
@@ -1484,6 +1487,9 @@
       "exam_status": "Examenstatus",
       "link": "Resourcelink",
       "add_link": "voeg een resourcelink toe...",
+      "calendar": "Kalender",
+      "kanban": "Bord",
+      "table": "Tabel",
       "row": {
         "done": "klaar",
         "in_prog": "bezig",

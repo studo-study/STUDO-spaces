@@ -4,7 +4,7 @@ import { useState } from "react";
 import SvenImport from "@/components/ui/app/private/create-studoset/svenimport";
 import Textimport from "@/components/ui/app/private/create-studoset/textimport";
 import { CardData } from "@/types/types";
-import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
+import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 import { RiAiGenerate } from "react-icons/ri";
 import { LuScanText } from "react-icons/lu";
 interface importerProps {
@@ -41,7 +41,7 @@ export default function SetImporter({
           />
         </div>
         <div>
-          <TabSwitcher
+          <SegmentedControls
             tabs={[
               {
                 key: "sven",

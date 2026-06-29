@@ -1,6 +1,6 @@
 "use client";
 import { useLayoutEffect, useRef, useState } from "react";
-import { TabSwitcherProps } from "@/components/ui/design_system/tabswitcher/TabSwitcher.types";
+import { SegmentedControlsProps } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls.types";
 
 const SIZE_STYLES = {
   sm: {
@@ -25,12 +25,13 @@ const SIZE_STYLES = {
   },
 } as const;
 
-export const TabSwitcher = <T extends string = string>({
+export const SegmentedControls = <T extends string = string>({
   tabs,
   value,
   onChange,
   size = "md",
-}: TabSwitcherProps<T>) => {
+  stretch,
+}: SegmentedControlsProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const [indicator, setIndicator] = useState<{
@@ -77,7 +78,7 @@ export const TabSwitcher = <T extends string = string>({
     <div className="flex justify-center">
       <div
         ref={containerRef}
-        className={`relative flex gap-1 bg-studogrey/30 border border-studoborder/30 rounded-full ${styles.padding}`}
+        className={`relative w-full flex gap-1 bg-studogrey/30 border border-studoborder/30 rounded-full ${styles.padding}`}
       >
         {indicator && (
           <div

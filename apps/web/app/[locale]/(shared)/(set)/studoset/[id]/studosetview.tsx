@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
-import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
+import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBottom";
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
@@ -276,7 +276,7 @@ export default function StudosetView({ id }: viewProps) {
             {t("cards_title")}:
           </span>
           <div className={"flex flex-row gap-2 items-center justify-center"}>
-            <TabSwitcher
+            <SegmentedControls
               size={"sm"}
               tabs={[
                 {

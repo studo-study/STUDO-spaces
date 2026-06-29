@@ -13,6 +13,7 @@ import ToggleGroupBase from "@/components/ui/design_system/togglegroup/ToggleGro
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFlowStore } from "@/store/slices/flow/flowStore";
+import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 
 const CoursePageHeader = () => {
   const t = useTranslations("flow.course");
@@ -43,12 +44,11 @@ const CoursePageHeader = () => {
               "w-fit flex flex-row items-center dark:text-white text-studodarkblue gap-2 transition-all duration-300  cursor-pointer hover:bg-studogrey/30 py-1 px-1 rounded-2xl"
             }
           >
-            <Link
-              href={"/flow/" + data.board_id + "/overview"}
+            <div
               className={`bg-${color}-400/20 text-${color}-500 min-w-8 min-h-8 w-8 h-8 rounded-xl flex items-center justify-center`}
             >
               <Icon size={15} />
-            </Link>
+            </div>
             <span className={"font-bold select-none text-xl"}>
               {data.title}
             </span>
@@ -57,7 +57,7 @@ const CoursePageHeader = () => {
           {isOpen && (
             <div
               className={`
-                    absolute top-full left-0 mt-2 z-[9999] min-w-[180px] rounded-xl
+                    absolute top-full left-0 mt-2 z-9999 min-w-45 rounded-xl
                     bg-white/80 dark:bg-[#1e293b]/90 backdrop-blur-xl
                     border border-white/50 dark:border-white/10 overflow-hidden
                     shadow-xl shadow-black/10 dark:shadow-black/30
@@ -102,10 +102,25 @@ const CoursePageHeader = () => {
           )}
         </div>
         <div>
-          <ToggleGroupBase
-            view={courseView}
-            setView={setCourseView}
-            options={["table", "kanban", "calendar"]}
+          <SegmentedControls
+            tabs={[
+              {
+                key: "table",
+                label: t("table"),
+              },
+              {
+                key: "kanban",
+                label: t("kanban"),
+              },
+              {
+                key: "calendar",
+                label: t("calendar"),
+              },
+            ]}
+            value={courseView}
+            onChange={(key) => {
+              setCourseView(key);
+            }}
           />
         </div>
       </div>

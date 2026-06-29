@@ -15,7 +15,13 @@ import { useAppStore } from "@/store/useAppStore";
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
 
-function AppLayoutInner({ children }: { children: ReactNode }) {
+function AppLayoutInner({
+  children,
+  variant = "default",
+}: {
+  children: ReactNode;
+  variant?: "default" | "mode";
+}) {
   const { user, isLoading } = useUser();
   const [Search, setSearch] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
@@ -64,18 +70,24 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
               toggleCreate={toggleCreate}
             />
           </div>
-          <div className={"w-full flex items-center justify-center h-full"}>
-            <main
-              className={`flex-1 min-h-0 xl:w-9/10 3xl:w-1/3 
-                                        h-full pl-5 pr-5 lg:pl-10 lg:pr-77 
-                                        overflow-y-scroll scroll-hidden 
-                                        [&::-webkit-scrollbar]:hidden
-                                        [-ms-overflow-style:none]
-                                        [scrollbar-width:none]`}
-            >
+          {variant === "mode" ? (
+            <main className="flex-1 min-h-0 h-full overflow-hidden flex flex-col">
               {children}
             </main>
-          </div>
+          ) : (
+            <div className={"w-full flex items-center justify-center h-full"}>
+              <main
+                className={`flex-1 min-h-0 xl:w-9/10 3xl:w-1/3
+                                          h-full pl-5 pr-5 lg:pl-10 lg:pr-77
+                                          overflow-y-scroll scroll-hidden
+                                          [&::-webkit-scrollbar]:hidden
+                                          [-ms-overflow-style:none]
+                                          [scrollbar-width:none]`}
+              >
+                {children}
+              </main>
+            </div>
+          )}
         </div>
       </div>
       <CreateFlowCourse createOpen={createOpen} setCreateOpen={setCreateOpen} />
@@ -84,10 +96,16 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
   );
 }
 
-export default function AppLayoutClient({ children }: { children: ReactNode }) {
+export default function AppLayoutClient({
+  children,
+  variant,
+}: {
+  children: ReactNode;
+  variant?: "default" | "mode";
+}) {
   return (
     <UserProvider>
-      <AppLayoutInner>{children}</AppLayoutInner>
+      <AppLayoutInner variant={variant}>{children}</AppLayoutInner>
     </UserProvider>
   );
 }

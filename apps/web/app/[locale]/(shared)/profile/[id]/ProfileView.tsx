@@ -3,7 +3,7 @@ import ProfileHeader from "@/components/ui/app/shared/profile/ProfileHeader";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import { useProfile } from "@/hooks/app/profile/useProfiles";
 import { usePublicProfile } from "@/hooks/app/profile/usePublicProfile";
-import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
+import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import Image from "next/image";
@@ -31,7 +31,7 @@ export default function ProfileView({ id, isPublic = false }: viewProps) {
       <ProfileHeader profile={profile} />
       <div className={"w-full flex flex-col gap-3"}>
         <div className={"h-10 w-full flex flex-row"}>
-          <TabSwitcher
+          <SegmentedControls
             tabs={[
               {
                 key: "ss",

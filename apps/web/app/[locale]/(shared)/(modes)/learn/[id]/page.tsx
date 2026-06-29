@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import LearnController from "@/app/[locale]/(shared)/(set)/(modes)/learn/[id]/learncontroller";
+import LearnController from "@/app/[locale]/(shared)/(modes)/learn/[id]/learncontroller";
 
 export default async function LearnPage({
   params,
@@ -13,10 +13,8 @@ export default async function LearnPage({
     next: { revalidate: 60 },
   }).then((res) => res.json());
 
-  console.log(data);
-
   return (
-    <div className=" w-full h-full flex flex-col dark:text-white  items-center justify-center gap-10 scroll-hidden">
+    <div className="w-full h-full flex flex-col dark:text-white items-center justify-center gap-10 scroll-hidden">
       <LearnController data={data} />
     </div>
   );
