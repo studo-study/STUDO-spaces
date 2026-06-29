@@ -1,5 +1,4 @@
 "use client";
-import { Link } from "@/i18n/routing";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
 import { Linkparser } from "@/components/ui/app/private/course/page/CoursePage/linkparser";
 import Chip from "@/components/ui/design_system/chip/Chip";
@@ -9,7 +8,6 @@ import { useTranslations } from "next-intl";
 import { BsExclamationTriangle } from "react-icons/bs";
 import { CgDanger } from "react-icons/cg";
 import { IoWarningOutline } from "react-icons/io5";
-import ToggleGroupBase from "@/components/ui/design_system/togglegroup/ToggleGroup";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFlowStore } from "@/store/slices/flow/flowStore";

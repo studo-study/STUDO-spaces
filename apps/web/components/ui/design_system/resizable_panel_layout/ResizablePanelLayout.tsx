@@ -110,7 +110,7 @@ const ResizablePanelLayoutBase: React.FC<ResizablePanelLayoutProps> = ({
   const storedMapRef = useRef<Record<string, number>>(loadSizeMap(storageKey));
 
   const [sizes, setSizes] = useState<number[]>(() =>
-    buildSizes(activePanels, storedMapRef.current),
+    buildSizes(activePanels, loadSizeMap(storageKey)),
   );
 
   // When active panel set changes, rebuild sizes

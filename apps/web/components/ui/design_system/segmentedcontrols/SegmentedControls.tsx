@@ -30,7 +30,6 @@ export const SegmentedControls = <T extends string = string>({
   value,
   onChange,
   size = "md",
-  stretch,
 }: SegmentedControlsProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
