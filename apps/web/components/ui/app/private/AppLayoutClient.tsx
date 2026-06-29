@@ -1,6 +1,6 @@
 // components/app/AppLayoutClient.tsx
 "use client";
-import { memo, ReactNode, SetStateAction, useState } from "react";
+import { memo, ReactNode, useState } from "react";
 import AppHeader from "@/components/ui/app/private/app_header/AppHeader";
 import BurgerMenu from "@/components/ui/app/private/app_header/BurgerMenu";
 import {
@@ -13,9 +13,6 @@ import AppLayoutContext from "@/components/context/AppLayoutContext";
 import { useAppStore } from "@/store/useAppStore";
 import { usePathname } from "next/navigation";
 import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import { BookSearch, Flower, SlidersHorizontal } from "lucide-react";
 import CourseSidebar from "@/components/ui/app/shared/studosets/course_context_menu/CourseSidebar";
 
 const MemoizedHeader = memo(AppHeader);

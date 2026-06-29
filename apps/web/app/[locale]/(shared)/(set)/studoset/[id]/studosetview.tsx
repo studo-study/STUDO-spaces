@@ -5,8 +5,6 @@ import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/app/shared/studosets/CardList";
 import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import SavedPopup from "@/components/ui/app/shared/studosets/savedpopup";
-import ClassroomPopup from "@/components/ui/app/shared/studosets/classroompopup";
 import SharePopup from "@/components/ui/app/shared/studosets/sharepopup";
 import SettingsPopup from "@/components/ui/app/shared/studosets/settingspopup";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";

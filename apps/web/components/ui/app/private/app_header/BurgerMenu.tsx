@@ -5,15 +5,7 @@ import { usePathname } from "next/navigation";
 import UserPopup from "@/components/ui/app/private/app_header/popups/BurgerPopup";
 import classNames from "@/utils/classnames";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import {
-  Album,
-  BookOpen,
-  GraduationCap,
-  House,
-  Layers,
-  Search,
-  SquareStack,
-} from "lucide-react";
+import { BookOpen, GraduationCap, House, Layers, Search } from "lucide-react";
 
 interface BurgerProps {
   burgerOpen: boolean;
