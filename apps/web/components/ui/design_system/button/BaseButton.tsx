@@ -19,6 +19,7 @@ interface BaseButtonProps extends Omit<
   textColor?: keyof typeof textColorMap;
   textSize?: keyof typeof textSizeMap;
   borderColor?: keyof typeof borderMap;
+  shape?: keyof typeof shapeMap;
   error?: string;
 }
 
@@ -68,6 +69,12 @@ const variantMap = {
   icon: "h-fit px-0  py-0 rounded-full border border-studoborder/30 bg-studogrey/30",
 } as const;
 
+const shapeMap = {
+  rectangle: "",
+  square: "!p-2 aspect-square",
+  circle: "!p-2 aspect-square",
+} as const;
+
 const gradientMap = {
   "rose-blue": "bg-gradient-to-r from-rose-500 to-blue-500",
   "purple-pink": "bg-gradient-to-r from-purple-500 to-pink-500",
@@ -91,6 +98,7 @@ const BaseButton = (props: BaseButtonProps) => {
     textColor,
     textSize,
     borderColor = "default",
+    shape,
     isLoading,
     isDisabled,
     disabled,
@@ -101,7 +109,11 @@ const BaseButton = (props: BaseButtonProps) => {
   } = props;
 
   const classes = [
-    rounded ? `rounded-${rounded}` : "rounded-full",
+    shape === "square"
+      ? "rounded-xl"
+      : rounded
+        ? `rounded-${rounded}`
+        : "rounded-full",
     "cursor-pointer active:scale-95 transition-all duration-300",
     "disabled:opacity-20 disabled:cursor-not-allowed",
     "font-bold flex flex-row gap-2 items-center justify-center",
@@ -110,6 +122,7 @@ const BaseButton = (props: BaseButtonProps) => {
     borderMap[borderColor],
     textColor ? textColorMap[textColor] : "",
     textSize ? textSizeMap[textSize] : "",
+    shape ? shapeMap[shape] : "",
     bg,
     px,
     className,

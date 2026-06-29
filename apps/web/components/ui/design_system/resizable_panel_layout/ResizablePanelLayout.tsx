@@ -8,6 +8,7 @@ export interface PanelConfig {
   defaultSize: number; // percentage 0-100
   minSize?: number; // percentage, default 5
   maxSize?: number; // percentage, default 95
+  resizable?: boolean; // default true — false hides the divider after this panel
 }
 
 export interface ResizablePanelLayoutProps {
@@ -251,26 +252,27 @@ const ResizablePanelLayoutBase: React.FC<ResizablePanelLayoutProps> = ({
             {child.props.children}
           </div>
 
-          {i < activeChildren.length - 1 && (
-            <div
-              onMouseDown={onMouseDown(i)}
-              style={{
-                flexShrink: 0,
-                flexGrow: 0,
-                ...(isHorizontal
-                  ? {
-                      width: `${dividerSize}px`,
-                      height: "100%",
-                      cursor: "ew-resize",
-                    }
-                  : {
-                      height: `${dividerSize}px`,
-                      width: "100%",
-                      cursor: "ns-resize",
-                    }),
-              }}
-            />
-          )}
+          {i < activeChildren.length - 1 &&
+            activePanels[i]?.resizable !== false && (
+              <div
+                onMouseDown={onMouseDown(i)}
+                style={{
+                  flexShrink: 0,
+                  flexGrow: 0,
+                  ...(isHorizontal
+                    ? {
+                        width: `${dividerSize}px`,
+                        height: "100%",
+                        cursor: "ew-resize",
+                      }
+                    : {
+                        height: `${dividerSize}px`,
+                        width: "100%",
+                        cursor: "ns-resize",
+                      }),
+                }}
+              />
+            )}
         </React.Fragment>
       ))}
     </div>
