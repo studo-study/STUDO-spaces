@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
 import { MdAccountCircle, MdOutlineVerifiedUser } from "react-icons/md";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { useUser } from "@/components/providers/auth/UserProvider";
 
 interface UserPopupProps {

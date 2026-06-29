@@ -4,10 +4,10 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { MdOutlinePrivacyTip, MdOutlineVerifiedUser } from "react-icons/md";
 import { LuLogOut, LuSettings } from "react-icons/lu";
+import { FaAngleRight } from "react-icons/fa6";
 import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
-import { FaAngleRight } from "react-icons/fa6";
 import { useToast } from "@/components/providers/app/ToastProvider";
 interface ProfileTriggerPopupProps {
   ProfileIsOpen: boolean;

@@ -7,6 +7,7 @@ interface BaseTooltipProps {
   content: string | number;
   position?: "top" | "bottom" | "left" | "right";
   delay?: number;
+  hidden?: boolean;
 }
 
 const BaseTooltip = ({
@@ -14,6 +15,7 @@ const BaseTooltip = ({
   content,
   position = "top",
   delay = 200,
+  hidden,
 }: BaseTooltipProps) => {
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -79,11 +81,12 @@ const BaseTooltip = ({
       onMouseLeave={hide}
     >
       {children}
-      {mounted &&
+      {!hidden &&
+        mounted &&
         createPortal(
           <div
             role="tooltip"
-            className={`fixed z-[9999] whitespace-nowrap rounded-full border border-studoborder/30
+            className={`fixed z-9999 whitespace-nowrap rounded-full border border-studoborder/30
               bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg
               pointer-events-none backdrop-blur-sm
               transition-all duration-150 ease-out

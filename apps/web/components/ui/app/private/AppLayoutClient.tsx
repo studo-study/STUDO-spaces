@@ -1,6 +1,6 @@
 // components/app/AppLayoutClient.tsx
 "use client";
-import { memo, ReactNode, useState } from "react";
+import { memo, ReactNode, SetStateAction, useState } from "react";
 import AppHeader from "@/components/ui/app/private/app_header/AppHeader";
 import BurgerMenu from "@/components/ui/app/private/app_header/BurgerMenu";
 import {
@@ -14,10 +14,9 @@ import { useAppStore } from "@/store/useAppStore";
 import { usePathname } from "next/navigation";
 import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { HiSparkles } from "react-icons/hi2";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import { LuScanSearch } from "react-icons/lu";
-import { IoIosOptions } from "react-icons/io";
+import { BookSearch, Flower, SlidersHorizontal } from "lucide-react";
+import CourseSidebar from "@/components/ui/app/shared/studosets/course_context_menu/CourseSidebar";
 
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
@@ -37,10 +36,9 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const sidebarOpen = useAppStore((s) => s.sidebarOpen);
   const pathname = usePathname();
+
   const toggleCreate = () => {
-    requestAnimationFrame(() => {
-      setCreateOpen(true);
-    });
+    requestAnimationFrame(() => setCreateOpen(true));
   };
 
   const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, "");
@@ -77,17 +75,13 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
               <ResizablePanelLayout
                 storageKey="studoset-sidebar"
                 panels={[
-                  { id: "main", defaultSize: menuOpen ? 68 : 100, minSize: 30 },
-                  ...(menuOpen
-                    ? [
-                        {
-                          id: "contextmenu",
-                          defaultSize: 32,
-                          minSize: 20,
-                          maxSize: 55,
-                        },
-                      ]
-                    : []),
+                  { id: "main", defaultSize: 78, minSize: 40 },
+                  {
+                    id: "contextmenu",
+                    defaultSize: 30,
+                    minSize: 30,
+                    maxSize: 45,
+                  },
                 ]}
               >
                 <ResizablePanelLayout.Panel panelId="main">
@@ -105,35 +99,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
                   </ResizablePanelLayout.Panel>
                 )}
               </ResizablePanelLayout>
-              <div className="shrink-0 w-20 h-full border-l border-studoborder/30 flex flex-col gap-5 py-5 items-center justify-start">
-                <BaseTooltip content={"Ask Sven"} position={"left"}>
-                  <BaseButton
-                    onClick={() => setMenuOpen((prev) => !prev)}
-                    variant={"outline_link"}
-                    size={"icon"}
-                  >
-                    <HiSparkles />
-                  </BaseButton>
-                </BaseTooltip>
-                <BaseTooltip content={"See in course"} position={"left"}>
-                  <BaseButton
-                    onClick={() => setMenuOpen((prev) => !prev)}
-                    variant={"outline_link"}
-                    size={"icon"}
-                  >
-                    <LuScanSearch />
-                  </BaseButton>
-                </BaseTooltip>
-                <BaseTooltip content={"Quick actions"} position={"left"}>
-                  <BaseButton
-                    onClick={() => setMenuOpen((prev) => !prev)}
-                    variant={"outline_link"}
-                    size={"icon"}
-                  >
-                    <IoIosOptions />
-                  </BaseButton>
-                </BaseTooltip>
-              </div>
+              <CourseSidebar setMenuOpen={setMenuOpen} />
             </>
           ) : (
             <main

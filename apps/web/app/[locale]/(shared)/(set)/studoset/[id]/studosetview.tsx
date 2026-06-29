@@ -25,6 +25,7 @@ import { SegmentedControls } from "@/components/ui/design_system/segmentedcontro
 import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBottom";
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
+import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 
 interface viewProps {
   id: string;
@@ -143,15 +144,21 @@ export default function StudosetView({ id }: viewProps) {
           {(data && data.title) || t("set_title")}
         </span>
         <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
-          <EditToggle id={id} />
-          <SavedPopup setId={id} />
-          <ClassroomPopup />
-          <SharePopup />
-          <SettingsPopup
-            isOwner={isOwner}
-            id={id}
-            isPrivateSet={data.public_set}
-          />
+          <BaseTooltip content={t("edit")}>
+            <EditToggle id={id} />
+          </BaseTooltip>
+
+          <BaseTooltip content={t("share")}>
+            <SharePopup />
+          </BaseTooltip>
+
+          <BaseTooltip content={t("settings")}>
+            <SettingsPopup
+              isOwner={isOwner}
+              id={id}
+              isPrivateSet={data.public_set}
+            />
+          </BaseTooltip>
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
@@ -187,7 +194,6 @@ export default function StudosetView({ id }: viewProps) {
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
           <LinkButton
-            className={"hidden"}
             href={`/learn/` + id}
             icon={
               <Image
@@ -204,7 +210,7 @@ export default function StudosetView({ id }: viewProps) {
           />
           <LinkButton
             href={`/speedy/` + id}
-            className="w-full hidden"
+            className="w-full"
             icon={
               <Image
                 width={20}

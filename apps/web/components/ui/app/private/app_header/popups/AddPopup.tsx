@@ -1,11 +1,11 @@
 "use client";
-import { IoIosAdd } from "react-icons/io";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
 import { FaChevronRight } from "react-icons/fa";
 import { FiBookOpen } from "react-icons/fi";
 import { TbCards } from "react-icons/tb";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
+import { Plus } from "lucide-react";
 
 interface TriggerAddProps {
   AddIsOpen: boolean;
@@ -30,7 +30,7 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
         <button className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300">
           <div className="absolute bg-blue-500/50 h-10 w-10 rounded-full blur-sm" />
           <div className="relative z-10 shadow-2xl bg-blue-500 h-10 min-w-10 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
-            <IoIosAdd />
+            <Plus size={20} />
           </div>
         </button>
       }
