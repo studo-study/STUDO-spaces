@@ -1,3 +1,4 @@
+"use client";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { X } from "lucide-react";
 import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
