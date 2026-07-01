@@ -126,9 +126,10 @@ export class FlowController {
   @Roles(Role.USER)
   @Get('courses/user/:user_id')
   async getCoursesByUserId(
-    @Param('user_id', ParseUserIdPipe) userId: string,
+    @Param('user_id', ParseUserIdPipe) _userId: string,
+    @Req() req: AuthenticatedRequest,
   ): Promise<FlowCourseResponse[]> {
-    return this.flowService.getCoursesByUserId(userId);
+    return this.flowService.getCoursesByUserId(req.user.id);
   }
 
   @ApiOperation({ summary: 'Haal een flowcourse op met rows.' })
