@@ -1,3 +1,4 @@
+"use client";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { BookSearch, Flower, SlidersHorizontal } from "lucide-react";
