@@ -1,3 +1,4 @@
+"use client";
 import { useTranslations } from "next-intl";
 import { TbCards } from "react-icons/tb";
 import { IoAdd } from "react-icons/io5";
