@@ -53,7 +53,7 @@ ci:
 	pnpm --filter @studo/api-node exec drizzle-kit check
 	pnpm --filter @studo/api-node db:seed
 
-node_modules: package.json package-lock.json
+node_modules: package.json pnpm-lock.yaml
 	pnpm install --frozen-lockfile
 	@touch node_modules
 
