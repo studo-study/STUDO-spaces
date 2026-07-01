@@ -1,3 +1,4 @@
+"use client";
 import { useTranslations } from "next-intl";
 import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
 import { IoIosAdd } from "react-icons/io";
