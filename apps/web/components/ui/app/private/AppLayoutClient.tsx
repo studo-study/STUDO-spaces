@@ -1,4 +1,3 @@
-// components/app/AppLayoutClient.tsx
 "use client";
 import { memo, ReactNode, useState } from "react";
 import AppHeader from "@/components/ui/app/private/app_header/AppHeader";
@@ -13,8 +12,9 @@ import AppLayoutContext from "@/components/context/AppLayoutContext";
 import { useAppStore } from "@/store/useAppStore";
 import { usePathname } from "next/navigation";
 import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
-import CourseSidebar from "@/components/ui/app/shared/studosets/course_context_menu/CourseSidebar";
-
+import CourseSidebar from "@/components/ui/app/private/course_context_menu/CourseSidebar";
+import SideMenu from "@/components/ui/app/private/course_context_menu/SideMenu";
+import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
 
@@ -30,10 +30,9 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
   const { user, isLoading } = useUser();
   const [Search, setSearch] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const sidebarOpen = useAppStore((s) => s.sidebarOpen);
   const pathname = usePathname();
-
+  const menuOpen = useSideMenu((state) => state.menuInfo);
   const toggleCreate = () => {
     requestAnimationFrame(() => setCreateOpen(true));
   };
@@ -86,17 +85,13 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
                     {children}
                   </main>
                 </ResizablePanelLayout.Panel>
-                {menuOpen && (
+                {menuOpen.isOpen && (
                   <ResizablePanelLayout.Panel panelId="contextmenu">
-                    <div className="h-full w-full border-l border-studoborder/30">
-                      <div className="w-full border-b border-studoborder/30 flex font-bold text-white items-center px-5 py-5">
-                        title
-                      </div>
-                    </div>
+                    <SideMenu origin={menuOpen?.origin ?? ""} />
                   </ResizablePanelLayout.Panel>
                 )}
               </ResizablePanelLayout>
-              <CourseSidebar setMenuOpen={setMenuOpen} />
+              <CourseSidebar />
             </>
           ) : (
             <main
