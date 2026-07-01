@@ -1,3 +1,4 @@
+"use client";
 import DoubleButton from "@/components/ui/design_system/button/DoubleButton";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import ToggleAbleSearchbar from "@/components/ui/design_system/search/ToggleAbleSearchbar";
