@@ -30,7 +30,6 @@ const DoubleButton: React.FC<DoubleButtonProps> = (props) => {
     onClick,
     width,
     children,
-    shape,
     isLoading,
     disabled,
     className,
