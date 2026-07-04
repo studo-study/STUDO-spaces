@@ -1027,10 +1027,15 @@
     "learnt": "Learned"
   },
   "notfound": {
-    "return": "back",
-    "404": "404"
+    "404": "404",
+    "return": "back"
   },
   "timed": {
+    "0": [
+      "Past midnight and still going strong!",
+      "Keep going!",
+      "Midnight and still crushing it!"
+    ],
     "2": [
       "Welcome back night owl",
       "Still up this late? You're not the only one...",
@@ -1073,11 +1078,6 @@
       "Welcome back, the night is still young, good luck",
       "Working late, nice!",
       "Time for a romantic evening date with your study material"
-    ],
-    "0": [
-      "Past midnight and still going strong!",
-      "Keep going!",
-      "Midnight and still crushing it!"
     ]
   },
   "home": {
@@ -1541,5 +1541,18 @@
     "server_error": "Server returned an error ({status})",
     "rate_limit": "You've reached the daily limit of 3 imports. Try again tomorrow.",
     "aborted": "Import cancelled"
+  },
+  "learnsettings": {
+    "learning": "General settings",
+    "answer_with": "Answer with",
+    "answer_type": "Answer type",
+    "revision_count": "Revision count",
+    "term_def_description": "Choose whether you answer with the term or the definition.",
+    "health": "Healthy studying",
+    "twenty_twenty_two": "20-20-2 learning",
+    "twenty_description": "20 min study, 20 sec look away, 2 min break",
+    "pomodoro_timer": "Pomodoro timer",
+    "pomodoro_description": "A timer that helps you get into hyperfocus.",
+    "reset_progress": "Reset progress"
   }
 }

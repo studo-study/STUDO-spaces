@@ -1,5 +1,5 @@
 "use client";
-import { memo, ReactNode, useState } from "react";
+import { memo, ReactNode, useEffect, useState } from "react";
 import AppHeader from "@/components/ui/app/private/app_header/AppHeader";
 import BurgerMenu from "@/components/ui/app/private/app_header/BurgerMenu";
 import {
@@ -33,6 +33,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
   const sidebarOpen = useAppStore((s) => s.sidebarOpen);
   const pathname = usePathname();
   const menuOpen = useSideMenu((state) => state.menuInfo);
+  const setMenuOpen = useSideMenu((state) => state.setMenuInfo);
   const toggleCreate = () => {
     requestAnimationFrame(() => setCreateOpen(true));
   };
@@ -41,6 +42,9 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
   const showStudoSidebar = STUDOSET_ROUTES.some((r) =>
     pathWithoutLocale.includes(r),
   );
+  useEffect(() => {
+    setMenuOpen({ isOpen: false, origin: null });
+  }, [pathname]);
 
   return (
     <AppLayoutContext.Provider value={{ toggleCreate }}>

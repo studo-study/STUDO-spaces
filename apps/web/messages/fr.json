@@ -605,8 +605,8 @@
     "alreadyRegistered": "Cette adresse e-mail est déjà sur la liste"
   },
   "notfound": {
-    "return": "retournée",
-    "404": "404"
+    "404": "404",
+    "return": "retournée"
   },
   "card": {
     "Definition": "Définition",
@@ -644,5 +644,18 @@
     "server_error": "Le serveur a retourné une erreur ({status})",
     "rate_limit": "Tu as atteint la limite quotidienne de 3 imports. Réessaie demain.",
     "aborted": "Import annulé"
+  },
+  "learnsettings": {
+    "learning": "Paramètres généraux",
+    "answer_with": "Répondre avec",
+    "answer_type": "Type de réponse",
+    "revision_count": "Nombre de révisions",
+    "term_def_description": "Choisissez si vous répondez avec le terme ou la définition.",
+    "health": "Étude saine",
+    "twenty_twenty_two": "Apprentissage 20-20-2",
+    "twenty_description": "20 min d’étude, 20 sec de pause visuelle, 2 min de pause",
+    "pomodoro_timer": "Minuteur Pomodoro",
+    "pomodoro_description": "Un minuteur qui vous aide à atteindre l’hyperfocus.",
+    "reset_progress": "Réinitialiser la progression"
   }
 }

@@ -10,17 +10,19 @@ import { useTranslations } from "next-intl";
 
 type Tab = "chat" | "history" | "options";
 const SvenChat = () => {
-  const t = useTranslations("");
+  const t = useTranslations("svenchat");
   const setMenuInfo = useSideMenu((state) => state.setMenuInfo);
   const [tab, setTab] = useState<Tab>("chat");
   return (
     <div className={"min-h-0 w-full flex flex-col flex-1"}>
       <div
         className={
-          "w-full pt-4 px-4 flex flex-row items-center justify-between"
+          "w-full pt-4 px-4 min-w-full relative flex flex-row items-center justify-center"
         }
       >
-        <div className={"flex flex-row gap-1 items-center"}>
+        <div
+          className={"absolute left-4 top-4 flex flex-row gap-1 items-center"}
+        >
           <BaseToolTip
             content={tab === "chat" ? "History" : "Chat"}
             position={"bottom"}
@@ -57,15 +59,17 @@ const SvenChat = () => {
         >
           {tab === "chat" ? t("new-chat") : t("history")}
         </span>
-        <BaseToolTip content={"Close"} position={"bottom"}>
-          <BaseButton
-            onClick={() => setMenuInfo({ isOpen: false, origin: null })}
-            size={"xs"}
-            variant={"ghost"}
-            shape="circle"
-            icon={<X size={15} />}
-          />
-        </BaseToolTip>
+        <div className={"absolute right-4 top-4"}>
+          <BaseToolTip content={"Close"} position={"bottom"}>
+            <BaseButton
+              onClick={() => setMenuInfo({ isOpen: false, origin: null })}
+              size={"xs"}
+              variant={"ghost"}
+              shape="circle"
+              icon={<X size={15} />}
+            />
+          </BaseToolTip>
+        </div>
       </div>
       <div
         className={

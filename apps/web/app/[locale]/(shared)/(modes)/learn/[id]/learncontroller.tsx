@@ -7,6 +7,9 @@ import SettingsTrigger from "@/components/ui/app/shared/profile/(modes)/learn/se
 import ProgressScreen from "@/components/ui/app/shared/profile/(modes)/learn/progressscreen";
 import { Card, FullStudyset } from "@/types/types";
 import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import { IoArrowBackOutline } from "react-icons/io5";
+import { useRouter } from "@/i18n/routing";
 
 interface LearnProps {
   data: FullStudyset;
@@ -124,6 +127,7 @@ export default function LearnController({ data }: LearnProps) {
   const sessionCards = data.session!.cards;
   const inputRef = useRef<HTMLInputElement>(null!);
   const startIndex = data.session!.index;
+  const Router = useRouter();
 
   // Initialiseer correctCounts vanuit bestaande sessiedata
   const initialCounts: Record<string, number> = {};
@@ -212,7 +216,15 @@ export default function LearnController({ data }: LearnProps) {
 
   return (
     <section className="w-full max-w-200 h-full py-20 gap-5 flex items-center justify-baseline flex-col">
-      <SettingsTrigger />
+      <div className="w-full flex">
+        <BaseButton
+          size="sm"
+          variant="icon"
+          onClick={() => Router.push("/studoset/" + data.id)}
+        >
+          <IoArrowBackOutline />
+        </BaseButton>
+      </div>
 
       <div className="w-full h-full flex items-center py-20 justify-baseline flex-col">
         <ProgressBar
