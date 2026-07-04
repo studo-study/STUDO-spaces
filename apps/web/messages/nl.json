@@ -1588,5 +1588,60 @@
     "server_error": "Server gaf een fout ({status})",
     "rate_limit": "Je hebt de dagelijkse limiet van 3 imports bereikt. Probeer morgen opnieuw.",
     "aborted": "Import geannuleerd"
+  },
+  "svenchat": {
+    "quote": "Sven helpt graag met cursusvragen"
+  },
+  "svenchatTimed": {
+    "new-chat": "Nieuwe chat",
+    "history": "Geschiedenis",
+    "2": [
+      "Dag nachtuil",
+      "Klaar om je vragen te beantwoorden!",
+      "Wat is de vraag? ",
+      "Nog bezig of al bezig!?",
+      "{name} is terug!"
+    ],
+    "4": [
+      "Is het geen bedtijd",
+      "Ga slapen!",
+      "Nog altijd wakker... hoe!?",
+      "Echt niet fatoe bro, ga pitten",
+      "Masten, Douchen, Studo..",
+      "Ik wil wel bijna pitten eigenlijk",
+      "Okaaay letsgooo"
+    ],
+    "7": [
+      "Goedemorgen {name}",
+      "Je bent wakker, eerste kleine win van de dag",
+      "Goeiemorgen morgen, goeiedag",
+      ""
+    ],
+    "11": [
+      "Welkom terug, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": [
+      "Goedemiddag {name}",
+      "Goed bezig, blijven volhouden",
+      "You got this!"
+    ],
+    "19": [
+      "Goedeavond {name}",
+      "Welkom terug",
+      "Avond shift geactiveerd",
+      "Let's Go Champ!"
+    ],
+    "22": [
+      "Welkom terug, de avond is nog jong, veel succes",
+      "Tot laat aan het werk, goed bezig!",
+      "Tijd voor een romantische avonddate met je studiemateriaal"
+    ],
+    "0": [
+      "Middernacht is geweest en nog steeds aan het knallen!",
+      "Blijven gaan!",
+      "Middernacht en nog altijd goed bezig!"
+    ]
   }
 }

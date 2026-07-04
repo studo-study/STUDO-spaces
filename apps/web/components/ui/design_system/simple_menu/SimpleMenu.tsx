@@ -7,6 +7,8 @@ interface SimpleMenuProps {
   width?: string | number;
   clickOutside?: () => void;
   isOpenProp?: boolean;
+  side?: "top" | "bottom" | "left" | "right";
+  align?: "start" | "center" | "end";
 }
 
 const SimpleMenu = (props: SimpleMenuProps) => {

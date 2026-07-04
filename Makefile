@@ -21,6 +21,14 @@ start-docker:
 	@echo "starting up docker..."
 	docker compose up
 
+start-docker-api:
+	@echo "starting up full api in docker container..."
+	docker compose -f docker-compose-backend.yml up
+
+start-docker-api-seeded:
+	@echo "starting up full seeded api in docker container... "
+	docker compose -f docker-compose-backend.yml --profile seed up
+
 start-web:
 	@echo "starting up web..."
 	cd apps/web/ && pnpm run dev
@@ -66,3 +74,13 @@ analyze:
 deps:
 	pnpm outdated -r
 	pnpm audit
+
+#qdrant documentatie
+pull-qdrant-docu:
+	docker pull qdrant/qdrant
+
+
+qdrant-docu:
+	docker run -p 6333:6333 -p 6334:6334 \
+		-v "$(PWD)/qdrant_storage:/qdrant/storage:z" \
+		qdrant/qdrant

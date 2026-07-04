@@ -6,6 +6,7 @@ import LearnCard from "@/components/ui/app/shared/profile/(modes)/learn/card";
 import SettingsTrigger from "@/components/ui/app/shared/profile/(modes)/learn/settings";
 import ProgressScreen from "@/components/ui/app/shared/profile/(modes)/learn/progressscreen";
 import { Card, FullStudyset } from "@/types/types";
+import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
 
 interface LearnProps {
   data: FullStudyset;
@@ -119,7 +120,6 @@ function learnReducer(state: State, action: Action): State {
 }
 
 export default function LearnController({ data }: LearnProps) {
-  console.log("data", data);
   const cards = data.cards;
   const sessionCards = data.session!.cards;
   const inputRef = useRef<HTMLInputElement>(null!);

@@ -1,36 +1,25 @@
-"use client";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { X } from "lucide-react";
-import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
 import SvenChat from "@/components/ui/app/private/course_context_menu/chat/SvenChat";
 import PdfReader from "@/components/ui/app/private/course_context_menu/pdf_reader/PdfReader";
+import { useParams } from "next/navigation";
+import PomodorTimer from "@/components/ui/app/private/course_context_menu/learn/pomodoro/PomodorTimer";
+import LearnSettings from "@/components/ui/app/private/course_context_menu/learn/settings/LearnSettings";
+import ExtraOptions from "@/components/ui/app/private/course_context_menu/extra_options/ExtraOptions";
 
 interface SideMenuProps {
   origin: string;
 }
 
-const SideMenuTitles: Record<string, string> = {
-  chat: "Chat",
-  course: "Course",
-  quick_actions: "Quick Actions",
-};
 const SideMenu: React.FC<SideMenuProps> = (props) => {
   const { origin } = props;
-  const title = SideMenuTitles[origin];
-  const setMenuOpen = useSideMenu((state) => state.setMenuInfo);
+  const path = useParams();
+  console.log(path);
   return (
-    <div className="h-full w-full border-l flex flex-col border-studoborder/30">
-      <div className="w-full border-b border-studoborder/30 flex justify-between font-bold dark:text-white items-center px-5 py-5">
-        {title}
-        <BaseButton
-          onClick={() => setMenuOpen({ isOpen: false, origin: null })}
-          size={"xs"}
-          shape="circle"
-          icon={<X />}
-        />
-      </div>
+    <div className="relative h-full w-full border-l flex flex-col bg-studogrey/5  border-studoborder/30">
       {origin === "chat" && <SvenChat />}
       {origin === "course" && <PdfReader />}
+      {origin === "pomodoro" && <PomodorTimer />}
+      {origin === "settings" && <LearnSettings />}
+      {origin === "options'" && <ExtraOptions />}
     </div>
   );
 };

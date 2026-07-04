@@ -1,6 +1,7 @@
 "use client";
 import { useLayoutEffect, useRef, useState } from "react";
 import { SegmentedControlsProps } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls.types";
+import classNames from "@/utils/classnames";
 
 const SIZE_STYLES = {
   sm: {
@@ -30,6 +31,7 @@ export const SegmentedControls = <T extends string = string>({
   value,
   onChange,
   size = "md",
+  stretch,
 }: SegmentedControlsProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -77,11 +79,18 @@ export const SegmentedControls = <T extends string = string>({
     <div className="flex justify-center">
       <div
         ref={containerRef}
-        className={`relative w-full flex gap-1 bg-studogrey/30 border border-studoborder/30 rounded-full ${styles.padding}`}
+        className={classNames(
+          `relative flex gap-1 bg-studogrey/30 border border-studoborder/30 rounded-full ${styles.padding}`,
+          stretch && "w-full",
+        )}
       >
         {indicator && (
           <div
-            className={`absolute bg-studogrey rounded-full shadow ease-out ${styles.inset}`}
+            className={classNames(
+              "absolute bg-studogrey rounded-full shadow ease-out",
+              styles.inset,
+              stretch && "w-full segmented-controls-stretch",
+            )}
             style={{
               left: `${indicator.left}px`,
               width: `${indicator.width}px`,
@@ -101,11 +110,14 @@ export const SegmentedControls = <T extends string = string>({
             }}
             type={"button"}
             onClick={() => onChange(t.key)}
-            className={`relative z-10 flex truncate items-center gap-1 rounded-full font-bold transition-colors duration-300 cursor-pointer ${styles.button} ${
-              value === t.key
-                ? "dark:text-white text-studodarkblue"
-                : "text-studodarkblue/50 dark:text-studogrey hover:text-zinc-400"
-            }`}
+            className={classNames(
+              `relative z-10 flex truncate items-center justify-center gap-1 rounded-full font-bold transition-colors duration-300 cursor-pointer ${styles.button} ${
+                value === t.key
+                  ? "dark:text-white text-studodarkblue"
+                  : "text-studodarkblue/50 dark:text-studogrey hover:text-zinc-400"
+              }`,
+              stretch && "segmented-controls-stretch",
+            )}
           >
             {t.icon}
             {t.label}

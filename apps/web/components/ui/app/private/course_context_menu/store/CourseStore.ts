@@ -1,6 +1,11 @@
 import { create } from "zustand";
 
-export type MenuOrigin = "chat" | "course" | "quick_actions";
+export type MenuOrigin =
+  | "chat"
+  | "course"
+  | "quick_actions"
+  | "Pomodoro"
+  | "Settings";
 export interface menuInfo {
   isOpen: boolean;
   origin: MenuOrigin | null;

@@ -1,5 +1,5 @@
 @import url('https://use.typekit.net/fmn3jvz.css');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');*/
 
 @import "tailwindcss";
 body {
@@ -948,4 +948,19 @@ body::-webkit-scrollbar {
 
 .checkbox-wrapper-7 .tgl-ios:checked + .tgl-btn:active:after {
     margin-left: -0.8em;
+}
+
+.segmented-controls-stretch {
+    display: flex;
+    width: 100%;
+}
+.segmented-controls-stretch > button {
+    flex: 1 1 0%;
+    min-width: 0;
+}
+.segmented-controls-stretch .segmented-controls-tab {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
