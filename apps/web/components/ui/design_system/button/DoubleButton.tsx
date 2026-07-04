@@ -15,9 +15,6 @@ interface DoubleButtonProps extends Omit<
   isLoading?: boolean;
   leftType?: "button" | "submit" | "reset";
   rightType?: "button" | "submit" | "reset";
-  bg?: string;
-  rounded?: string;
-  px?: string;
   error?: string;
 }
 
@@ -32,13 +29,10 @@ const DoubleButton: React.FC<DoubleButtonProps> = (props) => {
     onSubmitRight,
     onClick,
     width,
-    bg,
     children,
-    rounded,
     shape,
     isLoading,
     disabled,
-    px,
     className,
     leftIsDisabled,
     rightIsDisabled,
@@ -49,6 +43,7 @@ const DoubleButton: React.FC<DoubleButtonProps> = (props) => {
     <div
       className={classNames(
         "dark:text-white rounded-full border border-studoborder/30 flex flex-row gap-2 p-1.5 bg-studogrey/30",
+        className,
       )}
     >
       <button
