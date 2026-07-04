@@ -1,4 +1,4 @@
-import { Ref, SetStateAction, useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import classNames from "@/utils/classnames";
 import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 

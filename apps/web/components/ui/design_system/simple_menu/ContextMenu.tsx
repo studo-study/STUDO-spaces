@@ -11,7 +11,7 @@ interface SimpleMenuProps {
 }
 
 const SimpleContextMenu: React.FC<SimpleMenuProps> = (props) => {
-  const { trigger, children, width, clickOutside, isOpenProp } = props;
+  const { trigger, children, clickOutside } = props;
   return (
     <ContextMenu.Root onOpenChange={clickOutside}>
       <ContextMenu.Trigger asChild>{trigger}</ContextMenu.Trigger>

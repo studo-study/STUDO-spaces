@@ -45,22 +45,6 @@ const DoubleButton: React.FC<DoubleButtonProps> = (props) => {
     ...rest
   } = props;
 
-  const classes = [
-    shape === "square"
-      ? "rounded-xl"
-      : rounded
-        ? `rounded-${rounded}`
-        : "rounded-full",
-    "cursor-pointer active:scale-95 transition-all duration-300",
-    "disabled:opacity-20 disabled:cursor-not-allowed",
-    "font-bold flex flex-row gap-2 items-center justify-center",
-    bg,
-    px,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
     <div
       className={classNames(

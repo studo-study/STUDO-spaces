@@ -13,7 +13,6 @@ import {
   useSideMenu,
 } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
 import { usePathname } from "@/i18n/routing";
-import { GiTomato } from "react-icons/gi";
 
 const CourseSidebar: React.FC = () => {
   const menuOpen = useSideMenu((state) => state.menuInfo);

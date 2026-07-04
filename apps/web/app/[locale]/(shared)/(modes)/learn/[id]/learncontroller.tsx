@@ -3,10 +3,8 @@
 import { useReducer, useEffect, useRef, useMemo } from "react";
 import ProgressBar from "@/components/ui/app/shared/profile/(modes)/learn/progressbar";
 import LearnCard from "@/components/ui/app/shared/profile/(modes)/learn/card";
-import SettingsTrigger from "@/components/ui/app/shared/profile/(modes)/learn/settings";
 import ProgressScreen from "@/components/ui/app/shared/profile/(modes)/learn/progressscreen";
 import { Card, FullStudyset } from "@/types/types";
-import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useRouter } from "@/i18n/routing";

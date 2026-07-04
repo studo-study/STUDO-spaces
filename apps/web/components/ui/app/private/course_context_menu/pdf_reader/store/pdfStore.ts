@@ -7,7 +7,7 @@ interface PdfReader {
   currentPage: number;
   pageCount: number;
 }
-export const usePdfReader = create<PdfReader>((set) => ({
+export const usePdfReader = create<PdfReader>(() => ({
   doc_id: "",
   fileName: "",
   r2Key: "",

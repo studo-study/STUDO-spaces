@@ -44,7 +44,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
   );
   useEffect(() => {
     setMenuOpen({ isOpen: false, origin: null });
-  }, [pathname]);
+  }, [pathname, setMenuOpen]);
 
   return (
     <AppLayoutContext.Provider value={{ toggleCreate }}>

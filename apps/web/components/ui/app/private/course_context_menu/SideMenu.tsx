@@ -4,7 +4,6 @@ import PomodorTimer from "@/components/ui/app/private/course_context_menu/learn/
 import LearnSettings from "@/components/ui/app/private/course_context_menu/learn/settings/LearnSettings";
 import ExtraOptions from "@/components/ui/app/private/course_context_menu/extra_options/ExtraOptions";
 import { usePathname } from "@/i18n/routing";
-import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
 
 interface SideMenuProps {
   origin: string;
