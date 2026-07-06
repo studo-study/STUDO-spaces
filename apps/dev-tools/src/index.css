@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import "tailwindcss";
+
+.roboto-mono {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.jetbrains-mono {
+    font-family: "JetBrains Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@theme {
+    --font-mono: "JetBrains Mono", monospace;
+    --font-roboto: "Roboto Mono", monospace;
+}
+
+.section-title {
+    font-weight: bold;
+    font-size: var(--text-lg);
+    margin-bottom: 1rem;
+}
