@@ -21,7 +21,7 @@ interface SetItemProps {
 }
 
 export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
-  const date = new Date(set.last_studied).toLocaleDateString(locale);
+  const date = new Date(set.lastStudied).toLocaleDateString(locale);
   const iconSrc =
     set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
   const colorClass = COLORS[index % COLORS.length];
@@ -29,7 +29,7 @@ export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
   if (grid) {
     return (
       <Link
-        href={`/set/${set.set_id}`}
+        href={`/set/${set.setId}`}
         className={` h-50 flex-col flex gap-3 shadow-2xl items-center w-full rounded-2xl bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}
       >
         <div className={`h-0.5 w-full mb-3 bg-linear-to-r ${colorClass}`} />
@@ -69,7 +69,7 @@ export default function SetItem({ set, grid, index, t, locale }: SetItemProps) {
   } else {
     return (
       <Link
-        href={`/set/${set.set_id}`}
+        href={`/set/${set.setId}`}
         className={`
                      max-h-22 h-22 flex-col sm:flex-row px-10 py-4 sm:py-0 max-w-full min-w-full
                  flex gap-3 shadow-2xl items-center w-full rounded-full bg-studogrey/10 border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 overflow-hidden`}

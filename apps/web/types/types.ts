@@ -64,11 +64,11 @@ export interface UpdateUserRequest {
   email?: string;
   password?: string;
   displayName?: string;
-  img_url?: string;
-  streak_started?: string;
-  streak_count?: number;
-  streak_last_update?: string;
-  last_login?: string;
+  imgUrl?: string;
+  streakStarted?: string;
+  streakCount?: number;
+  streakLastUpdate?: string;
+  lastLogin?: string;
   role?: string;
 }
 
@@ -76,14 +76,14 @@ export interface User {
   id: string;
   email: string;
   displayName: string;
-  img_url: string;
-  join_date: string;
+  imgUrl: string;
+  joinDate: string;
   joinNumber: number;
   totalSets: number;
-  streak_started: string | null;
-  streak_count: number | null;
-  streak_last_update: string | null;
-  last_login: string;
+  streakStarted: string | null;
+  streakCount: number | null;
+  streakLastUpdate: string | null;
+  lastLogin: string;
   publicRole: string;
   verified: boolean;
 }
@@ -95,9 +95,9 @@ export interface Stats {
 }
 
 export interface LastStudied {
-  set_id: string;
+  setId: string;
   id: string;
-  last_studied: string;
+  lastStudied: string;
   title: string;
   type: string;
   progress: number;
@@ -116,20 +116,20 @@ export interface UserListResponse {
 export interface HeaderInfo {
   displayName: string;
   email: string;
-  streak_count: number | null;
+  streakCount: number | null;
   pfp: string;
 }
 
 export interface ClassActivity {
   id: string;
-  classroom_id: string;
-  user_id: string;
+  classroomId: string;
+  userId: string;
   displayName: string;
-  img_url: string;
-  set_id: string;
-  set_type: string;
+  imgUrl: string;
+  setId: string;
+  setType: string;
   title: string;
-  last_seen: string;
+  lastSeen: string;
 }
 
 export interface StartPage {
@@ -153,7 +153,7 @@ export interface UpdateCard {
   term?: string;
   definition?: string;
   number?: number;
-  updated_at?: string;
+  updatedAt?: string;
 }
 
 export interface Card {
@@ -161,14 +161,14 @@ export interface Card {
   term: string;
   definition: string;
   number: number;
-  term_content_type: "text" | "latex" | "code";
-  code_language: string;
-  created_at: string;
-  updated_at: string;
-  set_id: string;
-  owner_id: string;
-  suggestion_image_id?: string | null;
-  suggestion_image?: SuggestionImage | null;
+  termContentType: "text" | "latex" | "code";
+  codeLanguage: string;
+  createdAt: string;
+  updatedAt: string;
+  setId: string;
+  ownerId: string;
+  suggestionImageId?: string | null;
+  suggestionImage?: SuggestionImage | null;
 }
 
 export interface CardListResponse {
@@ -180,15 +180,15 @@ export interface CardListResponse {
 // ============================================================
 
 export interface CreateSetLike {
-  set_id: string;
+  setId: string;
 }
 
 export interface SetLike {
   id: string;
-  user_id: string;
-  set_id: string;
-  set_type: "studyset" | "visualset";
-  created_at: string;
+  userId: string;
+  setId: string;
+  setType: "studyset" | "visualset";
+  createdAt: string;
 }
 
 export interface SetLikeListResponse {
@@ -201,31 +201,31 @@ export interface SetLikeListResponse {
 
 export interface CreateStudyset {
   title: string;
-  global_term_language: string;
-  global_definition_language: string;
-  flowcourse_id?: string;
+  globalTermLanguage: string;
+  globalDefinitionLanguage: string;
+  flowcourseId?: string;
   cardlist: CreateCard[];
 }
 
 export interface UpdateStudyset {
   title?: string;
-  global_term_language?: string;
-  global_definition_language?: string;
-  public_set?: boolean;
+  globalTermLanguage?: string;
+  globalDefinitionLanguage?: string;
+  publicSet?: boolean;
   cards?: UpdateCard[];
 }
 
 export interface Studyset {
   id: string;
   title: string;
-  global_term_language: string;
-  global_definition_language: string;
-  created_at: string;
-  last_updated: string;
-  public_set: boolean;
+  globalTermLanguage: string;
+  globalDefinitionLanguage: string;
+  createdAt: string;
+  lastUpdated: string;
+  publicSet: boolean;
   displayName: string;
-  img_url: string;
-  user_id: string;
+  imgUrl: string;
+  userId: string;
 }
 
 export interface FullStudyset extends Studyset {
@@ -252,8 +252,8 @@ export interface CreateImage {
   title: string;
   url: string;
   index: number;
-  grid_x: number;
-  grid_y: number;
+  gridX: number;
+  gridY: number;
   scale: string;
 }
 
@@ -266,10 +266,10 @@ export interface Image {
   title: string;
   url: string;
   index: number;
-  grid_x: number;
-  grid_y: number;
+  gridX: number;
+  gridY: number;
   scale: string;
-  set_id: string;
+  setId: string;
 }
 
 export interface ImageWithPins extends Image {
@@ -284,7 +284,7 @@ export interface CreateVisualset {
 
 export interface UpdateVisualset {
   title?: string;
-  public_set?: boolean;
+  publicSet?: boolean;
   images?: UpdateImage[];
   pins?: UpdatePin[];
 }
@@ -292,12 +292,12 @@ export interface UpdateVisualset {
 export interface Visualset {
   id: string;
   title: string;
-  created_at: string;
-  last_updated: string;
-  public_set: boolean;
-  user_id: string;
+  createdAt: string;
+  lastUpdated: string;
+  publicSet: boolean;
+  userId: string;
   displayName: string;
-  img_url: string;
+  imgUrl: string;
 }
 
 export interface FullVisualset extends Visualset {
@@ -320,7 +320,7 @@ export interface CreatePin {
   definition: string;
   x: number;
   y: number;
-  image_id: string;
+  imageId: string;
 }
 
 export interface UpdatePin extends Partial<CreatePin> {
@@ -333,11 +333,11 @@ export interface Pin {
   definition: string;
   x: number;
   y: number;
-  created_at: string;
-  updated_at: string;
-  image_id: string;
-  set_id: string;
-  owner_id: string;
+  createdAt: string;
+  updatedAt: string;
+  imageId: string;
+  setId: string;
+  ownerId: string;
 }
 
 export interface PinListResponse {
@@ -364,33 +364,33 @@ export interface UpdateClassroom {
 export interface Classroom {
   id: string;
   name: string;
-  owner_id: string;
+  ownerId: string;
   type: string;
-  created_at: string;
+  createdAt: string;
   verified: boolean;
   school: string;
   public: boolean;
 }
 
 export interface ClassroomSet {
-  set_id: string;
-  set_type: string;
-  classroom_id: string;
-  added_by: string;
+  setId: string;
+  setType: string;
+  classroomId: string;
+  addedBy: string;
 }
 
 export interface FullClassroomSet extends ClassroomSet {
   title: string;
   owner: string;
-  created_at: string;
+  createdAt: string;
 }
 
 export interface ClassroomUser {
-  user_id: string;
-  classroom_id: string;
-  img_url: string;
+  userId: string;
+  classroomId: string;
+  imgUrl: string;
   role: string;
-  joined_at: string;
+  joinedAt: string;
   displayName: string;
   streak: number;
   verified: boolean;
@@ -407,7 +407,7 @@ export interface ClassroomListResponse {
 }
 
 export interface CreateClassroomUser {
-  classroom_id: string;
+  classroomId: string;
   role: string;
 }
 
@@ -416,7 +416,7 @@ export interface UpdateClassroomUser {
 }
 
 export interface CreateClassroomSet {
-  set_id: string;
+  setId: string;
 }
 
 export interface CreateClassroomSets {
@@ -424,9 +424,9 @@ export interface CreateClassroomSets {
 }
 
 export interface CreateClassroomActivity {
-  user_id: string;
-  set_id: string;
-  classroom_id: string;
+  userId: string;
+  setId: string;
+  classroomId: string;
 }
 
 // ============================================================
@@ -435,45 +435,45 @@ export interface CreateClassroomActivity {
 
 export interface StudySession {
   id: string;
-  started_at: string;
-  duration_min: number;
-  ended_at?: string;
+  startedAt: string;
+  durationMin: number;
+  endedAt?: string;
   index: number;
   accuracy: number;
-  average_response_time: number;
-  longest_focus_streak: number;
-  last_seen?: string;
-  last_studied?: string;
-  user_id: string;
-  set_id: string;
-  set_type: "studyset" | "visualset";
+  averageResponseTime: number;
+  longestFocusStreak: number;
+  lastSeen?: string;
+  lastStudied?: string;
+  userId: string;
+  setId: string;
+  setType: "studyset" | "visualset";
   cards: SessionCard[];
 }
 
 export interface SessionCard {
   id: string;
   number: number;
-  card_viewcount: number;
-  card_total_viewcount: number;
+  cardViewcount: number;
+  cardTotalViewcount: number;
   inQueue: boolean;
   mastered: boolean;
-  times_relearned: number;
-  card_id: string;
-  session_id: string;
-  owner_id: string;
+  timesRelearned: number;
+  cardId: string;
+  sessionId: string;
+  ownerId: string;
 }
 
 export interface SessionPin {
   id: string;
   number: number;
-  pin_viewcount: number;
-  pin_total_viewcount: number;
+  pinViewcount: number;
+  pinTotalViewcount: number;
   inQueue: boolean;
   mastered: boolean;
-  times_relearned: number;
-  pin_id: string;
-  session_id: string;
-  owner_id: string;
+  timesRelearned: number;
+  pinId: string;
+  sessionId: string;
+  ownerId: string;
 }
 
 // ============================================================
@@ -484,10 +484,10 @@ export interface SearchSetResult {
   id: string;
   title: string;
   subject: string;
-  last_studied?: string;
+  lastStudied?: string;
   owner: string;
-  img_url: string;
-  owner_id: string;
+  imgUrl: string;
+  ownerId: string;
   verified: boolean;
   likes: number;
   items: number;
@@ -497,7 +497,7 @@ export interface SearchSetResult {
 export interface SearchProfileResult {
   id: string;
   displayName: string;
-  img_url: string;
+  imgUrl: string;
   studoProfile: boolean;
   profileType: string;
   type: "profile";
@@ -507,7 +507,7 @@ export interface SearchClassroomResult {
   id: string;
   name: string;
   owner: string;
-  owner_id: string;
+  ownerId: string;
   type: "classroom";
   verified: boolean;
 }
@@ -598,8 +598,8 @@ export interface UserStats {
 }
 
 interface RecentSet {
-  set_id: string;
-  last_studied: string;
+  setId: string;
+  lastStudied: string;
   title: string;
   type: "studyset" | "visualset";
   progress: number;
@@ -610,12 +610,12 @@ export interface StudoUser {
   id: string;
   email: string;
   displayName: string;
-  img_url: string;
-  join_date: string;
+  imgUrl: string;
+  joinDate: string;
   joinNumber: number;
   totalSets: number;
-  streak_count: number;
-  streak_last_update: string;
+  streakCount: number;
+  streakLastUpdate: string;
   publicRole: "owner" | "admin" | "user"; // pas aan naar jouw rollen
   verified: boolean;
   stats: UserStats;
@@ -627,34 +627,34 @@ export interface StudoUser {
 // ============================================
 
 export interface ChallengeResponseDTO {
-  challenge_id: string;
+  challengeId: string;
   challengeType: "time attack" | "mastery tournament" | "duel";
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   running: boolean;
   title: string;
-  set_id: string;
+  setId: string;
   displayName: string;
-  creator_id: string;
-  classroom_id: string;
+  creatorId: string;
+  classroomId: string;
 }
 
 export interface ChallengeMemberDTO {
-  challenge_id: string;
-  user_id: string;
+  challengeId: string;
+  userId: string;
   displayName: string;
-  img_url: string;
-  classroom_id: string;
+  imgUrl: string;
+  classroomId: string;
   position: number;
   winner: boolean;
 }
 
 export interface ProfileDto {
-  user_id: string;
+  userId: string;
   displayName: string;
-  img_url: string;
-  banner_url: string | null;
-  join_date: string;
+  imgUrl: string;
+  bannerUrl: string | null;
+  joinDate: string;
   joinNumber: number;
   streak: number;
   verified: boolean;
@@ -680,21 +680,21 @@ export interface CardData {
 
 export interface Issue {
   id: string;
-  report_id: string;
-  filled_by: number;
+  reportId: string;
+  filledBy: number;
   title: string;
-  report_type: string;
+  reportType: string;
   description: string;
-  target_id: string;
-  target_type: string;
-  reported_user_id: number;
+  targetId: string;
+  targetType: string;
+  reportedUserId: number;
   status: string;
   priority: string | null;
-  created_at: string | null;
-  resolved_at: string | null;
-  reviewed_by: number | null;
-  moderator_note: string | null;
-  assignee_id: string | null;
+  createdAt: string | null;
+  resolvedAt: string | null;
+  reviewedBy: number | null;
+  moderatorNote: string | null;
+  assigneeId: string | null;
   assignee_displayName: string | null;
   number: number;
 }

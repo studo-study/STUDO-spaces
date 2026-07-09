@@ -46,14 +46,14 @@ const LastTenItem = (props: LastTenItemProps) => {
           >
             <span>
               {t("last_studied")} -{" "}
-              {new Date(data.last_studied).toLocaleDateString()}
+              {new Date(data.lastStudied).toLocaleDateString()}
             </span>
           </div>
           <Link
             href={
               data.type === "studyset"
-                ? "/studoset/" + data.set_id
-                : "/visualset/" + data.set_id
+                ? "/studoset/" + data.setId
+                : "/visualset/" + data.setId
             }
           >
             <BaseButton

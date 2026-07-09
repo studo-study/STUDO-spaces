@@ -13,16 +13,16 @@ export interface StudySetItem {
   id: string;
   title: string;
   studoset?: boolean;
-  global_term_language?: string;
-  global_definition_language?: string;
-  created_at: string;
-  last_updated: string;
-  public_set: boolean;
+  globalTermLanguage?: string;
+  globalDefinitionLanguage?: string;
+  createdAt: string;
+  lastUpdated: string;
+  publicSet: boolean;
   displayName: string;
-  img_url: string;
-  user_id: string;
+  imgUrl: string;
+  userId: string;
   type: "studyset" | "visualset";
-  flowcourse_icon?: string;
+  flowcourseIcon?: string;
 }
 
 export default function Grid() {
@@ -55,13 +55,12 @@ export default function Grid() {
     if (sortMode === "recent")
       return [...result].sort(
         (a, b) =>
-          new Date(b.last_updated).getTime() -
-          new Date(a.last_updated).getTime(),
+          new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime(),
       );
     if (sortMode === "created")
       return [...result].sort(
         (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       );
     return result;
   }, [allSets, sortMode, searchQuery]);

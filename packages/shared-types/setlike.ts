@@ -1,13 +1,13 @@
 export interface CreateSetLike {
-  set_id: string;
+  setId: string;
 }
 
 export interface SetLikeResponse {
   id: string;
-  user_id: string;
-  set_id: string;
-  set_type: string;
-  created_at: string;
+  userId: string;
+  setId: string;
+  setType: string;
+  createdAt: string;
 }
 
 export interface SetLikeResponseList {

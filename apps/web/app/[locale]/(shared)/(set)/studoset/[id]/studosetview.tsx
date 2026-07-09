@@ -24,6 +24,7 @@ import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBottom";
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
 
 interface viewProps {
   id: string;
@@ -61,6 +62,11 @@ export default function StudosetView({ id }: viewProps) {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
 
+  // Reset the pomodoro when leaving the studoset page.
+  useEffect(() => {
+    return () => pomodoroStore.getState().reset();
+  }, []);
+
   useEffect(() => {
     if (!isError) return;
     setLoaded(true);
@@ -72,7 +78,7 @@ export default function StudosetView({ id }: viewProps) {
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
   const liked = useMemo(
-    () => likes.some((l) => l.user_id === userId),
+    () => likes.some((l) => l.userId === userId),
     [likes, userId],
   );
   const toggleLike = () => {
@@ -88,7 +94,7 @@ export default function StudosetView({ id }: viewProps) {
   const not_studied = sessionCards
     ? sessionCards.reduce(
         (sum: number, card: SessionCardResponse) =>
-          card.card_viewcount === 0 ? sum + 1 : sum,
+          card.cardViewcount === 0 ? sum + 1 : sum,
         0,
       )
     : totalCards;
@@ -96,7 +102,7 @@ export default function StudosetView({ id }: viewProps) {
   const reviewed = sessionCards
     ? sessionCards.reduce(
         (sum: number, card: SessionCardResponse) =>
-          card.card_viewcount === 1 ? sum + 1 : sum,
+          card.cardViewcount === 1 ? sum + 1 : sum,
         0,
       )
     : 0;
@@ -104,12 +110,12 @@ export default function StudosetView({ id }: viewProps) {
   const studied = sessionCards
     ? sessionCards.reduce(
         (sum: number, card: SessionCardResponse) =>
-          card.card_viewcount > 1 ? sum + 1 : sum,
+          card.cardViewcount > 1 ? sum + 1 : sum,
         0,
       )
     : 0;
 
-  const isOwner = !!userId && userId === data?.user_id;
+  const isOwner = !!userId && userId === data?.userId;
 
   return (
     <div className={"relative w-full h-full px-10"}>
@@ -119,7 +125,7 @@ export default function StudosetView({ id }: viewProps) {
       >
         <span>{t("created")}</span>
         <Link
-          href={isOwner ? "/account" : `/profile/` + data?.user_id}
+          href={isOwner ? "/account" : `/profile/` + data?.userId}
           className="flex flex-row w-fit h-fit rounded-full sm:rounded-4xl
                             gap-1.5 sm:gap-2 px-1 pr-3 py-1 l max-w-fit
                              bg-studogrey/30 border border-studoborder/30 shadow-2x
@@ -127,7 +133,7 @@ export default function StudosetView({ id }: viewProps) {
         >
           <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full shrink-0">
             <Avatar
-              id={data?.user_id}
+              id={data?.userId}
               displayName={data?.displayName}
               size={25}
             />
@@ -147,14 +153,14 @@ export default function StudosetView({ id }: viewProps) {
           </BaseTooltip>
 
           <BaseTooltip content={t("share")}>
-            <SharePopup />
+            <SharePopup id={id} />
           </BaseTooltip>
 
           <BaseTooltip content={t("settings")}>
             <SettingsPopup
               isOwner={isOwner}
               id={id}
-              isPrivateSet={data.public_set}
+              isPrivateSet={data.publicSet}
             />
           </BaseTooltip>
         </div>

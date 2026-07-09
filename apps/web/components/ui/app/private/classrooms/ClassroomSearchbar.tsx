@@ -27,7 +27,7 @@ export default function ClassSearch({
             (item) =>
               item.name.toLowerCase().includes(query) ||
               item.school.toLowerCase().includes(query) ||
-              item.owner_id.toLowerCase().includes(query),
+              item.ownerId.toLowerCase().includes(query),
           ),
         );
       }

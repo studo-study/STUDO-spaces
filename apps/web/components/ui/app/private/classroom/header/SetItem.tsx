@@ -23,21 +23,21 @@ export default function SetItem({
   const currentUser = useUser().user?.id ?? "user";
   const currentSet = {
     title: set.title,
-    owner: set.user_id,
-    created_at: set.created_at,
-    set_id: set.id,
-    set_type: set.cards ? "studoset" : "visualset",
-    classroom_id: path,
-    added_by: currentUser,
+    owner: set.userId,
+    createdAt: set.createdAt,
+    setId: set.id,
+    setType: set.cards ? "studoset" : "visualset",
+    classroomId: path,
+    addedBy: currentUser,
   };
 
   const addToImported = () => {
     const index = importedClassrooms.findIndex(
-      (item) => item.set_id === currentSet.set_id,
+      (item) => item.setId === currentSet.setId,
     );
     if (index !== -1) {
       setImportedClassrooms((prev) =>
-        prev.filter((item) => item.set_id !== currentSet.set_id),
+        prev.filter((item) => item.setId !== currentSet.setId),
       );
     } else {
       setImportedClassrooms((prev) => [...prev, currentSet]);

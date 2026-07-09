@@ -783,7 +783,7 @@ describe('Users', () => {
 
       // Geen activiteit van de user zelf
       activities.forEach((activity) => {
-        expect(activity.user_id).not.toBe(userId2);
+        expect(activity.userId).not.toBe(userId2);
       });
     });
 
@@ -794,7 +794,7 @@ describe('Users', () => {
       twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
       activities.forEach((activity) => {
-        const activityDate = new Date(activity.last_seen);
+        const activityDate = new Date(activity.lastSeen);
         expect(activityDate.getTime()).toBeGreaterThanOrEqual(
           twoDaysAgo.getTime(),
         );
@@ -811,8 +811,8 @@ describe('Users', () => {
 
       if (lastTen.length > 1) {
         for (let i = 0; i < lastTen.length - 1; i++) {
-          const current = new Date(lastTen[i].last_studied);
-          const next = new Date(lastTen[i + 1].last_studied);
+          const current = new Date(lastTen[i].lastStudied);
+          const next = new Date(lastTen[i + 1].lastStudied);
           expect(current.getTime()).toBeGreaterThanOrEqual(next.getTime());
         }
       }

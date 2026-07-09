@@ -81,12 +81,12 @@ export default function FlowGridItem(props: FlowGridItemProps) {
             </div>
             <Link
               href={
-                item.owner_id === id ? "/account" : "/profile/" + item.owner_id
+                item.ownerId === id ? "/account" : "/profile/" + item.ownerId
               }
             >
-              <span>{item.owner_name} </span>
+              <span>{item.ownerName} </span>
               <span className={"text-zinc-300 text-xs dark:text-white/30"}>
-                {item.owner_id === id && t("you")}
+                {item.ownerId === id && t("you")}
               </span>
             </Link>
           </div>

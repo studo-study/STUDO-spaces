@@ -54,7 +54,7 @@ describe('Profiles', () => {
       expect(response.body.profiles).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            user_id: PROFILES_SEED[0].user_id,
+            user_id: PROFILES_SEED[0].userId,
             displayName: PROFILES_SEED[0].displayName,
           }),
         ]),
@@ -75,7 +75,7 @@ describe('Profiles', () => {
   // GET /api/profiles/:profile_id
   describe('GET /api/profiles/:profile_id', () => {
     it('moet 200 en gevraagde profiel retourneren', async () => {
-      const profileId = PROFILES_SEED[0].user_id;
+      const profileId = PROFILES_SEED[0].userId;
 
       const response = await request(server)
         .get(`${baseUrl}/${profileId}`)
@@ -83,7 +83,7 @@ describe('Profiles', () => {
 
       expect(response.statusCode).toBe(200);
       expect(response.body.profile).toMatchObject({
-        user_id: PROFILES_SEED[0].user_id,
+        user_id: PROFILES_SEED[0].userId,
         displayName: PROFILES_SEED[0].displayName,
       });
     });
@@ -99,7 +99,7 @@ describe('Profiles', () => {
     });
 
     testAuthHeader(() =>
-      request(server).get(`${baseUrl}/${PROFILES_SEED[0].user_id}`),
+      request(server).get(`${baseUrl}/${PROFILES_SEED[0].userId}`),
     );
   });
 });

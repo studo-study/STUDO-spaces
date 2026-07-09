@@ -22,9 +22,9 @@ const FREE_LIMIT = 5;
 
 interface SuggestionImage {
   id: string;
-  display_url: string;
+  displayUrl: string;
   photographer: string;
-  source_page_url: string;
+  sourcePageUrl: string;
 }
 
 interface Card {
@@ -32,13 +32,13 @@ interface Card {
   term: string;
   definition: string;
   number: number;
-  created_at: string;
-  updated_at: string;
-  set_id: string;
-  owner_id: string;
-  term_content_type: "text" | "latex" | "code";
-  code_language: string;
-  suggestion_image?: SuggestionImage | null;
+  createdAt: string;
+  updatedAt: string;
+  setId: string;
+  ownerId: string;
+  termContentType: "text" | "latex" | "code";
+  codeLanguage: string;
+  suggestionImage?: SuggestionImage | null;
 }
 
 interface FCState {
@@ -297,17 +297,17 @@ function CardView({ card, termMode, onLearnt }: CardProps) {
             {t("click_turn")}
           </span>
           <div
-            className={`flex flex-row gap-3 items-center w-full px-5 ${card.suggestion_image ? "justify-between" : "justify-center"}`}
+            className={`flex flex-row gap-3 items-center w-full px-5 ${card.suggestionImage ? "justify-between" : "justify-center"}`}
           >
             <div
-              className={`flex h-full items-center justify-center ${card.suggestion_image ? "w-1/2" : "w-full"}`}
+              className={`flex h-full items-center justify-center ${card.suggestionImage ? "w-1/2" : "w-full"}`}
             >
               {termMode ? (
                 <span className="text-xl select-none font-bold font-georgia">
-                  {card.term_content_type === "latex" ? (
+                  {card.termContentType === "latex" ? (
                     <SafeKaTeX value={card.term} fallback={card.term} />
-                  ) : card.term_content_type === "code" ? (
-                    <CodeBlock value={card.term} lang={card.code_language} />
+                  ) : card.termContentType === "code" ? (
+                    <CodeBlock value={card.term} lang={card.codeLanguage} />
                   ) : (
                     card.term
                   )}
@@ -318,13 +318,13 @@ function CardView({ card, termMode, onLearnt }: CardProps) {
                 </span>
               )}
             </div>
-            {card.suggestion_image && (
+            {card.suggestionImage && (
               <div className="max-h-1/3 rounded-lg overflow-hidden">
                 <Image
-                  src={card.suggestion_image.display_url}
+                  src={card.suggestionImage.displayUrl}
                   width={300}
                   height={300}
-                  alt={card.suggestion_image.photographer}
+                  alt={card.suggestionImage.photographer}
                 />
               </div>
             )}
@@ -342,10 +342,10 @@ function CardView({ card, termMode, onLearnt }: CardProps) {
             </span>
           ) : (
             <span className="text-xl select-none font-bold font-georgia">
-              {card.term_content_type === "latex" ? (
+              {card.termContentType === "latex" ? (
                 <SafeKaTeX value={card.term} fallback={card.term} />
-              ) : card.term_content_type === "code" ? (
-                <CodeBlock value={card.term} lang={card.code_language} />
+              ) : card.termContentType === "code" ? (
+                <CodeBlock value={card.term} lang={card.codeLanguage} />
               ) : (
                 card.term
               )}

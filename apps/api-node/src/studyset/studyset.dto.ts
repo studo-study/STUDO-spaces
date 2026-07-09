@@ -31,14 +31,14 @@ export class CreateStudysetDto {
     description: 'Language of the terms of the studoset (ISO 639-1 code)',
   })
   @IsString({ name: 'global_term_language', maxLength: 2 })
-  global_term_language: string;
+  globalTermLanguage: string;
 
   @ApiProperty({
     example: 'nl-NL',
     description: 'Language of the definitions of the studoset (ISO 639-1 code)',
   })
   @IsString({ name: 'global_definition_language', maxLength: 2 })
-  global_definition_language: string;
+  globalDefinitionLanguage: string;
 
   @ApiProperty({
     example: 'abc-123',
@@ -47,7 +47,7 @@ export class CreateStudysetDto {
   })
   @IsStringValidator()
   @IsOptional()
-  flowcourse_id?: string;
+  flowcourseId?: string;
 
   @IsArray()
   @ValidateNested({ each: true })
@@ -74,7 +74,7 @@ export class UpdateStudysetDto {
   })
   @IsString({ name: 'global_term_language', maxLength: 2 })
   @IsOptional()
-  global_term_language?: string;
+  globalTermLanguage?: string;
 
   @ApiProperty({
     example: 'nl-NL',
@@ -83,7 +83,7 @@ export class UpdateStudysetDto {
   })
   @IsString({ name: 'global_definition_language', maxLength: 2 })
   @IsOptional()
-  global_definition_language?: string;
+  globalDefinitionLanguage?: string;
 
   @ApiProperty({
     example: true,
@@ -92,7 +92,7 @@ export class UpdateStudysetDto {
   })
   @IsBoolean()
   @IsOptional()
-  public_set?: boolean;
+  publicSet?: boolean;
 
   @ApiProperty({
     description: 'Updated list of cards',
@@ -139,35 +139,35 @@ export class StudysetResponseDto {
     description: 'Language code of the terms',
   })
   @Expose()
-  global_term_language: string;
+  globalTermLanguage: string;
 
   @ApiProperty({
     example: 'nl-NL',
     description: 'Language code of the definitions',
   })
   @Expose()
-  global_definition_language: string;
+  globalDefinitionLanguage: string;
 
   @ApiProperty({
     example: '2024-01-15T10:30:00.000Z',
     description: 'Creation timestamp',
   })
   @Expose()
-  created_at: string;
+  createdAt: string;
 
   @ApiProperty({
     example: '2024-01-20T14:45:00.000Z',
     description: 'Last update timestamp',
   })
   @Expose()
-  last_updated: string;
+  lastUpdated: string;
 
   @ApiProperty({
     example: true,
     description: 'Whether the studoset is publicly visible',
   })
   @Expose()
-  public_set: boolean;
+  publicSet: boolean;
 
   @ApiProperty({
     example: 'Emile Duyck',
@@ -181,22 +181,22 @@ export class StudysetResponseDto {
     description: 'Profile picture URL of the owner',
   })
   @Expose()
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'User ID of the owner',
   })
   @Expose()
-  user_id: string;
+  userId: string;
 
   @ApiProperty({ example: 12, required: false })
   @Expose()
-  card_count?: number;
+  cardCount?: number;
 
   @ApiProperty({ example: '2024-09-01T10:00:00.000Z', required: false })
   @Expose()
-  last_studied?: string | null;
+  lastStudied?: string | null;
 
   @ApiProperty({ example: 75, required: false })
   @Expose()
@@ -204,7 +204,7 @@ export class StudysetResponseDto {
 
   @ApiProperty({ example: 'blue:bookopen', required: false })
   @Expose()
-  flowcourse_icon?: string;
+  flowcourseIcon?: string;
 }
 
 export class fullSetResponseDto extends StudysetResponseDto {

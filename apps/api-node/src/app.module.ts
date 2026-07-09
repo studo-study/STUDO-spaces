@@ -29,6 +29,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import type Redis from 'ioredis';
 import { REDIS_CLIENT } from './redis/redis.provider';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { REDIS_CLIENT } from './redis/redis.provider';
     SvenModule,
     AdminModule,
     FlowModule,
+    ChatModule,
   ],
   controllers: [AppController, HealthController],
   providers: [

@@ -30,11 +30,11 @@ export class StudysessionService {
     const seshes = [];
     for (const session of sessions) {
       const pins = await this.db.query.sessionpins.findMany({
-        where: eq(sessionpins.session_id, session.id),
+        where: eq(sessionpins.sessionId, session.id),
       });
 
       const cards = await this.db.query.sessioncards.findMany({
-        where: eq(sessioncards.session_id, session.id),
+        where: eq(sessioncards.sessionId, session.id),
       });
       seshes.push({
         ...session,
@@ -46,13 +46,13 @@ export class StudysessionService {
   }
 
   async getById(
-    user_id: string,
-    session_id: string,
+    userId: string,
+    sessionId: string,
   ): Promise<StudysessionResponseDto> {
     const session = await this.db.query.studysessions.findFirst({
       where: and(
-        eq(studysessions.id, session_id),
-        eq(studysessions.user_id, user_id),
+        eq(studysessions.id, sessionId),
+        eq(studysessions.userId, userId),
       ),
     });
 
@@ -61,40 +61,37 @@ export class StudysessionService {
     }
 
     const pins = await this.db.query.sessionpins.findMany({
-      where: eq(sessionpins.session_id, session_id),
+      where: eq(sessionpins.sessionId, sessionId),
     });
 
     const cards = await this.db.query.sessioncards.findMany({
-      where: eq(sessioncards.session_id, session_id),
+      where: eq(sessioncards.sessionId, sessionId),
     });
 
     return { ...session, pins: pins, cards: cards };
   }
 
   async updateById(
-    user_id: string,
-    session_id: string,
+    userId: string,
+    sessionId: string,
     body: UpdateStudysessionDto,
   ): Promise<StudysessionResponseDto> {
-    await this.updateStreak(user_id);
+    await this.updateStreak(userId);
     const updated = await this.db
       .update(studysessions)
       .set({
-        started_at: body.started_at,
-        duration_min: body.duration_min,
-        ended_at: body.ended_at,
+        startedAt: body.startedAt,
+        durationMin: body.durationMin,
+        endedAt: body.endedAt,
         index: body.index,
         accuracy: body.accuracy,
-        average_response_time: body.average_response_time,
-        longest_focus_streak: body.longest_focus_streak,
-        last_seen: body.last_seen,
-        last_studied: body.last_studied,
+        averageResponseTime: body.averageResponseTime,
+        longestFocusStreak: body.longestFocusStreak,
+        lastSeen: body.lastSeen,
+        lastStudied: body.lastStudied,
       })
       .where(
-        and(
-          eq(studysessions.id, session_id),
-          eq(studysessions.user_id, user_id),
-        ),
+        and(eq(studysessions.id, sessionId), eq(studysessions.userId, userId)),
       )
       .returning();
 
@@ -105,26 +102,23 @@ export class StudysessionService {
     if (body.cards) {
       for (const card of body.cards) {
         let totalviewcount;
-        if (card.card_viewcount && card.card_total_viewcount) {
-          totalviewcount = card.card_total_viewcount + card.card_viewcount;
+        if (card.cardViewcount && card.cardTotalViewcount) {
+          totalviewcount = card.cardTotalViewcount + card.cardViewcount;
         }
         const updateCard = await this.db
           .update(sessioncards)
           .set({
             number: card.number,
-            card_viewcount: card.card_viewcount,
-            card_total_viewcount: totalviewcount,
+            cardViewcount: card.cardViewcount,
+            cardTotalViewcount: totalviewcount,
             inQueue: card.inQueue,
             mastered: card.mastered,
-            times_relearned: card.times_relearned,
-            session_id: card.session_id,
-            owner_id: card.owner_id,
+            timesRelearned: card.timesRelearned,
+            sessionId: card.sessionId,
+            ownerId: card.ownerId,
           })
           .where(
-            and(
-              eq(sessioncards.id, card.id),
-              eq(sessioncards.owner_id, user_id),
-            ),
+            and(eq(sessioncards.id, card.id), eq(sessioncards.ownerId, userId)),
           )
           .returning();
 
@@ -141,13 +135,13 @@ export class StudysessionService {
           .set({
             number: pin.number,
             inQueue: pin.inQueue,
-            pin_viewcount: pin.pin_viewcount,
-            pin_total_viewcount: pin.pin_total_viewcount,
-            session_id: pin.session_id,
-            owner_id: pin.owner_id,
+            pinViewcount: pin.pinViewcount,
+            pinTotalViewcount: pin.pinTotalViewcount,
+            sessionId: pin.sessionId,
+            ownerId: pin.ownerId,
           })
           .where(
-            and(eq(sessionpins.id, pin.id), eq(sessionpins.owner_id, user_id)),
+            and(eq(sessionpins.id, pin.id), eq(sessionpins.ownerId, userId)),
           )
           .returning();
         if (updatePin.length === 0) {
@@ -156,17 +150,14 @@ export class StudysessionService {
       }
     }
 
-    return this.getById(user_id, session_id);
+    return this.getById(userId, sessionId);
   }
 
-  async deleteById(user_id: string, session_id: string): Promise<void> {
+  async deleteById(userId: string, sessionId: string): Promise<void> {
     const result = await this.db
       .delete(studysessions)
       .where(
-        and(
-          eq(studysessions.id, session_id),
-          eq(studysessions.user_id, user_id),
-        ),
+        and(eq(studysessions.id, sessionId), eq(studysessions.userId, userId)),
       )
       .returning();
 
@@ -176,38 +167,35 @@ export class StudysessionService {
   }
 
   async resetById(
-    user_id: string,
-    session_id: string,
+    userId: string,
+    sessionId: string,
   ): Promise<StudysessionResponseDto> {
-    // const studysessie = this.getById(user_id, session_id);
+    // const studysessie = this.getById(userId, sessionId);
     const pins: SessionPinResponseDTO[] =
       await this.db.query.sessionpins.findMany({
-        where: eq(sessionpins.session_id, session_id),
+        where: eq(sessionpins.sessionId, sessionId),
       });
     const cards: SessionCardResponseDTO[] =
       await this.db.query.sessioncards.findMany({
-        where: eq(sessioncards.session_id, session_id),
+        where: eq(sessioncards.sessionId, sessionId),
       });
 
     if (cards) {
       for (const card of cards) {
         let totalviewcount;
-        if (card.card_viewcount && card.card_total_viewcount) {
-          totalviewcount = card.card_total_viewcount + card.card_viewcount;
+        if (card.cardViewcount && card.cardTotalViewcount) {
+          totalviewcount = card.cardTotalViewcount + card.cardViewcount;
         }
         const updateCard = await this.db
           .update(sessioncards)
           .set({
-            card_viewcount: 0,
-            card_total_viewcount: totalviewcount,
+            cardViewcount: 0,
+            cardTotalViewcount: totalviewcount,
             inQueue: false,
             mastered: false,
           })
           .where(
-            and(
-              eq(sessioncards.id, card.id),
-              eq(sessioncards.owner_id, user_id),
-            ),
+            and(eq(sessioncards.id, card.id), eq(sessioncards.ownerId, userId)),
           )
           .returning();
 
@@ -223,11 +211,11 @@ export class StudysessionService {
           .update(sessionpins)
           .set({
             inQueue: false,
-            pin_viewcount: 0,
-            pin_total_viewcount: pin.pin_total_viewcount,
+            pinViewcount: 0,
+            pinTotalViewcount: pin.pinTotalViewcount,
           })
           .where(
-            and(eq(sessionpins.id, pin.id), eq(sessionpins.owner_id, user_id)),
+            and(eq(sessionpins.id, pin.id), eq(sessionpins.ownerId, userId)),
           )
           .returning();
         if (updatePin.length === 0) {
@@ -236,12 +224,12 @@ export class StudysessionService {
       }
     }
 
-    return this.getById(user_id, session_id);
+    return this.getById(userId, sessionId);
   }
 
-  async updateStreak(user_id: string): Promise<void> {
+  async updateStreak(userId: string): Promise<void> {
     const update_streak = await this.db.query.users.findFirst({
-      where: eq(users.id, user_id),
+      where: eq(users.id, userId),
     });
     if (!update_streak) {
       throw new NotFoundException("User doesn't exist");
@@ -251,7 +239,7 @@ export class StudysessionService {
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
 
-    const lastUpdate = update_streak.streak_last_update;
+    const lastUpdate = update_streak.streakLastUpdate;
     const lastUpdateDay = lastUpdate ? new Date(lastUpdate) : null;
     if (lastUpdateDay) lastUpdateDay.setHours(0, 0, 0, 0);
 
@@ -263,21 +251,21 @@ export class StudysessionService {
         await this.db
           .update(users)
           .set({
-            streak_last_update: new Date(),
-            streak_count: update_streak.streak_count
-              ? update_streak.streak_count + 1
+            streakLastUpdate: new Date(),
+            streakCount: update_streak.streakCount
+              ? update_streak.streakCount + 1
               : 1,
           })
-          .where(eq(users.id, user_id));
+          .where(eq(users.id, userId));
       } else {
         await this.db
           .update(users)
           .set({
-            streak_last_update: new Date(),
-            streak_count: 0,
-            streak_started: new Date(),
+            streakLastUpdate: new Date(),
+            streakCount: 0,
+            streakStarted: new Date(),
           })
-          .where(eq(users.id, user_id));
+          .where(eq(users.id, userId));
       }
     }
   }

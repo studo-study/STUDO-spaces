@@ -170,7 +170,7 @@ const CourseRow = (props: CourseRowProps) => {
                 icon={<HiCalendarDays size={14} />}
                 datePicker
                 subtle
-                value={data.due_date ?? ""}
+                value={data.dueDate ?? ""}
                 onChange={(d) => onChange({ due_date: d })}
               />
             </div>

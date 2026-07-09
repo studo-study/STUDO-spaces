@@ -18,14 +18,14 @@ export default function RecentlyAdded({ items }: ListItemProps) {
   const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
 
   const thisWeek = filteredSets.filter(
-    (item) => now - new Date(item.created_at).getTime() <= ONE_WEEK_IN_MS,
+    (item) => now - new Date(item.createdAt).getTime() <= ONE_WEEK_IN_MS,
   );
   const lastWeek = filteredSets.filter((item) => {
-    const age = now - new Date(item.created_at).getTime();
+    const age = now - new Date(item.createdAt).getTime();
     return age > ONE_WEEK_IN_MS && age <= ONE_WEEK_IN_MS * 2;
   });
   const rest = filteredSets.filter(
-    (item) => now - new Date(item.created_at).getTime() > ONE_WEEK_IN_MS * 2,
+    (item) => now - new Date(item.createdAt).getTime() > ONE_WEEK_IN_MS * 2,
   );
   const pinned = [];
   return (
@@ -118,14 +118,12 @@ interface SetItemProps {
 
 function ListItem({ set, t }: SetItemProps) {
   const iconSrc =
-    set.set_type === "studyset"
-      ? "/icons/studyset.svg"
-      : "/icons/visualset.svg";
+    set.setType === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
 
   const link =
-    set.set_type === "studyset"
-      ? "/studoset/" + set.set_id
-      : "/visualset/" + set.set_id;
+    set.setType === "studyset"
+      ? "/studoset/" + set.setId
+      : "/visualset/" + set.setId;
   return (
     <Link
       href={link}
@@ -165,7 +163,7 @@ function ListItem({ set, t }: SetItemProps) {
           <span
             className={"w-fit text-studodarkblue/30 dark:text-white/30 text-sm"}
           >
-            {t("added_by")} {set.added_by}
+            {t("added_by")} {set.addedBy}
           </span>
         </div>
       </div>

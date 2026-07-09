@@ -45,7 +45,7 @@ export default function AccountHeader() {
                 </BaseTooltip>
               )}
 
-              {user && user.streak_count != 0 && (
+              {user && user.streakCount != 0 && (
                 <Link href={"/streak"}>
                   <Image
                     width={20}

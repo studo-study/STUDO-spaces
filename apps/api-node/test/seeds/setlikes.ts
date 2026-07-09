@@ -12,24 +12,24 @@ const setLike3 = uuidv6();
 export const SETLIKES_SEED = [
   {
     id: setLike1,
-    user_id: userId2,
-    set_id: studySetId1,
-    set_type: 'studyset',
-    created_at: '2024-10-15T12:00:00.000Z',
+    userId: userId2,
+    setId: studySetId1,
+    setType: 'studyset',
+    createdAt: '2024-10-15T12:00:00.000Z',
   },
   {
     id: setLike2,
-    user_id: userId1,
-    set_id: studySetId1,
-    set_type: 'visualset',
-    created_at: '2024-10-20T09:30:00.000Z',
+    userId: userId1,
+    setId: studySetId1,
+    setType: 'visualset',
+    createdAt: '2024-10-20T09:30:00.000Z',
   },
   {
     id: setLike3,
-    user_id: userId1,
-    set_id: studySetId2,
-    set_type: 'studyset',
-    created_at: '2024-10-22T14:00:00.000Z',
+    userId: userId1,
+    setId: studySetId2,
+    setType: 'studyset',
+    createdAt: '2024-10-22T14:00:00.000Z',
   },
 ];
 

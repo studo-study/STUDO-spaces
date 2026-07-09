@@ -3,7 +3,11 @@ const PageContainer: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   return (
     <div className={"w-full h-full flex items-center justify-center"}>
-      <div className={"max-w-300 w-full h-full flex-1 min-h-0 overflow-y-auto"}>
+      <div
+        className={
+          "max-w-300 pt-5 w-full h-full flex-1 min-h-0 overflow-y-auto"
+        }
+      >
         {children}
       </div>
     </div>

@@ -14,17 +14,17 @@ const classroomId1 = '0e2b6da7-d82b-4be2-bf3e-4b320bfd497b';
 
 export const CLASSROOMSUSER_SEED = [
   {
-    user_id: userId2,
-    classroom_id: classroomId1,
+    userId: userId2,
+    classroomId: classroomId1,
     role: 'owner',
-    joined_at: '2024-08-20T10:00:00.000Z',
+    joinedAt: '2024-08-20T10:00:00.000Z',
     position: 1,
   },
   {
-    user_id: userId1,
-    classroom_id: classroomId1,
+    userId: userId1,
+    classroomId: classroomId1,
     role: 'student',
-    joined_at: '2024-08-22T10:00:00.000Z',
+    joinedAt: '2024-08-22T10:00:00.000Z',
     position: 2,
   },
 ];

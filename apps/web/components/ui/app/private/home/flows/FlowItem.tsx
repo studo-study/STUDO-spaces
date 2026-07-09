@@ -33,9 +33,9 @@ const FlowItem = (props: FlowItemProps) => {
       <div></div>
       <div className={"flex flex-row gap-2 w-full"}>
         <SmallBoardProgress
-          total_in_progress={board.total_in_progress}
-          total_length={board.total_length}
-          total_done={board.total_done}
+          total_in_progress={board.totalInProgress}
+          total_length={board.totalLength}
+          total_done={board.totalDone}
         />
       </div>
       <span className={"text-xs dark:text-white text-studodarkblue opacity-50"}>

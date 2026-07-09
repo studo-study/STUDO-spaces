@@ -1525,7 +1525,8 @@
     },
     "share": {
       "pop_title": "Deel set",
-      "copy_message": "Naar klembord gekopieerd"
+      "copy_message": "Naar klembord gekopieerd",
+      "isPrivate": "Set is privé"
     },
     "settings": {
       "pop_title": "Instellingen",
@@ -1592,7 +1593,8 @@
   "svenchat": {
     "quote": "Sven helpt graag met cursusvragen",
     "new-chat": "Nieuwe chat",
-    "history": "Geschiedenis"
+    "history": "Geschiedenis",
+    "recommended_title": "Aanbevolen"
   },
   "svenchatTimed": {
     "0": [
@@ -1647,7 +1649,10 @@
     "history": "Geschiedenis"
   },
   "pomodoro": {
-    "title": "Pomodoro Timer"
+    "title": "Pomodoro Timer",
+    "play": "Start",
+    "pause": "Pauzeer",
+    "focus_mode": "20 min gefocust studeren"
   },
   "learnsettings": {
     "learning": "Algemene instellingen",
@@ -1656,10 +1661,12 @@
     "revision_count": "Herhalingsteller",
     "term_def_description": "Kies of je met de term of de definitie antwoordt.",
     "health": "Gezond studeren",
-    "twenty_twenty_two": "20-20-2 leren",
-    "twenty_description": "20 min studeren, 20 sec opkijken, 2 min pauze",
+    "twenty_twenty_two": "20-20 leren",
+    "twenty_description": "20 min studeren, 20 sec opkijken",
     "pomodoro_timer": "Pomodoro timer",
     "pomodoro_description": "Een timer die je helpt in hyperfocus te komen.",
-    "reset_progress": "Voortgang resetten"
+    "reset_progress": "Voortgang resetten",
+    "type_description": "Kies hoe op welke manier je wilt antwoorden",
+    "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt"
   }
 }

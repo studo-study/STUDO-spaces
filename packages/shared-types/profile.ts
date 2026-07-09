@@ -2,11 +2,11 @@ import type { StudysetResponse } from "./studyset";
 import type { VisualsetResponse } from "./visualset";
 
 export interface Profile {
-  user_id: string;
+  userId: string;
   displayName: string;
-  img_url: string;
-  banner_url: string | null;
-  join_date: string;
+  imgUrl: string;
+  bannerUrl: string | null;
+  joinDate: string;
   joinNumber: number;
   streak: number;
   verified: boolean;
@@ -17,9 +17,9 @@ export interface ProfileListResponse {
 }
 
 export interface ClassroomProfile {
-  user_id: string;
+  userId: string;
   displayName: string;
-  img_url: string;
+  imgUrl: string;
 }
 
 export interface ClassroomProfileList {

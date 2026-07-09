@@ -1,6 +1,6 @@
 import SvenChat from "@/components/ui/app/private/course_context_menu/chat/SvenChat";
 import PdfReader from "@/components/ui/app/private/course_context_menu/pdf_reader/PdfReader";
-import PomodorTimer from "@/components/ui/app/private/course_context_menu/learn/pomodoro/PomodorTimer";
+import PomodorTimer from "@/components/ui/app/private/course_context_menu/learn/pomodoro/PomodoroTimer";
 import LearnSettings from "@/components/ui/app/private/course_context_menu/learn/settings/LearnSettings";
 import ExtraOptions from "@/components/ui/app/private/course_context_menu/extra_options/ExtraOptions";
 import { usePathname } from "@/i18n/routing";
@@ -19,8 +19,9 @@ const SideMenu: React.FC<SideMenuProps> = (props) => {
       {origin === "pomodoro" && isOnLearn && <PomodorTimer />}
       {origin === "settings" && isOnLearn && <LearnSettings />}
       {origin === "chat" && <SvenChat />}
+      {origin === "chat_history" && <SvenChat />}
       {origin === "course" && <PdfReader />}
-      {origin === "options'" && <ExtraOptions />}
+      {origin === "quick_actions" && <ExtraOptions />}
     </div>
   );
 };

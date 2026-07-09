@@ -48,14 +48,14 @@ export class FlowService {
 
   private async mapResources(rowId: string): Promise<FlowResourceResponse[]> {
     const resources = await this.db.query.flowresources.findMany({
-      where: eq(flowresources.row_id, rowId),
+      where: eq(flowresources.rowId, rowId),
     });
     return resources.map((r) => ({
-      id: r.flowresource_id,
+      id: r.flowresourceId,
       title: r.title,
       link: r.link,
-      link_type: r.link_type ?? undefined,
-      resource_type: r.resource_type ?? undefined,
+      linkType: r.linkType ?? undefined,
+      resourceType: r.resourceType ?? undefined,
     }));
   }
 
@@ -65,15 +65,15 @@ export class FlowService {
     const resources = await this.mapResources(row.id);
     return {
       id: row.id,
-      course_id: row.flowcourse_id,
+      courseId: row.flowcourseId,
       title: row.title,
-      order_index: row.order_index ?? 0,
+      orderIndex: row.orderIndex ?? 0,
       description: row.description ?? '',
       priority: row.priority ?? 'no_priority',
       status: row.status ?? 'not_started',
-      due_date: row.due_date?.toISOString() ?? '',
-      studoset_id: row.studoset ?? '',
-      visualset_id: row.visualset ?? '',
+      dueDate: row.dueDate?.toISOString() ?? '',
+      studosetId: row.studoset ?? '',
+      visualsetId: row.visualset ?? '',
       resources,
     };
   }
@@ -90,10 +90,10 @@ export class FlowService {
     course: typeof flowcourses.$inferSelect,
     includeRows = false,
   ): Promise<FlowCourseResponse | FullFlowCourseResponse> {
-    const addedBy = await this.getUser(course.added_by);
+    const addedBy = await this.getUser(course.addedBy);
 
     const rows = await this.db.query.flowrows.findMany({
-      where: eq(flowrows.flowcourse_id, course.id),
+      where: eq(flowrows.flowcourseId, course.id),
     });
 
     const totalLength = rows.length;
@@ -102,24 +102,24 @@ export class FlowService {
 
     const base: FlowCourseResponse = {
       id: course.id,
-      board_id: course?.board_id ?? null,
-      added_by_display_name: addedBy?.displayName ?? '',
-      added_by_id: course.added_by,
+      boardId: course?.boardId ?? null,
+      addedByDisplayName: addedBy?.displayName ?? '',
+      addedById: course.addedBy,
       title: course.title,
       icon: course.icon,
       description: course.description ?? '',
-      total_done: totalDone,
-      total_in_progress: totalInProgress,
-      total_length: totalLength,
+      totalDone: totalDone,
+      totalInProgress: totalInProgress,
+      totalLength: totalLength,
       resource: course.resource ?? '',
-      exam_date: course.exam_date ?? '',
-      lesson_days: course.lesson_days ?? '',
+      examDate: course.examDate ?? '',
+      lessonDays: course.lessonDays ?? '',
     };
 
     if (!includeRows) return base;
 
     const sortedRows = [...rows].sort(
-      (a, b) => (a.order_index ?? 0) - (b.order_index ?? 0),
+      (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0),
     );
     const mappedRows = await Promise.all(sortedRows.map((r) => this.mapRow(r)));
     return { ...base, rows: mappedRows } satisfies FullFlowCourseResponse;
@@ -129,10 +129,10 @@ export class FlowService {
     board: typeof flowboards.$inferSelect,
     owner?: typeof users.$inferSelect | null,
   ): Promise<FlowBoardOverview> {
-    if (!owner) owner = await this.getUser(board.owner_id);
+    if (!owner) owner = await this.getUser(board.ownerId);
 
     const courses = await this.db.query.flowcourses.findMany({
-      where: eq(flowcourses.board_id, board.id),
+      where: eq(flowcourses.boardId, board.id),
     });
 
     let totalLength = 0;
@@ -140,7 +140,7 @@ export class FlowService {
 
     for (const course of courses) {
       const rows = await this.db.query.flowrows.findMany({
-        where: eq(flowrows.flowcourse_id, course.id),
+        where: eq(flowrows.flowcourseId, course.id),
       });
       totalLength += rows.length;
       totalDone += rows.filter((r) => r.status === 'done').length;
@@ -148,21 +148,21 @@ export class FlowService {
 
     return {
       id: board.id,
-      owner_id: board.owner_id,
-      owner_name: owner?.displayName ?? '',
-      owner_pfp: owner?.img_url ?? '',
+      ownerId: board.ownerId,
+      ownerName: owner?.displayName ?? '',
+      ownerPfp: owner?.imgUrl ?? '',
       title: board.title,
       icon: board.icon,
-      creator_id: board.owner_id,
+      creatorId: board.ownerId,
       year: board.year ?? null,
       semester: board.semester ?? null,
-      school: board.school_name ?? null,
-      school_id: board.school_id ?? null,
+      school: board.schoolName ?? null,
+      schoolId: board.schoolId ?? null,
       progress:
         totalLength > 0 ? Math.round((totalDone / totalLength) * 100) : 0,
-      total_length: totalLength,
-      total_done: totalDone,
-      total_in_progress: totalLength - totalDone,
+      totalLength: totalLength,
+      totalDone: totalDone,
+      totalInProgress: totalLength - totalDone,
       courses: courses.length,
     };
   }
@@ -180,10 +180,10 @@ export class FlowService {
     });
     if (!board) throw new NotFoundException('Flowboard not found');
 
-    const owner = await this.getUser(board.owner_id);
+    const owner = await this.getUser(board.ownerId);
 
     const courses = await this.db.query.flowcourses.findMany({
-      where: eq(flowcourses.board_id, board.id),
+      where: eq(flowcourses.boardId, board.id),
     });
 
     const mappedCourses = await Promise.all(
@@ -191,37 +191,37 @@ export class FlowService {
     );
 
     const totalLength = mappedCourses.reduce(
-      (sum, c) => sum + c.total_length,
+      (sum, c) => sum + c.totalLength,
       0,
     );
-    const totalDone = mappedCourses.reduce((sum, c) => sum + c.total_done, 0);
+    const totalDone = mappedCourses.reduce((sum, c) => sum + c.totalDone, 0);
     const totalInProgress = mappedCourses.reduce(
-      (sum, c) => sum + c.total_in_progress,
+      (sum, c) => sum + c.totalInProgress,
       0,
     );
 
     return {
       id: board.id,
-      owner_id: board.owner_id,
-      owner_name: owner?.displayName ?? '',
-      owner_pfp: owner?.img_url ?? '',
+      ownerId: board.ownerId,
+      ownerName: owner?.displayName ?? '',
+      ownerPfp: owner?.imgUrl ?? '',
       title: board.title,
       icon: board.icon,
-      creator_id: board.owner_id,
+      creatorId: board.ownerId,
       year: board.year ?? null,
       semester: board.semester ?? null,
-      school: board.school_name ?? null,
-      school_id: board.school_id ?? null,
-      total_done: totalDone,
-      total_in_progress: totalInProgress,
-      total_length: totalLength,
+      school: board.schoolName ?? null,
+      schoolId: board.schoolId ?? null,
+      totalDone: totalDone,
+      totalInProgress: totalInProgress,
+      totalLength: totalLength,
       courses: mappedCourses,
     };
   }
 
   async getByUserId(userId: string): Promise<FlowBoardOverview[]> {
     const boards = await this.db.query.flowboards.findMany({
-      where: eq(flowboards.owner_id, userId),
+      where: eq(flowboards.ownerId, userId),
     });
     const owner = await this.getUser(userId);
     return Promise.all(boards.map((b) => this.mapBoardOverview(b, owner)));
@@ -229,7 +229,7 @@ export class FlowService {
 
   async getCoursesByUserId(userId: string): Promise<FlowCourseResponse[]> {
     const allCourses = await this.db.query.flowcourses.findMany({
-      where: eq(flowcourses.added_by, userId),
+      where: eq(flowcourses.addedBy, userId),
     });
     return Promise.all(allCourses.map((c) => this.mapCourse(c)));
   }
@@ -242,33 +242,33 @@ export class FlowService {
 
     await this.db.insert(flowboards).values({
       id,
-      owner_id: userId,
+      ownerId: userId,
       title: body.title,
       icon: body.icon,
       year: body.year,
       semester: body.semester ?? null,
-      school_name: body.school ?? null,
-      school_id: body.school_id ?? null,
+      schoolName: body.school ?? null,
+      schoolId: body.schoolId ?? null,
     });
 
     const owner = await this.getUser(userId);
 
     return {
       id,
-      owner_id: userId,
-      owner_name: owner?.displayName ?? '',
-      owner_pfp: owner?.img_url ?? '',
+      ownerId: userId,
+      ownerName: owner?.displayName ?? '',
+      ownerPfp: owner?.imgUrl ?? '',
       title: body.title,
       icon: body.icon,
-      creator_id: userId,
+      creatorId: userId,
       year: body.year,
       semester: body.semester ?? null,
       school: body.school ?? null,
-      school_id: body.school_id ?? null,
+      schoolId: body.schoolId ?? null,
       progress: 0,
-      total_length: 0,
-      total_done: 0,
-      total_in_progress: 0,
+      totalLength: 0,
+      totalDone: 0,
+      totalInProgress: 0,
       courses: 0,
     };
   }
@@ -290,8 +290,8 @@ export class FlowService {
         ...(body.year !== undefined && { year: body.year }),
         ...(body.semester !== undefined && { semester: body.semester }),
         ...(body.school !== undefined && { school_name: body.school }),
-        ...(body.school_id !== undefined && { school_id: body.school_id }),
-        updated_at: new Date(),
+        ...(body.schoolId !== undefined && { school_id: body.schoolId }),
+        updatedAt: new Date(),
       })
       .where(eq(flowboards.id, boardId));
 
@@ -326,9 +326,9 @@ export class FlowService {
     userId: string,
     body: CreateFlowCourse,
   ): Promise<FlowCourseResponse> {
-    if (body.board_id) {
+    if (body.boardId) {
       const board = await this.db.query.flowboards.findFirst({
-        where: eq(flowboards.id, body.board_id),
+        where: eq(flowboards.id, body.boardId),
       });
       if (!board) throw new NotFoundException('Flowboard not found');
     }
@@ -337,32 +337,32 @@ export class FlowService {
 
     await this.db.insert(flowcourses).values({
       id,
-      board_id: body.board_id ?? null,
-      added_by: userId,
+      boardId: body.boardId ?? null,
+      addedBy: userId,
       title: body.title,
       icon: body.icon,
       description: body.description ?? null,
       resource: body.resource ?? null,
-      exam_date: body.exam_date ?? null,
-      lesson_days: body.lesson_days ?? null,
+      examDate: body.examDate ?? null,
+      lessonDays: body.lessonDays ?? null,
     });
 
     const addedBy = await this.getUser(userId);
 
     return {
       id,
-      board_id: body.board_id ?? null,
-      added_by_display_name: addedBy?.displayName ?? '',
-      added_by_id: userId,
+      boardId: body.boardId ?? null,
+      addedByDisplayName: addedBy?.displayName ?? '',
+      addedById: userId,
       title: body.title,
       icon: body.icon,
       description: body.description ?? '',
-      total_done: 0,
-      total_in_progress: 0,
-      total_length: 0,
+      totalDone: 0,
+      totalInProgress: 0,
+      totalLength: 0,
       resource: body.resource ?? '',
-      exam_date: body.exam_date ?? '',
-      lesson_days: body.lesson_days ?? '',
+      examDate: body.examDate ?? '',
+      lessonDays: body.lessonDays ?? '',
     };
   }
 
@@ -383,9 +383,9 @@ export class FlowService {
         ...(body.description !== undefined && {
           description: body.description,
         }),
-        ...(body.exam_date !== undefined && { exam_date: body.exam_date }),
-        ...(body.lesson_days !== undefined && {
-          lesson_days: body.lesson_days,
+        ...(body.examDate !== undefined && { exam_date: body.examDate }),
+        ...(body.lessonDays !== undefined && {
+          lessonDays: body.lessonDays,
         }),
       })
       .where(eq(flowcourses.id, courseId));
@@ -410,46 +410,46 @@ export class FlowService {
 
   async createRow(body: CreateFlowRow): Promise<FlowRowResponse> {
     const course = await this.db.query.flowcourses.findFirst({
-      where: eq(flowcourses.id, body.course_id),
+      where: eq(flowcourses.id, body.courseId),
     });
     if (!course) throw new NotFoundException('Flowcourse not found');
 
     const id = crypto.randomUUID();
 
     // Auto-calculate order_index if not provided
-    let orderIndex = body.order_index;
+    let orderIndex = body.orderIndex;
     if (orderIndex === undefined) {
       const existingRows = await this.db.query.flowrows.findMany({
-        where: eq(flowrows.flowcourse_id, body.course_id),
+        where: eq(flowrows.flowcourseId, body.courseId),
       });
       orderIndex = existingRows.length;
     }
 
     await this.db.insert(flowrows).values({
       id,
-      flowcourse_id: body.course_id,
+      flowcourseId: body.courseId,
       title: body.title,
-      order_index: orderIndex,
+      orderIndex: orderIndex,
       description: body.description ?? null,
       priority: (body.priority ??
         'no_priority') as (typeof priorityEnum.enumValues)[number],
       status: (body.status ??
         'not_started') as (typeof statusEnum.enumValues)[number],
-      due_date: body.due_date ? new Date(body.due_date) : null,
-      studoset: body.studoset_id ?? null,
-      visualset: body.visualset_id ?? null,
+      dueDate: body.dueDate ? new Date(body.dueDate) : null,
+      studoset: body.studosetId ?? null,
+      visualset: body.visualsetId ?? null,
     });
 
     if (body.resources?.length) {
       await Promise.all(
         body.resources.map((res) =>
           this.db.insert(flowresources).values({
-            flowresource_id: crypto.randomUUID(),
-            row_id: id,
+            flowresourceId: crypto.randomUUID(),
+            rowId: id,
             title: res.title,
             link: res.link,
-            link_type: res.link_type ?? null,
-            resource_type: (res.resource_type ?? null) as
+            linkType: res.linkType ?? null,
+            resourceType: (res.resourceType ?? null) as
               | (typeof resourceTypeEnum.enumValues)[number]
               | null,
           }),
@@ -477,8 +477,8 @@ export class FlowService {
       .update(flowrows)
       .set({
         ...(body.title !== undefined && { title: body.title }),
-        ...(body.order_index !== undefined && {
-          order_index: body.order_index,
+        ...(body.orderIndex !== undefined && {
+          orderIndex: body.orderIndex,
         }),
         ...(body.description !== undefined && {
           description: body.description,
@@ -489,12 +489,12 @@ export class FlowService {
         ...(body.status !== undefined && {
           status: body.status as (typeof statusEnum.enumValues)[number],
         }),
-        ...(body.due_date !== undefined && {
-          due_date: body.due_date ? new Date(body.due_date) : null,
+        ...(body.dueDate !== undefined && {
+          dueDate: body.dueDate ? new Date(body.dueDate) : null,
         }),
-        ...(body.studoset_id !== undefined && { studoset: body.studoset_id }),
-        ...(body.visualset_id !== undefined && {
-          visualset: body.visualset_id,
+        ...(body.studosetId !== undefined && { studoset: body.studosetId }),
+        ...(body.visualsetId !== undefined && {
+          visualset: body.visualsetId,
         }),
       })
       .where(eq(flowrows.id, rowId));
@@ -529,12 +529,12 @@ export class FlowService {
     const id = crypto.randomUUID();
 
     await this.db.insert(flowresources).values({
-      flowresource_id: id,
-      row_id: rowId,
+      flowresourceId: id,
+      rowId: rowId,
       title: body.title,
       link: body.link,
-      link_type: body.link_type ?? null,
-      resource_type: (body.resource_type ?? null) as
+      linkType: body.linkType ?? null,
+      resourceType: (body.resourceType ?? null) as
         | (typeof resourceTypeEnum.enumValues)[number]
         | null,
     });
@@ -543,8 +543,8 @@ export class FlowService {
       id,
       title: body.title,
       link: body.link,
-      link_type: body.link_type,
-      resource_type: body.resource_type,
+      linkType: body.linkType,
+      resourceType: body.resourceType,
     };
   }
 
@@ -553,7 +553,7 @@ export class FlowService {
     body: UpdateFlowResource,
   ): Promise<FlowResourceResponse> {
     const resource = await this.db.query.flowresources.findFirst({
-      where: eq(flowresources.flowresource_id, resourceId),
+      where: eq(flowresources.flowresourceId, resourceId),
     });
     if (!resource) throw new NotFoundException('Resource not found');
 
@@ -562,35 +562,35 @@ export class FlowService {
       .set({
         ...(body.title !== undefined && { title: body.title }),
         ...(body.link !== undefined && { link: body.link }),
-        ...(body.link_type !== undefined && { link_type: body.link_type }),
-        ...(body.resource_type !== undefined && {
-          resource_type:
-            body.resource_type as (typeof resourceTypeEnum.enumValues)[number],
+        ...(body.linkType !== undefined && { link_type: body.linkType }),
+        ...(body.resourceType !== undefined && {
+          resourceType:
+            body.resourceType as (typeof resourceTypeEnum.enumValues)[number],
         }),
       })
-      .where(eq(flowresources.flowresource_id, resourceId));
+      .where(eq(flowresources.flowresourceId, resourceId));
 
     const updated = await this.db.query.flowresources.findFirst({
-      where: eq(flowresources.flowresource_id, resourceId),
+      where: eq(flowresources.flowresourceId, resourceId),
     });
 
     return {
-      id: updated!.flowresource_id,
+      id: updated!.flowresourceId,
       title: updated!.title,
       link: updated!.link,
-      link_type: updated!.link_type ?? undefined,
-      resource_type: updated!.resource_type ?? undefined,
+      linkType: updated!.linkType ?? undefined,
+      resourceType: updated!.resourceType ?? undefined,
     };
   }
 
   async deleteResource(resourceId: string): Promise<void> {
     const resource = await this.db.query.flowresources.findFirst({
-      where: eq(flowresources.flowresource_id, resourceId),
+      where: eq(flowresources.flowresourceId, resourceId),
     });
     if (!resource) throw new NotFoundException('Resource not found');
 
     await this.db
       .delete(flowresources)
-      .where(eq(flowresources.flowresource_id, resourceId));
+      .where(eq(flowresources.flowresourceId, resourceId));
   }
 }

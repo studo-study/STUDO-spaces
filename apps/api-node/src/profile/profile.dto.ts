@@ -18,7 +18,7 @@ export class ProfileDto {
     maxLength: 64,
   })
   @IsString({ maxLength: 64 })
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     description: 'Weergavenaam van de gebruiker',
@@ -34,7 +34,7 @@ export class ProfileDto {
     maxLength: 120,
   })
   @IsString({ maxLength: 120 })
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({
     description: 'URL naar banner (optioneel)',
@@ -45,7 +45,7 @@ export class ProfileDto {
   })
   @IsString({ maxLength: 120 })
   @IsOptional()
-  banner_url: string | null;
+  bannerUrl: string | null;
 
   @ApiProperty({
     description: 'Datum + tijd van aanmelding (ISO string)',
@@ -53,7 +53,7 @@ export class ProfileDto {
     maxLength: 24,
   })
   @IsString({ maxLength: 24 })
-  join_date: string;
+  joinDate: string;
 
   @ApiProperty({
     description: 'Uniek volgnummer bij registratie',
@@ -94,7 +94,7 @@ export class ProfileListResponseDto {
 export class ClassroomProfileDto {
   @ApiProperty({ example: '3U3IJJdkd2x9f8d3jK9pQ5mN7vL', maxLength: 64 })
   @IsString({ maxLength: 64 })
-  user_id: string;
+  userId: string;
 
   @ApiProperty({ example: 'Jan', maxLength: 100 })
   @IsString({ maxLength: 100 })
@@ -102,7 +102,7 @@ export class ClassroomProfileDto {
 
   @ApiProperty({ example: 'https://img.clerk.dev/xyz123.jpg', maxLength: 120 })
   @IsString({ maxLength: 120 })
-  img_url: string;
+  imgUrl: string;
 }
 
 export class ClassroomProfileListDto {

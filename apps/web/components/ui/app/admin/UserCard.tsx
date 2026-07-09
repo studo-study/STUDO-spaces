@@ -38,10 +38,10 @@ const UserCard = ({ user }: UserCardProps) => {
         <span className="flex flex-row items-center gap-1">
           <TbFlameFilled
             className={
-              user.streak_count === 0 ? "text-zinc-400" : "text-orange-400"
+              user.streakCount === 0 ? "text-zinc-400" : "text-orange-400"
             }
           />
-          {user.streak_count}
+          {user.streakCount}
         </span>
       </Field>
 

@@ -18,13 +18,17 @@
     "db:reset-and-seed": "pnpm --filter @studo/api-node db:reset-and-seed",
     "env:sync": "cp .env apps/api-node/.env && cp .env apps/web/.env && cp .env apps/legacy/.env && sed -i '' 's|AUTH_URL=http://localhost:4000/|AUTH_URL=http://localhost:5173/|' apps/legacy/.env && sed -i '' 's|NEXT_PUBLIC_FRONTEND=http://localhost:4000/|NEXT_PUBLIC_FRONTEND=http://localhost:5173/|' apps/legacy/.env",
     "web:cleanup": "pnpm --filter @studo/web rm -rf .next",
-    "web:inspect": "NODE_OPTIONS='--max-old-space-size=4096 --inspect' pnpm --filter @studo/web dev"
+    "web:inspect": "NODE_OPTIONS='--max-old-space-size=4096 --inspect' pnpm --filter @studo/web dev",
+    "knip": "knip"
   },
   "devDependencies": {
+    "@types/node": "^26.1.0",
     "husky": "^9.1.7",
+    "knip": "^6.24.0",
     "lint-staged": "^15.5.2",
     "prettier": "^3.4.2",
-    "turbo": "^2.5.0"
+    "turbo": "^2.5.0",
+    "typescript": "^6.0.3"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx}": [

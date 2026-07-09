@@ -16,16 +16,16 @@ const classroomId1 = '0e2b6da7-d82b-4be2-bf3e-4b320bfd497b';
 
 export const CLASSROOMSET_SEED = [
   {
-    set_id: studySetId1,
-    set_type: 'studyset',
-    added_by: userId2,
-    classroom_id: classroomId1,
+    setId: studySetId1,
+    setType: 'studyset',
+    addedBy: userId2,
+    classroomId: classroomId1,
   },
   {
-    set_id: studySetId2,
-    set_type: 'studyset',
-    added_by: userId1,
-    classroom_id: classroomId1,
+    setId: studySetId2,
+    setType: 'studyset',
+    addedBy: userId1,
+    classroomId: classroomId1,
   },
 ];
 

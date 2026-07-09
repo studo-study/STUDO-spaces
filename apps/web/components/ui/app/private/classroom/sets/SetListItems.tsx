@@ -29,7 +29,7 @@ interface SetItemProps {
 }
 
 function ListItem({ set, t, locale }: SetItemProps) {
-  const date = new Date(set.created_at).toLocaleDateString(locale);
+  const date = new Date(set.createdAt).toLocaleDateString(locale);
   const iconSrc = set.cards ? "/icons/studyset.svg" : "/icons/visualset.svg";
   const challenged = true;
 
@@ -77,7 +77,7 @@ function ListItem({ set, t, locale }: SetItemProps) {
           >
             <span>{t("added by")}</span>
             <Link
-              href={"/apps/web/components/ui/app/shared/profile" + set.user_id}
+              href={"/apps/web/components/ui/app/shared/profile" + set.userId}
               className={"hover:underline"}
             >
               {set.displayName}

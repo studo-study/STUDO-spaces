@@ -121,16 +121,16 @@ const AdminUserDetail = ({ userId }: Props) => {
             </span>
             <span className="flex items-center gap-1">
               <TbCalendar size={12} />
-              {new Date(data.join_date).toLocaleDateString("nl-BE")}
+              {new Date(data.joinDate).toLocaleDateString("nl-BE")}
             </span>
             <span className="flex items-center gap-1">
               <TbUser size={12} />
               {data.publicRole}
             </span>
-            {data.streak_count !== null && (
+            {data.streakCount !== null && (
               <span className="flex items-center gap-1 text-orange-400">
                 <TbFlameFilled size={12} />
-                {data.streak_count} dag streak
+                {data.streakCount} dag streak
               </span>
             )}
           </div>
@@ -184,18 +184,18 @@ const AdminUserDetail = ({ userId }: Props) => {
             { label: "Roles", value: data.roles.join(", ") },
             {
               label: "Laatste login",
-              value: new Date(data.last_login).toLocaleString("nl-BE"),
+              value: new Date(data.lastLogin).toLocaleString("nl-BE"),
             },
             {
               label: "Streak gestart",
-              value: data.streak_started
-                ? new Date(data.streak_started).toLocaleDateString("nl-BE")
+              value: data.streakStarted
+                ? new Date(data.streakStarted).toLocaleDateString("nl-BE")
                 : "—",
             },
             {
               label: "Streak laatste update",
-              value: data.streak_last_update
-                ? new Date(data.streak_last_update).toLocaleDateString("nl-BE")
+              value: data.streakLastUpdate
+                ? new Date(data.streakLastUpdate).toLocaleDateString("nl-BE")
                 : "—",
             },
           ].map(({ label, value }) => (
@@ -221,12 +221,12 @@ const AdminUserDetail = ({ userId }: Props) => {
                 <SetItem
                   key={key}
                   item={{
-                    set_id: s.id,
-                    last_studied: s.last_studied ?? s.created_at,
+                    setId: s.id,
+                    lastStudied: s.lastStudied ?? s.createdAt,
                     title: s.title,
                     type: "studoset",
-                    progress: s.card_count ?? 0,
-                    length: s.card_count ?? 0,
+                    progress: s.cardCount ?? 0,
+                    length: s.cardCount ?? 0,
                   }}
                 />
               ))
@@ -247,12 +247,12 @@ const AdminUserDetail = ({ userId }: Props) => {
                 <SetItem
                   key={key}
                   item={{
-                    set_id: v.id,
-                    last_studied: v.last_studied ?? v.created_at,
+                    setId: v.id,
+                    lastStudied: v.lastStudied ?? v.createdAt,
                     title: v.title,
                     type: "visualset",
-                    progress: v.pin_count ?? 0,
-                    length: v.pin_count ?? 0,
+                    progress: v.pinCount ?? 0,
+                    length: v.pinCount ?? 0,
                   }}
                 />
               ))
@@ -271,11 +271,11 @@ const AdminUserDetail = ({ userId }: Props) => {
             data.recentSessions.map((s) => (
               <SessionRow
                 key={s.id}
-                setId={s.set_id}
-                setType={s.set_type}
+                setId={s.setId}
+                setType={s.setType}
                 accuracy={s.accuracy}
-                duration={s.duration_min}
-                startedAt={s.started_at}
+                duration={s.durationMin}
+                startedAt={s.startedAt}
               />
             ))
           )}

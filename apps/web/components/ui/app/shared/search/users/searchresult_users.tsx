@@ -43,7 +43,7 @@ interface SetResultProps {
 }
 
 function UserResult({ item }: SetResultProps) {
-  console.log("img_url:", JSON.stringify(item.img_url));
+  console.log("img_url:", JSON.stringify(item.imgUrl));
   return (
     <Link
       href={"profile/" + item.id}

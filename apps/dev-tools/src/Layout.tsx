@@ -3,10 +3,14 @@ import PageContainer from "./components/PageContainer";
 
 export default function Layout() {
   return (
-    <div>
+    <div
+      className={
+        "bg-neutral-100 dark:bg-gray-900 dark:text-white w-screen h-screen"
+      }
+    >
       <header
         className={
-          "w-full h-15 font-roboto px-10 flex items-center justify-between border-b border-neutral-200"
+          "w-full h-15 font-roboto px-10 flex items-center justify-between border-b dark:border-white/50 border-neutral-200"
         }
       >
         <Link to="/" className={"hover:underline"}>
@@ -18,7 +22,7 @@ export default function Layout() {
           </Link>
         </nav>
       </header>
-      <main style={{ padding: 16 }}>
+      <main>
         <PageContainer>
           <Outlet />
         </PageContainer>

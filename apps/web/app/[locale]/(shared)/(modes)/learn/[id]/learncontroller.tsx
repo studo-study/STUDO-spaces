@@ -130,7 +130,7 @@ export default function LearnController({ data }: LearnProps) {
   // Initialiseer correctCounts vanuit bestaande sessiedata
   const initialCounts: Record<string, number> = {};
   sessionCards.forEach((sc) => {
-    if (sc.mastered) initialCounts[sc.card_id] = 2;
+    if (sc.mastered) initialCounts[sc.cardId] = 2;
   });
 
   const [state, dispatch] = useReducer(learnReducer, {
@@ -157,14 +157,14 @@ export default function LearnController({ data }: LearnProps) {
     : currentCard.card.term;
 
   const termTaal =
-    data.global_term_language !== data.global_definition_language
+    data.globalTermLanguage !== data.globalDefinitionLanguage
       ? "term"
-      : data.global_term_language;
+      : data.globalTermLanguage;
 
   const defTaal =
-    data.global_term_language !== data.global_definition_language
+    data.globalTermLanguage !== data.globalDefinitionLanguage
       ? "definitie"
-      : data.global_definition_language;
+      : data.globalDefinitionLanguage;
 
   useEffect(() => {
     let timer1: NodeJS.Timeout;

@@ -3,12 +3,12 @@ import { auth } from "@/auth";
 
 export async function GET() {
   const session = await auth();
-  if (!session?.accessToken) {
+  if (!session?.accessToken || !session.user?.id) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const response = await fetch(
-    `${process.env.AUTH_API_URL}/classrooms/user/me`,
+    `${process.env.AUTH_API_URL}/classrooms/user/${session.user.id}`,
     {
       headers: {
         Authorization: `Bearer ${session.accessToken}`,

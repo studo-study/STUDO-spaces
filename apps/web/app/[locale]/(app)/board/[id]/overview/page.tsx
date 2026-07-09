@@ -17,11 +17,11 @@ export default function Page() {
         {t("your_courses")}:
       </span>
       <div className={"flex flex-col gap-2"}>
-        {data.total_length !== 0 && data.total_in_progress !== 0 && (
+        {data.totalLength !== 0 && data.totalInProgress !== 0 && (
           <FlowProgress
-            total_done={data.total_done}
-            total_in_progress={data.total_in_progress}
-            total_length={data.total_length}
+            total_done={data.totalDone}
+            total_in_progress={data.totalInProgress}
+            total_length={data.totalLength}
           />
         )}
         <UrgentPoints />

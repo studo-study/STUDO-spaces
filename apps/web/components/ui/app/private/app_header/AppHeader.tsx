@@ -165,7 +165,7 @@ export default function AppHeader({
             <div className="min-w-20 h-8 rounded-4xl bg-studogrey/30 animate-pulse" />
           ) : (
             <Streak
-              streak={user?.streak_count ?? 0}
+              streak={user?.streakCount ?? 0}
               StreakOpen={StreakOpen}
               setStreakOpen={setStreakOpen}
             />

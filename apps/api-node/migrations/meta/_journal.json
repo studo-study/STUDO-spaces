@@ -113,6 +113,27 @@
       "when": 1781281817831,
       "tag": "0015_brainy_thaddeus_ross",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1783371563453,
+      "tag": "0016_chunky_gamora",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1783475068817,
+      "tag": "0017_lively_elektra",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1783581896642,
+      "tag": "0018_powerful_lord_tyger",
+      "breakpoints": true
     }
   ]
 }

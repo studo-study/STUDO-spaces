@@ -26,7 +26,7 @@ interface SetItemProps {
 }
 
 function GridItem({ set, locale }: SetItemProps) {
-  const date = new Date(set.last_updated).toLocaleDateString(locale);
+  const date = new Date(set.lastUpdated).toLocaleDateString(locale);
   const iconSrc =
     set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
   const link =
@@ -40,9 +40,9 @@ function GridItem({ set, locale }: SetItemProps) {
       <div className="h-0.5 w-full mb-3" />
 
       <div className="flex flex-row gap-3 items-center w-full px-7">
-        {set.flowcourse_icon ? (
+        {set.flowcourseIcon ? (
           <FlowIcon
-            icon={set.flowcourse_icon}
+            icon={set.flowcourseIcon}
             size={14}
             className="w-6 h-6 rounded-md flex-shrink-0"
           />
@@ -64,7 +64,7 @@ function GridItem({ set, locale }: SetItemProps) {
         <span className="text-white/30 text-sm">{date}</span>
         <div className="flex flex-row items-center gap-2">
           <Image
-            src={set.img_url}
+            src={set.imgUrl}
             width={16}
             height={16}
             className="w-4 h-4 rounded-full"

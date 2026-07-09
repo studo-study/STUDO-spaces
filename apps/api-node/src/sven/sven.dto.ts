@@ -57,5 +57,5 @@ export class ImageImportResponseDTO {
     description: 'content type van de content',
   })
   @Expose()
-  special_content_type: 'text' | 'latex' | 'code';
+  specialContentType: 'text' | 'latex' | 'code';
 }

@@ -26,7 +26,7 @@ export class updateSessionCardDTO {
   })
   @IsNumber({ name: 'card_viewcount' })
   @IsOptional()
-  card_viewcount?: number;
+  cardViewcount?: number;
 
   @ApiPropertyOptional({
     example: 15,
@@ -34,7 +34,7 @@ export class updateSessionCardDTO {
   })
   @IsNumber({ name: 'card_total_viewcount' })
   @IsOptional()
-  card_total_viewcount?: number;
+  cardTotalViewcount?: number;
 
   @ApiPropertyOptional({
     example: true,
@@ -58,7 +58,7 @@ export class updateSessionCardDTO {
   })
   @IsNumber({ name: 'times_relearned' })
   @IsOptional()
-  times_relearned?: number;
+  timesRelearned?: number;
 
   @ApiPropertyOptional({
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
@@ -66,7 +66,7 @@ export class updateSessionCardDTO {
   })
   @IsString({ name: 'session_id', maxLength: 64 })
   @IsOptional()
-  session_id?: string;
+  sessionId?: string;
 
   @ApiPropertyOptional({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
@@ -74,7 +74,7 @@ export class updateSessionCardDTO {
   })
   @IsString({ name: 'owner_id', maxLength: 64 })
   @IsOptional()
-  owner_id?: string;
+  ownerId?: string;
 }
 
 export class SessionCardResponseDTO {
@@ -97,14 +97,14 @@ export class SessionCardResponseDTO {
     description: 'Aantal keer bekeken in deze sessie',
   })
   @Expose()
-  card_viewcount: number;
+  cardViewcount: number;
 
   @ApiProperty({
     example: 15,
     description: 'Totaal aantal keer bekeken',
   })
   @Expose()
-  card_total_viewcount: number;
+  cardTotalViewcount: number;
 
   @ApiProperty({
     example: true,
@@ -125,26 +125,26 @@ export class SessionCardResponseDTO {
     description: 'Aantal keer opnieuw geleerd',
   })
   @Expose()
-  times_relearned: number;
+  timesRelearned: number;
 
   @ApiProperty({
     example: '4b3cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de card',
   })
   @Expose()
-  card_id: string;
+  cardId: string;
 
   @ApiProperty({
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de sessie',
   })
   @Expose()
-  session_id: string;
+  sessionId: string;
 
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de eigenaar',
   })
   @Expose()
-  owner_id: string;
+  ownerId: string;
 }

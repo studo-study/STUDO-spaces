@@ -10,11 +10,11 @@ interface FlowTableProps {
 const FlowTable = (props: FlowTableProps) => {
   const { data } = props;
   const sortedData = data.sort((a, b) => {
-    const aFirst = a.lesson_days
-      ? Number(a.lesson_days.split("-").sort()[0])
+    const aFirst = a.lessonDays
+      ? Number(a.lessonDays.split("-").sort()[0])
       : Infinity;
-    const bFirst = b.lesson_days
-      ? Number(b.lesson_days.split("-").sort()[0])
+    const bFirst = b.lessonDays
+      ? Number(b.lessonDays.split("-").sort()[0])
       : Infinity;
     return aFirst - bFirst;
   });

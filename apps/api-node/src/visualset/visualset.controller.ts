@@ -120,11 +120,11 @@ export class VisualsetController {
       type: 'object',
       properties: {
         title: { type: 'string' },
-        images_metadata: {
+        imagesMetadata: {
           type: 'string',
           description: 'JSON array van image metadata',
         },
-        pins_data: {
+        pinsData: {
           type: 'string',
           description: 'JSON array van pins',
         },
@@ -167,10 +167,10 @@ export class VisualsetController {
     const userId = req.user.id;
 
     const imagesMetadata: types.ImageMetadata[] = JSON.parse(
-      body.images_metadata,
+      body.imagesMetadata,
     );
     const pinsData: Omit<types.CreatePin, 'img_url'>[] = JSON.parse(
-      body.pins_data,
+      body.pinsData,
     );
 
     const uploadedUrls = await this.storageService.uploadMultipleImages(
@@ -187,7 +187,7 @@ export class VisualsetController {
 
     const pinsWithUrls: types.CreatePin[] = pinsData.map((pin, index) => ({
       ...pin,
-      img_url:
+      imgUrl:
         uploadedUrls[Math.floor(index / (pinsData.length / files.length))], // Simplified mapping
     }));
 

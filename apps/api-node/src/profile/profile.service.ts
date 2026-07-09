@@ -17,17 +17,17 @@ export class ProfileService {
   ) {}
 
   private serializeProfile(p: {
-    user_id: string;
+    userId: string;
     displayName: string;
-    img_url: string;
-    banner_url: string | null;
-    join_date: Date;
+    imgUrl: string;
+    bannerUrl: string | null;
+    joinDate: Date;
     joinNumber: number;
     streak: number;
     verified: boolean;
     tags: string[];
   }) {
-    return { ...p, join_date: p.join_date.toISOString() };
+    return { ...p, joinDate: p.joinDate.toISOString() };
   }
 
   async getAll(): Promise<ProfileListResponseDto> {
@@ -35,19 +35,19 @@ export class ProfileService {
     return { profiles: all.map((p) => this.serializeProfile(p)) };
   }
 
-  async getById(user_id: string): Promise<ProfileResponseDto> {
+  async getById(userId: string): Promise<ProfileResponseDto> {
     const profile = await this.db.query.profiles.findFirst({
-      where: eq(profiles.user_id, user_id),
+      where: eq(profiles.userId, userId),
     });
     if (!profile) {
       throw new NotFoundException();
     }
 
     const ss: StudysetResponseDto[] = await this.db.query.studysets.findMany({
-      where: eq(studysets.user_id, user_id),
+      where: eq(studysets.userId, userId),
     });
     const vs: VisualsetResponseDto[] = await this.db.query.visualsets.findMany({
-      where: eq(visualsets.user_id, user_id),
+      where: eq(visualsets.userId, userId),
     });
 
     return {
@@ -57,25 +57,19 @@ export class ProfileService {
     };
   }
 
-  async getPublicById(user_id: string): Promise<ProfileResponseDto> {
+  async getPublicById(userId: string): Promise<ProfileResponseDto> {
     const profile = await this.db.query.profiles.findFirst({
-      where: eq(profiles.user_id, user_id),
+      where: eq(profiles.userId, userId),
     });
     if (!profile) {
       throw new NotFoundException();
     }
 
     const ss: StudysetResponseDto[] = await this.db.query.studysets.findMany({
-      where: and(
-        eq(studysets.user_id, user_id),
-        eq(studysets.public_set, true),
-      ),
+      where: and(eq(studysets.userId, userId), eq(studysets.publicSet, true)),
     });
     const vs: VisualsetResponseDto[] = await this.db.query.visualsets.findMany({
-      where: and(
-        eq(visualsets.user_id, user_id),
-        eq(visualsets.public_set, true),
-      ),
+      where: and(eq(visualsets.userId, userId), eq(visualsets.publicSet, true)),
     });
 
     return {

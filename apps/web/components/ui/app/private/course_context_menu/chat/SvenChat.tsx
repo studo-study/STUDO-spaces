@@ -1,18 +1,29 @@
 import ChatInput from "@/components/ui/app/private/course_context_menu/chat/ChatInput";
 import ChatCanvas from "./ChatCanvas";
-import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
+import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { History, X, Plus, MessagesSquare } from "lucide-react";
 import BaseToolTip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatHistory from "@/components/ui/app/private/course_context_menu/chat/ChatHistory";
 import { useTranslations } from "next-intl";
 
 type Tab = "chat" | "history" | "options";
-const SvenChat = () => {
+const SvenChat: React.FC = () => {
   const t = useTranslations("svenchat");
+  const info = useSideMenu((state) => state.menuInfo);
   const setMenuInfo = useSideMenu((state) => state.setMenuInfo);
-  const [tab, setTab] = useState<Tab>("chat");
+  const [tab, setTab] = useState<Tab>(
+    info.origin === "chat_history" ? "history" : "chat",
+  );
+  const [hasMessages, setHasMessages] = useState<boolean>(false);
+  if (info.chat_id) {
+    setHasMessages(true);
+  }
+  useEffect(() => {
+    setTab(info.origin === "chat_history" ? "history" : "chat");
+  }, [info.origin, info.chat_id]);
+
   return (
     <div className={"min-h-0 w-full flex flex-col flex-1"}>
       <div

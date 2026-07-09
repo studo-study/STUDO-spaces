@@ -12,8 +12,8 @@ const HomePageSetItem = (props: SetItemProps) => {
     <Link
       href={
         item.type === "studyset"
-          ? "/studoset/" + item.set_id
-          : "/visualset/" + item.set_id
+          ? "/studoset/" + item.setId
+          : "/visualset/" + item.setId
       }
       className={
         "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"

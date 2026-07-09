@@ -46,7 +46,7 @@ export default function IconBrowser() {
   };
 
   return (
-    <div className={"flex flex-col flex-1 min-h-0"}>
+    <div className={"flex bg-gray-900 flex-col flex-1 min-h-0 overflow-hidden"}>
       <div className={"w-full gap-2 shrink-0"}>
         <PageTitle
           title={`Lucide Icons (${filtered.length} / ${ALL_ICONS.length})`}
@@ -56,18 +56,9 @@ export default function IconBrowser() {
           placeholder="Search an icon..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px 16px",
-            fontSize: 15,
-            borderRadius: 14,
-            border: "1px solid rgba(0,0,0,0.08)",
-            background: "rgba(255,255,255,0.7)",
-            backdropFilter: "blur(10px)",
-            outline: "none",
-            boxSizing: "border-box",
-            boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-          }}
+          className={
+            "w-full px-3 py-4 rounded-full text-sm border-neutral-200/30 border outline-none border-box"
+          }
         />
       </div>
 
@@ -75,22 +66,12 @@ export default function IconBrowser() {
         <div className={"grid grid-cols-7 p-4 gap-3"}>
           {paged.map(([name, Icon]) => (
             <button
+              className={
+                "dark:text-white dark:bg-gray-950 flex flex-col gap-3 border border-neutral-200/30 items-center justify-center px-2 backdrop-filter-2xl rounded-lg py-5"
+              }
               key={name}
               onClick={() => handleCopy(kebabCase(name))}
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                padding: "16px 8px",
-                borderRadius: 16,
-                border: "1px solid rgba(0,0,0,0.06)",
-                background:
-                  copied === kebabCase(name)
-                    ? "rgba(52,199,89,0.15)"
-                    : "rgba(255,255,255,0.6)",
-                backdropFilter: "blur(10px)",
                 cursor: "pointer",
                 transition: "transform 0.12s ease, background 0.2s ease",
               }}
@@ -103,7 +84,11 @@ export default function IconBrowser() {
               }
               title={kebabCase(name)}
             >
-              <Icon size={22} strokeWidth={1.75} color="#1d1d1f" />
+              <Icon
+                size={22}
+                strokeWidth={1.75}
+                className={"text-[##1d1d1f} dark:text-white"}
+              />
               <span
                 style={{
                   fontSize: 10,

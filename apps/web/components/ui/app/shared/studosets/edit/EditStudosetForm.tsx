@@ -113,8 +113,8 @@ export default function EditStudosetForm({ id }: EditsetProps) {
         {
           term: card.term,
           definition: card.definition,
-          contentType: card.term_content_type,
-          codeLanguage: card.code_language,
+          contentType: card.termContentType,
+          codeLanguage: card.codeLanguage,
         },
       ]),
     );
@@ -125,17 +125,16 @@ export default function EditStudosetForm({ id }: EditsetProps) {
         index: i,
         term: card.term,
         definition: card.definition,
-        image: card.suggestion_image ?? null,
+        image: card.suggestionImage ?? null,
         isDouble: false,
-        contentType: card.term_content_type,
-        codeLanguage: card.code_language,
+        contentType: card.termContentType,
+        codeLanguage: card.codeLanguage,
       })),
     );
     if (titleRef.current) titleRef.current.value = set.title;
-    if (termLangRef.current)
-      termLangRef.current.value = set.global_term_language;
+    if (termLangRef.current) termLangRef.current.value = set.globalTermLanguage;
     if (defLangRef.current)
-      defLangRef.current.value = set.global_definition_language;
+      defLangRef.current.value = set.globalDefinitionLanguage;
   }, [set]);
 
   useEffect(() => {

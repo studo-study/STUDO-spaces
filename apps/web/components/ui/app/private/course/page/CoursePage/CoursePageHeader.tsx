@@ -26,7 +26,7 @@ const CoursePageHeader = () => {
 
   const { Icon, color } = getFlowIcon(data.icon);
   const { name, icon } = Linkparser(data.resource);
-  const date = new Date(data.exam_date);
+  const date = new Date(data.examDate);
 
   const openDropDown = () => {
     setIsOpen((prev) => !prev);
@@ -74,7 +74,7 @@ const CoursePageHeader = () => {
                   <button
                     key={course.id}
                     onClick={() => {
-                      router.push(`/flow/${data.board_id}/${course.id}`);
+                      router.push(`/flow/${data.boardId}/${course.id}`);
                       setIsOpen(false);
                     }}
                     className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors cursor-pointer
@@ -123,12 +123,12 @@ const CoursePageHeader = () => {
         </div>
       </div>
       <div className={"w-full flex flex-row items-center gap-2"}>
-        {data.exam_date && ExamDateParser(date.toLocaleDateString(), t)}
-        {data.exam_date &&
+        {data.examDate && ExamDateParser(date.toLocaleDateString(), t)}
+        {data.examDate &&
           ExamStatus({
             examDate: date.toLocaleDateString(),
-            totalItems: data.total_length,
-            doneItems: data.total_done,
+            totalItems: data.totalLength,
+            doneItems: data.totalDone,
             t,
           })}
 

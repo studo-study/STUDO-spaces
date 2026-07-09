@@ -165,7 +165,7 @@ export class SessionController {
       displayName: string;
       provider: string;
       providerId?: string;
-      img_url?: string;
+      imgUrl?: string;
     },
   ) {
     return this.authService.validateSocialUser(body);

@@ -6,7 +6,7 @@ import PdfIndex from "@/components/ui/app/private/course_context_menu/pdf_reader
 import { useRef } from "react";
 import PdfCanvas from "@/components/ui/app/private/course_context_menu/pdf_reader/PdfCanvas";
 import { mockDocument } from "@/components/ui/app/private/course_context_menu/pdf_reader/mock/mock";
-import { usePdfReader } from "@/components/ui/app/private/course_context_menu/pdf_reader/store/pdfStore";
+import { usePdfReader } from "@/store/coursecontextmenu/PdfStore";
 
 const PdfReader: React.FC = () => {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});

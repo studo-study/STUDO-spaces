@@ -122,15 +122,15 @@ function syncBoardTotals(
 
   // Recalc board totals
   const boardDone = updatedCourses.reduce(
-    (s: number, c: FlowCourseResponse) => s + c.total_done,
+    (s: number, c: FlowCourseResponse) => s + c.totalDone,
     0,
   );
   const boardInProgress = updatedCourses.reduce(
-    (s: number, c: FlowCourseResponse) => s + c.total_in_progress,
+    (s: number, c: FlowCourseResponse) => s + c.totalInProgress,
     0,
   );
   const boardLength = updatedCourses.reduce(
-    (s: number, c: FlowCourseResponse) => s + c.total_length,
+    (s: number, c: FlowCourseResponse) => s + c.totalLength,
     0,
   );
 
@@ -138,9 +138,9 @@ function syncBoardTotals(
     activeBoard: {
       ...activeBoard,
       courses: updatedCourses,
-      total_done: boardDone,
-      total_in_progress: boardInProgress,
-      total_length: boardLength,
+      totalDone: boardDone,
+      totalInProgress: boardInProgress,
+      totalLength: boardLength,
     },
   });
 }
@@ -210,10 +210,10 @@ export const useFlowStore = create<FlowState>((set, get) => ({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        course_id: activeCourse.id,
+        courseId: activeCourse.id,
         title: "",
         status: "not_started",
-        order_index: activeCourse.rows.length,
+        orderIndex: activeCourse.rows.length,
       } satisfies CreateFlowRow),
     });
     if (!res.ok) return;
@@ -235,17 +235,17 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     const payload: UpdateFlowRow = {};
     if (rest.title !== undefined) payload.title = rest.title as string;
     if (rest.order_index !== undefined)
-      payload.order_index = rest.order_index as number;
+      payload.orderIndex = rest.order_index as number;
     if (rest.description !== undefined)
       payload.description = rest.description as string;
     if (rest.priority !== undefined)
       payload.priority = rest.priority as Priority;
     if (rest.status !== undefined) payload.status = rest.status as Status;
-    if (rest.due_date !== undefined) payload.due_date = rest.due_date as string;
+    if (rest.due_date !== undefined) payload.dueDate = rest.due_date as string;
     if (rest.studoset_id !== undefined)
-      payload.studoset_id = rest.studoset_id as string;
+      payload.studosetId = rest.studoset_id as string;
     if (rest.visualset_id !== undefined)
-      payload.visualset_id = rest.visualset_id as string;
+      payload.visualsetId = rest.visualset_id as string;
 
     const dirtyKey = `row:${rowId}`;
     const endpoint = `/api/flows/rows/${rowId}`;

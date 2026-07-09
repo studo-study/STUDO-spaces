@@ -90,7 +90,7 @@ export class AuthService {
 
     await this.db
       .update(users)
-      .set({ last_login: new Date() })
+      .set({ lastLogin: new Date() })
       .where(eq(users.id, user.id));
 
     return this.signJwt(user);
@@ -118,13 +118,13 @@ export class AuthService {
         email: googleUser.email,
         passwordHash: '',
         displayName: `${googleUser.firstName} ${googleUser.lastName}`,
-        img_url: googleUser.picture ?? '',
-        join_date: date,
+        imgUrl: googleUser.picture ?? '',
+        joinDate: date,
         totalSets: 0,
-        streak_started: null,
-        streak_count: 0,
-        streak_last_update: null,
-        last_login: date,
+        streakStarted: null,
+        streakCount: 0,
+        streakLastUpdate: null,
+        lastLogin: date,
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
@@ -133,11 +133,11 @@ export class AuthService {
 
       // Profile
       const newProfile = {
-        user_id: uid,
+        userId: uid,
         displayName: `${googleUser.firstName} ${googleUser.lastName}`,
-        img_url: googleUser.picture ?? '',
-        banner_url: '',
-        join_date: date,
+        imgUrl: googleUser.picture ?? '',
+        bannerUrl: '',
+        joinDate: date,
         streak: 0,
         verified: false,
         studoProfile: false,
@@ -156,7 +156,7 @@ export class AuthService {
       // Update last_login voor bestaande user
       await this.db
         .update(users)
-        .set({ last_login: new Date() })
+        .set({ lastLogin: new Date() })
         .where(eq(users.id, user.id));
     }
 
@@ -187,13 +187,13 @@ export class AuthService {
         email: microsoftUser.email,
         passwordHash: '',
         displayName: `${microsoftUser.firstName} ${microsoftUser.lastName}`,
-        img_url: microsoftUser.picture || 'default',
-        join_date: date,
+        imgUrl: microsoftUser.picture || 'default',
+        joinDate: date,
         totalSets: 0,
-        streak_started: null,
-        streak_count: 0,
-        streak_last_update: null,
-        last_login: date,
+        streakStarted: null,
+        streakCount: 0,
+        streakLastUpdate: null,
+        lastLogin: date,
         roles: [Role.USER],
         publicRole: 'student',
         verified: true, // Microsoft users zijn al geverifieerd
@@ -202,11 +202,11 @@ export class AuthService {
 
       // Profile
       const newProfile = {
-        user_id: uid,
+        userId: uid,
         displayName: `${microsoftUser.firstName} ${microsoftUser.lastName}`,
-        img_url: microsoftUser.picture || '',
-        banner_url: '',
-        join_date: date,
+        imgUrl: microsoftUser.picture || '',
+        bannerUrl: '',
+        joinDate: date,
         streak: 0,
         verified: false,
         studoProfile: false,
@@ -225,7 +225,7 @@ export class AuthService {
       // Update last_login voor bestaande user
       await this.db
         .update(users)
-        .set({ last_login: new Date() })
+        .set({ lastLogin: new Date() })
         .where(eq(users.id, user.id));
     }
 
@@ -256,13 +256,13 @@ export class AuthService {
         email: smartschoolUser.email,
         passwordHash: '',
         displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
-        img_url: smartschoolUser.picture || 'default',
-        join_date: date,
+        imgUrl: smartschoolUser.picture || 'default',
+        joinDate: date,
         totalSets: 0,
-        streak_started: null,
-        streak_count: 0,
-        streak_last_update: null,
-        last_login: date,
+        streakStarted: null,
+        streakCount: 0,
+        streakLastUpdate: null,
+        lastLogin: date,
         roles: [Role.USER],
         publicRole: 'student',
         verified: true, // Microsoft users zijn al geverifieerd
@@ -271,11 +271,11 @@ export class AuthService {
 
       // Profile
       const newProfile = {
-        user_id: uid,
+        userId: uid,
         displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
-        img_url: smartschoolUser.picture || '',
-        banner_url: '',
-        join_date: date,
+        imgUrl: smartschoolUser.picture || '',
+        bannerUrl: '',
+        joinDate: date,
         streak: 0,
         verified: false,
         studoProfile: false,
@@ -294,7 +294,7 @@ export class AuthService {
       // Update last_login voor bestaande user
       await this.db
         .update(users)
-        .set({ last_login: new Date() })
+        .set({ lastLogin: new Date() })
         .where(eq(users.id, user.id));
     }
 
@@ -328,13 +328,13 @@ export class AuthService {
       email: email,
       passwordHash: passwordHash,
       displayName: displayName,
-      img_url: 'default',
-      join_date: date,
+      imgUrl: 'default',
+      joinDate: date,
       totalSets: 0,
-      streak_started: date,
-      streak_count: 0,
-      streak_last_update: date,
-      last_login: date,
+      streakStarted: date,
+      streakCount: 0,
+      streakLastUpdate: date,
+      lastLogin: date,
       roles: [Role.USER],
       publicRole: role,
       verified: false,
@@ -343,11 +343,11 @@ export class AuthService {
 
     // Profile
     const newProfile = {
-      user_id: uid,
+      userId: uid,
       displayName: displayName,
-      img_url: '',
-      banner_url: '',
-      join_date: date,
+      imgUrl: '',
+      bannerUrl: '',
+      joinDate: date,
       streak: 0,
       verified: false,
       studoProfile: false,
@@ -372,7 +372,7 @@ export class AuthService {
     displayName: string;
     provider: string;
     providerId?: string;
-    img_url?: string;
+    imgUrl?: string;
   }): Promise<{ token: string; user: any }> {
     let user = await this.db.query.users.findFirst({
       where: eq(users.email, socialUser.email),
@@ -387,13 +387,13 @@ export class AuthService {
         email: socialUser.email,
         passwordHash: '',
         displayName: socialUser.displayName,
-        img_url: socialUser.img_url || 'default',
-        join_date: date,
+        imgUrl: socialUser.imgUrl || 'default',
+        joinDate: date,
         totalSets: 0,
-        streak_started: null,
-        streak_count: 0,
-        streak_last_update: null,
-        last_login: date,
+        streakStarted: null,
+        streakCount: 0,
+        streakLastUpdate: null,
+        lastLogin: date,
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
@@ -401,11 +401,11 @@ export class AuthService {
       };
 
       const newProfile = {
-        user_id: uid,
+        userId: uid,
         displayName: socialUser.displayName,
-        img_url: socialUser.img_url || '',
-        banner_url: '',
-        join_date: date,
+        imgUrl: socialUser.imgUrl || '',
+        bannerUrl: '',
+        joinDate: date,
         streak: 0,
         verified: false,
         studoProfile: false,
@@ -422,8 +422,8 @@ export class AuthService {
       await this.db
         .update(users)
         .set({
-          last_login: new Date(),
-          img_url: socialUser.img_url || user.img_url, // update foto
+          lastLogin: new Date(),
+          imgUrl: socialUser.imgUrl || user.imgUrl, // update foto
         })
         .where(eq(users.id, user.id));
       user = await this.db.query.users.findFirst({

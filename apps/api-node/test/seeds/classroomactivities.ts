@@ -15,14 +15,14 @@ const classroomId1 = '0e2b6da7-d82b-4be2-bf3e-4b320bfd497b';
 export const CLASSROOMACTIVITIES_SEED = [
   {
     id: 'b75a7b29-7307-4308-afc3-81371e67faf8',
-    classroom_id: classroomId1,
-    user_id: userId1,
+    classroomId: classroomId1,
+    userId: userId1,
     displayName: 'Charles Degraeuwe',
-    img_url: 'https://i.pravatar.cc/150?img=1',
-    set_id: studySetId1,
-    set_type: 'studyset',
+    imgUrl: 'https://i.pravatar.cc/150?img=1',
+    setId: studySetId1,
+    setType: 'studyset',
     title: 'Cell Biology Basics',
-    last_seen: '2024-10-29T14:30:00.000Z',
+    lastSeen: '2024-10-29T14:30:00.000Z',
   },
 ];
 

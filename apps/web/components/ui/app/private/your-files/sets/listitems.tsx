@@ -1,7 +1,6 @@
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
-import CourseIcons from "@/data";
 import { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
 import FlowIcon from "@/components/ui/app/private/course/overview/FlowIcon";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
@@ -10,6 +9,8 @@ import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions"
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdEditNote } from "react-icons/md";
 import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
+import { getCoverImage } from "@/utils/getCoverImage";
+import { usePathname, useRouter } from "@/i18n/routing";
 
 interface ListItemProps {
   items: StudySetItem[];
@@ -41,16 +42,16 @@ interface SetItemProps {
 }
 
 function ListItem({ set, t, locale }: SetItemProps) {
-  const date = new Date(set.last_updated)
+  const date = new Date(set.lastUpdated)
     .toLocaleDateString(locale)
     .split("-")
     .join("/");
-  console.log(set);
   const iconSrc =
     set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
   const link =
     set.type === "studyset" ? `/studoset/${set.id}` : `/visualset/${set.id}`;
   const { mutate: deleteSet } = useDeleteStudoset();
+  const router = useRouter();
   const handleDelete = () => deleteSet(set.id);
   return (
     <Link
@@ -60,9 +61,9 @@ function ListItem({ set, t, locale }: SetItemProps) {
     >
       <div className="flex flex-row gap-3 items-center w-full sm:w-1/2 sm:flex-1">
         <div className="w-17 h-17 rounded-2xl dark:bg-studogrey/30 bg-white flex items-center justify-center">
-          {set.flowcourse_icon ? (
+          {set.flowcourseIcon ? (
             <FlowIcon
-              icon={set.flowcourse_icon}
+              icon={set.flowcourseIcon}
               size={22}
               className="w-10 h-10 rounded-lg"
             />
@@ -95,17 +96,23 @@ function ListItem({ set, t, locale }: SetItemProps) {
               width={15}
               className={"dark:invert dark:brightness-0 h-4"}
             />
-            <span>{set.last_updated && date}</span>
+            <span>{set.lastUpdated && date}</span>
           </div>
         </div>
       </div>
 
       <div className="min-w-60 w-full sm:w-auto flex flex-row items-center justify-end sm:gap-6">
-        <Avatar id={set.user_id} displayName={set.displayName} />
+        <Avatar id={set.userId} displayName={set.displayName} />
         <div>
           <ItemOptions
             options={[
-              { label: t("edit_set"), icon: <MdEditNote />, onClick: () => {} },
+              {
+                label: t("edit_set"),
+                icon: <MdEditNote />,
+                onClick: () => {
+                  router.push("/studoset/" + set.id + "/edit");
+                },
+              },
               {
                 label: t("external_window"),
                 icon: <FaExternalLinkAlt size={10} />,
@@ -127,13 +134,4 @@ function ListItem({ set, t, locale }: SetItemProps) {
       </div>
     </Link>
   );
-}
-
-function getCoverImage(title: string): string {
-  const key = Object.keys(CourseIcons).find((k) =>
-    title.toLowerCase().includes(k),
-  ) as keyof typeof CourseIcons | undefined;
-  return key
-    ? `/icons/courses/${CourseIcons[key]}`
-    : "/icons/courses/default.svg";
 }

@@ -31,7 +31,7 @@ const DRAFT_KEY = "create-studoset-draft";
 
 type Draft = {
   title: string;
-  flowcourse_id: string;
+  flowcourseId: string;
   termLang: string;
   defLang: string;
   cardArray: CardData[];
@@ -115,7 +115,7 @@ export default function CreateStudosetForm() {
   const saveDraft = () => {
     const d: Draft = {
       title: titleRef.current?.value ?? "",
-      flowcourse_id: flowcourseId,
+      flowcourseId: flowcourseId,
       termLang,
       defLang,
       cardArray,
@@ -138,7 +138,7 @@ export default function CreateStudosetForm() {
     setHasDraft(true);
     if (d.cardArray.length > 0) setCardArray(d.cardArray);
     if (titleRef.current) titleRef.current.value = d.title;
-    if (d.flowcourse_id) setFlowcourseId(d.flowcourse_id);
+    if (d.flowcourseId) setFlowcourseId(d.flowcourseId);
     setTermLang(d.termLang);
     setDefLang(d.defLang);
   }, []);
@@ -202,20 +202,20 @@ export default function CreateStudosetForm() {
 
     const body = {
       title: titleRef.current!.value.trim(),
-      global_term_language: termLang,
-      global_definition_language: defLang,
-      ...(flowcourseId ? { flowcourse_id: flowcourseId } : {}),
+      globalTermLanguage: termLang,
+      globalDefinitionLanguage: defLang,
+      ...(flowcourseId ? { flowcourseId: flowcourseId } : {}),
       cardlist: cardArray.map((card, i) => ({
         term: card.term.trim().slice(0, 500),
         definition: card.definition.trim().slice(0, 500),
         number:
           typeof card.index === "number" && !isNaN(card.index) ? card.index : i,
-        ...(card.image ? { suggestion_image_id: card.image.id } : {}),
+        ...(card.image ? { suggestionImageId: card.image.id } : {}),
         ...(card.contentType &&
         ["text", "latex", "code"].includes(card.contentType)
-          ? { term_content_type: card.contentType }
+          ? { termContentType: card.contentType }
           : {}),
-        ...(card.codeLanguage ? { code_language: card.codeLanguage } : {}),
+        ...(card.codeLanguage ? { codeLanguage: card.codeLanguage } : {}),
       })),
     };
 

@@ -5,7 +5,7 @@ export interface CreateFlowBoard {
   year: string;
   semester?: string;
   school?: string;
-  school_id?: string;
+  schoolId?: string;
 }
 
 export interface UpdateFLowBoard {
@@ -15,78 +15,78 @@ export interface UpdateFLowBoard {
   year?: string;
   semester?: string;
   school?: string;
-  school_id?: string;
+  schoolId?: string;
 }
 
 export interface FlowBoardResponse {
   id: string;
-  owner_id: string;
-  owner_name: string;
-  owner_pfp: string;
+  ownerId: string;
+  ownerName: string;
+  ownerPfp: string;
   title: string;
   icon: string;
-  creator_id: string;
+  creatorId: string;
   year: string | null;
   semester: string | null;
   school: string | null;
-  school_id: string | null;
-  total_done: number;
-  total_in_progress: number;
-  total_length: number;
+  schoolId: string | null;
+  totalDone: number;
+  totalInProgress: number;
+  totalLength: number;
   courses: FlowCourseResponse[];
 }
 
 export interface FlowBoardOverview {
   id: string;
-  owner_id: string;
-  owner_name: string;
-  owner_pfp: string;
+  ownerId: string;
+  ownerName: string;
+  ownerPfp: string;
   title: string;
   icon: string;
-  creator_id: string;
+  creatorId: string;
   year: string | null;
   semester: string | null;
   school: string | null;
-  school_id: string | null;
+  schoolId: string | null;
   progress: number;
-  total_length: number;
-  total_done: number;
-  total_in_progress: number;
+  totalLength: number;
+  totalDone: number;
+  totalInProgress: number;
   courses: number;
 }
 
 export interface CreateFlowCourse {
-  board_id?: string;
+  boardId?: string;
   title: string;
   icon: string;
   description?: string;
   resource?: string;
-  exam_date?: string;
-  lesson_days?: string;
+  examDate?: string;
+  lessonDays?: string;
 }
 
 export interface UpdateFlowCourse {
   title?: string;
   icon?: string;
   description?: string;
-  exam_date?: string;
-  lesson_days?: string;
+  examDate?: string;
+  lessonDays?: string;
 }
 
 export interface FlowCourseResponse {
   id: string;
-  board_id: string | null;
-  added_by_display_name: string;
-  added_by_id: string;
+  boardId: string | null;
+  addedByDisplayName: string;
+  addedById: string;
   title: string;
   icon: string;
   description: string;
-  total_done: number;
-  total_in_progress: number;
-  total_length: number;
+  totalDone: number;
+  totalInProgress: number;
+  totalLength: number;
   resource: string;
-  exam_date: string;
-  lesson_days: string;
+  examDate: string;
+  lessonDays: string;
 }
 
 export interface FullFlowCourseResponse extends FlowCourseResponse {
@@ -94,65 +94,65 @@ export interface FullFlowCourseResponse extends FlowCourseResponse {
 }
 
 export interface CreateFlowRow {
-  course_id: string;
+  courseId: string;
   title: string;
-  order_index?: number;
+  orderIndex?: number;
   description?: string;
   priority?: Priority;
   status: Status;
-  due_date?: string;
-  studoset_id?: string;
-  visualset_id?: string;
+  dueDate?: string;
+  studosetId?: string;
+  visualsetId?: string;
   resources?: CreateFlowResource[];
 }
 
 export interface UpdateFlowRow {
   title?: string;
-  order_index?: number;
+  orderIndex?: number;
   description?: string;
   priority?: Priority;
   status?: Status;
-  due_date?: string;
-  studoset_id?: string;
-  visualset_id?: string;
+  dueDate?: string;
+  studosetId?: string;
+  visualsetId?: string;
 }
 
 export interface FlowRowResponse {
   id: string;
-  course_id: string;
+  courseId: string;
   title: string;
-  order_index: number;
+  orderIndex: number;
   description: string;
   priority: string;
-  course_link?: string;
-  summary_link?: string;
+  courseLink?: string;
+  summaryLink?: string;
   status: string;
-  due_date: string;
-  studoset_id: string;
-  visualset_id: string;
+  dueDate: string;
+  studosetId: string;
+  visualsetId: string;
   resources: FlowResourceResponse[];
 }
 
 export interface CreateFlowResource {
   title: string;
   link: string;
-  link_type?: string;
-  resource_type?: ResourceType;
+  linkType?: string;
+  resourceType?: ResourceType;
 }
 
 export interface UpdateFlowResource {
   title?: string;
   link?: string;
-  link_type?: string;
-  resource_type?: ResourceType;
+  linkType?: string;
+  resourceType?: ResourceType;
 }
 
 export interface FlowResourceResponse {
   id: string;
   title: string;
   link: string;
-  link_type?: string;
-  resource_type?: ResourceType;
+  linkType?: string;
+  resourceType?: ResourceType;
 }
 
 export interface MyBoardsResponse {

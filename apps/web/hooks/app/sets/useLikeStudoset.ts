@@ -39,11 +39,11 @@ export function useLikeStudoset(setId: string, userId: string) {
       optimisticUpdate((likes) => [
         ...likes,
         {
-          user_id: userId,
-          set_id: setId,
-          set_type: "studyset",
+          userId: userId,
+          setId: setId,
+          setType: "studyset",
           id: "optimistic",
-          created_at: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
         },
       ]),
     onError,
@@ -56,7 +56,7 @@ export function useLikeStudoset(setId: string, userId: string) {
         if (!r.ok) throw new Error("Failed to unlike");
       }),
     onMutate: () =>
-      optimisticUpdate((likes) => likes.filter((l) => l.user_id !== userId)),
+      optimisticUpdate((likes) => likes.filter((l) => l.userId !== userId)),
     onError,
     onSettled,
   });

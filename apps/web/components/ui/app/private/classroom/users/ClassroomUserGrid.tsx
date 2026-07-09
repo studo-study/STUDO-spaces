@@ -125,12 +125,12 @@ function JoinRequestItem({
 function UserItem({ t, user }: UserItemProps) {
   return (
     <Link
-      href={"/apps/web/components/ui/app/shared/profile" + user.user_id}
+      href={"/apps/web/components/ui/app/shared/profile" + user.userId}
       className={`max-h-15 min-h-15 flex-col sm:flex-row px-3 py-4 sm:py-0 max-w-full min-w-full cursor-pointer
                  flex gap-3 items-center w-full rounded-full bg-studogrey/30 border border-studoborder/30 
                  hover:border-studoborder transition-all duration-300 overflow-hidden`}
     >
-      <Avatar id={user.user_id} displayName={user.displayName} />
+      <Avatar id={user.userId} displayName={user.displayName} />
       <div className={"w-full flex flex-col"}>
         <div
           className={
@@ -167,7 +167,7 @@ function UserItem({ t, user }: UserItemProps) {
           <span
             className={"text-studodarkblue/30 dark:text-white/30 text-sm pr-3"}
           >
-            {t("joined")} {new Date(user.joined_at).toLocaleDateString()}
+            {t("joined")} {new Date(user.joinedAt).toLocaleDateString()}
           </span>
         )}
       </div>

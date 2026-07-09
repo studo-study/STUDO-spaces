@@ -14,7 +14,11 @@ init-swift-workers:
 	@echo "spinning up vapor"
 	cd apps/services/swift-services && swift run App
 
-init-all: init-web init-api
+init-dev-tools:
+	@echo "intalling dependencies for devtools"
+	cd apps/dev-tools && pnpm install
+
+init-all: init-web init-api init-dev-tools
 	@echo "installing all dependencies"
 
 start-docker:
@@ -36,6 +40,10 @@ start-web:
 start-api:
 	@echo "starting up the api..."
 	cd apps/api-node/ && pnpm start dev
+
+start-dev-tools:
+	@echo "starting up the api..."
+	cd apps/dev-tools/ && pnpm run dev
 
 clean-frontend:
 	@echo "cleaning up cache..."

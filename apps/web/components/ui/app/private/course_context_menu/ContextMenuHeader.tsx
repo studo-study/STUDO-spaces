@@ -2,7 +2,7 @@ import BaseToolTip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSideMenu } from "@/components/ui/app/private/course_context_menu/store/CourseStore";
+import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
 
 interface ContextMenuHeadrProps {
   t: string;

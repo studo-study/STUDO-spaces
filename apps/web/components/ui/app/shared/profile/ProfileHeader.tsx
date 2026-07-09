@@ -18,7 +18,7 @@ const FALLBACK_BANNER =
 
 export default function ProfileHeader({ profile }: ProfileHeaderProps) {
   const pf = profile.profile;
-  const bannerSrc = pf.banner_url || FALLBACK_BANNER;
+  const bannerSrc = pf.bannerUrl || FALLBACK_BANNER;
   const t = useTranslations("account");
   const isDark = useImageTextColor(bannerSrc, {
     left: 100,
@@ -27,7 +27,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
     height: 50,
   });
 
-  if (!pf.banner_url) {
+  if (!pf.bannerUrl) {
     return (
       <div
         className={
@@ -35,7 +35,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
         }
       >
         <div className={"w-full h-fit relative flex gap-5"}>
-          <Avatar size={80} id={pf.user_id} displayName={pf.displayName} />
+          <Avatar size={80} id={pf.userId} displayName={pf.displayName} />
           <div className={"w-fit flex items-center justify-center gap-2"}>
             <span
               className={`text-xl truncate dark:text-white text-studodarkblue`}
@@ -64,7 +64,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
             "absolute bottom-0 z-40 md:w-1/2 w-full md:h-25 flex md:flex-row flex-col items-center p-5 gap-2"
           }
         >
-          <Avatar size={80} id={pf.user_id} displayName={pf.displayName} />
+          <Avatar size={80} id={pf.userId} displayName={pf.displayName} />
           <div
             className={
               "w-fit flex flex-col backdrop-blur-2xl gap-2 items-center justify-center rounded-full px-3 "

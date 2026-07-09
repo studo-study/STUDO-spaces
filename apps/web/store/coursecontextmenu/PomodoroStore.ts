@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const POMODORO_DURATION = 1000;
+export const POMODORO_DURATION = 1200000;
 
 interface PomodoroStore {
   isRunning: boolean;
@@ -14,7 +14,7 @@ interface PomodoroStore {
   getElapsed: () => number;
 }
 
-export const usePomodoro = create<PomodoroStore>((set, get) => ({
+export const pomodoroStore = create<PomodoroStore>((set, get) => ({
   isRunning: false,
   elapsed: 0,
   startedAt: null,

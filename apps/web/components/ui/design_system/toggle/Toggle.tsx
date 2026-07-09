@@ -33,7 +33,7 @@ export const SwitchToggle: React.FC<ISwitchToggleProps> = (props) => {
       <input
         id={id}
         type="checkbox"
-        className="visually-hidden"
+        className="hidden"
         onChange={(evt) => onChange(evt.target.checked)}
         checked={isChecked}
         disabled={isDisabled}

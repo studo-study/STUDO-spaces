@@ -1,6 +1,7 @@
 packages:
   - "apps/api-node"
   - "apps/web"
+  - "apps/dev-tools"
   - "packages/*"
 allowBuilds:
   "@firebase/util": false

@@ -5,10 +5,10 @@ export type CardContentType = "text" | "latex" | "code";
 export interface CreateCard {
   term: string;
   definition: string;
-  suggestion_image_id?: string | null;
+  suggestionImageId?: string | null;
   number: number;
-  term_content_type: CardContentType;
-  code_language?: string;
+  termContentType: CardContentType;
+  codeLanguage?: string;
 }
 
 export interface CreateCardList {
@@ -20,10 +20,10 @@ export interface UpdateCard {
   term?: string;
   definition?: string;
   number?: number;
-  updated_at?: string;
-  term_content_type?: CardContentType;
-  code_language?: string;
-  suggestion_image_id?: string | null;
+  updatedAt?: string;
+  termContentType?: CardContentType;
+  codeLanguage?: string;
+  suggestionImageId?: string | null;
 }
 
 export interface CardResponse {
@@ -31,14 +31,14 @@ export interface CardResponse {
   term: string;
   definition: string;
   number: number;
-  created_at: string;
-  updated_at: string;
-  set_id: string;
-  owner_id: string;
-  term_content_type: CardContentType;
-  code_language: string;
-  suggestion_image_id?: string | null;
-  suggestion_image?: SuggestionImage | null;
+  createdAt: string;
+  updatedAt: string;
+  setId: string;
+  ownerId: string;
+  termContentType: CardContentType;
+  codeLanguage: string;
+  suggestionImageId?: string | null;
+  suggestionImage?: SuggestionImage | null;
 }
 
 export interface CardListResponse {

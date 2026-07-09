@@ -35,14 +35,14 @@ export class SetResponse {
     description: 'Profielfoto URL van de eigenaar',
   })
   @Expose()
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de eigenaar',
   })
   @Expose()
-  owner_id: string;
+  ownerId: string;
 
   @ApiProperty({
     example: true,
@@ -107,14 +107,14 @@ export class PublicSetResponse {
     description: 'Profielfoto URL van de eigenaar',
   })
   @Expose()
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de eigenaar',
   })
   @Expose()
-  owner_id: string;
+  ownerId: string;
 
   @ApiProperty({
     example: true,
@@ -165,7 +165,7 @@ export class ProfileResponse {
     description: 'Profielfoto URL',
   })
   @Expose()
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({
     example: 'student',
@@ -202,7 +202,7 @@ export class ClassroomResponse {
     description: 'UUID van de eigenaar',
   })
   @Expose()
-  owner_id: string;
+  ownerId: string;
 
   @ApiProperty({
     example: 'classroom',
@@ -239,14 +239,14 @@ export class StudoProfileResponse {
     description: 'Profielfoto URL',
   })
   @Expose()
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({
     example: 'https://example.com/banner.jpg',
     description: 'banner van het profile',
   })
   @Expose()
-  banner_url: string;
+  bannerUrl: string;
 }
 
 class SetResultData {

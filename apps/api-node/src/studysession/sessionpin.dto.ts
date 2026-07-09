@@ -34,7 +34,7 @@ export class updateSessionPinDTO {
   })
   @IsNumber({ name: 'pin_viewcount' })
   @IsOptional()
-  pin_viewcount?: number;
+  pinViewcount?: number;
 
   @ApiPropertyOptional({
     example: 20,
@@ -42,7 +42,7 @@ export class updateSessionPinDTO {
   })
   @IsNumber({ name: 'pin_total_viewcount' })
   @IsOptional()
-  pin_total_viewcount?: number;
+  pinTotalViewcount?: number;
 
   @ApiPropertyOptional({
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
@@ -50,7 +50,7 @@ export class updateSessionPinDTO {
   })
   @IsString({ name: 'session_id', maxLength: 64 })
   @IsOptional()
-  session_id?: string;
+  sessionId?: string;
 
   @ApiPropertyOptional({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
@@ -58,7 +58,7 @@ export class updateSessionPinDTO {
   })
   @IsString({ name: 'owner_id', maxLength: 64 })
   @IsOptional()
-  owner_id?: string;
+  ownerId?: string;
 }
 
 export class SessionPinResponseDTO {
@@ -88,7 +88,7 @@ export class SessionPinResponseDTO {
     description: 'Aantal keer opnieuw geleerd',
   })
   @Expose()
-  times_relearned: number;
+  timesRelearned: number;
 
   @ApiProperty({
     example: true,
@@ -102,33 +102,33 @@ export class SessionPinResponseDTO {
     description: 'Aantal keer bekeken in deze sessie',
   })
   @Expose()
-  pin_viewcount: number;
+  pinViewcount: number;
 
   @ApiProperty({
     example: 20,
     description: 'Totaal aantal keer bekeken',
   })
   @Expose()
-  pin_total_viewcount: number;
+  pinTotalViewcount: number;
 
   @ApiProperty({
     example: '4b3cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de identify',
   })
   @Expose()
-  pin_id: string;
+  pinId: string;
 
   @ApiProperty({
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de sessie',
   })
   @Expose()
-  session_id: string;
+  sessionId: string;
 
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de eigenaar',
   })
   @Expose()
-  owner_id: string;
+  ownerId: string;
 }

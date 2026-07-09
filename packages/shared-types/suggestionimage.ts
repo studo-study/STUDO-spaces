@@ -9,13 +9,13 @@ export interface SuggestionImagesResponse {
 
 export interface SuggestionImage {
   id: string;
-  pexels_id: string;
-  display_url: string;
+  pexelsId: string;
+  displayUrl: string;
   source: string;
   photographer: string;
-  source_page_url: string;
+  sourcePageUrl: string;
 }
 
 export interface SetCardImage {
-  image_id: string;
+  imageId: string;
 }

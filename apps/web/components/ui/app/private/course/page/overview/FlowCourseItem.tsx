@@ -21,14 +21,14 @@ const FlowCourseItem = (props: CourseItemProps) => {
   const t = useTranslations("flow");
 
   const handleExternal = () => {
-    window.open(`/flow/${data.board_id}/${data.id}`, "_blank");
+    window.open(`/flow/${data.boardId}/${data.id}`, "_blank");
   };
   const handleDelete = async () => {
     await fetch(`/api/flows/course/${data.id}`, { method: "DELETE" });
   };
   return (
     <div
-      onClick={() => router.push(`/flow/${data.board_id}/${data.id}`)}
+      onClick={() => router.push(`/flow/${data.boardId}/${data.id}`)}
       className={
         "relative gap-5 w-full flex flex-col cursor-pointer hover:border-studoborder transition-all min-h-30 p-5 rounded-3xl text-studodarkblue dark:text-white border border-studoborder/30 bg-studogrey/30"
       }
@@ -72,9 +72,9 @@ const FlowCourseItem = (props: CourseItemProps) => {
       </div>
       <div className={"flex flex-col gap-3"}>
         <CourseItemProgress
-          total_in_progress={data.total_in_progress}
-          total_length={data.total_length}
-          total_done={data.total_done}
+          total_in_progress={data.totalInProgress}
+          total_length={data.totalLength}
+          total_done={data.totalDone}
         />
         <div
           className={
@@ -82,12 +82,12 @@ const FlowCourseItem = (props: CourseItemProps) => {
           }
         >
           <span className={"bg-studogrey opacity-30 text-xs rounded-3xl px-2"}>
-            {data.total_done} / {data.total_length} done
+            {data.totalDone} / {data.totalLength} done
           </span>
           {ExamChip({
-            examDate: data.exam_date,
-            totalItems: data.total_length,
-            doneItems: data.total_done,
+            examDate: data.examDate,
+            totalItems: data.totalLength,
+            doneItems: data.totalDone,
           })}
         </div>
       </div>

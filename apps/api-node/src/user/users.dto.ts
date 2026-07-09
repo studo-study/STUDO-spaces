@@ -71,7 +71,7 @@ export class SocialLoginDto {
   providerId?: string;
 
   @ApiProperty({ example: 'https://...', required: false })
-  img_url?: string;
+  imgUrl?: string;
 }
 
 export class UpdateUserDTO {
@@ -118,7 +118,7 @@ export class UpdateUserDTO {
     optional: true,
     maxLength: 200,
   })
-  img_url?: string;
+  imgUrl?: string;
 
   @ApiProperty({
     example: '2024-01-01',
@@ -128,7 +128,7 @@ export class UpdateUserDTO {
     name: 'streak_started',
     optional: true,
   })
-  streak_started?: string;
+  streakStarted?: string;
 
   @ApiProperty({
     example: 5,
@@ -142,7 +142,7 @@ export class UpdateUserDTO {
     type: 'integer',
     optional: true,
   })
-  streak_count?: number;
+  streakCount?: number;
 
   @ApiProperty({
     example: '2024-01-03',
@@ -152,7 +152,7 @@ export class UpdateUserDTO {
     name: 'streak_last_update',
     optional: true,
   })
-  streak_last_update?: string;
+  streakLastUpdate?: string;
 
   @ApiProperty({
     example: '2024-01-05T14:30:00.000Z',
@@ -162,7 +162,7 @@ export class UpdateUserDTO {
     name: 'last_login',
     optional: true,
   })
-  last_login?: string;
+  lastLogin?: string;
 
   @ApiProperty({
     example: 'admin',
@@ -209,14 +209,14 @@ export class UserResponseDto {
     description: 'URL of profile picture',
   })
   @Expose()
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({
     example: '2011-10-05T14:48:00.000Z',
     description: 'Join date',
   })
   @Expose()
-  join_date: string;
+  joinDate: string;
 
   @ApiProperty({
     example: 1,
@@ -237,7 +237,7 @@ export class UserResponseDto {
     description: 'When the streak started',
     nullable: true,
   })
-  streak_started: string | null;
+  streakStarted: string | null;
 
   @ApiProperty({
     example: 7,
@@ -245,19 +245,19 @@ export class UserResponseDto {
     nullable: true,
   })
   @Expose()
-  streak_count: number | null;
+  streakCount: number | null;
 
   @ApiProperty({
     example: '2024-01-10',
     nullable: true,
   })
   @Expose()
-  streak_last_update: string | null;
+  streakLastUpdate: string | null;
 
   @ApiProperty({
     example: '2024-01-10T15:00:00.000Z',
   })
-  last_login: string;
+  lastLogin: string;
 
   @ApiProperty({
     example: ['user'],
@@ -288,11 +288,11 @@ export class UserResponseDto {
 export class LastStudiedDto {
   @ApiProperty({ example: 'set123' })
   @Expose()
-  set_id: string;
+  setId: string;
 
   @ApiProperty({ example: '2024-01-10T12:00:00.000Z' })
   @Expose()
-  last_studied: string;
+  lastStudied: string;
 
   @ApiProperty({ example: 'Biology Chapter 1' })
   @Expose()
@@ -375,7 +375,7 @@ export class HeaderResposneDto {
 
   @ApiProperty({ example: 5, nullable: true })
   @Expose()
-  streak_count: number | null;
+  streakCount: number | null;
 
   @ApiProperty({ example: 'https://example.com/pfp.png' })
   @Expose()
@@ -391,11 +391,11 @@ export class ClassActivitiesDto {
 
   @ApiProperty({ example: 'classroom123' })
   @Expose()
-  classroom_id: string;
+  classroomId: string;
 
   @ApiProperty({ example: 'user123' })
   @Expose()
-  user_id: string;
+  userId: string;
 
   @ApiProperty({ example: 'Charles' })
   @Expose()
@@ -403,15 +403,15 @@ export class ClassActivitiesDto {
 
   @ApiProperty({ example: 'https://example.com/avatar.png' })
   @Expose()
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({ example: 'set123' })
   @Expose()
-  set_id: string;
+  setId: string;
 
   @ApiProperty({ example: 'flashcard' })
   @Expose()
-  set_type: string;
+  setType: string;
 
   @ApiProperty({ example: 'Biology - Cells' })
   @Expose()
@@ -419,7 +419,7 @@ export class ClassActivitiesDto {
 
   @ApiProperty({ example: '2024-01-10T10:00:00.000Z' })
   @Expose()
-  last_seen: string;
+  lastSeen: string;
 }
 
 export class StartPaginaDto {

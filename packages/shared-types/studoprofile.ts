@@ -4,15 +4,15 @@ import type { VisualsetResponse } from "./visualset";
 export interface StudoProfile {
   id: string;
   displayName: string;
-  img_url: string;
-  banner_url?: string;
+  imgUrl: string;
+  bannerUrl?: string;
   tags: string[];
 }
 
 export interface Track {
   id: string;
   trackName: string;
-  icon_name: string;
+  iconName: string;
   grade: string;
   studysets: StudysetResponse[];
   visualsets: VisualsetResponse[];
@@ -22,7 +22,7 @@ export interface Community {
   id: string;
   name: string;
   owner: string;
-  owner_id: string;
+  ownerId: string;
   type: string;
   verified: boolean;
 }

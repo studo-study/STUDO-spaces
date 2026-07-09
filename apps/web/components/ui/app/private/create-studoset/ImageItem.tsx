@@ -19,13 +19,13 @@ const ImageItem = ({ image, selectImage, selected }: ImageItemProps) => {
       className={`rounded-2xl relative border-2 hover:border-studoblue ${isSelected ? "border-studoblue" : "border-studoborder/30"} overflow-hidden cursor-pointer w-full min-h-full bg-studogrey/30 `}
     >
       <Image
-        src={image.display_url}
+        src={image.displayUrl}
         alt={image.photographer}
         fill
         className="object-cover"
       />
       <Link
-        href={image.source_page_url}
+        href={image.sourcePageUrl}
         target="_blank"
         className={
           "absolute bottom-1 right-2 backdrop-blur-2xl p-0.5 h-fit w-fit truncate opacity-50 text-[6px]"

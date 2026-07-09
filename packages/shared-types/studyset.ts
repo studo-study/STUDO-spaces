@@ -6,34 +6,34 @@ import type { VisualsetResponse } from "./visualset";
 
 export interface CreateStudyset {
   title: string;
-  global_term_language: string;
-  global_definition_language: string;
+  globalTermLanguage: string;
+  globalDefinitionLanguage: string;
   cardlist: CreateCard[];
 }
 
 export interface UpdateStudyset {
   title?: string;
-  global_term_language?: string;
-  global_definition_language?: string;
-  public_set?: boolean;
+  globalTermLanguage?: string;
+  globalDefinitionLanguage?: string;
+  publicSet?: boolean;
   cards?: UpdateCard[];
 }
 
 export interface StudysetResponse {
   id: string;
   title: string;
-  global_term_language: string;
-  global_definition_language: string;
-  created_at: string;
-  last_updated: string;
-  public_set: boolean;
+  globalTermLanguage: string;
+  globalDefinitionLanguage: string;
+  createdAt: string;
+  lastUpdated: string;
+  publicSet: boolean;
   displayName: string;
-  img_url: string;
-  user_id: string;
-  card_count?: number;
-  last_studied?: string | null;
+  imgUrl: string;
+  userId: string;
+  cardCount?: number;
+  lastStudied?: string | null;
   progress?: number;
-  flowcourse_icon?: string;
+  flowcourseIcon?: string;
 }
 
 export interface FullStudysetResponse extends StudysetResponse {

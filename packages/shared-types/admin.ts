@@ -5,8 +5,8 @@ import type { Studysession } from "./studysession";
 export interface AdminRecentUser {
   id: string;
   displayName: string;
-  img_url: string;
-  join_date: string;
+  imgUrl: string;
+  joinDate: string;
   publicRole: string;
   verified: boolean;
   banned: boolean;
@@ -14,14 +14,14 @@ export interface AdminRecentUser {
 
 export interface AdminRecentActivity {
   id: string;
-  user_id: string;
+  userId: string;
   displayName: string;
-  img_url: string;
-  set_id: string;
-  set_type: string;
+  imgUrl: string;
+  setId: string;
+  setType: string;
   title: string;
-  last_seen: string;
-  classroom_id: string;
+  lastSeen: string;
+  classroomId: string;
 }
 
 export interface AdminPopularSet {
@@ -30,8 +30,8 @@ export interface AdminPopularSet {
   type: "studyset" | "visualset";
   title: string;
   displayName: string;
-  img_url: string;
-  user_id: string;
+  imgUrl: string;
+  userId: string;
 }
 
 export interface AdminStatsResponse {
@@ -49,9 +49,9 @@ export interface AdminStatsResponse {
 
 export interface AdminUserDetailProfile {
   displayName: string;
-  img_url: string;
-  banner_url: string | null;
-  join_date: string;
+  imgUrl: string;
+  bannerUrl: string | null;
+  joinDate: string;
   streak: number;
   verified: boolean;
   tags: string[];
@@ -59,13 +59,13 @@ export interface AdminUserDetailProfile {
 
 export interface AdminUserDetailStudoprofile {
   displayName: string;
-  img_url: string;
-  banner_url: string;
+  imgUrl: string;
+  bannerUrl: string;
   tags: string[];
   tracks: {
     id: string;
     trackName: string;
-    icon_name: string;
+    iconName: string;
     grade: string;
   }[];
 }
@@ -76,9 +76,9 @@ export interface AdminUserDetailClassroom {
   school: string;
   type: string;
   verified: boolean;
-  created_at: string;
+  createdAt: string;
   role: string;
-  joined_at: string;
+  joinedAt: string;
 }
 
 export interface AdminUserDetailStats {
@@ -94,14 +94,14 @@ export interface AdminUserDetail {
   id: string;
   email: string;
   displayName: string;
-  img_url: string;
-  join_date: string;
+  imgUrl: string;
+  joinDate: string;
   joinNumber: number;
   totalSets: number;
-  streak_started: string | null;
-  streak_count: number | null;
-  streak_last_update: string | null;
-  last_login: string;
+  streakStarted: string | null;
+  streakCount: number | null;
+  streakLastUpdate: string | null;
+  lastLogin: string;
   roles: string[];
   publicRole: string;
   verified: boolean;

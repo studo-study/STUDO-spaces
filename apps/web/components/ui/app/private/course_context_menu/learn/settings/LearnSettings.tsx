@@ -46,7 +46,7 @@ const LearnSettings = () => {
         {
           label: "answer_type",
           toggle: "tabs",
-          description: "pomodoro_description",
+          description: "type_description",
           value: learnSettings.answerType,
           changeSection: "pomodoro",
           options: [
@@ -59,7 +59,7 @@ const LearnSettings = () => {
         {
           label: "revision_count",
           toggle: "slider",
-          description: "pomodoro_description",
+          description: "revision_count_description",
           value: learnSettings.revisionCount,
           changeSection: "pomodoro",
           onchange: useLearnStore(
@@ -144,6 +144,7 @@ const LearnSettings = () => {
                   )}
                   {subItem.toggle === "tabs" && (
                     <Tabs
+                      size={"sm"}
                       tabs={subItem.options as Tab[]}
                       value={subItem.value as string}
                       onChange={(value) =>

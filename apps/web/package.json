@@ -34,6 +34,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "color2k": "^2.0.3",
+    "datejs": "1.0.0-rc3",
     "fast-average-color": "^9.5.2",
     "feather-icons": "^4.29.2",
     "firebase": "^12.9.0",
