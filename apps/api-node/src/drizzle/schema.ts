@@ -11,7 +11,6 @@ import {
   text,
   pgEnum,
   primaryKey,
-  foreignKey,
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
@@ -958,7 +957,7 @@ export const studocommunitiesRelations = relations(
   }),
 );
 
-export const reportsRelations = relations(reports, ({ one, many }) => ({
+export const reportsRelations = relations(reports, ({ one }) => ({
   filledBy: one(users, {
     fields: [reports.filledBy],
     references: [users.id],
