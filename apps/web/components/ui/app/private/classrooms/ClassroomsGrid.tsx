@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FullClassroom } from "@/types/types";
 import { useTranslations } from "next-intl";
 import ClassSearch from "@/components/ui/app/private/classrooms/ClassroomSearchbar";

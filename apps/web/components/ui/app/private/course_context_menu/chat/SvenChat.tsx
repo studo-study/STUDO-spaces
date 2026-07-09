@@ -4,7 +4,7 @@ import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { History, X, Plus, MessagesSquare } from "lucide-react";
 import BaseToolTip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChatHistory from "@/components/ui/app/private/course_context_menu/chat/ChatHistory";
 import { useTranslations } from "next-intl";
 
@@ -16,13 +16,16 @@ const SvenChat: React.FC = () => {
   const [tab, setTab] = useState<Tab>(
     info.origin === "chat_history" ? "history" : "chat",
   );
-  const [hasMessages, setHasMessages] = useState<boolean>(false);
+  const [, setHasMessages] = useState<boolean>(false);
   if (info.chat_id) {
     setHasMessages(true);
   }
-  useEffect(() => {
+  const infoKey = `${info.origin}|${info.chat_id}`;
+  const [prevInfoKey, setPrevInfoKey] = useState<string>(infoKey);
+  if (infoKey !== prevInfoKey) {
+    setPrevInfoKey(infoKey);
     setTab(info.origin === "chat_history" ? "history" : "chat");
-  }, [info.origin, info.chat_id]);
+  }
 
   return (
     <div className={"min-h-0 w-full flex flex-col flex-1"}>

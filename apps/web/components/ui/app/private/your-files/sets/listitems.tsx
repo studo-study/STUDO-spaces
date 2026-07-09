@@ -10,7 +10,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdEditNote } from "react-icons/md";
 import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
 import { getCoverImage } from "@/utils/getCoverImage";
-import { usePathname, useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/routing";
 
 interface ListItemProps {
   items: StudySetItem[];

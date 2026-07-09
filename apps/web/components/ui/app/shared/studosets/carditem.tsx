@@ -143,7 +143,7 @@ export default function CardItem({
       isOpen: true,
       origin: "course",
     });
-  }, []);
+  }, [menuInfo]);
   return (
     <div
       className={`w-full overflow-hidden rounded-3xl border bg-studogrey/30 flex flex-col items-center

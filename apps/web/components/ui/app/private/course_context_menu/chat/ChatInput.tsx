@@ -29,6 +29,7 @@ const ChatInput = () => {
   };
   const onSubmit = () => {
     if (!inputRef.current) return;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const body = {
       message: message,
       payload: payload,
