@@ -4,12 +4,12 @@ import { useTranslations } from "next-intl";
 import BasePopup from "@/components/ui/design_system/popup/BasePopup";
 import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
 import InputField from "@/components/ui/design_system/input/InputField";
-import IconPicker from "@/components/ui/app/private/course/overview/IconPicker";
+import IconPicker from "@/components/ui/app/private/course/other/IconPicker";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import TagSelector from "@/components/ui/design_system/tag/TagSelector";
 import { HiCalendarDays } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
+import { useFlowBoardMutations } from "@/hooks/app/flow/useFlowMutations";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { FaChevronRight } from "react-icons/fa";
 import IconButton from "@/components/ui/design_system/button/IconButton";
@@ -43,7 +43,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
   const [showMetadata, setShowMetadata] = useState<boolean>(false);
   const [days, setDays] = useState<string[]>([]);
   const t = useTranslations("flow.course");
-  const { addCourse } = useFlowStore();
+  const { addCourse } = useFlowBoardMutations();
   const { mutateAsync: createCourse } = useCreateCourse();
 
   //helper functions

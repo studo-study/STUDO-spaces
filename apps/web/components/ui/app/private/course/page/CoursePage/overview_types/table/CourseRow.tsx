@@ -17,8 +17,8 @@ import TagSelector from "@/components/ui/design_system/tag/TagSelector";
 import { LuLink } from "react-icons/lu";
 import ResourceIcon from "@/components/ui/app/private/course/page/CoursePage/overview_types/table/ResourceIcon";
 import { HiCalendarDays } from "react-icons/hi2";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
-import { useShallow } from "zustand/react/shallow";
+import { useFlowCourse } from "@/hooks/app/flow/useFlowData";
+import { useFlowRows } from "@/hooks/app/flow/useFlowMutations";
 
 interface CourseRowProps {
   rowId: string;
@@ -27,10 +27,8 @@ interface CourseRowProps {
 
 const CourseRow = (props: CourseRowProps) => {
   const { rowId, containsRes } = props;
-  const data = useFlowStore(
-    useShallow((s) => s.activeCourse?.rows.find((r) => r.id === rowId)),
-  );
-  const updateRow = useFlowStore((s) => s.updateRow);
+  const data = useFlowCourse().data?.rows.find((r) => r.id === rowId);
+  const { updateRow } = useFlowRows();
   const t = useTranslations("flow.course.row");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);

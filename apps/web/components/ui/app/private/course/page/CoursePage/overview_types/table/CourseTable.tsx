@@ -1,21 +1,15 @@
 "use client";
 import { useTranslations } from "next-intl";
-import CourseItemProgress from "@/components/ui/app/private/course/page/overview/CourseItemProgress";
 import { IoIosAdd } from "react-icons/io";
 import CourseRow from "@/components/ui/app/private/course/page/CoursePage/overview_types/table/CourseRow";
-import {
-  useFlowStore,
-  selectCourseTotals,
-} from "@/store/slices/flow/flowStore";
-import { useShallow } from "zustand/react/shallow";
+import { useCourseRows, useCourseTotals } from "@/hooks/app/flow/useFlowData";
+import { useFlowRows } from "@/hooks/app/flow/useFlowMutations";
 import { FaListCheck } from "react-icons/fa6";
 
 const CourseTable = () => {
-  const rows = useFlowStore((s) => s.activeCourse?.rows) ?? [];
-  const { totalLength, done, inProgress, containsRes } = useFlowStore(
-    useShallow(selectCourseTotals),
-  );
-  const addRow = useFlowStore((s) => s.addRow);
+  const rows = useCourseRows();
+  const { containsRes } = useCourseTotals();
+  const { addRow } = useFlowRows();
   const t = useTranslations("flow.course.row");
 
   return (
@@ -23,20 +17,6 @@ const CourseTable = () => {
       <div className={"w-full flex items-center gap-2 font-bold text-lg"}>
         <FaListCheck />
         <span>{t("flow_title")}</span>
-      </div>
-      <div className={"flex flex-row gap-3 items-center mb-2"}>
-        <CourseItemProgress
-          total_length={totalLength}
-          total_in_progress={inProgress}
-          total_done={done}
-        />
-        <span
-          className={
-            "flex flex-row truncate text-sm min-w-fit gap-2 text-studodarkblue font-bold dark:text-white"
-          }
-        >
-          {done + " / " + totalLength} {t("done")}
-        </span>
       </div>
       <div>
         <div

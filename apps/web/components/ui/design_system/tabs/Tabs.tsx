@@ -1,6 +1,7 @@
 "use client";
 import { useLayoutEffect, useRef, useState } from "react";
 import { SegmentedControlsProps } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls.types";
+import { Link } from "@/i18n/routing";
 import classNames from "@/utils/classnames";
 
 const SIZE_STYLES = {
@@ -30,7 +31,7 @@ export const Tabs = <T extends string = string>({
   stretch,
 }: SegmentedControlsProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const buttonRefs = useRef<Record<string, HTMLElement | null>>({});
   const [indicator, setIndicator] = useState<{
     left: number;
     width: number;
@@ -77,26 +78,51 @@ export const Tabs = <T extends string = string>({
           />
         )}
 
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            ref={(el) => {
-              buttonRefs.current[t.key] = el;
-            }}
-            type={"button"}
-            onClick={() => onChange(t.key)}
-            className={classNames(
-              `relative z-10 flex truncate items-center justify-center gap-1 rounded-full font-bold transition-colors duration-300 border border-transparent cursor-pointer ${styles.button} ${
-                value === t.key
-                  ? "dark:text-white text-studodarkblue bg-studogrey/30 border-studoborder/30"
-                  : "text-studodarkblue/50 dark:text-studogrey hover:text-zinc-400"
-              }`,
-            )}
-          >
-            {t.icon}
-            {t.label}
-          </button>
-        ))}
+        {tabs.map((t) => {
+          const className = classNames(
+            `relative z-10 flex truncate items-center justify-center gap-1 rounded-full font-bold transition-colors duration-300 border border-transparent cursor-pointer ${styles.button} ${
+              value === t.key
+                ? "dark:text-white text-studodarkblue bg-studogrey/30 border-studoborder/30"
+                : "text-studodarkblue/50 dark:text-studogrey hover:text-zinc-400"
+            }`,
+          );
+          const onSelect = () => {
+            onChange(t.key);
+            t.onclick?.();
+          };
+
+          if (t.href) {
+            return (
+              <Link
+                key={t.key}
+                href={t.href}
+                ref={(el) => {
+                  buttonRefs.current[t.key] = el;
+                }}
+                onClick={onSelect}
+                className={className}
+              >
+                {t.icon}
+                {t.label}
+              </Link>
+            );
+          }
+
+          return (
+            <button
+              key={t.key}
+              ref={(el) => {
+                buttonRefs.current[t.key] = el;
+              }}
+              type={"button"}
+              onClick={onSelect}
+              className={className}
+            >
+              {t.icon}
+              {t.label}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

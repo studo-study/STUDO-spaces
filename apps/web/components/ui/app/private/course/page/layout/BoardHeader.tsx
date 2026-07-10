@@ -3,10 +3,11 @@ import FlowBoardOverviewHeader from "@/components/ui/app/private/course/page/lay
 import BreadCrumbs from "@/components/ui/app/private/course/page/layout/BreadCrumbs";
 import { usePathname } from "@/i18n/routing";
 import { useFlowStore } from "@/store/slices/flow/flowStore";
+import { useFlowBoard } from "@/hooks/app/flow/useFlowData";
 import CreateFlowCourse from "@/components/ui/app/private/course/page/layout/CreateFlowCourse";
 
 const BoardHeader = () => {
-  const data = useFlowStore((s) => s.activeBoard);
+  const data = useFlowBoard().data;
   const createCourseOpen = useFlowStore((s) => s.createCourseOpen);
   const setCreateCourseOpen = useFlowStore((s) => s.setCreateCourseOpen);
   const pathName = usePathname();

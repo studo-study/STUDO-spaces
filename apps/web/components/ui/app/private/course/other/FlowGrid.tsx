@@ -1,9 +1,9 @@
 "use client";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
-import FlowGridItem from "@/components/ui/app/private/course/overview/FlowGridItem";
+import { useFlowBoards } from "@/hooks/app/flow/useFlowData";
+import FlowGridItem from "@/components/ui/app/private/course/other/FlowGridItem";
 
 export default function FlowGrid() {
-  const boards = useFlowStore((s) => s.boards);
+  const boards = useFlowBoards().data ?? [];
 
   return (
     <div className="grid grid-cols-3 gap-4 pt-15">

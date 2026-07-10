@@ -6,7 +6,8 @@ export type MenuOrigin =
   | "course"
   | "quick_actions"
   | "pomodoro"
-  | "settings";
+  | "settings"
+  | "widgets";
 export interface menuInfo {
   isOpen: boolean;
   origin: MenuOrigin | null;

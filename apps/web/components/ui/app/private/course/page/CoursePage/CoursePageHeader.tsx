@@ -11,15 +11,34 @@ import { IoWarningOutline } from "react-icons/io5";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFlowStore } from "@/store/slices/flow/flowStore";
-import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
+import {
+  useFlowBoard,
+  useFlowCourse,
+  useCourseTotals,
+} from "@/hooks/app/flow/useFlowData";
+import CourseItemProgress from "@/components/ui/app/private/course/page/overview/CourseItemProgress";
+import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
+import { Layers, NotebookText, Rows3, ScrollText } from "lucide-react";
+import { usePathname } from "@/i18n/routing";
 
 const CoursePageHeader = () => {
   const t = useTranslations("flow.course");
-  const data = useFlowStore((s) => s.activeCourse);
-  const boardData = useFlowStore((s) => s.activeBoard);
-  const courseView = useFlowStore((s) => s.courseView);
+  const tRow = useTranslations("flow.course.row");
+  const data = useFlowCourse().data;
+  const boardData = useFlowBoard().data;
   const setCourseView = useFlowStore((s) => s.setCourseView);
+  const { totalLength, done, inProgress } = useCourseTotals();
   const router = useRouter();
+  const segments = usePathname().split("/");
+  const path = segments.slice(0, 3).join("/");
+  // Active tab is driven by the URL, not store state, so it matches the
+  // page that is actually open on first render. `course` segment → "cursus".
+  const lastSegment = segments[3] ?? "overview";
+  const activeTab = (lastSegment === "course" ? "cursus" : lastSegment) as
+    | "overview"
+    | "cursus"
+    | "sets"
+    | "flow";
   const [isOpen, setIsOpen] = useState(false);
 
   if (!data) return null;
@@ -33,7 +52,7 @@ const CoursePageHeader = () => {
   };
 
   return (
-    <div className={"min-w-full h-25 flex flex-col gap-3"}>
+    <div className={"min-w-full min-h-fit flex flex-col gap-3"}>
       <div className={"flex flex-row justify-between"}>
         <div className={"relative"}>
           <div
@@ -99,50 +118,74 @@ const CoursePageHeader = () => {
             </div>
           )}
         </div>
-        <div>
-          <SegmentedControls
-            tabs={[
-              {
-                key: "table",
-                label: t("table"),
-              },
-              {
-                key: "kanban",
-                label: t("kanban"),
-              },
-              {
-                key: "calendar",
-                label: t("calendar"),
-              },
-            ]}
-            value={courseView}
-            onChange={(key) => {
-              setCourseView(key);
-            }}
-          />
+        <div className={"w-fit flex flex-row flex-wrap items-center gap-3"}>
+          {data.examDate && ExamDateParser(date.toLocaleDateString(), t)}
+          {data.examDate &&
+            ExamStatus({
+              examDate: date.toLocaleDateString(),
+              totalItems: data.totalLength,
+              doneItems: data.totalDone,
+              t,
+            })}
+
+          {data.resource && (
+            <BaseTooltip content={t("link")} position={"bottom"}>
+              <Chip
+                label={name}
+                onPress={() => {
+                  if (data.resource) window.open(data.resource);
+                }}
+                iconLeft={icon}
+              />
+            </BaseTooltip>
+          )}
         </div>
       </div>
-      <div className={"w-full flex flex-row items-center gap-2"}>
-        {data.examDate && ExamDateParser(date.toLocaleDateString(), t)}
-        {data.examDate &&
-          ExamStatus({
-            examDate: date.toLocaleDateString(),
-            totalItems: data.totalLength,
-            doneItems: data.totalDone,
-            t,
-          })}
-
-        {data.resource && (
-          <BaseTooltip content={t("link")} position={"bottom"}>
-            <Chip
-              label={name}
-              onPress={() => {
-                if (data.resource) window.open(data.resource);
-              }}
-              iconLeft={icon}
-            />
-          </BaseTooltip>
-        )}
+      <div className={"flex flex-1 min-w-50 flex-row items-center gap-2"}>
+        <CourseItemProgress
+          total_length={totalLength}
+          total_in_progress={inProgress}
+          total_done={done}
+        />
+        <span
+          className={
+            "flex flex-row min-w-fit gap-1 text-sm font-bold text-studodarkblue dark:text-white"
+          }
+        >
+          {done + " / " + totalLength} {tRow("done")}
+        </span>
+      </div>
+      <div className={"flex flex-row "}>
+        <Tabs
+          tabs={[
+            {
+              key: "overview",
+              label: "Overview",
+              icon: <ScrollText size={20} />,
+              href: path + "/overview",
+            },
+            {
+              key: "flow",
+              label: "Flow",
+              icon: <Rows3 size={20} />,
+              href: path + "/flow",
+            },
+            {
+              key: "cursus",
+              label: "Cursus",
+              icon: <NotebookText size={20} />,
+              href: path + "/course",
+            },
+            {
+              key: "sets",
+              label: "Sets",
+              icon: <Layers size={20} />,
+              href: path + "/sets",
+            },
+          ]}
+          value={activeTab}
+          onChange={setCourseView}
+        />
       </div>
     </div>
   );

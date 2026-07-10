@@ -1,8 +1,8 @@
 "use client";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
+import { useFlowCourse } from "@/hooks/app/flow/useFlowData";
 
 const CourseKanban = () => {
-  const data = useFlowStore((s) => s.activeCourse);
+  const data = useFlowCourse().data;
 
   if (!data) return null;
 

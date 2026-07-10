@@ -965,6 +965,15 @@ body::-webkit-scrollbar {
     align-items: center;
 }
 
+/* react-grid-layout drag/resize placeholder — match the dashed studoblue grid
+   instead of the default red block. */
+.react-grid-item.react-grid-placeholder {
+    background: rgb(79 131 255 / 0.1) !important;
+    border: 1px dashed rgb(79 131 255 / 0.4);
+    border-radius: 1.5rem;
+    opacity: 1;
+}
+
 .visually-hidden {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -973,4 +982,23 @@ body::-webkit-scrollbar {
     position: absolute;
     white-space: nowrap;
     width: 1px;
+}
+
+@keyframes widget-wiggle {
+    0% {
+        rotate: 0deg;
+    }
+    25% {
+        rotate: 1deg;
+    }
+    50% {
+        rotate: 0deg;
+    }
+    75% {
+        rotate: -1deg;
+    }
+}
+
+.animate-widget-wiggle {
+    animation: widget-wiggle 0.3s ease-in-out infinite;
 }

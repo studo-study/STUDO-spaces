@@ -2,7 +2,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
-import FlowIcon from "@/components/ui/app/private/course/overview/FlowIcon";
+import FlowIcon from "@/components/ui/app/private/course/other/FlowIcon";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { FiTrash2 } from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
@@ -116,7 +116,13 @@ function ListItem({ set, t, locale }: SetItemProps) {
               {
                 label: t("external_window"),
                 icon: <FaExternalLinkAlt size={10} />,
-                onClick: () => console.log("test"),
+                onClick: () => {
+                  window.open(
+                    `/studoset/${set.id}`,
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
+                },
               },
               {
                 label: t("delete"),

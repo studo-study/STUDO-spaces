@@ -5,11 +5,11 @@ import { useTranslations } from "next-intl";
 import { IoIosCloudOutline } from "react-icons/io";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
 import { Link } from "@/i18n/routing";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
+import { useFlowBoard } from "@/hooks/app/flow/useFlowData";
 
 const FlowBoardOverviewHeader = () => {
   const t = useTranslations("flow");
-  const data = useFlowStore((s) => s.activeBoard);
+  const data = useFlowBoard().data;
 
   const [pageTitle, setPageTitle] = useState<string>(data?.title ?? "");
   const [date, setDate] = useState<string>(data?.year ?? "");

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import BasePopup from "@/components/ui/design_system/popup/BasePopup";
 import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
 import InputField from "@/components/ui/design_system/input/InputField";
-import IconPicker from "@/components/ui/app/private/course/overview/IconPicker";
+import IconPicker from "@/components/ui/app/private/course/other/IconPicker";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import IconButton from "@/components/ui/design_system/button/IconButton";
 import { IoClose } from "react-icons/io5";

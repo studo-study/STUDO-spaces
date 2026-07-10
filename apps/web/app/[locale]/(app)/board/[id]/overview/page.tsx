@@ -1,13 +1,13 @@
 "use client";
 import FlowTable from "@/components/ui/app/private/course/page/overview/FlowTable";
-import FlowProgress from "@/components/ui/app/private/course/page/overview/FlowProgress";
+import CourseItemProgress from "@/components/ui/app/private/course/page/overview/CourseItemProgress";
 import UrgentPoints from "@/components/ui/app/private/course/page/overview/UrgentPoints";
 import { useTranslations } from "next-intl";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
+import { useFlowBoard } from "@/hooks/app/flow/useFlowData";
 
 export default function Page() {
   const t = useTranslations("flow");
-  const data = useFlowStore((s) => s.activeBoard);
+  const data = useFlowBoard().data;
 
   if (!data) return null;
 
@@ -18,11 +18,20 @@ export default function Page() {
       </span>
       <div className={"flex flex-col gap-2"}>
         {data.totalLength !== 0 && data.totalInProgress !== 0 && (
-          <FlowProgress
-            total_done={data.totalDone}
-            total_in_progress={data.totalInProgress}
-            total_length={data.totalLength}
-          />
+          <div className={"flex flex-row items-center gap-2"}>
+            <CourseItemProgress
+              total_done={data.totalDone}
+              total_in_progress={data.totalInProgress}
+              total_length={data.totalLength}
+            />
+            <span
+              className={
+                "flex min-w-fit flex-row gap-1 text-sm font-bold text-studodarkblue dark:text-white"
+              }
+            >
+              {data.totalDone + " / " + data.totalLength}
+            </span>
+          </div>
         )}
         <UrgentPoints />
         <FlowTable data={data.courses} />

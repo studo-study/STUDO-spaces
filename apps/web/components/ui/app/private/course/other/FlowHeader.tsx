@@ -1,8 +1,8 @@
 "use client";
 import { useTranslations } from "next-intl";
-import TriggerFlow from "@/components/ui/app/private/course/overview/TriggerFlow";
+import TriggerFlow from "@/components/ui/app/private/course/other/TriggerFlow";
 import { useState } from "react";
-import CreateFlowBoard from "@/components/ui/app/private/course/overview/CreateFlowBoard";
+import CreateFlowBoard from "@/components/ui/app/private/course/other/CreateFlowBoard";
 
 const FlowHeader = () => {
   const t = useTranslations("flow");

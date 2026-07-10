@@ -4,13 +4,13 @@ import { useTranslations } from "next-intl";
 import BasePopup from "@/components/ui/design_system/popup/BasePopup";
 import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
 import InputField from "@/components/ui/design_system/input/InputField";
-import IconPicker from "@/components/ui/app/private/course/overview/IconPicker";
+import IconPicker from "@/components/ui/app/private/course/other/IconPicker";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import TagSelector from "@/components/ui/design_system/tag/TagSelector";
 import { LiaUniversitySolid } from "react-icons/lia";
 import { MdOutlineCalendarViewMonth } from "react-icons/md";
 import { HiCalendarDays } from "react-icons/hi2";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
+import { useFlowBoardMutations } from "@/hooks/app/flow/useFlowMutations";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import IconButton from "@/components/ui/design_system/button/IconButton";
 import { IoClose } from "react-icons/io5";
@@ -44,7 +44,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showMetadata, setShowMetadata] = useState<boolean>(false);
   const t = useTranslations("flow");
-  const { addBoard } = useFlowStore();
+  const { addBoard } = useFlowBoardMutations();
 
   //helper functions
   const resetForm = () => {

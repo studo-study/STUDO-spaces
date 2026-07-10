@@ -5,19 +5,20 @@ import {
   BookSearch,
   Clock,
   Flower,
-  History,
+  LayoutGrid,
   Settings,
   SlidersHorizontal,
 } from "lucide-react";
 import { MenuOrigin, useSideMenu } from "@/store/coursecontextmenu/CourseStore";
 import { usePathname } from "@/i18n/routing";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
+import { MenuConfig, resolveMenuConfig } from "./config";
 
 const CourseSidebar: React.FC = () => {
   const menuOpen = useSideMenu((state) => state.menuInfo);
   const setMenuOpen = useSideMenu((state) => state.setMenuInfo);
   const pathname = usePathname();
-  const LearnMode = pathname.split("/").includes("learn");
+  const menuConfig = resolveMenuConfig(pathname);
   const pomodoroEnabled = useLearnStore(
     (state) => state.learnSettings.pomodoro,
   );
@@ -29,68 +30,72 @@ const CourseSidebar: React.FC = () => {
       setMenuOpen({ isOpen: true, origin: input as MenuOrigin });
     }
   };
+
+  const MenuItems: {
+    key: keyof MenuConfig;
+    tooltip: string;
+    onclick: () => void;
+    icon: React.ReactNode;
+    isEnabled: boolean;
+  }[] = [
+    {
+      key: "pomodoro",
+      tooltip: "Pomodoro Timer",
+      onclick: () => toggleMenu("pomodoro"),
+      icon: <Clock size={17} />,
+      isEnabled: pomodoroEnabled,
+    },
+    {
+      key: "learn_settings",
+      tooltip: "Settings",
+      onclick: () => toggleMenu("settings"),
+      icon: <Settings size={17} />,
+      isEnabled: true,
+    },
+    {
+      key: "chat",
+      tooltip: "Ask Sven",
+      onclick: () => toggleMenu("chat"),
+      icon: <Flower size={17} />,
+      isEnabled: true,
+    },
+    {
+      key: "check_course",
+      tooltip: "See in course",
+      onclick: () => toggleMenu("course"),
+      icon: <BookSearch size={17} />,
+      isEnabled: true,
+    },
+    {
+      key: "quick_actions",
+      tooltip: "Quick Actions",
+      onclick: () => toggleMenu("quick_actions"),
+      icon: <SlidersHorizontal size={17} />,
+      isEnabled: true,
+    },
+    {
+      key: "widgets",
+      tooltip: "Widgets",
+      onclick: () => toggleMenu("widgets"),
+      icon: <LayoutGrid size={17} />,
+      isEnabled: true,
+    },
+  ];
   return (
     <div className="shrink-0 w-20 h-full border-l border-studoborder/30 flex flex-col gap-5 py-5 items-center justify-start">
-      {LearnMode && (
-        <>
-          {pomodoroEnabled && (
-            <BaseTooltip content={"Pomodoro Timer"} position={"left"}>
-              <BaseButton
-                onClick={() => toggleMenu("pomodoro")}
-                variant={"outline_link"}
-                size={"icon"}
-              >
-                <Clock size={17} />
-              </BaseButton>
-            </BaseTooltip>
-          )}
-          <BaseTooltip content={"Settings"} position={"left"}>
+      {MenuItems.filter((item) => menuConfig[item.key] && item.isEnabled).map(
+        (item) => (
+          <BaseTooltip key={item.key} content={item.tooltip} position={"left"}>
             <BaseButton
-              onClick={() => toggleMenu("settings")}
+              onClick={item.onclick}
               variant={"outline_link"}
               size={"icon"}
             >
-              <Settings size={17} />
+              {item.icon}
             </BaseButton>
           </BaseTooltip>
-        </>
+        ),
       )}
-      <BaseTooltip content={"Ask Sven"} position={"left"}>
-        <BaseButton
-          onClick={() => toggleMenu("chat")}
-          variant={"outline_link"}
-          size={"icon"}
-        >
-          <Flower size={17} />
-        </BaseButton>
-      </BaseTooltip>
-      <BaseTooltip content={"Chat history"} position={"left"}>
-        <BaseButton
-          onClick={() => toggleMenu("chat_history")}
-          variant={"outline_link"}
-          size={"icon"}
-        >
-          <History size={17} />
-        </BaseButton>
-      </BaseTooltip>
-      <BaseTooltip content={"See in course"} position={"left"}>
-        <BaseButton
-          onClick={() => toggleMenu("course")}
-          variant={"outline_link"}
-          size={"icon"}
-        >
-          <BookSearch size={17} />
-        </BaseButton>
-      </BaseTooltip>
-      <BaseTooltip content={"Quick actions"} position={"left"}>
-        <BaseButton
-          onClick={() => toggleMenu("quick_actions")}
-          variant={"outline_link"}
-          size={"icon"}
-        >
-          <SlidersHorizontal size={17} />
-        </BaseButton>
-      </BaseTooltip>
     </div>
   );
 };

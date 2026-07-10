@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { FiTrash2 } from "react-icons/fi";
 import { useRouter } from "next/navigation";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
+import { useFlowBoardMutations } from "@/hooks/app/flow/useFlowMutations";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 
 interface FlowGridItemProps {
@@ -21,7 +21,7 @@ export default function FlowGridItem(props: FlowGridItemProps) {
   const id = user?.id;
   const name = user?.displayName;
   const router = useRouter();
-  const { removeBoard } = useFlowStore();
+  const { removeBoard } = useFlowBoardMutations();
   //methods
   const handleDelete = () => {
     removeBoard(item.id);

@@ -7,7 +7,7 @@ import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useTranslations } from "next-intl";
 import { FlowCourseResponse, FullStudysetResponse } from "@studo/types";
 import Image from "next/image";
-import FlowIcon from "@/components/ui/app/private/course/overview/FlowIcon";
+import FlowIcon from "@/components/ui/app/private/course/other/FlowIcon";
 import { getCoverImage } from "@/utils/getCoverImage";
 import { Payload } from "@/components/ui/app/private/course_context_menu/chat/ChatInput";
 

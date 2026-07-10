@@ -1475,31 +1475,8 @@
     "courses": "vakken",
     "course_1": "vak",
     "course": {
-      "create_title": "Nieuw vak",
-      "add_title": "Nieuw vak aanmaken",
-      "description": "Voeg een korte omschrijving toe...",
-      "create_btn": "Vak aanmaken",
-      "cancel_btn": "annuleren",
-      "add_metadata": "details toevoegen",
-      "add_later": "details verbergen",
-      "semester": "semester",
-      "exam_date": "Examendatum",
-      "exam_status": "Examenstatus",
-      "link": "Resourcelink",
-      "add_link": "voeg een resourcelink toe...",
-      "calendar": "Kalender",
-      "kanban": "Bord",
-      "table": "Tabel",
       "row": {
-        "done": "klaar",
-        "in_prog": "bezig",
-        "cta_add_t": "taak toevoegen...",
-        "add_resources": "Bronnen",
-        "add_details": "Details",
-        "add_set": "Gekoppelde sets",
-        "due_date": "Deadline",
-        "not_started": "te doen",
-        "doing": "bezig"
+        "done": "afgewerkt"
       }
     }
   },
@@ -1668,5 +1645,8 @@
     "reset_progress": "Voortgang resetten",
     "type_description": "Kies hoe op welke manier je wilt antwoorden",
     "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt"
+  },
+  "widgets": {
+    "title": "Widgets"
   }
 }
