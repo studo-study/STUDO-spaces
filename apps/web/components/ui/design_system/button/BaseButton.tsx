@@ -67,6 +67,7 @@ const variantMap = {
     "bg-blue-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
   default: "text-studodarkblue dark:text-white",
   icon: "h-fit px-0  py-0 rounded-full border border-studoborder/30 bg-studogrey/30",
+  plus: "shadow-2xl bg-blue-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder",
 } as const;
 
 const shapeMap = {

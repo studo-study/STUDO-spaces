@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import CoursePageHeader from "@/components/ui/app/private/course/page/CoursePage/CoursePageHeader";
+import CoursePageHeader from "@/components/ui/app/private/course/layout/CoursePageHeader";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import FlowStoreInitializer from "@/components/providers/app/FlowStoreInitializer";
 import { auth } from "@/auth";

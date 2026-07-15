@@ -1,7 +1,7 @@
 "use client";
-import FlowTable from "@/components/ui/app/private/course/page/overview/FlowTable";
-import CourseItemProgress from "@/components/ui/app/private/course/page/overview/CourseItemProgress";
-import UrgentPoints from "@/components/ui/app/private/course/page/overview/UrgentPoints";
+import FlowTable from "@/components/ui/app/private/board/FlowTable";
+import CourseItemProgress from "@/components/ui/app/private/course/layout/CourseItemProgress";
+import UrgentPoints from "@/components/ui/app/private/board/UrgentPoints";
 import { useTranslations } from "next-intl";
 import { useFlowBoard } from "@/hooks/app/flow/useFlowData";
 

@@ -2,7 +2,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
-import FlowIcon from "@/components/ui/app/private/course/other/FlowIcon";
+import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { FiTrash2 } from "react-icons/fi";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";

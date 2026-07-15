@@ -5,7 +5,7 @@ import { useWidgetMenu } from "@/store/coursecontextmenu/WidgetMenuStore";
 import {
   WIDGET_REGISTRY,
   WIDGET_TYPES,
-} from "@/components/ui/app/private/course/overview/widgets/widgetRegistry";
+} from "@/components/ui/app/private/course/overview/widgetRegistry";
 
 const CourseWidgets = () => {
   const editMode = useWidgetMenu((s) => s.editMode);

@@ -651,6 +651,10 @@ export class StudysetService {
   }
 
   async likeSet(userId: string, setId: string): Promise<SetLikeResponseDto> {
+    if (await this.isSetOwner(userId, setId)) {
+      throw new ForbiddenException("you can't like your own set");
+    }
+
     const date = new Date();
     const like = {
       id: uuidv4(),
@@ -836,5 +840,12 @@ export class StudysetService {
         selectedCount: 1,
       });
     }
+  }
+
+  async isSetOwner(userId: string, setId: string) {
+    const set = await this.db.query.studysets.findFirst({
+      where: eq(studysets.id, setId),
+    });
+    return set?.userId === userId;
   }
 }

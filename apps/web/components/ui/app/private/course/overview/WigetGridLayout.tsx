@@ -6,10 +6,13 @@ import {
   useWidgetMenu,
   type WidgetInstance,
 } from "@/store/coursecontextmenu/WidgetMenuStore";
-import { WIDGET_REGISTRY } from "@/components/ui/app/private/course/overview/widgets/widgetRegistry";
-import WidgetItem from "@/components/ui/app/private/course/overview/widgets/WidgetItem";
+import {
+  GRID_COLS,
+  WIDGET_REGISTRY,
+} from "@/components/ui/app/private/course/overview/widgetRegistry";
+import WidgetItem from "@/components/ui/app/private/course/overview/WidgetItem";
 
-const COLS = 3;
+const COLS = GRID_COLS;
 const START_ROWS = 3;
 const MARGIN = 16;
 const FALLBACK_ROW_HEIGHT = 90;
@@ -39,10 +42,7 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
   }, [containerRef]);
 
   // rowHeight so START_ROWS rows (+ gaps + padding) exactly fill the height.
-  const rowHeight =
-    height > 0
-      ? (height - MARGIN * (START_ROWS + 1)) / START_ROWS
-      : FALLBACK_ROW_HEIGHT;
+  const rowHeight = 240;
 
   // Load persisted layout for the active course.
   useEffect(() => {

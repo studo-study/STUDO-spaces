@@ -33,6 +33,10 @@ start-docker-api-seeded:
 	@echo "starting up full seeded api in docker container... "
 	docker compose -f docker-compose-backend.yml --profile seed up
 
+stop-docker-api:
+	docker compose down
+
+
 start-web:
 	@echo "starting up web..."
 	cd apps/web/ && pnpm run dev

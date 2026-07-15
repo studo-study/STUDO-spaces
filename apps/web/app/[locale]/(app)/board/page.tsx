@@ -1,5 +1,5 @@
-import FlowHeader from "@/components/ui/app/private/course/other/FlowHeader";
-import FlowGrid from "@/components/ui/app/private/course/other/FlowGrid";
+import FlowHeader from "@/components/ui/app/private/board/FlowHeader";
+import FlowGrid from "@/components/ui/app/private/board/FlowGrid";
 import FlowStoreInitializer from "@/components/providers/app/FlowStoreInitializer";
 import { auth } from "@/auth";
 

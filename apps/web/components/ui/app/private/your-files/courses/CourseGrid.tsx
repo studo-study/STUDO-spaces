@@ -5,7 +5,7 @@ import { useCourses } from "@/hooks/app/courses/useCourses";
 import { useTranslations } from "next-intl";
 import SetSearch from "@/components/ui/app/private/your-files/sets/search";
 import { useMemo, useState } from "react";
-import CourseAdd from "@/components/ui/app/private/course/other/AddPopup";
+import CourseAdd from "@/components/ui/app/private/course/layout/AddPopup";
 
 const CourseGrid = () => {
   const t = useTranslations("courses");

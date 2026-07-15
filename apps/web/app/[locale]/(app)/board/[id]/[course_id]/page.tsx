@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import FlowStoreInitializer from "@/components/providers/app/FlowStoreInitializer";
-import CoursePageContent from "@/components/ui/app/private/course/page/CoursePage/CoursePageContent";
+import CoursePageContent from "@/components/ui/app/private/course/CoursePageContent";
 
 export default async function Page({
   params,

@@ -7,7 +7,7 @@ import {
   useUser,
 } from "@/components/providers/auth/UserProvider";
 import ConsoleEasterEgg from "@/components/ui/overige/easteregg/console";
-import CreateFlowCourse from "@/components/ui/app/private/course/page/layout/CreateFlowCourse";
+import CreateFlowCourse from "@/components/ui/app/private/board/CreateFlowCourse";
 import AppLayoutContext from "@/components/context/AppLayoutContext";
 import { useAppStore } from "@/store/useAppStore";
 import { usePathname } from "next/navigation";
