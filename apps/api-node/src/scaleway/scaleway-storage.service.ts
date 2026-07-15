@@ -1,4 +1,3 @@
-// src/common/services/scaleway-storage.service.ts
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';

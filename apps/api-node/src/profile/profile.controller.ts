@@ -1,15 +1,8 @@
-import {
-  Controller,
-  Get,
-  Param,
-  ParseUUIDPipe,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
 import { ProfileService } from './profile.service';
-import { ProfileResponseDto, ProfileListResponseDto } from './profile.dto';
+import { ProfileResponseDto } from './profile.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
-import { CheckUserAccessGuard } from '../auth/guards/userAccess.guard';
 import {
   ApiBearerAuth,
   ApiTags,
@@ -24,21 +17,6 @@ import { Public } from '../auth/decorators/public.decorator';
 @Controller('profiles')
 export class ProfileController {
   constructor(private profileService: ProfileService) {}
-
-  // GET ALL PROFILES -----------------------------------------------
-
-  @ApiOperation({ summary: 'Haal alle profielen op (admin).' })
-  @ApiResponse({
-    status: 200,
-    description: 'Alle profielen opgehaald',
-    type: ProfileListResponseDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.ADMIN)
-  @Get()
-  async getAll(): Promise<ProfileListResponseDto> {
-    return this.profileService.getAll();
-  }
 
   // GET PROFILE BY ID ----------------------------------------------
 

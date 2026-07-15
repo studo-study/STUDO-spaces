@@ -33,7 +33,6 @@ export interface StudysetResponse {
   cardCount?: number;
   lastStudied?: string | null;
   progress?: number;
-  flowcourseIcon?: string;
 }
 
 export interface FullStudysetResponse extends StudysetResponse {

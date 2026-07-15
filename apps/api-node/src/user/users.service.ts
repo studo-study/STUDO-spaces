@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   Inject,
   Injectable,
@@ -15,28 +14,21 @@ import { and, eq, gte, inArray, ne, sql } from 'drizzle-orm';
 import {
   cards,
   classroomactivities,
-  classrooms,
   classroomusers,
-  flowboards,
-  flowcourses,
-  flowrows,
   images,
   sessioncards,
   sessionpins,
-  setlikes,
   studysessions,
   studysets,
   users,
   visualsets,
 } from '../drizzle/schema';
-import { ClassroomService } from '../classroom/classroom.service';
 import { plainToInstance } from 'class-transformer';
 import { AuthConfig, ServerConfig } from '../config/configuration';
 import * as argon2 from 'argon2';
 import { ConfigService } from '@nestjs/config';
 import {
   AllsetsResponse,
-  CardResponse,
   LastStudied,
   SessionCardResponse,
   SessionPinResponse,
@@ -47,16 +39,9 @@ import {
   UserListResponse,
   UserResponseStats,
   VisualsetResponse,
-  FullStudysetResponse,
-  ClassroomListResponse,
-  ClassroomUserResponse,
-  ClassroomResponse,
-  FullClassroomResponse,
   UpdateUser,
-  HeaderResponse,
   StartPagina,
   ClassActivities,
-  Boards,
   SyncResponse,
 } from '@studo/types';
 import { UserResponseDto, UserResponseStatsDto } from './users.dto';
@@ -309,107 +294,6 @@ export class UserService {
     };
   }
 
-  async getSetById(
-    userId: string,
-    setId: string,
-  ): Promise<FullStudysetResponse> {
-    const set = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, setId),
-    });
-
-    if (!set) {
-      throw new NotFoundException('No studoset with this id exists');
-    }
-
-    const classusers = await this.db.query.classroomusers.findMany({
-      where: eq(classroomusers.userId, userId),
-    });
-    const classes = [];
-    for (const u of classusers) {
-      const set = await this.db.query.classrooms.findFirst({
-        where: eq(classrooms.id, u.classroomId),
-      });
-      if (set) {
-        classes.push(set);
-      }
-    }
-
-    const session = await this.db.query.studysessions.findFirst({
-      where: eq(studysessions.setId, setId),
-    });
-
-    if (!session) {
-      throw new NotFoundException("Session doesn't exist");
-    }
-
-    const seshcards = await this.db.query.sessioncards.findMany({
-      where: eq(sessioncards.sessionId, session.id),
-    });
-
-    const sesh = { ...session, cards: seshcards, pins: null };
-    return {
-      ...set,
-      cards: (await this.db.query.cards.findMany({
-        where: eq(cards.setId, setId),
-      })) as CardResponse[],
-      likes: await this.db.query.setlikes.findMany({
-        where: eq(setlikes.setId, setId),
-      }),
-
-      session: sesh,
-      classrooms: classes,
-    };
-  }
-
-  async getAllClassroomsByUserId(
-    userId: string,
-  ): Promise<ClassroomListResponse> {
-    //user kan ook geen classrooms gejoined zijn
-    const classroomUsers: ClassroomUserResponse[] =
-      await this.db.query.classroomusers.findMany({
-        where: eq(classroomusers.userId, userId),
-      });
-
-    const classIds: string[] = classroomUsers.map(
-      (u: ClassroomUserResponse) => u.classroomId,
-    );
-
-    const Clsrms: ClassroomResponse[] = [];
-
-    for (const id of classIds) {
-      const clsrm = await this.db.query.classrooms.findFirst({
-        where: eq(classrooms.id, id),
-      });
-
-      if (clsrm) {
-        Clsrms.push(clsrm);
-      }
-    }
-    return {
-      classrooms: Clsrms,
-    };
-  }
-
-  async getClassroomByUserId(
-    userId: string,
-    classroomId: string,
-  ): Promise<FullClassroomResponse> {
-    const userconfirm = await this.db.query.classroomusers.findFirst({
-      where: and(
-        eq(classroomusers.userId, userId),
-        eq(classroomusers.classroomId, classroomId),
-      ),
-    });
-
-    const css = new ClassroomService(this.db);
-    const room = await css.getById(classroomId);
-    if (!userconfirm) {
-      throw new BadRequestException('User is not a member of this classroom');
-    }
-
-    return room;
-  }
-
   async updateById(
     userId: string,
     body: UpdateUser,
@@ -470,33 +354,11 @@ export class UserService {
     await this.db.delete(users).where(eq(users.id, userId));
   }
 
-  //TODO
-  uploadProfilePicture(_user_id: string, _body: unknown) {
-    throw new Error('not yet implemented');
-  }
-
-  async headerInfo(userId: string): Promise<HeaderResponse> {
-    const usr = await this.db.query.users.findFirst({
-      where: eq(users.id, userId),
-    });
-
-    if (!usr) {
-      throw new NotFoundException('User not found');
-    }
-    return {
-      displayName: usr.displayName,
-      email: usr.email,
-      streakCount: usr.streakCount,
-      pfp: usr.imgUrl,
-    };
-  }
-
   async startPagina(userId: string): Promise<StartPagina> {
     return {
       lastTen: await this.getLastTen(userId),
       class: await this.getClassmateActivity(userId),
       stats: await this.getTotalStats(userId),
-      boards: await this.getBoards(userId),
     };
   }
 
@@ -544,57 +406,5 @@ export class UserService {
     }
 
     return userArray;
-  }
-  async getBoards(userId: string): Promise<Boards[]> {
-    const owner = await this.db.query.users.findFirst({
-      where: eq(users.id, userId),
-    });
-    if (!owner) {
-      throw new NotFoundException('owner not found');
-    }
-
-    const stats = await this.db
-      .select({
-        boardId: flowboards.id,
-        totalLength: sql<number>`count(${flowrows.id})`.mapWith(Number),
-        done: sql<number>`count(*) filter (where ${flowrows.status} = 'done')`.mapWith(
-          Number,
-        ),
-        inProgress:
-          sql<number>`count(*) filter (where ${flowrows.status} = 'doing')`.mapWith(
-            Number,
-          ),
-      })
-      .from(flowboards)
-      .leftJoin(flowcourses, eq(flowcourses.boardId, flowboards.id))
-      .leftJoin(flowrows, eq(flowrows.flowcourseId, flowcourses.id))
-      .where(eq(flowboards.ownerId, userId))
-      .groupBy(flowboards.id);
-
-    const boards = await this.db.query.flowboards.findMany({
-      where: eq(flowboards.ownerId, userId),
-    });
-
-    const statsByBoard = new Map(stats.map((s) => [s.boardId, s]));
-
-    return boards.map((board) => {
-      const s = statsByBoard.get(board.id);
-      return {
-        id: board.id,
-        ownerId: board.ownerId,
-        ownerName: owner.displayName,
-        ownerPfp: owner.imgUrl,
-        title: board.title,
-        icon: board.icon,
-        year: board.year,
-        semester: board.semester,
-        school: board.schoolName,
-        schoolId: board.schoolId,
-        totalDone: s?.done ?? 0,
-        totalInProgress: s?.inProgress ?? 0,
-        totalLength: s?.totalLength ?? 0,
-        courses: boards.length,
-      };
-    });
   }
 }

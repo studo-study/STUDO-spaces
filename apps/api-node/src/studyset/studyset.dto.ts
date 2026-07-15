@@ -3,7 +3,7 @@ import { VisualsetResponseDto } from '../visualset/visualset.dto';
 
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { ClassroomResponseDto } from '../classroom/classroom.dto';
-import { IsString } from 'nestjs-swagger-dto';
+import { IsBoolean, IsString } from 'nestjs-swagger-dto';
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
@@ -12,7 +12,6 @@ import {
   ArrayMaxSize,
   ArrayMinSize,
   IsArray,
-  IsBoolean,
   IsOptional,
   ValidateNested,
   IsString as IsStringValidator,
@@ -39,15 +38,6 @@ export class CreateStudysetDto {
   })
   @IsString({ name: 'global_definition_language', maxLength: 2 })
   globalDefinitionLanguage: string;
-
-  @ApiProperty({
-    example: 'abc-123',
-    description: 'Optional flowcourse ID to link this set to',
-    required: false,
-  })
-  @IsStringValidator()
-  @IsOptional()
-  flowcourseId?: string;
 
   @IsArray()
   @ValidateNested({ each: true })
@@ -90,8 +80,7 @@ export class UpdateStudysetDto {
     description: 'Whether the studoset is public or private',
     required: false,
   })
-  @IsBoolean()
-  @IsOptional()
+  @IsBoolean({ name: 'public_set', optional: true })
   publicSet?: boolean;
 
   @ApiProperty({
@@ -201,10 +190,6 @@ export class StudysetResponseDto {
   @ApiProperty({ example: 75, required: false })
   @Expose()
   progress?: number;
-
-  @ApiProperty({ example: 'blue:bookopen', required: false })
-  @Expose()
-  flowcourseIcon?: string;
 }
 
 export class fullSetResponseDto extends StudysetResponseDto {

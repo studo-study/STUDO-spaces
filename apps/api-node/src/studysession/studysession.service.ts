@@ -25,22 +25,36 @@ export class StudysessionService {
     private readonly db: DatabaseProvider,
   ) {}
 
+  /** Load the pins and cards belonging to a session. */
+  private async loadSessionChildren(sessionId: string) {
+    const [pins, cards] = await Promise.all([
+      this.db.query.sessionpins.findMany({
+        where: eq(sessionpins.sessionId, sessionId),
+      }),
+      this.db.query.sessioncards.findMany({
+        where: eq(sessioncards.sessionId, sessionId),
+      }),
+    ]);
+    return { pins, cards };
+  }
+
+  /** Accumulated total view count once the current session views are folded in. */
+  private accumulateViewcount(
+    viewcount: number | null | undefined,
+    totalViewcount: number | null | undefined,
+  ): number | undefined {
+    if (viewcount && totalViewcount) {
+      return totalViewcount + viewcount;
+    }
+    return undefined;
+  }
+
   async getAll(): Promise<StudysessionListResponseDto> {
     const sessions = await this.db.query.studysessions.findMany();
     const seshes = [];
     for (const session of sessions) {
-      const pins = await this.db.query.sessionpins.findMany({
-        where: eq(sessionpins.sessionId, session.id),
-      });
-
-      const cards = await this.db.query.sessioncards.findMany({
-        where: eq(sessioncards.sessionId, session.id),
-      });
-      seshes.push({
-        ...session,
-        cards: cards,
-        pins: pins,
-      });
+      const { pins, cards } = await this.loadSessionChildren(session.id);
+      seshes.push({ ...session, cards, pins });
     }
     return { sessions: seshes };
   }
@@ -60,15 +74,8 @@ export class StudysessionService {
       throw new NotFoundException("Session doesn't exist");
     }
 
-    const pins = await this.db.query.sessionpins.findMany({
-      where: eq(sessionpins.sessionId, sessionId),
-    });
-
-    const cards = await this.db.query.sessioncards.findMany({
-      where: eq(sessioncards.sessionId, sessionId),
-    });
-
-    return { ...session, pins: pins, cards: cards };
+    const { pins, cards } = await this.loadSessionChildren(sessionId);
+    return { ...session, pins, cards };
   }
 
   async updateById(
@@ -101,10 +108,10 @@ export class StudysessionService {
 
     if (body.cards) {
       for (const card of body.cards) {
-        let totalviewcount;
-        if (card.cardViewcount && card.cardTotalViewcount) {
-          totalviewcount = card.cardTotalViewcount + card.cardViewcount;
-        }
+        const totalviewcount = this.accumulateViewcount(
+          card.cardViewcount,
+          card.cardTotalViewcount,
+        );
         const updateCard = await this.db
           .update(sessioncards)
           .set({
@@ -170,7 +177,6 @@ export class StudysessionService {
     userId: string,
     sessionId: string,
   ): Promise<StudysessionResponseDto> {
-    // const studysessie = this.getById(userId, sessionId);
     const pins: SessionPinResponseDTO[] =
       await this.db.query.sessionpins.findMany({
         where: eq(sessionpins.sessionId, sessionId),
@@ -182,10 +188,10 @@ export class StudysessionService {
 
     if (cards) {
       for (const card of cards) {
-        let totalviewcount;
-        if (card.cardViewcount && card.cardTotalViewcount) {
-          totalviewcount = card.cardTotalViewcount + card.cardViewcount;
-        }
+        const totalviewcount = this.accumulateViewcount(
+          card.cardViewcount,
+          card.cardTotalViewcount,
+        );
         const updateCard = await this.db
           .update(sessioncards)
           .set({

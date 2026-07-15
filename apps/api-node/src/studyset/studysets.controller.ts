@@ -85,25 +85,6 @@ export class StudysetsController {
     return this.studysetService.getAllByUser(req.user.id);
   }
 
-  //GET specfieke studosets's session ----------------------------------------
-
-  @ApiOperation({ summary: 'Haal studysession op van een studoset.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiResponse({
-    status: 200,
-    description: 'Studysessions gevonden',
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get(':set_id/studysession')
-  async getStudysessionBySetId(
-    @Request() req: AuthenticatedRequest,
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-  ) {
-    const user_id = req.user.id;
-    return this.studysetService.getBySetId(user_id, set_id);
-  }
-
   // SUGGEST image ---------------------------------------------------------
   @ApiOperation({ summary: 'Suggereer afbeeldingen bij een term (Pexels).' })
   @ApiResponse({ status: 200, type: SuggestionImagesResponse })
@@ -210,28 +191,6 @@ export class StudysetsController {
   ): Promise<SetLikeResponseDto> {
     const user_id = req.user.id;
     return this.studysetService.likeSet(user_id, set_id);
-  }
-
-  // POST studysessie ----------------------------------------------------------
-
-  @ApiOperation({
-    summary: 'Start een nieuwe studysession voor deze studoset.',
-  })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiResponse({
-    status: 201,
-    description: 'Studysession aangemaakt',
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Post(':set_id/studysession')
-  @HttpCode(HttpStatus.CREATED)
-  async createSession(
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Request() req: AuthenticatedRequest,
-  ) {
-    const user_id = req.user.id;
-    return this.studysetService.createSession(user_id, set_id);
   }
 
   // PUT studoset -----------------------------------------------------------

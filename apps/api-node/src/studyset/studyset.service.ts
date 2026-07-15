@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import type { Redis } from 'ioredis';
 import { REDIS_CLIENT } from '../redis/redis.provider';
-import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 import {
   CreateStudysetDto,
   fullSetResponseDto,
@@ -26,12 +25,9 @@ import {
 } from '../drizzle/drizzle.provider';
 import {
   cards,
-  classroomactivities,
   classrooms,
   classroomsets,
   classroomusers,
-  flowcourse_sets,
-  flowcourses,
   pins,
   sessioncards,
   setlikes,
@@ -48,6 +44,7 @@ import {
   SuggestionImagesResponse,
   TermSuggestionDTO,
 } from './image.dto';
+import { buildNewSession, deleteSetReferences } from '../lib/set-helpers';
 
 @Injectable()
 export class StudysetService {
@@ -67,7 +64,6 @@ export class StudysetService {
     data: CreateStudysetDto,
   ): Promise<StudysetResponseDto> {
     const date = new Date();
-    const setId = uuidv4();
     const name = await this.db.query.users.findFirst({
       where: eq(users.id, userId),
     });
@@ -75,8 +71,7 @@ export class StudysetService {
       throw new NotFoundException('no user with this id exists');
     }
 
-    const set = {
-      id: setId,
+    const setValues = {
       title: data.title,
       globalTermLanguage: data.globalTermLanguage,
       globalDefinitionLanguage: data.globalDefinitionLanguage,
@@ -89,51 +84,33 @@ export class StudysetService {
       studoset: false,
     };
 
-    //sessie creeeren
-    const session = {
-      id: uuidv4(),
-      startedAt: date.toISOString(),
-      durationMin: 0,
-      secondLastLogin: 'unknown',
-      lastLogin: 'unknown',
-      endedAt: 'unknown',
-      index: 0,
-      accuracy: 100,
-      averageResponseTime: 0,
-      longestFocusStreak: 0,
-      deviceType: 'unknown',
-      lastSeen: date.toISOString(),
-      lastStudied: date.toISOString(),
-      userId: userId,
-      setId: setId,
+    const [set] = await this.db.insert(studysets).values(setValues).returning();
+    const setId = set.id;
+
+    // sessie creeeren
+    const session = buildNewSession({
+      userId,
+      setId,
       setType: 'studyset',
-    };
+      now: date,
+    });
 
     //kaarten creeeren
-    const CARDS: CardResponseDto[] = [];
-    data.cardlist.forEach((c: CreateCardDto) => {
-      const card = {
-        id: uuidv6(),
+    const CARDS: (typeof cards.$inferInsert)[] = data.cardlist.map(
+      (c: CreateCardDto) => ({
         term: c.term,
         definition: c.definition,
         suggestionImageId: c.suggestionImageId ?? null,
         number: c.number,
         createdAt: date.toISOString(),
         updatedAt: '',
-        cardViewcount: 0,
-        cardTotalViewcount: 0,
-        inQueue: false,
-        mastered: false,
-        timesRelearned: 0,
         setId: setId,
         ownerId: userId,
         termContentType: c.termContentType ?? 'text',
         codeLanguage: c.codeLanguage ?? 'typescript',
-      };
-      CARDS.push(card);
-    });
+      }),
+    );
 
-    await this.db.insert(studysets).values(set);
     await this.db.insert(studysessions).values(session);
 
     await this.db
@@ -145,13 +122,6 @@ export class StudysetService {
       .where(eq(users.id, userId));
     if (CARDS.length > 0) {
       await this.db.insert(cards).values(CARDS);
-    }
-    if (data.flowcourseId) {
-      await this.db.insert(flowcourse_sets).values({
-        id: uuidv4(),
-        setId: setId,
-        courseId: data.flowcourseId,
-      });
     }
     await this.invalidateSyncCache(userId);
     return set;
@@ -171,26 +141,21 @@ export class StudysetService {
     if (set.userId !== userId)
       throw new ForbiddenException('You do not own this studoset');
 
-    const card = {
-      id: uuidv6(),
-      term: data.term,
-      definition: data.definition,
-      suggestionImageId: data.suggestionImageId ?? null,
-      number: data.number,
-      createdAt: date.toISOString(),
-      updatedAt: date.toISOString(),
-      cardViewcount: 0,
-      cardTotalViewcount: 0,
-      inQueue: false,
-      mastered: false,
-      timesRelearned: 0,
-      setId,
-      ownerId: userId,
-      termContentType: data.termContentType ?? 'text',
-      codeLanguage: data.codeLanguage ?? 'typescript',
-    };
-
-    await this.db.insert(cards).values(card);
+    const [card] = await this.db
+      .insert(cards)
+      .values({
+        term: data.term,
+        definition: data.definition,
+        suggestionImageId: data.suggestionImageId ?? null,
+        number: data.number,
+        createdAt: date.toISOString(),
+        updatedAt: date.toISOString(),
+        setId,
+        ownerId: userId,
+        termContentType: data.termContentType ?? 'text',
+        codeLanguage: data.codeLanguage ?? 'typescript',
+      })
+      .returning();
 
     return {
       id: card.id,
@@ -201,7 +166,7 @@ export class StudysetService {
       updatedAt: card.updatedAt,
       setId: card.setId,
       ownerId: card.ownerId,
-      termContentType: card.termContentType,
+      termContentType: card.termContentType as 'text' | 'latex' | 'code',
       codeLanguage: card.codeLanguage,
     };
   }
@@ -293,29 +258,12 @@ export class StudysetService {
         ),
     ]);
 
-    const flowcourseLinks =
-      allSetIds.length > 0
-        ? await this.db
-            .select({
-              setId: flowcourse_sets.setId,
-              icon: flowcourses.icon,
-            })
-            .from(flowcourse_sets)
-            .innerJoin(
-              flowcourses,
-              eq(flowcourse_sets.courseId, flowcourses.id),
-            )
-            .where(inArray(flowcourse_sets.setId, allSetIds))
-        : [];
-
     const sets = allSets.map((set) => ({
       ...set,
       cardCount: cardCounts.find((c) => c.setId === set.id)?.count ?? 0,
       lastStudied:
         allSessions.find((s) => s.setId === set.id)?.lastStudied ?? null,
       progress: allSessions.find((s) => s.setId === set.id)?.accuracy ?? 0,
-      flowcourseIcon:
-        flowcourseLinks.find((f) => f.setId === set.id)?.icon ?? undefined,
     }));
 
     // --- Visualsets ---
@@ -524,7 +472,6 @@ export class StudysetService {
 
       await this.db.insert(cards).values(
         body.cardlist.map((card) => ({
-          id: uuidv6(),
           term: card.term,
           definition: card.definition,
           suggestionImageId: card.suggestionImageId ?? null,
@@ -605,38 +552,7 @@ export class StudysetService {
     }
 
     await this.db.transaction(async (tx) => {
-      await tx
-        .delete(studysessions)
-        .where(
-          and(
-            eq(studysessions.setId, setId),
-            eq(studysessions.setType, 'studyset'),
-          ),
-        );
-
-      await tx
-        .delete(setlikes)
-        .where(
-          and(eq(setlikes.setId, setId), eq(setlikes.setType, 'studyset')),
-        );
-
-      await tx
-        .delete(classroomsets)
-        .where(
-          and(
-            eq(classroomsets.setId, setId),
-            eq(classroomsets.setType, 'studyset'),
-          ),
-        );
-
-      await tx
-        .delete(classroomactivities)
-        .where(
-          and(
-            eq(classroomactivities.setId, setId),
-            eq(classroomactivities.setType, 'studyset'),
-          ),
-        );
+      await deleteSetReferences(tx, setId, 'studyset');
 
       const result = await tx
         .delete(studysets)
@@ -656,15 +572,15 @@ export class StudysetService {
     }
 
     const date = new Date();
-    const like = {
-      id: uuidv4(),
-      setId: setId,
-      setType: 'studyset',
-      userId: userId,
-      createdAt: date.toISOString(),
-    };
-
-    await this.db.insert(setlikes).values(like);
+    const [like] = await this.db
+      .insert(setlikes)
+      .values({
+        setId: setId,
+        setType: 'studyset',
+        userId: userId,
+        createdAt: date.toISOString(),
+      })
+      .returning();
 
     return like;
   }
@@ -699,36 +615,17 @@ export class StudysetService {
       throw new NotFoundException('Studyset not found');
     }
 
-    const date = new Date();
-    const ssid = uuidv4();
-
-    const session = {
-      id: ssid,
-      startedAt: date.toISOString(),
-      durationMin: 0,
-      secondLastLogin: 'unknown',
-      lastLogin: 'unknown',
-      endedAt: 'unknown',
-      index: 0,
-      accuracy: 100,
-      averageResponseTime: 0,
-      longestFocusStreak: 0,
-      deviceType: 'unknown',
-      lastSeen: date.toISOString(),
-      lastStudied: date.toISOString(),
-      userId,
-      setId,
-      setType: 'studyset',
-    };
-
-    await this.db.insert(studysessions).values(session);
+    const [session] = await this.db
+      .insert(studysessions)
+      .values(buildNewSession({ userId, setId, setType: 'studyset' }))
+      .returning();
+    const ssid = session.id;
 
     const kaartjes = await this.db.query.cards.findMany({
       where: eq(cards.setId, setId),
     });
 
-    const seshcards = kaartjes.map((kaart) => ({
-      id: uuidv4(),
+    const cardValues = kaartjes.map((kaart) => ({
       number: kaart.number,
       cardViewcount: 0,
       cardTotalViewcount: 0,
@@ -740,9 +637,10 @@ export class StudysetService {
       ownerId: userId,
     }));
 
-    if (seshcards.length > 0) {
-      await this.db.insert(sessioncards).values(seshcards);
-    }
+    const seshcards =
+      cardValues.length > 0
+        ? await this.db.insert(sessioncards).values(cardValues).returning()
+        : [];
 
     return { ...session, cards: seshcards, pins: null };
   }
@@ -776,15 +674,16 @@ export class StudysetService {
         });
         if (existing) return existing;
 
-        const newImage = {
-          id: uuidv4(),
-          pexelsId: String(p.id),
-          displayUrl: p.src.large,
-          photographer: p.photographer,
-          sourcePageUrl: p.url,
-          source: 'pexels',
-        };
-        await this.db.insert(suggestion_images).values(newImage);
+        const [newImage] = await this.db
+          .insert(suggestion_images)
+          .values({
+            pexelsId: String(p.id),
+            displayUrl: p.src.large,
+            photographer: p.photographer,
+            sourcePageUrl: p.url,
+            source: 'pexels',
+          })
+          .returning();
         return newImage;
       }),
     );

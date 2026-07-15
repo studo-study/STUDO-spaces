@@ -183,8 +183,8 @@ export class AdminService {
               type: 'studyset' as const,
               title: s.title,
               displayName: s.displayName,
-              imgUrl: s.img_url,
-              userId: s.user_id,
+              imgUrl: s.imgUrl,
+              userId: s.userId,
             };
         }
         if (row.visualsetId) {
@@ -196,8 +196,8 @@ export class AdminService {
               type: 'visualset' as const,
               title: v.title,
               displayName: v.displayName,
-              imgUrl: v.img_url,
-              userId: v.user_id,
+              imgUrl: v.imgUrl,
+              userId: v.userId,
             };
         }
         return null;
@@ -217,7 +217,7 @@ export class AdminService {
         joinDate: u.joinDate.toISOString(),
       })),
       recentActivity,
-      popularSets: popularSets.filter(Boolean),
+      popularSets,
     };
   }
 

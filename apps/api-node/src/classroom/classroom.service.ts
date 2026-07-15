@@ -4,7 +4,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
 
 import {
   ClassroomListResponseDto,
@@ -45,33 +44,82 @@ export class ClassroomService {
     private readonly db: DatabaseProvider,
   ) {}
 
+  // --- Helpers -----------------------------------------------------
+
+  /** Fetch a classroom or throw if it doesn't exist. */
+  private async findClassroomOrThrow(classroomId: string) {
+    const classroom = await this.db.query.classrooms.findFirst({
+      where: eq(classrooms.id, classroomId),
+    });
+
+    if (!classroom) {
+      throw new NotFoundException('No classroom with this id exists');
+    }
+
+    return classroom;
+  }
+
+  /** Fetch a classroom and assert the given user owns it. */
+  private async findOwnedClassroomOrThrow(classroomId: string, userId: string) {
+    const classroom = await this.findClassroomOrThrow(classroomId);
+
+    if (classroom.ownerId !== userId) {
+      throw new ForbiddenException('You do not own this classroom');
+    }
+
+    return classroom;
+  }
+
+  /** Resolve a set id to a studyset/visualset, throwing if neither exists. */
+  private async resolveSet(setId: string): Promise<{
+    set: typeof studysets.$inferSelect | typeof visualsets.$inferSelect;
+    type: 'studyset' | 'visualset';
+  }> {
+    const studyset = await this.db.query.studysets.findFirst({
+      where: eq(studysets.id, setId),
+    });
+    if (studyset) {
+      return { set: studyset, type: 'studyset' };
+    }
+
+    const visualset = await this.db.query.visualsets.findFirst({
+      where: eq(visualsets.id, setId),
+    });
+    if (visualset) {
+      return { set: visualset, type: 'visualset' };
+    }
+
+    throw new NotFoundException(`Set doesn't exist`);
+  }
+
+  // --- CRUD --------------------------------------------------------
+
   async create(
     userId: string,
     classroom: CreateClassroomDto,
   ): Promise<ClassroomResponseDto> {
-    const uid = uuidv4();
     const date = new Date();
 
-    const Class: ClassroomResponseDto = {
-      id: uid,
-      name: classroom.name,
-      ownerId: userId,
-      type: classroom.type,
-      createdAt: date.toISOString(),
-      verified: false,
-      school: classroom.school,
-    };
+    const [Class] = await this.db
+      .insert(classrooms)
+      .values({
+        name: classroom.name,
+        ownerId: userId,
+        type: classroom.type,
+        createdAt: date.toISOString(),
+        verified: false,
+        school: classroom.school,
+      })
+      .returning();
 
-    const owner: ClassroomUserResponseDto = {
+    await this.db.insert(classroomusers).values({
       userId: userId,
-      classroomId: uid,
+      classroomId: Class.id,
       role: 'owner',
       joinedAt: date.toISOString(),
       position: 0,
-    };
+    });
 
-    await this.db.insert(classrooms).values(Class);
-    await this.db.insert(classroomusers).values(owner);
     return Class;
   }
 
@@ -80,24 +128,7 @@ export class ClassroomService {
     setId: string,
     userId: string,
   ): Promise<ClassroomSetDto> {
-    const studyset = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, setId),
-    });
-    const visualset = await this.db.query.visualsets.findFirst({
-      where: eq(visualsets.id, setId),
-    });
-
-    let set;
-    let type;
-    if (studyset) {
-      set = studyset;
-      type = 'studyset';
-    } else if (visualset) {
-      set = visualset;
-      type = 'visualset';
-    } else {
-      throw new NotFoundException(`"studoset·doesn't·exist"`);
-    }
+    const { set, type } = await this.resolveSet(setId);
 
     const cset: ClassroomSetDto = {
       setId: set.id,
@@ -130,12 +161,7 @@ export class ClassroomService {
     activityDto: CreateClassroomActivityDto,
   ): Promise<ClassActivitiesDto> {
     // Classroom check
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, classroomId),
-    });
-    if (!classroom) {
-      throw new NotFoundException(`Classroom doesn't exist`);
-    }
+    await this.findClassroomOrThrow(classroomId);
 
     // Check of user al activity heeft en verwijder die
     const oldActivity = await this.db.query.classroomactivities.findFirst({
@@ -165,44 +191,23 @@ export class ClassroomService {
       throw new NotFoundException(`User profile doesn't exist`);
     }
 
-    let set_type: string;
-    let set: any;
+    const { set, type: set_type } = await this.resolveSet(activityDto.setId);
 
-    const studyset = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, activityDto.setId),
-    });
+    // Nieuwe activiteit genereren en returnen
+    const [newActivity] = await this.db
+      .insert(classroomactivities)
+      .values({
+        classroomId: classroomId,
+        userId: userId,
+        displayName: user.displayName,
+        imgUrl: user.imgUrl,
+        setId: activityDto.setId,
+        setType: set_type,
+        title: set.title,
+        lastSeen: date.toISOString(),
+      })
+      .returning();
 
-    if (studyset) {
-      set_type = 'studyset';
-      set = studyset;
-    } else {
-      const visualset = await this.db.query.visualsets.findFirst({
-        where: eq(visualsets.id, activityDto.setId),
-      });
-
-      if (!visualset) {
-        throw new NotFoundException(`Set doesn't exist`);
-      }
-
-      set_type = 'visualset';
-      set = visualset;
-    }
-
-    // Nieuwe activiteit genereren
-    const newActivity: ClassActivitiesDto = {
-      id: uuidv4(),
-      classroomId: classroomId,
-      userId: userId,
-      displayName: user.displayName,
-      imgUrl: user.imgUrl,
-      setId: activityDto.setId,
-      setType: set_type,
-      title: set.title,
-      lastSeen: date.toISOString(),
-    };
-
-    // Inserten en returnen
-    await this.db.insert(classroomactivities).values(newActivity);
     return newActivity;
   }
   async remove(
@@ -210,17 +215,7 @@ export class ClassroomService {
     set: string,
     userId: string,
   ): Promise<void> {
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, classroomId),
-    });
-
-    if (!classroom) {
-      throw new NotFoundException('No classroom with this id exists');
-    }
-
-    if (classroom.ownerId !== userId) {
-      throw new ForbiddenException('You do not own this classroom');
-    }
+    await this.findOwnedClassroomOrThrow(classroomId, userId);
 
     const result = await this.db
       .delete(classroomsets)
@@ -328,13 +323,8 @@ export class ClassroomService {
   }
 
   async getById(id: string): Promise<FullClassroomResponseDto> {
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, id),
-    });
+    const classroom = await this.findClassroomOrThrow(id);
 
-    if (!classroom) {
-      throw new Error(`Classroom doesn't exist`);
-    }
     return {
       id: classroom.id,
       name: classroom.name,
@@ -439,31 +429,11 @@ export class ClassroomService {
   }
 
   async getActivity(id: string): Promise<ClassActivitiesDto[]> {
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, id),
-    });
-    if (!classroom) {
-      throw new NotFoundException(`Classroom doesn't exist`);
-    }
+    await this.findClassroomOrThrow(id);
 
     return this.db.query.classroomactivities.findMany({
       where: eq(classroomactivities.classroomId, id),
     });
-  }
-
-  async promoteUser(classroomId: string, userId: string) {
-    const promotedUser = await this.db
-      .update(classroomusers)
-      .set({ role: 'owner' })
-      .where(
-        and(
-          eq(classroomusers.classroomId, classroomId),
-          eq(classroomusers.userId, userId),
-        ),
-      );
-
-    await this.updateById(classroomId, { owner: userId });
-    return promotedUser;
   }
 
   async updateById(id: string, body: UpdateClassroomDto): Promise<void> {
@@ -479,22 +449,12 @@ export class ClassroomService {
       .returning();
 
     if (updated.length === 0) {
-      throw new NotFoundException('Visualset not found');
+      throw new NotFoundException('No classroom with this id exists');
     }
   }
 
   async deleteById(id: string, userId: string) {
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, id),
-    });
-
-    if (!classroom) {
-      throw new NotFoundException('No classroom with this id exists');
-    }
-
-    if (classroom.ownerId !== userId) {
-      throw new ForbiddenException('You do not own this classroom');
-    }
+    await this.findOwnedClassroomOrThrow(id, userId);
 
     await this.db.delete(classrooms).where(eq(classrooms.id, id));
   }

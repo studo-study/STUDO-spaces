@@ -9,15 +9,22 @@ import {
   jsonb,
   timestamp,
   text,
-  pgEnum,
   primaryKey,
+  uuid,
+  date,
 } from 'drizzle-orm/pg-core';
-import { relations, sql } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
+import {
+  courseDocumentStatusEnum,
+  courseRolesEnum,
+  setTypeEnum,
+  widgetTypeEnum,
+} from './enums';
 
 export const users = pgTable(
   'users',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     email: varchar('email', { length: 255 }).notNull(),
     passwordHash: varchar('password_hash', { length: 255 }).notNull(),
     displayName: varchar('displayname', { length: 100 }).notNull(),
@@ -40,7 +47,7 @@ export const users = pgTable(
 export const profiles = pgTable(
   'profiles',
   {
-    userId: varchar('user_id', { length: 64 })
+    userId: uuid('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull()
       .primaryKey(),
@@ -67,7 +74,7 @@ export const profiles = pgTable(
 export const studoprofiles = pgTable(
   'studoprofiles',
   {
-    id: varchar('user_id', { length: 64 })
+    id: uuid('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull()
       .primaryKey(),
@@ -90,8 +97,8 @@ export const studoprofiles = pgTable(
 export const studotracks = pgTable(
   'studotracks',
   {
-    id: varchar('id', { length: 64 }).notNull().primaryKey(),
-    studoprofileId: varchar('studoprofile_id', { length: 64 })
+    id: uuid('id').primaryKey().defaultRandom().notNull(),
+    studoprofileId: uuid('studoprofile_id')
       .references(() => studoprofiles.id, { onDelete: 'cascade' })
       .notNull(),
     trackName: varchar('displayname', { length: 100 }).notNull(),
@@ -112,7 +119,7 @@ export const studotracks = pgTable(
 export const studysets = pgTable(
   'studysets',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     title: varchar('title', { length: 200 }).notNull(),
     studoset: boolean(`studoset`).notNull(),
     globalTermLanguage: varchar('global_term_language', {
@@ -126,7 +133,7 @@ export const studysets = pgTable(
     publicSet: boolean('publicSet').notNull(),
     displayName: varchar('displayname', { length: 100 }).notNull(),
     imgUrl: varchar('img_url', { length: 250 }).notNull(),
-    userId: varchar('user_id', { length: 64 })
+    userId: uuid('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
@@ -144,13 +151,13 @@ export const studysets = pgTable(
 export const visualsets = pgTable(
   'visualsets',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     title: varchar('title', { length: 200 }).notNull(),
     studoset: boolean(`studoset`).notNull(),
     createdAt: varchar('created_at', { length: 24 }).notNull(),
     lastUpdated: varchar('last_updated', { length: 24 }).notNull(),
     publicSet: boolean('publicSet').notNull(),
-    userId: varchar('user_id', { length: 64 })
+    userId: uuid('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
     displayName: varchar('displayname', { length: 100 }).notNull(),
@@ -170,14 +177,14 @@ export const visualsets = pgTable(
 export const images = pgTable(
   'images',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     title: varchar('title', { length: 100 }).notNull(),
     index: integer('index').notNull(),
     url: varchar('url', { length: 250 }).notNull(),
     gridX: integer('grid_x').notNull(),
     gridY: integer('grid_y').notNull(),
     scale: varchar('scale', { length: 64 }).notNull(),
-    setId: varchar('set_id', { length: 64 })
+    setId: uuid('set_id')
       .references(() => visualsets.id, { onDelete: 'cascade' })
       .notNull(),
   },
@@ -193,35 +200,35 @@ export const images = pgTable(
 );
 
 export const pins = pgTable('pins', {
-  id: varchar('id', { length: 64 }).primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(),
   definition: varchar('definition', { length: 128 }).notNull(),
   x: integer('x').notNull(),
   y: integer('y').notNull(),
   number: integer('number').notNull(),
   createdAt: varchar('created_at', { length: 24 }).notNull(),
   updatedAt: varchar('updated_at', { length: 24 }).notNull(),
-  imageId: varchar('image_id', { length: 64 })
+  imageId: uuid('image_id')
     .references(() => images.id, { onDelete: 'cascade' })
     .notNull(),
-  setId: varchar('set_id', { length: 64 })
+  setId: uuid('set_id')
     .references(() => visualsets.id, { onDelete: 'cascade' })
     .notNull(),
-  ownerId: varchar('owner_id', { length: 64 })
+  ownerId: uuid('owner_id')
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
 });
 
 export const cards = pgTable('cards', {
-  id: varchar('id', { length: 64 }).primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(),
   term: varchar('term', { length: 512 }).notNull(),
   definition: varchar('definition', { length: 512 }).notNull(),
   number: integer('number').notNull(),
   createdAt: varchar('created_at', { length: 24 }).notNull(),
   updatedAt: varchar('updated_at', { length: 24 }).notNull(),
-  setId: varchar('set_id', { length: 64 })
+  setId: uuid('set_id')
     .references(() => studysets.id, { onDelete: 'cascade' })
     .notNull(),
-  ownerId: varchar('owner_id', { length: 64 })
+  ownerId: uuid('owner_id')
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   termContentType: varchar('term_content_type', { length: 8 })
@@ -230,15 +237,15 @@ export const cards = pgTable('cards', {
   codeLanguage: varchar('code_language', { length: 32 })
     .notNull()
     .default('typescript'),
-  suggestionImageId: varchar('suggestion_image_id', { length: 64 }),
+  suggestionImageId: uuid('suggestion_image_id'),
 });
 
 export const setlikes = pgTable('setlikes', {
-  id: varchar('id', { length: 64 }).primaryKey(),
-  userId: varchar('user_id', { length: 64 })
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id')
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
-  setId: varchar('set_id', { length: 64 }).notNull(),
+  setId: uuid('set_id').notNull(),
   setType: varchar('set_type', { length: 20 }).notNull(),
   createdAt: varchar('created_at', { length: 24 }).notNull(),
 });
@@ -246,11 +253,11 @@ export const setlikes = pgTable('setlikes', {
 export const studysessions = pgTable(
   'studysessions',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
-    userId: varchar('user_id', { length: 64 })
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
-    setId: varchar('set_id', { length: 64 }).notNull(),
+    setId: uuid('set_id').notNull(),
     setType: varchar('set_type', { length: 30 }).notNull(),
     startedAt: varchar('started_at', { length: 24 }).notNull(),
     durationMin: integer('duration_min').notNull(),
@@ -270,20 +277,20 @@ export const studysessions = pgTable(
 export const sessioncards = pgTable(
   'sessioncards',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     number: integer('number').notNull(),
     cardViewcount: integer('card_viewcount').notNull(),
     cardTotalViewcount: integer('card_total_viewcount').notNull(),
     inQueue: boolean('inQueue').notNull(),
     mastered: boolean('mastered').notNull(),
     timesRelearned: integer('times_relearned').notNull(),
-    cardId: varchar('card_id', { length: 64 })
+    cardId: uuid('card_id')
       .references(() => cards.id, { onDelete: 'cascade' })
       .notNull(),
-    sessionId: varchar('session_id', { length: 64 })
+    sessionId: uuid('session_id')
       .references(() => studysessions.id, { onDelete: 'cascade' })
       .notNull(),
-    ownerId: varchar('owner_id', { length: 64 })
+    ownerId: uuid('owner_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
@@ -301,20 +308,20 @@ export const sessioncards = pgTable(
 export const sessionpins = pgTable(
   'sessionpins',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     number: integer('number').notNull(),
     pinViewcount: integer('pin_viewcount').notNull(),
     pinTotalViewcount: integer('pin_total_viewcount').notNull(),
     inQueue: boolean('inQueue').notNull(),
     mastered: boolean('mastered').notNull(),
     timesRelearned: integer('times_relearned').notNull(),
-    pinId: varchar('pin_id', { length: 64 })
+    pinId: uuid('pin_id')
       .references(() => pins.id, { onDelete: 'cascade' }) // ✅ CHANGED: consistent gedrag
       .notNull(),
-    sessionId: varchar('session_id', { length: 64 })
+    sessionId: uuid('session_id')
       .references(() => studysessions.id, { onDelete: 'cascade' })
       .notNull(),
-    ownerId: varchar('owner_id', { length: 64 })
+    ownerId: uuid('owner_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
@@ -332,9 +339,9 @@ export const sessionpins = pgTable(
 export const classrooms = pgTable(
   'classrooms',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     name: varchar('name', { length: 64 }).notNull(),
-    ownerId: varchar('owner_id', { length: 64 })
+    ownerId: uuid('owner_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
     type: varchar('type', { length: 40 }).notNull(),
@@ -356,10 +363,10 @@ export const classrooms = pgTable(
 export const classroomusers = pgTable(
   'classroomusers',
   {
-    userId: varchar('user_id', { length: 64 })
+    userId: uuid('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
-    classroomId: varchar('classroom_id', { length: 64 })
+    classroomId: uuid('classroom_id')
       .references(() => classrooms.id, { onDelete: 'cascade' })
       .notNull(),
     role: varchar('role', { length: 7 }).notNull(),
@@ -377,10 +384,12 @@ export const classroomusers = pgTable(
 export const classroomsets = pgTable(
   'classroomsets',
   {
-    setId: varchar('set_id', { length: 64 }).notNull(),
+    setId: uuid('set_id')
+      .notNull()
+      .references(() => studysets.id),
     setType: varchar('set_type', { length: 20 }).notNull(),
     addedBy: varchar('added_by', { length: 100 }).notNull(),
-    classroomId: varchar('classroom_id', { length: 64 })
+    classroomId: uuid('classroom_id')
       .references(() => classrooms.id, { onDelete: 'cascade' })
       .notNull(),
   },
@@ -390,17 +399,19 @@ export const classroomsets = pgTable(
 );
 
 export const classroomactivities = pgTable('classroomactivity', {
-  id: varchar('id', { length: 64 }).primaryKey(),
-  classroomId: varchar('classroom_id', { length: 64 })
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  classroomId: uuid('classroom_id')
     .references(() => classrooms.id, { onDelete: 'cascade' })
     .notNull(),
-  userId: varchar('user_id', { length: 64 })
+  userId: uuid('user_id')
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   displayName: varchar('displayName', { length: 64 }).notNull(),
   imgUrl: varchar('img_url', { length: 250 }).notNull(),
   lastSeen: varchar('last_seen', { length: 64 }).notNull(),
-  setId: varchar('set_id', { length: 64 }).notNull(),
+  setId: uuid('set_id')
+    .references(() => studysets.id)
+    .notNull(),
   setType: varchar('set_type', { length: 24 }).notNull(),
   title: varchar('title', { length: 64 }).notNull(),
 });
@@ -408,9 +419,9 @@ export const classroomactivities = pgTable('classroomactivity', {
 export const tracksets = pgTable(
   'tracksets',
   {
-    setId: varchar('set_id', { length: 64 }).notNull(),
+    setId: uuid('id').primaryKey().defaultRandom().notNull(),
     setType: varchar('set_type', { length: 20 }).notNull(),
-    trackId: varchar('track_id', { length: 64 })
+    trackId: uuid('track_id')
       .references(() => studotracks.id, { onDelete: 'cascade' })
       .notNull(),
   },
@@ -422,11 +433,11 @@ export const tracksets = pgTable(
 export const studoprofilecommunities = pgTable(
   'studoprofilecommunities',
   {
-    classroomId: varchar('classroom_id', { length: 64 })
+    classroomId: uuid('classroom_id')
       .references(() => classrooms.id, { onDelete: 'cascade' }) // FK naar classrooms
       .notNull(),
     classType: varchar('class_type', { length: 20 }).notNull(),
-    studoprofileId: varchar('studoprofile_id', { length: 64 })
+    studoprofileId: uuid('studoprofile_id')
       .references(() => studoprofiles.id, { onDelete: 'cascade' }) // FK naar studoprofiles
       .notNull(),
   },
@@ -439,179 +450,36 @@ export const studoprofilecommunities = pgTable(
 );
 
 export const popular_sets = pgTable('popular_sets', {
-  id: varchar('id', { length: 64 }).primaryKey().notNull(),
-  studysetId: varchar('studyset_id').references(() => studysets.id),
-  visualsetId: varchar('visualset_id').references(() => visualsets.id),
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  studysetId: uuid('studyset_id').references(() => studysets.id),
+  visualsetId: uuid('visualset_id').references(() => visualsets.id),
   rank: integer('rank').notNull(),
   snapshotId: integer('snapshot_id').notNull(),
 });
 
 export const reports = pgTable('reports', {
-  reportId: varchar('report_id').primaryKey(),
-  filledBy: varchar('filled_by')
+  reportId: uuid('report_id').primaryKey(),
+  filledBy: uuid('filled_by')
     .notNull()
     .references(() => users.id),
   reportType: varchar('report_type', { length: 50 }).notNull(),
   description: text('description'),
-  targetId: varchar('target_id').notNull(),
+  targetId: uuid('target_id').notNull(),
   targetType: varchar('target_type', { length: 20 }).notNull(),
-  reportedUserId: varchar('reported_user_id').references(() => users.id),
+  reportedUserId: uuid('reported_user_id').references(() => users.id),
   status: varchar('status', { length: 20 }).default('to_do').notNull(),
   priority: varchar('priority').default('no_priority').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   resolvedAt: timestamp('resolved_at'),
-  reviewedBy: varchar('reviewed_by').references(() => users.id),
+  reviewedBy: uuid('reviewed_by').references(() => users.id),
   moderatorNote: text('moderator_note'),
-  assigneeId: varchar('assignee_id').references(() => users.id),
+  assigneeId: uuid('assignee_id').references(() => users.id),
   assigneeDisplayName: varchar('assignee_displayName'),
   number: integer('number').notNull(),
 });
 
-export const flowboards = pgTable(
-  'flowboards',
-  {
-    id: varchar('board_id').primaryKey(),
-    ownerId: varchar('owner_id')
-      .references(() => users.id, { onDelete: 'cascade' })
-      .notNull(),
-    title: varchar('title').notNull(),
-    icon: varchar('icon').default('flowboard_icon').notNull(),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at').defaultNow().notNull(),
-    year: varchar('year'),
-    semester: varchar('semester'),
-    schoolName: varchar('school_name'),
-    schoolId: varchar('school_id'),
-  },
-  (table) => [
-    index('flowboards_search_index').using(
-      'gin',
-      sql`to_tsvector
-      ('simple',
-      ${table.id}
-      )`,
-    ),
-    index('flowboard_title_search_index').using(
-      'gin',
-      sql`to_tsvector
-      ('simple',
-      ${table.title}
-      )`,
-    ),
-  ],
-);
-
-export const flowcourses = pgTable(
-  'flowcourses',
-  {
-    id: varchar('flowcourse_id').primaryKey(),
-    boardId: varchar('board_id').references(() => flowboards.id, {
-      onDelete: 'cascade',
-    }),
-    addedBy: varchar('added_by')
-      .references(() => users.id, { onDelete: 'cascade' })
-      .notNull(),
-    title: varchar('title').notNull(),
-    icon: varchar('icon').default('flowcourse_icon').notNull(),
-    description: text('description'),
-    resource: varchar('resource'),
-    examDate: varchar('exam_date'),
-    lessonDays: varchar('lesson_days'),
-  },
-  (table) => [
-    index('flowcourses_search_index').using(
-      'gin',
-      sql`to_tsvector
-      ('simple',
-      ${table.id}
-      )`,
-    ),
-    index('board_id_search_index').using(
-      'gin',
-      sql`to_tsvector
-      ('simple',
-      ${table.boardId}
-      )`,
-    ),
-    index('flow_course_title_search_index').using(
-      'gin',
-      sql`to_tsvector
-      ('simple',
-      ${table.title}
-      )`,
-    ),
-  ],
-);
-
-export const flowcourse_sets = pgTable('flowcourse_sets', {
-  id: varchar('id').primaryKey(),
-  setId: varchar('set_id')
-    .references(() => studysets.id || visualsets.id, { onDelete: 'cascade' })
-    .notNull(),
-  courseId: varchar('course_id')
-    .references(() => flowcourses.id)
-    .notNull(),
-});
-
-export const statusEnum = pgEnum('status', ['not_started', 'doing', 'done']);
-
-export const priorityEnum = pgEnum('priority', [
-  'no_priority',
-  'low',
-  'medium',
-  'high',
-]);
-
-export const rowTypeEnum = pgEnum('rowType', [
-  'lesson',
-  'practice',
-  'study',
-  'exam',
-  'summary',
-  'task',
-]);
-
-export const flowrows = pgTable('flowrows', {
-  id: varchar('flowrow_id').primaryKey(),
-  flowcourseId: varchar('flowcourse_id')
-    .references(() => flowcourses.id, { onDelete: 'cascade' })
-    .notNull(),
-  title: varchar('title').notNull(),
-  orderIndex: integer('order_index'),
-  description: text('description'),
-  type: rowTypeEnum('type').default('task'),
-  priority: priorityEnum('priority').default('no_priority'),
-  status: statusEnum('status').default('not_started').notNull(),
-  estimatedTime: integer('estimated_time'),
-  difficulty: integer('difficulty'),
-  isRequired: boolean('is_required').default(true),
-  dueDate: timestamp('due_date'),
-  studoset: varchar('studoset').references(() => studysets.id),
-  visualset: varchar('visualset').references(() => visualsets.id),
-});
-
-export const resourceTypeEnum = pgEnum('resourceType', [
-  'course',
-  'notes',
-  'summary',
-  'abstract',
-  'sample_exam',
-  'task',
-]);
-
-export const flowresources = pgTable('flowresources', {
-  flowresourceId: varchar('flowresource_id').primaryKey(),
-  rowId: varchar('row_id')
-    .references(() => flowrows.id, { onDelete: 'cascade' })
-    .notNull(),
-  title: varchar('title').notNull(),
-  link: varchar('link').notNull(),
-  linkType: varchar('link_type'),
-  resourceType: resourceTypeEnum('resource_type').default('task'),
-});
-
 export const suggestion_images = pgTable('suggestion_images', {
-  id: varchar('id').primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
   pexelsId: varchar('pexels_id').notNull().unique(),
   displayUrl: varchar('display_url').notNull(),
   source: varchar('source').notNull().default('pexels'),
@@ -622,10 +490,10 @@ export const suggestion_images = pgTable('suggestion_images', {
 export const suggestion_terms_cards = pgTable(
   'suggestion_terms_cards',
   {
-    cardId: varchar('card_id')
+    cardId: uuid('card_id')
       .notNull()
       .references(() => cards.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
-    imageId: varchar('image_id')
+    imageId: uuid('image_id')
       .notNull()
       .references(() => suggestion_images.id, {
         onUpdate: 'cascade',
@@ -640,15 +508,12 @@ export const suggestion_terms_cards = pgTable(
 
 export const chat = pgTable(
   'chat',
+
   {
-    id: varchar('id').notNull().primaryKey(),
-    userId: varchar('user_id')
+    id: uuid('id').primaryKey().defaultRandom().notNull(),
+    userId: uuid('user_id')
       .notNull()
       .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
-    boardId: varchar('board_id').references(() => flowboards.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
     title: varchar('title').notNull(),
     creationDate: varchar('creation_date').notNull(),
     pinned: boolean('pinned').notNull().default(false),
@@ -681,8 +546,8 @@ export const chat = pgTable(
 export const chatMessage = pgTable(
   'chat_message',
   {
-    id: varchar('id').notNull().unique().primaryKey(),
-    chatId: varchar('chat_id')
+    id: uuid('id').primaryKey().defaultRandom().notNull(),
+    chatId: uuid('chat_id')
       .notNull()
       .references(() => chat.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
     svenMessage: boolean('sven_message').notNull(),
@@ -711,23 +576,19 @@ export const chatMessage = pgTable(
 export const chatMessagePayload = pgTable(
   'chat_message_payload',
   {
-    id: varchar('id', { length: 64 }).primaryKey(),
-    messageId: varchar('message_id')
+    id: uuid('id').primaryKey().defaultRandom().notNull(),
+    messageId: uuid('message_id')
       .notNull()
       .references(() => chatMessage.id, {
         onUpdate: 'cascade',
         onDelete: 'cascade',
       }),
     title: varchar('title').notNull().default('payload'),
-    flowcourseId: varchar('flowcourse_id').references(() => flowcourses.id, {
+    studosetId: uuid('studoset_id').references(() => studysets.id, {
       onDelete: 'cascade',
       onUpdate: 'cascade',
     }),
-    studosetId: varchar('studoset_id').references(() => studysets.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
-    cardId: varchar('card_id').references(() => cards.id, {
+    cardId: uuid('card_id').references(() => cards.id, {
       onUpdate: 'cascade',
       onDelete: 'cascade',
     }),
@@ -750,317 +611,189 @@ export const chatMessagePayload = pgTable(
   ],
 );
 
-// ============================================================
-// RELATIONS
-// ============================================================
+export const courses = pgTable('course', {
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  title: varchar('title').notNull(),
+  icon: varchar('icon').notNull().default(''),
+  publicCourse: boolean('public_course').default(false),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+  academyYear: integer('academy_year'),
+  examDate: date('exam_date'),
+  institute: varchar('institute'),
+});
 
-export const usersRelations = relations(users, ({ many, one }) => ({
-  profile: one(profiles, {
-    fields: [users.id],
-    references: [profiles.userId],
-  }),
-  studysets: many(studysets),
-  visualsets: many(visualsets),
-  pins: many(pins),
-  cards: many(cards),
-  setlikes: many(setlikes),
-  studysessions: many(studysessions),
-  classroomusers: many(classroomusers),
-  classroomactivities: many(classroomactivities),
-  sessioncards: many(sessioncards),
-  sessionpins: many(sessionpins),
-  flowboards: many(flowboards),
-  flowcourses: many(flowcourses),
-  reports: many(reports),
-}));
-
-export const profilesRelations = relations(profiles, ({ one }) => ({
-  user: one(users, {
-    fields: [profiles.userId],
-    references: [users.id],
-  }),
-}));
-
-export const studysetsRelations = relations(studysets, ({ one, many }) => ({
-  user: one(users, {
-    fields: [studysets.userId],
-    references: [users.id],
-  }),
-  cards: many(cards),
-}));
-
-export const visualsetsRelations = relations(visualsets, ({ one, many }) => ({
-  user: one(users, {
-    fields: [visualsets.userId],
-    references: [users.id],
-  }),
-  images: many(images),
-  pins: many(pins),
-}));
-
-export const imagesRelations = relations(images, ({ one, many }) => ({
-  visualset: one(visualsets, {
-    fields: [images.setId],
-    references: [visualsets.id],
-  }),
-  pins: many(pins),
-}));
-
-export const pinsRelations = relations(pins, ({ one, many }) => ({
-  image: one(images, {
-    fields: [pins.imageId],
-    references: [images.id],
-  }),
-  visualset: one(visualsets, {
-    fields: [pins.setId],
-    references: [visualsets.id],
-  }),
-  owner: one(users, {
-    fields: [pins.ownerId],
-    references: [users.id],
-  }),
-  sessionpins: many(sessionpins),
-}));
-
-export const cardsRelations = relations(cards, ({ one, many }) => ({
-  studyset: one(studysets, {
-    fields: [cards.setId],
-    references: [studysets.id],
-  }),
-  owner: one(users, {
-    fields: [cards.ownerId],
-    references: [users.id],
-  }),
-  sessioncards: many(sessioncards),
-  suggestionImage: one(suggestion_images, {
-    fields: [cards.suggestionImageId],
-    references: [suggestion_images.id],
-  }),
-  suggestionTermsCards: many(suggestion_terms_cards),
-}));
-
-export const setlikesRelations = relations(setlikes, ({ one }) => ({
-  user: one(users, {
-    fields: [setlikes.userId],
-    references: [users.id],
-  }),
-}));
-
-export const studysessionsRelations = relations(
-  studysessions,
-  ({ one, many }) => ({
-    user: one(users, {
-      fields: [studysessions.userId],
-      references: [users.id],
+export const courseUsers = pgTable(
+  'course_users',
+  {
+    userId: uuid('user_id').references(() => users.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
     }),
-    sessioncards: many(sessioncards),
-    sessionpins: many(sessionpins),
+    courseId: uuid('course_id').references(() => courses.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    }),
+    role: courseRolesEnum('role').notNull().default('viewer'),
+    createdAt: timestamp('created_at').defaultNow(),
+    updatedAt: timestamp('updated_at').defaultNow(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.courseId] }),
   }),
 );
 
-export const sessioncardsRelations = relations(sessioncards, ({ one }) => ({
-  card: one(cards, {
-    fields: [sessioncards.cardId],
-    references: [cards.id],
-  }),
-  session: one(studysessions, {
-    fields: [sessioncards.sessionId],
-    references: [studysessions.id],
-  }),
-  owner: one(users, {
-    fields: [sessioncards.ownerId],
-    references: [users.id],
-  }),
-}));
-
-export const sessionpinsRelations = relations(sessionpins, ({ one }) => ({
-  pin: one(pins, {
-    fields: [sessionpins.pinId],
-    references: [pins.id],
-  }),
-  session: one(studysessions, {
-    fields: [sessionpins.sessionId],
-    references: [studysessions.id],
-  }),
-  owner: one(users, {
-    fields: [sessionpins.ownerId],
-    references: [users.id],
-  }),
-}));
-
-export const classroomsRelations = relations(classrooms, ({ one, many }) => ({
-  owner: one(users, {
-    fields: [classrooms.ownerId],
-    references: [users.id],
-  }),
-  classroomusers: many(classroomusers),
-  classroomsets: many(classroomsets),
-  classroomactivities: many(classroomactivities),
-  studoprofilecommunities: many(studoprofilecommunities),
-}));
-
-export const classroomusersRelations = relations(classroomusers, ({ one }) => ({
-  user: one(users, {
-    fields: [classroomusers.userId],
-    references: [users.id],
-  }),
-  classroom: one(classrooms, {
-    fields: [classroomusers.classroomId],
-    references: [classrooms.id],
-  }),
-}));
-
-export const classroomsetsRelations = relations(classroomsets, ({ one }) => ({
-  classroom: one(classrooms, {
-    fields: [classroomsets.classroomId],
-    references: [classrooms.id],
-  }),
-}));
-
-export const classroomactivitiesRelations = relations(
-  classroomactivities,
-  ({ one }) => ({
-    user: one(users, {
-      fields: [classroomactivities.userId],
-      references: [users.id],
+export const courseWorkspaces = pgTable(
+  'course_workspaces',
+  {
+    id: uuid('id').primaryKey().defaultRandom().notNull(),
+    courseId: uuid('course_id').references(() => courses.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
     }),
-    classroom: one(classrooms, {
-      fields: [classroomactivities.classroomId],
-      references: [classrooms.id],
+    userId: uuid('user_id').references(() => users.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
     }),
-  }),
+  },
+  (t) => [uniqueIndex('idx_workspace_unique').on(t.courseId, t.userId)],
 );
 
-export const studoprofilesRelations = relations(studoprofiles, ({ many }) => ({
-  tracks: many(studotracks),
-  studoprofilecommunities: many(studoprofilecommunities),
-}));
+export const courseWidgets = pgTable('course_widgets', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  workspaceId: uuid('workspace_id')
+    .references(() => courseWorkspaces.id, { onDelete: 'cascade' })
+    .notNull(),
+  type: widgetTypeEnum('type').notNull(),
+  x: integer('x').notNull().default(0),
+  y: integer('y').notNull().default(0),
+  w: integer('w').notNull().default(1),
+  h: integer('h').notNull().default(1),
+  config: jsonb('config')
+    .notNull()
+    .default(sql`'{}'::jsonb`),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+});
 
-export const studotracksRelations = relations(studotracks, ({ one }) => ({
-  profile: one(studoprofiles, {
-    fields: [studotracks.studoprofileId],
-    references: [studoprofiles.id],
-  }),
-}));
+export const courseDocuments = pgTable('course_documents', {
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  courseId: uuid('course_id')
+    .references(() => courses.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    })
+    .notNull(),
+  uploaderId: uuid('uploader_id')
+    .references(() => users.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    })
+    .notNull(),
+  title: varchar('title').notNull(),
+  author: varchar('author'),
+  publishingDate: date('publishing_date'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+  pageCount: integer('page_count'),
+  wordCount: integer('word_count'),
+  status: courseDocumentStatusEnum('status').default('uploading'),
+});
 
-export const studocommunitiesRelations = relations(
-  studoprofilecommunities,
-  ({ one }) => ({
-    profile: one(studoprofiles, {
-      fields: [studoprofilecommunities.studoprofileId],
-      references: [studoprofiles.id],
-    }),
-    classroom: one(classrooms, {
-      fields: [studoprofilecommunities.classroomId],
-      references: [classrooms.id],
-    }),
-  }),
+export const courseSets = pgTable(
+  'course_sets',
+  {
+    setId: uuid('set_id')
+      .notNull()
+      .references(() => studysets.id, { onDelete: 'cascade' }),
+    setType: setTypeEnum('set_type').notNull(),
+    addedBy: uuid('added_by')
+      .references(() => courseUsers.userId)
+      .notNull(),
+    courseId: uuid('course_id')
+      .references(() => courses.id, { onDelete: 'cascade' })
+      .notNull(),
+    createdAt: timestamp('created_at').defaultNow(),
+    updatedAt: timestamp('updated_at').defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('idx_course_sets_unique').on(table.setId, table.courseId),
+  ],
 );
 
-export const reportsRelations = relations(reports, ({ one }) => ({
-  filledBy: one(users, {
-    fields: [reports.filledBy],
-    references: [users.id],
-  }),
-  reportedUserId: one(users, {
-    fields: [reports.reportedUserId],
-    references: [users.id],
-  }),
-  reviewedBy: one(users, {
-    fields: [reports.reviewedBy],
-    references: [users.id],
-  }),
-  assigneeId: one(users, {
-    fields: [reports.assigneeId],
-    references: [users.id],
-  }),
-  assigneeDisplayName: one(users, {
-    fields: [reports.assigneeDisplayName],
-    references: [users.displayName],
-  }),
-}));
-export const flowboardsRelations = relations(flowboards, ({ one, many }) => ({
-  owner: one(users, { fields: [flowboards.ownerId], references: [users.id] }),
-  courses: many(flowcourses),
-}));
+export const courseTables = pgTable('course_tables', {
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  courseId: uuid('course_id')
+    .references(() => courses.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    })
+    .notNull(),
+  title: varchar('title').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
 
-export const flowcoursesRelations = relations(flowcourses, ({ one, many }) => ({
-  board: one(flowboards, {
-    fields: [flowcourses.boardId],
-    references: [flowboards.id],
-  }),
-  addedBy: one(users, {
-    fields: [flowcourses.addedBy],
-    references: [users.id],
-  }),
-  rows: many(flowrows),
-}));
+export const courseRows = pgTable('course_rows', {
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  tableId: uuid('table_id')
+    .references(() => courseTables.id, {
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
+    })
+    .notNull(),
+  index: integer('index').notNull(),
+  createdBy: uuid('created_by').references(() => courseUsers.userId),
+});
 
-export const flowrowsRelations = relations(flowrows, ({ one, many }) => ({
-  course: one(flowcourses, {
-    fields: [flowrows.flowcourseId],
-    references: [flowcourses.id],
-  }),
-  studyset: one(studysets, {
-    fields: [flowrows.studoset],
-    references: [studysets.id],
-  }),
-  visualset: one(visualsets, {
-    fields: [flowrows.visualset],
-    references: [visualsets.id],
-  }),
-  resources: many(flowresources),
-}));
+export const boards = pgTable('boards', {
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  title: varchar('title').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+  icon: varchar('icon').notNull().default(''),
+  publicBoard: boolean('public_board').default(false),
+  academyYear: integer('academy_year'),
+  examDate: date('exam_date'),
+  institute: varchar('institute'),
+});
 
-export const flowresourcesRelations = relations(flowresources, ({ one }) => ({
-  row: one(flowrows, {
-    fields: [flowresources.rowId],
-    references: [flowrows.id],
-  }),
-}));
-
-export const suggestionImagesRelations = relations(
-  suggestion_images,
-  ({ many }) => ({
-    cards: many(cards),
-    suggestionTermsCards: many(suggestion_terms_cards),
-  }),
+export const boardCourses = pgTable(
+  'board_courses',
+  {
+    boardId: uuid('board_id').references(() => boards.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    }),
+    courseId: uuid('course_id').references(() => courses.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    }),
+  },
+  (table) => [
+    uniqueIndex('idx_board_courses_unique').on(table.boardId, table.courseId),
+  ],
 );
 
-export const chatRelations = relations(chat, ({ one, many }) => ({
-  user: one(users, {
-    fields: [chat.userId],
-    references: [users.id],
-  }),
-  messages: many(chatMessage),
-}));
-
-export const chatMessageRelations = relations(chatMessage, ({ one, many }) => ({
-  chat: one(chat, {
-    fields: [chatMessage.chatId],
-    references: [chat.id],
-  }),
-  payloads: many(chatMessagePayload),
-}));
-
-export const chatMessagePayloadRelations = relations(
-  chatMessagePayload,
-  ({ one }) => ({
-    message: one(chatMessage, {
-      fields: [chatMessagePayload.messageId],
-      references: [chatMessage.id],
+export const boardUsers = pgTable(
+  'board_users',
+  {
+    boardId: uuid('board_id').references(() => boards.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
     }),
-    course: one(flowcourses, {
-      fields: [chatMessagePayload.flowcourseId],
-      references: [flowcourses.id],
+    userId: uuid('user_id').references(() => users.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
     }),
-    studyset: one(studysets, {
-      fields: [chatMessagePayload.studosetId],
-      references: [studysets.id],
-    }),
-    cards: one(cards, {
-      fields: [chatMessagePayload.cardId],
-      references: [cards.id],
-    }),
-  }),
+    role: courseRolesEnum('role').notNull().default('viewer'),
+    createdAt: timestamp('created_at').defaultNow(),
+    updatedAt: timestamp('updated_at').defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('idx_board_users_unique').on(table.boardId, table.userId),
+  ],
 );

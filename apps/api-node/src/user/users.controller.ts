@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseUUIDPipe,
   Post,
   Put,
   UseGuards,
@@ -32,15 +31,8 @@ import {
 } from '@nestjs/swagger';
 import { Request as ExpressRequest } from 'express';
 import {
-  ClassroomListResponseDto,
-  FullClassroomResponseDto,
-} from '../classroom/classroom.dto';
-import {
-  HeaderResposneDto,
   RegisterUserRequestDto,
-  StartPaginaDto,
   SyncResponseDto,
-  TotalStatsDto,
   UpdateUserDTO,
   UserListResponseDto,
   UserResponseDto,
@@ -64,6 +56,16 @@ export class UserController {
     private readonly userService: UserService,
     private readonly authService: AuthService,
   ) {}
+
+  /**
+   * Assert the requester may act on `userId`: admins may act on anyone,
+   * regular users only on themselves. Throws ForbiddenException otherwise.
+   */
+  private assertSelfOrAdmin(req: AuthenticatedRequest, userId: string): void {
+    if (req.user.role !== Role.ADMIN && req.user.id !== userId) {
+      throw new ForbiddenException('You are not allowed to access this user');
+    }
+  }
 
   // REGISTER -------------------------------------------------------
 
@@ -120,115 +122,9 @@ export class UserController {
       throw new NotFoundException('No user with this id exists');
     }
 
-    // Admin can access any user, regular users only their own
-    if (req.user.role !== Role.ADMIN && req.user.id !== user_id) {
-      throw new ForbiddenException('You are not allow to see this');
-    }
+    this.assertSelfOrAdmin(req, user_id);
 
-    // Get user data
     return this.userService.getById(user_id);
-  }
-
-  // GET USER STUDYSETS --------------------------------------------
-
-  @ApiOperation({ summary: 'Haal alle studosets op van een gebruiker.' })
-  @ApiParam({ name: 'user_id', type: String })
-  @ApiResponse({
-    status: 200,
-    description: 'Studysets gevonden',
-    type: UserResponseStatsDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get(':user_id/studosets')
-  async getAllSetsById(
-    @Param('user_id', ParseUserIdPipe) user_id: string,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<types.AllsetsResponse> {
-    if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
-      throw new ForbiddenException('You are not allow to see this');
-    }
-    return this.userService.getAllSetsById(user_id);
-  }
-
-  // GET USER STATS -------------------------------------------------
-
-  @ApiOperation({ summary: 'Haal alle statistieken op van een gebruiker.' })
-  @ApiParam({ name: 'user_id', type: String })
-  @ApiResponse({
-    status: 200,
-    description: 'Statistieken opgehaald',
-    type: TotalStatsDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get(':user_id/sets')
-  async getAllStats(
-    @Param('user_id', ParseUserIdPipe) user_id: string,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<types.TotalStats> {
-    if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
-      throw new ForbiddenException('You are not allow to see this');
-    }
-    return this.userService.getTotalStats(user_id);
-  }
-
-  // GET USER CLASSROOMS -------------------------------------------
-
-  @ApiOperation({ summary: 'Haal alle classrooms op van een gebruiker.' })
-  @ApiParam({ name: 'user_id', type: String })
-  @ApiResponse({
-    status: 200,
-    description: 'Classrooms opgehaald',
-    type: ClassroomListResponseDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get(':user_id/classrooms')
-  async getAllUserClassroomsById(
-    @Param('user_id', ParseUserIdPipe) userId: string,
-  ): Promise<types.ClassroomListResponse> {
-    return this.userService.getAllClassroomsByUserId(userId);
-  }
-
-  @ApiOperation({ summary: 'Haal specifieke classroom op van een gebruiker.' })
-  @ApiParam({ name: 'user_id', type: String })
-  @ApiParam({ name: 'classroom_id', type: 'uuid' })
-  @ApiResponse({
-    status: 200,
-    description: 'Classroom gevonden',
-    type: FullClassroomResponseDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get(':user_id/classrooms/:classroom_id')
-  async getClassroomByUserId(
-    @Param('user_id', ParseUserIdPipe) userId: string,
-    @Param('classroom_id', ParseUUIDPipe) classroom_id: string,
-  ): Promise<types.FullClassroomResponse> {
-    return this.userService.getClassroomByUserId(userId, classroom_id);
-  }
-
-  // START PAGE -----------------------------------------------------
-
-  @ApiOperation({ summary: 'Haal startpagina info op voor een gebruiker.' })
-  @ApiParam({ name: 'user_id', type: String })
-  @ApiResponse({
-    status: 200,
-    description: 'Startpagina data',
-    type: StartPaginaDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER)
-  @Get(':user_id/start')
-  async getStart(
-    @Param('user_id', ParseUserIdPipe) user_id: string,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<types.StartPagina> {
-    if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
-      throw new ForbiddenException('You are not allow to see this');
-    }
-    return this.userService.startPagina(user_id);
   }
 
   // SYNC ------------------------------------------------------------
@@ -249,9 +145,7 @@ export class UserController {
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,
   ): Promise<types.SyncResponse> {
-    if (req.user.id !== user_id && req.user.role !== Role.ADMIN) {
-      throw new ForbiddenException('You are not allow to see this');
-    }
+    this.assertSelfOrAdmin(req, user_id);
     return this.userService.sync(user_id);
   }
 
@@ -273,18 +167,13 @@ export class UserController {
     @Body() body: types.UpdateUser,
     @Request() req: AuthenticatedRequest,
   ): Promise<types.UserResponse> {
-    // Check if user exists first (before authorization)
     const userExists = await this.userService.existsById(userId);
     if (!userExists) {
       throw new NotFoundException('User does not exist');
     }
 
-    // Admin can update any user, regular users only their own profile
-    if (req.user.role !== Role.ADMIN && req.user.id !== userId) {
-      throw new ForbiddenException('You are not allowed to update this user');
-    }
+    this.assertSelfOrAdmin(req, userId);
 
-    // Update the user
     return this.userService.updateById(userId, body);
   }
 
@@ -304,47 +193,13 @@ export class UserController {
     @Param('user_id', ParseUserIdPipe) user_id: string,
     @Request() req: AuthenticatedRequest,
   ) {
-    // Check if user exists first (will throw NotFoundException if not)
     const userExists = await this.userService.existsById(user_id);
     if (!userExists) {
       throw new NotFoundException('No user with this id exists');
     }
 
-    // Admin can delete any user, regular users only their own account
-    if (req.user.role !== Role.ADMIN && req.user.id !== user_id) {
-      throw new ForbiddenException('Not allowed to delete this user');
-    }
+    this.assertSelfOrAdmin(req, user_id);
 
     return this.userService.deleteById(user_id);
-  }
-
-  // GET HEADERS ----------------------------------------------------
-
-  @ApiOperation({ summary: 'Haal user app_footer info op.' })
-  @ApiParam({ name: 'user_id', type: String })
-  @ApiResponse({
-    status: 200,
-    description: 'Header informatie opgehaald',
-    type: HeaderResposneDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get('/:user_id/app')
-  async getHeader(
-    @Param('user_id', ParseUserIdPipe) user_id: string,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<types.HeaderResponse> {
-    // Check if user exists first
-    const userExists = await this.userService.existsById(user_id);
-    if (!userExists) {
-      throw new NotFoundException('User not found');
-    }
-
-    // Admin can access any user's app, regular users only their own
-    if (req.user.role !== Role.ADMIN && req.user.id !== user_id) {
-      throw new NotFoundException('Header not found');
-    }
-
-    return this.userService.headerInfo(user_id);
   }
 }

@@ -3,24 +3,20 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { CreateSetLikeDto, SetLikeResponseDto } from '../studyset/setlike.dto';
 import {
   CreateVisualsetDto,
   FullVSResponseListDto,
-  ImageDto,
   VisualsetResponseDto,
   VisualsetResponseListDto,
   UpdateVisualsetDto,
 } from './visualset.dto';
-import { PinResponseDto } from '../pin/pin.dto';
 import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
 import {
-  classroomactivities,
   classrooms,
   classroomsets,
   classroomusers,
@@ -32,7 +28,8 @@ import {
   users,
   visualsets,
 } from '../drizzle/schema';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq, inArray, sql } from 'drizzle-orm';
+import { buildNewSession, deleteSetReferences } from '../lib/set-helpers';
 
 @Injectable()
 export class VisualsetService {
@@ -53,81 +50,30 @@ export class VisualsetService {
       throw new NotFoundException('no user with this id exists');
     }
 
-    const Pins: PinResponseDto[] = [];
-    const setId = uuidv4();
-    const visualset = {
-      id: setId,
-      title: data.title,
-      createdAt: date.toISOString(),
-      lastStudied: '',
-      lastUpdated: date.toISOString(),
-      publicSet: false,
-      userId: userId,
-      displayName: name.displayName,
-      imgUrl: name.imgUrl,
-      studoset: false,
-    };
+    const [visualset] = await this.db
+      .insert(visualsets)
+      .values({
+        title: data.title,
+        createdAt: date.toISOString(),
+        lastUpdated: date.toISOString(),
+        publicSet: false,
+        userId: userId,
+        displayName: name.displayName,
+        imgUrl: name.imgUrl,
+        studoset: false,
+      })
+      .returning();
+    const setId = visualset.id;
 
-    //sessie creeeren
-    const ssid = uuidv4();
-    const session = {
-      id: ssid,
-      startedAt: date.toISOString(),
-      durationMin: 0,
-      secondLastLogin: 'unknown',
-      lastLogin: 'unknown',
-      endedAt: 'unknown',
-      index: 0,
-      accuracy: 100,
-      averageResponseTime: 0,
-      longestFocusStreak: 0,
-      deviceType: 'unknown',
-      lastSeen: date.toISOString(),
-      lastStudied: date.toISOString(),
-      userId: userId,
-      setId: setId,
-      setType: 'visualset',
-    };
+    // sessie creeeren
+    const [session] = await this.db
+      .insert(studysessions)
+      .values(
+        buildNewSession({ userId, setId, setType: 'visualset', now: date }),
+      )
+      .returning();
+    const ssid = session.id;
 
-    //images creeeren
-    const IMAGES: ImageDto[] = [];
-    data.images.forEach((image) => {
-      const imgId = uuidv6();
-      const Image: ImageDto = {
-        id: imgId,
-        title: image.title,
-        url: image.url,
-        index: image.index,
-        gridX: image.gridX,
-        gridY: image.gridY,
-        scale: String(image.scale),
-        setId: setId,
-      };
-      IMAGES.push(Image);
-      //pins creeeren
-      data.pins
-        .filter((pin) => {
-          return pin.imgUrl === image.url;
-        })
-        .map((pin) => {
-          const Pin = {
-            id: uuidv6(),
-            definition: pin.definition,
-            x: pin.x,
-            y: pin.y,
-            number: pin.number,
-            createdAt: date.toISOString(),
-            updatedAt: date.toISOString(),
-            imageId: imgId,
-            setId: setId,
-            ownerId: userId,
-          };
-          Pins.push(Pin);
-        });
-    });
-
-    await this.db.insert(visualsets).values(visualset);
-    await this.db.insert(studysessions).values(session);
     await this.db
       .update(users)
       .set({
@@ -136,27 +82,51 @@ export class VisualsetService {
       })
       .where(eq(users.id, userId));
 
-    for (const Image of IMAGES) {
-      await this.db.insert(images).values(Image);
-    }
+    //images + pins creeeren
+    for (const image of data.images) {
+      const [insertedImage] = await this.db
+        .insert(images)
+        .values({
+          title: image.title,
+          url: image.url,
+          index: image.index,
+          gridX: image.gridX,
+          gridY: image.gridY,
+          scale: String(image.scale),
+          setId: setId,
+        })
+        .returning();
 
-    for (const pin of Pins) {
-      await this.db.insert(pins).values(pin);
+      const imagePins = data.pins.filter((pin) => pin.imgUrl === image.url);
+      for (const pin of imagePins) {
+        const [insertedPin] = await this.db
+          .insert(pins)
+          .values({
+            definition: pin.definition,
+            x: pin.x,
+            y: pin.y,
+            number: pin.number,
+            createdAt: date.toISOString(),
+            updatedAt: date.toISOString(),
+            imageId: insertedImage.id,
+            setId: setId,
+            ownerId: userId,
+          })
+          .returning();
 
-      // sessionpin aanmaken
-      const sessionPin = {
-        id: uuidv4(),
-        number: pin.number,
-        pinViewcount: 0,
-        pinTotalViewcount: 0,
-        inQueue: false,
-        mastered: false,
-        timesRelearned: 0,
-        pinId: pin.id,
-        sessionId: ssid,
-        ownerId: userId,
-      };
-      await this.db.insert(sessionpins).values(sessionPin);
+        // sessionpin aanmaken
+        await this.db.insert(sessionpins).values({
+          number: pin.number,
+          pinViewcount: 0,
+          pinTotalViewcount: 0,
+          inQueue: false,
+          mastered: false,
+          timesRelearned: 0,
+          pinId: insertedPin.id,
+          sessionId: ssid,
+          ownerId: userId,
+        });
+      }
     }
 
     return visualset;
@@ -223,40 +193,37 @@ export class VisualsetService {
       ),
     });
 
-    let sesh = null;
     if (!session) {
       await this.createSession(userId, setId);
-      sesh = await this.getBySetId(userId, setId);
-    } else {
-      sesh = await this.getBySetId(userId, setId);
     }
+    const sesh = await this.getBySetId(userId, setId);
 
+    // Classrooms the user belongs to that also contain this set
     const classusers = await this.db.query.classroomusers.findMany({
       where: eq(classroomusers.userId, userId),
     });
+    const classroomIds = classusers.map((u) => u.classroomId);
 
-    const classes = [];
-    for (const u of classusers) {
-      const classroom = await this.db.query.classrooms.findFirst({
-        where: eq(classrooms.id, u.classroomId),
-      });
-      if (classroom) {
-        classes.push(classroom);
-      }
-    }
+    const [classes, classroomSetsForThisSet] = await Promise.all([
+      classroomIds.length > 0
+        ? this.db.query.classrooms.findMany({
+            where: inArray(classrooms.id, classroomIds),
+          })
+        : Promise.resolve([] as (typeof classrooms.$inferSelect)[]),
+      classroomIds.length > 0
+        ? this.db.query.classroomsets.findMany({
+            where: and(
+              eq(classroomsets.setId, setId),
+              inArray(classroomsets.classroomId, classroomIds),
+            ),
+          })
+        : Promise.resolve([] as (typeof classroomsets.$inferSelect)[]),
+    ]);
 
-    const setclasses = [];
-    for (const c of classes) {
-      const class_set = await this.db.query.classroomsets.findFirst({
-        where: and(
-          eq(classroomsets.setId, setId),
-          eq(classroomsets.classroomId, c.id),
-        ),
-      });
-      if (class_set) {
-        setclasses.push(c);
-      }
-    }
+    const classroomIdsWithSet = new Set(
+      classroomSetsForThisSet.map((cs) => cs.classroomId),
+    );
+    const setclasses = classes.filter((c) => classroomIdsWithSet.has(c.id));
 
     return {
       ...set,
@@ -377,38 +344,7 @@ export class VisualsetService {
 
     await this.db.transaction(async (tx) => {
       // Verwijder polymorphic references
-      await tx
-        .delete(studysessions)
-        .where(
-          and(
-            eq(studysessions.setId, setId),
-            eq(studysessions.setType, 'visualset'),
-          ),
-        );
-
-      await tx
-        .delete(setlikes)
-        .where(
-          and(eq(setlikes.setId, setId), eq(setlikes.setType, 'visualset')),
-        );
-
-      await tx
-        .delete(classroomsets)
-        .where(
-          and(
-            eq(classroomsets.setId, setId),
-            eq(classroomsets.setType, 'visualset'),
-          ),
-        );
-
-      await tx
-        .delete(classroomactivities)
-        .where(
-          and(
-            eq(classroomactivities.setId, setId),
-            eq(classroomactivities.setType, 'visualset'),
-          ),
-        );
+      await deleteSetReferences(tx, setId, 'visualset');
 
       const result = await tx
         .delete(visualsets)
@@ -426,15 +362,15 @@ export class VisualsetService {
     body: CreateSetLikeDto,
   ): Promise<SetLikeResponseDto> {
     const date = new Date();
-    const like = {
-      id: uuidv4(),
-      setId: body.setId,
-      setType: 'visualset',
-      userId: userId,
-      createdAt: date.toISOString(),
-    };
-
-    await this.db.insert(setlikes).values(like);
+    const [like] = await this.db
+      .insert(setlikes)
+      .values({
+        setId: body.setId,
+        setType: 'visualset',
+        userId: userId,
+        createdAt: date.toISOString(),
+      })
+      .returning();
 
     return like;
   }
@@ -469,30 +405,12 @@ export class VisualsetService {
       throw new NotFoundException('Visualset not found');
     }
 
-    const date = new Date();
-    const ssid = uuidv4();
-
     // Session aanmaken
-    const session = {
-      id: ssid,
-      startedAt: date.toISOString(),
-      durationMin: 0,
-      secondLastLogin: 'unknown',
-      lastLogin: 'unknown',
-      endedAt: 'unknown',
-      index: 0,
-      accuracy: 100,
-      averageResponseTime: 0,
-      longestFocusStreak: 0,
-      deviceType: 'unknown',
-      lastSeen: date.toISOString(),
-      lastStudied: date.toISOString(),
-      userId,
-      setId,
-      setType: 'visualset',
-    };
-
-    await this.db.insert(studysessions).values(session);
+    const [session] = await this.db
+      .insert(studysessions)
+      .values(buildNewSession({ userId, setId, setType: 'visualset' }))
+      .returning();
+    const ssid = session.id;
 
     // Alle pins ophalen
     const pinnetjes = await this.db.query.pins.findMany({
@@ -502,19 +420,20 @@ export class VisualsetService {
     // Pins parallel inserten
     const seshpins = await Promise.all(
       pinnetjes.map(async (pin) => {
-        const created = {
-          id: uuidv4(),
-          number: pin.number,
-          pinViewcount: 0,
-          pinTotalViewcount: 0,
-          inQueue: false,
-          mastered: false,
-          timesRelearned: 0,
-          pinId: pin.id,
-          sessionId: ssid,
-          ownerId: userId,
-        };
-        await this.db.insert(sessionpins).values(created);
+        const [created] = await this.db
+          .insert(sessionpins)
+          .values({
+            number: pin.number,
+            pinViewcount: 0,
+            pinTotalViewcount: 0,
+            inQueue: false,
+            mastered: false,
+            timesRelearned: 0,
+            pinId: pin.id,
+            sessionId: ssid,
+            ownerId: userId,
+          })
+          .returning();
         return created;
       }),
     );

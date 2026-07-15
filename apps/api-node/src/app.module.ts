@@ -22,7 +22,7 @@ import { HealthController } from './health/health.controller';
 import { StudoprofileModule } from './studoprofile/studoprofile.module';
 import { SvenModule } from './sven/sven.module';
 import { AdminModule } from './admin/admin.module';
-import { FlowModule } from './flow/flow.module';
+import { CourseModule } from './course/course.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisModule } from './redis/redis.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
@@ -58,11 +58,10 @@ import { ChatModule } from './chat/chat.module';
     SearchModule,
     AuthModule,
     SessionModule,
-    SearchModule,
     StudoprofileModule,
     SvenModule,
     AdminModule,
-    FlowModule,
+    CourseModule,
     ChatModule,
   ],
   controllers: [AppController, HealthController],

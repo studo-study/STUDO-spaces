@@ -52,12 +52,6 @@ export class SearchService {
 
   // ─── Public helpers ──────────────────────────────────────────────────────────
 
-  async search(query: string, _id: string) {
-    return this.withCache(`search:auth:${this.normalise(query)}`, () =>
-      this.compute(query),
-    );
-  }
-
   async publicSearch(query: string) {
     return this.withCache(`search:public:${this.normalise(query)}`, () =>
       this.compute(query),

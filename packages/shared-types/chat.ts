@@ -5,7 +5,6 @@ export interface MessageRequest {
 }
 
 export interface PayLoadRequest {
-  flowCourseId?: string;
   studosetId?: string;
   cardId?: string;
 }
@@ -13,7 +12,6 @@ export interface PayLoadRequest {
 export interface ChatResponse {
   id: string;
   userId: string;
-  boardId: string | null;
   title: string;
   creationDate: string;
   pinned: boolean;
@@ -36,7 +34,6 @@ export interface ChatPayLoadResponse {
   id: string;
   title: string;
   messageId: string;
-  flowCourseId?: string;
   studosetId?: string;
   cardId?: string;
 }
