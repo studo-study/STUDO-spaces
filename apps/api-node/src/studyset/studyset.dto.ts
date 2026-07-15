@@ -14,7 +14,6 @@ import {
   IsArray,
   IsOptional,
   ValidateNested,
-  IsString as IsStringValidator,
 } from 'class-validator';
 
 export class CreateStudysetDto {

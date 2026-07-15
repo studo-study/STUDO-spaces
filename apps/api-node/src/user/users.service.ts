@@ -10,7 +10,7 @@ import {
 } from '../drizzle/drizzle.provider';
 import type { Redis } from 'ioredis';
 import { REDIS_CLIENT } from '../redis/redis.provider';
-import { and, eq, gte, inArray, ne, sql } from 'drizzle-orm';
+import { and, eq, gte, inArray, ne } from 'drizzle-orm';
 import {
   cards,
   classroomactivities,
