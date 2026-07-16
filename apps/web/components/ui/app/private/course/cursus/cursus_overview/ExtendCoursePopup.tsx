@@ -11,7 +11,7 @@ interface ExtendCoursePopupProps {
 const ExtendCoursePopup: React.FC<ExtendCoursePopupProps> = (props) => {
   const ref = useRef(null);
   const { isOpen, setIsOpen } = props;
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging] = useState(false);
   const t = useTranslations("");
   return (
     <PopupBackdrop isOpen={isOpen} setIsOpen={setIsOpen} blur>

@@ -1,11 +1,8 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { IoIosAdd } from "react-icons/io";
 import SetSearch from "@/components/ui/app/private/your-files/sets/search";
 import ListItems from "@/components/ui/app/private/your-files/sets/listitems";
-import Image from "next/image";
 import { useSets } from "@/hooks/app/sets/useSets";
 import { StudysetResponse, type VisualsetResponse } from "@studo/types";
 import { useParams } from "next/navigation";
@@ -27,7 +24,6 @@ export interface StudySetItem {
 }
 
 export default function CourseSetsGrid() {
-  const id = useParams().id;
   const { sets, visualsets } = useSets();
   const allSets: StudySetItem[] = useMemo(
     () => [

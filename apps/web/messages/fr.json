@@ -657,5 +657,34 @@
     "pomodoro_timer": "Minuteur Pomodoro",
     "pomodoro_description": "Un minuteur qui vous aide à atteindre l’hyperfocus.",
     "reset_progress": "Réinitialiser la progression"
+  },
+  "flow": {
+    "course": {
+      "add_title": "Ajouter un titre",
+      "create_title": "Nouveau cours",
+      "create_course": "Créer un cours",
+      "create_btn": "Créer",
+      "description": "Description",
+      "add_metadata": "Ajouter des métadonnées",
+      "add_later": "Ajouter plus tard",
+      "add_link": "Ajouter un lien",
+      "exam_date": "Date d’examen",
+      "exam_status": "Statut de l’examen",
+      "behind": "En retard",
+      "slightly_behind": "Légèrement en retard",
+      "error_icon_required": "Icône requise",
+      "error_title_required": "Titre requis",
+      "n": "n",
+      "cta_add_t": "Ajouter une ligne",
+      "flow_title": "Planning",
+      "row": {
+        "done": "terminé",
+        "doing": "en cours",
+        "not_started": "non commencé",
+        "due_date": "échéance",
+        "priorité": "priorité",
+        "priority": "priorité"
+      }
+    }
   }
 }

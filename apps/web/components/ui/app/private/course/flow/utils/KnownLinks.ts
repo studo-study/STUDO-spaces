@@ -64,7 +64,7 @@ const universityData = [
     icon: "powerpoint.png",
   },
 
-  { name: "PDF", patterns: [".pdf"], icon: "pdf" },
+  { name: "PDF", patterns: [".pdf"], icon: "pdf.png" },
   {
     name: "Google Drive",
     patterns: ["drive.google.com"],

@@ -22,8 +22,7 @@ const FileGrid: React.FC = () => {
   // lokaal gedropte bestanden die nog geüpload moeten worden
   const [pending, setPending] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [isUploading] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const toast = useToast();
 

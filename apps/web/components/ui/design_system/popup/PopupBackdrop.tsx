@@ -1,6 +1,7 @@
 "use client";
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
+import usePortalMounted from "@/components/ui/design_system/popup/useSyncExternalStore";
 
 interface PopupBackdropProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -13,8 +14,7 @@ const PopupBackdrop = (props: PopupBackdropProps) => {
   const { isOpen, setIsOpen, children, blur } = props;
 
   // Portal enkel na client-mount; `document` bestaat niet tijdens SSR.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = usePortalMounted();
   if (!mounted) return null;
 
   return createPortal(

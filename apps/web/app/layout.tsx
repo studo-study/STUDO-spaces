@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={montserrat.variable}>
+    <html lang="en" className={montserrat.variable} suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/fmn3jvz.css" />
         <IcoSwitcher />

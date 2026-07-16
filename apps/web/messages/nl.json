@@ -1476,8 +1476,29 @@
     "course_1": "vak",
     "course": {
       "row": {
-        "done": "afgewerkt"
-      }
+        "done": "afgewerkt",
+        "doing": "bezig",
+        "not_started": "niet gestart",
+        "due_date": "deadline",
+        "priority": "prioriteit"
+      },
+      "add_title": "Titel toevoegen",
+      "create_title": "Nieuwe cursus",
+      "create_course": "Cursus aanmaken",
+      "create_btn": "Aanmaken",
+      "description": "Beschrijving",
+      "add_metadata": "Metadata toevoegen",
+      "add_later": "Later toevoegen",
+      "add_link": "Link toevoegen",
+      "exam_date": "Examendatum",
+      "exam_status": "Examenstatus",
+      "behind": "Achter op schema",
+      "slightly_behind": "Licht achter",
+      "error_icon_required": "Kies een icoon",
+      "error_title_required": "Titel is verplicht",
+      "n": "n",
+      "cta_add_t": "Rij toevoegen",
+      "flow_title": "Planning"
     }
   },
   "courses": {

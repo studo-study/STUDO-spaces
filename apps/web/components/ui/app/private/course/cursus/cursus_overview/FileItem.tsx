@@ -4,7 +4,7 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { Plus } from "lucide-react";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import ExtendCoursePopup from "@/components/ui/app/private/course/cursus/cursus_overview/ExtendCoursePopup";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import { CourseDocument } from "@studo/types";
 import { useParams } from "next/navigation";
 

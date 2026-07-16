@@ -2,11 +2,8 @@
 import { useTranslations } from "next-intl";
 import { IoIosAdd } from "react-icons/io";
 import CourseRow from "@/components/ui/app/private/course/flow/CourseRow";
-import { useCourseRows, useCourseTotals } from "@/hooks/app/flow/useFlowData";
-import { useFlowRows } from "@/hooks/app/flow/useFlowMutations";
 import { FaListCheck } from "react-icons/fa6";
 import { useCourse } from "@/hooks/app/courses/useCourse";
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
 const CourseTable = () => {

@@ -1,6 +1,5 @@
 "use client";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
-import { Linkparser } from "@/components/ui/app/private/course/flow/utils/linkparser";
 import Chip from "@/components/ui/design_system/chip/Chip";
 import { HiCalendarDays, HiChevronUpDown } from "react-icons/hi2";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
@@ -22,7 +21,6 @@ import { Layers, NotebookText, Rows3, ScrollText } from "lucide-react";
 import { usePathname } from "@/i18n/routing";
 import { useCourses } from "@/hooks/app/courses/useCourses";
 import classNames from "@/utils/classnames";
-import { t } from "shiki/bundle/full";
 
 const CoursePageHeader = () => {
   const t = useTranslations("flow.course");
@@ -88,14 +86,14 @@ const CoursePageHeader = () => {
                     }
                 `}
             >
-              {boardData?.courses.map((course) => {
+              {courses?.map((course) => {
                 const { Icon, color } = getFlowIcon(course.icon);
                 const isActive = course.id === data?.id;
                 return (
                   <button
                     key={course.id}
                     onClick={() => {
-                      router.push(`/flow/${data?.boardId}/${course.id}`);
+                      router.push(`/course/${course.id}`);
                       setIsOpen(false);
                     }}
                     className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors cursor-pointer

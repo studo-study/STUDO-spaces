@@ -1431,20 +1431,20 @@
     "courses": "subjects",
     "course_1": "subject",
     "course": {
-      "create_title": "New subject",
-      "add_title": "Create new subject",
-      "description": "Add a short description...",
-      "create_btn": "Create subject",
+      "create_title": "New course",
+      "add_title": "Add title",
+      "description": "Description",
+      "create_btn": "Create",
       "cancel_btn": "cancel",
-      "add_metadata": "add details",
-      "add_later": "hide details",
-      "slightly_behind": "Slightly Behind",
+      "add_metadata": "Add metadata",
+      "add_later": "Add later",
+      "slightly_behind": "Slightly behind",
       "semester": "semester",
       "exam_date": "Exam date",
       "exam_status": "Exam status",
       "link": "Resource link",
-      "add_link": "add a resource link...",
-      "flow_title": "material",
+      "add_link": "Add link",
+      "flow_title": "Planning",
       "more_sets": "all sets",
       "row": {
         "flow_title": "flow",
@@ -1454,10 +1454,17 @@
         "add_resources": "Resources",
         "add_details": "Details",
         "add_set": "Linked sets",
-        "due_date": "Deadline",
-        "not_started": "to do",
-        "doing": "in progress"
-      }
+        "due_date": "due date",
+        "not_started": "not started",
+        "doing": "in progress",
+        "priority": "priority"
+      },
+      "create_course": "Create course",
+      "behind": "Behind schedule",
+      "error_icon_required": "Icon required",
+      "error_title_required": "Title required",
+      "n": "n",
+      "cta_add_t": "Add row"
     }
   },
   "courses": {

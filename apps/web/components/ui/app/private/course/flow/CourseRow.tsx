@@ -17,8 +17,6 @@ import TagSelector from "@/components/ui/design_system/tag/TagSelector";
 import { LuLink } from "react-icons/lu";
 import ResourceIcon from "@/components/ui/app/private/course/flow/ResourceIcon";
 import { HiCalendarDays } from "react-icons/hi2";
-import { useFlowCourse } from "@/hooks/app/flow/useFlowData";
-import { useFlowRows } from "@/hooks/app/flow/useFlowMutations";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 
 interface CourseRowProps {
@@ -39,7 +37,7 @@ const CourseRow = (props: CourseRowProps) => {
 
   if (!data) return null;
 
-  const onChange = (updates: Record<string, unknown>) => console.log("");
+  const onChange = (updates: Record<string, unknown>) => console.log(updates);
 
   return (
     <div

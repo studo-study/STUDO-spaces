@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { GridLayout, useContainerWidth, type Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import {
@@ -27,18 +27,6 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
   const applyLayout = useWidgetMenu((s) => s.applyLayout);
 
   const { width, containerRef, mounted } = useContainerWidth();
-  const [height, setHeight] = useState(0);
-
-  // Track container height so START_ROWS fills the full available height.
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([entry]) => {
-      setHeight(entry.contentRect.height);
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [containerRef]);
 
   // rowHeight so START_ROWS rows (+ gaps + padding) exactly fill the height.
   const rowHeight = 240;
