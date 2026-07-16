@@ -33,6 +33,7 @@ import {
   courseSets,
   courseTables,
   courseRows,
+  courseResources,
   boards,
   boardUsers,
 } from './schema';
@@ -394,7 +395,7 @@ export const courseTablesRelations = relations(
   }),
 );
 
-export const courseRowsRelations = relations(courseRows, ({ one }) => ({
+export const courseRowsRelations = relations(courseRows, ({ one, many }) => ({
   table: one(courseTables, {
     fields: [courseRows.tableId],
     references: [courseTables.id],
@@ -403,7 +404,18 @@ export const courseRowsRelations = relations(courseRows, ({ one }) => ({
     fields: [courseRows.createdBy],
     references: [users.id],
   }),
+  resources: many(courseResources),
 }));
+
+export const courseResourcesRelations = relations(
+  courseResources,
+  ({ one }) => ({
+    row: one(courseRows, {
+      fields: [courseResources.rowId],
+      references: [courseRows.id],
+    }),
+  }),
+);
 
 export const boardsRelations = relations(boards, ({ many }) => ({
   courses: many(courses),

@@ -38,6 +38,7 @@ async function resetDatabase() {
   await db.delete(schema.courseDocumentChunks);
   await db.delete(schema.courseDocuments);
   await db.delete(schema.courseSets);
+  await db.delete(schema.courseResources);
   await db.delete(schema.courseRows);
   await db.delete(schema.courseTables);
   await db.delete(schema.courseUsers);
@@ -1066,9 +1067,31 @@ export async function seedStudo(
     await db
       .insert(schema.courseTables)
       .values([{ id: tableId1, courseId: courseId1, title: 'Studieplanning' }]);
+    const rowId1 = uuidv6();
+    const rowId2 = uuidv6();
     await db.insert(schema.courseRows).values([
-      { tableId: tableId1, position: 0, createdBy: userId1 },
-      { tableId: tableId1, position: 1, createdBy: userId1 },
+      {
+        id: rowId1,
+        tableId: tableId1,
+        rowIndex: 0,
+        type: 'course',
+        status: 'done',
+        description: 'Hoofdstuk 1',
+        createdBy: userId1,
+      },
+      {
+        id: rowId2,
+        tableId: tableId1,
+        rowIndex: 1,
+        type: 'task',
+        status: 'not_started',
+        description: 'Oefeningen maken',
+        createdBy: userId1,
+      },
+    ]);
+    await db.insert(schema.courseResources).values([
+      { rowId: rowId1, link: 'https://chamilo.hogent.be/hoofdstuk1' },
+      { rowId: rowId2, link: 'https://example.com/oefeningen.pdf' },
     ]);
     console.log('Course tables seeded\n');
 

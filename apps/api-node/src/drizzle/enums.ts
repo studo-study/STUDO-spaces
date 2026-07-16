@@ -26,3 +26,25 @@ export const widgetTypeEnum = pgEnum('widget_type', [
 ]);
 
 export const mimeTypeEnum = pgEnum('mime_type', ['pdf', 'docx']);
+
+export const rowStatusEnum = pgEnum('row_status', [
+  'not_started',
+  'doing',
+  'done',
+]);
+
+export const rowTypeEnum = pgEnum('row_type', [
+  'course',
+  'notes',
+  'summary',
+  'abstract',
+  'sample_exam',
+  'task',
+]);
+
+export const rowPriorityEnum = pgEnum('row_priority', [
+  'no_priority',
+  'low',
+  'medium',
+  'high',
+]);

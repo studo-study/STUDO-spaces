@@ -19,6 +19,9 @@ import {
   courseDocumentStatusEnum,
   courseRolesEnum,
   mimeTypeEnum,
+  rowStatusEnum,
+  rowTypeEnum,
+  rowPriorityEnum,
   setTypeEnum,
   widgetTypeEnum,
 } from './enums';
@@ -634,6 +637,10 @@ export const courses = pgTable('course', {
 
 export const courseContext = pgTable('course_context', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
+  courseId: uuid('course_id').references(() => courses.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
   model: varchar('model'),
   documentCount: varchar('document_count'),
   context: text('context'),
@@ -642,14 +649,18 @@ export const courseContext = pgTable('course_context', {
 export const courseUsers = pgTable(
   'course_users',
   {
-    userId: uuid('user_id').references(() => users.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
-    courseId: uuid('course_id').references(() => courses.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
+    userId: uuid('user_id')
+      .references(() => users.id, {
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      })
+      .notNull(),
+    courseId: uuid('course_id')
+      .references(() => courses.id, {
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      })
+      .notNull(),
     role: courseRolesEnum('role').notNull().default('viewer'),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
@@ -777,10 +788,25 @@ export const courseRows = pgTable('course_rows', {
       onDelete: 'cascade',
     })
     .notNull(),
-  position: integer('position').notNull(),
+  rowIndex: integer('row_index').notNull(),
   createdBy: uuid('created_by').references(() => users.id, {
     onDelete: 'set null',
   }),
+  status: rowStatusEnum('status').default('not_started'),
+  priority: rowPriorityEnum('priority').default('no_priority'),
+  description: text('description'),
+  type: rowTypeEnum('type'),
+});
+
+export const courseResources = pgTable('course_resources', {
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  rowId: uuid('row_id')
+    .references(() => courseRows.id, {
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
+    })
+    .notNull(),
+  link: varchar('link').notNull(),
 });
 
 export const boards = pgTable('boards', {
