@@ -24,3 +24,5 @@ export const widgetTypeEnum = pgEnum('widget_type', [
   'timer',
   'calendar',
 ]);
+
+export const mimeTypeEnum = pgEnum('mime_type', ['pdf', 'docx']);

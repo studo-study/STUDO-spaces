@@ -33,11 +33,21 @@ async function resetDatabase() {
   await db.delete(schema.setlikes);
   await db.delete(schema.pins);
   await db.delete(schema.cards);
+  await db.delete(schema.courseWidgets);
+  await db.delete(schema.courseWorkspaces);
+  await db.delete(schema.courseDocumentChunks);
+  await db.delete(schema.courseDocuments);
+  await db.delete(schema.courseSets);
+  await db.delete(schema.courseRows);
+  await db.delete(schema.courseTables);
+  await db.delete(schema.courseUsers);
+  await db.delete(schema.courses);
+  await db.delete(schema.boardUsers);
+  await db.delete(schema.boards);
   await db.delete(schema.images);
   await db.delete(schema.visualsets);
   await db.delete(schema.studysets);
   await db.delete(schema.studoprofilecommunities);
-  await db.delete(schema.tracksets);
   await db.delete(schema.tracksets);
   await db.delete(schema.studotracks);
   await db.delete(schema.studoprofiles);
@@ -102,6 +112,14 @@ export async function seedStudo(
     const message4 = uuidv6();
     const message5 = uuidv6();
     const message6 = uuidv6();
+
+    // course / board
+    const boardId1 = uuidv6();
+    const courseId1 = uuidv6(); // zit in board
+    const courseId2 = uuidv6(); // standalone
+    const workspaceId1 = uuidv6();
+    const documentId1 = uuidv6();
+    const tableId1 = uuidv6();
 
     // === 1. Users ===
     console.log('Seeding users...');
@@ -930,6 +948,130 @@ export async function seedStudo(
       },
     ]);
     console.log('Payload seeded\n');
+
+    // === 27. Boards ===
+    console.log('Seeding boards...');
+    await db.insert(schema.boards).values([
+      {
+        id: boardId1,
+        title: 'Geneeskunde 2e bach',
+        icon: 'board_icon',
+        publicBoard: false,
+        academyYear: 2025,
+        institute: 'HOGENT',
+      },
+    ]);
+    console.log('Boards seeded\n');
+
+    // === 28. Courses ===
+    console.log('Seeding courses...');
+    await db.insert(schema.courses).values([
+      {
+        id: courseId1,
+        boardId: boardId1, // erft academyYear/institute van het board
+        title: 'Anatomie',
+        icon: 'course_icon',
+        publicCourse: false,
+        examDate: '2026-01-15',
+      },
+      {
+        id: courseId2,
+        boardId: null, // standalone
+        title: 'Losse cursus Statistiek',
+        icon: 'course_icon',
+        publicCourse: true,
+        academyYear: 2025,
+        institute: 'UGent',
+      },
+    ]);
+    console.log('Courses seeded\n');
+
+    // === 29. Board users ===
+    console.log('Seeding board users...');
+    await db.insert(schema.boardUsers).values([
+      { boardId: boardId1, userId: userId1, role: 'owner' },
+      { boardId: boardId1, userId: userId2, role: 'viewer' },
+    ]);
+    console.log('Board users seeded\n');
+
+    // === 30. Course users ===
+    console.log('Seeding course users...');
+    await db.insert(schema.courseUsers).values([
+      { userId: userId1, courseId: courseId1, role: 'owner' },
+      { userId: userId1, courseId: courseId2, role: 'owner' },
+      { userId: userId3, courseId: courseId2, role: 'editor' },
+    ]);
+    console.log('Course users seeded\n');
+
+    // === 31. Course workspace + widgets ===
+    console.log('Seeding course workspace...');
+    await db
+      .insert(schema.courseWorkspaces)
+      .values([{ id: workspaceId1, courseId: courseId1 }]);
+    await db.insert(schema.courseWidgets).values([
+      { workspaceId: workspaceId1, type: 'notes', x: 0, y: 0, w: 2, h: 2 },
+      { workspaceId: workspaceId1, type: 'flashcards', x: 2, y: 0, w: 2, h: 2 },
+      { workspaceId: workspaceId1, type: 'timer', x: 0, y: 2, w: 1, h: 1 },
+    ]);
+    console.log('Course workspace seeded\n');
+
+    // === 32. Course documents + chunks ===
+    console.log('Seeding course documents...');
+    await db.insert(schema.courseDocuments).values([
+      {
+        id: documentId1,
+        courseId: courseId1,
+        uploaderId: userId1,
+        title: 'Hoofdstuk 1 - Skelet',
+        author: 'Prof. Janssens',
+        storageKey: `courses/${courseId1}/skelet.pdf`,
+        mimeType: 'pdf',
+        status: 'finished',
+        pageCount: 42,
+        wordCount: 12000,
+      },
+    ]);
+    await db.insert(schema.courseDocumentChunks).values([
+      {
+        documentId: documentId1,
+        chunkIndex: 0,
+        pageStart: 1,
+        pageEnd: 2,
+        text: 'Het menselijk skelet bestaat uit 206 botten...',
+      },
+      {
+        documentId: documentId1,
+        chunkIndex: 1,
+        pageStart: 3,
+        pageEnd: 4,
+        text: 'De wervelkolom bestaat uit 33 wervels...',
+      },
+    ]);
+    console.log('Course documents seeded\n');
+
+    // === 33. Course sets ===
+    console.log('Seeding course sets...');
+    await db.insert(schema.courseSets).values([
+      {
+        setId: studySetId1,
+        setType: 'studoset',
+        addedBy: userId1,
+        courseId: courseId1,
+      },
+    ]);
+    console.log('Course sets seeded\n');
+
+    // === 34. Course tables + rows ===
+    console.log('Seeding course tables...');
+    await db
+      .insert(schema.courseTables)
+      .values([{ id: tableId1, courseId: courseId1, title: 'Studieplanning' }]);
+    await db.insert(schema.courseRows).values([
+      { tableId: tableId1, position: 0, createdBy: userId1 },
+      { tableId: tableId1, position: 1, createdBy: userId1 },
+    ]);
+    console.log('Course tables seeded\n');
+
     console.log('All data seeded successfully!');
   } catch (error) {
     console.error('Error seeding database:', error);

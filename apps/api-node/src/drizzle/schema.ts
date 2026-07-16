@@ -12,11 +12,13 @@ import {
   primaryKey,
   uuid,
   date,
+  vector,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import {
   courseDocumentStatusEnum,
   courseRolesEnum,
+  mimeTypeEnum,
   setTypeEnum,
   widgetTypeEnum,
 } from './enums';
@@ -136,6 +138,7 @@ export const studysets = pgTable(
     userId: uuid('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
+    generated: boolean('generated').notNull().default(false),
   },
   (table) => [
     index('studysets_search_index').using(
@@ -238,6 +241,10 @@ export const cards = pgTable('cards', {
     .notNull()
     .default('typescript'),
   suggestionImageId: uuid('suggestion_image_id'),
+  courseDocumentChunkId: uuid('course_document_chunk_id').references(
+    () => courseDocumentChunks.id,
+    { onUpdate: 'cascade' },
+  ),
 });
 
 export const setlikes = pgTable('setlikes', {
@@ -384,9 +391,7 @@ export const classroomusers = pgTable(
 export const classroomsets = pgTable(
   'classroomsets',
   {
-    setId: uuid('set_id')
-      .notNull()
-      .references(() => studysets.id),
+    setId: uuid('set_id').notNull(),
     setType: varchar('set_type', { length: 20 }).notNull(),
     addedBy: varchar('added_by', { length: 100 }).notNull(),
     classroomId: uuid('classroom_id')
@@ -409,9 +414,7 @@ export const classroomactivities = pgTable('classroomactivity', {
   displayName: varchar('displayName', { length: 64 }).notNull(),
   imgUrl: varchar('img_url', { length: 250 }).notNull(),
   lastSeen: varchar('last_seen', { length: 64 }).notNull(),
-  setId: uuid('set_id')
-    .references(() => studysets.id)
-    .notNull(),
+  setId: uuid('set_id').notNull(),
   setType: varchar('set_type', { length: 24 }).notNull(),
   title: varchar('title', { length: 64 }).notNull(),
 });
@@ -613,14 +616,27 @@ export const chatMessagePayload = pgTable(
 
 export const courses = pgTable('course', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
+  // null = standalone course; anders erft het board-brede instellingen.
+  boardId: uuid('board_id').references(() => boards.id, {
+    onDelete: 'set null',
+    onUpdate: 'cascade',
+  }),
   title: varchar('title').notNull(),
   icon: varchar('icon').notNull().default(''),
   publicCourse: boolean('public_course').default(false),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
+  // academische velden = override; effectief = course.x ?? board.x
   academyYear: integer('academy_year'),
   examDate: date('exam_date'),
   institute: varchar('institute'),
+});
+
+export const courseContext = pgTable('course_context', {
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  model: varchar('model'),
+  documentCount: varchar('document_count'),
+  context: text('context'),
 });
 
 export const courseUsers = pgTable(
@@ -643,21 +659,15 @@ export const courseUsers = pgTable(
   }),
 );
 
-export const courseWorkspaces = pgTable(
-  'course_workspaces',
-  {
-    id: uuid('id').primaryKey().defaultRandom().notNull(),
-    courseId: uuid('course_id').references(() => courses.id, {
+export const courseWorkspaces = pgTable('course_workspaces', {
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
+  courseId: uuid('course_id')
+    .references(() => courses.id, {
       onDelete: 'cascade',
       onUpdate: 'cascade',
-    }),
-    userId: uuid('user_id').references(() => users.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
-  },
-  (t) => [uniqueIndex('idx_workspace_unique').on(t.courseId, t.userId)],
-);
+    })
+    .notNull(),
+});
 
 export const courseWidgets = pgTable('course_widgets', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -701,17 +711,39 @@ export const courseDocuments = pgTable('course_documents', {
   pageCount: integer('page_count'),
   wordCount: integer('word_count'),
   status: courseDocumentStatusEnum('status').default('uploading'),
+  storageKey: varchar('storage_key').notNull(),
+  mimeType: mimeTypeEnum('mime_type').notNull().default('pdf'),
+  fileSize: integer('file_size'),
+  checksum: integer('checksum'),
+});
+
+export const courseDocumentChunks = pgTable('course_document_chunks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  documentId: uuid('document_id')
+    .references(() => courseDocuments.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    })
+    .notNull(),
+  pageStart: integer('page_start'),
+  pageEnd: integer('page_end'),
+  chunkIndex: integer('chunk_index').notNull(),
+  text: text('text').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+  embeddingModel: varchar('embedding_model'),
+  embedding: vector('embedding', { dimensions: 1536 }),
 });
 
 export const courseSets = pgTable(
   'course_sets',
   {
-    setId: uuid('set_id')
-      .notNull()
-      .references(() => studysets.id, { onDelete: 'cascade' }),
+    // polymorf: set_id verwijst naar studysets OF visualsets (zie set_type) —
+    // geen harde FK mogelijk naar één tabel.
+    setId: uuid('set_id').notNull(),
     setType: setTypeEnum('set_type').notNull(),
     addedBy: uuid('added_by')
-      .references(() => courseUsers.userId)
+      .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
     courseId: uuid('course_id')
       .references(() => courses.id, { onDelete: 'cascade' })
@@ -745,8 +777,10 @@ export const courseRows = pgTable('course_rows', {
       onDelete: 'cascade',
     })
     .notNull(),
-  index: integer('index').notNull(),
-  createdBy: uuid('created_by').references(() => courseUsers.userId),
+  position: integer('position').notNull(),
+  createdBy: uuid('created_by').references(() => users.id, {
+    onDelete: 'set null',
+  }),
 });
 
 export const boards = pgTable('boards', {
@@ -760,23 +794,6 @@ export const boards = pgTable('boards', {
   examDate: date('exam_date'),
   institute: varchar('institute'),
 });
-
-export const boardCourses = pgTable(
-  'board_courses',
-  {
-    boardId: uuid('board_id').references(() => boards.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
-    courseId: uuid('course_id').references(() => courses.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
-  },
-  (table) => [
-    uniqueIndex('idx_board_courses_unique').on(table.boardId, table.courseId),
-  ],
-);
 
 export const boardUsers = pgTable(
   'board_users',

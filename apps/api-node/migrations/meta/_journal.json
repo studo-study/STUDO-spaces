@@ -141,6 +141,20 @@
       "when": 1784133115941,
       "tag": "0019_id_uuid_and_course",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1784168842315,
+      "tag": "0020_next_firestar",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1784169804671,
+      "tag": "0021_gorgeous_captain_universe",
+      "breakpoints": true
     }
   ]
 }

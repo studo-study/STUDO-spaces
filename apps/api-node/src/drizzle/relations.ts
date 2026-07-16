@@ -24,6 +24,17 @@ import {
   suggestion_terms_cards,
   users,
   visualsets,
+  courses,
+  courseUsers,
+  courseWorkspaces,
+  courseWidgets,
+  courseDocuments,
+  courseDocumentChunks,
+  courseSets,
+  courseTables,
+  courseRows,
+  boards,
+  boardUsers,
 } from './schema';
 
 export const usersRelations = relations(users, ({ many, one }) => ({
@@ -42,6 +53,9 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   sessioncards: many(sessioncards),
   sessionpins: many(sessionpins),
   reports: many(reports),
+  courseMemberships: many(courseUsers),
+  uploadedDocuments: many(courseDocuments),
+  boardMemberships: many(boardUsers),
 }));
 
 export const profilesRelations = relations(profiles, ({ one }) => ({
@@ -291,3 +305,118 @@ export const chatMessagePayloadRelations = relations(
     }),
   }),
 );
+
+export const coursesRelations = relations(courses, ({ one, many }) => ({
+  board: one(boards, {
+    fields: [courses.boardId],
+    references: [boards.id],
+  }),
+  members: many(courseUsers),
+  workspaces: many(courseWorkspaces),
+  documents: many(courseDocuments),
+  sets: many(courseSets),
+  tables: many(courseTables),
+}));
+
+export const courseUsersRelations = relations(courseUsers, ({ one }) => ({
+  user: one(users, {
+    fields: [courseUsers.userId],
+    references: [users.id],
+  }),
+  course: one(courses, {
+    fields: [courseUsers.courseId],
+    references: [courses.id],
+  }),
+}));
+
+export const courseWorkspacesRelations = relations(
+  courseWorkspaces,
+  ({ one, many }) => ({
+    course: one(courses, {
+      fields: [courseWorkspaces.courseId],
+      references: [courses.id],
+    }),
+    widgets: many(courseWidgets),
+  }),
+);
+
+export const courseWidgetsRelations = relations(courseWidgets, ({ one }) => ({
+  workspace: one(courseWorkspaces, {
+    fields: [courseWidgets.workspaceId],
+    references: [courseWorkspaces.id],
+  }),
+}));
+
+export const courseDocumentsRelations = relations(
+  courseDocuments,
+  ({ one, many }) => ({
+    course: one(courses, {
+      fields: [courseDocuments.courseId],
+      references: [courses.id],
+    }),
+    uploader: one(users, {
+      fields: [courseDocuments.uploaderId],
+      references: [users.id],
+    }),
+    chunks: many(courseDocumentChunks),
+  }),
+);
+
+export const courseDocumentChunksRelations = relations(
+  courseDocumentChunks,
+  ({ one }) => ({
+    document: one(courseDocuments, {
+      fields: [courseDocumentChunks.documentId],
+      references: [courseDocuments.id],
+    }),
+  }),
+);
+
+export const courseSetsRelations = relations(courseSets, ({ one }) => ({
+  course: one(courses, {
+    fields: [courseSets.courseId],
+    references: [courses.id],
+  }),
+  addedByUser: one(users, {
+    fields: [courseSets.addedBy],
+    references: [users.id],
+  }),
+}));
+
+export const courseTablesRelations = relations(
+  courseTables,
+  ({ one, many }) => ({
+    course: one(courses, {
+      fields: [courseTables.courseId],
+      references: [courses.id],
+    }),
+    rows: many(courseRows),
+  }),
+);
+
+export const courseRowsRelations = relations(courseRows, ({ one }) => ({
+  table: one(courseTables, {
+    fields: [courseRows.tableId],
+    references: [courseTables.id],
+  }),
+  createdByUser: one(users, {
+    fields: [courseRows.createdBy],
+    references: [users.id],
+  }),
+}));
+
+export const boardsRelations = relations(boards, ({ many }) => ({
+  courses: many(courses),
+  members: many(boardUsers),
+}));
+
+export const boardUsersRelations = relations(boardUsers, ({ one }) => ({
+  board: one(boards, {
+    fields: [boardUsers.boardId],
+    references: [boards.id],
+  }),
+  user: one(users, {
+    fields: [boardUsers.userId],
+    references: [users.id],
+  }),
+}));
