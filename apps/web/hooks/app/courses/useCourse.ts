@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import type { FullFlowCourseResponse } from "@studo/types";
+import type { FullCourseResponse } from "@studo/types";
+import { courseKeys } from "./courseKeys";
 
+/** Volledige course (tables → rows → resources, sets, documents, members). */
 export function useCourse(id: string) {
-  return useQuery<FullFlowCourseResponse>({
-    queryKey: ["courses", id],
+  return useQuery<FullCourseResponse>({
+    queryKey: courseKeys.course(id),
+    enabled: Boolean(id),
     queryFn: () =>
-      fetch(`/api/flows/course/${id}`).then((r) => {
+      fetch(`/api/courses/${id}`).then((r) => {
         if (!r.ok)
           throw Object.assign(new Error("Failed to load"), {
             status: r.status,

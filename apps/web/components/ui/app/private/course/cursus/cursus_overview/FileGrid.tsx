@@ -5,6 +5,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useTranslations } from "next-intl";
+import { useCourse } from "@/hooks/app/courses/useCourse";
+import { useParams } from "next/navigation";
+import { CourseDocument } from "@studo/types";
 
 const MAX_FILES = 3;
 const MAX_DAILY_USES = 3;
@@ -12,7 +15,12 @@ const RATE_LIMIT_KEY = "sven_import_usage";
 const ACCEPTED = ["application/pdf", "document/docx", "xlsx"];
 const FileGrid: React.FC = () => {
   const t = useTranslations("");
-  const [files, setFiles] = useState<File[]>([]);
+  const id = useParams().id;
+  // server-documenten = bron van waarheid
+  const documents: CourseDocument[] =
+    useCourse(id as string).data?.documents ?? [];
+  // lokaal gedropte bestanden die nog geüpload moeten worden
+  const [pending, setPending] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -50,7 +58,7 @@ const FileGrid: React.FC = () => {
         toast.error(t("error_file_types"));
         return;
       }
-      setFiles((prev) => [...prev, ...valid].slice(0, MAX_FILES));
+      setPending((prev) => [...prev, ...valid].slice(0, MAX_FILES));
     },
     [t, toast],
   );
@@ -82,12 +90,14 @@ const FileGrid: React.FC = () => {
           )}
         />
         <div className={"flex flex-row flex-wrap w-full"}>
-          <FileItem />
-          <FileItem />
-          <FileItem />
-          <FileItem />
-          <FileItem />
-          <FileItem />
+          {documents.map((file, index) => (
+            <FileItem file={file} key={file.id + index} />
+          ))}
+          {pending.length > 0 && (
+            <span className={"text-sm text-studogrey"}>
+              {pending.length} {t("pending_upload")}
+            </span>
+          )}
         </div>
       </div>
     </div>

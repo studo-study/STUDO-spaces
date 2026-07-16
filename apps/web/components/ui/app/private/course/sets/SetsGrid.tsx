@@ -8,6 +8,7 @@ import ListItems from "@/components/ui/app/private/your-files/sets/listitems";
 import Image from "next/image";
 import { useSets } from "@/hooks/app/sets/useSets";
 import { StudysetResponse, type VisualsetResponse } from "@studo/types";
+import { useParams } from "next/navigation";
 
 export interface StudySetItem {
   id: string;
@@ -26,6 +27,7 @@ export interface StudySetItem {
 }
 
 export default function CourseSetsGrid() {
+  const id = useParams().id;
   const { sets, visualsets } = useSets();
   const allSets: StudySetItem[] = useMemo(
     () => [

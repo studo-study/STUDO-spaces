@@ -31,7 +31,6 @@ export class CourseService {
         updatedAt: iso(c.updatedAt),
       }));
   }
-
   async getFullCourse(courseId: string): Promise<FullCourseResponse> {
     const course = await this.db.query.courses.findFirst({
       where: eq(courses.id, courseId),
@@ -51,32 +50,37 @@ export class CourseService {
     const examDate = course.examDate ?? course.board?.examDate ?? null;
     const institute = course.institute ?? course.board?.institute ?? null;
 
-    const tables = course.tables.map((t) => ({
-      id: t.id,
-      courseId: t.courseId,
-      title: t.title,
-      createdAt: iso(t.createdAt),
-      updatedAt: iso(t.updatedAt),
-      rows: t.rows
-        .sort((a, b) => a.rowIndex - b.rowIndex)
-        .map((r) => ({
-          id: r.id,
-          tableId: r.tableId,
-          rowIndex: r.rowIndex,
-          createdBy: r.createdBy,
-          status: r.status,
-          priority: r.priority,
-          type: r.type,
-          description: r.description,
-          resources: r.resources.map((res) => ({
-            id: res.id,
-            rowId: res.rowId,
-            link: res.link,
-          })),
-        })),
-    }));
+    // max één tabel per course
+    const src = course.tables[0] ?? null;
+    const table = src
+      ? {
+          id: src.id,
+          courseId: src.courseId,
+          title: src.title,
+          createdAt: iso(src.createdAt),
+          updatedAt: iso(src.updatedAt),
+          rows: src.rows
+            .sort((a, b) => a.rowIndex - b.rowIndex)
+            .map((r) => ({
+              id: r.id,
+              tableId: r.tableId,
+              rowIndex: r.rowIndex,
+              createdBy: r.createdBy,
+              status: r.status,
+              priority: r.priority,
+              type: r.type,
+              description: r.description,
+              dueDate: r.dueDate,
+              resources: r.resources.map((res) => ({
+                id: res.id,
+                rowId: res.rowId,
+                link: res.link,
+              })),
+            })),
+        }
+      : null;
 
-    const allRows = tables.flatMap((t) => t.rows);
+    const allRows = table?.rows ?? [];
 
     return {
       id: course.id,
@@ -92,7 +96,7 @@ export class CourseService {
       totalRows: allRows.length,
       totalDone: allRows.filter((r) => r.status === 'done').length,
       totalInProgress: allRows.filter((r) => r.status === 'doing').length,
-      tables,
+      table,
       sets: course.sets.map((s) => ({
         setId: s.setId,
         setType: s.setType,
@@ -127,4 +131,6 @@ export class CourseService {
       })),
     };
   }
+
+  async createCourse() {}
 }

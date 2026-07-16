@@ -5,18 +5,21 @@ import { Plus } from "lucide-react";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import ExtendCoursePopup from "@/components/ui/app/private/course/cursus/cursus_overview/ExtendCoursePopup";
 import { SetStateAction, useState } from "react";
+import { CourseDocument } from "@studo/types";
+import { useParams } from "next/navigation";
 
 interface FileItemProps {
-  link: string;
+  file: CourseDocument;
 }
 const FileItem: React.FC<FileItemProps> = (props) => {
-  const { link } = props;
+  const { file } = props;
+  const locale = useParams().locale;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const path = usePathname();
   return (
     <>
       <Link
-        href={path + "/" + link}
+        href={path + "/" + file.id}
         className={
           "flex min-w-1/4 items-center mb-5 group justify-center max-h-85 cursor-pointer"
         }
@@ -49,8 +52,10 @@ const FileItem: React.FC<FileItemProps> = (props) => {
           </div>
           <div className={"flex flex-row w-full justify-between"}>
             <div className={"flex flex-col w-full"}>
-              <span className={"font-semibold"}>Title</span>
-              <span className={"text-studogrey text-xs"}>date</span>
+              <span className={"font-semibold"}>{file.title}</span>
+              <span className={"text-studogrey text-xs"}>
+                {new Date(file?.createdAt as string).toLocaleDateString(locale)}
+              </span>
             </div>
           </div>
         </div>

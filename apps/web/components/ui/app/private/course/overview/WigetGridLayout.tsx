@@ -15,7 +15,6 @@ import WidgetItem from "@/components/ui/app/private/course/overview/WidgetItem";
 const COLS = GRID_COLS;
 const START_ROWS = 3;
 const MARGIN = 16;
-const FALLBACK_ROW_HEIGHT = 90;
 
 interface WigetGridLayoutProps {
   courseId: string;

@@ -22,6 +22,7 @@ import { Layers, NotebookText, Rows3, ScrollText } from "lucide-react";
 import { usePathname } from "@/i18n/routing";
 import { useCourses } from "@/hooks/app/courses/useCourses";
 import classNames from "@/utils/classnames";
+import { t } from "shiki/bundle/full";
 
 const CoursePageHeader = () => {
   const t = useTranslations("flow.course");
@@ -34,8 +35,6 @@ const CoursePageHeader = () => {
   const router = useRouter();
   const segments = usePathname().split("/");
   const path = segments.slice(0, 3).join("/");
-  // Active tab is driven by the URL, not store state, so it matches the
-  // page that is actually open on first render. `course` segment → "cursus".
   const lastSegment = segments[3] ?? "overview";
   const activeTab = (lastSegment === "course" ? "cursus" : lastSegment) as
     | "overview"
@@ -44,11 +43,7 @@ const CoursePageHeader = () => {
     | "flow";
   const [isOpen, setIsOpen] = useState(false);
 
-  if (!data) return null;
-
-  const { Icon, color } = getFlowIcon(data.icon);
-  const { name, icon } = Linkparser(data.resource);
-  const date = new Date(data.examDate);
+  const { Icon, color } = getFlowIcon(data?.icon ?? "");
 
   const openDropDown = () => {
     if (courses && courses?.length <= 1) return;
@@ -74,7 +69,7 @@ const CoursePageHeader = () => {
               <Icon size={15} />
             </div>
             <span className={"font-bold select-none text-xl"}>
-              {data.title}
+              {data?.title}
             </span>
             {courses && courses?.length > 1 && <HiChevronUpDown />}
           </div>
@@ -95,12 +90,12 @@ const CoursePageHeader = () => {
             >
               {boardData?.courses.map((course) => {
                 const { Icon, color } = getFlowIcon(course.icon);
-                const isActive = course.id === data.id;
+                const isActive = course.id === data?.id;
                 return (
                   <button
                     key={course.id}
                     onClick={() => {
-                      router.push(`/flow/${data.boardId}/${course.id}`);
+                      router.push(`/flow/${data?.boardId}/${course.id}`);
                       setIsOpen(false);
                     }}
                     className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors cursor-pointer
@@ -126,26 +121,14 @@ const CoursePageHeader = () => {
           )}
         </div>
         <div className={"w-fit flex flex-row flex-wrap items-center gap-3"}>
-          {data.examDate && ExamDateParser(date.toLocaleDateString(), t)}
-          {data.examDate &&
+          {data?.examDate && ExamDateParser(data?.examDate, t)}
+          {data?.examDate &&
             ExamStatus({
-              examDate: date.toLocaleDateString(),
-              totalItems: data.totalLength,
-              doneItems: data.totalDone,
+              examDate: data?.examDate,
+              totalRows: data?.totalRows ?? 0,
+              totalDone: data?.totalDone ?? 0,
               t,
             })}
-
-          {data.resource && (
-            <BaseTooltip content={t("link")} position={"bottom"}>
-              <Chip
-                label={name}
-                onPress={() => {
-                  if (data.resource) window.open(data.resource);
-                }}
-                iconLeft={icon}
-              />
-            </BaseTooltip>
-          )}
         </div>
       </div>
       <div className={"flex flex-1 min-w-50 flex-row items-center gap-2"}>
@@ -211,13 +194,13 @@ function ExamDateParser(
 
 function ExamStatus({
   examDate,
-  totalItems,
-  doneItems,
+  totalRows,
+  totalDone,
   t,
 }: {
   examDate: string | null;
-  totalItems: number;
-  doneItems: number;
+  totalRows: number;
+  totalDone: number;
   t: ReturnType<typeof useTranslations>;
 }) {
   if (!examDate) return null;
@@ -228,8 +211,8 @@ function ExamStatus({
 
   if (diffDays < 0) return null;
 
-  if (totalItems > 0) {
-    const remainingItems = totalItems - doneItems;
+  if (totalRows > 0) {
+    const remainingItems = totalRows - totalDone;
     const itemsPerDay = diffDays > 0 ? remainingItems / diffDays : Infinity;
 
     if (itemsPerDay > 5) {

@@ -2,33 +2,33 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type {
-  FlowBoardOverview,
-  FlowBoardResponse,
-  FullFlowCourseResponse,
+  BoardOverview,
+  CourseRow,
+  FullCourseResponse,
 } from "@studo/types";
-import { flowKeys } from "./flowKeys";
+import { courseKeys } from "../courses/courseKeys";
 
-// The flow data is primarily hydrated by the server (see FlowStoreInitializer).
-// Board/course queries stay fresh through optimistic mutation writes, so we
-// only fetch when there is no hydrated entry and never auto-refetch.
+// Course-data wordt primair door de server gehydrateerd (zie CourseStoreInitializer).
+// Board/course-queries blijven vers via optimistische mutation-writes, dus we
+// fetchen enkel wanneer er geen gehydrateerde entry is en refetchen nooit auto.
 
-/** Board id from the current route (`/board/[id]/...`). */
+/** Board id uit de huidige route (`/board/[id]/...`). */
 function useBoardId(): string | undefined {
   const params = useParams<{ id?: string }>();
   return params?.id;
 }
 
-/** Course id from the current route (`/board/[id]/[course_id]` or `/course/[id]`). */
+/** Course id uit de route (`/board/[id]/[course_id]` of `/course/[id]`). */
 function useCourseId(): string | undefined {
   const params = useParams<{ id?: string; course_id?: string }>();
   return params?.course_id ?? params?.id;
 }
 
 export function useFlowBoards() {
-  return useQuery<FlowBoardOverview[]>({
-    queryKey: flowKeys.boards,
+  return useQuery<BoardOverview[]>({
+    queryKey: courseKeys.boards,
     queryFn: async () => {
-      const res = await fetch("/api/flows/me");
+      const res = await fetch("/api/courses/boards/me");
       const json = await res.json();
       return Array.isArray(json) ? json : (json?.boards ?? []);
     },
@@ -39,18 +39,18 @@ export function useFlowBoard() {
   const id = useBoardId();
   const queryClient = useQueryClient();
   const hydrated = id
-    ? queryClient.getQueryData<FlowBoardResponse>(flowKeys.board(id))
+    ? queryClient.getQueryData<BoardOverview>(courseKeys.board(id))
     : undefined;
 
-  return useQuery<FlowBoardResponse>({
-    queryKey: flowKeys.board(id ?? ""),
+  return useQuery<BoardOverview>({
+    queryKey: courseKeys.board(id ?? ""),
     queryFn: async () => {
-      const res = await fetch(`/api/flows/board/${id}`);
+      const res = await fetch(`/api/courses/boards/${id}`);
       if (!res.ok) throw new Error(`Failed to load board ${id}`);
       return res.json();
     },
-    // Only fetch when we actually have a hydrated board for this id; avoids
-    // firing bogus requests when `id` is a course id (standalone course route).
+    // Enkel fetchen wanneer er echt een gehydrateerd board is; voorkomt bogus
+    // requests wanneer `id` een course-id is (standalone course-route).
     enabled: Boolean(id) && Boolean(hydrated),
     staleTime: Infinity,
   });
@@ -60,25 +60,27 @@ export function useFlowCourse() {
   const id = useCourseId();
   const queryClient = useQueryClient();
   const hydrated = id
-    ? queryClient.getQueryData<FullFlowCourseResponse>(flowKeys.course(id))
+    ? queryClient.getQueryData<FullCourseResponse>(courseKeys.course(id))
     : undefined;
 
-  return useQuery<FullFlowCourseResponse>({
-    queryKey: flowKeys.course(id ?? ""),
+  return useQuery<FullCourseResponse>({
+    queryKey: courseKeys.course(id ?? ""),
     queryFn: async () => {
-      const res = await fetch(`/api/flows/course/${id}`);
+      const res = await fetch(`/api/courses/${id}`);
       if (!res.ok) throw new Error(`Failed to load course ${id}`);
       return res.json();
     },
-    enabled: Boolean(id) && Boolean(hydrated),
+    enabled: Boolean(id),
+    initialData: hydrated,
     staleTime: Infinity,
   });
 }
 
-// ─── Derived helpers (replace the old zustand selectors) ────────────
-export function useCourseRows() {
+// ─── Afgeleide helpers ──────────────────────────────────────────────
+/** Rows van de (ene) course-tabel, op rowIndex gesorteerd. */
+export function useCourseRows(): CourseRow[] {
   const { data } = useFlowCourse();
-  return data?.rows ?? [];
+  return [...(data?.table?.rows ?? [])].sort((a, b) => a.rowIndex - b.rowIndex);
 }
 
 export function useCourseTotals() {

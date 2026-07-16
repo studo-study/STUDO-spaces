@@ -19,16 +19,19 @@ import ResourceIcon from "@/components/ui/app/private/course/flow/ResourceIcon";
 import { HiCalendarDays } from "react-icons/hi2";
 import { useFlowCourse } from "@/hooks/app/flow/useFlowData";
 import { useFlowRows } from "@/hooks/app/flow/useFlowMutations";
+import { useCourse } from "@/hooks/app/courses/useCourse";
 
 interface CourseRowProps {
   rowId: string;
   containsRes: boolean;
+  courseId: string;
 }
 
 const CourseRow = (props: CourseRowProps) => {
-  const { rowId, containsRes } = props;
-  const data = useFlowCourse().data?.rows.find((r) => r.id === rowId);
-  const { updateRow } = useFlowRows();
+  const { rowId, containsRes, courseId } = props;
+  const data = useCourse(courseId).data?.table?.rows.find(
+    (r) => r.id === rowId,
+  );
   const t = useTranslations("flow.course.row");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -36,8 +39,7 @@ const CourseRow = (props: CourseRowProps) => {
 
   if (!data) return null;
 
-  const onChange = (updates: Record<string, unknown>) =>
-    updateRow(rowId, updates);
+  const onChange = (updates: Record<string, unknown>) => console.log("");
 
   return (
     <div
@@ -64,7 +66,7 @@ const CourseRow = (props: CourseRowProps) => {
           }
         >
           <StatusSelector
-            status={data.status}
+            status={data.status as string}
             setStatus={(s) => onChange({ status: s })}
           />
         </div>
@@ -76,7 +78,7 @@ const CourseRow = (props: CourseRowProps) => {
           <input
             type="text"
             placeholder={"add a task..."}
-            value={data.title}
+            value={data.id}
             onChange={(e) => onChange({ title: e.target.value })}
             className={"outline-none border-none w-full h-full"}
           />
@@ -128,7 +130,7 @@ const CourseRow = (props: CourseRowProps) => {
                 label: "Task",
               },
             ]}
-            value={data.description}
+            value={data.description ?? ""}
             onChange={(d) => onChange({ description: d })}
           />
         </div>
@@ -185,7 +187,7 @@ const CourseRow = (props: CourseRowProps) => {
                   { value: "medium", label: "Medium", dot: "bg-amber-400" },
                   { value: "high", label: "High", dot: "bg-rose-500" },
                 ]}
-                value={data.priority}
+                value={data.priority as string}
                 onChange={(d) => onChange({ priority: d })}
               />
             </div>

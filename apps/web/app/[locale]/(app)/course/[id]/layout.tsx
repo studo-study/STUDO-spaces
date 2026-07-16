@@ -23,7 +23,7 @@ export default async function CoursepageLayout({
       <FlowStoreInitializer course={data} />
       <PageContainer>
         <CoursePageHeader />
-        <div className={"flex w-full h-full"}>{children}</div>
+        <div className={"flex flex-1 min-h-0 w-full"}>{children}</div>
       </PageContainer>
     </>
   );

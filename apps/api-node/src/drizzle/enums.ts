@@ -40,6 +40,7 @@ export const rowTypeEnum = pgEnum('row_type', [
   'abstract',
   'sample_exam',
   'task',
+  'set',
 ]);
 
 export const rowPriorityEnum = pgEnum('row_priority', [

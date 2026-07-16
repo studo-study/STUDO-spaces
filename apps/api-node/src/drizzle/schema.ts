@@ -774,7 +774,8 @@ export const courseTables = pgTable('course_tables', {
       onDelete: 'cascade',
       onUpdate: 'cascade',
     })
-    .notNull(),
+    .notNull()
+    .unique(),
   title: varchar('title').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
@@ -792,10 +793,12 @@ export const courseRows = pgTable('course_rows', {
   createdBy: uuid('created_by').references(() => users.id, {
     onDelete: 'set null',
   }),
+  title: varchar('title'),
   status: rowStatusEnum('status').default('not_started'),
   priority: rowPriorityEnum('priority').default('no_priority'),
   description: text('description'),
-  type: rowTypeEnum('type'),
+  type: rowTypeEnum('type').default('task'),
+  dueDate: date('due_date'),
 });
 
 export const courseResources = pgTable('course_resources', {

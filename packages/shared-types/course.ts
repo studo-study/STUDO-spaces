@@ -15,7 +15,9 @@ export type RowType =
   | "summary"
   | "abstract"
   | "sample_exam"
-  | "task";
+  | "task"
+  | "set";
+
 export type RowPriority = "no_priority" | "low" | "medium" | "high";
 export type CourseDocumentStatus =
   | "uploading"
@@ -129,6 +131,7 @@ export interface CourseRow {
   type: RowType | null;
   description: string | null;
   resources: CourseResource[];
+  dueDate: string | null;
 }
 
 export interface CourseTable {
@@ -150,9 +153,9 @@ export interface CourseResponse extends Course {
   totalInProgress?: number;
 }
 
-/** Volledige course incl. planning-tabellen, sets, documenten. */
+/** Volledige course incl. de (ene) planning-tabel, sets, documenten. */
 export interface FullCourseResponse extends CourseResponse {
-  tables: CourseTable[];
+  table: CourseTable | null; // max één tabel per course
   sets: CourseSet[];
   documents: CourseDocument[];
   members: CourseMember[];
