@@ -1506,7 +1506,12 @@
       "copy_message": "Added to clipboard"
     },
     "settings": {
-      "pop_title": "Settings"
+      "pop_title": "Settings",
+      "reset_progress": "Reset progress",
+      "reset_success": "Progress reset",
+      "submit_error": "Something went wrong, please try again",
+      "make_private": "Public set",
+      "delete_set": "Delete set"
     }
   },
   "speedy": {

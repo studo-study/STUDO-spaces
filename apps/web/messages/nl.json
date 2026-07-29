@@ -1529,6 +1529,8 @@
     "settings": {
       "pop_title": "Instellingen",
       "reset_progress": "Reset vooruitgang",
+      "reset_success": "Voortgang gereset",
+      "submit_error": "Er is iets misgegaan, probeer opnieuw",
       "make_private": "Publieke set",
       "delete_set": "Verwijder set"
     }

@@ -1,17 +1,21 @@
+import classNames from "@/utils/classnames";
+
 interface ProgressBarProps {
   cardIndex: number;
   cardLength: number;
-  queueMode: boolean;
-  queueIndex: number;
-  queueLength: number;
+  queueMode?: boolean;
+  queueIndex?: number;
+  queueLength?: number;
   subtle?: boolean;
+  position?: "left" | "right" | "top" | "bottom";
 }
 export default function ProgressBar({
   cardIndex,
   cardLength,
-  queueMode,
-  queueLength,
-  queueIndex,
+  queueMode = false,
+  queueLength = 0,
+  queueIndex = 0,
+  position = "right",
   subtle,
 }: ProgressBarProps) {
   const index = queueMode ? queueIndex : cardIndex;
@@ -19,10 +23,18 @@ export default function ProgressBar({
   const perc = length > 0 ? Math.floor((index / length) * 100) : 0;
   console.log(perc);
   return (
-    <div className={`w-full ${subtle ? "h-fit" : "h-15"} gap-2 flex flex-col`}>
+    <div
+      className={classNames(
+        `w-full gap-2 flex`,
+        position === "left" && "flex-row items-center gap-5",
+        position === "right" && "flex-row-reverse items-center gap-5",
+        position === "top" && "flex-col justify-center gap-2",
+        position === "bottom" && "flex-col-reverse justify-center gap-2",
+      )}
+    >
       {!subtle && (
-        <div className={"w-full flex items-center justify-between"}>
-          <span>{queueMode ? queueIndex + 1 : index + 1}</span>
+        <div className={"flex items-center justify-between gap-1 "}>
+          <span>{queueMode ? queueIndex + 1 : index + 1}</span>/
           <span>{queueMode ? queueLength : cardLength}</span>
         </div>
       )}

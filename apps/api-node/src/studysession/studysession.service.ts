@@ -8,7 +8,7 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import {
   sessioncards,
   sessionpins,
@@ -36,17 +36,6 @@ export class StudysessionService {
       }),
     ]);
     return { pins, cards };
-  }
-
-  /** Accumulated total view count once the current session views are folded in. */
-  private accumulateViewcount(
-    viewcount: number | null | undefined,
-    totalViewcount: number | null | undefined,
-  ): number | undefined {
-    if (viewcount && totalViewcount) {
-      return totalViewcount + viewcount;
-    }
-    return undefined;
   }
 
   async getAll(): Promise<StudysessionListResponseDto> {
@@ -106,32 +95,39 @@ export class StudysessionService {
       throw new NotFoundException('No user with this id exists');
     }
 
-    if (body.cards) {
+    if (body.cards && body.cards.length > 0) {
+      // bestaande sessioncards ophalen om het totaal via een delta bij te werken
+      const ids = body.cards.map((c) => c.id);
+      const existingCards = await this.db.query.sessioncards.findMany({
+        where: and(
+          inArray(sessioncards.id, ids),
+          eq(sessioncards.ownerId, userId),
+        ),
+      });
+      const existingById = new Map(existingCards.map((c) => [c.id, c]));
+
       for (const card of body.cards) {
-        const totalviewcount = this.accumulateViewcount(
-          card.cardViewcount,
-          card.cardTotalViewcount,
-        );
-        const updateCard = await this.db
+        const existing = existingById.get(card.id);
+        if (!existing) {
+          throw new NotFoundException('Sessioncard not found');
+        }
+        const newViewcount = card.cardViewcount ?? existing.cardViewcount;
+        // enkel positieve toename telt mee voor het levenslange totaal
+        // → herhaalde/identieke PUT is idempotent (delta 0)
+        const delta = Math.max(0, newViewcount - existing.cardViewcount);
+        await this.db
           .update(sessioncards)
           .set({
             number: card.number,
-            cardViewcount: card.cardViewcount,
-            cardTotalViewcount: totalviewcount,
+            cardViewcount: newViewcount,
+            cardTotalViewcount: existing.cardTotalViewcount + delta,
             inQueue: card.inQueue,
             mastered: card.mastered,
             timesRelearned: card.timesRelearned,
-            sessionId: card.sessionId,
-            ownerId: card.ownerId,
           })
           .where(
             and(eq(sessioncards.id, card.id), eq(sessioncards.ownerId, userId)),
-          )
-          .returning();
-
-        if (updateCard.length === 0) {
-          throw new NotFoundException('No user with this id exists');
-        }
+          );
       }
     }
 
@@ -188,45 +184,31 @@ export class StudysessionService {
 
     if (cards) {
       for (const card of cards) {
-        const totalviewcount = this.accumulateViewcount(
-          card.cardViewcount,
-          card.cardTotalViewcount,
-        );
-        const updateCard = await this.db
+        // sessie resetten: sessie-teller op 0, levenslang totaal blijft staan
+        await this.db
           .update(sessioncards)
           .set({
             cardViewcount: 0,
-            cardTotalViewcount: totalviewcount,
             inQueue: false,
             mastered: false,
           })
           .where(
             and(eq(sessioncards.id, card.id), eq(sessioncards.ownerId, userId)),
-          )
-          .returning();
-
-        if (updateCard.length === 0) {
-          throw new NotFoundException('No user with this id exists');
-        }
+          );
       }
     }
 
     if (pins) {
       for (const pin of pins) {
-        const updatePin = await this.db
+        await this.db
           .update(sessionpins)
           .set({
             inQueue: false,
             pinViewcount: 0,
-            pinTotalViewcount: pin.pinTotalViewcount,
           })
           .where(
             and(eq(sessionpins.id, pin.id), eq(sessionpins.ownerId, userId)),
-          )
-          .returning();
-        if (updatePin.length === 0) {
-          throw new NotFoundException('No user with this id exists');
-        }
+          );
       }
     }
 

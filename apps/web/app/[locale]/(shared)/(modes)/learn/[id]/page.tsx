@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import LearnController from "@/app/[locale]/(shared)/(modes)/learn/[id]/learncontroller";
+import { LearnStoreProvider } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 
 export default async function LearnPage({
   params,
@@ -15,7 +16,9 @@ export default async function LearnPage({
 
   return (
     <div className="w-full h-full flex flex-col dark:text-white items-center justify-center gap-10 scroll-hidden">
-      <LearnController data={data} />
+      <LearnStoreProvider setId={id}>
+        <LearnController data={data} />
+      </LearnStoreProvider>
     </div>
   );
 }

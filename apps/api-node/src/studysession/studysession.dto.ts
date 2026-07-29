@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNumber } from 'nestjs-swagger-dto';
-import { IsUUID } from 'class-validator';
+import { IsUUID, IsOptional, IsArray, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { SessionPinResponseDTO, updateSessionPinDTO } from './sessionpin.dto';
 import {
@@ -15,7 +15,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'started_at',
     optional: true,
   })
   startedAt?: string;
@@ -26,7 +25,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsNumber({
-    name: 'duration_min',
     type: 'integer',
     optional: true,
   })
@@ -38,7 +36,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'second_last_login',
     optional: true,
   })
   secondLastLogin?: string;
@@ -49,7 +46,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'last_login',
     optional: true,
   })
   lastLogin?: string;
@@ -60,7 +56,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'ended_at',
     optional: true,
   })
   endedAt?: string;
@@ -73,7 +68,6 @@ export class UpdateStudysessionDto {
   })
   @Type(() => Number)
   @IsNumber({
-    name: 'index',
     type: 'integer',
     min: 0,
     optional: true,
@@ -86,7 +80,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsNumber({
-    name: 'accuracy',
     type: 'integer',
     optional: true,
   })
@@ -98,7 +91,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsNumber({
-    name: 'average_response_time',
     type: 'integer',
     optional: true,
   })
@@ -110,7 +102,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsNumber({
-    name: 'longest_focus_streak',
     type: 'integer',
     optional: true,
   })
@@ -122,7 +113,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'last_studied',
     optional: true,
   })
   lastStudied?: string;
@@ -132,11 +122,9 @@ export class UpdateStudysessionDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
+  @IsOptional()
   @IsUUID()
-  @IsString({
-    name: 'user_id',
-  })
-  userId: string;
+  userId?: string;
 
   @ApiProperty({
     description: 'Laatst gezien item',
@@ -145,8 +133,8 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsUUID()
+  @IsOptional()
   @IsString({
-    name: 'last_seen',
     optional: true,
   })
   lastSeen?: string;
@@ -156,6 +144,10 @@ export class UpdateStudysessionDto {
     type: [updateSessionCardDTO],
     required: false,
   })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => updateSessionCardDTO)
   cards?: updateSessionCardDTO[];
 
   @ApiProperty({
@@ -163,6 +155,10 @@ export class UpdateStudysessionDto {
     type: [updateSessionPinDTO],
     required: false,
   })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => updateSessionPinDTO)
   pins?: updateSessionPinDTO[];
 }
 

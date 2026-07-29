@@ -62,7 +62,7 @@ export default function IconBrowser() {
         />
       </div>
 
-      <div className={"flex-1 min-h-0 overflow-auto"}>
+      <div className={"flex-1 min-h-0 overflow-hidden"}>
         <div className={"grid grid-cols-7 p-4 gap-3"}>
           {paged.map(([name, Icon]) => (
             <button

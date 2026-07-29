@@ -626,7 +626,12 @@
       "copy_message": "Copié dans le presse-papiers"
     },
     "settings": {
-      "pop_title": "Paramètres"
+      "pop_title": "Paramètres",
+      "reset_progress": "Réinitialiser la progression",
+      "reset_success": "Progression réinitialisée",
+      "submit_error": "Une erreur s'est produite, veuillez réessayer",
+      "make_private": "Ensemble public",
+      "delete_set": "Supprimer l'ensemble"
     }
   },
   "svenimport": {

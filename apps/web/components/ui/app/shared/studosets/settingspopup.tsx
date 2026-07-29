@@ -6,26 +6,41 @@ import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
 import { useRouter } from "@/i18n/routing";
 import CheckboxField from "@/components/ui/design_system/input/CheckBox";
 import { useUpdateStudyset } from "@/hooks/app/sets/useUpdateStudoset";
+import { useResetSession } from "@/hooks/app/session/useResetSession";
 import { useToast } from "@/components/providers/app/ToastProvider";
 
 interface SettingsPopupProps {
   isOwner: boolean;
   id: string;
   isPrivateSet: boolean;
+  sessionId?: string;
 }
 export default function SettingsPopup({
   isOwner,
   id,
   isPrivateSet,
+  sessionId,
 }: SettingsPopupProps) {
   const t = useTranslations("popup.settings");
   const { mutate: deleteSet } = useDeleteStudoset();
   const mutation = useUpdateStudyset(id);
+  const { mutate: resetSession, isPending: isResetting } = useResetSession(
+    sessionId ?? "",
+    id,
+  );
   const Router = useRouter();
   const toast = useToast();
   const toggleDelete = () => {
     deleteSet(id);
     Router.push("/home");
+  };
+
+  const toggleResetProgress = () => {
+    if (!sessionId) return;
+    resetSession(undefined, {
+      onSuccess: () => toast.success(t("reset_success")),
+      onError: () => toast.error(t("submit_error")),
+    });
   };
 
   const togglePrivate = async () => {
@@ -65,8 +80,10 @@ export default function SettingsPopup({
           )}
           <button
             type={"button"}
+            onClick={toggleResetProgress}
+            disabled={!sessionId || isResetting}
             className={
-              "flex-1 w-full min-w-full items-center border-2 font-bold border-rose-600/50 hover:text-rose-600 hover:border-rose-600 text-rose-600/50 cursor-pointer transition-all active:scale-95 duration-300 min-h-10 rounded-lg"
+              "flex-1 w-full min-w-full items-center border-2 font-bold border-rose-600/50 hover:text-rose-600 hover:border-rose-600 text-rose-600/50 cursor-pointer transition-all active:scale-95 duration-300 min-h-10 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
             }
           >
             {t("reset_progress")}

@@ -9,6 +9,52 @@ const cardId3 = '0c3e9782-0978-4348-bf33-fce99c88c769';
 const cardId4 = '30aee87f-d44b-490a-9839-72ca553c9ab4';
 const studySetId1 = '63c1725a-3723-4691-98e1-b8630cb1bdab';
 const studySetId2 = '2e145267-e5d7-48d0-a605-09c29157358e';
+const studySetId3 = 'a4f2e8c1-9b3d-4e6a-8f2c-1d5e7a9b0c3e';
+
+const EN_NL_PAIRS: [string, string][] = [
+  ['House', 'Huis'],
+  ['Dog', 'Hond'],
+  ['Cat', 'Kat'],
+  ['Water', 'Water'],
+  ['Bread', 'Brood'],
+  ['Apple', 'Appel'],
+  ['Book', 'Boek'],
+  ['Table', 'Tafel'],
+  ['Chair', 'Stoel'],
+  ['Car', 'Auto'],
+  ['Tree', 'Boom'],
+  ['Flower', 'Bloem'],
+  ['Sun', 'Zon'],
+  ['Moon', 'Maan'],
+  ['Star', 'Ster'],
+  ['Friend', 'Vriend'],
+  ['Family', 'Familie'],
+  ['School', 'School'],
+  ['Teacher', 'Leraar'],
+  ['Student', 'Student'],
+  ['City', 'Stad'],
+  ['Street', 'Straat'],
+  ['Window', 'Raam'],
+  ['Door', 'Deur'],
+  ['Kitchen', 'Keuken'],
+  ['Garden', 'Tuin'],
+  ['Bicycle', 'Fiets'],
+  ['Train', 'Trein'],
+  ['Money', 'Geld'],
+  ['Time', 'Tijd'],
+];
+
+const ENNL_CARDS_SEED = EN_NL_PAIRS.map(([term, definition], i) => ({
+  id: `b0000000-0000-4000-8000-${String(i + 1).padStart(12, '0')}`,
+  term,
+  definition,
+  number: i + 1,
+  createdAt: '2024-10-01T08:15:00.000Z',
+  updatedAt: '2024-10-01T08:15:00.000Z',
+  setId: studySetId3,
+  ownerId: userId1,
+  termContentType: 'text',
+}));
 
 export const CARDS_SEED = [
   {
@@ -56,6 +102,7 @@ export const CARDS_SEED = [
     ownerId: userId2,
     termContentType: 'text',
   },
+  ...ENNL_CARDS_SEED,
 ];
 
 export async function seedCards(drizzle: DatabaseProvider) {

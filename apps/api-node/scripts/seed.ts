@@ -74,7 +74,41 @@ export async function seedStudo(
 
     const studySetId1 = uuidv6();
     const studySetId2 = uuidv6();
+    const studySetId3 = uuidv6();
     const visualSetId1 = uuidv6();
+
+    const EN_NL_PAIRS: [string, string][] = [
+      ['House', 'Huis'],
+      ['Dog', 'Hond'],
+      ['Cat', 'Kat'],
+      ['Water', 'Water'],
+      ['Bread', 'Brood'],
+      ['Apple', 'Appel'],
+      ['Book', 'Boek'],
+      ['Table', 'Tafel'],
+      ['Chair', 'Stoel'],
+      ['Car', 'Auto'],
+      ['Tree', 'Boom'],
+      ['Flower', 'Bloem'],
+      ['Sun', 'Zon'],
+      ['Moon', 'Maan'],
+      ['Star', 'Ster'],
+      ['Friend', 'Vriend'],
+      ['Family', 'Familie'],
+      ['School', 'School'],
+      ['Teacher', 'Leraar'],
+      ['Student', 'Student'],
+      ['City', 'Stad'],
+      ['Street', 'Straat'],
+      ['Window', 'Raam'],
+      ['Door', 'Deur'],
+      ['Kitchen', 'Keuken'],
+      ['Garden', 'Tuin'],
+      ['Bicycle', 'Fiets'],
+      ['Train', 'Trein'],
+      ['Money', 'Geld'],
+      ['Time', 'Tijd'],
+    ];
 
     const classroomId1 = uuidv6();
     const classroomId2 = uuidv6();
@@ -318,6 +352,19 @@ export async function seedStudo(
         imgUrl: 'https://i.pravatar.cc/150?img=2',
         displayName: 'Paul ALlan',
       },
+      {
+        id: studySetId3,
+        title: 'English - Dutch Vocabulary',
+        studoset: true,
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'nl',
+        createdAt: '2024-10-01T08:00:00.000Z',
+        lastUpdated: '2024-10-01T08:00:00.000Z',
+        publicSet: true,
+        userId: userId1,
+        displayName: 'Studo Admin',
+        imgUrl: 'https://i.pravatar.cc/150?img=1',
+      },
     ]);
     console.log('Studysets seeded\n');
 
@@ -387,6 +434,17 @@ export async function seedStudo(
         setId: studySetId2,
         ownerId: userId2,
       },
+      ...EN_NL_PAIRS.map(([term, definition], i) => ({
+        id: uuidv6(),
+        term,
+        definition,
+        number: i + 1,
+        termContentType: 'text',
+        createdAt: '2024-10-01T08:15:00.000Z',
+        updatedAt: '2024-10-01T08:15:00.000Z',
+        setId: studySetId3,
+        ownerId: userId1,
+      })),
     ]);
     console.log('Cards seeded\n');
 

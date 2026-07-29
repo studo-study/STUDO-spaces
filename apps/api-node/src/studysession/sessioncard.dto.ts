@@ -8,7 +8,7 @@ export class updateSessionCardDTO {
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de kaart',
   })
-  @IsString({ name: 'id', maxLength: 64 })
+  @IsString({ maxLength: 64 })
   @IsNotEmpty()
   id: string;
 
@@ -16,24 +16,21 @@ export class updateSessionCardDTO {
     example: 1,
     description: 'Nummer van de kaart in de sessie',
   })
-  @IsNumber({ name: 'number' })
-  @IsOptional()
+  @IsNumber({ optional: true })
   number?: number;
 
   @ApiPropertyOptional({
     example: 3,
     description: 'Aantal keer bekeken in deze sessie',
   })
-  @IsNumber({ name: 'card_viewcount' })
-  @IsOptional()
+  @IsNumber({ optional: true })
   cardViewcount?: number;
 
   @ApiPropertyOptional({
     example: 15,
     description: 'Totaal aantal keer bekeken',
   })
-  @IsNumber({ name: 'card_total_viewcount' })
-  @IsOptional()
+  @IsNumber({ optional: true })
   cardTotalViewcount?: number;
 
   @ApiPropertyOptional({
@@ -56,24 +53,21 @@ export class updateSessionCardDTO {
     example: 2,
     description: 'Aantal keer opnieuw geleerd',
   })
-  @IsNumber({ name: 'times_relearned' })
-  @IsOptional()
+  @IsNumber({ optional: true })
   timesRelearned?: number;
 
   @ApiPropertyOptional({
     example: '1f0cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de sessie',
   })
-  @IsString({ name: 'session_id', maxLength: 64 })
-  @IsOptional()
+  @IsString({ maxLength: 64, optional: true })
   sessionId?: string;
 
   @ApiPropertyOptional({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de eigenaar',
   })
-  @IsString({ name: 'owner_id', maxLength: 64 })
-  @IsOptional()
+  @IsString({ maxLength: 64, optional: true })
   ownerId?: string;
 }
 

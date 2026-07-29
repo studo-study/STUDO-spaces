@@ -1,6 +1,9 @@
 import ContextMenuHeader from "@/components/ui/app/private/course_context_menu/ContextMenuHeader";
 import { SwitchToggle } from "@/components/ui/design_system/toggle/Toggle";
-import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
+import {
+  DEFAULT_LEARN_SETTINGS,
+  useLearnStore,
+} from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import { useTranslations } from "next-intl";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
@@ -27,6 +30,18 @@ type LearnSettingsType = {
 const LearnSettings = () => {
   const t = useTranslations("learnsettings");
   const learnSettings = useLearnStore((state) => state.learnSettings);
+  const handleReset = () => {
+    learnSettings.setAnswerType("typing");
+    learnSettings.setAnswerWith("term");
+    learnSettings.setPomodoro(false);
+    learnSettings.setTwentyMode(false);
+    learnSettings.setTwentyCount("");
+    learnSettings.setTwentyMode(false);
+    learnSettings.setRevisionCount(2);
+    learnSettings.setStrictnessLevel(2);
+  };
+
+  const isDifferent = learnSettings != DEFAULT_LEARN_SETTINGS;
   const LearnSettingsSections: LearnSettingsType[] = [
     {
       label: "learning",
@@ -160,7 +175,12 @@ const LearnSettings = () => {
       </div>
       <div className={"flex p-8 flex-1 min-h-0 flex-col items-end justify-end"}>
         <div>
-          <BaseButton variant={"danger"} label={t("reset_progress")} />
+          <BaseButton
+            disabled={!isDifferent}
+            variant={"danger"}
+            label={t("reset_progress")}
+            onClick={handleReset}
+          />
         </div>
       </div>
     </div>

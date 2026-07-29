@@ -161,6 +161,7 @@ export default function StudosetView({ id }: viewProps) {
               isOwner={isOwner}
               id={id}
               isPrivateSet={data.publicSet}
+              sessionId={data.session?.id}
             />
           </BaseTooltip>
         </div>
