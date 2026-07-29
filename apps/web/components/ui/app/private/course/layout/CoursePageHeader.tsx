@@ -27,7 +27,6 @@ const CoursePageHeader = () => {
   const tRow = useTranslations("flow.course.row");
   const courses = useCourses().data;
   const data = useFlowCourse().data;
-  const boardData = useFlowBoard().data;
   const setCourseView = useFlowStore((s) => s.setCourseView);
   const { totalLength, done, inProgress } = useCourseTotals();
   const router = useRouter();

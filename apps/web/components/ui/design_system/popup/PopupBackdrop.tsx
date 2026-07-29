@@ -1,6 +1,5 @@
 "use client";
 import { createPortal } from "react-dom";
-import { useEffect, useState } from "react";
 import usePortalMounted from "@/components/ui/design_system/popup/useSyncExternalStore";
 
 interface PopupBackdropProps extends React.HTMLAttributes<HTMLDivElement> {

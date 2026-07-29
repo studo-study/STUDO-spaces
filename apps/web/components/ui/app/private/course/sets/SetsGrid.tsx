@@ -5,7 +5,6 @@ import SetSearch from "@/components/ui/app/private/your-files/sets/search";
 import ListItems from "@/components/ui/app/private/your-files/sets/listitems";
 import { useSets } from "@/hooks/app/sets/useSets";
 import { StudysetResponse, type VisualsetResponse } from "@studo/types";
-import { useParams } from "next/navigation";
 
 export interface StudySetItem {
   id: string;

@@ -2,7 +2,6 @@
 import FileItem from "./FileItem";
 import classNames from "@/utils/classnames";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useTranslations } from "next-intl";
 import { useCourse } from "@/hooks/app/courses/useCourse";
@@ -28,25 +27,10 @@ const FileGrid: React.FC = () => {
 
   useEffect(() => {
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       abortControllerRef.current?.abort();
     };
   }, []);
-
-  const getRateLimitData = () => {
-    try {
-      const stored = localStorage.getItem(RATE_LIMIT_KEY);
-      if (!stored) return { count: 0, date: "" };
-      return JSON.parse(stored) as { count: number; date: string };
-    } catch {
-      return { count: 0, date: "" };
-    }
-  };
-
-  const checkRateLimit = () => {
-    const { count, date } = getRateLimitData();
-    if (date !== new Date().toDateString()) return true;
-    return count < MAX_DAILY_USES;
-  };
 
   const addFiles = useCallback(
     (incoming: FileList | File[]) => {
