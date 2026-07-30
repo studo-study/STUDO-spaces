@@ -19,7 +19,7 @@ const PopupBackdrop = (props: PopupBackdropProps) => {
   return createPortal(
     <div
       onClick={() => setIsOpen(false)}
-      className={`fixed inset-0 flex items-baseline justify-center pt-80 w-screen bg-black/50 h-screen z-[99999] ${blur && "backdrop-blur-xl"}
+      className={`fixed inset-0 flex items-baseline justify-center pt-80 w-screen bg-black/50 h-screen z-99999 ${blur && "backdrop-blur-xl"}
         ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
     >
       {children}
