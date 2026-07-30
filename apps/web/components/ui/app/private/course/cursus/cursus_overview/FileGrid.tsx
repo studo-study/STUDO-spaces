@@ -9,8 +9,6 @@ import { useParams } from "next/navigation";
 import { CourseDocument } from "@studo/types";
 
 const MAX_FILES = 3;
-const MAX_DAILY_USES = 3;
-const RATE_LIMIT_KEY = "sven_import_usage";
 const ACCEPTED = ["application/pdf", "document/docx", "xlsx"];
 const FileGrid: React.FC = () => {
   const t = useTranslations("");

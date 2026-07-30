@@ -1,12 +1,11 @@
 "use client";
-import { useCallback, useEffect, useMemo } from "react";
-import { Card } from "@/types/types";
+import { useEffect } from "react";
 import CardItem from "@/components/ui/app/shared/studosets/carditem";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useTranslations } from "next-intl";
 import { MdEdit } from "react-icons/md";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
-import { CardResponse, SessionCardResponse } from "@studo/types";
+import { CardResponse } from "@studo/types";
 
 interface CardListProps {
   cards: CardResponse[] | undefined;

@@ -10,11 +10,7 @@ import { IoWarningOutline } from "react-icons/io5";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFlowStore } from "@/store/slices/flow/flowStore";
-import {
-  useFlowBoard,
-  useFlowCourse,
-  useCourseTotals,
-} from "@/hooks/app/flow/useFlowData";
+import { useFlowCourse, useCourseTotals } from "@/hooks/app/flow/useFlowData";
 import CourseItemProgress from "@/components/ui/app/private/course/layout/CourseItemProgress";
 import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
 import { Layers, NotebookText, Rows3, ScrollText } from "lucide-react";
