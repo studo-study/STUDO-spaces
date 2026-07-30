@@ -1,5 +1,5 @@
 "use client";
-import { FlowCourseResponse } from "@studo/types";
+import { CourseResponse } from "@studo/types";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
 import CourseItemProgress from "@/components/ui/app/private/course/layout/CourseItemProgress";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ import { CgDanger } from "react-icons/cg";
 import { BsExclamationTriangle } from "react-icons/bs";
 
 interface CourseItemProps {
-  data: FlowCourseResponse;
+  data: CourseResponse;
 }
 
 const FlowCourseItem = (props: CourseItemProps) => {
@@ -72,9 +72,9 @@ const FlowCourseItem = (props: CourseItemProps) => {
       </div>
       <div className={"flex flex-col gap-3"}>
         <CourseItemProgress
-          total_in_progress={data.totalInProgress}
-          total_length={data.totalLength}
-          total_done={data.totalDone}
+          total_in_progress={data.totalInProgress ?? 0}
+          total_length={data.totalLength ?? 0}
+          total_done={data.totalDone ?? 0}
         />
         <div
           className={
@@ -86,8 +86,8 @@ const FlowCourseItem = (props: CourseItemProps) => {
           </span>
           {ExamChip({
             examDate: data.examDate,
-            totalItems: data.totalLength,
-            doneItems: data.totalDone,
+            totalItems: data.totalLength ?? 0,
+            doneItems: data.totalDone ?? 0,
           })}
         </div>
       </div>

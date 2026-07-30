@@ -5,14 +5,14 @@ import { SegmentedControls } from "@/components/ui/design_system/segmentedcontro
 import { usePathname } from "@/i18n/routing";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useTranslations } from "next-intl";
-import { FlowCourseResponse, FullStudysetResponse } from "@studo/types";
+import { CourseResponse, FullStudysetResponse } from "@studo/types";
 import Image from "next/image";
 import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import { getCoverImage } from "@/utils/getCoverImage";
 import { Payload } from "@/components/ui/app/private/course_context_menu/chat/ChatInput";
 
 interface EntityPickerItemProps {
-  item: FullStudysetResponse | FlowCourseResponse;
+  item: FullStudysetResponse | CourseResponse;
   type: "studoset" | "course";
   payLoad: Payload[];
   setPayload: React.Dispatch<SetStateAction<Payload[]>>;
@@ -45,12 +45,8 @@ const EntityPickerItem: React.FC<EntityPickerItemProps> = (props) => {
         isAdded ? "border-studoblue" : "border-studoborder/30",
       )}
     >
-      {type === "course" && "flowcourseIcon" in item && item.flowcourseIcon ? (
-        <FlowIcon
-          icon={item.flowcourseIcon}
-          size={22}
-          className="w-5 h-5 rounded-lg"
-        />
+      {type === "course" && "icon" in item && item.icon ? (
+        <FlowIcon icon={item.icon} size={22} className="w-5 h-5 rounded-lg" />
       ) : (
         <Image
           width={32}

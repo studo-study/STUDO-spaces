@@ -132,6 +132,12 @@ export interface CourseRow {
   description: string | null;
   resources: CourseResource[];
   dueDate: string | null;
+  // Optioneel: door de client gebruikte velden (nog niet door de API geleverd).
+  title?: string;
+  studosetId?: string | null;
+  visualsetId?: string | null;
+  courseLink?: string | null;
+  summaryLink?: string | null;
 }
 
 export interface CourseTable {
@@ -149,8 +155,10 @@ export interface CourseTable {
 export interface CourseResponse extends Course {
   addedByDisplayName?: string;
   totalRows?: number;
+  totalLength?: number;
   totalDone?: number;
   totalInProgress?: number;
+  lessonDays?: string | null;
 }
 
 /** Volledige course incl. de (ene) planning-tabel, sets, documenten. */
@@ -161,10 +169,29 @@ export interface FullCourseResponse extends CourseResponse {
   members: CourseMember[];
 }
 
+/** Gedeelde eigenaar/planning-velden (nog niet altijd door de API geleverd). */
+interface BoardMeta {
+  ownerId?: string;
+  ownerName?: string;
+  ownerPfp?: string;
+  year?: string | null;
+  semester?: string | null;
+  school?: string | null;
+  progress?: number;
+  totalDone?: number;
+  totalInProgress?: number;
+  totalLength?: number;
+}
+
 /** Board-overzicht met de courses eronder. */
-export interface BoardOverview extends Board {
+export interface BoardOverview extends Board, BoardMeta {
   courses: CourseResponse[];
   members: BoardMember[];
+}
+
+/** Compacte board-kaart (home): `courses` is het aantal, niet de lijst. */
+export interface BoardSummary extends Board, BoardMeta {
+  courses: number;
 }
 
 export interface CoursesResponse {
@@ -173,6 +200,10 @@ export interface CoursesResponse {
 
 export interface BoardsResponse {
   boards: BoardOverview[];
+}
+
+export interface MyBoardsResponse {
+  boards: BoardSummary[];
 }
 
 // --- Create / update payloads ---
@@ -185,17 +216,26 @@ export interface CreateCourse {
   academyYear?: number;
   examDate?: string;
   institute?: string;
+  description?: string;
+  resource?: string;
+  lessonDays?: string;
 }
 
 export type UpdateCourse = Partial<CreateCourse>;
 
 export interface CreateCourseRow {
-  tableId: string;
-  rowIndex: number;
+  tableId?: string;
+  courseId?: string;
+  rowIndex?: number;
+  orderIndex?: number;
+  title?: string;
   type?: RowType;
   status?: RowStatus;
   priority?: RowPriority;
   description?: string;
+  dueDate?: string;
+  studosetId?: string;
+  visualsetId?: string;
 }
 
 export type UpdateCourseRow = Partial<Omit<CreateCourseRow, "tableId">>;

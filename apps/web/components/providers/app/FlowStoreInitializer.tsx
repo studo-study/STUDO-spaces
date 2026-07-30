@@ -2,15 +2,15 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { flowKeys } from "@/hooks/app/flow/flowKeys";
 import type {
-  FlowBoardOverview,
-  FlowBoardResponse,
-  FullFlowCourseResponse,
+  BoardSummary,
+  BoardOverview,
+  FullCourseResponse,
 } from "@studo/types";
 
 interface Props {
-  boards?: FlowBoardOverview[];
-  board?: FlowBoardResponse;
-  course?: FullFlowCourseResponse;
+  boards?: BoardSummary[];
+  board?: BoardOverview;
+  course?: FullCourseResponse;
 }
 
 // Seeds the react-query cache with data fetched by the server components, so

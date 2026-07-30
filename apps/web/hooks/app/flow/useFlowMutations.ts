@@ -1,15 +1,15 @@
 "use client";
 import { useQueryClient, type QueryClient } from "@tanstack/react-query";
 import type {
-  FlowBoardOverview,
-  FlowBoardResponse,
-  FlowCourseResponse,
-  FullFlowCourseResponse,
-  FlowRowResponse,
-  CreateFlowRow,
-  UpdateFlowRow,
-  Priority,
-  Status,
+  BoardSummary,
+  BoardOverview,
+  CourseResponse,
+  FullCourseResponse,
+  CourseRow,
+  CreateCourseRow,
+  UpdateCourseRow,
+  RowPriority,
+  RowStatus,
 } from "@studo/types";
 import { flowKeys } from "./flowKeys";
 import { useFlowCourse } from "./useFlowData";
@@ -63,25 +63,21 @@ function mergeDirty(
 function patchCourse(
   qc: QueryClient,
   courseId: string,
-  updater: (c: FullFlowCourseResponse) => FullFlowCourseResponse,
+  updater: (c: FullCourseResponse) => FullCourseResponse,
 ) {
-  qc.setQueryData<FullFlowCourseResponse>(flowKeys.course(courseId), (old) =>
+  qc.setQueryData<FullCourseResponse>(flowKeys.course(courseId), (old) =>
     old ? updater(old) : old,
   );
 }
 
 /** Recompute course totals and roll them up into the parent board cache. */
 function syncBoardTotals(qc: QueryClient, courseId: string) {
-  const course = qc.getQueryData<FullFlowCourseResponse>(
-    flowKeys.course(courseId),
-  );
+  const course = qc.getQueryData<FullCourseResponse>(flowKeys.course(courseId));
   if (!course?.boardId) return;
-  const board = qc.getQueryData<FlowBoardResponse>(
-    flowKeys.board(course.boardId),
-  );
+  const board = qc.getQueryData<BoardOverview>(flowKeys.board(course.boardId));
   if (!board) return;
 
-  const rows = course.rows;
+  const rows = course.table?.rows ?? [];
   const totalDone = rows.filter((r) => r.status === "done").length;
   const totalInProgress = rows.filter((r) => r.status === "doing").length;
   const totalLength = rows.length;
@@ -90,12 +86,15 @@ function syncBoardTotals(qc: QueryClient, courseId: string) {
     c.id === course.id ? { ...c, totalDone, totalInProgress, totalLength } : c,
   );
 
-  qc.setQueryData<FlowBoardResponse>(flowKeys.board(course.boardId), {
+  qc.setQueryData<BoardOverview>(flowKeys.board(course.boardId), {
     ...board,
     courses: updatedCourses,
-    totalDone: updatedCourses.reduce((s, c) => s + c.totalDone, 0),
-    totalInProgress: updatedCourses.reduce((s, c) => s + c.totalInProgress, 0),
-    totalLength: updatedCourses.reduce((s, c) => s + c.totalLength, 0),
+    totalDone: updatedCourses.reduce((s, c) => s + (c.totalDone ?? 0), 0),
+    totalInProgress: updatedCourses.reduce(
+      (s, c) => s + (c.totalInProgress ?? 0),
+      0,
+    ),
+    totalLength: updatedCourses.reduce((s, c) => s + (c.totalLength ?? 0), 0),
   });
 }
 
@@ -107,7 +106,7 @@ export function useFlowRows() {
 
   const addRow = async () => {
     if (!courseId) return;
-    const current = qc.getQueryData<FullFlowCourseResponse>(
+    const current = qc.getQueryData<FullCourseResponse>(
       flowKeys.course(courseId),
     );
     if (!current) return;
@@ -119,27 +118,32 @@ export function useFlowRows() {
         courseId,
         title: "",
         status: "not_started",
-        orderIndex: current.rows.length,
-      } satisfies CreateFlowRow),
+        orderIndex: current.table?.rows.length ?? 0,
+      } satisfies CreateCourseRow),
     });
     if (!res.ok) return;
-    const newRow: FlowRowResponse = await res.json();
-    patchCourse(qc, courseId, (c) => ({ ...c, rows: [...c.rows, newRow] }));
+    const newRow: CourseRow = await res.json();
+    patchCourse(qc, courseId, (c) => ({
+      ...c,
+      table: c.table
+        ? { ...c.table, rows: [...c.table.rows, newRow] }
+        : c.table,
+    }));
     syncBoardTotals(qc, courseId);
   };
 
   const updateRow = (rowId: string, updates: Record<string, unknown>) => {
     if (!courseId) return;
     const rest = updates;
-    const payload: UpdateFlowRow = {};
+    const payload: UpdateCourseRow = {};
     if (rest.title !== undefined) payload.title = rest.title as string;
     if (rest.order_index !== undefined)
       payload.orderIndex = rest.order_index as number;
     if (rest.description !== undefined)
       payload.description = rest.description as string;
     if (rest.priority !== undefined)
-      payload.priority = rest.priority as Priority;
-    if (rest.status !== undefined) payload.status = rest.status as Status;
+      payload.priority = rest.priority as RowPriority;
+    if (rest.status !== undefined) payload.status = rest.status as RowStatus;
     if (rest.due_date !== undefined) payload.dueDate = rest.due_date as string;
     if (rest.studoset_id !== undefined)
       payload.studosetId = rest.studoset_id as string;
@@ -186,7 +190,14 @@ export function useFlowRows() {
     // Optimistic UI update
     patchCourse(qc, courseId, (c) => ({
       ...c,
-      rows: c.rows.map((r) => (r.id === rowId ? { ...r, ...updates } : r)),
+      table: c.table
+        ? {
+            ...c.table,
+            rows: c.table.rows.map((r) =>
+              r.id === rowId ? { ...r, ...updates } : r,
+            ),
+          }
+        : c.table,
     }));
     if ("status" in updates) syncBoardTotals(qc, courseId);
   };
@@ -202,7 +213,9 @@ export function useFlowRows() {
 
     patchCourse(qc, courseId, (c) => ({
       ...c,
-      rows: c.rows.filter((r) => r.id !== rowId),
+      table: c.table
+        ? { ...c.table, rows: c.table.rows.filter((r) => r.id !== rowId) }
+        : c.table,
     }));
 
     fetch(`/api/flows/rows/${rowId}`, { method: "DELETE" });
@@ -216,28 +229,28 @@ export function useFlowRows() {
 export function useFlowBoardMutations() {
   const qc = useQueryClient();
 
-  const addBoard = (board: FlowBoardOverview) => {
-    qc.setQueryData<FlowBoardOverview[]>(flowKeys.boards, (old) =>
+  const addBoard = (board: BoardSummary) => {
+    qc.setQueryData<BoardSummary[]>(flowKeys.boards, (old) =>
       old ? [...old, board] : [board],
     );
   };
 
   const removeBoard = (id: string) => {
-    qc.setQueryData<FlowBoardOverview[]>(flowKeys.boards, (old) =>
+    qc.setQueryData<BoardSummary[]>(flowKeys.boards, (old) =>
       old ? old.filter((b) => b.id !== id) : old,
     );
     fetch(`/api/flows/${id}`, { method: "DELETE" });
   };
 
-  const addCourse = (course: FlowCourseResponse) => {
+  const addCourse = (course: CourseResponse) => {
     if (!course.boardId) return;
-    qc.setQueryData<FlowBoardResponse>(flowKeys.board(course.boardId), (old) =>
+    qc.setQueryData<BoardOverview>(flowKeys.board(course.boardId), (old) =>
       old ? { ...old, courses: [...old.courses, course] } : old,
     );
   };
 
   const removeCourse = (courseId: string, boardId: string) => {
-    qc.setQueryData<FlowBoardResponse>(flowKeys.board(boardId), (old) =>
+    qc.setQueryData<BoardOverview>(flowKeys.board(boardId), (old) =>
       old
         ? { ...old, courses: old.courses.filter((c) => c.id !== courseId) }
         : old,

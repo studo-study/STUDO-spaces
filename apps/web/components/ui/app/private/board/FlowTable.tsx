@@ -1,10 +1,10 @@
 "use client";
-import { FlowCourseResponse } from "@studo/types";
+import { CourseResponse } from "@studo/types";
 import CreateFlowCourseButton from "@/components/ui/app/private/board/CreateFlowCourseButton";
 import FlowCourseItem from "@/components/ui/app/private/board/FlowCourseItem";
 
 interface FlowTableProps {
-  data: FlowCourseResponse[];
+  data: CourseResponse[];
 }
 
 const FlowTable = (props: FlowTableProps) => {

@@ -20,9 +20,9 @@ export default function Page() {
         {data.totalLength !== 0 && data.totalInProgress !== 0 && (
           <div className={"flex flex-row items-center gap-2"}>
             <CourseItemProgress
-              total_done={data.totalDone}
-              total_in_progress={data.totalInProgress}
-              total_length={data.totalLength}
+              total_done={data.totalDone ?? 0}
+              total_in_progress={data.totalInProgress ?? 0}
+              total_length={data.totalLength ?? 0}
             />
             <span
               className={

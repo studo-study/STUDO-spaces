@@ -117,10 +117,10 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
       title,
       icon: selectedIcon,
       description,
-      exam_date: examDate,
-      board_id: board_id ?? undefined,
+      examDate,
+      boardId: board_id ?? undefined,
       resource: link,
-      lesson_days: days.join("-"),
+      lessonDays: days.join("-"),
     });
 
     addCourse(data);

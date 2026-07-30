@@ -1,5 +1,5 @@
 "use client";
-import { FlowBoardOverview } from "@studo/types";
+import { BoardOverview } from "@studo/types";
 import { Link } from "@/i18n/routing";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
@@ -11,7 +11,7 @@ import { useFlowBoardMutations } from "@/hooks/app/flow/useFlowMutations";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 
 interface FlowGridItemProps {
-  item: FlowBoardOverview;
+  item: BoardOverview;
 }
 export default function FlowGridItem(props: FlowGridItemProps) {
   const { item } = props;

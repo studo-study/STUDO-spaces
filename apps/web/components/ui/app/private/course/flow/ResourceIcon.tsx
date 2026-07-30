@@ -1,12 +1,12 @@
 "use client";
-import { FlowResourceResponse } from "@studo/types";
+import { CourseResource } from "@studo/types";
 import Image from "next/image";
 import { useState } from "react";
 import { Linkparser } from "@/components/ui/app/private/course/flow/utils/linkparser";
 import { IoIosClose } from "react-icons/io";
 
 interface ResourceIconProps {
-  input: FlowResourceResponse;
+  input: CourseResource;
   deleteable?: boolean;
   onDelete?: (input: string) => void;
 }

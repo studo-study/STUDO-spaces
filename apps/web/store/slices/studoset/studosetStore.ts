@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import { Card } from "@/types/types";
+import { CardResponse } from "@studo/types";
 
 interface StudosetStore {
-  studosetCards: Card[];
+  studosetCards: CardResponse[];
   editingCardId: string | null;
   savingCardIds: string[];
   setStudosetCards: (cards: Card[]) => void;

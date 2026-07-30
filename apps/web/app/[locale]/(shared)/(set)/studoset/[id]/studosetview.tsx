@@ -85,37 +85,37 @@ export default function StudosetView({ id }: viewProps) {
     if (liked) unlike.mutate(data?.id);
     else like.mutate(data?.id);
   };
-  if (!data?.cards) return null;
-  const totalCards = data.cards.length;
+
+  const totalCards = data?.cards.length;
   const sessionCards = isPlaceholderData
     ? null
     : (data?.session?.cards ?? null);
 
-  const not_studied = sessionCards
-    ? sessionCards.reduce(
-        (sum: number, card: SessionCardResponse) =>
-          card.cardViewcount === 0 ? sum + 1 : sum,
-        0,
-      )
-    : totalCards;
+  const filteredCards = useMemo(() => {
+    if (tab !== "not_learned") return data?.cards;
+    return data?.cards?.filter((card) => {
+      const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
+      return sessionCard ? sessionCard.cardViewcount === 0 : true;
+    });
+  }, [tab, data?.cards, sessionCards]);
 
-  const reviewed = sessionCards
-    ? sessionCards.reduce(
-        (sum: number, card: SessionCardResponse) =>
-          card.cardViewcount === 1 ? sum + 1 : sum,
-        0,
-      )
-    : 0;
-
-  const studied = sessionCards
-    ? sessionCards.reduce(
-        (sum: number, card: SessionCardResponse) =>
-          card.cardViewcount > 1 ? sum + 1 : sum,
-        0,
-      )
-    : 0;
+  const { not_studied, reviewed, studied } = useMemo(() => {
+    if (!sessionCards) {
+      return { not_studied: totalCards ?? 0, reviewed: 0, studied: 0 };
+    }
+    return sessionCards.reduce(
+      (acc, card: SessionCardResponse) => {
+        if (card.cardViewcount === 0) acc.not_studied += 1;
+        else if (card.cardViewcount === 1) acc.reviewed += 1;
+        else acc.studied += 1;
+        return acc;
+      },
+      { not_studied: 0, reviewed: 0, studied: 0 },
+    );
+  }, [sessionCards, totalCards]);
 
   const isOwner = !!userId && userId === data?.userId;
+  if (!data?.cards) return null;
 
   return (
     <div className={"relative w-full h-full px-10"}>
@@ -261,7 +261,7 @@ export default function StudosetView({ id }: viewProps) {
             }
           >
             <span className={"font-bold"}>{t("not_learned")}</span>
-            <Progress length={totalCards} progress={not_studied} />
+            <Progress length={totalCards ?? 0} progress={not_studied ?? 0} />
           </div>
           <div
             className={
@@ -269,7 +269,7 @@ export default function StudosetView({ id }: viewProps) {
             }
           >
             <span className={"font-bold"}>{t("reviewed")}</span>
-            <Progress length={totalCards} progress={reviewed} />
+            <Progress length={totalCards ?? 0} progress={reviewed} />
           </div>
           <div
             className={
@@ -277,14 +277,14 @@ export default function StudosetView({ id }: viewProps) {
             }
           >
             <span className={"font-bold"}>{t("studied")}</span>
-            <Progress length={totalCards} progress={studied} />
+            <Progress length={totalCards ?? 0} progress={studied} />
           </div>
         </div>
 
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className={"w-full flex justify-between items-center"}>
           <span className="w-full h-fit font-bold text-sm sm:text-base">
-            {t("cards_title")}:
+            {t("cards_title")}: ({filteredCards?.length})
           </span>
           <div className={"flex flex-row gap-2 items-center justify-center"}>
             <SegmentedControls
@@ -306,7 +306,7 @@ export default function StudosetView({ id }: viewProps) {
             />
           </div>
         </div>
-        <CardList cards={data?.cards ?? []} isOwner={isOwner} setId={id} />
+        <CardList cards={filteredCards} isOwner={isOwner} setId={id} />
         <BottomCredits />
         <div ref={bottomRef} />
       </div>
