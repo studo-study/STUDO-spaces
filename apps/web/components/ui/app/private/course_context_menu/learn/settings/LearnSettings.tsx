@@ -8,6 +8,9 @@ import { useTranslations } from "next-intl";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
 import SimpleSlider from "@/components/ui/design_system/slider/SimpleSlider";
+import { useToast } from "@/components/providers/app/ToastProvider";
+import { useResetSession } from "@/hooks/app/session/useResetSession";
+import { useStudoset } from "@/hooks/app/sets/useStudoset";
 
 type Tab = {
   label: string;
@@ -30,6 +33,7 @@ type LearnSettingsType = {
 const LearnSettings = () => {
   const t = useTranslations("learnsettings");
   const learnSettings = useLearnStore((state) => state.learnSettings);
+  const toast = useToast();
   const handleReset = () => {
     learnSettings.setAnswerType("typing");
     learnSettings.setAnswerWith("term");
@@ -105,6 +109,22 @@ const LearnSettings = () => {
       ],
     },
   ];
+
+  const id = useLearnStore((state) => state.setId);
+  const sessionId = useStudoset(id ?? "")?.data?.session?.id;
+  const { mutate: resetSession, isPending: isResetting } = useResetSession(
+    sessionId ?? "",
+    id ?? "",
+  );
+
+  const toggleResetProgress = () => {
+    if (!sessionId) return;
+    resetSession(undefined, {
+      onSuccess: () => toast.success(t("reset_success")),
+      onError: () => toast.error(t("submit_error")),
+    });
+  };
+
   return (
     <div className={"min-h-0 w-full flex flex-col flex-1 gap-2"}>
       <ContextMenuHeader t={"settings"} />
@@ -174,11 +194,17 @@ const LearnSettings = () => {
         })}
       </div>
       <div className={"flex p-8 flex-1 min-h-0 flex-col items-end justify-end"}>
-        <div>
+        <div className={"flex flex-row"}>
           <BaseButton
-            disabled={!isDifferent}
+            disabled={isResetting}
             variant={"danger"}
             label={t("reset_progress")}
+            onClick={toggleResetProgress}
+          />
+          <BaseButton
+            disabled={!isDifferent}
+            variant={"ghost"}
+            label={t("reset_settings")}
             onClick={handleReset}
           />
         </div>

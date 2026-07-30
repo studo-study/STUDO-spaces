@@ -1666,6 +1666,7 @@
     "pomodoro_timer": "Pomodoro timer",
     "pomodoro_description": "Een timer die je helpt in hyperfocus te komen.",
     "reset_progress": "Voortgang resetten",
+    "reset_settings": "default instellingen",
     "type_description": "Kies hoe op welke manier je wilt antwoorden",
     "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt"
   },
