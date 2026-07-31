@@ -6,7 +6,6 @@ import { GoDotFill } from "react-icons/go";
 import { TbFlameFilled } from "react-icons/tb";
 import {
   TbBook,
-  TbFolder,
   TbPhoto,
   TbSchool,
   TbClock,
@@ -122,16 +121,16 @@ const AdminUserDetail = ({ userId }: Props) => {
             </span>
             <span className="flex items-center gap-1">
               <TbCalendar size={12} />
-              {new Date(data.join_date).toLocaleDateString("nl-BE")}
+              {new Date(data.joinDate).toLocaleDateString("nl-BE")}
             </span>
             <span className="flex items-center gap-1">
               <TbUser size={12} />
               {data.publicRole}
             </span>
-            {data.streak_count !== null && (
+            {data.streakCount !== null && (
               <span className="flex items-center gap-1 text-orange-400">
                 <TbFlameFilled size={12} />
-                {data.streak_count} dag streak
+                {data.streakCount} dag streak
               </span>
             )}
           </div>
@@ -151,11 +150,6 @@ const AdminUserDetail = ({ userId }: Props) => {
             icon={<TbPhoto size={18} />}
             label="visualsets"
             value={data.stats.totalVisualsets}
-          />
-          <StatCard
-            icon={<TbFolder size={18} />}
-            label="folders"
-            value={data.stats.totalFolders}
           />
           <StatCard
             icon={<TbSchool size={18} />}
@@ -190,18 +184,18 @@ const AdminUserDetail = ({ userId }: Props) => {
             { label: "Roles", value: data.roles.join(", ") },
             {
               label: "Laatste login",
-              value: new Date(data.last_login).toLocaleString("nl-BE"),
+              value: new Date(data.lastLogin).toLocaleString("nl-BE"),
             },
             {
               label: "Streak gestart",
-              value: data.streak_started
-                ? new Date(data.streak_started).toLocaleDateString("nl-BE")
+              value: data.streakStarted
+                ? new Date(data.streakStarted).toLocaleDateString("nl-BE")
                 : "—",
             },
             {
               label: "Streak laatste update",
-              value: data.streak_last_update
-                ? new Date(data.streak_last_update).toLocaleDateString("nl-BE")
+              value: data.streakLastUpdate
+                ? new Date(data.streakLastUpdate).toLocaleDateString("nl-BE")
                 : "—",
             },
           ].map(({ label, value }) => (
@@ -227,13 +221,12 @@ const AdminUserDetail = ({ userId }: Props) => {
                 <SetItem
                   key={key}
                   item={{
-                    set_id: s.id,
-                    last_studied: s.last_studied ?? s.created_at,
+                    setId: s.id,
+                    lastStudied: s.lastStudied ?? s.createdAt,
                     title: s.title,
-                    Course: s.course,
                     type: "studoset",
-                    progress: s.card_count ?? 0,
-                    length: s.card_count ?? 0,
+                    progress: s.cardCount ?? 0,
+                    length: s.cardCount ?? 0,
                   }}
                 />
               ))
@@ -254,13 +247,12 @@ const AdminUserDetail = ({ userId }: Props) => {
                 <SetItem
                   key={key}
                   item={{
-                    set_id: v.id,
-                    last_studied: v.last_studied ?? v.created_at,
+                    setId: v.id,
+                    lastStudied: v.lastStudied ?? v.createdAt,
                     title: v.title,
-                    Course: v.course,
                     type: "visualset",
-                    progress: v.pin_count ?? 0,
-                    length: v.pin_count ?? 0,
+                    progress: v.pinCount ?? 0,
+                    length: v.pinCount ?? 0,
                   }}
                 />
               ))
@@ -279,11 +271,11 @@ const AdminUserDetail = ({ userId }: Props) => {
             data.recentSessions.map((s) => (
               <SessionRow
                 key={s.id}
-                setId={s.set_id}
-                setType={s.set_type}
+                setId={s.setId}
+                setType={s.setType}
                 accuracy={s.accuracy}
-                duration={s.duration_min}
-                startedAt={s.started_at}
+                duration={s.durationMin}
+                startedAt={s.startedAt}
               />
             ))
           )}
@@ -291,26 +283,6 @@ const AdminUserDetail = ({ userId }: Props) => {
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Folders */}
-        <div>
-          <SectionTitle>Folders</SectionTitle>
-          <div className="mt-3 flex flex-col gap-2">
-            {data.folders.length === 0 ? (
-              <p className="text-sm opacity-40">Geen folders</p>
-            ) : (
-              data.folders.map((f) => (
-                <div
-                  key={f.id}
-                  className="flex items-center gap-3 rounded-xl border border-studoborder/20 px-4 py-3"
-                >
-                  <TbFolder size={16} className="shrink-0 opacity-40" />
-                  <p className="text-sm font-medium">{f.name}</p>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
         {/* Klassen */}
         <div>
           <SectionTitle>Klassen</SectionTitle>

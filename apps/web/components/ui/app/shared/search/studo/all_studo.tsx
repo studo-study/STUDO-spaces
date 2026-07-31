@@ -39,7 +39,7 @@ function UserResult({ item }: SetResultProps) {
     >
       {/* Banner */}
       <Image
-        src={item.banner_url}
+        src={item.bannerUrl}
         alt={`${item.displayName} banner`}
         fill
         className="object-cover opacity-75"

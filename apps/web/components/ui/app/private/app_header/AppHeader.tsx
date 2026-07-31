@@ -1,19 +1,19 @@
 // components/app/app_header/header.tsx
 "use client";
 import { useLocale } from "next-intl";
-import { HiMenuAlt4 } from "react-icons/hi";
 import TriggerAddPopup from "@/components/ui/app/private/app_header/popups/AddPopup";
 import { useEffect, useRef, useState } from "react";
 import TriggerNotif from "@/components/ui/app/private/app_header/popups/NotificationsPopup";
 import StreakPopup from "@/components/ui/app/private/app_header/StreakPopup";
 import TriggerProfile from "@/components/ui/app/private/app_header/popups/ProfilePopup";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { FaArrowRight } from "react-icons/fa";
 import { StudoUser } from "@/types/types";
 import { useAppStore } from "@/store/useAppStore";
 import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection";
+import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
+import { ArrowRight, PanelRightOpen } from "lucide-react";
+import { HiMenuAlt4 } from "react-icons/hi";
 
 interface HeaderProps {
   burgerOpen: boolean;
@@ -41,7 +41,7 @@ export default function AppHeader({
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const searchRef = useRef<HTMLInputElement>(null);
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
-  const premium = false;
+  const premium = process.env.NEXT_PUBLIC_PREMIUM === "true";
 
   useEffect(() => {
     if (Search && searchRef.current) {
@@ -52,7 +52,7 @@ export default function AppHeader({
   return (
     <div
       className={
-        "h-fit z-[100] top-0 w-screen flex flex-col dark:border-none border-b border-b-studoborder/30"
+        "h-fit z-100 top-0 w-screen flex flex-col border-b border-b-studoborder/30"
       }
     >
       <div className={"w-screen h-0.5"}></div>
@@ -73,7 +73,7 @@ export default function AppHeader({
             >
               OPENBREIN
             </Link>{" "}
-            for free <FaArrowRight size={12} />
+            for free <ArrowRight size={18} />
           </span>
         </div>
       )}
@@ -85,21 +85,31 @@ export default function AppHeader({
             className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb"
           >
             {burgerOpen ? (
-              <TbLayoutSidebarLeftCollapse className={"dark:opacity-30"} />
+              <PanelRightOpen className={"dark:opacity-30"} />
             ) : (
               <HiMenuAlt4 className={"dark:opacity-30"} />
             )}
           </button>
           <Link
-            href={"/apps/web/components/ui/app/app/home"}
+            href={"/home"}
             title={SpecialeDagTitel()}
             className={"w-fit flex flex-row gap-1"}
           >
-            <span
-              className={`font-georgia text-3xl font-bold truncate bg-gradient-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}
-            >
-              Studo
-            </span>
+            {premium ? (
+              <span
+                className={
+                  "font-georgia text-3xl font-bold truncate flex flex-row gap-1 bg-linear-to-r bg-clip-text text-transparent transition-all duration-300 from-indigo-300 to-blue-300"
+                }
+              >
+                Studo Select
+              </span>
+            ) : (
+              <span
+                className={`font-georgia text-3xl font-bold truncate flex flex-row gap-1 bg-linear-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}
+              >
+                Studo
+              </span>
+            )}
             {beta && (
               <span
                 className={
@@ -110,7 +120,7 @@ export default function AppHeader({
               </span>
             )}
           </Link>
-          {premium && (
+          {!premium && !beta && (
             <Link
               href={"/select"}
               className={
@@ -122,15 +132,13 @@ export default function AppHeader({
           )}
         </div>
 
-        {/*center*/}
-        {/*
-        <div className={"w-full h-fit flex justify-end items-center"}>
+        <div className={"w-full h-fit flex justify-end items-center gap-2"}>
+          <OnlineScanner />
           <AppSearchbar />
-        </div>*/}
+        </div>
 
         {/* Right section */}
         <div className="flex items-center gap-5 ml-5 justify-end">
-          <OnlineScanner />
           {/* Add button */}
           <TriggerAddPopup
             AddIsOpen={AddIsOpen}
@@ -138,13 +146,11 @@ export default function AppHeader({
             toggleCreate={toggleCreate}
           />
 
-          {/* Notifications */}
           <TriggerNotif
             NotifIsOpen={NotifIsOpen}
             setNotifIsOpen={setNotifIsOpen}
           />
 
-          {/* Profile */}
           {isLoading ? (
             <div className="h-10 w-10 rounded-full bg-studogrey/30 animate-pulse" />
           ) : (
@@ -155,12 +161,11 @@ export default function AppHeader({
             />
           )}
 
-          {/* Streak */}
           {isLoading ? (
             <div className="min-w-20 h-8 rounded-4xl bg-studogrey/30 animate-pulse" />
           ) : (
             <Streak
-              streak={user?.streak_count ?? 0}
+              streak={user?.streakCount ?? 0}
               StreakOpen={StreakOpen}
               setStreakOpen={setStreakOpen}
             />

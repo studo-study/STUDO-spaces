@@ -3,7 +3,12 @@ import { drizzle, PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { DatabaseConfig, ServerConfig } from '../config/configuration';
 import { Inject } from '@nestjs/common';
-import * as schema from './schema';
+import * as tables from './schema';
+import * as relations from './relations';
+
+// relations moeten mee in het schema-object, anders kent drizzle de
+// `.with`-relaties niet (query's geven dan `never` terug / falen runtime).
+const schema = { ...tables, ...relations };
 
 export const DrizzleAsyncProvider = 'DrizzleAsyncProvider';
 

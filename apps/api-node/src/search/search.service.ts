@@ -52,12 +52,6 @@ export class SearchService {
 
   // ─── Public helpers ──────────────────────────────────────────────────────────
 
-  async search(query: string, _id: string) {
-    return this.withCache(`search:auth:${this.normalise(query)}`, () =>
-      this.compute(query),
-    );
-  }
-
   async publicSearch(query: string) {
     return this.withCache(`search:public:${this.normalise(query)}`, () =>
       this.compute(query),
@@ -217,14 +211,14 @@ export class SearchService {
       this.db.query.studysets.findMany({
         where: and(
           sql`similarity(${studysets.title}, ${query}) > 0.3`,
-          eq(studysets.public_set, true),
+          eq(studysets.publicSet, true),
         ),
         orderBy: sql`similarity(${studysets.title}, ${query}) DESC`,
       }),
       this.db.query.visualsets.findMany({
         where: and(
           sql`similarity(${visualsets.title}, ${query}) > 0.3`,
-          eq(visualsets.public_set, true),
+          eq(visualsets.publicSet, true),
         ),
         orderBy: sql`similarity(${visualsets.title}, ${query}) DESC`,
       }),
@@ -238,9 +232,9 @@ export class SearchService {
     // profiles
     profileResult.forEach((p) => {
       ProfileArray.push({
-        id: p.user_id,
+        id: p.userId,
         displayName: p.displayName,
-        img_url: p.img_url,
+        imgUrl: p.imgUrl,
         type: 'profile',
       });
     });
@@ -250,33 +244,31 @@ export class SearchService {
       StudoArray.push({
         id: s.id,
         displayName: s.displayName,
-        img_url: s.img_url,
-        banner_url: s.banner_url,
+        imgUrl: s.imgUrl,
+        bannerUrl: s.bannerUrl,
       });
     });
 
     // classrooms — batch owners
     const classroomOwnerIds = [
-      ...new Set(classroomResult.map((c) => c.owner_id)),
+      ...new Set(classroomResult.map((c) => c.ownerId)),
     ];
     const classroomOwners = classroomOwnerIds.length
       ? await this.db.query.profiles.findMany({
-          where: inArray(profiles.user_id, classroomOwnerIds),
+          where: inArray(profiles.userId, classroomOwnerIds),
         })
       : [];
 
     for (const c of classroomResult) {
-      const ownerProfile = classroomOwners.find(
-        (p) => p.user_id === c.owner_id,
-      );
+      const ownerProfile = classroomOwners.find((p) => p.userId === c.ownerId);
       if (!ownerProfile)
-        throw new NotFoundException(`User ${c.owner_id} not found`);
+        throw new NotFoundException(`User ${c.ownerId} not found`);
 
       ClassArray.push({
         id: c.id,
         name: c.name,
         owner: ownerProfile.displayName,
-        owner_id: c.owner_id,
+        ownerId: c.ownerId,
         type: c.type,
         verified: c.verified,
       });
@@ -285,37 +277,37 @@ export class SearchService {
     // studysets — batch owners, likes, cards
     const studysetIds = studoysetResult.map((ss) => ss.id);
     const studysetOwnerIds = [
-      ...new Set(studoysetResult.map((ss) => ss.user_id)),
+      ...new Set(studoysetResult.map((ss) => ss.userId)),
     ];
 
     const [studysetOwners, allStudysetLikes, allCards] = studysetIds.length
       ? await Promise.all([
           this.db.query.profiles.findMany({
-            where: inArray(profiles.user_id, studysetOwnerIds),
+            where: inArray(profiles.userId, studysetOwnerIds),
           }),
           this.db.query.setlikes.findMany({
-            where: inArray(setlikes.set_id, studysetIds),
+            where: inArray(setlikes.setId, studysetIds),
           }),
           this.db.query.cards.findMany({
-            where: inArray(cards.set_id, studysetIds),
+            where: inArray(cards.setId, studysetIds),
           }),
         ])
       : [[], [], []];
 
     for (const ss of studoysetResult) {
-      const owner = studysetOwners.find((p) => p.user_id === ss.user_id);
-      if (!owner) throw new NotFoundException(`User ${ss.user_id} not found`);
+      const owner = studysetOwners.find((p) => p.userId === ss.userId);
+      if (!owner) throw new NotFoundException(`User ${ss.userId} not found`);
 
       SetArray.push({
         id: ss.id,
         title: ss.title,
-        subject: ss.course,
+        subject: '',
         owner: owner.displayName,
-        img_url: owner.img_url,
-        owner_id: ss.user_id,
+        imgUrl: owner.imgUrl,
+        ownerId: ss.userId,
         verified: owner.verified,
-        likes: allStudysetLikes.filter((l) => l.set_id === ss.id).length,
-        items: allCards.filter((c) => c.set_id === ss.id).length,
+        likes: allStudysetLikes.filter((l) => l.setId === ss.id).length,
+        items: allCards.filter((c) => c.setId === ss.id).length,
         type: 'studyset',
       });
     }
@@ -323,37 +315,37 @@ export class SearchService {
     // visualsets — batch owners, likes, images
     const visualsetIds = visualsetResult.map((vs) => vs.id);
     const visualsetOwnerIds = [
-      ...new Set(visualsetResult.map((vs) => vs.user_id)),
+      ...new Set(visualsetResult.map((vs) => vs.userId)),
     ];
 
     const [visualsetOwners, allVisualsetLikes, allImages] = visualsetIds.length
       ? await Promise.all([
           this.db.query.profiles.findMany({
-            where: inArray(profiles.user_id, visualsetOwnerIds),
+            where: inArray(profiles.userId, visualsetOwnerIds),
           }),
           this.db.query.setlikes.findMany({
-            where: inArray(setlikes.set_id, visualsetIds),
+            where: inArray(setlikes.setId, visualsetIds),
           }),
           this.db.query.images.findMany({
-            where: inArray(images.set_id, visualsetIds),
+            where: inArray(images.setId, visualsetIds),
           }),
         ])
       : [[], [], []];
 
     for (const vs of visualsetResult) {
-      const owner = visualsetOwners.find((p) => p.user_id === vs.user_id);
-      if (!owner) throw new NotFoundException(`User ${vs.user_id} not found`);
+      const owner = visualsetOwners.find((p) => p.userId === vs.userId);
+      if (!owner) throw new NotFoundException(`User ${vs.userId} not found`);
 
       SetArray.push({
         id: vs.id,
         title: vs.title,
-        subject: vs.course,
+        subject: '',
         owner: owner.displayName,
-        img_url: owner.img_url,
-        owner_id: vs.user_id,
+        imgUrl: owner.imgUrl,
+        ownerId: vs.userId,
         verified: owner.verified,
-        likes: allVisualsetLikes.filter((l) => l.set_id === vs.id).length,
-        items: allImages.filter((i) => i.set_id === vs.id).length,
+        likes: allVisualsetLikes.filter((l) => l.setId === vs.id).length,
+        items: allImages.filter((i) => i.setId === vs.id).length,
         type: 'visualset',
       });
     }

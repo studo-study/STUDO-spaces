@@ -1,17 +1,27 @@
 "use client";
 import Image from "next/image";
 import CourseItem from "@/components/ui/app/private/your-files/courses/courseItem";
-import { useSets } from "@/hooks/app/sets/useSets";
+import { useCourses } from "@/hooks/app/courses/useCourses";
 import { useTranslations } from "next-intl";
+import SetSearch from "@/components/ui/app/private/your-files/sets/search";
+import { useMemo, useState } from "react";
+import CourseAdd from "@/components/ui/app/private/course/layout/AddPopup";
 
 const CourseGrid = () => {
   const t = useTranslations("courses");
-  const { sets, visualsets } = useSets();
-  const courses = new Set<string>();
-  sets?.forEach((item: { course: string }) => courses.add(item.course));
-  visualsets?.forEach((item: { course: string }) => courses.add(item.course));
+  const { data: courses = [] } = useCourses();
+  const [searchQuery, setSearchQuery] = useState("");
 
-  if ([...courses].length === 0) {
+  const filteredCoures = useMemo(() => {
+    let result = courses;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter((s) => s.title.toLowerCase().includes(q));
+    }
+
+    return result;
+  }, [courses, searchQuery]);
+  if (courses.length === 0) {
     return (
       <div className="w-full h-fit flex-1 flex-col gap-2 flex dark:text-white text-studodarkblue font-bold items-center pt-40">
         <Image
@@ -36,10 +46,22 @@ const CourseGrid = () => {
   }
 
   return (
-    <div className="w-full grid grid-cols-5 gap-5 scroll-hidden py-5">
-      {[...courses].map((item) => (
-        <CourseItem key={item} course={item} options />
-      ))}
+    <div className={"w-full flex-1"}>
+      <div className="sticky top-0 w-full h-20 z-20 backdrop-blur-2xl py-8 flex overflow-visible flex-row items-center justify-end gap-3">
+        <div className="w-fit flex flex-row gap-5 items-center">
+          <SetSearch
+            sets={courses}
+            setSearchQuery={setSearchQuery}
+            placeholder={t("search_course")}
+          />
+          <CourseAdd />
+        </div>
+      </div>
+      <div className="w-full grid grid-cols-5 gap-5 scroll-hidden py-5">
+        {filteredCoures.map((course) => (
+          <CourseItem key={course.id} course={course} options />
+        ))}
+      </div>
     </div>
   );
 };

@@ -4,7 +4,6 @@ import { UserModule } from './user/user.module';
 import { StudysetModule } from './studyset/studyset.module';
 import { StudysessionModule } from './studysession/studysession.module';
 import { ProfileModule } from './profile/profile.module';
-import { FolderModule } from './folder/folder.module';
 import { ClassroomModule } from './classroom/classroom.module';
 import { PinModule } from './pin/pin.module';
 import { VisualsetModule } from './visualset/visualset.module';
@@ -23,38 +22,35 @@ import { HealthController } from './health/health.controller';
 import { StudoprofileModule } from './studoprofile/studoprofile.module';
 import { SvenModule } from './sven/sven.module';
 import { AdminModule } from './admin/admin.module';
-import { FlowModule } from './flow/flow.module';
+import { CourseModule } from './course/course.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisModule } from './redis/redis.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
-import Redis from 'ioredis';
+import type Redis from 'ioredis';
+import { REDIS_CLIENT } from './redis/redis.provider';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
     ThrottlerModule.forRootAsync({
-      useFactory: () => ({
+      imports: [RedisModule],
+      inject: [REDIS_CLIENT],
+      useFactory: (redis: Redis) => ({
         throttlers: [{ ttl: 60_000, limit: 100 }],
-        storage: new ThrottlerStorageRedisService(
-          new Redis({
-            host: process.env.REDISHOST ?? 'localhost',
-            port: Number(process.env.REDISPORT ?? 6379),
-            password: process.env.REDISPASSWORD,
-          }),
-        ),
+        storage: new ThrottlerStorageRedisService(redis),
       }),
     }),
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
     }),
-    CacheModule.register(),
+    CacheModule.register({ ttl: 60_000, max: 500 }),
     RedisModule,
     UserModule,
     StudysetModule,
     StudysessionModule,
     ProfileModule,
-    FolderModule,
     ClassroomModule,
     PinModule,
     VisualsetModule,
@@ -62,11 +58,11 @@ import Redis from 'ioredis';
     SearchModule,
     AuthModule,
     SessionModule,
-    SearchModule,
     StudoprofileModule,
     SvenModule,
     AdminModule,
-    FlowModule,
+    CourseModule,
+    ChatModule,
   ],
   controllers: [AppController, HealthController],
   providers: [

@@ -9,6 +9,8 @@ import LaTeXInput from "@/components/ui/design_system/input/LaTeXInput";
 import SafeKaTeX from "@/components/ui/design_system/input/SafeKaTeX";
 import { codeToHtml } from "shiki";
 import { useTranslations } from "next-intl";
+import { BookOpen } from "lucide-react";
+import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
 
 interface CarditemProps {
   index: number;
@@ -44,16 +46,17 @@ export default function CardItem({
   const currentCard = studosetCards.find((c) => c.id === card.id) ?? card;
   const isEditing = editingCardId === card.id;
   const isSaving = savingCardIds.includes(card.id);
+  const menuInfo = useSideMenu((state) => state.setMenuInfo);
 
   const [editTerm, setEditTerm] = useState(currentCard.term);
   const [editDefinition, setEditDefinition] = useState(currentCard.definition);
-  const [contentType, setContentType] = useState(currentCard.term_content_type);
-  const [codeLanguage, setCodeLanguage] = useState(currentCard.code_language);
+  const [contentType, setContentType] = useState(currentCard.termContentType);
+  const [codeLanguage, setCodeLanguage] = useState(currentCard.codeLanguage);
 
   const enterEdit = () => {
     setEditTerm(currentCard.term);
     setEditDefinition(currentCard.definition);
-    setContentType(currentCard.term_content_type);
+    setContentType(currentCard.termContentType);
     setEditingCardId(card.id);
   };
 
@@ -66,8 +69,8 @@ export default function CardItem({
     if (
       term === currentCard.term &&
       definition === currentCard.definition &&
-      contentType === currentCard.term_content_type &&
-      codeLanguage === currentCard.code_language
+      contentType === currentCard.termContentType &&
+      codeLanguage === currentCard.codeLanguage
     )
       return;
 
@@ -103,8 +106,8 @@ export default function CardItem({
     setEditingCardId,
     currentCard.term,
     currentCard.definition,
-    currentCard.term_content_type,
-    currentCard.code_language,
+    currentCard.termContentType,
+    currentCard.codeLanguage,
     contentType,
     codeLanguage,
     setId,
@@ -135,6 +138,12 @@ export default function CardItem({
     [save, setEditingCardId],
   );
 
+  const lookUpCourse = useCallback(() => {
+    menuInfo({
+      isOpen: true,
+      origin: "course",
+    });
+  }, [menuInfo]);
   return (
     <div
       className={`w-full overflow-hidden rounded-3xl border bg-studogrey/30 flex flex-col items-center
@@ -145,26 +154,36 @@ export default function CardItem({
       onFocus={handleContainerFocus}
     >
       {/* Header */}
-      <div className="w-full h-10 bg-studogrey/30 flex pr-2 px-5 py-2 items-center justify-between border-b border-studoborder/30 flex-shrink-0">
+      <div className="w-full h-10 bg-studogrey/30 flex pr-2 px-5 py-2 items-center justify-between border-b border-studoborder/30 shrink-0">
         <span className="text-sm">{index + 1}</span>
-
-        {isOwner && (
+        <div className={"w-fit flex flex-row items-center gap-2"}>
           <button
             type="button"
             className="rounded-full hover:bg-studogrey px-1 py-1 cursor-pointer transition-all duration-150 flex items-center justify-center w-6 h-6"
-            onClick={isEditing ? save : enterEdit}
+            onClick={lookUpCourse}
             disabled={isSaving}
-            aria-label={isEditing ? "Opslaan" : "Bewerken"}
+            aria-label={"check in course"}
           >
-            {isSaving ? (
-              <div className="w-3.5 h-3.5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-            ) : isEditing ? (
-              <MdCheck className="text-emerald-400" size={16} />
-            ) : (
-              <MdEdit size={16} title={t("edit")} />
-            )}
+            <BookOpen size={14} />
           </button>
-        )}
+          {isOwner && (
+            <button
+              type="button"
+              className="rounded-full hover:bg-studogrey px-1 py-1 cursor-pointer transition-all duration-150 flex items-center justify-center w-6 h-6"
+              onClick={isEditing ? save : enterEdit}
+              disabled={isSaving}
+              aria-label={isEditing ? "Opslaan" : "Bewerken"}
+            >
+              {isSaving ? (
+                <div className="w-3.5 h-3.5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+              ) : isEditing ? (
+                <MdCheck className="text-emerald-400" size={16} />
+              ) : (
+                <MdEdit size={16} title={t("edit")} />
+              )}
+            </button>
+          )}
+        </div>
       </div>
 
       <div
@@ -182,15 +201,15 @@ export default function CardItem({
               placeholder="Term..."
               onKeyDown={(e) => handleKeyDown(e)}
             />
-          ) : currentCard.term_content_type === "latex" ? (
+          ) : currentCard.termContentType === "latex" ? (
             <span className="w-full flex items-center overflow-hidden">
               <SafeKaTeX value={currentCard.term} />
             </span>
-          ) : currentCard.term_content_type === "code" ? (
+          ) : currentCard.termContentType === "code" ? (
             <div className="w-full px-3 h-10 flex items-center border border-studoborder/30 rounded-full bg-studogrey/10 overflow-hidden">
               <CodeBlock
                 value={currentCard.term}
-                lang={currentCard.code_language}
+                lang={currentCard.codeLanguage}
               />
             </div>
           ) : (

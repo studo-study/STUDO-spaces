@@ -7,7 +7,7 @@ const MockRequests = [
   {
     displayName: "Charles Degraeuwe",
     date: new Date().toISOString(),
-    img_url: "https://example.com",
+    imgUrl: "https://example.com",
     id: "user19293",
   },
 ];

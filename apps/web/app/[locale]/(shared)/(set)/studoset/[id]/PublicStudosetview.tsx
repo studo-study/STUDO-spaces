@@ -50,7 +50,7 @@ export default function PublicStudosetView({ id }: viewProps) {
       >
         <span>{t("created")}</span>
         <Link
-          href={`/profile/` + data?.user_id}
+          href={`/profile/` + data?.userId}
           className="flex flex-row w-fit h-fit rounded-full sm:rounded-4xl
                             gap-1.5 sm:gap-2 px-1 pr-3 py-1 l max-w-fit
                              bg-studogrey/30 border border-studoborder/30 shadow-2x
@@ -58,7 +58,7 @@ export default function PublicStudosetView({ id }: viewProps) {
         >
           <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full shrink-0">
             <Avatar
-              id={data?.user_id}
+              id={data?.userId}
               displayName={data?.displayName}
               size={25}
             />
@@ -73,7 +73,7 @@ export default function PublicStudosetView({ id }: viewProps) {
           {(data && data.title) || t("set_title")}
         </span>
         <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
-          <SharePopup />
+          <SharePopup id={data.id} />
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>

@@ -10,18 +10,18 @@ export interface SocialLogin {
   displayName: string;
   provider: string;
   providerId?: string;
-  img_url?: string;
+  imgUrl?: string;
 }
 
 export interface UpdateUser {
   email?: string;
   password?: string;
   displayName?: string;
-  img_url?: string;
-  streak_started?: string;
-  streak_count?: number;
-  streak_last_update?: string;
-  last_login?: string;
+  imgUrl?: string;
+  streakStarted?: string;
+  streakCount?: number;
+  streakLastUpdate?: string;
+  lastLogin?: string;
   role?: string;
 }
 
@@ -29,14 +29,14 @@ export interface UserResponse {
   id: string;
   email: string;
   displayName: string;
-  img_url: string;
-  join_date: string;
+  imgUrl: string;
+  joinDate: string;
   joinNumber: number;
   totalSets: number;
-  streak_started: string | null;
-  streak_count: number | null;
-  streak_last_update: string | null;
-  last_login: string;
+  streakStarted: string | null;
+  streakCount: number | null;
+  streakLastUpdate: string | null;
+  lastLogin: string;
   roles: string[];
   publicRole: string;
   verified: boolean;
@@ -44,10 +44,9 @@ export interface UserResponse {
 }
 
 export interface LastStudied {
-  set_id: string;
-  last_studied: string;
+  setId: string;
+  lastStudied: string;
   title: string;
-  Course: string;
   type: string;
   progress: number;
   length: number;
@@ -72,43 +71,24 @@ export interface UserListResponse {
 export interface HeaderResponse {
   displayName: string;
   email: string;
-  streak_count: number | null;
+  streakCount: number | null;
   pfp: string;
 }
 
 export interface ClassActivities {
   id: string;
-  classroom_id: string;
-  user_id: string;
+  classroomId: string;
+  userId: string;
   displayName: string;
-  img_url: string;
-  set_id: string;
-  set_type: string;
+  imgUrl: string;
+  setId: string;
+  setType: string;
   title: string;
-  last_seen: string;
-}
-
-export interface Boards {
-  id: string;
-  owner_id: string;
-  owner_name: string;
-  owner_pfp: string;
-  title: string;
-  icon: string;
-  year: string | null;
-  semester: string | null;
-  school: string | null;
-  school_id: string | null;
-  total_done: number;
-  total_in_progress: number;
-  total_length: number;
-  courses: number;
+  lastSeen: string;
 }
 
 export interface StartPagina {
   lastTen: LastStudied[];
-  courses: string[];
-  boards: Boards[];
   class: ClassActivities[];
   stats: TotalStats;
 }
@@ -116,7 +96,5 @@ export interface StartPagina {
 export interface SyncResponse {
   studysets: import("./studyset").StudysetResponse[];
   visualsets: import("./visualset").VisualsetResponse[];
-  folders: import("./folder").FolderResponse[];
-  courses: string[];
   start: StartPagina;
 }

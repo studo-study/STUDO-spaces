@@ -3,8 +3,8 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { type FullClassroom, type FullClassroomSet } from "@/types/types";
 import Image from "next/image";
-import CourseIcons from "@/data";
 import { useState } from "react";
+import CourseIcons from "@/data";
 
 interface ListItemProps {
   items: FullClassroom;
@@ -18,14 +18,14 @@ export default function RecentlyAdded({ items }: ListItemProps) {
   const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
 
   const thisWeek = filteredSets.filter(
-    (item) => now - new Date(item.created_at).getTime() <= ONE_WEEK_IN_MS,
+    (item) => now - new Date(item.createdAt).getTime() <= ONE_WEEK_IN_MS,
   );
   const lastWeek = filteredSets.filter((item) => {
-    const age = now - new Date(item.created_at).getTime();
+    const age = now - new Date(item.createdAt).getTime();
     return age > ONE_WEEK_IN_MS && age <= ONE_WEEK_IN_MS * 2;
   });
   const rest = filteredSets.filter(
-    (item) => now - new Date(item.created_at).getTime() > ONE_WEEK_IN_MS * 2,
+    (item) => now - new Date(item.createdAt).getTime() > ONE_WEEK_IN_MS * 2,
   );
   const pinned = [];
   return (
@@ -118,14 +118,12 @@ interface SetItemProps {
 
 function ListItem({ set, t }: SetItemProps) {
   const iconSrc =
-    set.set_type === "studyset"
-      ? "/icons/studyset.svg"
-      : "/icons/visualset.svg";
+    set.setType === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
 
   const link =
-    set.set_type === "studyset"
-      ? "/studoset/" + set.set_id
-      : "/visualset/" + set.set_id;
+    set.setType === "studyset"
+      ? "/studoset/" + set.setId
+      : "/visualset/" + set.setId;
   return (
     <Link
       href={link}
@@ -145,8 +143,8 @@ function ListItem({ set, t }: SetItemProps) {
             width={0}
             height={0}
             className={"w-8"}
-            src={getCoverImage(set.course)}
-            alt={set.course}
+            src={getCoverImage(set.title)}
+            alt={set.title}
           />
         </div>
         <div className={"w-fit flex flex-col pt-1"}>
@@ -165,7 +163,7 @@ function ListItem({ set, t }: SetItemProps) {
           <span
             className={"w-fit text-studodarkblue/30 dark:text-white/30 text-sm"}
           >
-            {t("added_by")} {set.added_by}
+            {t("added_by")} {set.addedBy}
           </span>
         </div>
       </div>
@@ -173,11 +171,10 @@ function ListItem({ set, t }: SetItemProps) {
   );
 }
 
-function getCoverImage(course: string): string {
+function getCoverImage(title: string): string {
   const key = Object.keys(CourseIcons).find((k) =>
-    course.toLowerCase().includes(k),
+    title.toLowerCase().includes(k),
   ) as keyof typeof CourseIcons | undefined;
-
   return key
     ? `/icons/courses/${CourseIcons[key]}`
     : "/icons/courses/default.svg";

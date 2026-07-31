@@ -18,6 +18,7 @@ async function main() {
   await sql.unsafe(`DROP SCHEMA IF EXISTS drizzle CASCADE`);
   await sql.unsafe(`CREATE SCHEMA public`);
   await sql.unsafe(`GRANT ALL ON SCHEMA public TO public`);
+  await sql.unsafe(`CREATE EXTENSION IF NOT EXISTS vector`);
   console.log('Reset complete.');
 
   await migrate(db, { migrationsFolder: './migrations' });

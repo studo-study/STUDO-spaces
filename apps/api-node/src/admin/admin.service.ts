@@ -13,7 +13,6 @@ import {
   classroomactivities,
   classroomusers,
   classrooms,
-  folders,
   popular_sets,
   profiles,
   studoprofiles,
@@ -42,10 +41,10 @@ export class AdminService {
 
     return found.map((user) => ({
       ...user,
-      join_date: user.join_date.toISOString(),
-      last_login: user.last_login.toISOString(),
-      streak_started: user.streak_started?.toISOString() ?? null,
-      streak_last_update: user.streak_last_update?.toISOString() ?? null,
+      joinDate: user.joinDate.toISOString(),
+      lastLogin: user.lastLogin.toISOString(),
+      streakStarted: user.streakStarted?.toISOString() ?? null,
+      streakLastUpdate: user.streakLastUpdate?.toISOString() ?? null,
       roles: user.roles as string[],
     }));
   }
@@ -74,8 +73,8 @@ export class AdminService {
         .from(users)
         .where(
           and(
-            gte(users.join_date, startOfThisMonth),
-            lt(users.join_date, startOfNextMonth),
+            gte(users.joinDate, startOfThisMonth),
+            lt(users.joinDate, startOfNextMonth),
           ),
         ),
       this.db
@@ -83,8 +82,8 @@ export class AdminService {
         .from(users)
         .where(
           and(
-            gte(users.join_date, startOfLastMonth),
-            lt(users.join_date, startOfThisMonth),
+            gte(users.joinDate, startOfLastMonth),
+            lt(users.joinDate, startOfThisMonth),
           ),
         ),
       this.db
@@ -92,8 +91,8 @@ export class AdminService {
         .from(users)
         .where(
           and(
-            gte(users.last_login, startOfThisMonth),
-            lt(users.last_login, startOfNextMonth),
+            gte(users.lastLogin, startOfThisMonth),
+            lt(users.lastLogin, startOfNextMonth),
           ),
         ),
       this.db
@@ -101,8 +100,8 @@ export class AdminService {
         .from(users)
         .where(
           and(
-            gte(users.last_login, startOfLastMonth),
-            lt(users.last_login, startOfThisMonth),
+            gte(users.lastLogin, startOfLastMonth),
+            lt(users.lastLogin, startOfThisMonth),
           ),
         ),
       this.db.select({ totalStudysets: count() }).from(studysets),
@@ -113,23 +112,23 @@ export class AdminService {
         columns: {
           id: true,
           displayName: true,
-          img_url: true,
-          join_date: true,
+          imgUrl: true,
+          joinDate: true,
           publicRole: true,
           verified: true,
           banned: true,
         },
       }),
       this.db.query.classroomactivities.findMany({
-        orderBy: [desc(classroomactivities.last_seen)],
+        orderBy: [desc(classroomactivities.lastSeen)],
         limit: 10,
       }),
       this.db
         .select({
           id: popular_sets.id,
           rank: popular_sets.rank,
-          studyset_id: popular_sets.studyset_id,
-          visualset_id: popular_sets.visualset_id,
+          studysetId: popular_sets.studysetId,
+          visualsetId: popular_sets.visualsetId,
         })
         .from(popular_sets)
         .orderBy(popular_sets.rank)
@@ -138,10 +137,10 @@ export class AdminService {
 
     // Resolve popular set titles — 2 batch queries instead of N+1
     const studysetIds = popularSetsRaw
-      .map((r) => r.studyset_id)
+      .map((r) => r.studysetId)
       .filter(Boolean) as string[];
     const visualsetIds = popularSetsRaw
-      .map((r) => r.visualset_id)
+      .map((r) => r.visualsetId)
       .filter(Boolean) as string[];
 
     const [studysetsMap, visualsetsMap] = await Promise.all([
@@ -150,10 +149,9 @@ export class AdminService {
             .select({
               id: studysets.id,
               title: studysets.title,
-              course: studysets.course,
               displayName: studysets.displayName,
-              img_url: studysets.img_url,
-              user_id: studysets.user_id,
+              imgUrl: studysets.imgUrl,
+              userId: studysets.userId,
             })
             .from(studysets)
             .where(inArray(studysets.id, studysetIds))
@@ -164,10 +162,9 @@ export class AdminService {
             .select({
               id: visualsets.id,
               title: visualsets.title,
-              course: visualsets.course,
               displayName: visualsets.displayName,
-              img_url: visualsets.img_url,
-              user_id: visualsets.user_id,
+              imgUrl: visualsets.imgUrl,
+              userId: visualsets.userId,
             })
             .from(visualsets)
             .where(inArray(visualsets.id, visualsetIds))
@@ -177,32 +174,30 @@ export class AdminService {
 
     const popularSets = popularSetsRaw
       .map((row) => {
-        if (row.studyset_id) {
-          const s = studysetsMap.get(row.studyset_id);
+        if (row.studysetId) {
+          const s = studysetsMap.get(row.studysetId);
           if (s)
             return {
               id: row.id,
               rank: row.rank,
               type: 'studyset' as const,
               title: s.title,
-              course: s.course,
               displayName: s.displayName,
-              img_url: s.img_url,
-              user_id: s.user_id,
+              imgUrl: s.imgUrl,
+              userId: s.userId,
             };
         }
-        if (row.visualset_id) {
-          const v = visualsetsMap.get(row.visualset_id);
+        if (row.visualsetId) {
+          const v = visualsetsMap.get(row.visualsetId);
           if (v)
             return {
               id: row.id,
               rank: row.rank,
               type: 'visualset' as const,
               title: v.title,
-              course: v.course,
               displayName: v.displayName,
-              img_url: v.img_url,
-              user_id: v.user_id,
+              imgUrl: v.imgUrl,
+              userId: v.userId,
             };
         }
         return null;
@@ -219,10 +214,10 @@ export class AdminService {
       totalVisualsets,
       recentUsers: recentUsers.map((u) => ({
         ...u,
-        join_date: u.join_date.toISOString(),
+        joinDate: u.joinDate.toISOString(),
       })),
       recentActivity,
-      popularSets: popularSets.filter(Boolean),
+      popularSets,
     };
   }
 
@@ -238,32 +233,28 @@ export class AdminService {
       recentStudysets,
       recentVisualsets,
       recentSessions,
-      userFolders,
       userClassrooms,
     ] = await Promise.all([
       this.db.query.profiles.findFirst({
-        where: eq(profiles.user_id, userId),
+        where: eq(profiles.userId, userId),
       }),
       this.db.query.studoprofiles.findFirst({
         where: eq(studoprofiles.id, userId),
       }),
       this.db.query.studysets.findMany({
-        where: eq(studysets.user_id, userId),
-        orderBy: [desc(studysets.last_updated)],
+        where: eq(studysets.userId, userId),
+        orderBy: [desc(studysets.lastUpdated)],
         limit: 10,
       }),
       this.db.query.visualsets.findMany({
-        where: eq(visualsets.user_id, userId),
-        orderBy: [desc(visualsets.last_updated)],
+        where: eq(visualsets.userId, userId),
+        orderBy: [desc(visualsets.lastUpdated)],
         limit: 10,
       }),
       this.db.query.studysessions.findMany({
-        where: eq(studysessions.user_id, userId),
-        orderBy: [desc(studysessions.started_at)],
+        where: eq(studysessions.userId, userId),
+        orderBy: [desc(studysessions.startedAt)],
         limit: 10,
-      }),
-      this.db.query.folders.findMany({
-        where: eq(folders.owner_id, userId),
       }),
       this.db
         .select({
@@ -272,25 +263,25 @@ export class AdminService {
           school: classrooms.school,
           type: classrooms.type,
           verified: classrooms.verified,
-          created_at: classrooms.created_at,
+          createdAt: classrooms.createdAt,
           role: classroomusers.role,
-          joined_at: classroomusers.joined_at,
+          joinedAt: classroomusers.joinedAt,
         })
         .from(classroomusers)
-        .innerJoin(classrooms, eq(classroomusers.classroom_id, classrooms.id))
-        .where(eq(classroomusers.user_id, userId)),
+        .innerJoin(classrooms, eq(classroomusers.classroomId, classrooms.id))
+        .where(eq(classroomusers.userId, userId)),
     ]);
 
     let studoprofileWithTracks = null;
     if (studoprofile) {
       const tracks = await this.db.query.studotracks.findMany({
-        where: eq(studotracks.studoprofile_id, userId),
+        where: eq(studotracks.studoprofileId, userId),
       });
       studoprofileWithTracks = { ...studoprofile, tracks };
     }
 
     const totalTimeLearned = recentSessions.reduce(
-      (acc, s) => acc + s.duration_min,
+      (acc, s) => acc + s.durationMin,
       0,
     );
     const avgAccuracy =
@@ -303,17 +294,17 @@ export class AdminService {
 
     return {
       ...user,
-      join_date: user.join_date.toISOString(),
-      last_login: user.last_login.toISOString(),
-      streak_started: user.streak_started?.toISOString() ?? null,
-      streak_last_update: user.streak_last_update?.toISOString() ?? null,
+      joinDate: user.joinDate.toISOString(),
+      lastLogin: user.lastLogin.toISOString(),
+      streakStarted: user.streakStarted?.toISOString() ?? null,
+      streakLastUpdate: user.streakLastUpdate?.toISOString() ?? null,
       roles: user.roles as string[],
       profile: profile
         ? {
             displayName: profile.displayName,
-            img_url: profile.img_url,
-            banner_url: profile.banner_url ?? null,
-            join_date: profile.join_date.toISOString(),
+            imgUrl: profile.imgUrl,
+            bannerUrl: profile.bannerUrl ?? null,
+            joinDate: profile.joinDate.toISOString(),
             streak: profile.streak,
             verified: profile.verified,
             tags: profile.tags,
@@ -322,13 +313,13 @@ export class AdminService {
       studoprofile: studoprofileWithTracks
         ? {
             displayName: studoprofileWithTracks.displayName,
-            img_url: studoprofileWithTracks.img_url,
-            banner_url: studoprofileWithTracks.banner_url,
+            imgUrl: studoprofileWithTracks.imgUrl,
+            bannerUrl: studoprofileWithTracks.bannerUrl,
             tags: studoprofileWithTracks.tags,
             tracks: studoprofileWithTracks.tracks.map((t) => ({
               id: t.id,
               trackName: t.trackName,
-              icon_name: t.icon_name,
+              iconName: t.iconName,
               grade: t.grade,
             })),
           }
@@ -336,7 +327,6 @@ export class AdminService {
       recentStudysets: recentStudysets.map((s) => ({ ...s, card_count: 0 })),
       recentVisualsets: recentVisualsets.map((v) => ({ ...v, pin_count: 0 })),
       recentSessions,
-      folders: userFolders,
       classrooms: userClassrooms,
       stats: {
         totalSessions: recentSessions.length,
@@ -344,7 +334,6 @@ export class AdminService {
         averageAccuracy: avgAccuracy,
         totalStudysets: recentStudysets.length,
         totalVisualsets: recentVisualsets.length,
-        totalFolders: userFolders.length,
         totalClassrooms: userClassrooms.length,
       },
     };

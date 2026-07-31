@@ -10,7 +10,7 @@ export class CreateSetLikeDto {
   })
   @IsString({ name: 'set_id', maxLength: 64 })
   @IsNotEmpty()
-  set_id: string;
+  setId: string;
 }
 
 export class SetLikeResponseDto {
@@ -26,28 +26,28 @@ export class SetLikeResponseDto {
     description: 'UUID van de gebruiker',
   })
   @Expose()
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de set',
   })
   @Expose()
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     example: 'studyset',
     description: 'Type van de set (studoset of ((visualset)))',
   })
   @Expose()
-  set_type: string;
+  setType: string;
 
   @ApiProperty({
     example: '2024-01-15T10:30:00.000Z',
     description: 'Aanmaak timestamp van de like',
   })
   @Expose()
-  created_at: string;
+  createdAt: string;
 }
 
 export class SetLikeResponseListDto {

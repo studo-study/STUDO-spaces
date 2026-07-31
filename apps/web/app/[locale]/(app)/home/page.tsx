@@ -16,9 +16,11 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const t = await getTranslations("home");
-  const tTimed = await getTranslations("timed");
-  const session = await auth();
+  const [t, tTimed, session] = await Promise.all([
+    getTranslations("home"),
+    getTranslations("timed"),
+    auth(),
+  ]);
   const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? "");
 
   return (

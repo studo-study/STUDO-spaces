@@ -4,7 +4,7 @@ import request from 'supertest';
 import type { Server } from 'http';
 
 import { createTestApp } from '../helpers/create-app';
-import { login, loginAdmin } from '../helpers/login';
+import { login } from '../helpers/login';
 import { testAuthHeader } from '../helpers/testAuthHeader';
 import {
   DatabaseProvider,
@@ -18,7 +18,6 @@ describe('Profiles', () => {
   let db: DatabaseProvider;
   let server: Server;
   let authToken: string;
-  let adminToken: string;
 
   const baseUrl = '/api/profiles';
 
@@ -30,9 +29,7 @@ describe('Profiles', () => {
     await seedUsers(app, db);
     await seedProfiles(db);
 
-    // Login
     authToken = await login(app);
-    adminToken = await loginAdmin(app);
   });
 
   afterAll(async () => {
@@ -41,41 +38,10 @@ describe('Profiles', () => {
     await app.close();
   });
 
-  // GET /api/profiles (Admin only)
-  describe('GET /api/profiles', () => {
-    it('moet 200 retourneren en alle profielen tonen (enkel vr admins)', async () => {
-      const response = await request(server)
-        .get(baseUrl)
-        .auth(adminToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.profiles).toBeDefined();
-      expect(response.body.profiles.length).toBeGreaterThan(0);
-      expect(response.body.profiles).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            user_id: PROFILES_SEED[0].user_id,
-            displayName: PROFILES_SEED[0].displayName,
-          }),
-        ]),
-      );
-    });
-
-    it('moet 403 retourneren wanneer normale gebruiker oprvaagt', async () => {
-      const response = await request(server)
-        .get(baseUrl)
-        .auth(authToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(403);
-    });
-
-    testAuthHeader(() => request(server).get(baseUrl));
-  });
-
   // GET /api/profiles/:profile_id
   describe('GET /api/profiles/:profile_id', () => {
     it('moet 200 en gevraagde profiel retourneren', async () => {
-      const profileId = PROFILES_SEED[0].user_id;
+      const profileId = PROFILES_SEED[0].userId;
 
       const response = await request(server)
         .get(`${baseUrl}/${profileId}`)
@@ -83,12 +49,12 @@ describe('Profiles', () => {
 
       expect(response.statusCode).toBe(200);
       expect(response.body.profile).toMatchObject({
-        user_id: PROFILES_SEED[0].user_id,
+        userId: PROFILES_SEED[0].userId,
         displayName: PROFILES_SEED[0].displayName,
       });
     });
 
-    it('moet  404 retourneren wanneer profile niet bestaat', async () => {
+    it('moet 404 retourneren wanneer profile niet bestaat', async () => {
       const fakeUuid = '99999999-9999-9999-9999-999999999999';
 
       const response = await request(server)
@@ -99,7 +65,24 @@ describe('Profiles', () => {
     });
 
     testAuthHeader(() =>
-      request(server).get(`${baseUrl}/${PROFILES_SEED[0].user_id}`),
+      request(server).get(`${baseUrl}/${PROFILES_SEED[0].userId}`),
     );
+  });
+
+  // GET /api/profiles/public/:profile_id (geen auth vereist)
+  describe('GET /api/profiles/public/:profile_id', () => {
+    it('moet 200 en publiek profiel retourneren zonder authenticatie', async () => {
+      const profileId = PROFILES_SEED[0].userId;
+
+      const response = await request(server).get(
+        `${baseUrl}/public/${profileId}`,
+      );
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body.profile).toMatchObject({
+        userId: PROFILES_SEED[0].userId,
+        displayName: PROFILES_SEED[0].displayName,
+      });
+    });
   });
 });

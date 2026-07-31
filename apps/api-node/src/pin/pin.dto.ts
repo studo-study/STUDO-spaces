@@ -50,7 +50,7 @@ export class CreatePinDto {
   })
   @IsString()
   @MinLength(5)
-  img_url: string;
+  imgUrl: string;
 }
 
 export class UpdatePinDto {
@@ -102,7 +102,7 @@ export class UpdatePinDto {
   })
   @IsString()
   @IsOptional()
-  updated_at?: string;
+  updatedAt?: string;
 }
 
 export class PinResponseDto {
@@ -140,32 +140,32 @@ export class PinResponseDto {
     example: '2025-04-01T10:22:11.123Z',
   })
   @IsString()
-  created_at: string;
+  createdAt: string;
 
   @ApiProperty({
     description: 'Wanneer de identify laatst is gewijzigd',
     example: '2025-04-05T12:34:56.789Z',
   })
   @IsString()
-  updated_at: string;
+  updatedAt: string;
 
   @ApiProperty({ description: 'ID van de afbeelding', example: 'img_123abc' })
   @IsString()
-  image_id: string;
+  imageId: string;
 
   @ApiProperty({
     description: 'ID van de ((visualset))',
     example: 'set_456def',
   })
   @IsString()
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     description: 'User ID van de eigenaar',
     example: '550e8400-e29b-41d4-a716-446655440000',
   })
   @IsString()
-  owner_id: string;
+  ownerId: string;
 }
 
 export class PinResponseListDto {

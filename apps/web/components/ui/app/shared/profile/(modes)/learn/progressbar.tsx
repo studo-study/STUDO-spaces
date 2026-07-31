@@ -1,28 +1,45 @@
+import classNames from "@/utils/classnames";
+import { Phase } from "@/app/[locale]/(shared)/(modes)/learn/[id]/LearnCard";
+
 interface ProgressBarProps {
   cardIndex: number;
   cardLength: number;
-  queueMode: boolean;
-  queueIndex: number;
-  queueLength: number;
+  queueMode?: boolean;
+  queueIndex?: number;
+  queueLength?: number;
   subtle?: boolean;
+  position?: "left" | "right" | "top" | "bottom";
+  phase?: Phase;
+  errorMode?: boolean;
 }
 export default function ProgressBar({
   cardIndex,
   cardLength,
-  queueMode,
-  queueLength,
-  queueIndex,
+  queueMode = false,
+  queueLength = 0,
+  queueIndex = 0,
+  position = "right",
   subtle,
+  phase,
+  errorMode = false,
 }: ProgressBarProps) {
   const index = queueMode ? queueIndex : cardIndex;
   const length = queueMode ? queueLength : cardLength;
   const perc = length > 0 ? Math.floor((index / length) * 100) : 0;
   console.log(perc);
   return (
-    <div className={`w-full ${subtle ? "h-fit" : "h-15"} gap-2 flex flex-col`}>
+    <div
+      className={classNames(
+        `w-full gap-2 flex`,
+        position === "left" && "flex-row items-center gap-5",
+        position === "right" && "flex-row-reverse items-center gap-5",
+        position === "top" && "flex-col justify-center gap-2",
+        position === "bottom" && "flex-col-reverse justify-center gap-2",
+      )}
+    >
       {!subtle && (
-        <div className={"w-full flex items-center justify-between"}>
-          <span>{queueMode ? queueIndex + 1 : index + 1}</span>
+        <div className={"flex items-center justify-between gap-1 "}>
+          <span>{queueMode ? queueIndex + 1 : index + 1}</span>/
           <span>{queueMode ? queueLength : cardLength}</span>
         </div>
       )}
@@ -34,7 +51,7 @@ export default function ProgressBar({
       >
         <div
           style={{ width: `${perc}%` }}
-          className={` h-full rounded-full bg-linear-90 ${queueMode ? "from-rose-400 to-rose-500" : "from-emerald-400 to-emerald-500"}`}
+          className={` h-full rounded-full bg-linear-90 ${errorMode ? "from-amber-500 to-orange-500" : "from-emerald-400 to-emerald-500"}`}
         />
       </div>
     </div>

@@ -1,6 +1,11 @@
-import { useSync } from "../useSync";
+import { useQuery } from "@tanstack/react-query";
+import type { Course } from "@studo/types";
+import { courseKeys } from "./courseKeys";
 
+/** Alle courses waar de ingelogde user lid van is. */
 export function useCourses() {
-  const { courses, isLoading, error } = useSync();
-  return { courses, isLoading, error };
+  return useQuery<Course[]>({
+    queryKey: courseKeys.all,
+    queryFn: () => fetch("/api/courses/me").then((r) => r.json()),
+  });
 }

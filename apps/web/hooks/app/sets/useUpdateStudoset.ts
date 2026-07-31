@@ -2,10 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface UpdateStudysetBody {
   title?: string;
-  course?: string;
   global_term_language?: string;
   global_definition_language?: string;
-  folder_id?: string;
   public_set?: boolean;
   cardlist?: {
     term: string;

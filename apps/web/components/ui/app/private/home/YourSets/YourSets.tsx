@@ -12,7 +12,7 @@ const YourSets = () => {
   const { lastTen } = useSets();
   const t = useTranslations("home");
 
-  const items: LastStudied[] = lastTen.slice(0, 10);
+  const items: LastStudied[] = lastTen.slice(0, 6);
 
   if (items.length === 0) return null;
 

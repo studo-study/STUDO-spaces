@@ -1,9 +1,6 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { SearchService } from './search.service';
-import { PublicSearchRsultsDto, SearchResultsDto } from './search.dto';
-import { Roles } from '../auth/decorators/roles.decorator';
-import { Role } from '../auth/roles';
-import { CheckUserAccessGuard } from '../auth/guards/userAccess.guard';
+import { PublicSearchRsultsDto } from './search.dto';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -17,7 +14,7 @@ import { Public } from '../auth/decorators/public.decorator';
 @ApiBearerAuth()
 @Controller('search')
 export class SearchController {
-  constructor(private readonly SearchService: SearchService) {}
+  constructor(private readonly searchService: SearchService) {}
 
   @Public()
   @ApiOperation({
@@ -35,34 +32,6 @@ export class SearchController {
   })
   @Get('public/:query')
   async getPublicSearchResults(@Param('query') query: string) {
-    return await this.SearchService.publicSearch(query);
-  }
-
-  @ApiOperation({
-    summary: 'Zoek naar sets, users of classrooms.',
-  })
-  @ApiParam({
-    name: 'id',
-    type: String,
-    description: 'User ID waarvoor gezocht wordt',
-  })
-  @ApiParam({
-    name: 'query',
-    type: String,
-    description: 'Zoekterm',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Zoekresultaten gevonden',
-    type: SearchResultsDto,
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER)
-  @Get(':id/:query')
-  async getSearchResults(
-    @Param('query') query: string,
-    @Param('id') user_id: string,
-  ) {
-    return await this.SearchService.search(user_id, query);
+    return await this.searchService.publicSearch(query);
   }
 }

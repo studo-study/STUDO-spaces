@@ -1,7 +1,7 @@
 "use client";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { Bell } from "lucide-react";
 
 interface TriggerNotifProps {
   NotifIsOpen: boolean;
@@ -27,7 +27,7 @@ export default function TriggerNotif({
       className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
     >
       <div className="flex items-center justify-center bg-slate-200 dark:bg-gray-700/50 text-2xl dark:text-white/30 min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl">
-        <IoMdNotificationsOutline />
+        <Bell size={20} />
       </div>
       {notifications.notifications.length > 0 && (
         <div className="absolute top-0.5 right-0.5 rounded-full border-studoborder border bg-rose-500 w-2 h-2" />

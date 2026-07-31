@@ -23,10 +23,6 @@ async function hashPassword(password: string): Promise<string> {
 async function resetDatabase() {
   console.log('🗑️ Resetting database...');
 
-  await db.delete(schema.flowresources);
-  await db.delete(schema.flowrows);
-  await db.delete(schema.flowcourses);
-  await db.delete(schema.flowboards);
   await db.delete(schema.classroomactivities);
   await db.delete(schema.classroomsets);
   await db.delete(schema.classroomusers);
@@ -37,12 +33,22 @@ async function resetDatabase() {
   await db.delete(schema.setlikes);
   await db.delete(schema.pins);
   await db.delete(schema.cards);
+  await db.delete(schema.courseWidgets);
+  await db.delete(schema.courseWorkspaces);
+  await db.delete(schema.courseDocumentChunks);
+  await db.delete(schema.courseDocuments);
+  await db.delete(schema.courseSets);
+  await db.delete(schema.courseResources);
+  await db.delete(schema.courseRows);
+  await db.delete(schema.courseTables);
+  await db.delete(schema.courseUsers);
+  await db.delete(schema.courses);
+  await db.delete(schema.boardUsers);
+  await db.delete(schema.boards);
   await db.delete(schema.images);
   await db.delete(schema.visualsets);
   await db.delete(schema.studysets);
-  await db.delete(schema.folders);
   await db.delete(schema.studoprofilecommunities);
-  await db.delete(schema.tracksets);
   await db.delete(schema.tracksets);
   await db.delete(schema.studotracks);
   await db.delete(schema.studoprofiles);
@@ -54,7 +60,7 @@ async function resetDatabase() {
 
 export async function seedStudo(
   db: PostgresJsDatabase<typeof schema> & {
-    $client: postgres.Sql<{}>;
+    $client: postgres.Sql;
   },
 ) {
   try {
@@ -65,12 +71,44 @@ export async function seedStudo(
     const userId2 = uuidv6();
     const userId3 = uuidv6();
     const userId4 = uuidv6();
-    const folderId1 = uuidv6();
-    const folderId2 = uuidv6();
 
     const studySetId1 = uuidv6();
     const studySetId2 = uuidv6();
+    const studySetId3 = uuidv6();
     const visualSetId1 = uuidv6();
+
+    const EN_NL_PAIRS: [string, string][] = [
+      ['House', 'Huis'],
+      ['Dog', 'Hond'],
+      ['Cat', 'Kat'],
+      ['Water', 'Water'],
+      ['Bread', 'Brood'],
+      ['Apple', 'Appel'],
+      ['Book', 'Boek'],
+      ['Table', 'Tafel'],
+      ['Chair', 'Stoel'],
+      ['Car', 'Auto'],
+      ['Tree', 'Boom'],
+      ['Flower', 'Bloem'],
+      ['Sun', 'Zon'],
+      ['Moon', 'Maan'],
+      ['Star', 'Ster'],
+      ['Friend', 'Vriend'],
+      ['Family', 'Familie'],
+      ['School', 'School'],
+      ['Teacher', 'Leraar'],
+      ['Student', 'Student'],
+      ['City', 'Stad'],
+      ['Street', 'Straat'],
+      ['Window', 'Raam'],
+      ['Door', 'Deur'],
+      ['Kitchen', 'Keuken'],
+      ['Garden', 'Tuin'],
+      ['Bicycle', 'Fiets'],
+      ['Train', 'Trein'],
+      ['Money', 'Geld'],
+      ['Time', 'Tijd'],
+    ];
 
     const classroomId1 = uuidv6();
     const classroomId2 = uuidv6();
@@ -98,6 +136,26 @@ export async function seedStudo(
     const sessionId4 = uuidv6();
     const sessionId5 = uuidv6();
 
+    //chat
+    const chatId1 = uuidv6();
+    const chatId2 = uuidv6();
+    const chatId3 = uuidv6();
+
+    const message1 = uuidv6();
+    const message2 = uuidv6();
+    const message3 = uuidv6();
+    const message4 = uuidv6();
+    const message5 = uuidv6();
+    const message6 = uuidv6();
+
+    // course / board
+    const boardId1 = uuidv6();
+    const courseId1 = uuidv6(); // zit in board
+    const courseId2 = uuidv6(); // standalone
+    const workspaceId1 = uuidv6();
+    const documentId1 = uuidv6();
+    const tableId1 = uuidv6();
+
     // === 1. Users ===
     console.log('Seeding users...');
     await db.insert(schema.users).values([
@@ -106,13 +164,13 @@ export async function seedStudo(
         email: 'support@studo.study',
         passwordHash: await hashPassword('Wachtwoord'),
         displayName: 'Studo Admin',
-        img_url: 'https://i.pravatar.cc/150?img=1',
-        join_date: new Date('2024-01-15T10:00:00.000Z'),
+        imgUrl: 'https://i.pravatar.cc/150?img=1',
+        joinDate: new Date('2024-01-15T10:00:00.000Z'),
         totalSets: 2,
-        streak_started: new Date('2024-10-01T08:00:00.000Z'),
-        streak_count: 29,
-        streak_last_update: new Date('2024-10-29T09:30:00.000Z'),
-        last_login: new Date('2024-10-30T08:00:00.000Z'),
+        streakStarted: new Date('2024-10-01T08:00:00.000Z'),
+        streakCount: 29,
+        streakLastUpdate: new Date('2024-10-29T09:30:00.000Z'),
+        lastLogin: new Date('2024-10-30T08:00:00.000Z'),
         roles: [Role.USER, Role.ADMIN],
         publicRole: 'owner',
         verified: true,
@@ -123,13 +181,13 @@ export async function seedStudo(
         email: 'paulallan@example.com',
         passwordHash: await hashPassword('123'),
         displayName: 'Paul Allan',
-        img_url: 'https://i.pravatar.cc/150?img=2',
-        join_date: new Date('2024-02-20T14:30:00.000Z'),
+        imgUrl: 'https://i.pravatar.cc/150?img=2',
+        joinDate: new Date('2024-02-20T14:30:00.000Z'),
         totalSets: 1,
-        streak_started: new Date('2024-10-15T10:00:00.000Z'),
-        streak_count: 15,
-        streak_last_update: new Date('2024-10-30T07:15:00.000Z'),
-        last_login: new Date('2024-10-30T07:15:00.000Z'),
+        streakStarted: new Date('2024-10-15T10:00:00.000Z'),
+        streakCount: 15,
+        streakLastUpdate: new Date('2024-10-30T07:15:00.000Z'),
+        lastLogin: new Date('2024-10-30T07:15:00.000Z'),
         roles: [Role.USER],
         publicRole: 'student',
         verified: false,
@@ -140,13 +198,13 @@ export async function seedStudo(
         email: 'teacher@example.com',
         passwordHash: await hashPassword('123'),
         displayName: 'Carol Williams',
-        img_url: 'https://i.pravatar.cc/150?img=3',
-        join_date: new Date('2023-08-01T09:00:00.000Z'),
+        imgUrl: 'https://i.pravatar.cc/150?img=3',
+        joinDate: new Date('2023-08-01T09:00:00.000Z'),
         totalSets: 0,
-        streak_started: null,
-        streak_count: null,
-        streak_last_update: new Date('2024-10-30T08:00:00.000Z'),
-        last_login: new Date('2024-10-30T08:00:00.000Z'),
+        streakStarted: null,
+        streakCount: null,
+        streakLastUpdate: new Date('2024-10-30T08:00:00.000Z'),
+        lastLogin: new Date('2024-10-30T08:00:00.000Z'),
         roles: [Role.USER],
         publicRole: 'teacher',
         verified: false,
@@ -157,13 +215,13 @@ export async function seedStudo(
         email: 'geneeskunde@studo.study',
         passwordHash: await hashPassword('123'),
         displayName: 'geneeskunde',
-        img_url: 'https://i.pravatar.cc/150?img=3',
-        join_date: new Date('2023-08-01T09:00:00.000Z'),
+        imgUrl: 'https://i.pravatar.cc/150?img=3',
+        joinDate: new Date('2023-08-01T09:00:00.000Z'),
         totalSets: 0,
-        streak_started: null,
-        streak_count: null,
-        streak_last_update: new Date('2024-10-30T08:00:00.000Z'),
-        last_login: new Date('2024-10-30T08:00:00.000Z'),
+        streakStarted: null,
+        streakCount: null,
+        streakLastUpdate: new Date('2024-10-30T08:00:00.000Z'),
+        lastLogin: new Date('2024-10-30T08:00:00.000Z'),
         roles: [Role.USER, Role.ADMIN, Role.VERIFIED],
         publicRole: 'Studo Profile',
         verified: true,
@@ -176,31 +234,31 @@ export async function seedStudo(
     console.log('Seeding profiles...');
     await db.insert(schema.profiles).values([
       {
-        user_id: userId1,
+        userId: userId1,
         displayName: 'Studo Admin',
-        img_url: 'https://i.pravatar.cc/150?img=1',
-        banner_url: '',
-        join_date: new Date('2024-01-15T10:00:00.000Z'),
+        imgUrl: 'https://i.pravatar.cc/150?img=1',
+        bannerUrl: '',
+        joinDate: new Date('2024-01-15T10:00:00.000Z'),
         streak: 29,
         verified: false,
         tags: ['Studo Admin'],
       },
       {
-        user_id: userId2,
+        userId: userId2,
         displayName: 'Paul Allan',
-        img_url: 'https://i.pravatar.cc/150?img=2',
-        banner_url: '',
-        join_date: new Date('2024-02-20T14:30:00.000Z'),
+        imgUrl: 'https://i.pravatar.cc/150?img=2',
+        bannerUrl: '',
+        joinDate: new Date('2024-02-20T14:30:00.000Z'),
         streak: 15,
         verified: false,
         tags: ['Paul Allan'],
       },
       {
-        user_id: userId3,
+        userId: userId3,
         displayName: 'Carol Williams',
-        img_url: 'https://i.pravatar.cc/150?img=3',
-        banner_url: '',
-        join_date: new Date('2023-08-01T09:00:00.000Z'),
+        imgUrl: 'https://i.pravatar.cc/150?img=3',
+        bannerUrl: '',
+        joinDate: new Date('2023-08-01T09:00:00.000Z'),
         streak: 0,
         verified: false,
         tags: ['Carol Williams'],
@@ -220,8 +278,8 @@ export async function seedStudo(
       {
         id: userId1,
         displayName: 'Geneeskunde',
-        img_url: '',
-        banner_url: 'https://wallpaperaccess.com//full/1330480.jpg',
+        imgUrl: '',
+        bannerUrl: 'https://wallpaperaccess.com//full/1330480.jpg',
         tags: ['geneeskunde', 'anatomie', 'ingangsexamen', 'ugent', 'kuleuven'],
       },
     ]);
@@ -230,48 +288,40 @@ export async function seedStudo(
     await db.insert(schema.studotracks).values([
       {
         id: trackId1,
-        studoprofile_id: userId1,
+        studoprofileId: userId1,
         trackName: 'Biologie',
-        icon_name: 'biology',
+        iconName: 'biology',
         grade: 'Ingangsexamen',
       },
       {
         id: trackId2,
-        studoprofile_id: userId1,
+        studoprofileId: userId1,
         trackName: 'Chemie',
-        icon_name: 'chemistry',
+        iconName: 'chemistry',
         grade: 'Ingangsexamen',
       },
       {
         id: trackId3,
-        studoprofile_id: userId1,
+        studoprofileId: userId1,
         trackName: 'Fysica',
-        icon_name: 'physics',
+        iconName: 'physics',
         grade: 'Ingangsexamen',
       },
       {
         id: trackId4,
-        studoprofile_id: userId1,
+        studoprofileId: userId1,
         trackName: 'Wiskunde',
-        icon_name: 'maths',
+        iconName: 'maths',
         grade: 'Ingangsexamen',
       },
       {
         id: trackId5,
-        studoprofile_id: userId1,
+        studoprofileId: userId1,
         trackName: 'Fysiologie',
-        icon_name: 'physiology-icon',
+        iconName: 'physiology-icon',
         grade: 'eerste jaar',
       },
     ]);
-
-    // === 4. Folders ===
-    console.log('Seeding folders...');
-    await db.insert(schema.folders).values([
-      { id: folderId1, name: 'Biology Notes', owner_id: userId1 },
-      { id: folderId2, name: 'Computer Science', owner_id: userId2 },
-    ]);
-    console.log('Folders seeded\n');
 
     // === 5. Studysets ===
     console.log('Seeding studosets...');
@@ -279,30 +329,41 @@ export async function seedStudo(
       {
         id: studySetId1,
         title: 'Cell Biology Basics',
-        course: 'Biology 101',
         studoset: false,
-        global_term_language: 'en',
-        global_definition_language: 'en',
-        created_at: '2024-09-01T10:00:00.000Z',
-        last_updated: '2024-09-01T10:00:00.000Z',
-        public_set: true,
-        user_id: userId1,
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'en',
+        createdAt: '2024-09-01T10:00:00.000Z',
+        lastUpdated: '2024-09-01T10:00:00.000Z',
+        publicSet: true,
+        userId: userId1,
         displayName: 'Studo Admin',
-        img_url: 'https://i.pravatar.cc/150?img=1',
+        imgUrl: 'https://i.pravatar.cc/150?img=1',
       },
       {
         id: studySetId2,
         title: 'Data Structures',
-        course: 'CS 201',
         studoset: false,
-        global_term_language: 'en',
-        global_definition_language: 'en',
-        created_at: '2024-08-15T09:00:00.000Z',
-        last_updated: '2024-08-15T09:00:00.000Z',
-        public_set: false,
-        user_id: userId2,
-        img_url: 'https://i.pravatar.cc/150?img=2',
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'en',
+        createdAt: '2024-08-15T09:00:00.000Z',
+        lastUpdated: '2024-08-15T09:00:00.000Z',
+        publicSet: false,
+        userId: userId2,
+        imgUrl: 'https://i.pravatar.cc/150?img=2',
         displayName: 'Paul ALlan',
+      },
+      {
+        id: studySetId3,
+        title: 'English - Dutch Vocabulary',
+        studoset: true,
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'nl',
+        createdAt: '2024-10-01T08:00:00.000Z',
+        lastUpdated: '2024-10-01T08:00:00.000Z',
+        publicSet: true,
+        userId: userId1,
+        displayName: 'Studo Admin',
+        imgUrl: 'https://i.pravatar.cc/150?img=1',
       },
     ]);
     console.log('Studysets seeded\n');
@@ -313,14 +374,13 @@ export async function seedStudo(
       {
         id: visualSetId1,
         title: 'Human Anatomy',
-        course: 'Anatomy 101',
         studoset: true,
-        created_at: '2024-09-10T11:00:00.000Z',
-        last_updated: '2024-09-10T11:00:00.000Z',
-        public_set: true,
-        user_id: userId4,
+        createdAt: '2024-09-10T11:00:00.000Z',
+        lastUpdated: '2024-09-10T11:00:00.000Z',
+        publicSet: true,
+        userId: userId4,
         displayName: 'geneeskunde',
-        img_url: 'https://i.pravatar.cc/150?img=1',
+        imgUrl: 'https://i.pravatar.cc/150?img=1',
       },
     ]);
     console.log('Visualsets seeded\n');
@@ -333,22 +393,22 @@ export async function seedStudo(
         term: 'Mitochondria',
         definition: 'The powerhouse of the cell',
         number: 1,
-        term_content_type: 'text',
-        created_at: '2024-09-01T10:15:00.000Z',
-        updated_at: '2024-09-01T10:15:00.000Z',
-        set_id: studySetId1,
-        owner_id: userId1,
+        termContentType: 'text',
+        createdAt: '2024-09-01T10:15:00.000Z',
+        updatedAt: '2024-09-01T10:15:00.000Z',
+        setId: studySetId1,
+        ownerId: userId1,
       },
       {
         id: cardId2,
         term: 'Nucleus',
         definition: 'Contains genetic material (DNA)',
         number: 2,
-        term_content_type: 'text',
-        created_at: '2024-09-01T10:20:00.000Z',
-        updated_at: '2024-09-01T10:20:00.000Z',
-        set_id: studySetId1,
-        owner_id: userId1,
+        termContentType: 'text',
+        createdAt: '2024-09-01T10:20:00.000Z',
+        updatedAt: '2024-09-01T10:20:00.000Z',
+        setId: studySetId1,
+        ownerId: userId1,
       },
       {
         id: cardId3,
@@ -356,11 +416,11 @@ export async function seedStudo(
         definition:
           'A data structure that stores elements in contiguous memory',
         number: 1,
-        term_content_type: 'text',
-        created_at: '2024-08-15T09:15:00.000Z',
-        updated_at: '2024-08-15T09:15:00.000Z',
-        set_id: studySetId2,
-        owner_id: userId2,
+        termContentType: 'text',
+        createdAt: '2024-08-15T09:15:00.000Z',
+        updatedAt: '2024-08-15T09:15:00.000Z',
+        setId: studySetId2,
+        ownerId: userId2,
       },
       {
         id: cardId4,
@@ -368,12 +428,23 @@ export async function seedStudo(
         definition:
           'A linear data structure where elements are linked using pointers',
         number: 2,
-        term_content_type: 'text',
-        created_at: '2024-08-15T09:20:00.000Z',
-        updated_at: '2024-08-15T09:20:00.000Z',
-        set_id: studySetId2,
-        owner_id: userId2,
+        termContentType: 'text',
+        createdAt: '2024-08-15T09:20:00.000Z',
+        updatedAt: '2024-08-15T09:20:00.000Z',
+        setId: studySetId2,
+        ownerId: userId2,
       },
+      ...EN_NL_PAIRS.map(([term, definition], i) => ({
+        id: uuidv6(),
+        term,
+        definition,
+        number: i + 1,
+        termContentType: 'text',
+        createdAt: '2024-10-01T08:15:00.000Z',
+        updatedAt: '2024-10-01T08:15:00.000Z',
+        setId: studySetId3,
+        ownerId: userId1,
+      })),
     ]);
     console.log('Cards seeded\n');
 
@@ -385,10 +456,10 @@ export async function seedStudo(
         title: 'Human Body Diagram',
         index: 1,
         url: 'https://example.com/images/human-body.jpg',
-        grid_x: 0,
-        grid_y: 0,
+        gridX: 0,
+        gridY: 0,
         scale: '1.0',
-        set_id: visualSetId1,
+        setId: visualSetId1,
       },
     ]);
     console.log('Images seeded\n');
@@ -401,11 +472,11 @@ export async function seedStudo(
         x: 150,
         y: 200,
         number: 1,
-        created_at: '2024-09-10T11:30:00.000Z',
-        updated_at: '2024-09-10T11:30:00.000Z',
-        image_id: imageId1,
-        set_id: visualSetId1,
-        owner_id: userId1,
+        createdAt: '2024-09-10T11:30:00.000Z',
+        updatedAt: '2024-09-10T11:30:00.000Z',
+        imageId: imageId1,
+        setId: visualSetId1,
+        ownerId: userId1,
       },
       {
         id: pinId2,
@@ -413,11 +484,11 @@ export async function seedStudo(
         x: 150,
         y: 50,
         number: 2,
-        created_at: '2024-09-10T11:35:00.000Z',
-        updated_at: '2024-09-10T11:35:00.000Z',
-        image_id: imageId1,
-        set_id: visualSetId1,
-        owner_id: userId1,
+        createdAt: '2024-09-10T11:35:00.000Z',
+        updatedAt: '2024-09-10T11:35:00.000Z',
+        imageId: imageId1,
+        setId: visualSetId1,
+        ownerId: userId1,
       },
     ]);
     console.log('Pins seeded\n');
@@ -427,24 +498,24 @@ export async function seedStudo(
     await db.insert(schema.setlikes).values([
       {
         id: setLike1,
-        user_id: userId2,
-        set_id: studySetId1,
-        set_type: 'studyset',
-        created_at: '2024-10-15T12:00:00.000Z',
+        userId: userId2,
+        setId: studySetId1,
+        setType: 'studyset',
+        createdAt: '2024-10-15T12:00:00.000Z',
       },
       {
         id: setLike2,
-        user_id: userId1,
-        set_id: visualSetId1,
-        set_type: 'visualset',
-        created_at: '2024-10-20T09:30:00.000Z',
+        userId: userId1,
+        setId: visualSetId1,
+        setType: 'visualset',
+        createdAt: '2024-10-20T09:30:00.000Z',
       },
       {
         id: setLike3,
-        user_id: userId3,
-        set_id: studySetId1,
-        set_type: 'studyset',
-        created_at: '2024-10-22T14:00:00.000Z',
+        userId: userId3,
+        setId: studySetId1,
+        setType: 'studyset',
+        createdAt: '2024-10-22T14:00:00.000Z',
       },
     ]);
     console.log('Setlikes seeded\n');
@@ -452,14 +523,14 @@ export async function seedStudo(
     console.log('Seeding tracksets...');
     await db.insert(schema.tracksets).values([
       {
-        set_id: visualSetId1,
-        set_type: 'visualset',
-        track_id: trackId1,
+        setId: visualSetId1,
+        setType: 'visualset',
+        trackId: trackId1,
       },
       {
-        set_id: studySetId1,
-        set_type: 'studyset',
-        track_id: trackId1,
+        setId: studySetId1,
+        setType: 'studyset',
+        trackId: trackId1,
       },
     ]);
 
@@ -468,78 +539,78 @@ export async function seedStudo(
     await db.insert(schema.studysessions).values([
       {
         id: sessionId1,
-        user_id: userId1,
-        set_id: studySetId1,
-        set_type: 'studyset',
-        started_at: '2024-10-29T14:00:00.000Z',
-        duration_min: 45,
-        last_studied: '2024-10-29T14:30:00.000Z',
-        ended_at: '2024-10-29T14:45:00.000Z',
+        userId: userId1,
+        setId: studySetId1,
+        setType: 'studyset',
+        startedAt: '2024-10-29T14:00:00.000Z',
+        durationMin: 45,
+        lastStudied: '2024-10-29T14:30:00.000Z',
+        endedAt: '2024-10-29T14:45:00.000Z',
         index: 5,
         accuracy: 85,
-        average_response_time: 3500,
-        longest_focus_streak: 12,
-        last_seen: cardId1,
+        averageResponseTime: 3500,
+        longestFocusStreak: 12,
+        lastSeen: cardId1,
       },
       {
         id: sessionId2,
-        user_id: userId1,
-        set_id: studySetId2,
-        set_type: 'studyset',
-        started_at: '2024-10-29T15:00:00.000Z',
-        duration_min: 30,
-        last_studied: '2024-10-29T15:30:00.000Z',
-        ended_at: '2024-10-29T15:30:00.000Z',
+        userId: userId1,
+        setId: studySetId2,
+        setType: 'studyset',
+        startedAt: '2024-10-29T15:00:00.000Z',
+        durationMin: 30,
+        lastStudied: '2024-10-29T15:30:00.000Z',
+        endedAt: '2024-10-29T15:30:00.000Z',
         index: 3,
         accuracy: 78,
-        average_response_time: 4000,
-        longest_focus_streak: 8,
-        last_seen: cardId3,
+        averageResponseTime: 4000,
+        longestFocusStreak: 8,
+        lastSeen: cardId3,
       },
       {
         id: sessionId3,
-        user_id: userId1,
-        set_id: visualSetId1,
-        set_type: 'visualset',
-        started_at: '2024-10-29T16:00:00.000Z',
-        duration_min: 25,
-        last_studied: '2024-10-29T16:25:00.000Z',
-        ended_at: '2024-10-29T16:25:00.000Z',
+        userId: userId1,
+        setId: visualSetId1,
+        setType: 'visualset',
+        startedAt: '2024-10-29T16:00:00.000Z',
+        durationMin: 25,
+        lastStudied: '2024-10-29T16:25:00.000Z',
+        endedAt: '2024-10-29T16:25:00.000Z',
         index: 4,
         accuracy: 90,
-        average_response_time: 3000,
-        longest_focus_streak: 10,
-        last_seen: pinId1,
+        averageResponseTime: 3000,
+        longestFocusStreak: 10,
+        lastSeen: pinId1,
       },
       {
         id: sessionId4,
-        user_id: userId2,
-        set_id: visualSetId1,
-        set_type: 'visualset',
-        started_at: '2024-10-30T08:00:00.000Z',
-        duration_min: 30,
-        ended_at: '2024-10-30T08:30:00.000Z',
+        userId: userId2,
+        setId: visualSetId1,
+        setType: 'visualset',
+        startedAt: '2024-10-30T08:00:00.000Z',
+        durationMin: 30,
+        endedAt: '2024-10-30T08:30:00.000Z',
         index: 3,
         accuracy: 92,
-        average_response_time: 2800,
-        longest_focus_streak: 8,
-        last_seen: pinId2,
-        last_studied: '2024-10-30T08:15:00.000Z',
+        averageResponseTime: 2800,
+        longestFocusStreak: 8,
+        lastSeen: pinId2,
+        lastStudied: '2024-10-30T08:15:00.000Z',
       },
       {
         id: sessionId5,
-        user_id: userId2,
-        set_id: studySetId2,
-        set_type: 'studyset',
-        started_at: '2024-10-30T09:00:00.000Z',
-        duration_min: 20,
-        ended_at: '2024-10-30T09:20:00.000Z',
+        userId: userId2,
+        setId: studySetId2,
+        setType: 'studyset',
+        startedAt: '2024-10-30T09:00:00.000Z',
+        durationMin: 20,
+        endedAt: '2024-10-30T09:20:00.000Z',
         index: 2,
         accuracy: 88,
-        average_response_time: 3200,
-        longest_focus_streak: 6,
-        last_seen: cardId3,
-        last_studied: '2024-10-30T09:10:00.000Z',
+        averageResponseTime: 3200,
+        longestFocusStreak: 6,
+        lastSeen: cardId3,
+        lastStudied: '2024-10-30T09:10:00.000Z',
       },
     ]);
     console.log('Studysessions seeded\n');
@@ -550,74 +621,74 @@ export async function seedStudo(
       {
         id: uuidv6(),
         number: 1,
-        card_viewcount: 3,
-        card_total_viewcount: 8,
+        cardViewcount: 3,
+        cardTotalViewcount: 8,
         inQueue: false,
         mastered: true,
-        times_relearned: 1,
-        card_id: cardId1,
-        session_id: sessionId1,
-        owner_id: userId1,
+        timesRelearned: 1,
+        cardId: cardId1,
+        sessionId: sessionId1,
+        ownerId: userId1,
       },
       {
         id: uuidv6(),
         number: 2,
-        card_viewcount: 2,
-        card_total_viewcount: 5,
+        cardViewcount: 2,
+        cardTotalViewcount: 5,
         inQueue: true,
         mastered: false,
-        times_relearned: 0,
-        card_id: cardId2,
-        session_id: sessionId1,
-        owner_id: userId1,
+        timesRelearned: 0,
+        cardId: cardId2,
+        sessionId: sessionId1,
+        ownerId: userId1,
       },
       {
         id: uuidv6(),
         number: 1,
-        card_viewcount: 4,
-        card_total_viewcount: 10,
+        cardViewcount: 4,
+        cardTotalViewcount: 10,
         inQueue: false,
         mastered: true,
-        times_relearned: 2,
-        card_id: cardId3,
-        session_id: sessionId2,
-        owner_id: userId1,
+        timesRelearned: 2,
+        cardId: cardId3,
+        sessionId: sessionId2,
+        ownerId: userId1,
       },
       {
         id: uuidv6(),
         number: 2,
-        card_viewcount: 3,
-        card_total_viewcount: 7,
+        cardViewcount: 3,
+        cardTotalViewcount: 7,
         inQueue: true,
         mastered: false,
-        times_relearned: 1,
-        card_id: cardId4,
-        session_id: sessionId2,
-        owner_id: userId1,
+        timesRelearned: 1,
+        cardId: cardId4,
+        sessionId: sessionId2,
+        ownerId: userId1,
       },
       {
         id: uuidv6(),
         number: 1,
-        card_viewcount: 2,
-        card_total_viewcount: 4,
+        cardViewcount: 2,
+        cardTotalViewcount: 4,
         inQueue: false,
         mastered: true,
-        times_relearned: 0,
-        card_id: cardId3,
-        session_id: sessionId5,
-        owner_id: userId2,
+        timesRelearned: 0,
+        cardId: cardId3,
+        sessionId: sessionId5,
+        ownerId: userId2,
       },
       {
         id: uuidv6(),
         number: 2,
-        card_viewcount: 1,
-        card_total_viewcount: 2,
+        cardViewcount: 1,
+        cardTotalViewcount: 2,
         inQueue: true,
         mastered: false,
-        times_relearned: 0,
-        card_id: cardId4,
-        session_id: sessionId5,
-        owner_id: userId2,
+        timesRelearned: 0,
+        cardId: cardId4,
+        sessionId: sessionId5,
+        ownerId: userId2,
       },
     ]);
     console.log('SessionCards seeded\n');
@@ -628,50 +699,50 @@ export async function seedStudo(
       {
         id: uuidv6(),
         number: 1,
-        pin_viewcount: 5,
-        pin_total_viewcount: 12,
+        pinViewcount: 5,
+        pinTotalViewcount: 12,
         inQueue: false,
         mastered: true,
-        times_relearned: 1,
-        pin_id: pinId1,
-        session_id: sessionId3,
-        owner_id: userId1,
+        timesRelearned: 1,
+        pinId: pinId1,
+        sessionId: sessionId3,
+        ownerId: userId1,
       },
       {
         id: uuidv6(),
         number: 2,
-        pin_viewcount: 3,
-        pin_total_viewcount: 8,
+        pinViewcount: 3,
+        pinTotalViewcount: 8,
         inQueue: true,
         mastered: false,
-        times_relearned: 0,
-        pin_id: pinId2,
-        session_id: sessionId3,
-        owner_id: userId1,
+        timesRelearned: 0,
+        pinId: pinId2,
+        sessionId: sessionId3,
+        ownerId: userId1,
       },
       {
         id: uuidv6(),
         number: 1,
-        pin_viewcount: 4,
-        pin_total_viewcount: 9,
+        pinViewcount: 4,
+        pinTotalViewcount: 9,
         inQueue: false,
         mastered: true,
-        times_relearned: 1,
-        pin_id: pinId1,
-        session_id: sessionId4,
-        owner_id: userId2,
+        timesRelearned: 1,
+        pinId: pinId1,
+        sessionId: sessionId4,
+        ownerId: userId2,
       },
       {
         id: uuidv6(),
         number: 2,
-        pin_viewcount: 2,
-        pin_total_viewcount: 5,
+        pinViewcount: 2,
+        pinTotalViewcount: 5,
         inQueue: true,
         mastered: false,
-        times_relearned: 0,
-        pin_id: pinId2,
-        session_id: sessionId4,
-        owner_id: userId2,
+        timesRelearned: 0,
+        pinId: pinId2,
+        sessionId: sessionId4,
+        ownerId: userId2,
       },
     ]);
     console.log('SessionPins seeded\n');
@@ -682,45 +753,45 @@ export async function seedStudo(
       {
         id: classroomId1,
         name: 'Biology 101 - Fall 2024',
-        owner_id: userId3,
+        ownerId: userId3,
         type: 'class_group',
-        created_at: '2024-08-20T10:00:00.000Z',
+        createdAt: '2024-08-20T10:00:00.000Z',
         verified: false,
         school: `Erasmus De Pinte`,
       },
       {
         id: classroomId3,
         name: 'KU Leuven - rechten',
-        owner_id: userId3,
+        ownerId: userId3,
         type: 'university',
-        created_at: '2024-08-20T10:00:00.000Z',
+        createdAt: '2024-08-20T10:00:00.000Z',
         verified: true,
         school: `KU Leuven`,
       },
       {
         id: classroomId4,
         name: 'UGent - informatica',
-        owner_id: userId3,
+        ownerId: userId3,
         type: 'university',
-        created_at: '2024-08-20T10:00:00.000Z',
+        createdAt: '2024-08-20T10:00:00.000Z',
         verified: true,
         school: `UGent`,
       },
       {
         id: classroomId5,
         name: 'UGent - bio engineering',
-        owner_id: userId3,
+        ownerId: userId3,
         type: 'university',
-        created_at: '2024-08-20T10:00:00.000Z',
+        createdAt: '2024-08-20T10:00:00.000Z',
         verified: true,
         school: `UGent`,
       },
       {
         id: classroomId2,
         name: 'Advanced Computer Science',
-        owner_id: userId3,
+        ownerId: userId3,
         type: 'study_group',
-        created_at: '2024-08-22T11:00:00.000Z',
+        createdAt: '2024-08-22T11:00:00.000Z',
         verified: false,
         school: `Ugent`,
       },
@@ -731,45 +802,45 @@ export async function seedStudo(
     console.log('Seeding classroomusers...');
     await db.insert(schema.classroomusers).values([
       {
-        user_id: userId3,
-        classroom_id: classroomId1,
+        userId: userId3,
+        classroomId: classroomId1,
         role: 'owner',
-        joined_at: '2024-08-20T10:00:00.000Z',
+        joinedAt: '2024-08-20T10:00:00.000Z',
         position: 1,
       },
       {
-        user_id: userId1,
-        classroom_id: classroomId1,
+        userId: userId1,
+        classroomId: classroomId1,
         role: 'student',
-        joined_at: '2024-08-22T10:00:00.000Z',
+        joinedAt: '2024-08-22T10:00:00.000Z',
         position: 2,
       },
       {
-        user_id: userId2,
-        classroom_id: classroomId1,
+        userId: userId2,
+        classroomId: classroomId1,
         role: 'student',
-        joined_at: '2024-08-25T10:00:00.000Z',
+        joinedAt: '2024-08-25T10:00:00.000Z',
         position: 3,
       },
       {
-        user_id: userId3,
-        classroom_id: classroomId2,
+        userId: userId3,
+        classroomId: classroomId2,
         role: 'owner',
-        joined_at: '2024-08-22T11:00:00.000Z',
+        joinedAt: '2024-08-22T11:00:00.000Z',
         position: 2,
       },
       {
-        user_id: userId2,
-        classroom_id: classroomId2,
+        userId: userId2,
+        classroomId: classroomId2,
         role: 'student',
-        joined_at: '2024-08-25T10:00:00.000Z',
+        joinedAt: '2024-08-25T10:00:00.000Z',
         position: 1,
       },
       {
-        user_id: userId1,
-        classroom_id: classroomId2,
+        userId: userId1,
+        classroomId: classroomId2,
         role: 'student',
-        joined_at: '2024-08-25T10:00:00.000Z',
+        joinedAt: '2024-08-25T10:00:00.000Z',
         position: 3,
       },
     ]);
@@ -779,16 +850,16 @@ export async function seedStudo(
     console.log('Seeding classroomsets...');
     await db.insert(schema.classroomsets).values([
       {
-        set_id: studySetId1,
-        set_type: 'studyset',
-        classroom_id: classroomId1,
-        added_by: userId2,
+        setId: studySetId1,
+        setType: 'studyset',
+        classroomId: classroomId1,
+        addedBy: userId2,
       },
       {
-        set_id: visualSetId1,
-        set_type: 'visualset',
-        classroom_id: classroomId1,
-        added_by: userId1,
+        setId: visualSetId1,
+        setType: 'visualset',
+        classroomId: classroomId1,
+        addedBy: userId1,
       },
     ]);
     console.log('Classroomsets seeded\n');
@@ -798,14 +869,14 @@ export async function seedStudo(
     await db.insert(schema.classroomactivities).values([
       {
         id: classAct1,
-        classroom_id: classroomId1,
-        user_id: userId1,
+        classroomId: classroomId1,
+        userId: userId1,
         displayName: 'Studo Admin',
-        img_url: 'https://i.pravatar.cc/150?img=1',
-        set_id: studySetId1,
-        set_type: 'studyset',
+        imgUrl: 'https://i.pravatar.cc/150?img=1',
+        setId: studySetId1,
+        setType: 'studyset',
         title: 'Cell Biology Basics',
-        last_seen: '2024-10-29T14:30:00.000Z',
+        lastSeen: '2024-10-29T14:30:00.000Z',
       },
     ]);
     console.log('Classroomactivities seeded\n');
@@ -814,192 +885,273 @@ export async function seedStudo(
     console.log('Seeding studoprofilecommunities...');
     await db.insert(schema.studoprofilecommunities).values([
       {
-        classroom_id: classroomId3,
-        class_type: 'university',
-        studoprofile_id: userId1,
+        classroomId: classroomId3,
+        classType: 'university',
+        studoprofileId: userId1,
       },
       {
-        classroom_id: classroomId4,
-        class_type: 'university',
-        studoprofile_id: userId1,
+        classroomId: classroomId4,
+        classType: 'university',
+        studoprofileId: userId1,
       },
       {
-        classroom_id: classroomId5,
-        class_type: 'university',
-        studoprofile_id: userId1,
+        classroomId: classroomId5,
+        classType: 'university',
+        studoprofileId: userId1,
       },
     ]);
     console.log('Studoprofilecommunities seeded\n');
 
-    // === 18. Flowboards ===
-    console.log('Seeding flowboards...');
-
-    const flowboardId1 = uuidv6();
-    const flowcourseId1 = uuidv6();
-
-    await db.insert(schema.flowboards).values([
+    // === 24. Chats ===
+    console.log('Seeding chats...');
+    await db.insert(schema.chat).values([
       {
-        id: flowboardId1,
-        owner_id: userId1,
-        title: 'Heilige Excel',
-        icon: 'flowboard_icon',
-        year: '2025-2026',
-        semester: 'Semester 2',
-        school_name: 'HOGENT',
-        school_id: null,
+        id: chatId1,
+        userId: userId1,
+        title: 'Statistiek vragen',
+        creationDate: '2026-06-22T10:00:00.000Z',
+        pinned: false,
+      },
+      {
+        id: chatId2,
+        userId: userId1,
+        title: 'Nieuwe chat',
+        creationDate: '2026-06-23T10:00:00.000Z',
+        pinned: false,
+      },
+      {
+        id: chatId3,
+        userId: userId1,
+        title: 'Data Science samenvatting',
+        creationDate: '2026-06-22T10:10:00.000Z',
+        pinned: true,
       },
     ]);
-    console.log('Flowboards seeded\n');
+    console.log('Chats seeded\n');
 
-    // === 19. Flowcourses ===
-    console.log('Seeding flowcourses...');
-    await db.insert(schema.flowcourses).values([
+    // === 25. Chat messages ===
+    console.log('Seeding messages...');
+    await db.insert(schema.chatMessage).values([
       {
-        id: flowcourseId1,
-        board_id: flowboardId1,
-        added_by: userId1,
-        title: 'Data Science',
-        icon: 'flowcourse_icon',
-        description: null,
-        resource: null,
-        exam_date: '2026-06-15',
-        lesson_days: 'Ma, Wo',
+        id: message1,
+        chatId: chatId1,
+        svenMessage: false,
+        sortIndex: 1,
+        content: 'Goodmorning',
+        createdAt: '2026-06-22T10:10:00.000Z',
+      },
+      {
+        id: message2,
+        chatId: chatId1,
+        svenMessage: true,
+        sortIndex: 2,
+        content: 'Hi, how are you? I am Sven, your assistant.',
+        createdAt: '2026-06-22T10:12:00.000Z',
+      },
+      {
+        id: message3,
+        chatId: chatId1,
+        svenMessage: false,
+        sortIndex: 3,
+        content: 'Kan je de centrale limietstelling uitleggen?',
+        createdAt: '2026-06-22T10:13:00.000Z',
+      },
+      {
+        id: message4,
+        chatId: chatId1,
+        svenMessage: true,
+        sortIndex: 4,
+        content:
+          'Zeker! De centrale limietstelling zegt dat het gemiddelde van een grote steekproef ongeveer normaal verdeeld is, ongeacht de oorspronkelijke verdeling.',
+        createdAt: '2026-06-22T10:13:30.000Z',
+      },
+      {
+        id: message5,
+        chatId: chatId3,
+        svenMessage: false,
+        sortIndex: 1,
+        content: 'Vat deze studieset samen voor mij.',
+        createdAt: '2026-06-22T10:11:00.000Z',
+      },
+      {
+        id: message6,
+        chatId: chatId3,
+        svenMessage: true,
+        sortIndex: 2,
+        content: 'Hier is een samenvatting van je set en de eerste kaart.',
+        createdAt: '2026-06-22T10:11:20.000Z',
       },
     ]);
-    console.log('Flowcourses seeded\n');
+    console.log('Chatmessages seeded\n');
 
-    // === 20. Flowrows ===
-    console.log('Seeding flowrows...');
-
-    const flowrowId1 = uuidv6();
-    const flowrowId2 = uuidv6();
-    const flowrowId3 = uuidv6();
-    const flowrowId4 = uuidv6();
-    const flowrowId5 = uuidv6();
-    const flowrowId6 = uuidv6();
-    const flowrowId7 = uuidv6();
-
-    await db.insert(schema.flowrows).values([
+    // === 26. Chat message payloads ===
+    console.log('Seeding payloads...');
+    await db.insert(schema.chatMessagePayload).values([
       {
-        id: flowrowId1,
-        flowcourse_id: flowcourseId1,
-        title: 'Basisbegrippen, steekproefonderzoek',
-        order_index: 1,
-        type: 'lesson',
+        id: uuidv6(),
+        messageId: message3,
+        studosetId: null,
+        cardId: null,
+      },
+      {
+        id: uuidv6(),
+        messageId: message5,
+        studosetId: studySetId1,
+        cardId: null,
+      },
+      {
+        id: uuidv6(),
+        messageId: message6,
+        studosetId: studySetId1,
+        cardId: cardId1,
+      },
+    ]);
+    console.log('Payload seeded\n');
+
+    // === 27. Boards ===
+    console.log('Seeding boards...');
+    await db.insert(schema.boards).values([
+      {
+        id: boardId1,
+        title: 'Geneeskunde 2e bach',
+        icon: 'board_icon',
+        publicBoard: false,
+        academyYear: 2025,
+        institute: 'HOGENT',
+      },
+    ]);
+    console.log('Boards seeded\n');
+
+    // === 28. Courses ===
+    console.log('Seeding courses...');
+    await db.insert(schema.courses).values([
+      {
+        id: courseId1,
+        boardId: boardId1, // erft academyYear/institute van het board
+        title: 'Anatomie',
+        icon: 'course_icon',
+        publicCourse: false,
+        examDate: '2026-01-15',
+      },
+      {
+        id: courseId2,
+        boardId: null, // standalone
+        title: 'Losse cursus Statistiek',
+        icon: 'course_icon',
+        publicCourse: true,
+        academyYear: 2025,
+        institute: 'UGent',
+      },
+    ]);
+    console.log('Courses seeded\n');
+
+    // === 29. Board users ===
+    console.log('Seeding board users...');
+    await db.insert(schema.boardUsers).values([
+      { boardId: boardId1, userId: userId1, role: 'owner' },
+      { boardId: boardId1, userId: userId2, role: 'viewer' },
+    ]);
+    console.log('Board users seeded\n');
+
+    // === 30. Course users ===
+    console.log('Seeding course users...');
+    await db.insert(schema.courseUsers).values([
+      { userId: userId1, courseId: courseId1, role: 'owner' },
+      { userId: userId1, courseId: courseId2, role: 'owner' },
+      { userId: userId3, courseId: courseId2, role: 'editor' },
+    ]);
+    console.log('Course users seeded\n');
+
+    // === 31. Course workspace + widgets ===
+    console.log('Seeding course workspace...');
+    await db
+      .insert(schema.courseWorkspaces)
+      .values([{ id: workspaceId1, courseId: courseId1 }]);
+    await db.insert(schema.courseWidgets).values([
+      { workspaceId: workspaceId1, type: 'notes', x: 0, y: 0, w: 2, h: 2 },
+      { workspaceId: workspaceId1, type: 'flashcards', x: 2, y: 0, w: 2, h: 2 },
+      { workspaceId: workspaceId1, type: 'timer', x: 0, y: 2, w: 1, h: 1 },
+    ]);
+    console.log('Course workspace seeded\n');
+
+    // === 32. Course documents + chunks ===
+    console.log('Seeding course documents...');
+    await db.insert(schema.courseDocuments).values([
+      {
+        id: documentId1,
+        courseId: courseId1,
+        uploaderId: userId1,
+        title: 'Hoofdstuk 1 - Skelet',
+        author: 'Prof. Janssens',
+        storageKey: `courses/${courseId1}/skelet.pdf`,
+        mimeType: 'pdf',
+        status: 'finished',
+        pageCount: 42,
+        wordCount: 12000,
+      },
+    ]);
+    await db.insert(schema.courseDocumentChunks).values([
+      {
+        documentId: documentId1,
+        chunkIndex: 0,
+        pageStart: 1,
+        pageEnd: 2,
+        text: 'Het menselijk skelet bestaat uit 206 botten...',
+      },
+      {
+        documentId: documentId1,
+        chunkIndex: 1,
+        pageStart: 3,
+        pageEnd: 4,
+        text: 'De wervelkolom bestaat uit 33 wervels...',
+      },
+    ]);
+    console.log('Course documents seeded\n');
+
+    // === 33. Course sets ===
+    console.log('Seeding course sets...');
+    await db.insert(schema.courseSets).values([
+      {
+        setId: studySetId1,
+        setType: 'studoset',
+        addedBy: userId1,
+        courseId: courseId1,
+      },
+    ]);
+    console.log('Course sets seeded\n');
+
+    // === 34. Course tables + rows ===
+    console.log('Seeding course tables...');
+    await db
+      .insert(schema.courseTables)
+      .values([{ id: tableId1, courseId: courseId1, title: 'Studieplanning' }]);
+    const rowId1 = uuidv6();
+    const rowId2 = uuidv6();
+    await db.insert(schema.courseRows).values([
+      {
+        id: rowId1,
+        tableId: tableId1,
+        rowIndex: 0,
+        type: 'course',
         status: 'done',
+        description: 'Hoofdstuk 1',
+        createdBy: userId1,
       },
       {
-        id: flowrowId2,
-        flowcourse_id: flowcourseId1,
-        title: 'Analyse van 1 variabele',
-        order_index: 2,
-        type: 'lesson',
-        status: 'done',
-      },
-      {
-        id: flowrowId3,
-        flowcourse_id: flowcourseId1,
-        title: 'Kansrekening, de centrale limietstelling, statistische toetsen',
-        order_index: 3,
-        type: 'lesson',
+        id: rowId2,
+        tableId: tableId1,
+        rowIndex: 1,
+        type: 'task',
         status: 'not_started',
-      },
-      {
-        id: flowrowId4,
-        flowcourse_id: flowcourseId1,
-        title: 'Analyse van 2 kwalitatieve variabelen',
-        order_index: 4,
-        type: 'lesson',
-        status: 'not_started',
-      },
-      {
-        id: flowrowId5,
-        flowcourse_id: flowcourseId1,
-        title: 'Analyse van 2 variabelen kwalitatief vs kwantitatief',
-        order_index: 5,
-        type: 'lesson',
-        status: 'not_started',
-      },
-      {
-        id: flowrowId6,
-        flowcourse_id: flowcourseId1,
-        title: 'Analyse van 2 kwantitatieve variabelen',
-        order_index: 6,
-        type: 'lesson',
-        status: 'not_started',
-      },
-      {
-        id: flowrowId7,
-        flowcourse_id: flowcourseId1,
-        title: 'Tijdserie analyse',
-        order_index: 7,
-        type: 'lesson',
-        status: 'not_started',
+        description: 'Oefeningen maken',
+        createdBy: userId1,
       },
     ]);
-    console.log('Flowrows seeded\n');
-
-    // === 21. Flowresources ===
-    console.log('Seeding flowresources...');
-    await db.insert(schema.flowresources).values([
-      {
-        flowresource_id: uuidv6(),
-        row_id: flowrowId1,
-        title: 'Chamilo - H1',
-        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235478',
-        link_type: 'chamilo',
-        resource_type: 'course',
-      },
-      {
-        flowresource_id: uuidv6(),
-        row_id: flowrowId2,
-        title: 'Chamilo - H2',
-        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235483',
-        link_type: 'chamilo',
-        resource_type: 'course',
-      },
-      {
-        flowresource_id: uuidv6(),
-        row_id: flowrowId3,
-        title: 'Chamilo - H3',
-        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235487',
-        link_type: 'chamilo',
-        resource_type: 'course',
-      },
-      {
-        flowresource_id: uuidv6(),
-        row_id: flowrowId4,
-        title: 'Chamilo - H4',
-        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235492',
-        link_type: 'chamilo',
-        resource_type: 'course',
-      },
-      {
-        flowresource_id: uuidv6(),
-        row_id: flowrowId5,
-        title: 'Chamilo - H5',
-        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235497',
-        link_type: 'chamilo',
-        resource_type: 'course',
-      },
-      {
-        flowresource_id: uuidv6(),
-        row_id: flowrowId6,
-        title: 'Chamilo - H6',
-        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235501',
-        link_type: 'chamilo',
-        resource_type: 'course',
-      },
-      {
-        flowresource_id: uuidv6(),
-        row_id: flowrowId7,
-        title: 'Chamilo - H7',
-        link: 'https://chamilo.hogent.be/index.php?application=Chamilo%5CApplication%5CWeblcms&go=CourseViewer&course=65813&tool=LearningPath&tool_action=ComplexDisplay&publication=2662152&preview_content_object_id=5963339&learning_path_action=Viewer&child_id=235505',
-        link_type: 'chamilo',
-        resource_type: 'course',
-      },
+    await db.insert(schema.courseResources).values([
+      { rowId: rowId1, link: 'https://chamilo.hogent.be/hoofdstuk1' },
+      { rowId: rowId2, link: 'https://example.com/oefeningen.pdf' },
     ]);
-    console.log('Flowresources seeded\n');
+    console.log('Course tables seeded\n');
 
     console.log('All data seeded successfully!');
   } catch (error) {

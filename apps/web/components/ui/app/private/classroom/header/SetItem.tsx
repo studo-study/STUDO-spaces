@@ -1,8 +1,8 @@
 import Image from "next/image";
+import CourseIcons from "@/data";
 import { FullClassroomSet, FullStudyset } from "@/types/types";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/components/providers/auth/UserProvider";
-import CourseIcons from "@/data";
 import { useState } from "react";
 
 interface setItemProps {
@@ -23,22 +23,21 @@ export default function SetItem({
   const currentUser = useUser().user?.id ?? "user";
   const currentSet = {
     title: set.title,
-    course: set.course,
-    owner: set.user_id,
-    created_at: set.created_at,
-    set_id: set.id,
-    set_type: set.cards ? "studoset" : "visualset",
-    classroom_id: path,
-    added_by: currentUser,
+    owner: set.userId,
+    createdAt: set.createdAt,
+    setId: set.id,
+    setType: set.cards ? "studoset" : "visualset",
+    classroomId: path,
+    addedBy: currentUser,
   };
 
   const addToImported = () => {
     const index = importedClassrooms.findIndex(
-      (item) => item.set_id === currentSet.set_id,
+      (item) => item.setId === currentSet.setId,
     );
     if (index !== -1) {
       setImportedClassrooms((prev) =>
-        prev.filter((item) => item.set_id !== currentSet.set_id),
+        prev.filter((item) => item.setId !== currentSet.setId),
       );
     } else {
       setImportedClassrooms((prev) => [...prev, currentSet]);
@@ -64,8 +63,8 @@ export default function SetItem({
           }
         >
           <Image
-            src={getCoverImage(set.course)}
-            alt={set.course}
+            src={getCoverImage(set.title)}
+            alt={set.title}
             width={0}
             height={0}
             className={"w-6"}
@@ -101,11 +100,10 @@ export default function SetItem({
   );
 }
 
-function getCoverImage(course: string): string {
+function getCoverImage(title: string): string {
   const key = Object.keys(CourseIcons).find((k) =>
-    course.toLowerCase().includes(k),
+    title.toLowerCase().includes(k),
   ) as keyof typeof CourseIcons | undefined;
-
   return key
     ? `/icons/courses/${CourseIcons[key]}`
     : "/icons/courses/default.svg";

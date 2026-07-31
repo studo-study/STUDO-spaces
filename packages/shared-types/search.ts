@@ -3,8 +3,8 @@ export interface SetSearchResult {
   title: string;
   subject: string;
   owner: string;
-  img_url: string;
-  owner_id: string;
+  imgUrl: string;
+  ownerId: string;
   verified: boolean;
   likes: number;
   items: number;
@@ -14,7 +14,7 @@ export interface SetSearchResult {
 export interface ProfileSearchResult {
   id: string;
   displayName: string;
-  img_url: string;
+  imgUrl: string;
   type: string;
 }
 
@@ -22,7 +22,7 @@ export interface ClassroomSearchResult {
   id: string;
   name: string;
   owner: string;
-  owner_id: string;
+  ownerId: string;
   type: string;
   verified: boolean;
 }
@@ -30,8 +30,8 @@ export interface ClassroomSearchResult {
 export interface StudoProfileSearchResult {
   id: string;
   displayName: string;
-  img_url: string;
-  banner_url: string;
+  imgUrl: string;
+  bannerUrl: string;
 }
 
 export interface SearchResults {

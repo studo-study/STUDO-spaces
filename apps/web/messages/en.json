@@ -931,7 +931,7 @@
   "header": {
     "create_ss": "Create Studoset",
     "create_vs": "Create Visualset",
-    "create_f": "Create Folder",
+    "create_c": "Create Course",
     "notifs": "notifications",
     "day streak": "day streak",
     "studied": "You've studied ",
@@ -942,7 +942,7 @@
     "ad": "Admin",
     "home": "Home",
     "sets": "Sets",
-    "courses": "Subjects",
+    "courses": "Courses",
     "planner": "Planner",
     "flow": "Flow",
     "folders": "Folders",
@@ -951,7 +951,8 @@
     "account": "Account",
     "nonotif": "no notifications",
     "allup": "all up to date",
-    "search": "search..."
+    "search": "search...",
+    "search_btn": "Search"
   },
   "createfolder": {
     "title": "create a folder",
@@ -1026,10 +1027,15 @@
     "learnt": "Learned"
   },
   "notfound": {
-    "return": "back",
-    "404": "404"
+    "404": "404",
+    "return": "back"
   },
   "timed": {
+    "0": [
+      "Past midnight and still going strong!",
+      "Keep going!",
+      "Midnight and still crushing it!"
+    ],
     "2": [
       "Welcome back night owl",
       "Still up this late? You're not the only one...",
@@ -1072,11 +1078,6 @@
       "Welcome back, the night is still young, good luck",
       "Working late, nice!",
       "Time for a romantic evening date with your study material"
-    ],
-    "0": [
-      "Past midnight and still going strong!",
-      "Keep going!",
-      "Midnight and still crushing it!"
     ]
   },
   "home": {
@@ -1084,7 +1085,7 @@
     "jump-back-in_next": "Next",
     "jump-back-in_previous": "Previous",
     "jump-back-in_goto": "Go to item {index}",
-    "courses_overview_title": "Your subjects",
+    "courses_overview_title": "Your Courses",
     "flow_overview_title": "Your boards",
     "getstarted_overview_title": "Start creating",
     "pinned_title": "Pinned",
@@ -1105,7 +1106,7 @@
     "Continue": "Sets",
     "checkAll": "all sets",
     "studied": "studied",
-    "checkCourse": "all subjects",
+    "checkCourse": "all courses",
     "act": "Friends",
     "CheckAct": "all activity",
     "create_ss": "Create Studoset",
@@ -1124,7 +1125,7 @@
     "sets_studied": "sets studied",
     "lets_go": "Start here",
     "set_overview_title": "Your sets",
-    "all_courses": "All subjects",
+    "all_courses": "All courses",
     "all_sets": "All sets",
     "flows_overview_title": "Your flowboards",
     "visualset_btn_lbl": "Create a Visualset",
@@ -1135,15 +1136,14 @@
     },
     "flow": {
       "course": "subject",
-      "courses": "subjects"
+      "courses": "courses"
     }
   },
   "y_f": {
     "title": "Your files",
     "subtitle": "Manage your study material",
     "sets": "Sets",
-    "folders": "Folders",
-    "courses": "Subjects",
+    "courses": "Courses",
     "your_sets": {
       "title": "Your sets",
       "cards": "cards",
@@ -1431,29 +1431,40 @@
     "courses": "subjects",
     "course_1": "subject",
     "course": {
-      "create_title": "New subject",
-      "add_title": "Create new subject",
-      "description": "Add a short description...",
-      "create_btn": "Create subject",
+      "create_title": "New course",
+      "add_title": "Add title",
+      "description": "Description",
+      "create_btn": "Create",
       "cancel_btn": "cancel",
-      "add_metadata": "add details",
-      "add_later": "hide details",
+      "add_metadata": "Add metadata",
+      "add_later": "Add later",
+      "slightly_behind": "Slightly behind",
       "semester": "semester",
       "exam_date": "Exam date",
       "exam_status": "Exam status",
       "link": "Resource link",
-      "add_link": "add a resource link...",
+      "add_link": "Add link",
+      "flow_title": "Planning",
+      "more_sets": "all sets",
       "row": {
+        "flow_title": "flow",
         "done": "done",
         "in_prog": "in progress",
         "cta_add_t": "add task...",
         "add_resources": "Resources",
         "add_details": "Details",
         "add_set": "Linked sets",
-        "due_date": "Deadline",
-        "not_started": "to do",
-        "doing": "in progress"
-      }
+        "due_date": "due date",
+        "not_started": "not started",
+        "doing": "in progress",
+        "priority": "priority"
+      },
+      "create_course": "Create course",
+      "behind": "Behind schedule",
+      "error_icon_required": "Icon required",
+      "error_title_required": "Title required",
+      "n": "n",
+      "cta_add_t": "Add row"
     }
   },
   "courses": {
@@ -1495,7 +1506,12 @@
       "copy_message": "Added to clipboard"
     },
     "settings": {
-      "pop_title": "Settings"
+      "pop_title": "Settings",
+      "reset_progress": "Reset progress",
+      "reset_success": "Progress reset",
+      "submit_error": "Something went wrong, please try again",
+      "make_private": "Public set",
+      "delete_set": "Delete set"
     }
   },
   "speedy": {
@@ -1537,5 +1553,18 @@
     "server_error": "Server returned an error ({status})",
     "rate_limit": "You've reached the daily limit of 3 imports. Try again tomorrow.",
     "aborted": "Import cancelled"
+  },
+  "learnsettings": {
+    "learning": "General settings",
+    "answer_with": "Answer with",
+    "answer_type": "Answer type",
+    "revision_count": "Revision count",
+    "term_def_description": "Choose whether you answer with the term or the definition.",
+    "health": "Healthy studying",
+    "twenty_twenty_two": "20-20-2 learning",
+    "twenty_description": "20 min study, 20 sec look away, 2 min break",
+    "pomodoro_timer": "Pomodoro timer",
+    "pomodoro_description": "A timer that helps you get into hyperfocus.",
+    "reset_progress": "Reset progress"
   }
 }

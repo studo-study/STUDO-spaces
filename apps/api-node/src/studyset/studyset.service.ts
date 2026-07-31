@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import type { Redis } from 'ioredis';
 import { REDIS_CLIENT } from '../redis/redis.provider';
-import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 import {
   CreateStudysetDto,
   fullSetResponseDto,
@@ -17,7 +16,6 @@ import {
   UpdateStudysetDto,
 } from './studyset.dto';
 
-import { SwitchFolderDto } from '../folder/folder.dto';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
 import { CardResponseDto, CreateCardDto } from './card.dto';
 import { SetLikeResponseDto } from './setlike.dto';
@@ -27,12 +25,9 @@ import {
 } from '../drizzle/drizzle.provider';
 import {
   cards,
-  classroomactivities,
   classrooms,
   classroomsets,
   classroomusers,
-  folder_sets,
-  folders,
   pins,
   sessioncards,
   setlikes,
@@ -49,6 +44,7 @@ import {
   SuggestionImagesResponse,
   TermSuggestionDTO,
 } from './image.dto';
+import { buildNewSession, deleteSetReferences } from '../lib/set-helpers';
 
 @Injectable()
 export class StudysetService {
@@ -59,164 +55,127 @@ export class StudysetService {
     private readonly redis: Redis,
   ) {}
 
-  private async invalidateSyncCache(user_id: string) {
-    await this.redis.del(`sync:${user_id}`);
+  private async invalidateSyncCache(userId: string) {
+    await this.redis.del(`sync:${userId}`);
   }
 
   async create(
-    user_id: string,
+    userId: string,
     data: CreateStudysetDto,
   ): Promise<StudysetResponseDto> {
     const date = new Date();
-    const setId = uuidv4();
     const name = await this.db.query.users.findFirst({
-      where: eq(users.id, user_id),
+      where: eq(users.id, userId),
     });
     if (!name) {
       throw new NotFoundException('no user with this id exists');
     }
 
-    const set = {
-      id: setId,
+    const setValues = {
       title: data.title,
-      course: data.course,
-      global_term_language: data.global_term_language,
-      global_definition_language: data.global_definition_language,
-      created_at: date.toISOString(),
-      last_updated: '',
-      public_set: true,
-      user_id: user_id,
+      globalTermLanguage: data.globalTermLanguage,
+      globalDefinitionLanguage: data.globalDefinitionLanguage,
+      createdAt: date.toISOString(),
+      lastUpdated: '',
+      publicSet: true,
+      userId: userId,
       displayName: name.displayName,
-      img_url: name.img_url,
+      imgUrl: name.imgUrl,
       studoset: false,
     };
 
-    //sessie creeeren
-    const session = {
-      id: uuidv4(),
-      started_at: date.toISOString(),
-      duration_min: 0,
-      second_last_login: 'unknown',
-      last_login: 'unknown',
-      ended_at: 'unknown',
-      index: 0,
-      accuracy: 100,
-      average_response_time: 0,
-      longest_focus_streak: 0,
-      device_type: 'unknown',
-      last_seen: date.toISOString(),
-      last_studied: date.toISOString(),
-      user_id: user_id,
-      set_id: setId,
-      set_type: 'studyset',
-    };
+    const [set] = await this.db.insert(studysets).values(setValues).returning();
+    const setId = set.id;
 
-    //kaarten creeeren
-    const CARDS: CardResponseDto[] = [];
-    data.cardlist.forEach((c: CreateCardDto) => {
-      const card = {
-        id: uuidv6(),
-        term: c.term,
-        definition: c.definition,
-        suggestion_image_id: c.suggestion_image_id ?? null,
-        number: c.number,
-        created_at: date.toISOString(),
-        updated_at: '',
-        card_viewcount: 0,
-        card_total_viewcount: 0,
-        inQueue: false,
-        mastered: false,
-        times_relearned: 0,
-        set_id: setId,
-        owner_id: user_id,
-        term_content_type: c.term_content_type ?? 'text',
-        code_language: c.code_language ?? 'typescript',
-      };
-      CARDS.push(card);
+    // sessie creeeren
+    const session = buildNewSession({
+      userId,
+      setId,
+      setType: 'studyset',
+      now: date,
     });
 
-    await this.db.insert(studysets).values(set);
+    //kaarten creeeren
+    const CARDS: (typeof cards.$inferInsert)[] = data.cardlist.map(
+      (c: CreateCardDto) => ({
+        term: c.term,
+        definition: c.definition,
+        suggestionImageId: c.suggestionImageId ?? null,
+        number: c.number,
+        createdAt: date.toISOString(),
+        updatedAt: '',
+        setId: setId,
+        ownerId: userId,
+        termContentType: c.termContentType ?? 'text',
+        codeLanguage: c.codeLanguage ?? 'typescript',
+      }),
+    );
+
     await this.db.insert(studysessions).values(session);
 
-    if (data.folder_id) {
-      await this.db.insert(folder_sets).values({
-        id: uuidv6(),
-        user_id: user_id,
-        set_id: setId,
-        set_type: 'studyset',
-        folder_id: data.folder_id,
-      });
-    }
     await this.db
       .update(users)
       .set({
         totalSets: sql`${users.totalSets}
         + 1`,
       })
-      .where(eq(users.id, user_id));
+      .where(eq(users.id, userId));
     if (CARDS.length > 0) {
       await this.db.insert(cards).values(CARDS);
     }
-    await this.invalidateSyncCache(user_id);
-    return { ...set, folder_id: data.folder_id ?? null };
+    await this.invalidateSyncCache(userId);
+    return set;
   }
 
   async createCard(
-    user_id: string,
-    set_id: string,
+    userId: string,
+    setId: string,
     data: CreateCardDto,
   ): Promise<CardResponseDto> {
     const date = new Date();
 
     const set = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, set_id),
+      where: eq(studysets.id, setId),
     });
     if (!set) throw new NotFoundException('Studyset not found');
-    if (set.user_id !== user_id)
+    if (set.userId !== userId)
       throw new ForbiddenException('You do not own this studoset');
 
-    const card = {
-      id: uuidv6(),
-      term: data.term,
-      definition: data.definition,
-      suggestion_image_id: data.suggestion_image_id ?? null,
-      number: data.number,
-      created_at: date.toISOString(),
-      updated_at: date.toISOString(),
-      card_viewcount: 0,
-      card_total_viewcount: 0,
-      inQueue: false,
-      mastered: false,
-      times_relearned: 0,
-      set_id,
-      owner_id: user_id,
-      term_content_type: data.term_content_type ?? 'text',
-      code_language: data.code_language ?? 'typescript',
-    };
-
-    await this.db.insert(cards).values(card);
+    const [card] = await this.db
+      .insert(cards)
+      .values({
+        term: data.term,
+        definition: data.definition,
+        suggestionImageId: data.suggestionImageId ?? null,
+        number: data.number,
+        createdAt: date.toISOString(),
+        updatedAt: date.toISOString(),
+        setId,
+        ownerId: userId,
+        termContentType: data.termContentType ?? 'text',
+        codeLanguage: data.codeLanguage ?? 'typescript',
+      })
+      .returning();
 
     return {
       id: card.id,
       term: card.term,
       definition: card.definition,
       number: card.number,
-      created_at: card.created_at,
-      updated_at: card.updated_at,
-      set_id: card.set_id,
-      owner_id: card.owner_id,
-      term_content_type: card.term_content_type,
-      code_language: card.code_language,
+      createdAt: card.createdAt,
+      updatedAt: card.updatedAt,
+      setId: card.setId,
+      ownerId: card.ownerId,
+      termContentType: card.termContentType as 'text' | 'latex' | 'code',
+      codeLanguage: card.codeLanguage,
     };
   }
 
   async getPublicById(
-    set_id: string,
-  ): Promise<
-    Omit<fullSetResponseDto, 'session' | 'folders' | 'classrooms' | 'folder_id'>
-  > {
+    setId: string,
+  ): Promise<Omit<fullSetResponseDto, 'session' | 'classrooms'>> {
     const set = await this.db.query.studysets.findFirst({
-      where: and(eq(studysets.id, set_id), eq(studysets.public_set, true)),
+      where: and(eq(studysets.id, setId), eq(studysets.publicSet, true)),
     });
 
     if (!set) {
@@ -224,12 +183,12 @@ export class StudysetService {
     }
 
     const kaarten = await this.db.query.cards.findMany({
-      where: eq(cards.set_id, set_id),
+      where: eq(cards.setId, setId),
       with: { suggestionImage: true },
     });
 
     const likes = await this.db.query.setlikes.findMany({
-      where: eq(setlikes.set_id, set_id),
+      where: eq(setlikes.setId, setId),
     });
 
     return {
@@ -238,7 +197,7 @@ export class StudysetService {
         .sort((a, b) => a.number - b.number)
         .map(({ suggestionImage, ...card }) => ({
           ...card,
-          suggestion_image: suggestionImage ?? null,
+          suggestionImage: suggestionImage ?? null,
         })) as unknown as CardResponseDto[],
       likes,
     };
@@ -248,19 +207,19 @@ export class StudysetService {
     return { sets: await this.db.query.studysets.findMany() };
   }
 
-  async getAllByUser(user_id: string): Promise<MyStudysetsResponseDto> {
+  async getAllByUser(userId: string): Promise<MyStudysetsResponseDto> {
     const ownSets = await this.db.query.studysets.findMany({
-      where: eq(studysets.user_id, user_id),
+      where: eq(studysets.userId, userId),
     });
 
     const allSessions = await this.db.query.studysessions.findMany({
       where: and(
-        eq(studysessions.user_id, user_id),
-        eq(studysessions.set_type, 'studyset'),
+        eq(studysessions.userId, userId),
+        eq(studysessions.setType, 'studyset'),
       ),
     });
 
-    const sessionSetIds = [...new Set(allSessions.map((s) => s.set_id))].filter(
+    const sessionSetIds = [...new Set(allSessions.map((s) => s.setId))].filter(
       (id) => !ownSets.some((s) => s.id === id),
     );
 
@@ -277,63 +236,50 @@ export class StudysetService {
     const cardCounts =
       allSetIds.length > 0
         ? await this.db
-            .select({ set_id: cards.set_id, count: count() })
+            .select({ setId: cards.setId, count: count() })
             .from(cards)
-            .where(inArray(cards.set_id, allSetIds))
-            .groupBy(cards.set_id)
-        : [];
-
-    const folderEntries =
-      allSetIds.length > 0
-        ? await this.db.query.folder_sets.findMany({
-            where: and(
-              eq(folder_sets.user_id, user_id),
-              eq(folder_sets.set_type, 'studyset'),
-              inArray(folder_sets.set_id, allSetIds),
-            ),
-          })
+            .where(inArray(cards.setId, allSetIds))
+            .groupBy(cards.setId)
         : [];
 
     const [totalCardsResult, learnedCardsResult] = await Promise.all([
       this.db
         .select({ count: count() })
         .from(sessioncards)
-        .where(eq(sessioncards.owner_id, user_id)),
+        .where(eq(sessioncards.ownerId, userId)),
       this.db
         .select({ count: count() })
         .from(sessioncards)
         .where(
           and(
-            eq(sessioncards.owner_id, user_id),
-            gte(sessioncards.card_viewcount, 2),
+            eq(sessioncards.ownerId, userId),
+            gte(sessioncards.cardViewcount, 2),
           ),
         ),
     ]);
 
     const sets = allSets.map((set) => ({
       ...set,
-      card_count: cardCounts.find((c) => c.set_id === set.id)?.count ?? 0,
-      last_studied:
-        allSessions.find((s) => s.set_id === set.id)?.last_studied ?? null,
-      progress: allSessions.find((s) => s.set_id === set.id)?.accuracy ?? 0,
-      folder_id:
-        folderEntries.find((f) => f.set_id === set.id)?.folder_id ?? null,
+      cardCount: cardCounts.find((c) => c.setId === set.id)?.count ?? 0,
+      lastStudied:
+        allSessions.find((s) => s.setId === set.id)?.lastStudied ?? null,
+      progress: allSessions.find((s) => s.setId === set.id)?.accuracy ?? 0,
     }));
 
     // --- Visualsets ---
     const ownVisualsets = await this.db.query.visualsets.findMany({
-      where: eq(visualsets.user_id, user_id),
+      where: eq(visualsets.userId, userId),
     });
 
     const allVSSessions = await this.db.query.studysessions.findMany({
       where: and(
-        eq(studysessions.user_id, user_id),
-        eq(studysessions.set_type, 'visualset'),
+        eq(studysessions.userId, userId),
+        eq(studysessions.setType, 'visualset'),
       ),
     });
 
     const vsSessionSetIds = [
-      ...new Set(allVSSessions.map((s) => s.set_id)),
+      ...new Set(allVSSessions.map((s) => s.setId)),
     ].filter((id) => !ownVisualsets.some((vs) => vs.id === id));
 
     let studiedVisualsets: (typeof ownVisualsets)[number][] = [];
@@ -349,37 +295,24 @@ export class StudysetService {
     const pinCounts =
       allVSIds.length > 0
         ? await this.db
-            .select({ set_id: pins.set_id, count: count() })
+            .select({ setId: pins.setId, count: count() })
             .from(pins)
-            .where(inArray(pins.set_id, allVSIds))
-            .groupBy(pins.set_id)
-        : [];
-
-    const vsFolderEntries =
-      allVSIds.length > 0
-        ? await this.db.query.folder_sets.findMany({
-            where: and(
-              eq(folder_sets.user_id, user_id),
-              eq(folder_sets.set_type, 'visualset'),
-              inArray(folder_sets.set_id, allVSIds),
-            ),
-          })
+            .where(inArray(pins.setId, allVSIds))
+            .groupBy(pins.setId)
         : [];
 
     const visualsetsMapped = allVisualsets.map((vs) => ({
       ...vs,
-      pin_count: pinCounts.find((p) => p.set_id === vs.id)?.count ?? 0,
-      last_studied:
-        allVSSessions.find((s) => s.set_id === vs.id)?.last_studied ?? null,
-      progress: allVSSessions.find((s) => s.set_id === vs.id)?.accuracy ?? 0,
-      folder_id:
-        vsFolderEntries.find((f) => f.set_id === vs.id)?.folder_id ?? null,
+      pinCount: pinCounts.find((p) => p.setId === vs.id)?.count ?? 0,
+      lastStudied:
+        allVSSessions.find((s) => s.setId === vs.id)?.lastStudied ?? null,
+      progress: allVSSessions.find((s) => s.setId === vs.id)?.accuracy ?? 0,
     }));
 
     const stats = {
       totalsets: sets.length + visualsetsMapped.length,
       timeLearned: [...allSessions, ...allVSSessions].reduce(
-        (sum, s) => sum + s.duration_min,
+        (sum, s) => sum + s.durationMin,
         0,
       ),
       totalCards: totalCardsResult[0]?.count ?? 0,
@@ -389,9 +322,9 @@ export class StudysetService {
     return { sets, visualsets: visualsetsMapped, stats };
   }
 
-  async getById(user_id: string, set_id: string): Promise<fullSetResponseDto> {
+  async getById(userId: string, setId: string): Promise<fullSetResponseDto> {
     const set = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, set_id),
+      where: eq(studysets.id, setId),
     });
 
     if (!set) {
@@ -400,10 +333,10 @@ export class StudysetService {
 
     // Get user's classrooms
     const classusers = await this.db.query.classroomusers.findMany({
-      where: eq(classroomusers.user_id, user_id),
+      where: eq(classroomusers.userId, userId),
     });
 
-    const classroomIds = classusers.map((u) => u.classroom_id);
+    const classroomIds = classusers.map((u) => u.classroomId);
 
     const [classes, classroomSetsForThisSet] = await Promise.all([
       classroomIds.length > 0
@@ -414,47 +347,42 @@ export class StudysetService {
       classroomIds.length > 0
         ? this.db.query.classroomsets.findMany({
             where: and(
-              eq(classroomsets.set_id, set_id),
-              inArray(classroomsets.classroom_id, classroomIds),
+              eq(classroomsets.setId, setId),
+              inArray(classroomsets.classroomId, classroomIds),
             ),
           })
         : Promise.resolve([] as (typeof classroomsets.$inferSelect)[]),
     ]);
 
     const classroomIdsWithSet = new Set(
-      classroomSetsForThisSet.map((cs) => cs.classroom_id),
+      classroomSetsForThisSet.map((cs) => cs.classroomId),
     );
 
     const setclasses = classes.filter((c) => classroomIdsWithSet.has(c.id));
 
-    // Get user's folders
-    const foldrs = await this.db.query.folders.findMany({
-      where: eq(folders.owner_id, user_id),
-    });
-
     const session = await this.db.query.studysessions.findFirst({
       where: and(
-        eq(studysessions.set_id, set_id),
-        eq(studysessions.user_id, user_id),
+        eq(studysessions.setId, setId),
+        eq(studysessions.userId, userId),
       ),
     });
 
     let sesh = null;
     if (!session) {
-      sesh = await this.createSession(user_id, set_id);
+      sesh = await this.createSession(userId, setId);
     } else {
-      sesh = await this.getBySetId(user_id, set_id);
+      sesh = await this.getBySetId(userId, setId);
       if (sesh.cards && sesh.cards.length === 0) {
         await this.db
           .delete(studysessions)
           .where(eq(studysessions.id, sesh.id));
-        sesh = await this.createSession(user_id, set_id);
+        sesh = await this.createSession(userId, setId);
       }
     }
 
     // Get cards
     const kaarten = await this.db.query.cards.findMany({
-      where: eq(cards.set_id, set_id),
+      where: eq(cards.setId, setId),
       with: {
         suggestionImage: true,
       },
@@ -462,51 +390,40 @@ export class StudysetService {
 
     // Get likes
     const likes = await this.db.query.setlikes.findMany({
-      where: eq(setlikes.set_id, set_id),
-    });
-
-    // Get folder_id for this user/set combination
-    const folderEntry = await this.db.query.folder_sets.findFirst({
-      where: and(
-        eq(folder_sets.user_id, user_id),
-        eq(folder_sets.set_id, set_id),
-        eq(folder_sets.set_type, 'studyset'),
-      ),
+      where: eq(setlikes.setId, setId),
     });
 
     return {
       ...set,
-      folder_id: folderEntry?.folder_id ?? null,
       cards: kaarten
         .sort((a, b) => a.number - b.number)
         .map(({ suggestionImage, ...card }) => ({
           ...card,
-          suggestion_image: suggestionImage ?? null,
+          suggestionImage: suggestionImage ?? null,
         })) as unknown as CardResponseDto[],
       likes: likes,
       session: sesh,
-      folders: foldrs,
       classrooms: setclasses,
     };
   }
 
   async getBySetId(
-    user_id: string,
-    set_id: string,
+    userId: string,
+    setId: string,
   ): Promise<StudysessionResponseDto> {
     let session = await this.db.query.studysessions.findFirst({
       where: and(
-        eq(studysessions.set_id, set_id),
-        eq(studysessions.user_id, user_id),
+        eq(studysessions.setId, setId),
+        eq(studysessions.userId, userId),
       ),
     });
 
     if (!session) {
-      session = await this.createSession(user_id, set_id);
+      session = await this.createSession(userId, setId);
     }
 
     const seshcards = await this.db.query.sessioncards.findMany({
-      where: eq(sessioncards.session_id, session.id),
+      where: eq(sessioncards.sessionId, session.id),
     });
 
     return {
@@ -517,21 +434,21 @@ export class StudysetService {
   }
 
   async updateById(
-    user_id: string,
-    set_id: string,
+    userId: string,
+    setId: string,
     body: UpdateStudysetDto,
   ): Promise<StudysetResponseDto> {
     const date = new Date();
     const isoNow = date.toISOString();
 
     const set = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, set_id),
+      where: eq(studysets.id, setId),
     });
     if (!set) {
       throw new NotFoundException('Studyset not found');
     }
 
-    if (set.user_id !== user_id) {
+    if (set.userId !== userId) {
       throw new ForbiddenException('You do not own this studoset');
     }
 
@@ -539,39 +456,37 @@ export class StudysetService {
       .update(studysets)
       .set({
         title: body.title,
-        course: body.course,
-        global_term_language: body.global_term_language,
-        global_definition_language: body.global_definition_language,
-        last_updated: isoNow,
-        public_set: body.public_set,
+        globalTermLanguage: body.globalTermLanguage,
+        globalDefinitionLanguage: body.globalDefinitionLanguage,
+        lastUpdated: isoNow,
+        publicSet: body.publicSet,
       })
-      .where(eq(studysets.id, set_id));
+      .where(eq(studysets.id, setId));
 
     if (!updated) {
       throw new NotFoundException('Studyset not found');
     }
 
     if (body.cardlist && body.cardlist.length > 0) {
-      await this.db.delete(cards).where(eq(cards.set_id, set_id));
+      await this.db.delete(cards).where(eq(cards.setId, setId));
 
       await this.db.insert(cards).values(
         body.cardlist.map((card) => ({
-          id: uuidv6(),
           term: card.term,
           definition: card.definition,
-          suggestion_image_id: card.suggestion_image_id ?? null,
+          suggestionImageId: card.suggestionImageId ?? null,
           number: card.number,
-          created_at: isoNow,
-          updated_at: isoNow,
-          card_viewcount: 0,
-          card_total_viewcount: 0,
+          createdAt: isoNow,
+          updatedAt: isoNow,
+          cardViewcount: 0,
+          cardTotalViewcount: 0,
           inQueue: false,
           mastered: false,
-          times_relearned: 0,
-          set_id,
-          owner_id: user_id,
-          term_content_type: card.term_content_type ?? 'text',
-          code_language: card.code_language ?? 'typescript',
+          timesRelearned: 0,
+          setId,
+          ownerId: userId,
+          termContentType: card.termContentType ?? 'text',
+          codeLanguage: card.codeLanguage ?? 'typescript',
         })),
       );
     } else if (body.cards && body.cards.length > 0) {
@@ -598,12 +513,12 @@ export class StudysetService {
               number: card.number,
               term: card.term,
               definition: card.definition,
-              updated_at: isoNow,
-              ...(card.term_content_type !== undefined && {
-                term_content_type: card.term_content_type,
+              updatedAt: isoNow,
+              ...(card.termContentType !== undefined && {
+                termContentType: card.termContentType,
               }),
-              ...(card.code_language !== undefined && {
-                code_language: card.code_language,
+              ...(card.codeLanguage !== undefined && {
+                codeLanguage: card.codeLanguage,
               }),
             })
             .where(eq(cards.id, card.id));
@@ -611,178 +526,69 @@ export class StudysetService {
       );
     }
 
-    return this.getById(user_id, set_id);
+    return this.getById(userId, setId);
   }
 
-  async deleteById(user_id: string, set_id: string): Promise<void> {
+  async deleteById(userId: string, setId: string): Promise<void> {
     const set = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, set_id),
+      where: eq(studysets.id, setId),
     });
 
     if (!set) {
       throw new NotFoundException('Studyset not found');
     }
 
-    if (set.user_id !== user_id) {
+    if (set.userId !== userId) {
       await this.db
         .delete(studysessions)
         .where(
           and(
-            eq(studysessions.set_id, set_id),
-            eq(studysessions.user_id, user_id),
-            eq(studysessions.set_type, 'studyset'),
+            eq(studysessions.setId, setId),
+            eq(studysessions.userId, userId),
+            eq(studysessions.setType, 'studyset'),
           ),
         );
       return;
     }
 
     await this.db.transaction(async (tx) => {
-      await tx
-        .delete(studysessions)
-        .where(
-          and(
-            eq(studysessions.set_id, set_id),
-            eq(studysessions.set_type, 'studyset'),
-          ),
-        );
-
-      await tx
-        .delete(setlikes)
-        .where(
-          and(eq(setlikes.set_id, set_id), eq(setlikes.set_type, 'studyset')),
-        );
-
-      await tx
-        .delete(classroomsets)
-        .where(
-          and(
-            eq(classroomsets.set_id, set_id),
-            eq(classroomsets.set_type, 'studyset'),
-          ),
-        );
-
-      await tx
-        .delete(classroomactivities)
-        .where(
-          and(
-            eq(classroomactivities.set_id, set_id),
-            eq(classroomactivities.set_type, 'studyset'),
-          ),
-        );
+      await deleteSetReferences(tx, setId, 'studyset');
 
       const result = await tx
         .delete(studysets)
-        .where(eq(studysets.id, set_id))
+        .where(eq(studysets.id, setId))
         .returning();
 
       if (result.length === 0) {
         throw new NotFoundException('Failed to delete studoset');
       }
     });
-    await this.invalidateSyncCache(user_id);
+    await this.invalidateSyncCache(userId);
   }
 
-  async switchFolder(
-    user_id: string,
-    dto: SwitchFolderDto,
-  ): Promise<fullSetResponseDto> {
-    const checkset = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, dto.set_id),
-    });
-    if (!checkset) {
-      throw new NotFoundException('Studyset not found');
+  async likeSet(userId: string, setId: string): Promise<SetLikeResponseDto> {
+    if (await this.isSetOwner(userId, setId)) {
+      throw new ForbiddenException("you can't like your own set");
     }
 
-    if (checkset.user_id !== user_id) {
-      throw new ForbiddenException('You do not own this studoset');
-    }
-
-    const existing = await this.db.query.folder_sets.findFirst({
-      where: and(
-        eq(folder_sets.user_id, user_id),
-        eq(folder_sets.set_id, dto.set_id),
-        eq(folder_sets.set_type, 'studyset'),
-      ),
-    });
-
-    if (existing) {
-      await this.db
-        .update(folder_sets)
-        .set({ folder_id: dto.destinationFolder_id })
-        .where(eq(folder_sets.id, existing.id));
-    } else {
-      await this.db.insert(folder_sets).values({
-        id: uuidv6(),
-        user_id: user_id,
-        set_id: dto.set_id,
-        set_type: 'studyset',
-        folder_id: dto.destinationFolder_id,
-      });
-    }
-
-    return this.getById(user_id, dto.set_id);
-  }
-
-  async saveToFolder(
-    user_id: string,
-    set_id: string,
-    folder_id: string,
-  ): Promise<void> {
-    const existing = await this.db.query.folder_sets.findFirst({
-      where: and(
-        eq(folder_sets.user_id, user_id),
-        eq(folder_sets.set_id, set_id),
-        eq(folder_sets.set_type, 'studyset'),
-      ),
-    });
-
-    if (existing) {
-      await this.db
-        .update(folder_sets)
-        .set({ folder_id })
-        .where(eq(folder_sets.id, existing.id));
-    } else {
-      await this.db.insert(folder_sets).values({
-        id: uuidv6(),
-        user_id,
-        set_id,
-        set_type: 'studyset',
-        folder_id,
-      });
-    }
-  }
-
-  async removeFromFolder(user_id: string, set_id: string): Promise<void> {
-    await this.db
-      .delete(folder_sets)
-      .where(
-        and(
-          eq(folder_sets.user_id, user_id),
-          eq(folder_sets.set_id, set_id),
-          eq(folder_sets.set_type, 'studyset'),
-        ),
-      );
-  }
-
-  async likeSet(user_id: string, set_id: string): Promise<SetLikeResponseDto> {
     const date = new Date();
-    const like = {
-      id: uuidv4(),
-      set_id: set_id,
-      set_type: 'studyset',
-      user_id: user_id,
-      created_at: date.toISOString(),
-    };
-
-    await this.db.insert(setlikes).values(like);
+    const [like] = await this.db
+      .insert(setlikes)
+      .values({
+        setId: setId,
+        setType: 'studyset',
+        userId: userId,
+        createdAt: date.toISOString(),
+      })
+      .returning();
 
     return like;
   }
 
-  async removeLike(user_id: string, set_id: string): Promise<void> {
+  async removeLike(userId: string, setId: string): Promise<void> {
     const result = await this.db
       .delete(setlikes)
-      .where(and(eq(setlikes.set_id, set_id), eq(setlikes.user_id, user_id)))
+      .where(and(eq(setlikes.setId, setId), eq(setlikes.userId, userId)))
       .returning();
 
     if (result.length === 0) {
@@ -790,69 +596,51 @@ export class StudysetService {
     }
   }
 
-  async getAllLikes(set_id: string): Promise<SetLikeResponseDto[]> {
+  async getAllLikes(setId: string): Promise<SetLikeResponseDto[]> {
     return await this.db.query.setlikes.findMany({
-      where: eq(setlikes.set_id, set_id),
+      where: eq(setlikes.setId, setId),
     });
   }
 
   async createSession(
-    user_id: string,
-    set_id: string,
+    userId: string,
+    setId: string,
   ): Promise<StudysessionResponseDto> {
     // Zoek de studoset op
     const set = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, set_id),
+      where: eq(studysets.id, setId),
     });
 
     if (!set) {
       throw new NotFoundException('Studyset not found');
     }
 
-    const date = new Date();
-    const ssid = uuidv4();
-
-    const session = {
-      id: ssid,
-      started_at: date.toISOString(),
-      duration_min: 0,
-      second_last_login: 'unknown',
-      last_login: 'unknown',
-      ended_at: 'unknown',
-      index: 0,
-      accuracy: 100,
-      average_response_time: 0,
-      longest_focus_streak: 0,
-      device_type: 'unknown',
-      last_seen: date.toISOString(),
-      last_studied: date.toISOString(),
-      user_id,
-      set_id,
-      set_type: 'studyset',
-    };
-
-    await this.db.insert(studysessions).values(session);
+    const [session] = await this.db
+      .insert(studysessions)
+      .values(buildNewSession({ userId, setId, setType: 'studyset' }))
+      .returning();
+    const ssid = session.id;
 
     const kaartjes = await this.db.query.cards.findMany({
-      where: eq(cards.set_id, set_id),
+      where: eq(cards.setId, setId),
     });
 
-    const seshcards = kaartjes.map((kaart) => ({
-      id: uuidv4(),
+    const cardValues = kaartjes.map((kaart) => ({
       number: kaart.number,
-      card_viewcount: 0,
-      card_total_viewcount: 0,
+      cardViewcount: 0,
+      cardTotalViewcount: 0,
       inQueue: false,
       mastered: false,
-      times_relearned: 0,
-      card_id: kaart.id,
-      session_id: ssid,
-      owner_id: user_id,
+      timesRelearned: 0,
+      cardId: kaart.id,
+      sessionId: ssid,
+      ownerId: userId,
     }));
 
-    if (seshcards.length > 0) {
-      await this.db.insert(sessioncards).values(seshcards);
-    }
+    const seshcards =
+      cardValues.length > 0
+        ? await this.db.insert(sessioncards).values(cardValues).returning()
+        : [];
 
     return { ...session, cards: seshcards, pins: null };
   }
@@ -882,19 +670,20 @@ export class StudysetService {
     const images = await Promise.all(
       data.photos.map(async (p: any) => {
         const existing = await this.db.query.suggestion_images.findFirst({
-          where: eq(suggestion_images.pexels_id, String(p.id)),
+          where: eq(suggestion_images.pexelsId, String(p.id)),
         });
         if (existing) return existing;
 
-        const newImage = {
-          id: uuidv4(),
-          pexels_id: String(p.id),
-          display_url: p.src.large,
-          photographer: p.photographer,
-          source_page_url: p.url,
-          source: 'pexels',
-        };
-        await this.db.insert(suggestion_images).values(newImage);
+        const [newImage] = await this.db
+          .insert(suggestion_images)
+          .values({
+            pexelsId: String(p.id),
+            displayUrl: p.src.large,
+            photographer: p.photographer,
+            sourcePageUrl: p.url,
+            source: 'pexels',
+          })
+          .returning();
         return newImage;
       }),
     );
@@ -905,50 +694,57 @@ export class StudysetService {
   }
 
   async setCardImage(
-    user_id: string,
-    card_id: string,
+    userId: string,
+    cardId: string,
     dto: SetCardImageDto,
   ): Promise<void> {
     const card = await this.db.query.cards.findFirst({
-      where: eq(cards.id, card_id),
+      where: eq(cards.id, cardId),
     });
     if (!card) throw new NotFoundException('Card not found');
-    if (card.owner_id !== user_id)
+    if (card.ownerId !== userId)
       throw new ForbiddenException('You do not own this card');
 
     const image = await this.db.query.suggestion_images.findFirst({
-      where: eq(suggestion_images.id, dto.image_id),
+      where: eq(suggestion_images.id, dto.imageId),
     });
     if (!image) throw new NotFoundException('Suggestion image not found');
 
     await this.db
       .update(cards)
-      .set({ suggestion_image_id: dto.image_id })
-      .where(eq(cards.id, card_id));
+      .set({ suggestionImageId: dto.imageId })
+      .where(eq(cards.id, cardId));
 
     const existing = await this.db.query.suggestion_terms_cards.findFirst({
       where: and(
-        eq(suggestion_terms_cards.card_id, card_id),
-        eq(suggestion_terms_cards.image_id, dto.image_id),
+        eq(suggestion_terms_cards.cardId, cardId),
+        eq(suggestion_terms_cards.imageId, dto.imageId),
       ),
     });
 
     if (existing) {
       await this.db
         .update(suggestion_terms_cards)
-        .set({ selected_count: existing.selected_count + 1 })
+        .set({ selectedCount: existing.selectedCount + 1 })
         .where(
           and(
-            eq(suggestion_terms_cards.card_id, card_id),
-            eq(suggestion_terms_cards.image_id, dto.image_id),
+            eq(suggestion_terms_cards.cardId, cardId),
+            eq(suggestion_terms_cards.imageId, dto.imageId),
           ),
         );
     } else {
       await this.db.insert(suggestion_terms_cards).values({
-        card_id,
-        image_id: dto.image_id,
-        selected_count: 1,
+        cardId,
+        imageId: dto.imageId,
+        selectedCount: 1,
       });
     }
+  }
+
+  async isSetOwner(userId: string, setId: string) {
+    const set = await this.db.query.studysets.findFirst({
+      where: eq(studysets.id, setId),
+    });
+    return set?.userId === userId;
   }
 }

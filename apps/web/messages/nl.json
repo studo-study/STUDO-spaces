@@ -951,7 +951,10 @@
     "account": "Account",
     "nonotif": "geen meldingen",
     "allup": "alles up-to-date",
-    "search": "zoeken..."
+    "search": "zoeken...",
+    "search_btn": "Zoeken",
+    "create_c": "Creëer vak",
+    "create_b": "Creëer board"
   },
   "createfolder": {
     "title": "maak een map",
@@ -1050,10 +1053,15 @@
     "no_suggestions": "geen suggesties gevonden"
   },
   "notfound": {
-    "return": "terug",
-    "404": "404"
+    "404": "404",
+    "return": "terug"
   },
   "timed": {
+    "0": [
+      "Middernacht is geweest en nog steeds aan het knallen!",
+      "Blijven gaan!",
+      "Middernacht en nog altijd goed bezig!"
+    ],
     "2": [
       "Welkom terug nachtuil",
       "Nog zo laat op? Je bent niet de enige...",
@@ -1096,11 +1104,6 @@
       "Welkom terug, de avond is nog jong, veel succes",
       "Tot laat aan het werk, goed bezig!",
       "Tijd voor een romantische avonddate met je studiemateriaal"
-    ],
-    "0": [
-      "Middernacht is geweest en nog steeds aan het knallen!",
-      "Blijven gaan!",
-      "Middernacht en nog altijd goed bezig!"
     ]
   },
   "home": {
@@ -1472,29 +1475,30 @@
     "courses": "vakken",
     "course_1": "vak",
     "course": {
-      "create_title": "Nieuw vak",
-      "add_title": "Nieuw vak aanmaken",
-      "description": "Voeg een korte omschrijving toe...",
-      "create_btn": "Vak aanmaken",
-      "cancel_btn": "annuleren",
-      "add_metadata": "details toevoegen",
-      "add_later": "details verbergen",
-      "semester": "semester",
+      "row": {
+        "done": "afgewerkt",
+        "doing": "bezig",
+        "not_started": "niet gestart",
+        "due_date": "deadline",
+        "priority": "prioriteit"
+      },
+      "add_title": "Titel toevoegen",
+      "create_title": "Nieuwe cursus",
+      "create_course": "Cursus aanmaken",
+      "create_btn": "Aanmaken",
+      "description": "Beschrijving",
+      "add_metadata": "Metadata toevoegen",
+      "add_later": "Later toevoegen",
+      "add_link": "Link toevoegen",
       "exam_date": "Examendatum",
       "exam_status": "Examenstatus",
-      "link": "Resourcelink",
-      "add_link": "voeg een resourcelink toe...",
-      "row": {
-        "done": "klaar",
-        "in_prog": "bezig",
-        "cta_add_t": "taak toevoegen...",
-        "add_resources": "Bronnen",
-        "add_details": "Details",
-        "add_set": "Gekoppelde sets",
-        "due_date": "Deadline",
-        "not_started": "te doen",
-        "doing": "bezig"
-      }
+      "behind": "Achter op schema",
+      "slightly_behind": "Licht achter",
+      "error_icon_required": "Kies een icoon",
+      "error_title_required": "Titel is verplicht",
+      "n": "n",
+      "cta_add_t": "Rij toevoegen",
+      "flow_title": "Planning"
     }
   },
   "courses": {
@@ -1519,11 +1523,14 @@
     },
     "share": {
       "pop_title": "Deel set",
-      "copy_message": "Naar klembord gekopieerd"
+      "copy_message": "Naar klembord gekopieerd",
+      "isPrivate": "Set is privé"
     },
     "settings": {
       "pop_title": "Instellingen",
       "reset_progress": "Reset vooruitgang",
+      "reset_success": "Voortgang gereset",
+      "submit_error": "Er is iets misgegaan, probeer opnieuw",
       "make_private": "Publieke set",
       "delete_set": "Verwijder set"
     }
@@ -1582,5 +1589,99 @@
     "server_error": "Server gaf een fout ({status})",
     "rate_limit": "Je hebt de dagelijkse limiet van 3 imports bereikt. Probeer morgen opnieuw.",
     "aborted": "Import geannuleerd"
+  },
+  "svenchat": {
+    "quote": "Sven helpt graag met cursusvragen",
+    "new-chat": "Nieuwe chat",
+    "history": "Geschiedenis",
+    "recommended_title": "Aanbevolen"
+  },
+  "svenchatTimed": {
+    "0": [
+      "Middernacht is geweest en nog steeds aan het knallen!",
+      "Blijven gaan!",
+      "Middernacht en nog altijd goed bezig!"
+    ],
+    "2": [
+      "Dag nachtuil",
+      "Klaar om je vragen te beantwoorden!",
+      "Wat is de vraag? ",
+      "Nog bezig of al bezig!?",
+      "{name} is terug!"
+    ],
+    "4": [
+      "Is het geen bedtijd",
+      "Ga slapen!",
+      "Nog altijd wakker... hoe!?",
+      "Echt niet fatoe bro, ga pitten",
+      "Masten, Douchen, Studo..",
+      "Ik wil wel bijna pitten eigenlijk",
+      "Okaaay letsgooo"
+    ],
+    "7": [
+      "Goedemorgen {name}",
+      "Je bent wakker, eerste kleine win van de dag",
+      "Goeiemorgen morgen, goeiedag",
+      ""
+    ],
+    "11": [
+      "Welkom terug, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": [
+      "Goedemiddag {name}",
+      "Goed bezig, blijven volhouden",
+      "You got this!"
+    ],
+    "19": [
+      "Goedeavond {name}",
+      "Welkom terug",
+      "Avond shift geactiveerd",
+      "Let's Go Champ!"
+    ],
+    "22": [
+      "Welkom terug, de avond is nog jong, veel succes",
+      "Tot laat aan het werk, goed bezig!",
+      "Tijd voor een romantische avonddate met je studiemateriaal"
+    ],
+    "new-chat": "Nieuwe chat",
+    "history": "Geschiedenis"
+  },
+  "pomodoro": {
+    "title": "Pomodoro Timer",
+    "play": "Start",
+    "pause": "Pauzeer",
+    "focus_mode": "20 min gefocust studeren"
+  },
+  "learnsettings": {
+    "learning": "Algemene instellingen",
+    "answer_with": "Antwoorden met",
+    "answer_type": "Type antwoord",
+    "revision_count": "Herhalingsteller",
+    "term_def_description": "Kies of je met de term of de definitie antwoordt.",
+    "health": "Gezond studeren",
+    "twenty_twenty_two": "20-20 leren",
+    "twenty_description": "20 min studeren, 20 sec opkijken",
+    "pomodoro_timer": "Pomodoro timer",
+    "pomodoro_description": "Een timer die je helpt in hyperfocus te komen.",
+    "reset_progress": "Voortgang resetten",
+    "reset_settings": "default instellingen",
+    "type_description": "Kies hoe op welke manier je wilt antwoorden",
+    "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt"
+  },
+  "learn": {
+    "enter_continue": "*druk op enter om verder te gaan",
+    "type_answer": "type je antwoord...",
+    "reset": "reset",
+    "all_set": "De set is helemaal doorlopen!",
+    "back": "terug naar set",
+    "restart": "oefen nog eens",
+    "revision": "herhaal",
+    "hint": "toon hint",
+    "next": "volgende"
+  },
+  "widgets": {
+    "title": "Widgets"
   }
 }

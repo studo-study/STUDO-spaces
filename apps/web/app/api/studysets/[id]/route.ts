@@ -5,8 +5,7 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const session = await auth();
+  const [{ id }, session] = await Promise.all([params, auth()]);
   if (!session?.accessToken) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
@@ -25,13 +24,14 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const session = await auth();
+  const [{ id }, session, body] = await Promise.all([
+    params,
+    auth(),
+    req.json(),
+  ]);
   if (!session?.accessToken) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-
-  const body = await req.json();
 
   const response = await fetch(`${process.env.AUTH_API_URL}/studysets/${id}`, {
     method: "PUT",
@@ -50,8 +50,7 @@ export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const session = await auth();
+  const [{ id }, session] = await Promise.all([params, auth()]);
   if (!session?.accessToken) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }

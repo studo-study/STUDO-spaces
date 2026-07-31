@@ -1,16 +1,13 @@
 "use client";
 import { createContext, useContext } from "react";
-import { FlowRowResponse, FullFlowCourseResponse } from "@studo/types";
+import { CourseRow, FullCourseResponse } from "@studo/types";
 
 interface CourseState {
-  rows: FlowRowResponse[];
-  setRows: React.Dispatch<React.SetStateAction<FlowRowResponse[]>>;
-  updateRow: (
-    index: number,
-    updates: Partial<FlowRowResponse>,
-  ) => Promise<void>;
+  rows: CourseRow[];
+  setRows: React.Dispatch<React.SetStateAction<CourseRow[]>>;
+  updateRow: (index: number, updates: Partial<CourseRow>) => Promise<void>;
   addRow: () => void;
-  data: FullFlowCourseResponse;
+  data: FullCourseResponse;
 }
 
 export const CourseContext = createContext<CourseState | null>(null);

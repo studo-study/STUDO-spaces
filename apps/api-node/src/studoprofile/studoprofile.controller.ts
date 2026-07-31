@@ -14,26 +14,26 @@ import { Controller, Get, Param } from '@nestjs/common';
 @ApiBearerAuth()
 @Controller('studoprofiles')
 export class StudoprofileController {
-  constructor(private readonly TrackService: StudoprofileService) {}
+  constructor(private readonly studoprofileService: StudoprofileService) {}
 
   @Public()
   @ApiOperation({
-    summary: 'Zoek naar studoprofielen zonder ingelogd te zijn.',
+    summary: 'Haal een studoprofiel op zonder ingelogd te zijn.',
   })
   @ApiParam({
-    name: 'query',
+    name: 'id',
     type: String,
-    description: 'Zoekterm',
+    description: 'Studoprofiel ID',
   })
   @ApiResponse({
     status: 200,
-    description: 'Zoekresultaten gevonden',
+    description: 'Studoprofiel gevonden',
     type: StudoProfileResponseDTO,
   })
   @Get(':id')
-  async getPublicSearchResults(
+  async getStudoprofileById(
     @Param('id') id: string,
   ): Promise<StudoProfileResponseDTO> {
-    return await this.TrackService.trackSearch(id);
+    return await this.studoprofileService.trackSearch(id);
   }
 }

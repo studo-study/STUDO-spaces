@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNumber } from 'nestjs-swagger-dto';
-import { IsUUID } from 'class-validator';
+import { IsUUID, IsOptional, IsArray, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { SessionPinResponseDTO, updateSessionPinDTO } from './sessionpin.dto';
 import {
@@ -15,10 +15,9 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'started_at',
     optional: true,
   })
-  started_at?: string;
+  startedAt?: string;
 
   @ApiProperty({
     description: 'Duur in minuten',
@@ -26,11 +25,10 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsNumber({
-    name: 'duration_min',
     type: 'integer',
     optional: true,
   })
-  duration_min?: number;
+  durationMin?: number;
 
   @ApiProperty({
     description: 'Voorlaatste login',
@@ -38,10 +36,9 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'second_last_login',
     optional: true,
   })
-  second_last_login?: string;
+  secondLastLogin?: string;
 
   @ApiProperty({
     description: 'Laatste login',
@@ -49,10 +46,9 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'last_login',
     optional: true,
   })
-  last_login?: string;
+  lastLogin?: string;
 
   @ApiProperty({
     description: 'Eindtijd van de sessie',
@@ -60,10 +56,9 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'ended_at',
     optional: true,
   })
-  ended_at?: string;
+  endedAt?: string;
 
   @ApiProperty({
     description: 'Index in de set',
@@ -73,7 +68,6 @@ export class UpdateStudysessionDto {
   })
   @Type(() => Number)
   @IsNumber({
-    name: 'index',
     type: 'integer',
     min: 0,
     optional: true,
@@ -86,7 +80,6 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsNumber({
-    name: 'accuracy',
     type: 'integer',
     optional: true,
   })
@@ -98,11 +91,10 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsNumber({
-    name: 'average_response_time',
     type: 'integer',
     optional: true,
   })
-  average_response_time?: number;
+  averageResponseTime?: number;
 
   @ApiProperty({
     description: 'Langste focus streak',
@@ -110,11 +102,10 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsNumber({
-    name: 'longest_focus_streak',
     type: 'integer',
     optional: true,
   })
-  longest_focus_streak?: number;
+  longestFocusStreak?: number;
 
   @ApiProperty({
     description: 'Laatst bestudeerd',
@@ -122,21 +113,18 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsString({
-    name: 'last_studied',
     optional: true,
   })
-  last_studied?: string;
+  lastStudied?: string;
 
   @ApiProperty({
     description: 'UUID van de gebruiker',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
+  @IsOptional()
   @IsUUID()
-  @IsString({
-    name: 'user_id',
-  })
-  user_id: string;
+  userId?: string;
 
   @ApiProperty({
     description: 'Laatst gezien item',
@@ -145,17 +133,21 @@ export class UpdateStudysessionDto {
     required: false,
   })
   @IsUUID()
+  @IsOptional()
   @IsString({
-    name: 'last_seen',
     optional: true,
   })
-  last_seen?: string;
+  lastSeen?: string;
 
   @ApiProperty({
     description: 'Lijst van session cards',
     type: [updateSessionCardDTO],
     required: false,
   })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => updateSessionCardDTO)
   cards?: updateSessionCardDTO[];
 
   @ApiProperty({
@@ -163,6 +155,10 @@ export class UpdateStudysessionDto {
     type: [updateSessionPinDTO],
     required: false,
   })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => updateSessionPinDTO)
   pins?: updateSessionPinDTO[];
 }
 
@@ -178,19 +174,19 @@ export class StudysessionDTO {
     description: 'Starttijd',
     example: '2024-01-15T10:30:00.000Z',
   })
-  started_at: string;
+  startedAt: string;
 
   @ApiProperty({
     description: 'Duur in minuten',
     example: 45,
   })
-  duration_min: number;
+  durationMin: number;
 
   @ApiProperty({
     description: 'Eindtijd',
     example: '2024-01-15T11:15:00.000Z',
   })
-  ended_at: string;
+  endedAt: string;
 
   @ApiProperty({
     description: 'Index in de set',
@@ -208,45 +204,45 @@ export class StudysessionDTO {
     description: 'Gemiddelde reactietijd',
     example: 2500,
   })
-  average_response_time: number;
+  averageResponseTime: number;
 
   @ApiProperty({
     description: 'Langste focus streak',
     example: 10,
   })
-  longest_focus_streak: number;
+  longestFocusStreak: number;
 
   @ApiProperty({
     description: 'Laatst gezien item',
     example: 'card_123',
   })
-  last_seen: string;
+  lastSeen: string;
 
   @ApiProperty({
     description: 'Laatst bestudeerd',
     example: '2024-01-15T11:15:00.000Z',
   })
-  last_studied: string;
+  lastStudied: string;
 
   @ApiProperty({
     description: 'UUID van de gebruiker',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     description: 'UUID van de set',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     description: 'Type van de set',
     example: 'flashcard',
   })
-  set_type: string;
+  setType: string;
 }
 
 export class StudysessionResponseDto {
@@ -261,19 +257,19 @@ export class StudysessionResponseDto {
     description: 'Starttijd',
     example: '2024-01-15T10:30:00.000Z',
   })
-  started_at: string;
+  startedAt: string;
 
   @ApiProperty({
     description: 'Duur in minuten',
     example: 45,
   })
-  duration_min: number;
+  durationMin: number;
 
   @ApiProperty({
     description: 'Eindtijd',
     example: '2024-01-15T11:15:00.000Z',
   })
-  ended_at: string;
+  endedAt: string;
 
   @ApiProperty({
     description: 'Index in de set',
@@ -291,45 +287,45 @@ export class StudysessionResponseDto {
     description: 'Gemiddelde reactietijd',
     example: 2500,
   })
-  average_response_time: number;
+  averageResponseTime: number;
 
   @ApiProperty({
     description: 'Langste focus streak',
     example: 10,
   })
-  longest_focus_streak: number;
+  longestFocusStreak: number;
 
   @ApiProperty({
     description: 'Laatst gezien item',
     example: 'card_123',
   })
-  last_seen: string;
+  lastSeen: string;
 
   @ApiProperty({
     description: 'Laatst bestudeerd',
     example: '2024-01-15T11:15:00.000Z',
   })
-  last_studied: string;
+  lastStudied: string;
 
   @ApiProperty({
     description: 'UUID van de gebruiker',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     description: 'UUID van de set',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     description: 'Type van de set',
     example: 'flashcard',
   })
-  set_type: string;
+  setType: string;
 
   @ApiProperty({
     description: 'Lijst van session pins',
@@ -385,17 +381,17 @@ export class UserStats {
     description: 'Type apparaat',
     example: 'desktop',
   })
-  device_type: string;
+  deviceType: string;
 
   @ApiProperty({
     description: 'Voorlaatste login',
     example: '2024-01-15T09:00:00.000Z',
   })
-  second_last_login: string;
+  secondLastLogin: string;
 
   @ApiProperty({
     description: 'Laatste login',
     example: '2024-01-15T10:30:00.000Z',
   })
-  last_login: string;
+  lastLogin: string;
 }

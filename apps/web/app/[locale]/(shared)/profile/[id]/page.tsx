@@ -9,8 +9,7 @@ export default async function ProfilePage({
 }: {
   params: Promise<{ locale: string; id: string }>;
 }) {
-  const { id } = await params;
-  const session = await auth();
+  const [{ id }, session] = await Promise.all([params, auth()]);
 
   if (session) {
     return (

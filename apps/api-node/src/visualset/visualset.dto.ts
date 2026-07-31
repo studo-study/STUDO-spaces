@@ -29,13 +29,6 @@ export class VisualsetResponseDto {
   title: string;
 
   @ApiProperty({
-    example: 'Biology',
-    description: 'Course name',
-  })
-  @Expose()
-  course: string;
-
-  @ApiProperty({
     description: 'tells if the set is created by studo',
   })
   @Expose()
@@ -46,28 +39,28 @@ export class VisualsetResponseDto {
     description: 'Creation date',
   })
   @Expose()
-  created_at: string;
+  createdAt: string;
 
   @ApiProperty({
     example: '2024-01-10T10:00:00.000Z',
     description: 'Last updated date',
   })
   @Expose()
-  last_updated: string;
+  lastUpdated: string;
 
   @ApiProperty({
     example: true,
     description: 'Whether the set is public',
   })
   @Expose()
-  public_set: boolean;
+  publicSet: boolean;
 
   @ApiProperty({
     example: 'user123',
     description: 'User ID of the creator',
   })
   @Expose()
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     example: 'Charles',
@@ -81,23 +74,15 @@ export class VisualsetResponseDto {
     description: 'Profile picture of the creator',
   })
   @Expose()
-  img_url: string;
-
-  @ApiProperty({
-    example: 'folder123',
-    description: 'Folder ID',
-    required: false,
-  })
-  @Expose()
-  folder_id?: string | null;
+  imgUrl: string;
 
   @ApiProperty({ example: 8, required: false })
   @Expose()
-  pin_count?: number;
+  pinCount?: number;
 
   @ApiProperty({ example: '2024-09-01T10:00:00.000Z', required: false })
   @Expose()
-  last_studied?: string | null;
+  lastStudied?: string | null;
 
   @ApiProperty({ example: 75, required: false })
   @Expose()
@@ -120,32 +105,25 @@ export class PublicVisualsetResponseDto {
   title: string;
 
   @ApiProperty({
-    example: 'Biology',
-    description: 'Course name',
-  })
-  @Expose()
-  course: string;
-
-  @ApiProperty({
     example: '2024-01-01T10:00:00.000Z',
     description: 'Creation date',
   })
   @Expose()
-  created_at: string;
+  createdAt: string;
 
   @ApiProperty({
     example: '2024-01-10T10:00:00.000Z',
     description: 'Last updated date',
   })
   @Expose()
-  last_updated: string;
+  lastUpdated: string;
 
   @ApiProperty({
     example: 'user123',
     description: 'User ID of the creator',
   })
   @Expose()
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     example: 'Charles',
@@ -191,7 +169,7 @@ export class CreateImageDto {
     format: 'int32',
     type: 'integer',
   })
-  grid_x: number;
+  gridX: number;
 
   @ApiProperty({
     example: 0,
@@ -202,7 +180,7 @@ export class CreateImageDto {
     format: 'int32',
     type: 'integer',
   })
-  grid_y: number;
+  gridY: number;
 
   @ApiProperty({
     example: '1',
@@ -258,14 +236,14 @@ export class ImageDto {
     description: 'Grid X positie',
   })
   @Expose()
-  grid_x: number;
+  gridX: number;
 
   @ApiProperty({
     example: 0,
     description: 'Grid Y positie',
   })
   @Expose()
-  grid_y: number;
+  gridY: number;
 
   @ApiProperty({
     example: '1',
@@ -279,7 +257,7 @@ export class ImageDto {
     description: 'Visualset ID',
   })
   @Expose()
-  set_id: string;
+  setId: string;
 }
 
 export class ImageResponseDto {
@@ -316,14 +294,14 @@ export class ImageResponseDto {
     description: 'Grid X position',
   })
   @Expose()
-  grid_x: number;
+  gridX: number;
 
   @ApiProperty({
     example: 0,
     description: 'Grid Y positie',
   })
   @Expose()
-  grid_y: number;
+  gridY: number;
 
   @ApiProperty({
     example: '1',
@@ -337,7 +315,7 @@ export class ImageResponseDto {
     description: 'Visualset ID',
   })
   @Expose()
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     type: PinResponseListDto,
@@ -401,20 +379,6 @@ export class CreateVisualsetDto {
   title: string;
 
   @ApiProperty({
-    example: 'Biology',
-    description: 'Subject of the ((visualset))',
-  })
-  @IsString({ name: 'subject', maxLength: 100 })
-  subject: string;
-
-  @ApiProperty({
-    example: 'folder123',
-    description: 'Folder ID',
-  })
-  @IsString({ name: 'folder_id', maxLength: 64 })
-  folder_id: string;
-
-  @ApiProperty({
     type: [CreateImageDto],
     description: 'Images in the ((visualset))',
   })
@@ -445,27 +409,7 @@ export class UpdateVisualsetDto {
   })
   @IsBoolean()
   @IsOptional()
-  public_set?: boolean;
-
-  @ApiProperty({
-    example: 'Chemistry',
-    description: 'Updated course',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  @MaxLength(100)
-  course?: string;
-
-  @ApiProperty({
-    example: 'folder123',
-    description: 'Folder ID',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  @MaxLength(64)
-  folder_id?: string;
+  publicSet?: boolean;
 
   @ApiProperty({
     type: [UpdateImgDto],

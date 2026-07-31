@@ -74,7 +74,7 @@ export default function Overview() {
               </span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{set.title}</p>
-                <p className="truncate text-xs opacity-50">{set.course}</p>
+                <p className="truncate text-xs opacity-50">{set.displayName}</p>
               </div>
               <p className="shrink-0 text-xs opacity-40">{set.displayName}</p>
             </div>
@@ -90,14 +90,10 @@ export default function Overview() {
           data.recentActivity.map((act) => (
             <Link
               key={act.id}
-              href={`/apps/web/components/ui/app/app/admin/users/${act.user_id}`}
+              href={`/apps/web/components/ui/app/app/admin/users/${act.userId}`}
               className="w-full flex items-center gap-3 rounded-2xl border border-studoborder/20 px-4 py-3 hover:border-studoborder transition-colors"
             >
-              <Avatar
-                displayName={act.displayName}
-                id={act.user_id}
-                size={32}
-              />
+              <Avatar displayName={act.displayName} id={act.userId} size={32} />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">
                   {act.displayName}
@@ -105,7 +101,7 @@ export default function Overview() {
                 <p className="truncate text-xs opacity-50">{act.title}</p>
               </div>
               <p className="shrink-0 text-xs opacity-40">
-                {new Date(act.last_seen).toLocaleDateString("nl-BE")}
+                {new Date(act.lastSeen).toLocaleDateString("nl-BE")}
               </p>
             </Link>
           ))

@@ -15,12 +15,12 @@ export class StudoProfileDTO {
 
   @ApiProperty()
   @IsString()
-  img_url: string;
+  imgUrl: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  banner_url?: string;
+  bannerUrl?: string;
 
   @ApiProperty({ type: [String] })
   @IsArray()
@@ -39,7 +39,7 @@ export class TrackDTO {
 
   @ApiProperty()
   @IsString()
-  icon_name: string;
+  iconName: string;
 
   @ApiProperty()
   @IsString()
@@ -85,7 +85,7 @@ export class CommunityDTO {
     description: 'UUID van de eigenaar',
   })
   @Expose()
-  owner_id: string;
+  ownerId: string;
 
   @ApiProperty({
     example: 'classroom',

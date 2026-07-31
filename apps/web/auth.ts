@@ -100,12 +100,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: user.id!,
           email: user.email!,
           displayName: user.displayName,
-          img_url: user.img_url,
-          join_date: user.join_date,
+          imgUrl: user.img_url,
+          joinDate: user.join_date,
           joinNumber: user.joinNumber,
           totalSets: user.totalSets,
-          streak_count: user.streak_count,
-          streak_last_update: user.streak_last_update,
+          streakCount: user.streak_count,
+          streakLastUpdate: user.streak_last_update,
           publicRole: user.publicRole as "user" | "owner" | "admin",
           verified: user.verified,
           stats: user.stats,
@@ -116,19 +116,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Bij MICROSOFT login (nieuw)
       if (account?.provider === "microsoft-entra-id") {
         try {
-          let imgUrl = "default";
-          try {
-            const photoRes = await fetch(
-              "https://graph.microsoft.com/v1.0/me/photo/$value",
-              {
-                headers: { Authorization: `Bearer ${account.access_token}` },
-              },
-            );
-            if (photoRes.ok) {
-              const buffer = await photoRes.arrayBuffer();
-              imgUrl = `data:image/jpeg;base64,${Buffer.from(buffer).toString("base64")}`;
-            }
-          } catch {}
+          const imgUrl = profile?.picture || "default";
 
           const res = await fetch(
             `${process.env.AUTH_API_URL}/sessions/social-login`,

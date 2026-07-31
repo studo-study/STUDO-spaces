@@ -29,7 +29,7 @@ interface SetItemProps {
 }
 
 function ListItem({ set, t, locale }: SetItemProps) {
-  const date = new Date(set.created_at).toLocaleDateString(locale);
+  const date = new Date(set.createdAt).toLocaleDateString(locale);
   const iconSrc = set.cards ? "/icons/studyset.svg" : "/icons/visualset.svg";
   const challenged = true;
 
@@ -53,8 +53,8 @@ function ListItem({ set, t, locale }: SetItemProps) {
             width={0}
             height={0}
             className={"w-8"}
-            src={getCoverImage(set.course)}
-            alt={set.course}
+            src={getCoverImage(set.title)}
+            alt={set.title}
           />
         </div>
         <div>
@@ -77,7 +77,7 @@ function ListItem({ set, t, locale }: SetItemProps) {
           >
             <span>{t("added by")}</span>
             <Link
-              href={"/apps/web/components/ui/app/shared/profile" + set.user_id}
+              href={"/apps/web/components/ui/app/shared/profile" + set.userId}
               className={"hover:underline"}
             >
               {set.displayName}
@@ -110,11 +110,10 @@ function ListItem({ set, t, locale }: SetItemProps) {
   );
 }
 
-function getCoverImage(course: string): string {
+function getCoverImage(title: string): string {
   const key = Object.keys(CourseIcons).find((k) =>
-    course.toLowerCase().includes(k),
+    title.toLowerCase().includes(k),
   ) as keyof typeof CourseIcons | undefined;
-
   return key
     ? `/icons/courses/${CourseIcons[key]}`
     : "/icons/courses/default.svg";

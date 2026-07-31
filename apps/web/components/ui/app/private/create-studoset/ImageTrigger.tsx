@@ -23,7 +23,7 @@ const ImageTrigger = ({
     >
       {image && (
         <Image
-          src={image.display_url}
+          src={image.displayUrl}
           alt={image.id}
           width={80}
           height={80}

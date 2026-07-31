@@ -14,7 +14,7 @@ export class SetCardImageDto {
   @ApiProperty({ example: 'abc123', description: 'ID van de suggestion image' })
   @IsString({ name: 'image_id', maxLength: 64 })
   @IsNotEmpty()
-  image_id: string;
+  imageId: string;
 }
 
 export class SuggestionImagesResponse {
@@ -23,9 +23,9 @@ export class SuggestionImagesResponse {
 
 export class SuggestionImage {
   id: string;
-  pexels_id: string;
-  display_url: string;
+  pexelsId: string;
+  displayUrl: string;
   source: string;
   photographer: string;
-  source_page_url: string;
+  sourcePageUrl: string;
 }

@@ -4,7 +4,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
 
 import {
   ClassroomListResponseDto,
@@ -45,65 +44,97 @@ export class ClassroomService {
     private readonly db: DatabaseProvider,
   ) {}
 
+  // --- Helpers -----------------------------------------------------
+
+  /** Fetch a classroom or throw if it doesn't exist. */
+  private async findClassroomOrThrow(classroomId: string) {
+    const classroom = await this.db.query.classrooms.findFirst({
+      where: eq(classrooms.id, classroomId),
+    });
+
+    if (!classroom) {
+      throw new NotFoundException('No classroom with this id exists');
+    }
+
+    return classroom;
+  }
+
+  /** Fetch a classroom and assert the given user owns it. */
+  private async findOwnedClassroomOrThrow(classroomId: string, userId: string) {
+    const classroom = await this.findClassroomOrThrow(classroomId);
+
+    if (classroom.ownerId !== userId) {
+      throw new ForbiddenException('You do not own this classroom');
+    }
+
+    return classroom;
+  }
+
+  /** Resolve a set id to a studyset/visualset, throwing if neither exists. */
+  private async resolveSet(setId: string): Promise<{
+    set: typeof studysets.$inferSelect | typeof visualsets.$inferSelect;
+    type: 'studyset' | 'visualset';
+  }> {
+    const studyset = await this.db.query.studysets.findFirst({
+      where: eq(studysets.id, setId),
+    });
+    if (studyset) {
+      return { set: studyset, type: 'studyset' };
+    }
+
+    const visualset = await this.db.query.visualsets.findFirst({
+      where: eq(visualsets.id, setId),
+    });
+    if (visualset) {
+      return { set: visualset, type: 'visualset' };
+    }
+
+    throw new NotFoundException(`Set doesn't exist`);
+  }
+
+  // --- CRUD --------------------------------------------------------
+
   async create(
-    user_id: string,
+    userId: string,
     classroom: CreateClassroomDto,
   ): Promise<ClassroomResponseDto> {
-    const uid = uuidv4();
     const date = new Date();
 
-    const Class: ClassroomResponseDto = {
-      id: uid,
-      name: classroom.name,
-      owner_id: user_id,
-      type: classroom.type,
-      created_at: date.toISOString(),
-      verified: false,
-      school: classroom.school,
-    };
+    const [Class] = await this.db
+      .insert(classrooms)
+      .values({
+        name: classroom.name,
+        ownerId: userId,
+        type: classroom.type,
+        createdAt: date.toISOString(),
+        verified: false,
+        school: classroom.school,
+      })
+      .returning();
 
-    const owner: ClassroomUserResponseDto = {
-      user_id: user_id,
-      classroom_id: uid,
+    await this.db.insert(classroomusers).values({
+      userId: userId,
+      classroomId: Class.id,
       role: 'owner',
-      joined_at: date.toISOString(),
+      joinedAt: date.toISOString(),
       position: 0,
-    };
+    });
 
-    await this.db.insert(classrooms).values(Class);
-    await this.db.insert(classroomusers).values(owner);
     return Class;
   }
 
   async add(
-    classroom_id: string,
-    set_id: string,
-    user_id: string,
+    classroomId: string,
+    setId: string,
+    userId: string,
   ): Promise<ClassroomSetDto> {
-    const studyset = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, set_id),
-    });
-    const visualset = await this.db.query.visualsets.findFirst({
-      where: eq(visualsets.id, set_id),
-    });
-
-    let set;
-    let type;
-    if (studyset) {
-      set = studyset;
-      type = 'studyset';
-    } else if (visualset) {
-      set = visualset;
-      type = 'visualset';
-    } else {
-      throw new NotFoundException(`"studoset·doesn't·exist"`);
-    }
+    const { set, type } = await this.resolveSet(setId);
 
     const cset: ClassroomSetDto = {
-      set_id: set.id,
-      set_type: type,
-      classroom_id: classroom_id,
-      added_by: user_id,
+      setId: set.id,
+      setType: type,
+      classroomId: classroomId,
+      addedBy: userId,
     };
 
     await this.db.insert(classroomsets).values(cset);
@@ -112,36 +143,31 @@ export class ClassroomService {
   }
 
   async addSets(
-    classroom_id: string,
-    user_id: string,
+    classroomId: string,
+    userId: string,
     body: CreateClassroomSetsDto,
   ): Promise<ClassroomSetDto[]> {
     const sets: ClassroomSetDto[] = [];
     for (const s of body.sets) {
-      const set = await this.add(classroom_id, s, user_id);
+      const set = await this.add(classroomId, s, userId);
       sets.push(set);
     }
     return sets;
   }
 
   async createActivity(
-    user_id: string,
-    classroom_id: string,
+    userId: string,
+    classroomId: string,
     activityDto: CreateClassroomActivityDto,
   ): Promise<ClassActivitiesDto> {
     // Classroom check
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, classroom_id),
-    });
-    if (!classroom) {
-      throw new NotFoundException(`Classroom doesn't exist`);
-    }
+    await this.findClassroomOrThrow(classroomId);
 
     // Check of user al activity heeft en verwijder die
     const oldActivity = await this.db.query.classroomactivities.findFirst({
       where: and(
-        eq(classroomactivities.user_id, user_id),
-        eq(classroomactivities.classroom_id, classroom_id),
+        eq(classroomactivities.userId, userId),
+        eq(classroomactivities.classroomId, classroomId),
       ),
     });
 
@@ -150,84 +176,53 @@ export class ClassroomService {
         .delete(classroomactivities)
         .where(
           and(
-            eq(classroomactivities.user_id, user_id),
-            eq(classroomactivities.classroom_id, classroom_id),
+            eq(classroomactivities.userId, userId),
+            eq(classroomactivities.classroomId, classroomId),
           ),
         );
     }
 
     const date = new Date();
     const user = await this.db.query.profiles.findFirst({
-      where: eq(profiles.user_id, user_id),
+      where: eq(profiles.userId, userId),
     });
 
     if (!user) {
       throw new NotFoundException(`User profile doesn't exist`);
     }
 
-    let set_type: string;
-    let set: any;
+    const { set, type: set_type } = await this.resolveSet(activityDto.setId);
 
-    const studyset = await this.db.query.studysets.findFirst({
-      where: eq(studysets.id, activityDto.set_id),
-    });
+    // Nieuwe activiteit genereren en returnen
+    const [newActivity] = await this.db
+      .insert(classroomactivities)
+      .values({
+        classroomId: classroomId,
+        userId: userId,
+        displayName: user.displayName,
+        imgUrl: user.imgUrl,
+        setId: activityDto.setId,
+        setType: set_type,
+        title: set.title,
+        lastSeen: date.toISOString(),
+      })
+      .returning();
 
-    if (studyset) {
-      set_type = 'studyset';
-      set = studyset;
-    } else {
-      const visualset = await this.db.query.visualsets.findFirst({
-        where: eq(visualsets.id, activityDto.set_id),
-      });
-
-      if (!visualset) {
-        throw new NotFoundException(`Set doesn't exist`);
-      }
-
-      set_type = 'visualset';
-      set = visualset;
-    }
-
-    // Nieuwe activiteit genereren
-    const newActivity: ClassActivitiesDto = {
-      id: uuidv4(),
-      classroom_id: classroom_id,
-      user_id: user_id,
-      displayName: user.displayName,
-      img_url: user.img_url,
-      set_id: activityDto.set_id,
-      set_type: set_type,
-      title: set.title,
-      last_seen: date.toISOString(),
-    };
-
-    // Inserten en returnen
-    await this.db.insert(classroomactivities).values(newActivity);
     return newActivity;
   }
   async remove(
-    classroom_id: string,
+    classroomId: string,
     set: string,
-    user_id: string,
+    userId: string,
   ): Promise<void> {
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, classroom_id),
-    });
-
-    if (!classroom) {
-      throw new NotFoundException('No classroom with this id exists');
-    }
-
-    if (classroom.owner_id !== user_id) {
-      throw new ForbiddenException('You do not own this classroom');
-    }
+    await this.findOwnedClassroomOrThrow(classroomId, userId);
 
     const result = await this.db
       .delete(classroomsets)
       .where(
         and(
-          eq(classroomsets.set_id, set),
-          eq(classroomsets.classroom_id, classroom_id),
+          eq(classroomsets.setId, set),
+          eq(classroomsets.classroomId, classroomId),
         ),
       )
       .returning();
@@ -238,15 +233,15 @@ export class ClassroomService {
   }
 
   async join(
-    user_id: string,
+    userId: string,
     user: CreateClassroomUserDto,
   ): Promise<ClassroomUserResponseDto> {
     const date = new Date();
     const u = {
-      user_id: user_id,
-      classroom_id: user.classroom_id,
+      userId: userId,
+      classroomId: user.classroomId,
       role: user.role,
-      joined_at: date.toISOString(),
+      joinedAt: date.toISOString(),
       position: 0,
     };
 
@@ -254,12 +249,12 @@ export class ClassroomService {
     return u;
   }
 
-  async leave(user_id: string, classroom_id: string): Promise<void> {
+  async leave(userId: string, classroomId: string): Promise<void> {
     await this.db.transaction(async (tx) => {
       const user = await tx.query.classroomusers.findFirst({
         where: and(
-          eq(classroomusers.classroom_id, classroom_id),
-          eq(classroomusers.user_id, user_id),
+          eq(classroomusers.classroomId, classroomId),
+          eq(classroomusers.userId, userId),
         ),
       });
 
@@ -269,7 +264,7 @@ export class ClassroomService {
 
       if (user.role === 'owner') {
         const members = await tx.query.classroomusers.findMany({
-          where: eq(classroomusers.classroom_id, classroom_id),
+          where: eq(classroomusers.classroomId, classroomId),
         });
 
         if (members.length < 2) {
@@ -279,10 +274,10 @@ export class ClassroomService {
         }
 
         const nextOwner = members
-          .filter((m) => m.user_id !== user_id)
+          .filter((m) => m.userId !== userId)
           .sort(
             (a, b) =>
-              new Date(a.joined_at).getTime() - new Date(b.joined_at).getTime(),
+              new Date(a.joinedAt).getTime() - new Date(b.joinedAt).getTime(),
           )[0];
 
         await tx
@@ -290,23 +285,23 @@ export class ClassroomService {
           .set({ role: 'owner' })
           .where(
             and(
-              eq(classroomusers.classroom_id, classroom_id),
-              eq(classroomusers.user_id, nextOwner.user_id),
+              eq(classroomusers.classroomId, classroomId),
+              eq(classroomusers.userId, nextOwner.userId),
             ),
           );
 
         await tx
           .update(classrooms)
-          .set({ owner_id: nextOwner.user_id })
-          .where(eq(classrooms.id, classroom_id));
+          .set({ ownerId: nextOwner.userId })
+          .where(eq(classrooms.id, classroomId));
       }
 
       await tx
         .delete(classroomusers)
         .where(
           and(
-            eq(classroomusers.user_id, user_id),
-            eq(classroomusers.classroom_id, classroom_id),
+            eq(classroomusers.userId, userId),
+            eq(classroomusers.classroomId, classroomId),
           ),
         );
     });
@@ -318,7 +313,7 @@ export class ClassroomService {
 
   async getAllByUserId(id: string): Promise<ClassroomListResponseDto> {
     const rows = await this.db.query.classroomusers.findMany({
-      where: eq(classroomusers.user_id, id),
+      where: eq(classroomusers.userId, id),
       with: {
         classroom: true,
       },
@@ -328,19 +323,14 @@ export class ClassroomService {
   }
 
   async getById(id: string): Promise<FullClassroomResponseDto> {
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, id),
-    });
+    const classroom = await this.findClassroomOrThrow(id);
 
-    if (!classroom) {
-      throw new Error(`Classroom doesn't exist`);
-    }
     return {
       id: classroom.id,
       name: classroom.name,
-      owner_id: classroom.owner_id,
+      ownerId: classroom.ownerId,
       type: classroom.type,
-      created_at: classroom.created_at,
+      createdAt: classroom.createdAt,
       school: classroom.school,
       verified: classroom.verified,
       sets: await this.getSetsById(classroom.id),
@@ -350,18 +340,18 @@ export class ClassroomService {
 
   async getSetsById(id: string): Promise<FullClassroomSetDto[]> {
     const classRoomSets = await this.db.query.classroomsets.findMany({
-      where: eq(classroomsets.classroom_id, id),
+      where: eq(classroomsets.classroomId, id),
     });
 
     if (classRoomSets.length === 0) return [];
 
-    const userIds = [...new Set(classRoomSets.map((cs) => cs.added_by))];
+    const userIds = [...new Set(classRoomSets.map((cs) => cs.addedBy))];
     const studysetIds = classRoomSets
-      .filter((cs) => cs.set_type === 'studyset')
-      .map((cs) => cs.set_id);
+      .filter((cs) => cs.setType === 'studyset')
+      .map((cs) => cs.setId);
     const visualsetIds = classRoomSets
-      .filter((cs) => cs.set_type === 'visualset')
-      .map((cs) => cs.set_id);
+      .filter((cs) => cs.setType === 'visualset')
+      .map((cs) => cs.setId);
 
     const [usersMap, studysetsMap, visualsetsMap] = await Promise.all([
       this.db.query.users
@@ -382,24 +372,23 @@ export class ClassroomService {
     const lijst: FullClassroomSetDto[] = [];
 
     for (const classroomset of classRoomSets) {
-      const user = usersMap.get(classroomset.added_by);
+      const user = usersMap.get(classroomset.addedBy);
       if (!user) continue;
 
       const set =
-        classroomset.set_type === 'studyset'
-          ? studysetsMap.get(classroomset.set_id)
-          : visualsetsMap.get(classroomset.set_id);
+        classroomset.setType === 'studyset'
+          ? studysetsMap.get(classroomset.setId)
+          : visualsetsMap.get(classroomset.setId);
 
       if (set) {
         lijst.push({
-          set_id: classroomset.set_id,
-          set_type: classroomset.set_type,
-          classroom_id: classroomset.classroom_id,
-          owner: set.user_id,
-          course: set.course,
-          created_at: set.created_at,
+          setId: classroomset.setId,
+          setType: classroomset.setType,
+          classroomId: classroomset.classroomId,
+          owner: set.userId,
+          createdAt: set.created_at,
           title: set.title,
-          added_by: user.displayName,
+          addedBy: user.displayName,
         });
       }
     }
@@ -409,30 +398,30 @@ export class ClassroomService {
 
   async getUsersById(id: string): Promise<ClassroomUserDto[]> {
     const ClassroomUsers = await this.db.query.classroomusers.findMany({
-      where: eq(classroomusers.classroom_id, id),
+      where: eq(classroomusers.classroomId, id),
     });
 
     if (ClassroomUsers.length === 0) return [];
 
-    const userIds = ClassroomUsers.map((u) => u.user_id);
+    const userIds = ClassroomUsers.map((u) => u.userId);
     const profileRows = await this.db.query.profiles.findMany({
-      where: inArray(profiles.user_id, userIds),
+      where: inArray(profiles.userId, userIds),
     });
-    const profileMap = new Map(profileRows.map((p) => [p.user_id, p]));
+    const profileMap = new Map(profileRows.map((p) => [p.userId, p]));
 
     return ClassroomUsers.flatMap((User) => {
-      const u = profileMap.get(User.user_id);
+      const u = profileMap.get(User.userId);
       if (!u) return [];
       return [
         {
-          user_id: User.user_id,
-          classroom_id: User.classroom_id,
+          userId: User.userId,
+          classroomId: User.classroomId,
           role: User.role,
-          joined_at: User.joined_at,
+          joinedAt: User.joinedAt,
           displayName: u.displayName,
           streak: u.streak,
           verified: u.verified,
-          img_url: u.img_url,
+          imgUrl: u.imgUrl,
           position: 0,
         },
       ];
@@ -440,31 +429,11 @@ export class ClassroomService {
   }
 
   async getActivity(id: string): Promise<ClassActivitiesDto[]> {
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, id),
-    });
-    if (!classroom) {
-      throw new NotFoundException(`Classroom doesn't exist`);
-    }
+    await this.findClassroomOrThrow(id);
 
     return this.db.query.classroomactivities.findMany({
-      where: eq(classroomactivities.classroom_id, id),
+      where: eq(classroomactivities.classroomId, id),
     });
-  }
-
-  async promoteUser(classroom_id: string, user_id: string) {
-    const promotedUser = await this.db
-      .update(classroomusers)
-      .set({ role: 'owner' })
-      .where(
-        and(
-          eq(classroomusers.classroom_id, classroom_id),
-          eq(classroomusers.user_id, user_id),
-        ),
-      );
-
-    await this.updateById(classroom_id, { owner: user_id });
-    return promotedUser;
   }
 
   async updateById(id: string, body: UpdateClassroomDto): Promise<void> {
@@ -474,28 +443,18 @@ export class ClassroomService {
         name: body.name,
         type: body.type,
         verified: body.verified,
-        owner_id: body.owner,
+        ownerId: body.owner,
       })
       .where(eq(classrooms.id, id))
       .returning();
 
     if (updated.length === 0) {
-      throw new NotFoundException('Visualset not found');
+      throw new NotFoundException('No classroom with this id exists');
     }
   }
 
-  async deleteById(id: string, user_id: string) {
-    const classroom = await this.db.query.classrooms.findFirst({
-      where: eq(classrooms.id, id),
-    });
-
-    if (!classroom) {
-      throw new NotFoundException('No classroom with this id exists');
-    }
-
-    if (classroom.owner_id !== user_id) {
-      throw new ForbiddenException('You do not own this classroom');
-    }
+  async deleteById(id: string, userId: string) {
+    await this.findOwnedClassroomOrThrow(id, userId);
 
     await this.db.delete(classrooms).where(eq(classrooms.id, id));
   }

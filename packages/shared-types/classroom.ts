@@ -14,15 +14,15 @@ export interface UpdateClassroom {
 export interface ClassroomResponse {
   id: string;
   name: string;
-  owner_id: string;
+  ownerId: string;
   type: string;
-  created_at: string;
+  createdAt: string;
   verified: boolean;
   school: string;
 }
 
 export interface CreateClassroomSet {
-  set_id: string;
+  setId: string;
 }
 
 export interface CreateClassroomSets {
@@ -30,29 +30,28 @@ export interface CreateClassroomSets {
 }
 
 export interface ClassroomSet {
-  set_id: string;
-  set_type: string;
-  classroom_id: string;
-  added_by: string;
+  setId: string;
+  setType: string;
+  classroomId: string;
+  addedBy: string;
 }
 
 export interface FullClassroomSet {
-  set_id: string;
-  set_type: string;
+  setId: string;
+  setType: string;
   title: string;
-  course: string;
-  classroom_id: string;
+  classroomId: string;
   owner: string;
-  added_by: string;
-  created_at: string;
+  addedBy: string;
+  createdAt: string;
 }
 
 export interface ClassroomUser {
-  user_id: string;
-  classroom_id: string;
-  img_url: string;
+  userId: string;
+  classroomId: string;
+  imgUrl: string;
   role: string;
-  joined_at: string;
+  joinedAt: string;
   displayName: string;
   streak: number;
   verified: boolean;
@@ -69,7 +68,7 @@ export interface ClassroomListResponse {
 }
 
 export interface CreateClassroomUser {
-  classroom_id: string;
+  classroomId: string;
   role: string;
 }
 
@@ -79,20 +78,20 @@ export interface UpdateClassroomUsers {
 }
 
 export interface LeaveClassroom {
-  classroom_id: string;
+  classroomId: string;
 }
 
 export interface CreateClassroomActivity {
-  user_id: string;
-  set_id: string;
-  classroom_id: string;
+  userId: string;
+  setId: string;
+  classroomId: string;
 }
 
 export interface ClassroomUserResponse {
-  user_id: string;
-  classroom_id: string;
+  userId: string;
+  classroomId: string;
   role: string;
-  joined_at: string;
+  joinedAt: string;
   position: number;
 }
 
@@ -101,24 +100,24 @@ export interface CreateChallenge {
 }
 
 export interface ChallengeResponse {
-  challenge_id: string;
+  challengeId: string;
   challengeType: "time attack" | "mastery tournament" | "duel";
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   running: boolean;
-  set_id: string;
+  setId: string;
   title: string;
-  display_name: string;
-  creator_id: string;
-  classroom_id: string;
+  displayName: string;
+  creatorId: string;
+  classroomId: string;
 }
 
 export interface ChallengeMember {
-  challenge_id: string;
-  user_id: string;
-  display_name: string;
-  img_url: string;
-  classroom_id: string;
+  challengeId: string;
+  userId: string;
+  displayName: string;
+  imgUrl: string;
+  classroomId: string;
   position: number;
   winner: boolean;
 }
@@ -126,6 +125,6 @@ export interface ChallengeMember {
 export interface JoinRequest {
   displayName: string;
   date: string;
-  img_url: string;
+  imgUrl: string;
   id: string;
 }

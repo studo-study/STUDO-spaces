@@ -1,11 +1,11 @@
-import { FlowBoardOverview } from "@studo/types";
+import { BoardSummary } from "@studo/types";
 import { Link } from "@/i18n/routing";
 import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
 import SmallBoardProgress from "@/components/ui/app/private/home/flows/SmallBoardProgress";
 import { useTranslations } from "next-intl";
 
 interface FlowItemProps {
-  board: FlowBoardOverview;
+  board: BoardSummary;
 }
 const FlowItem = (props: FlowItemProps) => {
   const { board } = props;
@@ -33,9 +33,9 @@ const FlowItem = (props: FlowItemProps) => {
       <div></div>
       <div className={"flex flex-row gap-2 w-full"}>
         <SmallBoardProgress
-          total_in_progress={board.total_in_progress}
-          total_length={board.total_length}
-          total_done={board.total_done}
+          total_in_progress={board.totalInProgress ?? 0}
+          total_length={board.totalLength ?? 0}
+          total_done={board.totalDone ?? 0}
         />
       </div>
       <span className={"text-xs dark:text-white text-studodarkblue opacity-50"}>

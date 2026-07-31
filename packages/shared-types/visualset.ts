@@ -6,27 +6,24 @@ import type { ClassroomResponse } from "./classroom";
 export interface VisualsetResponse {
   id: string;
   title: string;
-  course: string;
   studoset: boolean;
-  created_at: string;
-  last_updated: string;
-  public_set: boolean;
-  user_id: string;
+  createdAt: string;
+  lastUpdated: string;
+  publicSet: boolean;
+  userId: string;
   displayName: string;
-  img_url: string;
-  folder_id?: string | null;
-  pin_count?: number;
-  last_studied?: string | null;
+  imgUrl: string;
+  pinCount?: number;
+  lastStudied?: string | null;
   progress?: number;
 }
 
 export interface PublicVisualsetResponse {
   id: string;
   title: string;
-  course: string;
-  created_at: string;
-  last_updated: string;
-  user_id: string;
+  createdAt: string;
+  lastUpdated: string;
+  userId: string;
   displayName: string;
 }
 
@@ -34,8 +31,8 @@ export interface CreateImage {
   title: string;
   url: string;
   index: number;
-  grid_x: number;
-  grid_y: number;
+  gridX: number;
+  gridY: number;
   scale: string;
 }
 
@@ -48,10 +45,10 @@ export interface Image {
   title: string;
   url: string;
   index: number;
-  grid_x: number;
-  grid_y: number;
+  gridX: number;
+  gridY: number;
   scale: string;
-  set_id: string;
+  setId: string;
 }
 
 export interface ImageResponse {
@@ -59,10 +56,10 @@ export interface ImageResponse {
   title: string;
   url: string;
   index: number;
-  grid_x: number;
-  grid_y: number;
+  gridX: number;
+  gridY: number;
   scale: string;
-  set_id: string;
+  setId: string;
   pins: PinResponseList;
 }
 
@@ -79,34 +76,28 @@ export interface VisualsetResponseList {
 
 export interface CreateVisualset {
   title: string;
-  subject: string;
-  folder_id: string;
   images: CreateImage[];
   pins: CreatePin[];
 }
 
 export interface UpdateVisualset {
   title?: string;
-  public_set?: boolean;
-  course?: string;
-  folder_id?: string;
+  publicSet?: boolean;
   images?: UpdateImage[];
   pins?: UpdatePin[];
 }
 
 export interface CreateVisualsetWithFiles {
   title: string;
-  subject: string;
-  folder_id: string;
-  images_metadata: string;
-  pins_data: string;
+  imagesMetadata: string;
+  pinsData: string;
 }
 
 export interface ImageMetadata {
   title: string;
   index: number;
-  grid_x: number;
-  grid_y: number;
+  gridX: number;
+  gridY: number;
   scale: string;
 }
 

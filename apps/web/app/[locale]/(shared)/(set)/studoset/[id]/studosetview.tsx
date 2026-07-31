@@ -4,10 +4,7 @@ import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/app/shared/studosets/CardList";
 import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
-import { IoFolderOpenOutline } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import SavedPopup from "@/components/ui/app/shared/studosets/savedpopup";
-import ClassroomPopup from "@/components/ui/app/shared/studosets/classroompopup";
 import SharePopup from "@/components/ui/app/shared/studosets/sharepopup";
 import SettingsPopup from "@/components/ui/app/shared/studosets/settingspopup";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
@@ -20,18 +17,27 @@ import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useRouter } from "next/navigation";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
-import { TabSwitcher } from "@/components/ui/design_system/tabswitcher/TabSwitcher";
+import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBottom";
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
+import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
 
 interface viewProps {
   id: string;
 }
 
-type Tab = "learned" | "reviewed" | "not_learned" | "all";
+type Tab = "all" | "";
+type Filter = "learned" | "reviewed" | "not_learned" | "all";
 
 export default function StudosetView({ id }: viewProps) {
   const t = useTranslations("studoset");
@@ -40,6 +46,7 @@ export default function StudosetView({ id }: viewProps) {
   const toast = useToast();
   const router = useRouter();
   const { data, isPlaceholderData, isError, error } = useStudoset(id);
+  const [filter, setFilter] = useState<Filter>("all");
   const [tab, setTab] = useState<Tab>("all");
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLDivElement>(null);
@@ -63,6 +70,11 @@ export default function StudosetView({ id }: viewProps) {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
 
+  // Reset the pomodoro when leaving the studoset page.
+  useEffect(() => {
+    return () => pomodoroStore.getState().reset();
+  }, []);
+
   useEffect(() => {
     if (!isError) return;
     setLoaded(true);
@@ -74,44 +86,70 @@ export default function StudosetView({ id }: viewProps) {
   const { like, unlike } = useLikeStudoset(id, userId ?? "");
   const likes = useMemo(() => data?.likes ?? [], [data]);
   const liked = useMemo(
-    () => likes.some((l) => l.user_id === userId),
+    () => likes.some((l) => l.userId === userId),
     [likes, userId],
   );
   const toggleLike = () => {
     if (liked) unlike.mutate(data?.id);
     else like.mutate(data?.id);
   };
-  if (!data?.cards) return null;
-  const totalCards = data.cards.length;
+
+  const totalCards = data?.cards?.length;
   const sessionCards = isPlaceholderData
     ? null
     : (data?.session?.cards ?? null);
 
-  const not_studied = sessionCards
-    ? sessionCards.reduce(
-        (sum: number, card: SessionCardResponse) =>
-          card.card_viewcount === 0 ? sum + 1 : sum,
-        0,
-      )
-    : totalCards;
+  const filteredCards = useMemo(() => {
+    if (filter === "not_learned") {
+      return data?.cards?.filter((card) => {
+        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
+        return sessionCard ? sessionCard.cardViewcount === 0 : true;
+      });
+    }
 
-  const reviewed = sessionCards
-    ? sessionCards.reduce(
-        (sum: number, card: SessionCardResponse) =>
-          card.card_viewcount === 1 ? sum + 1 : sum,
-        0,
-      )
-    : 0;
+    if (filter === "reviewed") {
+      return data?.cards?.filter((card) => {
+        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
+        return sessionCard ? sessionCard.cardViewcount === 1 : true;
+      });
+    }
 
-  const studied = sessionCards
-    ? sessionCards.reduce(
-        (sum: number, card: SessionCardResponse) =>
-          card.card_viewcount > 1 ? sum + 1 : sum,
-        0,
-      )
-    : 0;
+    if (filter === "learned") {
+      return data?.cards?.filter((card) => {
+        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
+        return sessionCard ? sessionCard.cardViewcount >= 2 : true;
+      });
+    }
 
-  const isOwner = !!userId && userId === data?.user_id;
+    return data?.cards;
+  }, [filter, data?.cards, sessionCards]);
+
+  const { not_studied, reviewed, studied } = useMemo(() => {
+    if (!sessionCards) {
+      return { not_studied: totalCards ?? 0, reviewed: 0, studied: 0 };
+    }
+    return sessionCards.reduce(
+      (acc, card: SessionCardResponse) => {
+        if (card.cardViewcount === 0) acc.not_studied += 1;
+        else if (card.cardViewcount === 1) acc.reviewed += 1;
+        else acc.studied += 1;
+        return acc;
+      },
+      { not_studied: 0, reviewed: 0, studied: 0 },
+    );
+  }, [sessionCards, totalCards]);
+
+  const isOwner = !!userId && userId === data?.userId;
+
+  const toggleTab = (input: string) => {
+    if (filter === (input as Filter)) {
+      setFilter("all");
+    } else {
+      setFilter(input as Filter);
+    }
+  };
+
+  if (!data?.cards) return null;
 
   return (
     <div className={"relative w-full h-full px-10"}>
@@ -121,7 +159,7 @@ export default function StudosetView({ id }: viewProps) {
       >
         <span>{t("created")}</span>
         <Link
-          href={isOwner ? "/account" : `/profile/` + data?.user_id}
+          href={isOwner ? "/account" : `/profile/` + data?.userId}
           className="flex flex-row w-fit h-fit rounded-full sm:rounded-4xl
                             gap-1.5 sm:gap-2 px-1 pr-3 py-1 l max-w-fit
                              bg-studogrey/30 border border-studoborder/30 shadow-2x
@@ -129,7 +167,7 @@ export default function StudosetView({ id }: viewProps) {
         >
           <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full shrink-0">
             <Avatar
-              id={data?.user_id}
+              id={data?.userId}
               displayName={data?.displayName}
               size={25}
             />
@@ -144,26 +182,25 @@ export default function StudosetView({ id }: viewProps) {
           {(data && data.title) || t("set_title")}
         </span>
         <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
-          <EditToggle id={id} />
-          <SavedPopup setId={id} />
-          <ClassroomPopup />
-          <SharePopup />
-          <SettingsPopup
-            isOwner={isOwner}
-            id={id}
-            isPrivateSet={data.public_set}
-          />
+          <BaseTooltip content={t("edit")}>
+            <EditToggle id={id} />
+          </BaseTooltip>
+
+          <BaseTooltip content={t("share")}>
+            <SharePopup id={id} />
+          </BaseTooltip>
+
+          <BaseTooltip content={t("settings")}>
+            <SettingsPopup
+              isOwner={isOwner}
+              id={id}
+              isPrivateSet={data.publicSet}
+              sessionId={data.session?.id}
+            />
+          </BaseTooltip>
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
-        {data?.folder_id && (
-          <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
-            <IoFolderOpenOutline />
-            <span>
-              {t("saved_in")}: {data?.folders?.[0]?.name}
-            </span>
-          </div>
-        )}
         {data?.classrooms?.[0] && (
           <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
             <Image
@@ -196,7 +233,6 @@ export default function StudosetView({ id }: viewProps) {
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
           <LinkButton
-            className={"hidden"}
             href={`/learn/` + id}
             icon={
               <Image
@@ -213,7 +249,7 @@ export default function StudosetView({ id }: viewProps) {
           />
           <LinkButton
             href={`/speedy/` + id}
-            className="w-full hidden"
+            className="w-full"
             icon={
               <Image
                 width={20}
@@ -254,38 +290,45 @@ export default function StudosetView({ id }: viewProps) {
         </span>
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
           <div
+            onClick={() => toggleTab("not_learned")}
             className={
-              "w-full h-full p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
+              "w-full h-full cursor-pointer p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
             }
           >
             <span className={"font-bold"}>{t("not_learned")}</span>
-            <Progress length={totalCards} progress={not_studied} />
+            <Progress
+              length={totalCards ?? 0}
+              progress={not_studied ?? 0}
+              reverse
+            />
           </div>
           <div
+            onClick={() => toggleTab("reviewed")}
             className={
-              "w-full h-full p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
+              "w-full h-full p-5 cursor-pointer border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
             }
           >
             <span className={"font-bold"}>{t("reviewed")}</span>
-            <Progress length={totalCards} progress={reviewed} />
+            <Progress length={totalCards ?? 0} progress={reviewed} reverse />
           </div>
           <div
+            onClick={() => toggleTab("learned")}
             className={
-              "w-full h-full p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
+              "w-full h-full p-5 cursor-pointer border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
             }
           >
             <span className={"font-bold"}>{t("studied")}</span>
-            <Progress length={totalCards} progress={studied} />
+            <Progress length={totalCards ?? 0} progress={studied} />
           </div>
         </div>
 
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className={"w-full flex justify-between items-center"}>
           <span className="w-full h-fit font-bold text-sm sm:text-base">
-            {t("cards_title")}:
+            {t("cards_title")}: ({filteredCards?.length})
           </span>
           <div className={"flex flex-row gap-2 items-center justify-center"}>
-            <TabSwitcher
+            <SegmentedControls
               size={"sm"}
               tabs={[
                 {
@@ -293,8 +336,8 @@ export default function StudosetView({ id }: viewProps) {
                   label: t("all"),
                 },
                 {
-                  key: "not_learned",
-                  label: t("ns"),
+                  key: "learned",
+                  label: t("s"),
                 },
               ]}
               value={tab}
@@ -304,7 +347,7 @@ export default function StudosetView({ id }: viewProps) {
             />
           </div>
         </div>
-        <CardList cards={data?.cards ?? []} isOwner={isOwner} setId={id} />
+        <CardList cards={filteredCards} isOwner={isOwner} setId={id} />
         <BottomCredits />
         <div ref={bottomRef} />
       </div>

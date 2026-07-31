@@ -5,10 +5,15 @@ import { PiExport } from "react-icons/pi";
 import { MdCopyAll } from "react-icons/md";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { usePathname } from "@/i18n/routing";
+import { useStudoset } from "@/hooks/app/sets/useStudoset";
 
-export default function SharePopup() {
+interface SharePopupProps {
+  id: string;
+}
+export default function SharePopup(props: SharePopupProps) {
+  const { id } = props;
   const t = useTranslations("popup.share");
-
+  const studoset = useStudoset(id).data;
   const pathname = usePathname();
   const locale = useLocale();
   const buildLink = window.location.origin + "/" + locale + "/" + pathname;
@@ -33,6 +38,9 @@ export default function SharePopup() {
     >
       <div className={"w-full h-full flex group flex-col gap-1 pt-1"}>
         <span className={"font-bold"}>{t("pop_title")}:</span>
+        {!studoset?.publicSet && (
+          <span className={"text-xs text-studogrey"}>{t("isPrivate")}*</span>
+        )}
         <div
           className={"border-0.5 rounded h-1 border-studoborder/30 w-full"}
         />

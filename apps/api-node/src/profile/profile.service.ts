@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ProfileListResponseDto, ProfileResponseDto } from './profile.dto';
+import { ProfileResponseDto } from './profile.dto';
 import { StudysetResponseDto } from '../studyset/studyset.dto';
 import {
   type DatabaseProvider,
@@ -17,37 +17,46 @@ export class ProfileService {
   ) {}
 
   private serializeProfile(p: {
-    user_id: string;
+    userId: string;
     displayName: string;
-    img_url: string;
-    banner_url: string | null;
-    join_date: Date;
+    imgUrl: string;
+    bannerUrl: string | null;
+    joinDate: Date;
     joinNumber: number;
     streak: number;
     verified: boolean;
     tags: string[];
   }) {
-    return { ...p, join_date: p.join_date.toISOString() };
+    return { ...p, joinDate: p.joinDate.toISOString() };
   }
 
-  async getAll(): Promise<ProfileListResponseDto> {
-    const all = await this.db.query.profiles.findMany();
-    return { profiles: all.map((p) => this.serializeProfile(p)) };
-  }
-
-  async getById(user_id: string): Promise<ProfileResponseDto> {
+  /**
+   * Load a profile together with its sets. When `publicOnly` is true only the
+   * user's public sets are returned (used by the unauthenticated endpoint).
+   */
+  private async loadProfile(
+    userId: string,
+    publicOnly: boolean,
+  ): Promise<ProfileResponseDto> {
     const profile = await this.db.query.profiles.findFirst({
-      where: eq(profiles.user_id, user_id),
+      where: eq(profiles.userId, userId),
     });
     if (!profile) {
       throw new NotFoundException();
     }
 
+    const studysetWhere = publicOnly
+      ? and(eq(studysets.userId, userId), eq(studysets.publicSet, true))
+      : eq(studysets.userId, userId);
+    const visualsetWhere = publicOnly
+      ? and(eq(visualsets.userId, userId), eq(visualsets.publicSet, true))
+      : eq(visualsets.userId, userId);
+
     const ss: StudysetResponseDto[] = await this.db.query.studysets.findMany({
-      where: eq(studysets.user_id, user_id),
+      where: studysetWhere,
     });
     const vs: VisualsetResponseDto[] = await this.db.query.visualsets.findMany({
-      where: eq(visualsets.user_id, user_id),
+      where: visualsetWhere,
     });
 
     return {
@@ -57,31 +66,11 @@ export class ProfileService {
     };
   }
 
-  async getPublicById(user_id: string): Promise<ProfileResponseDto> {
-    const profile = await this.db.query.profiles.findFirst({
-      where: eq(profiles.user_id, user_id),
-    });
-    if (!profile) {
-      throw new NotFoundException();
-    }
+  async getById(userId: string): Promise<ProfileResponseDto> {
+    return this.loadProfile(userId, false);
+  }
 
-    const ss: StudysetResponseDto[] = await this.db.query.studysets.findMany({
-      where: and(
-        eq(studysets.user_id, user_id),
-        eq(studysets.public_set, true),
-      ),
-    });
-    const vs: VisualsetResponseDto[] = await this.db.query.visualsets.findMany({
-      where: and(
-        eq(visualsets.user_id, user_id),
-        eq(visualsets.public_set, true),
-      ),
-    });
-
-    return {
-      profile: this.serializeProfile(profile),
-      studysets: ss,
-      visualsets: vs,
-    };
+  async getPublicById(userId: string): Promise<ProfileResponseDto> {
+    return this.loadProfile(userId, true);
   }
 }

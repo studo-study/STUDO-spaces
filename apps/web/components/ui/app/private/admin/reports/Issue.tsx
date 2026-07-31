@@ -38,7 +38,7 @@ export default function IssueItem({ item, status }: IssueProps) {
           #{item?.number}
         </span>
         <div>
-          {item.assignee_id ? (
+          {item.assigneeId ? (
             <div
               className={
                 "min-w-5 text-xs p-0.5 min-h-5 w-5 h-5 cursor-pointer max-w-5 max-h-5 rounded-full bg-emerald-800 uppercase flex items-center justify-center text-center border border-studoborder"
@@ -77,7 +77,7 @@ export default function IssueItem({ item, status }: IssueProps) {
             "max-w-fit max-h-6 text-xs  px-3 h-6 first-letter:uppercase w-fit rounded-xl bg-studogrey flex items-center justify-center opacity-50"
           }
         >
-          {item.report_type.split("_").join(" ")}
+          {item.reportType.split("_").join(" ")}
         </div>
       </div>
       <PopupBackdrop isOpen={isOpen} setIsOpen={toggleOpen}>

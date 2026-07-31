@@ -67,11 +67,11 @@ export class SvenService {
       properties: {
         term: { type: SchemaType.STRING },
         definition: { type: SchemaType.STRING },
-        special_content_type: {
+        specialContentType: {
           type: SchemaType.STRING,
           enum: ['text', 'latex', 'code'],
         },
-        special_side: {
+        specialSide: {
           type: SchemaType.STRING,
           enum: ['none', 'term', 'definition'],
         },
@@ -125,7 +125,7 @@ export class SvenService {
           definition: '',
           image: '',
           isDouble: false,
-          special_content_type: 'text',
+          specialContentType: 'text',
         },
       ];
     }
@@ -161,16 +161,16 @@ export class SvenService {
     type GeminiCard = {
       term: string;
       definition: string;
-      special_content_type: 'text' | 'latex' | 'code';
-      special_side: 'none' | 'term' | 'definition';
+      specialContentType: 'text' | 'latex' | 'code';
+      specialSide: 'none' | 'term' | 'definition';
     };
     const parsed = JSON.parse(result.response.text()) as GeminiCard[];
 
     return parsed.map((card, i) => {
       let { term, definition } = card;
-      const contentType = card.special_content_type;
+      const contentType = card.specialContentType;
 
-      if (card.special_side === 'definition' && contentType !== 'text') {
+      if (card.specialSide === 'definition' && contentType !== 'text') {
         [term, definition] = [definition, term];
       }
 
@@ -181,7 +181,7 @@ export class SvenService {
         definition: definition.slice(0, 500),
         image: '',
         isDouble: false,
-        special_content_type: contentType,
+        specialContentType: contentType,
       };
     });
   }

@@ -1,6 +1,5 @@
-// components/app/AppLayoutClient.tsx
 "use client";
-import { memo, ReactNode, useState } from "react";
+import { memo, ReactNode, useEffect, useState } from "react";
 import AppHeader from "@/components/ui/app/private/app_header/AppHeader";
 import BurgerMenu from "@/components/ui/app/private/app_header/BurgerMenu";
 import {
@@ -8,44 +7,46 @@ import {
   useUser,
 } from "@/components/providers/auth/UserProvider";
 import ConsoleEasterEgg from "@/components/ui/overige/easteregg/console";
-import CreateFolder from "@/components/ui/app/private/create-folder/CreateFolder";
+import CreateFlowCourse from "@/components/ui/app/private/board/CreateFlowCourse";
 import AppLayoutContext from "@/components/context/AppLayoutContext";
-import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
-import { usePathname, useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
-
+import { usePathname } from "next/navigation";
+import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
+import CourseSidebar from "@/components/ui/app/private/course_context_menu/CourseSidebar";
+import SideMenu from "@/components/ui/app/private/course_context_menu/SideMenu";
+import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
+
+const STUDOSET_ROUTES = [
+  "/studoset/",
+  "/visualset/",
+  "/flashcards/",
+  "/learn/",
+  "/speedy/",
+  "/course",
+  "/sets",
+];
 
 function AppLayoutInner({ children }: { children: ReactNode }) {
   const { user, isLoading } = useUser();
   const [Search, setSearch] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
-  const router = useRouter();
   const sidebarOpen = useAppStore((s) => s.sidebarOpen);
   const pathname = usePathname();
-  const inMode = /\/(speedy|learn|flashcards)\//.test(pathname);
-  const toggleSearch = () => setSearch(true);
+  const menuOpen = useSideMenu((state) => state.menuInfo);
+  const setMenuOpen = useSideMenu((state) => state.setMenuInfo);
   const toggleCreate = () => {
-    requestAnimationFrame(() => {
-      setCreateOpen(true);
-    });
-  };
-  const newStudoset = () => {
-    router.push("/create-studoset");
+    requestAnimationFrame(() => setCreateOpen(true));
   };
 
-  const newVisualset = () => {
-    router.push("/create-visualset");
-  };
-
-  useKeyboardShortcut("f", () => !inMode && toggleCreate());
-  useKeyboardShortcut("s", () => !inMode && newStudoset());
-  useKeyboardShortcut("v", () => !inMode && newVisualset());
-  useKeyboardShortcut("m", () => !inMode && toggleSearch(), {
-    ctrl: true,
-    always: true,
-  });
+  const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, "");
+  const showStudoSidebar = STUDOSET_ROUTES.some((r) =>
+    pathWithoutLocale.includes(r),
+  );
+  useEffect(() => {
+    setMenuOpen({ isOpen: false, origin: null });
+  }, [pathname, setMenuOpen]);
 
   return (
     <AppLayoutContext.Provider value={{ toggleCreate }}>
@@ -61,29 +62,53 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
           isLoading={isLoading}
         />
 
-        <div className="flex-1 min-h-0 w-full flex flex-row relative">
-          <div className={"min-w-57 h-full"}>
+        <div className="flex-1 min-h-0 w-full flex flex-row">
+          {/* Left nav */}
+          <div className="shrink-0 h-full">
             <MemoizedBurger
               burgerOpen={sidebarOpen}
-              toggleSearch={toggleSearch}
+              toggleSearch={() => setSearch(true)}
               toggleCreate={toggleCreate}
             />
           </div>
-          <div className={"w-full flex items-center justify-center h-full"}>
+
+          {showStudoSidebar ? (
+            <>
+              <ResizablePanelLayout
+                storageKey="studoset-sidebar"
+                panels={[
+                  { id: "main", defaultSize: 78, minSize: 40 },
+                  {
+                    id: "contextmenu",
+                    defaultSize: 30,
+                    minSize: 30,
+                    maxSize: 45,
+                  },
+                ]}
+              >
+                <ResizablePanelLayout.Panel panelId="main">
+                  <main className="flex-1 min-h-0 h-full overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    {children}
+                  </main>
+                </ResizablePanelLayout.Panel>
+                {menuOpen.isOpen && (
+                  <ResizablePanelLayout.Panel panelId="contextmenu">
+                    <SideMenu origin={menuOpen?.origin ?? ""} />
+                  </ResizablePanelLayout.Panel>
+                )}
+              </ResizablePanelLayout>
+              <CourseSidebar />
+            </>
+          ) : (
             <main
-              className={`flex-1 min-h-0 xl:w-9/10 3xl:w-1/3 
-                                        h-full pl-5 pr-5 lg:pl-10 lg:pr-77 
-                                        overflow-y-scroll scroll-hidden 
-                                        [&::-webkit-scrollbar]:hidden
-                                        [-ms-overflow-style:none]
-                                        [scrollbar-width:none]`}
+              className={`flex-1 min-h-0 h-full overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${sidebarOpen ? "pr-57" : "pr-30"} transition-[padding] duration-300`}
             >
               {children}
             </main>
-          </div>
+          )}
         </div>
       </div>
-      <CreateFolder createOpen={createOpen} setCreateOpen={setCreateOpen} />
+      <CreateFlowCourse createOpen={createOpen} setCreateOpen={setCreateOpen} />
       <ConsoleEasterEgg />
     </AppLayoutContext.Provider>
   );

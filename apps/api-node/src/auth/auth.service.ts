@@ -7,9 +7,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginRequest, RegisterUserRequest } from '@studo/types';
-import { folders, profiles, users } from '../drizzle/schema';
+import { profiles, users } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
-import { v4 as uuidv4 } from 'uuid';
 import {
   type DatabaseProvider,
   InjectDrizzle,
@@ -90,10 +89,72 @@ export class AuthService {
 
     await this.db
       .update(users)
-      .set({ last_login: new Date() })
+      .set({ lastLogin: new Date() })
       .where(eq(users.id, user.id));
 
     return this.signJwt(user);
+  }
+
+  /**
+   * Find an existing user by email, or provision a new user + profile for an
+   * OAuth/social login. Existing users get their lastLogin bumped. Returns the
+   * persisted user row.
+   */
+  private async findOrCreateOAuthUser(params: {
+    email: string;
+    displayName: string;
+    imgUrl: string;
+    tag: string;
+    verified: boolean;
+  }): Promise<User> {
+    const existing = await this.db.query.users.findFirst({
+      where: eq(users.email, params.email),
+    });
+
+    if (existing) {
+      await this.db
+        .update(users)
+        .set({ lastLogin: new Date() })
+        .where(eq(users.id, existing.id));
+      return existing;
+    }
+
+    const date = new Date();
+
+    const [{ id: uid }] = await this.db
+      .insert(users)
+      .values({
+        email: params.email,
+        passwordHash: '',
+        displayName: params.displayName,
+        imgUrl: params.imgUrl,
+        joinDate: date,
+        totalSets: 0,
+        streakStarted: null,
+        streakCount: 0,
+        streakLastUpdate: null,
+        lastLogin: date,
+        roles: [Role.USER],
+        publicRole: 'student',
+        verified: params.verified,
+        banned: false,
+      })
+      .returning({ id: users.id });
+
+    await this.db.insert(profiles).values({
+      userId: uid,
+      displayName: params.displayName,
+      imgUrl: params.imgUrl === 'default' ? '' : params.imgUrl,
+      bannerUrl: '',
+      joinDate: date,
+      streak: 0,
+      verified: false,
+      tags: [params.tag],
+    });
+
+    return (await this.db.query.users.findFirst({
+      where: eq(users.id, uid),
+    }))!;
   }
 
   //google users
@@ -103,73 +164,15 @@ export class AuthService {
     lastName: string;
     picture?: string;
   }): Promise<string> {
-    // Check of user bestaat op basis van email
-    let user = await this.db.query.users.findFirst({
-      where: eq(users.email, googleUser.email),
+    const fullName = `${googleUser.firstName} ${googleUser.lastName}`;
+    const user = await this.findOrCreateOAuthUser({
+      email: googleUser.email,
+      displayName: fullName,
+      imgUrl: googleUser.picture ?? '',
+      tag: fullName,
+      verified: false,
     });
-
-    if (!user) {
-      // Maak nieuwe user aan voor Google OAuth
-      const date = new Date();
-      const uid = uuidv4();
-
-      const newUser = {
-        id: uid,
-        email: googleUser.email,
-        passwordHash: '',
-        displayName: `${googleUser.firstName} ${googleUser.lastName}`,
-        img_url: googleUser.picture ?? '',
-        join_date: date,
-        totalSets: 0,
-        streak_started: null,
-        streak_count: 0,
-        streak_last_update: null,
-        last_login: date,
-        roles: [Role.USER],
-        publicRole: 'student',
-        verified: false,
-        banned: false,
-      };
-
-      // Profile
-      const newProfile = {
-        user_id: uid,
-        displayName: `${googleUser.firstName} ${googleUser.lastName}`,
-        img_url: googleUser.picture ?? '',
-        banner_url: '',
-        join_date: date,
-        streak: 0,
-        verified: false,
-        studoProfile: false,
-        tags: [`${googleUser.firstName} ${googleUser.lastName}`],
-      };
-
-      // Root folder
-      const rootFolder = {
-        id: uuidv4(),
-        name: `${googleUser.firstName}'s folder`,
-        owner_id: uid,
-      };
-
-      // Insert all records
-      await this.db.insert(users).values(newUser);
-      await this.db.insert(profiles).values(newProfile);
-      await this.db.insert(folders).values(rootFolder);
-
-      // Fetch de nieuwe user
-      user = await this.db.query.users.findFirst({
-        where: eq(users.id, uid),
-      });
-    } else {
-      // Update last_login voor bestaande user
-      await this.db
-        .update(users)
-        .set({ last_login: new Date() })
-        .where(eq(users.id, user.id));
-    }
-
-    // Genereer en return JWT token
-    return this.signJwt(user!);
+    return this.signJwt(user);
   }
 
   //microsoft users
@@ -180,73 +183,14 @@ export class AuthService {
     displayName: string;
     picture?: string;
   }): Promise<string> {
-    // Check of user bestaat op basis van email
-    let user = await this.db.query.users.findFirst({
-      where: eq(users.email, microsoftUser.email),
+    const user = await this.findOrCreateOAuthUser({
+      email: microsoftUser.email,
+      displayName: `${microsoftUser.firstName} ${microsoftUser.lastName}`,
+      imgUrl: microsoftUser.picture || 'default',
+      tag: microsoftUser.displayName,
+      verified: true, // Microsoft users zijn al geverifieerd
     });
-
-    if (!user) {
-      // Maak nieuwe user aan voor Microsoft OAuth
-      const date = new Date();
-      const uid = uuidv4();
-
-      const newUser = {
-        id: uid,
-        email: microsoftUser.email,
-        passwordHash: '',
-        displayName: `${microsoftUser.firstName} ${microsoftUser.lastName}`,
-        img_url: microsoftUser.picture || 'default',
-        join_date: date,
-        totalSets: 0,
-        streak_started: null,
-        streak_count: 0,
-        streak_last_update: null,
-        last_login: date,
-        roles: [Role.USER],
-        publicRole: 'student',
-        verified: true, // Microsoft users zijn al geverifieerd
-        banned: false,
-      };
-
-      // Profile
-      const newProfile = {
-        user_id: uid,
-        displayName: `${microsoftUser.firstName} ${microsoftUser.lastName}`,
-        img_url: microsoftUser.picture || '',
-        banner_url: '',
-        join_date: date,
-        streak: 0,
-        verified: false,
-        studoProfile: false,
-        tags: [microsoftUser.displayName],
-      };
-
-      // Root folder
-      const rootFolder = {
-        id: uuidv4(),
-        name: `${microsoftUser.firstName}'s folder`,
-        owner_id: uid,
-      };
-
-      // Insert all records
-      await this.db.insert(users).values(newUser);
-      await this.db.insert(profiles).values(newProfile);
-      await this.db.insert(folders).values(rootFolder);
-
-      // Fetch de nieuwe user
-      user = await this.db.query.users.findFirst({
-        where: eq(users.id, uid),
-      });
-    } else {
-      // Update last_login voor bestaande user
-      await this.db
-        .update(users)
-        .set({ last_login: new Date() })
-        .where(eq(users.id, user.id));
-    }
-
-    // Genereer en return JWT token
-    return this.signJwt(user!);
+    return this.signJwt(user);
   }
 
   //smartschool users
@@ -257,74 +201,16 @@ export class AuthService {
     displayName: string;
     picture?: string;
   }): Promise<string> {
-    // Check of user bestaat op basis van email
-    let user = await this.db.query.users.findFirst({
-      where: eq(users.email, smartschoolUser.email),
+    const user = await this.findOrCreateOAuthUser({
+      email: smartschoolUser.email,
+      displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
+      imgUrl: smartschoolUser.picture || 'default',
+      tag: smartschoolUser.displayName,
+      verified: true,
     });
-
-    if (!user) {
-      // Maak nieuwe user aan voor Microsoft OAuth
-      const date = new Date();
-      const uid = uuidv4();
-
-      const newUser = {
-        id: uid,
-        email: smartschoolUser.email,
-        passwordHash: '',
-        displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
-        img_url: smartschoolUser.picture || 'default',
-        join_date: date,
-        totalSets: 0,
-        streak_started: null,
-        streak_count: 0,
-        streak_last_update: null,
-        last_login: date,
-        roles: [Role.USER],
-        publicRole: 'student',
-        verified: true, // Microsoft users zijn al geverifieerd
-        banned: false,
-      };
-
-      // Profile
-      const newProfile = {
-        user_id: uid,
-        displayName: `${smartschoolUser.firstName} ${smartschoolUser.lastName}`,
-        img_url: smartschoolUser.picture || '',
-        banner_url: '',
-        join_date: date,
-        streak: 0,
-        verified: false,
-        studoProfile: false,
-        tags: [smartschoolUser.displayName],
-      };
-
-      // Root folder
-      const rootFolder = {
-        id: uuidv4(),
-        name: `${smartschoolUser.firstName}'s folder`,
-        owner_id: uid,
-      };
-
-      // Insert all records
-      await this.db.insert(users).values(newUser);
-      await this.db.insert(profiles).values(newProfile);
-      await this.db.insert(folders).values(rootFolder);
-
-      // Fetch de nieuwe user
-      user = await this.db.query.users.findFirst({
-        where: eq(users.id, uid),
-      });
-    } else {
-      // Update last_login voor bestaande user
-      await this.db
-        .update(users)
-        .set({ last_login: new Date() })
-        .where(eq(users.id, user.id));
-    }
-
-    // Genereer en return JWT token
-    return this.signJwt(user!);
+    return this.signJwt(user);
   }
+
   //registreer functie
   async register({
     displayName,
@@ -333,7 +219,6 @@ export class AuthService {
     role,
   }: RegisterUserRequest): Promise<string> {
     const date = new Date();
-    const uid = uuidv4(); // ✅ Functie uitvoeren
     const passwordHash = await this.hashPassword(password);
 
     const existingUser = await this.db.query.users.findFirst({
@@ -347,48 +232,37 @@ export class AuthService {
     }
 
     // User
-    const newUser = {
-      id: uid,
-      email: email,
-      passwordHash: passwordHash,
-      displayName: displayName,
-      img_url: 'default',
-      join_date: date,
-      totalSets: 0,
-      streak_started: date,
-      streak_count: 0,
-      streak_last_update: date,
-      last_login: date,
-      roles: [Role.USER],
-      publicRole: role,
-      verified: false,
-      banned: false,
-    };
+    const [{ id: uid }] = await this.db
+      .insert(users)
+      .values({
+        email: email,
+        passwordHash: passwordHash,
+        displayName: displayName,
+        imgUrl: 'default',
+        joinDate: date,
+        totalSets: 0,
+        streakStarted: date,
+        streakCount: 0,
+        streakLastUpdate: date,
+        lastLogin: date,
+        roles: [Role.USER],
+        publicRole: role,
+        verified: false,
+        banned: false,
+      })
+      .returning({ id: users.id });
 
     // Profile
-    const newProfile = {
-      user_id: uid,
+    await this.db.insert(profiles).values({
+      userId: uid,
       displayName: displayName,
-      img_url: '',
-      banner_url: '',
-      join_date: date,
+      imgUrl: '',
+      bannerUrl: '',
+      joinDate: date,
       streak: 0,
       verified: false,
-      studoProfile: false,
       tags: [displayName],
-    };
-
-    // Root folder
-    const rootFolder = {
-      id: uuidv4(), // ✅ Functie uitvoeren
-      name: `${displayName}'s folder`,
-      owner_id: uid,
-    };
-
-    // Insert all records
-    await this.db.insert(users).values(newUser);
-    await this.db.insert(profiles).values(newProfile);
-    await this.db.insert(folders).values(rootFolder);
+    });
 
     // Fetch the created user
     const user = await this.db.query.users.findFirst({
@@ -404,7 +278,7 @@ export class AuthService {
     displayName: string;
     provider: string;
     providerId?: string;
-    img_url?: string;
+    imgUrl?: string;
   }): Promise<{ token: string; user: any }> {
     let user = await this.db.query.users.findFirst({
       where: eq(users.email, socialUser.email),
@@ -412,47 +286,37 @@ export class AuthService {
 
     if (!user) {
       const date = new Date();
-      const uid = uuidv4();
 
-      const newUser = {
-        id: uid,
-        email: socialUser.email,
-        passwordHash: '',
-        displayName: socialUser.displayName,
-        img_url: socialUser.img_url || 'default',
-        join_date: date,
-        totalSets: 0,
-        streak_started: null,
-        streak_count: 0,
-        streak_last_update: null,
-        last_login: date,
-        roles: [Role.USER],
-        publicRole: 'student',
-        verified: false,
-        banned: false,
-      };
+      const [{ id: uid }] = await this.db
+        .insert(users)
+        .values({
+          email: socialUser.email,
+          passwordHash: '',
+          displayName: socialUser.displayName,
+          imgUrl: socialUser.imgUrl || 'default',
+          joinDate: date,
+          totalSets: 0,
+          streakStarted: null,
+          streakCount: 0,
+          streakLastUpdate: null,
+          lastLogin: date,
+          roles: [Role.USER],
+          publicRole: 'student',
+          verified: false,
+          banned: false,
+        })
+        .returning({ id: users.id });
 
-      const newProfile = {
-        user_id: uid,
+      await this.db.insert(profiles).values({
+        userId: uid,
         displayName: socialUser.displayName,
-        img_url: socialUser.img_url || '',
-        banner_url: '',
-        join_date: date,
+        imgUrl: socialUser.imgUrl || '',
+        bannerUrl: '',
+        joinDate: date,
         streak: 0,
         verified: false,
-        studoProfile: false,
         tags: [socialUser.displayName],
-      };
-
-      const rootFolder = {
-        id: uuidv4(),
-        name: `${socialUser.displayName}'s folder`,
-        owner_id: uid,
-      };
-
-      await this.db.insert(users).values(newUser);
-      await this.db.insert(profiles).values(newProfile);
-      await this.db.insert(folders).values(rootFolder);
+      });
 
       user = await this.db.query.users.findFirst({
         where: eq(users.id, uid),
@@ -461,8 +325,8 @@ export class AuthService {
       await this.db
         .update(users)
         .set({
-          last_login: new Date(),
-          img_url: socialUser.img_url || user.img_url, // update foto
+          lastLogin: new Date(),
+          imgUrl: socialUser.imgUrl || user.imgUrl, // update foto
         })
         .where(eq(users.id, user.id));
       user = await this.db.query.users.findFirst({

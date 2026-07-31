@@ -11,7 +11,9 @@ declare global {
 export default async function () {
   console.log('🚢 Pulling and starting PostgreSQL container');
 
-  const container = await new PostgreSqlContainer('postgres:16').start();
+  const container = await new PostgreSqlContainer(
+    'pgvector/pgvector:pg16',
+  ).start();
 
   const connectionUri = container.getConnectionUri();
   process.env.DATABASE_URL = connectionUri;

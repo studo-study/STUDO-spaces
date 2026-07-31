@@ -51,9 +51,9 @@ export default function TrackView() {
               "relative min-w-full min-h-full rounded-4xl overflow-hidden h-full"
             }
           >
-            {result && result?.profile && result?.profile.banner_url && (
+            {result && result?.profile && result?.profile.bannerUrl && (
               <Image
-                src={result.profile.banner_url}
+                src={result.profile.bannerUrl}
                 alt="banner"
                 fill
                 className="object-cover rounded-3xl"

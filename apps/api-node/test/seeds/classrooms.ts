@@ -15,9 +15,9 @@ export const CLASSROOM_SEED = [
   {
     id: classroomId1,
     name: 'Biology 101 - Fall 2024',
-    owner_id: userId1,
+    ownerId: userId1,
     type: 'public',
-    created_at: '2024-08-20T10:00:00.000Z',
+    createdAt: '2024-08-20T10:00:00.000Z',
     verified: true,
     school: '',
   },

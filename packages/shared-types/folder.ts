@@ -12,7 +12,7 @@ export interface UpdateFolder {
 export interface FolderResponse {
   id: string;
   name: string;
-  owner_id: string;
+  ownerId: string;
 }
 
 export interface FolderSets {
@@ -23,7 +23,7 @@ export interface FolderSets {
 export interface FullFolderResponse {
   id: string;
   name: string;
-  owner_id: string;
+  ownerId: string;
   sets: FolderSets;
 }
 
@@ -32,7 +32,7 @@ export interface FolderListResponse {
 }
 
 export interface SwitchFolder {
-  user_id: string;
-  set_id: string;
+  userId: string;
+  setId: string;
   destinationFolder_id: string;
 }

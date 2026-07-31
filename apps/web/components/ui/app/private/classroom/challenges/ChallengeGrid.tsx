@@ -33,7 +33,7 @@ export default function ChallengeGrid() {
           </span>
           <div className={"w-full h-fit grid grid-cols-2 grid-rows-3 gap-5"}>
             {challenges
-              .filter((challenge) => challenge.classroom_id === classroom)
+              .filter((challenge) => challenge.classroomId === classroom)
               .map((challenge, i) => (
                 <ChallengeItem challenge={challenge} key={i} />
               ))}
@@ -195,7 +195,7 @@ function UserItem({ user }: UserItemProps) {
       >
         {user.position}
       </span>
-      <Avatar displayName={user.displayName} id={user.user_id} size={40} />
+      <Avatar displayName={user.displayName} id={user.userId} size={40} />
       <span className={"truncate text-sm lg:text-base"}>
         {user.displayName}
       </span>

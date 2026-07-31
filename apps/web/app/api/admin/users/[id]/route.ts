@@ -5,10 +5,11 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { session, error } = await requireAdmin();
+  const [{ session, error }, { id }] = await Promise.all([
+    requireAdmin(),
+    params,
+  ]);
   if (error) return error;
-
-  const { id } = await params;
   const response = await fetch(
     `${process.env.AUTH_API_URL}/admin/users/${id}`,
     {

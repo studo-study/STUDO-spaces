@@ -8,9 +8,9 @@ import {
   UseGuards,
   Get,
   Req,
-  Res, // 👈 Voeg toe
+  Res,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config'; // 👈 Voeg toe
+import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth/auth.service';
 import { LoginRequestDto, LoginResponseDto } from './session.dto';
 import { Public } from '../auth/decorators/public.decorator';
@@ -32,8 +32,15 @@ import { AuthGuard } from '@nestjs/passport';
 export class SessionController {
   constructor(
     private authService: AuthService,
-    private configService: ConfigService, // 👈 Inject ConfigService
+    private configService: ConfigService,
   ) {}
+
+  // Build the frontend auth-callback redirect URL for a signed token.
+  private buildCallbackRedirect(res: Response, token: string) {
+    const frontendUrl =
+      this.configService.get<string>('url.url') || 'http://localhost:5173';
+    return res.redirect(`${frontendUrl}/auth/callback?token=${token}`);
+  }
 
   // inloggen met STUDO --------------------------------------------------
   @ApiOperation({ summary: 'De user inloggen.' })
@@ -72,12 +79,7 @@ export class SessionController {
   async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const token = await this.authService.validateGoogleUser(req.user as any);
-
-    const frontendUrl =
-      this.configService.get<string>('url.url') || 'http://localhost:5173';
-    const redirectUrl = `${frontendUrl}/auth/callback?token=${token}`;
-
-    return res.redirect(redirectUrl);
+    return this.buildCallbackRedirect(res, token);
   }
 
   // inloggen met MICROSOFT --------------------------------------------
@@ -101,13 +103,7 @@ export class SessionController {
   async microsoftAuthRedirect(@Req() req: Request, @Res() res: Response) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const token = await this.authService.validateMicrosoftUser(req.user as any);
-
-    // 👇 Gebruik configService en correct pad
-    const frontendUrl =
-      this.configService.get<string>('url.url') || 'http://localhost:5173/home';
-
-    // 👇 Redirect naar frontend met token in URL
-    return res.redirect(`${frontendUrl}/auth/callback?token=${token}`);
+    return this.buildCallbackRedirect(res, token);
   }
 
   // inloggen met FACEBOOK ---------------------------------------------
@@ -135,7 +131,7 @@ export class SessionController {
   @Get('smartschool')
   @UseGuards(AuthGuard('smartschool'))
   async smartschoolLogin() {
-    // redirect naar Facebook login
+    // redirect naar Smartschool login
   }
 
   @ApiOperation({
@@ -149,12 +145,10 @@ export class SessionController {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       req.user as any,
     );
-    const frontendUrl =
-      this.configService.get<string>('url.url') || 'http://localhost:5173/home';
-    return res.redirect(`${frontendUrl}/auth/callback?token=${token}`);
+    return this.buildCallbackRedirect(res, token);
   }
 
-  //inloggen met microsoft --------------------------------------------------
+  // social login (na OAuth op de client) ---------------------------------
   @Public()
   @Post('social-login')
   @HttpCode(HttpStatus.OK)
@@ -165,7 +159,7 @@ export class SessionController {
       displayName: string;
       provider: string;
       providerId?: string;
-      img_url?: string;
+      imgUrl?: string;
     },
   ) {
     return this.authService.validateSocialUser(body);

@@ -128,7 +128,7 @@ export class ClassroomResponseDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  owner_id: string;
+  ownerId: string;
 
   @ApiProperty({
     description: 'Type van de classroom',
@@ -140,7 +140,7 @@ export class ClassroomResponseDto {
     description: 'Aanmaakdatum',
     example: '2024-01-15T10:30:00.000Z',
   })
-  created_at: string;
+  createdAt: string;
 
   @ApiProperty({
     description: 'Verificatie status',
@@ -162,7 +162,7 @@ export class CreateClassroomSetDto {
   })
   @IsUUID()
   @IsNotEmpty()
-  set_id: string;
+  setId: string;
 }
 
 export class CreateClassroomSetsDto {
@@ -178,27 +178,27 @@ export class ClassroomSetDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     description: 'Type van de set',
     example: 'flashcard',
   })
-  set_type: string;
+  setType: string;
 
   @ApiProperty({
     description: 'UUID van de classroom',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  classroom_id: string;
+  classroomId: string;
 
   @ApiProperty({
     description: 'UUID van de toevoeger',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  added_by: string;
+  addedBy: string;
 }
 
 export class FullClassroomSetDto {
@@ -207,13 +207,13 @@ export class FullClassroomSetDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     description: 'Type van de set',
     example: 'flashcard',
   })
-  set_type: string;
+  setType: string;
 
   @ApiProperty({
     description: 'Titel van de set',
@@ -222,17 +222,11 @@ export class FullClassroomSetDto {
   title: string;
 
   @ApiProperty({
-    description: 'onderwerp van de set',
-    example: 'biology',
-  })
-  course: string;
-
-  @ApiProperty({
     description: 'UUID van de classroom',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  classroom_id: string;
+  classroomId: string;
 
   @ApiProperty({
     description: 'UUID van de eigenaar',
@@ -246,13 +240,13 @@ export class FullClassroomSetDto {
     example: 'Frank De Boozere',
     format: 'uuid',
   })
-  added_by: string;
+  addedBy: string;
 
   @ApiProperty({
     description: 'Aanmaakdatum',
     example: '2024-01-15T10:30:00.000Z',
   })
-  created_at: string;
+  createdAt: string;
 }
 
 export class ClassroomUserDto {
@@ -261,20 +255,20 @@ export class ClassroomUserDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     description: 'UUID van de classroom',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  classroom_id: string;
+  classroomId: string;
 
   @ApiProperty({
     description: 'profielfoto van de gebruiker',
     example: 'https://image.png',
   })
-  img_url: string;
+  imgUrl: string;
 
   @ApiProperty({
     description: 'Rol van de gebruiker',
@@ -286,7 +280,7 @@ export class ClassroomUserDto {
     description: 'Datum wanneer gebruiker lid werd',
     example: '2024-01-15T10:30:00.000Z',
   })
-  joined_at: string;
+  joinedAt: string;
 
   @ApiProperty({
     description: 'Display naam van de gebruiker',
@@ -348,7 +342,7 @@ export class CreateClassroomUserDto {
     minLength: 20,
   })
   @IsUUID()
-  classroom_id: string;
+  classroomId: string;
 
   @ApiProperty({
     description: 'Rol van de gebruiker',
@@ -389,7 +383,7 @@ export class leaveClassroomDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  classroom_id: string;
+  classroomId: string;
 }
 
 export class CreateClassroomActivityDto {
@@ -402,7 +396,7 @@ export class CreateClassroomActivityDto {
     name: 'user_id',
     maxLength: 64,
   })
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     description: 'UUID van de set',
@@ -413,7 +407,7 @@ export class CreateClassroomActivityDto {
     name: 'set_id',
     maxLength: 64,
   })
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     description: 'UUID van de classroom',
@@ -424,7 +418,7 @@ export class CreateClassroomActivityDto {
     name: 'classroom_id',
     maxLength: 64,
   })
-  classroom_id: string;
+  classroomId: string;
 }
 
 export class ClassroomUserResponseDto {
@@ -433,14 +427,14 @@ export class ClassroomUserResponseDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  user_id: string;
+  userId: string;
 
   @ApiProperty({
     description: 'UUID van de classroom',
     example: '550e8400-e29b-41d4-a716-446655440000',
     format: 'uuid',
   })
-  classroom_id: string;
+  classroomId: string;
 
   @ApiProperty({
     description: 'Rol van de gebruiker',
@@ -452,7 +446,7 @@ export class ClassroomUserResponseDto {
     description: 'Datum wanneer gebruiker lid werd',
     example: '2024-01-15T10:30:00.000Z',
   })
-  joined_at: string;
+  joinedAt: string;
 
   @ApiProperty({
     description: 'Positie van de gebruiker',
@@ -466,24 +460,24 @@ export class CreateChallengeDTO {
 }
 
 export class ChallengeResponseDTO {
-  challenge_id: string;
+  challengeId: string;
   challengeType: 'time attack' | 'mastery tournament' | 'duel';
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
   running: boolean;
-  set_id: string;
+  setId: string;
   title: string;
-  display_name: string;
-  creator_id: string;
-  classroom_id: string;
+  displayName: string;
+  creatorId: string;
+  classroomId: string;
 }
 
 export class ChallengeMemberDTO {
-  challenge_id: string;
-  user_id: string;
-  display_name: string;
-  img_url: string;
-  classroom_id: string;
+  challengeId: string;
+  userId: string;
+  displayName: string;
+  imgUrl: string;
+  classroomId: string;
   position: number;
   winner: boolean;
 }

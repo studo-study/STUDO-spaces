@@ -8,7 +8,7 @@ import { useCourses } from "@/hooks/app/courses/useCourses";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 
 const Courses = () => {
-  const { courses } = useCourses();
+  const { data: courses = [] } = useCourses();
   const t = useTranslations("home");
 
   if (courses.length === 0) return null;
@@ -24,8 +24,8 @@ const Courses = () => {
         />
         <Container height={"30"}>
           <div className="min-w-full w-full flex flex-row gap-5">
-            {courses.map((item, index) => (
-              <CourseItem course={item} key={index} />
+            {courses.map((item) => (
+              <CourseItem course={item} key={item.id} />
             ))}
           </div>
         </Container>

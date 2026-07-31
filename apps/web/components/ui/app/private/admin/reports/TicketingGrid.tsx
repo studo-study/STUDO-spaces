@@ -57,7 +57,7 @@ export default function TicketingGrid() {
 
         // 1. Vind en verwijder het item uit de bron-kolom
         const fromItems = [...updated[fromStatus]];
-        const itemIndex = fromItems.findIndex((i) => i.report_id === itemId);
+        const itemIndex = fromItems.findIndex((i) => i.reportId === itemId);
         const [movedItem] = fromItems.splice(itemIndex, 1);
 
         // 2. Update status op het item zelf

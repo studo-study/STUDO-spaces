@@ -3,7 +3,7 @@ export interface CreatePin {
   x: number;
   y: number;
   number: number;
-  img_url: string;
+  imgUrl: string;
 }
 
 export interface UpdatePin {
@@ -12,7 +12,7 @@ export interface UpdatePin {
   x?: number;
   y?: number;
   number?: number;
-  updated_at?: string;
+  updatedAt?: string;
 }
 
 export interface PinResponse {
@@ -21,11 +21,11 @@ export interface PinResponse {
   x: number;
   y: number;
   number: number;
-  created_at: string;
-  updated_at: string;
-  image_id: string;
-  set_id: string;
-  owner_id: string;
+  createdAt: string;
+  updatedAt: string;
+  imageId: string;
+  setId: string;
+  ownerId: string;
 }
 
 export interface PinResponseList {

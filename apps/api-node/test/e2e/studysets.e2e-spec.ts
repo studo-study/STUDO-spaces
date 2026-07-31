@@ -14,7 +14,6 @@ import { seedStudysessions, clearStudysessions } from '../seeds/studysessions';
 import { clearSessioncards, seedSessioncards } from '../seeds/sessioncards';
 import { login, loginAdmin } from '../helpers/login';
 import { clearUsers, seedUsers } from '../seeds/users';
-import { clearFolders, seedFolders } from '../seeds/folders';
 import { clearProfiles, seedProfiles } from '../seeds/profiles';
 import { clearCards, seedCards } from '../seeds/cards';
 
@@ -30,11 +29,9 @@ describe('Studysets', () => {
   // studySetId1 belongs to userId1 (admin/charles)
   // studySetId2 belongs to userId2 (user/paulallen)
   const studySetId1 = '63c1725a-3723-4691-98e1-b8630cb1bdab';
-  const studySetId2 = '2e145267-e5d7-48d0-a605-09c29157358e';
-  const userId1 = '1f0c076e-f30c-64b0-a0f3-d5a021c6a9cb'; // charles (admin)
   const userId2 = '2f0c076e-f30c-6390-a0f3-d5a021c6a9cb'; // paulallen (user)
-  const folderId1 = '2b5a7605-6b7c-49dd-8fc5-fe7ad62c410b'; // belongs to userId1 (charles)
-  const folderId2 = 'd9365882-43aa-49ca-84fa-28e2ec08572b'; // belongs to userId2 (paulallen)
+  // sessionId1 belongs to userId1 (charles) and studySetId1
+  const sessionId1 = 'f64a9f4c-53a5-4ce5-8c1a-86b3e4b26c8b';
 
   beforeAll(async () => {
     app = await createTestApp();
@@ -47,14 +44,12 @@ describe('Studysets', () => {
     await clearSetlikes(db);
     await clearCards(db);
     await clearStudysets(db);
-    await clearFolders(db);
     await clearProfiles(db);
     await clearUsers(db);
 
     // Seed in correct order
     await seedUsers(app, db);
     await seedProfiles(db);
-    await seedFolders(db);
     await seedStudysets(db);
     await seedStudysessions(db);
     await seedCards(db);
@@ -73,16 +68,15 @@ describe('Studysets', () => {
     await clearSetlikes(db);
     await clearCards(db);
     await clearStudysets(db);
-    await clearFolders(db);
     await clearProfiles(db);
     await clearUsers(db);
     await app.close();
   });
 
   // ============================================================
-  // GET /api/studosets - Get all studosets (admin only)
+  // GET /api/studysets - Get all studosets (admin only)
   // ============================================================
-  describe('GET /api/studosets', () => {
+  describe('GET /api/studysets', () => {
     it('zou alle studosets moeten retourneren voor admin', async () => {
       const response = await request(server)
         .get(baseUrl)
@@ -109,9 +103,31 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // GET /api/studosets/:set_id - Get studoset by ID
+  // GET /api/studysets/me - Get studosets of logged-in user
   // ============================================================
-  describe('GET /api/studosets/:set_id', () => {
+  describe('GET /api/studysets/me', () => {
+    it('zou de studosets van de ingelogde user moeten retourneren', async () => {
+      const response = await request(server)
+        .get(`${baseUrl}/me`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('sets');
+      expect(response.body).toHaveProperty('visualsets');
+      expect(Array.isArray(response.body.sets)).toBe(true);
+    });
+
+    it('zou 401 moeten retourneren zonder authenticatie', async () => {
+      const response = await request(server).get(`${baseUrl}/me`).expect(401);
+
+      expect(response.body.message).toBe('You need to be signed in');
+    });
+  });
+
+  // ============================================================
+  // GET /api/studysets/:set_id - Get studoset by ID
+  // ============================================================
+  describe('GET /api/studysets/:set_id', () => {
     it('zou een specifieke studoset met alle details moeten retourneren', async () => {
       const response = await request(server)
         .get(`${baseUrl}/${studySetId1}`)
@@ -123,7 +139,6 @@ describe('Studysets', () => {
       expect(response.body).toHaveProperty('cards');
       expect(response.body).toHaveProperty('likes');
       expect(response.body).toHaveProperty('session');
-      expect(response.body).toHaveProperty('folders');
       expect(response.body).toHaveProperty('classrooms');
       expect(Array.isArray(response.body.cards)).toBe(true);
     });
@@ -155,39 +170,39 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // GET /api/studosets/:set_id/studysession - Get studysession by set ID
+  // GET /api/studysessions/:session_id - Get studysession by ID
   // ============================================================
-  describe('GET /api/studosets/:set_id/studysession', () => {
-    it('zou de studysession voor een specifieke studoset moeten retourneren', async () => {
+  describe('GET /api/studysessions/:session_id', () => {
+    it('zou een specifieke studysession moeten retourneren', async () => {
       const response = await request(server)
-        .get(`${baseUrl}/${studySetId1}/studysession`)
+        .get(`/api/studysessions/${sessionId1}`)
         .set('Authorization', `Bearer ${adminToken}`)
         .expect(200);
 
-      expect(response.body).toHaveProperty('id');
-      expect(response.body).toHaveProperty('set_id', studySetId1);
+      expect(response.body).toHaveProperty('id', sessionId1);
+      expect(response.body).toHaveProperty('setId', studySetId1);
       expect(response.body).toHaveProperty('cards');
       expect(Array.isArray(response.body.cards)).toBe(true);
     });
 
-    it('zou 404 moeten retourneren voor een niet-bestaande set', async () => {
+    it('zou 404 moeten retourneren voor een niet-bestaande session', async () => {
       const fakeId = '00000000-0000-0000-0000-000000000000';
       await request(server)
-        .get(`${baseUrl}/${fakeId}/studysession`)
-        .set('Authorization', `Bearer ${authToken}`)
+        .get(`/api/studysessions/${fakeId}`)
+        .set('Authorization', `Bearer ${adminToken}`)
         .expect(404);
     });
 
     it('zou UUID format moeten valideren', async () => {
       await request(server)
-        .get(`${baseUrl}/not-a-uuid/studysession`)
-        .set('Authorization', `Bearer ${authToken}`)
-        .expect(404);
+        .get('/api/studysessions/not-a-uuid')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .expect(400);
     });
 
     it('zou 401 moeten retourneren zonder authenticatie', async () => {
       const response = await request(server)
-        .get(`${baseUrl}/${studySetId1}/studysession`)
+        .get(`/api/studysessions/${sessionId1}`)
         .expect(401);
 
       expect(response.body.message).toBe('You need to be signed in');
@@ -195,16 +210,14 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // POST /api/studosets - Create studoset
+  // POST /api/studysets - Create studoset
   // ============================================================
-  describe('POST /api/studosets', () => {
+  describe('POST /api/studysets', () => {
     it('zou een nieuwe studoset moeten aanmaken', async () => {
       const newStudyset = {
         title: 'New Test Set',
-        course: 'Test Course',
         global_term_language: 'en',
         global_definition_language: 'nl',
-        folder_id: folderId2,
         cardlist: [
           {
             term: 'Test Term 1',
@@ -227,10 +240,10 @@ describe('Studysets', () => {
 
       expect(response.body).toHaveProperty('id');
       expect(response.body).toHaveProperty('title', 'New Test Set');
-      expect(response.body).toHaveProperty('course', 'Test Course');
-      expect(response.body).toHaveProperty('user_id', userId2);
-      expect(response.body).toHaveProperty('folder_id', folderId2);
-      expect(response.body.public_set).toBe(true);
+      expect(response.body).toHaveProperty('userId', userId2);
+      expect(response.body).toHaveProperty('globalTermLanguage', 'en');
+      expect(response.body).toHaveProperty('globalDefinitionLanguage', 'nl');
+      expect(response.body.publicSet).toBe(true);
 
       // Cleanup - delete the created set
       if (response.body.id) {
@@ -243,7 +256,7 @@ describe('Studysets', () => {
     it('zou required fields moeten valideren', async () => {
       const invalidStudyset = {
         title: 'Incomplete Set',
-        // Missing: course, global_term_language, global_definition_language, folder_id, cardlist
+        // Missing: global_term_language, global_definition_language, cardlist
       };
 
       const response = await request(server)
@@ -259,10 +272,8 @@ describe('Studysets', () => {
     it('zou lege cardlist moeten rejecten', async () => {
       const invalidStudyset = {
         title: 'Test Set',
-        course: 'Test Course',
         global_term_language: 'en',
         global_definition_language: 'nl',
-        folder_id: folderId2,
         cardlist: [],
       };
 
@@ -278,10 +289,8 @@ describe('Studysets', () => {
     it('zou unknown fields moeten rejecten', async () => {
       const studysetWithUnknownField = {
         title: 'Test Set',
-        course: 'Test Course',
         global_term_language: 'en',
         global_definition_language: 'nl',
-        folder_id: folderId2,
         unknownField: 'should be rejected',
         cardlist: [
           {
@@ -307,9 +316,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // POST /api/studosets/:set_id/likes - Like a studoset
+  // POST /api/studysets/:set_id/likes - Like a studoset
   // ============================================================
-  describe('POST /api/studosets/:set_id/likes', () => {
+  describe('POST /api/studysets/:set_id/likes', () => {
     it('zou een studoset moeten kunnen liken', async () => {
       const response = await request(server)
         .post(`${baseUrl}/${studySetId1}/likes`)
@@ -317,10 +326,10 @@ describe('Studysets', () => {
         .expect(201);
 
       expect(response.body).toHaveProperty('id');
-      expect(response.body).toHaveProperty('set_id', studySetId1);
-      expect(response.body).toHaveProperty('user_id', userId2);
-      expect(response.body).toHaveProperty('set_type', 'studyset');
-      expect(response.body).toHaveProperty('created_at');
+      expect(response.body).toHaveProperty('setId', studySetId1);
+      expect(response.body).toHaveProperty('userId', userId2);
+      expect(response.body).toHaveProperty('setType', 'studyset');
+      expect(response.body).toHaveProperty('createdAt');
 
       // Cleanup - remove the like
       await request(server)
@@ -339,9 +348,9 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // DELETE /api/studosets/:set_id/likes - Remove like from studoset
+  // DELETE /api/studysets/:set_id/likes - Remove like from studoset
   // ============================================================
-  describe('DELETE /api/studosets/:set_id/likes', () => {
+  describe('DELETE /api/studysets/:set_id/likes', () => {
     it('zou een like moeten kunnen verwijderen', async () => {
       // First like the set
       await request(server)
@@ -375,13 +384,12 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // PUT /api/studosets/:set_id - Update studoset
+  // PUT /api/studysets/:set_id - Update studoset
   // ============================================================
-  describe('PUT /api/studosets/:set_id', () => {
+  describe('PUT /api/studysets/:set_id', () => {
     it('zou een studoset moeten kunnen updaten (owner)', async () => {
       const updateDto = {
         title: 'Updated Title',
-        course: 'Updated Course',
         global_term_language: 'nl',
         global_definition_language: 'de',
         public_set: true,
@@ -394,10 +402,9 @@ describe('Studysets', () => {
         .expect(200);
 
       expect(response.body).toHaveProperty('title', 'Updated Title');
-      expect(response.body).toHaveProperty('course', 'Updated Course');
-      expect(response.body).toHaveProperty('global_term_language', 'nl');
-      expect(response.body).toHaveProperty('global_definition_language', 'de');
-      expect(response.body).toHaveProperty('public_set', true);
+      expect(response.body).toHaveProperty('globalTermLanguage', 'nl');
+      expect(response.body).toHaveProperty('globalDefinitionLanguage', 'de');
+      expect(response.body).toHaveProperty('publicSet', true);
     });
 
     it('zou cards binnen een studoset moeten kunnen updaten', async () => {
@@ -476,153 +483,15 @@ describe('Studysets', () => {
   });
 
   // ============================================================
-  // PUT /api/studosets/:set_id/folder - Switch folder
+  // DELETE /api/studysets/:set_id - Delete studoset
   // ============================================================
-  describe('PUT /api/studosets/:set_id/folder', () => {
-    it('zou een studoset naar een andere folder moeten kunnen verplaatsen', async () => {
-      const switchDto = {
-        user_id: userId1,
-        set_id: studySetId1,
-        destinationFolder_id: folderId1,
-      };
-
-      const response = await request(server)
-        .put(`${baseUrl}/${studySetId1}/folder`)
-        .set('Authorization', `Bearer ${adminToken}`)
-        .send(switchDto)
-        .expect(200);
-
-      expect(response.body).toHaveProperty('folder_id', folderId1);
-    });
-
-    it('zou 400 moeten retourneren bij set_id mismatch', async () => {
-      const switchDto = {
-        user_id: userId1,
-        set_id: studySetId2, // Different from URL param
-        destinationFolder_id: folderId1,
-      };
-
-      await request(server)
-        .put(`${baseUrl}/${studySetId1}/folder`)
-        .set('Authorization', `Bearer ${adminToken}`)
-        .send(switchDto)
-        .expect(400);
-    });
-
-    it('zou destinationFolder_id moeten vereisen', async () => {
-      const invalidDto = {
-        user_id: userId1,
-        set_id: studySetId1,
-        // Missing destinationFolder_id
-      };
-
-      await request(server)
-        .put(`${baseUrl}/${studySetId1}/folder`)
-        .set('Authorization', `Bearer ${adminToken}`)
-        .send(invalidDto)
-        .expect(400);
-    });
-
-    it('zou UUID format moeten valideren voor folder_id', async () => {
-      const invalidDto = {
-        user_id: userId1,
-        set_id: studySetId1,
-        destinationFolder_id: 'not-a-uuid',
-      };
-
-      await request(server)
-        .put(`${baseUrl}/${studySetId1}/folder`)
-        .set('Authorization', `Bearer ${adminToken}`)
-        .send(invalidDto)
-        .expect(400);
-    });
-
-    it('zou 403 moeten retourneren bij folder switch van studoset van andere user', async () => {
-      // authToken (paulallen) tries to switch folder of studySetId1 (owned by charles)
-      const switchDto = {
-        user_id: userId1,
-        set_id: studySetId1,
-        destinationFolder_id: folderId1,
-      };
-
-      await request(server)
-        .put(`${baseUrl}/${studySetId1}/folder`)
-        .set('Authorization', `Bearer ${authToken}`)
-        .send(switchDto)
-        .expect(403);
-    });
-
-    it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const switchDto = {
-        user_id: userId1,
-        set_id: studySetId1,
-        destinationFolder_id: folderId1,
-      };
-
-      const response = await request(server)
-        .put(`${baseUrl}/${studySetId1}/folder`)
-        .send(switchDto)
-        .expect(401);
-
-      expect(response.body.message).toBe('You need to be signed in');
-    });
-  });
-
-  // ============================================================
-  // POST /api/studosets/:set_id/studysession - Create studysession
-  // ============================================================
-  describe('POST /api/studosets/:set_id/studysession', () => {
-    it('zou een nieuwe studysession moeten kunnen aanmaken', async () => {
-      // authToken (paulallen) creates session for studySetId2 (which they own)
-      const response = await request(server)
-        .post(`${baseUrl}/${studySetId2}/studysession`)
-        .set('Authorization', `Bearer ${authToken}`)
-        .expect(201);
-
-      expect(response.body).toHaveProperty('id');
-      expect(response.body).toHaveProperty('set_id', studySetId2);
-      expect(response.body).toHaveProperty('user_id', userId2);
-      expect(response.body).toHaveProperty('set_type', 'studyset');
-      expect(response.body).toHaveProperty('cards');
-      expect(Array.isArray(response.body.cards)).toBe(true);
-    });
-
-    it('zou 404 moeten retourneren voor niet-bestaande studoset', async () => {
-      const fakeId = '00000000-0000-0000-0000-000000000000';
-      await request(server)
-        .post(`${baseUrl}/${fakeId}/studysession`)
-        .set('Authorization', `Bearer ${authToken}`)
-        .expect(404);
-    });
-
-    it('zou UUID format moeten valideren', async () => {
-      await request(server)
-        .post(`${baseUrl}/invalid-uuid/studysession`)
-        .set('Authorization', `Bearer ${authToken}`)
-        .expect(404);
-    });
-
-    it('zou 401 moeten retourneren zonder authenticatie', async () => {
-      const response = await request(server)
-        .post(`${baseUrl}/${studySetId1}/studysession`)
-        .expect(401);
-
-      expect(response.body.message).toBe('You need to be signed in');
-    });
-  });
-
-  // ============================================================
-  // DELETE /api/studosets/:set_id - Delete studoset
-  // ============================================================
-  describe('DELETE /api/studosets/:set_id', () => {
+  describe('DELETE /api/studysets/:set_id', () => {
     it('zou een studoset moeten kunnen verwijderen (owner)', async () => {
       // Create a temporary studoset as authToken user (paulallen)
       const tempSet = {
         title: 'Temporary Set To Delete',
-        course: 'Test',
         global_term_language: 'en',
         global_definition_language: 'en',
-        folder_id: folderId2,
         cardlist: [
           {
             term: 'Temp',
@@ -681,13 +550,11 @@ describe('Studysets', () => {
   // Edge cases
   // ============================================================
   describe('Edge cases', () => {
-    it('zou special characters in title en course moeten kunnen handelen', async () => {
+    it('zou special characters in title moeten kunnen handelen', async () => {
       const specialSet = {
         title: 'Test & <Special> "Characters"',
-        course: "Biology's Course (Advanced)",
         global_term_language: 'en',
         global_definition_language: 'nl',
-        folder_id: folderId2,
         cardlist: [
           {
             term: 'Test',
@@ -704,7 +571,6 @@ describe('Studysets', () => {
         .expect(201);
 
       expect(response.body.title).toBe(specialSet.title);
-      expect(response.body.course).toBe(specialSet.course);
 
       // Cleanup
       await request(server)
@@ -715,10 +581,8 @@ describe('Studysets', () => {
     it('zou unicode in card content moeten kunnen handelen', async () => {
       const unicodeSet = {
         title: 'Unicode Test',
-        course: 'Languages',
         global_term_language: 'en',
         global_definition_language: 'en',
-        folder_id: folderId2,
         cardlist: [
           {
             term: 'Japanese',
@@ -755,10 +619,8 @@ describe('Studysets', () => {
     it('zou card volgorde moeten behouden', async () => {
       const orderedSet = {
         title: 'Ordered Set',
-        course: 'Test',
         global_term_language: 'en',
         global_definition_language: 'en',
-        folder_id: folderId2,
         cardlist: [
           { term: 'First', definition: 'First def', number: 1 },
           { term: 'Second', definition: 'Second def', number: 2 },

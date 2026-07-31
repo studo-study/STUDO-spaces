@@ -46,7 +46,7 @@ export function SpeedyProvider({
 
   const initialCounts: Record<string, number> = {};
   sessionCards.forEach((sc) => {
-    if (sc.mastered) initialCounts[sc.card_id] = 2;
+    if (sc.mastered) initialCounts[sc.cardId] = 2;
   });
 
   const [state, dispatch] = useReducer(learnReducer, {
@@ -78,11 +78,11 @@ export function SpeedyProvider({
     const viewcount = state.correctCounts[currentCard.card.id] ?? 0;
 
     updateSession.mutate({
-      user_id: session.user_id,
+      userId: session.userId,
       cards: [
         {
           id: currentCard.sessionCard.id,
-          card_viewcount: viewcount,
+          cardViewcount: viewcount,
           mastered: viewcount >= 2,
           inQueue: state.phase === "incorrect",
         },

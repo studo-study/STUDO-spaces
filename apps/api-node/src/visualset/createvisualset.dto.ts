@@ -6,33 +6,25 @@ export class CreateVisualsetWithFilesDto {
   @IsString()
   title: string;
 
-  @ApiProperty({ example: 'Biology' })
-  @IsString()
-  subject: string;
-
-  @ApiProperty({ example: 'folder123' })
-  @IsString()
-  folder_id: string;
-
   @ApiProperty({
     type: 'string',
     description: 'JSON string van images metadata (zonder URLs)',
   })
   @IsString()
-  images_metadata: string;
+  imagesMetadata: string;
 
   @ApiProperty({
     type: 'string',
     description: 'JSON string van pins data',
   })
   @IsString()
-  pins_data: string;
+  pinsData: string;
 }
 
 export interface ImageMetadata {
   title: string;
   index: number;
-  grid_x: number;
-  grid_y: number;
+  gridX: number;
+  gridY: number;
   scale: string;
 }

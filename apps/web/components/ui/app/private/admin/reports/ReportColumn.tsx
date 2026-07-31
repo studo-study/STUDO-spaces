@@ -77,7 +77,7 @@ export default function ReportColumn({
         className="max-w-full h-full rounded-2xl group overflow-y-scroll overflow-hidden scroll-hidden flex flex-col gap-3"
       >
         {items.map((item) => (
-          <div key={item.report_id} data-id={item.report_id}>
+          <div key={item.reportId} data-id={item.reportId}>
             <IssueItem item={item} status={status} />
           </div>
         ))}

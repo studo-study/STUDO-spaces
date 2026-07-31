@@ -37,7 +37,7 @@ export class CreateCardDto {
   })
   @IsString({ name: 'suggestion_image_id', maxLength: 64 })
   @IsOptional()
-  suggestion_image_id?: string | null;
+  suggestionImageId?: string | null;
 
   @ApiProperty({
     example: 1,
@@ -54,7 +54,7 @@ export class CreateCardDto {
   })
   @IsOptional()
   @IsIn(['text', 'latex', 'code'])
-  term_content_type?: 'text' | 'latex' | 'code';
+  termContentType?: 'text' | 'latex' | 'code';
 
   @ApiPropertyOptional({
     example: 'typescript',
@@ -62,7 +62,7 @@ export class CreateCardDto {
   })
   @IsString({ name: 'code_language', maxLength: 32 })
   @IsOptional()
-  code_language?: string;
+  codeLanguage?: string;
 }
 
 export class CreateCardListDto {
@@ -118,7 +118,7 @@ export class UpdateCardDto {
   })
   @IsString({ name: 'suggestion_image_id', maxLength: 64 })
   @IsOptional()
-  suggestion_image_id?: string | null;
+  suggestionImageId?: string | null;
 
   @ApiPropertyOptional({
     example: '2024-01-20T14:45:00.000Z',
@@ -126,7 +126,7 @@ export class UpdateCardDto {
   })
   @IsString({ name: 'updated_at', maxLength: 24 })
   @IsOptional()
-  updated_at?: string;
+  updatedAt?: string;
 
   @ApiPropertyOptional({
     example: 'text',
@@ -135,7 +135,7 @@ export class UpdateCardDto {
   })
   @IsOptional()
   @IsIn(['text', 'latex', 'code'])
-  term_content_type?: 'text' | 'latex' | 'code';
+  termContentType?: 'text' | 'latex' | 'code';
 
   @ApiPropertyOptional({
     example: 'typescript',
@@ -143,7 +143,7 @@ export class UpdateCardDto {
   })
   @IsString({ name: 'code_language', maxLength: 32 })
   @IsOptional()
-  code_language?: string;
+  codeLanguage?: string;
 }
 
 export class CardResponseDto {
@@ -181,28 +181,28 @@ export class CardResponseDto {
     description: 'Aanmaak timestamp',
   })
   @Expose()
-  created_at: string;
+  createdAt: string;
 
   @ApiProperty({
     example: '2024-01-20T14:45:00.000Z',
     description: 'Laatste update timestamp',
   })
   @Expose()
-  updated_at: string;
+  updatedAt: string;
 
   @ApiProperty({
     example: '2f1cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de studoset',
   })
   @Expose()
-  set_id: string;
+  setId: string;
 
   @ApiProperty({
     example: '3a2cad9e-a4cc-68a0-9a80-792df80a3e75',
     description: 'UUID van de eigenaar',
   })
   @Expose()
-  owner_id: string;
+  ownerId: string;
 
   @ApiProperty({
     example: 'text',
@@ -210,14 +210,14 @@ export class CardResponseDto {
     enum: ['text', 'latex', 'code'],
   })
   @Expose()
-  term_content_type: 'text' | 'latex' | 'code';
+  termContentType: 'text' | 'latex' | 'code';
 
   @ApiProperty({
     example: 'typescript',
     description: 'Programmeertaal voor code cards',
   })
   @Expose()
-  code_language: string;
+  codeLanguage: string;
 
   @ApiProperty({
     example: 'abc123',
@@ -226,17 +226,17 @@ export class CardResponseDto {
     required: false,
   })
   @Expose()
-  suggestion_image_id?: string | null;
+  suggestionImageId?: string | null;
 
   @ApiPropertyOptional({ description: 'Volledig suggestion image object' })
   @Expose()
-  suggestion_image?: {
+  suggestionImage?: {
     id: string;
-    pexels_id: string;
-    display_url: string;
+    pexelsId: string;
+    displayUrl: string;
     source: string;
     photographer: string;
-    source_page_url: string;
+    sourcePageUrl: string;
   } | null;
 }
 

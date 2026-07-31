@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FullClassroom } from "@/types/types";
 import { useTranslations } from "next-intl";
 import ClassSearch from "@/components/ui/app/private/classrooms/ClassroomSearchbar";
@@ -13,11 +13,8 @@ export default function ClassroomGrid() {
   const User = useUser().user;
   const selectionRef = useRef<HTMLSelectElement>(null);
   const t = useTranslations("classrooms");
-  const [filteredClasses, setFilteredClasses] = useState<FullClassroom[]>([]);
-
-  useEffect(() => {
-    setFilteredClasses(classrooms);
-  }, [classrooms]);
+  const [filteredClasses, setFilteredClasses] =
+    useState<FullClassroom[]>(classrooms);
 
   const filterClasses = () => {
     if (selectionRef.current && User) {
@@ -30,15 +27,15 @@ export default function ClassroomGrid() {
       if (value === "last") {
         setFilteredClasses(
           classrooms.toSorted((a, b) => {
-            const userA = a.users.find((u) => u.user_id === User.id);
-            const userB = b.users.find((u) => u.user_id === User.id);
+            const userA = a.users.find((u) => u.userId === User.id);
+            const userB = b.users.find((u) => u.userId === User.id);
 
-            const timeA = userA?.joined_at
-              ? new Date(userA.joined_at).getTime()
+            const timeA = userA?.joinedAt
+              ? new Date(userA.joinedAt).getTime()
               : 0;
 
-            const timeB = userB?.joined_at
-              ? new Date(userB.joined_at).getTime()
+            const timeB = userB?.joinedAt
+              ? new Date(userB.joinedAt).getTime()
               : 0;
 
             return timeB - timeA;

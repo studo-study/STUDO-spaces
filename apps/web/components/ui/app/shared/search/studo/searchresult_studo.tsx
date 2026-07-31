@@ -43,7 +43,7 @@ interface SetResultProps {
 }
 
 function UserResult({ item }: SetResultProps) {
-  console.log("img_url:", JSON.stringify(item.img_url));
+  console.log("img_url:", JSON.stringify(item.imgUrl));
   return (
     <Link
       href={`track/${item.id}`}
@@ -51,7 +51,7 @@ function UserResult({ item }: SetResultProps) {
     >
       {/* Banner */}
       <Image
-        src={item.banner_url}
+        src={item.bannerUrl}
         alt={`${item.displayName} banner`}
         fill
         className="object-cover opacity-75"

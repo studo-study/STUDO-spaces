@@ -93,8 +93,7 @@ export async function generateMetadata({
 }
 
 export default async function WelcomePage() {
-  const locale = await getLocale();
-  const session = await auth();
+  const [locale, session] = await Promise.all([getLocale(), auth()]);
 
   if (session) {
     redirect(`/${locale}/home`);

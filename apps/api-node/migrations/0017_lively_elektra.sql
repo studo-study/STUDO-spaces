@@ -1,0 +1,1 @@
+ALTER TABLE "chat_message_payload" ADD COLUMN "title" varchar DEFAULT 'payload' NOT NULL;

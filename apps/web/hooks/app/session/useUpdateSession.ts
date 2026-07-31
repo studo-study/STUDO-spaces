@@ -1,7 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { UpdateStudysession } from "@studo/types";
 
-export function useUpdateSession(sessionId: string, setId: string) {
+export function useUpdateSession(
+  sessionId: string,
+  setId: string,
+  // per checkpoint invalideren = extra GET van de hele set → opt-out mogelijk
+  { invalidateOnSettled = true }: { invalidateOnSettled?: boolean } = {},
+) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -17,7 +22,8 @@ export function useUpdateSession(sessionId: string, setId: string) {
       }
       return r.json();
     },
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: ["studosets", setId] }),
+    onSettled: invalidateOnSettled
+      ? () => queryClient.invalidateQueries({ queryKey: ["studosets", setId] })
+      : undefined,
   });
 }

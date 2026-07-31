@@ -65,7 +65,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
   const [cardArray, setCardArray] = useState<CardData[]>([firstCard()]);
 
   const titleRef = useRef<HTMLInputElement>(null);
-  const courseRef = useRef<HTMLInputElement>(null);
   const termLangRef = useRef<HTMLSelectElement>(null);
   const defLangRef = useRef<HTMLSelectElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
@@ -100,6 +99,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
         definition: string;
         contentType: string;
         codeLanguage: string;
+        imageId: string | null;
       }
     >
   >(new Map());
@@ -114,8 +114,9 @@ export default function EditStudosetForm({ id }: EditsetProps) {
         {
           term: card.term,
           definition: card.definition,
-          contentType: card.term_content_type,
-          codeLanguage: card.code_language,
+          contentType: card.termContentType,
+          codeLanguage: card.codeLanguage,
+          imageId: card.suggestionImage?.id ?? null,
         },
       ]),
     );
@@ -126,18 +127,16 @@ export default function EditStudosetForm({ id }: EditsetProps) {
         index: i,
         term: card.term,
         definition: card.definition,
-        image: card.suggestion_image ?? null,
+        image: card.suggestionImage ?? null,
         isDouble: false,
-        contentType: card.term_content_type,
-        codeLanguage: card.code_language,
+        contentType: card.termContentType,
+        codeLanguage: card.codeLanguage,
       })),
     );
     if (titleRef.current) titleRef.current.value = set.title;
-    if (courseRef.current) courseRef.current.value = set.course;
-    if (termLangRef.current)
-      termLangRef.current.value = set.global_term_language;
+    if (termLangRef.current) termLangRef.current.value = set.globalTermLanguage;
     if (defLangRef.current)
-      defLangRef.current.value = set.global_definition_language;
+      defLangRef.current.value = set.globalDefinitionLanguage;
   }, [set]);
 
   useEffect(() => {
@@ -149,16 +148,11 @@ export default function EditStudosetForm({ id }: EditsetProps) {
 
   const validate = (): boolean => {
     const title = titleRef.current?.value?.trim();
-    const course = courseRef.current?.value?.trim();
     const termLang = termLangRef.current?.value;
     const defLang = defLangRef.current?.value;
 
     if (!title) {
       toast.error(t("title_error"));
-      return false;
-    }
-    if (!course) {
-      toast.error(t("course_error"));
       return false;
     }
 
@@ -193,9 +187,16 @@ export default function EditStudosetForm({ id }: EditsetProps) {
 
     const origIds = new Set(originalCardsRef.current.keys());
     const currIds = new Set(cardArray.map((c) => c.id));
+    // image-wijziging → via de volledige cardlist-payload (partial cards-update
+    // negeert suggestion_image_id backend-side)
+    const imageChanged = cardArray.some((c) => {
+      const orig = originalCardsRef.current.get(c.id);
+      return orig ? (c.image?.id ?? null) !== orig.imageId : !!c.image;
+    });
     const structureChanged =
       cardArray.some((c) => !origIds.has(c.id)) ||
-      [...origIds].some((id) => !currIds.has(id));
+      [...origIds].some((id) => !currIds.has(id)) ||
+      imageChanged;
 
     const cardPayload = structureChanged
       ? {
@@ -204,11 +205,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
             definition: card.definition.trim().slice(0, 500),
             number: !isNaN(card.index) ? card.index : i,
             ...(card.image ? { suggestion_image_id: card.image.id } : {}),
-            ...(card.contentType &&
-            ["text", "latex", "code"].includes(card.contentType)
-              ? { term_content_type: card.contentType }
-              : {}),
-            ...(card.codeLanguage ? { code_language: card.codeLanguage } : {}),
           })),
         }
       : (() => {
@@ -219,7 +215,8 @@ export default function EditStudosetForm({ id }: EditsetProps) {
               card.term.trim() !== orig.term ||
               card.definition.trim() !== orig.definition ||
               card.contentType !== orig.contentType ||
-              card.codeLanguage !== orig.codeLanguage
+              card.codeLanguage !== orig.codeLanguage ||
+              (card.image?.id ?? null) !== orig.imageId
             );
           });
           return changed.length === 0
@@ -230,20 +227,13 @@ export default function EditStudosetForm({ id }: EditsetProps) {
                   term: card.term.trim().slice(0, 500),
                   definition: card.definition.trim().slice(0, 500),
                   number: !isNaN(card.index) ? card.index : i,
-                  ...(card.contentType &&
-                  ["text", "latex", "code"].includes(card.contentType)
-                    ? { term_content_type: card.contentType }
-                    : {}),
-                  ...(card.codeLanguage
-                    ? { code_language: card.codeLanguage }
-                    : {}),
+                  suggestion_image_id: card.image?.id ?? null,
                 })),
               };
         })();
 
     const body = {
       title: titleRef.current!.value.trim(),
-      course: courseRef.current!.value.trim(),
       global_term_language: termLangRef.current!.value,
       global_definition_language: defLangRef.current!.value,
       ...cardPayload,
@@ -413,25 +403,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      courseRef.current?.focus();
-                    }
-                  }}
-                />
-              </div>
-              <div className="w-full sm:w-1/2 gap-1 flex flex-col h-fit">
-                <InputField
-                  ref={courseRef}
-                  variant={"cardInput"}
-                  placeholder={t("course_placeholder")}
-                  data-cy="course_input"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      if (cardArray.length > 0) {
-                        cardNodesRef.current
-                          .get(cardArray[0].id)
-                          ?.term?.focus();
-                      }
                     }
                   }}
                 />

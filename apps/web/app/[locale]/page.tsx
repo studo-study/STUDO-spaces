@@ -5,8 +5,7 @@ import { getLocale } from "next-intl/server";
 import { auth } from "./../../auth";
 
 export default async function LocalePage() {
-  const locale = await getLocale();
-  const session = await auth();
+  const [locale, session] = await Promise.all([getLocale(), auth()]);
 
   if (session) {
     redirect(`/${locale}/home`);

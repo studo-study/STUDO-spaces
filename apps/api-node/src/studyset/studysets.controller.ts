@@ -11,19 +11,16 @@ import {
   Query,
   UseGuards,
   Request,
-  BadRequestException,
 } from '@nestjs/common';
 import {
   CreateStudysetDto,
   fullSetResponseDto,
   MyStudysetsResponseDto,
-  SaveToFolderDto,
   StudysetListResponseDto,
   StudysetResponseDto,
   UpdateStudysetDto,
 } from './studyset.dto';
 import { StudysetService } from './studyset.service';
-import { SwitchFolderDto } from '../folder/folder.dto';
 import { CreateSetLikeDto, SetLikeResponseDto } from './setlike.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
@@ -86,25 +83,6 @@ export class StudysetsController {
     @Request() req: AuthenticatedRequest,
   ): Promise<MyStudysetsResponseDto> {
     return this.studysetService.getAllByUser(req.user.id);
-  }
-
-  //GET specfieke studosets's session ----------------------------------------
-
-  @ApiOperation({ summary: 'Haal studysession op van een studoset.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiResponse({
-    status: 200,
-    description: 'Studysessions gevonden',
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Get(':set_id/studysession')
-  async getStudysessionBySetId(
-    @Request() req: AuthenticatedRequest,
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-  ) {
-    const user_id = req.user.id;
-    return this.studysetService.getBySetId(user_id, set_id);
   }
 
   // SUGGEST image ---------------------------------------------------------
@@ -215,28 +193,6 @@ export class StudysetsController {
     return this.studysetService.likeSet(user_id, set_id);
   }
 
-  // POST studysessie ----------------------------------------------------------
-
-  @ApiOperation({
-    summary: 'Start een nieuwe studysession voor deze studoset.',
-  })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiResponse({
-    status: 201,
-    description: 'Studysession aangemaakt',
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Post(':set_id/studysession')
-  @HttpCode(HttpStatus.CREATED)
-  async createSession(
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Request() req: AuthenticatedRequest,
-  ) {
-    const user_id = req.user.id;
-    return this.studysetService.createSession(user_id, set_id);
-  }
-
   // PUT studoset -----------------------------------------------------------
 
   @ApiOperation({ summary: 'Update een studoset.' })
@@ -257,68 +213,6 @@ export class StudysetsController {
   ): Promise<StudysetResponseDto> {
     const user_id = req.user.id;
     return this.studysetService.updateById(user_id, id, update);
-  }
-
-  // POST set opslaan in folder (voor elke user) ----------------------------
-
-  @ApiOperation({ summary: 'Sla een set op in een folder.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiBody({ type: SaveToFolderDto })
-  @ApiResponse({ status: 204, description: 'Set opgeslagen in folder' })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Post(':set_id/folder')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async saveToFolder(
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Body() body: SaveToFolderDto,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<void> {
-    return this.studysetService.saveToFolder(
-      req.user.id,
-      set_id,
-      body.folder_id,
-    );
-  }
-
-  // DELETE set verwijderen uit folder (voor elke user) --------------------
-
-  @ApiOperation({ summary: 'Verwijder een set uit een folder.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiResponse({ status: 204, description: 'Set verwijderd uit folder' })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Delete(':set_id/folder')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async removeFromFolder(
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Request() req: AuthenticatedRequest,
-  ): Promise<void> {
-    return this.studysetService.removeFromFolder(req.user.id, set_id);
-  }
-
-  // PUT studoset van folder -------------------------------------------------
-
-  @ApiOperation({ summary: 'Verplaats studoset naar andere folder.' })
-  @ApiParam({ name: 'set_id', type: 'uuid' })
-  @ApiBody({ type: SwitchFolderDto })
-  @ApiResponse({
-    status: 200,
-    description: 'Studyset verplaatst naar andere folder',
-  })
-  @UseGuards(CheckUserAccessGuard)
-  @Roles(Role.USER, Role.ADMIN)
-  @Put(':set_id/folder')
-  async switchFolder(
-    @Param('set_id', ParseStudySetIdPipe) set_id: string,
-    @Body() switchbody: SwitchFolderDto,
-    @Request() req: AuthenticatedRequest,
-  ) {
-    if (switchbody.set_id !== set_id) {
-      throw new BadRequestException('Set ID mismatch');
-    }
-    const user_id = req.user.id;
-    return this.studysetService.switchFolder(user_id, switchbody);
   }
 
   // DELETE studoset ---------------------------------------------------------

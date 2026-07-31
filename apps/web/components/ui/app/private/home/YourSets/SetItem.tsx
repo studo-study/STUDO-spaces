@@ -12,8 +12,8 @@ const HomePageSetItem = (props: SetItemProps) => {
     <Link
       href={
         item.type === "studyset"
-          ? "/studoset/" + item.set_id
-          : "/visualset/" + item.set_id
+          ? "/studoset/" + item.setId
+          : "/visualset/" + item.setId
       }
       className={
         "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
@@ -36,7 +36,7 @@ const HomePageSetItem = (props: SetItemProps) => {
         </span>
       </div>
       <div className={"flex flex-row gap-2 w-1/3"}>
-        <SmallProgress progress={0} length={item.length} />
+        <SmallProgress progress={item.progress * 2} length={item.length || 1} />
       </div>
     </Link>
   );
