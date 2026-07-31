@@ -525,12 +525,12 @@ const LearnCard = () => {
                   }
                   onClick={toggleImage}
                 >
-                  {showImage ? (
+                  {showImage && currentCard()?.img_url ? (
                     <div
                       className={"overflow-hidden h-full min-w-fit rounded-3xl"}
                     >
                       <Image
-                        src={currentCard()?.img_url}
+                        src={currentCard()!.img_url!}
                         alt={"image"}
                         width={200}
                         height={200}

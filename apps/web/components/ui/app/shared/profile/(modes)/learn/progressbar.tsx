@@ -10,7 +10,7 @@ interface ProgressBarProps {
   subtle?: boolean;
   position?: "left" | "right" | "top" | "bottom";
   phase?: Phase;
-  errorMode: boolean;
+  errorMode?: boolean;
 }
 export default function ProgressBar({
   cardIndex,
@@ -21,7 +21,7 @@ export default function ProgressBar({
   position = "right",
   subtle,
   phase,
-  errorMode,
+  errorMode = false,
 }: ProgressBarProps) {
   const index = queueMode ? queueIndex : cardIndex;
   const length = queueMode ? queueLength : cardLength;
