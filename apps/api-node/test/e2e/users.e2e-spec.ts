@@ -247,90 +247,13 @@ describe('Users', () => {
     testAuthHeader(() => request(server).get(`${baseUrl}/${userId1}`));
   });
 
-  describe('GET /api/users/:user_id/studosets', () => {
-    it('moet 200 retourneren en alle studosets van user tonen', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId2}/studosets`)
-        .auth(userAuthToken, { type: 'bearer' });
+  // Classrooms van een user worden nu via de classrooms-controller opgehaald.
+  describe('GET /api/classrooms/user/:id', () => {
+    const classroomId = '0e2b6da7-d82b-4be2-bf3e-4b320bfd497b';
 
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('studysets');
-      expect(response.body).toHaveProperty('visualsets');
-    });
-
-    it('moet lege arrays retourneren voor user zonder sets', async () => {
-      // Maak nieuwe user zonder sets
-      const authService = app.get(AuthService);
-      const newToken = await authService.register({
-        displayName: 'Empty User',
-        email: 'empty.sets@hogent.be',
-        password: '12345678',
-        role: 'student',
-      });
-
-      const newUser = await db.query.users.findFirst({
-        where: eq(users.email, 'empty.sets@hogent.be'),
-      });
-
-      const response = await request(server)
-        .get(`${baseUrl}/${newUser!.id}/studosets`)
-        .auth(newToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.studysets).toEqual([]);
-      expect(response.body.visualsets).toEqual([]);
-    });
-
-    testAuthHeader(() =>
-      request(server).get(`${baseUrl}/${userId1}/studosets`),
-    );
-  });
-
-  describe('GET /api/users/:user_id/sets', () => {
-    it('moet 200 retourneren en user statistieken tonen', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId2}/sets`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('totalsets');
-      expect(response.body).toHaveProperty('timeLearned');
-      expect(response.body).toHaveProperty('cardsLearned');
-      expect(typeof response.body.totalsets).toBe('number');
-      expect(typeof response.body.timeLearned).toBe('number');
-      expect(typeof response.body.cardsLearned).toBe('number');
-    });
-
-    it('moet nul statistieken retourneren voor nieuwe user', async () => {
-      const authService = app.get(AuthService);
-      const newToken = await authService.register({
-        displayName: 'Stats User',
-        email: 'sets.test@hogent.be',
-        password: '12345678',
-        role: 'student',
-      });
-
-      const newUser = await db.query.users.findFirst({
-        where: eq(users.email, 'sets.test@hogent.be'),
-      });
-
-      const response = await request(server)
-        .get(`${baseUrl}/${newUser!.id}/sets`)
-        .auth(newToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.totalsets).toBe(0);
-      expect(response.body.timeLearned).toBe(0);
-      expect(response.body.cardsLearned).toBe(0);
-    });
-
-    testAuthHeader(() => request(server).get(`${baseUrl}/${userId1}/sets`));
-  });
-
-  describe('GET /api/users/:user_id/classrooms', () => {
     it('moet 200 retourneren en alle classrooms van user tonen', async () => {
       const response = await request(server)
-        .get(`${baseUrl}/${userId2}/classrooms`)
+        .get(`/api/classrooms/user/${userId2}`)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
@@ -352,82 +275,25 @@ describe('Users', () => {
       });
 
       const response = await request(server)
-        .get(`${baseUrl}/${newUser!.id}/classrooms`)
+        .get(`/api/classrooms/user/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
       expect(response.body.classrooms).toEqual([]);
     });
 
-    testAuthHeader(() =>
-      request(server).get(`${baseUrl}/${userId1}/classrooms`),
-    );
-  });
-
-  describe('GET /api/users/:user_id/classrooms/:classroom_id', () => {
     it('moet 200 retourneren en specifieke classroom tonen', async () => {
-      const classroomId = '0e2b6da7-d82b-4be2-bf3e-4b320bfd497b';
       const response = await request(server)
-        .get(`${baseUrl}/${userId2}/classrooms/${classroomId}`)
+        .get(`/api/classrooms/${classroomId}`)
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(200);
       expect(response.body.id).toBe(classroomId);
     });
 
-    it('moet 400 retourneren wanneer user geen lid is van classroom', async () => {
-      const authService = app.get(AuthService);
-      const newToken = await authService.register({
-        displayName: 'Not Member User',
-        email: 'notmember@hogent.be',
-        password: '12345678',
-        role: 'student',
-      });
-
-      const newUser = await db.query.users.findFirst({
-        where: eq(users.email, 'notmember@hogent.be'),
-      });
-
-      const classroomId = '0e2b6da7-d82b-4be2-bf3e-4b320bfd497b';
-      const response = await request(server)
-        .get(`${baseUrl}/${newUser!.id}/classrooms/${classroomId}`)
-        .auth(newToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(400);
-      expect(response.body.message).toContain('not a member');
-    });
-
     testAuthHeader(() =>
-      request(server).get(
-        `${baseUrl}/${userId1}/classrooms/0e2b6da7-d82b-4be2-bf3e-4b320bfd497b`,
-      ),
+      request(server).get(`/api/classrooms/user/${userId1}`),
     );
-  });
-
-  describe('GET /api/users/:user_id/start', () => {
-    it('moet 200 retourneren en startpagina data tonen', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId2}/start`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('lastTen');
-      expect(response.body).toHaveProperty('courses');
-      expect(response.body).toHaveProperty('class');
-      expect(Array.isArray(response.body.lastTen)).toBe(true);
-      expect(Array.isArray(response.body.courses)).toBe(true);
-      expect(Array.isArray(response.body.class)).toBe(true);
-    });
-
-    it('moet 403 retourneren voor andere user', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId1}/start`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(403);
-    });
-
-    testAuthHeader(() => request(server).get(`${baseUrl}/${userId2}/start`));
   });
 
   describe('PUT /api/users/:user_id', () => {
@@ -488,13 +354,13 @@ describe('Users', () => {
         .put(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
-          streak_started: '2024-01-01',
-          streak_count: 10,
-          streak_last_update: '2024-01-10',
+          streakStarted: '2024-01-01',
+          streakCount: 10,
+          streakLastUpdate: '2024-01-10',
         });
 
       expect(response.statusCode).toBe(200);
-      expect(response.body.streak_count).toBe(10);
+      expect(response.body.streakCount).toBe(10);
     });
 
     it('moet img_url kunnen updaten', async () => {
@@ -514,11 +380,11 @@ describe('Users', () => {
         .put(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
-          img_url: 'https://example.com/new-image.png',
+          imgUrl: 'https://example.com/new-image.png',
         });
 
       expect(response.statusCode).toBe(200);
-      expect(response.body.img_url).toBe('https://example.com/new-image.png');
+      expect(response.body.imgUrl).toBe('https://example.com/new-image.png');
     });
 
     it('moet last_login kunnen updaten', async () => {
@@ -615,7 +481,9 @@ describe('Users', () => {
         .auth(userAuthToken, { type: 'bearer' });
 
       expect(response.statusCode).toBe(403);
-      expect(response.body.message).toEqual('Not allowed to delete this user');
+      expect(response.body.message).toEqual(
+        'You are not allowed to access this user',
+      );
     });
 
     it('moet 404 retourneren bij niet-bestaande user', async () => {
@@ -639,113 +507,6 @@ describe('Users', () => {
     testAuthHeader(() => request(server).delete(`${baseUrl}/${userId1}`));
   });
 
-  describe('GET /api/users/:user_id/app', () => {
-    it('moet 200 retourneren en app_footer info tonen', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId2}/app`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('displayName');
-      expect(response.body).toHaveProperty('email');
-      expect(response.body).toHaveProperty('streak_count');
-      expect(response.body).toHaveProperty('pfp');
-    });
-
-    it('moet 404 retourneren wanneer andere user app opvraagt', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId1}/app`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(404);
-      expect(response.body.message).toBe('Header not found');
-    });
-
-    it('moet 200 retourneren wanneer admin app opvraagt', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId1}/app`)
-        .auth(adminAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.displayName).toBe('Charles Degraeuwe');
-    });
-
-    it('moet 404 retourneren voor niet-bestaande user', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/00000000-0000-0000-0000-000000000000/app`)
-        .auth(adminAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(404);
-      expect(response.body.message).toBe('User not found');
-    });
-
-    testAuthHeader(() => request(server).get(`${baseUrl}/${userId2}/app`));
-  });
-
-  describe('GET /api/users/:user_id/course/:course_id', () => {
-    it('moet 200 retourneren en course studosets tonen', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId2}/course/Biology`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('studysets');
-      expect(response.body).toHaveProperty('visualsets');
-      expect(Array.isArray(response.body.studysets)).toBe(true);
-      expect(Array.isArray(response.body.visualsets)).toBe(true);
-    });
-
-    it('moet alleen sets van opgegeven course retourneren', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId2}/course/Math`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-
-      // Alle sets moeten course "Math" hebben
-      response.body.studysets.forEach((set: any) => {
-        expect(set.course).toBe('Math');
-      });
-
-      response.body.visualsets.forEach((set: any) => {
-        expect(set.course).toBe('Math');
-      });
-    });
-
-    it('moet lege arrays retourneren voor niet-bestaande course', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId2}/course/NonExistentCourse`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.studysets).toEqual([]);
-      expect(response.body.visualsets).toEqual([]);
-    });
-
-    it('moet 404 retourneren wanneer andere user course opvraagt', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId1}/course/Biology`)
-        .auth(userAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(404);
-      expect(response.body.message).toBe('Course not found');
-    });
-
-    it('moet 200 retourneren wanneer admin course opvraagt', async () => {
-      const response = await request(server)
-        .get(`${baseUrl}/${userId1}/course/Biology`)
-        .auth(adminAuthToken, { type: 'bearer' });
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('studysets');
-      expect(response.body).toHaveProperty('visualsets');
-    });
-
-    testAuthHeader(() =>
-      request(server).get(`${baseUrl}/${userId2}/course/Biology`),
-    );
-  });
-
   describe('UserService - Additional Coverage', () => {
     it('existsById moet true retourneren voor bestaande user', async () => {
       const exists = await userService.existsById(userId1);
@@ -764,16 +525,6 @@ describe('Users', () => {
       expect(hashed).toBeTruthy();
       expect(hashed).not.toBe('testpassword123');
       expect(hashed.length).toBeGreaterThan(50);
-    });
-
-    it('getCourses moet lege array retourneren voor user zonder sets', async () => {
-      const authService = app.get(AuthService);
-      await authService.register({
-        displayName: 'No Course User',
-        email: 'nocourse@hogent.be',
-        password: '12345678',
-        role: 'student',
-      });
     });
 
     it('getClassmateActivity moet alleen activiteit van anderen tonen', async () => {

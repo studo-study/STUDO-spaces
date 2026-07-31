@@ -16,13 +16,14 @@ const Clock: React.FC<ClockProps> = (props) => {
   const progressRef = useRef<SVGPathElement>(null);
   const isRunning = pomodoroStore((state) => state.isRunning);
   const reset = pomodoroStore((state) => state.reset);
+  const finish = pomodoroStore((state) => state.finish);
   const isEnabled = useLearnStore((state) => state.learnSettings.pomodoro);
 
   useEffect(() => {
     if (!progressRef.current) return;
     const elapsed = pomodoroStore.getState().getElapsed();
     if (elapsed >= POMODORO_DURATION) {
-      reset();
+      finish();
       return;
     }
     const animation = progressRef.current.animate(
@@ -37,12 +38,12 @@ const Clock: React.FC<ClockProps> = (props) => {
     }
 
     animation.currentTime = elapsed;
-    animation.onfinish = () => reset();
+    animation.onfinish = () => finish();
     if (isRunning) animation.play();
     else animation.pause();
 
     return () => animation.cancel();
-  }, [isRunning, reset, isEnabled]);
+  }, [isRunning, reset, finish, isEnabled]);
 
   return (
     <div className="relative flex items-center justify-center w-full h-fit">

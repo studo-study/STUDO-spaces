@@ -99,6 +99,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
         definition: string;
         contentType: string;
         codeLanguage: string;
+        imageId: string | null;
       }
     >
   >(new Map());
@@ -115,6 +116,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
           definition: card.definition,
           contentType: card.termContentType,
           codeLanguage: card.codeLanguage,
+          imageId: card.suggestionImage?.id ?? null,
         },
       ]),
     );
@@ -185,9 +187,16 @@ export default function EditStudosetForm({ id }: EditsetProps) {
 
     const origIds = new Set(originalCardsRef.current.keys());
     const currIds = new Set(cardArray.map((c) => c.id));
+    // image-wijziging → via de volledige cardlist-payload (partial cards-update
+    // negeert suggestion_image_id backend-side)
+    const imageChanged = cardArray.some((c) => {
+      const orig = originalCardsRef.current.get(c.id);
+      return orig ? (c.image?.id ?? null) !== orig.imageId : !!c.image;
+    });
     const structureChanged =
       cardArray.some((c) => !origIds.has(c.id)) ||
-      [...origIds].some((id) => !currIds.has(id));
+      [...origIds].some((id) => !currIds.has(id)) ||
+      imageChanged;
 
     const cardPayload = structureChanged
       ? {
@@ -196,11 +205,6 @@ export default function EditStudosetForm({ id }: EditsetProps) {
             definition: card.definition.trim().slice(0, 500),
             number: !isNaN(card.index) ? card.index : i,
             ...(card.image ? { suggestion_image_id: card.image.id } : {}),
-            ...(card.contentType &&
-            ["text", "latex", "code"].includes(card.contentType)
-              ? { term_content_type: card.contentType }
-              : {}),
-            ...(card.codeLanguage ? { code_language: card.codeLanguage } : {}),
           })),
         }
       : (() => {
@@ -211,7 +215,8 @@ export default function EditStudosetForm({ id }: EditsetProps) {
               card.term.trim() !== orig.term ||
               card.definition.trim() !== orig.definition ||
               card.contentType !== orig.contentType ||
-              card.codeLanguage !== orig.codeLanguage
+              card.codeLanguage !== orig.codeLanguage ||
+              (card.image?.id ?? null) !== orig.imageId
             );
           });
           return changed.length === 0
@@ -222,13 +227,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
                   term: card.term.trim().slice(0, 500),
                   definition: card.definition.trim().slice(0, 500),
                   number: !isNaN(card.index) ? card.index : i,
-                  ...(card.contentType &&
-                  ["text", "latex", "code"].includes(card.contentType)
-                    ? { term_content_type: card.contentType }
-                    : {}),
-                  ...(card.codeLanguage
-                    ? { code_language: card.codeLanguage }
-                    : {}),
+                  suggestion_image_id: card.image?.id ?? null,
                 })),
               };
         })();

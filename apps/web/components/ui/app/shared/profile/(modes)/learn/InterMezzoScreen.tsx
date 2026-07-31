@@ -1,4 +1,5 @@
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
+import { useTranslations } from "next-intl";
 
 interface ReviewItem {
   word: string;
@@ -8,6 +9,7 @@ interface InterMezzoScreenProps {
   items: ReviewItem[];
 }
 const InterMezzoScreen: React.FC<InterMezzoScreenProps> = ({ items }) => {
+  const t = useTranslations("learn");
   return (
     <div
       className={
@@ -33,7 +35,9 @@ const InterMezzoScreen: React.FC<InterMezzoScreenProps> = ({ items }) => {
           </AnimateOnMount>
         ))}
       </div>
-      <span className={"text-sm text-studogrey"}>*press enter to continue</span>
+      <span className={"text-sm dark:text-studogrey text-black/25"}>
+        {t("enter_continue")}
+      </span>
     </div>
   );
 };

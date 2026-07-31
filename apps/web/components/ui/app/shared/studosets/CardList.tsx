@@ -33,6 +33,15 @@ export default function CardList({
 
   return (
     <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 mb-8 sm:mb-10">
+      {cards?.length === 0 && (
+        <div
+          className={
+            "w-full min-h-0 flex-1 flex justify-center items-center dark:text-studogrey text-black/20 font-medium"
+          }
+        >
+          <span>No cards</span>
+        </div>
+      )}
       {displayCards?.map((card, i) => (
         <CardItem
           key={card.id}

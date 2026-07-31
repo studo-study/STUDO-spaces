@@ -1,10 +1,18 @@
+import classNames from "@/utils/classnames";
+
 interface ProgressProps {
   length: number;
   progress: number;
   height?: number;
+  reverse?: boolean;
 }
 
-export function Progress({ length, progress, height = 56 }: ProgressProps) {
+export function Progress({
+  length,
+  progress,
+  height = 56,
+  reverse = false,
+}: ProgressProps) {
   const radius = 42;
   const circumference = 2 * Math.PI * radius;
   const prog: number = Math.min(100, Math.floor((progress / length) * 100));
@@ -12,7 +20,9 @@ export function Progress({ length, progress, height = 56 }: ProgressProps) {
 
   return (
     <div
-      className="rounded-full flex justify-center items-center relative overflow-hidden"
+      className={classNames(
+        "rounded-full flex justify-center items-center relative overflow-hidden",
+      )}
       style={{ height, width: height }}
     >
       <svg
@@ -29,7 +39,9 @@ export function Progress({ length, progress, height = 56 }: ProgressProps) {
           strokeWidth="10"
           className={
             prog === 100
-              ? "stroke-emerald-500"
+              ? reverse
+                ? "stroke-studoblue"
+                : "stroke-green-500"
               : "dark:stroke-studogrey stroke-gray-300"
           }
         />
@@ -42,7 +54,7 @@ export function Progress({ length, progress, height = 56 }: ProgressProps) {
           strokeWidth="10"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className={`transition-all ${progress == 0 && "opacity-0"} duration-500 ease-out ${getStrokeColor({ prog })}`}
+          className={`transition-all ${progress == 0 && "opacity-0"} duration-500 ease-out ${getStrokeColor({ progression: prog, reversed: reverse })}`}
           style={{
             transform: "rotate(-90deg)",
             transformOrigin: "50% 50%",
@@ -61,16 +73,18 @@ export function Progress({ length, progress, height = 56 }: ProgressProps) {
 }
 
 interface strokeProps {
-  prog: number;
+  progression: number;
+  reversed: boolean;
 }
 
-function getStrokeColor({ prog }: strokeProps) {
-  if (prog === 100) return "stroke-emerald-500";
-  if (prog >= 95) return "stroke-green-500";
-  if (prog >= 85) return "stroke-green-400";
-  if (prog >= 75) return "stroke-green-300";
-  if (prog >= 65) return "stroke-amber-500";
-  if (prog >= 50) return "stroke-red-200";
-  if (prog > 0) return "stroke-red-400";
+function getStrokeColor({ progression, reversed }: strokeProps) {
+  const prog = reversed ? Math.abs(progression - 100) : progression;
+  if (prog === 100) return "stroke-green-500";
+  if (prog >= 95) return "stroke-emerald-500";
+  if (prog >= 85) return "stroke-emerald-400";
+  if (prog >= 75) return "stroke-emerald-300";
+  if (prog >= 65) return "stroke-teal-500";
+  if (prog >= 50) return "stroke-cyan-400";
+  if (prog > 0) return "stroke-blue-400";
   return "stroke-studoblue";
 }

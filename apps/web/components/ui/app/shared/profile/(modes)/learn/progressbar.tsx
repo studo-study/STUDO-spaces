@@ -1,4 +1,5 @@
 import classNames from "@/utils/classnames";
+import { Phase } from "@/app/[locale]/(shared)/(modes)/learn/[id]/LearnCard";
 
 interface ProgressBarProps {
   cardIndex: number;
@@ -8,6 +9,8 @@ interface ProgressBarProps {
   queueLength?: number;
   subtle?: boolean;
   position?: "left" | "right" | "top" | "bottom";
+  phase?: Phase;
+  errorMode: boolean;
 }
 export default function ProgressBar({
   cardIndex,
@@ -17,6 +20,8 @@ export default function ProgressBar({
   queueIndex = 0,
   position = "right",
   subtle,
+  phase,
+  errorMode,
 }: ProgressBarProps) {
   const index = queueMode ? queueIndex : cardIndex;
   const length = queueMode ? queueLength : cardLength;
@@ -46,7 +51,7 @@ export default function ProgressBar({
       >
         <div
           style={{ width: `${perc}%` }}
-          className={` h-full rounded-full bg-linear-90 ${queueMode ? "from-rose-400 to-rose-500" : "from-emerald-400 to-emerald-500"}`}
+          className={` h-full rounded-full bg-linear-90 ${errorMode ? "from-amber-500 to-orange-500" : "from-emerald-400 to-emerald-500"}`}
         />
       </div>
     </div>

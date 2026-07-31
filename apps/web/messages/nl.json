@@ -1670,6 +1670,17 @@
     "type_description": "Kies hoe op welke manier je wilt antwoorden",
     "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt"
   },
+  "learn": {
+    "enter_continue": "*druk op enter om verder te gaan",
+    "type_answer": "type je antwoord...",
+    "reset": "reset",
+    "all_set": "De set is helemaal doorlopen!",
+    "back": "terug naar set",
+    "restart": "oefen nog eens",
+    "revision": "herhaal",
+    "hint": "toon hint",
+    "next": "volgende"
+  },
   "widgets": {
     "title": "Widgets"
   }
