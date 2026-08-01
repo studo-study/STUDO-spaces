@@ -133,11 +133,13 @@ export function SpeedyProvider({
   // Persist the final result once the set is finished.
   useEffect(() => {
     if (state.phase !== "finished") return;
-    setElapsedMs(Date.now() - startTimeRef.current);
+    const finishedAt = Date.now();
+    const startedAt = startTimeRef.current || finishedAt;
+    setElapsedMs(finishedAt - startedAt);
     updateSession.mutate({
       userId: session.userId,
       accuracy,
-      endedAt: new Date().toISOString(),
+      endedAt: new Date(finishedAt).toISOString(),
     });
   }, [state.phase]); // eslint-disable-line react-hooks/exhaustive-deps
 
