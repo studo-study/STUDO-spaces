@@ -7,7 +7,7 @@ export function useCreateCourse() {
 
   return useMutation<Course, Error, CreateCourse>({
     mutationFn: (body) =>
-      fetch("/api/courses", {
+      fetch("/api/flows/course", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

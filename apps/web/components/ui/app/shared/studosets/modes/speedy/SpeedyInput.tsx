@@ -1,39 +1,31 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useSpeedyContext } from "./SpeedyContext";
+import { useTranslations } from "next-intl";
 
 const SpeedyInput = () => {
-  const { state, dispatch, currentCard, cards, gameStarted } =
-    useSpeedyContext();
+  const { state, dispatch, currentCard, gameStarted } = useSpeedyContext();
   const inputRef = useRef<HTMLInputElement>(null!);
+  const t = useTranslations("speedy");
 
   useEffect(() => {
-    if (state.phase === "answering" || gameStarted) inputRef.current?.focus();
-  }, [gameStarted, state.phase]);
-
-  useEffect(() => {
-    if (!state.wrongAttempt) return;
-    if (inputRef.current) inputRef.current.value = "";
-    inputRef.current?.focus();
-    const t = setTimeout(() => dispatch({ type: "RESET_WRONG_ATTEMPT" }), 300);
-    return () => clearTimeout(t);
-  }, [state.wrongAttempt, dispatch]);
+    if (state.phase === "answering" && gameStarted) inputRef.current?.focus();
+  }, [gameStarted, state.phase, state.deckIndex]);
 
   const correct = state.phase === "correct";
   const incorrect = state.phase === "incorrect";
   const disabled = state.phase !== "answering";
 
   const checkInput = () => {
+    const card = currentCard.card;
+    if (!card) return;
     const input = inputRef.current?.value ?? "";
-    const correctAnswer = state.termMode
-      ? currentCard.card.definition
-      : currentCard.card.term;
+    const correctAnswer = state.termMode ? card.definition : card.term;
     dispatch({
       type: "SUBMIT_ANSWER",
       input,
       correctAnswer,
-      card: currentCard.card,
-      cards,
+      card,
     });
     if (inputRef.current) inputRef.current.value = "";
   };
@@ -43,7 +35,7 @@ const SpeedyInput = () => {
       className={`bg-gray-300/20 min-h-12 dark:bg-studogrey/20 px-5 flex items-center w-full rounded-3xl h-fit py-2 border ${
         correct
           ? "border-emerald-400"
-          : incorrect || state.wrongAttempt
+          : incorrect
             ? "border-rose-400"
             : "border-transparent focus-within:border-gray-300 focus-within:dark:border-studoborder/30"
       }`}
@@ -54,8 +46,8 @@ const SpeedyInput = () => {
         autoFocus={true}
         onKeyDown={(e) => e.key === "Enter" && !disabled && checkInput()}
         type="text"
-        placeholder={state.termMode ? "typ definitie" : "typ term"}
-        className="w-full group h-full outline-none"
+        placeholder={state.termMode ? t("type_definition") : t("type_term")}
+        className="w-full group h-full outline-none bg-transparent"
       />
     </div>
   );

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { ReactNode } from "react";
 import { FaChevronDown, FaPlus } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 
@@ -25,6 +25,7 @@ type ComboBoxProps = {
   tabIndex?: number;
   searchable?: boolean;
   creatable?: boolean;
+  createButton?: ReactNode;
 };
 
 const sizeMap = {
@@ -74,6 +75,7 @@ const ComboBox = ({
   dataCy,
   title,
   tabIndex,
+  createButton,
   searchable = true,
   creatable = false,
 }: ComboBoxProps) => {
@@ -205,7 +207,7 @@ const ComboBox = ({
 
       <div
         className={`absolute left-0 right-0 top-full mt-2
-          z-[9999] p-3 border border-studoborder/30
+          z-9999 p-3 border border-studoborder/30
           rounded-2xl backdrop-blur-2xl min-w-30
           glass-rgb gap-2 flex flex-col h-fit
           shadow-xl shadow-black/10 dark:shadow-black/30
@@ -219,17 +221,20 @@ const ComboBox = ({
         onClick={(e) => e.stopPropagation()}
       >
         {searchable && (
-          <div className="flex glass-rgb rounded-3xl justify-between border border-studoborder/30 text-sm">
-            <input
-              ref={searchRef}
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleSearchKeyDown}
-              placeholder={searchPlaceholder}
-              autoComplete="off"
-              className="h-9 px-4 w-full outline-none bg-transparent"
-            />
+          <div className={"flex flex-row gap-2 items-center min-w-0 flex-1"}>
+            <div className="flex glass-rgb w-full rounded-3xl justify-between border border-studoborder/30 text-sm">
+              <input
+                ref={searchRef}
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
+                placeholder={searchPlaceholder}
+                autoComplete="off"
+                className="h-9 px-4 w-full outline-none bg-transparent"
+              />
+            </div>
+            {createButton}
           </div>
         )}
 

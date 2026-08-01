@@ -691,5 +691,26 @@
         "priority": "priorité"
       }
     }
+  },
+  "speedy": {
+    "modal_title": "Prêt ?",
+    "pause_title": "En pause...",
+    "modal_expl": "Réponds aux questions le plus vite possible,\nmais attention : les mauvaises réponses reviennent plus tard.",
+    "return": "retour au set",
+    "start": "commence ta manche",
+    "pause": "pause",
+    "continue": "continuer",
+    "answer_with": "répondre avec",
+    "definition": "Définition",
+    "term": "Terme",
+    "type_definition": "tapez la définition",
+    "type_term": "tapez le terme",
+    "round": "Manche",
+    "restart": "recommencer",
+    "finished_title": "Set terminé !",
+    "finished_expl": "Bien joué — voici ton résultat.",
+    "stat_rounds": "Manches",
+    "stat_time": "Temps",
+    "stat_accuracy": "Précision"
   }
 }

@@ -14,6 +14,7 @@ import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { useTranslations } from "next-intl";
 import { SpeedyProvider, useSpeedyContext } from "./SpeedyContext";
 import PauseModal from "@/components/ui/app/shared/studosets/modes/speedy/PauseModal";
+import SpeedyEndScreen from "@/components/ui/app/shared/studosets/modes/speedy/SpeedyEndScreen";
 
 interface SpeedyModeInnerProps {
   id: string;
@@ -23,31 +24,45 @@ interface SpeedyModeInnerProps {
 }
 
 function SpeedyModeContent({ id }: { id: string }) {
-  const { state, dispatch, cards, setGameStarted, gameStarted } =
+  const { state, dispatch, setGameStarted, gameStarted, startGame, resume } =
     useSpeedyContext();
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const handleStart = () => {
-    setIsOpen(false);
-    setGameStarted(true);
-  };
-
-  useEffect(() => {
-    if (state.phase === "correct") {
-      dispatch({ type: "ADVANCE", cards });
-    } else if (state.phase === "incorrect") {
-      const timeout = setTimeout(() => {
-        dispatch({ type: "ADVANCE", cards });
-      }, 600);
-      return () => clearTimeout(timeout);
-    }
-  }, [cards, dispatch, state.phase]);
   const t = useTranslations("speedy");
   const Router = useRouter();
 
   const returnToSet = useCallback(() => {
     Router.push("/studoset/" + id);
   }, [Router, id]);
+
+  const handleStart = () => {
+    setIsOpen(false);
+    startGame();
+  };
+
+  useEffect(() => {
+    if (state.phase === "correct") {
+      dispatch({ type: "ADVANCE" });
+    } else if (state.phase === "incorrect") {
+      const timeout = setTimeout(() => {
+        dispatch({ type: "ADVANCE" });
+      }, 600);
+      return () => clearTimeout(timeout);
+    }
+  }, [dispatch, state.phase, state.deckIndex]);
+
+  if (state.phase === "finished") {
+    return (
+      <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
+        <div className="w-full flex">
+          <BaseButton size="sm" variant="icon" onClick={returnToSet}>
+            <IoArrowBackOutline />
+          </BaseButton>
+        </div>
+        <SpeedyEndScreen back={returnToSet} />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
@@ -59,16 +74,20 @@ function SpeedyModeContent({ id }: { id: string }) {
 
       <div className="w-2/3 flex flex-col gap-5 items-center justify-center">
         <div className="flex flex-row items-center w-full gap-3">
+          <span className="text-xs sm:text-sm whitespace-nowrap opacity-75">
+            {t("round")} {state.round}
+          </span>
           <ProgressBar
-            cardIndex={state.queueMode ? state.queueIndex : state.index}
-            cardLength={cards.length}
-            queueMode={state.queueMode}
-            queueIndex={state.queueIndex}
-            queueLength={state.queue.length}
+            cardIndex={state.deckIndex}
+            cardLength={state.deck.length}
             subtle
           />
           <BaseTooltip content={t("answer_with")}>
-            <BaseButton variant="icon" className="min-h-full">
+            <BaseButton
+              variant="icon"
+              className="min-h-full"
+              onClick={() => dispatch({ type: "TOGGLE_TERM_MODE" })}
+            >
               <p className="text-xs sm:text-sm">
                 {state.termMode ? t("definition") : t("term")}
               </p>
@@ -97,7 +116,7 @@ function SpeedyModeContent({ id }: { id: string }) {
       {!gameStarted && !isOpen && (
         <PauseModal
           isOpen={!gameStarted}
-          setIsOpen={handleStart}
+          setIsOpen={resume}
           back={returnToSet}
         />
       )}

@@ -1,22 +1,16 @@
 import { Card } from "@/types/types";
 
-export type Phase =
-  | "answering"
-  | "correct"
-  | "incorrect"
-  | "showAnswer"
-  | "showProgress";
+export type Phase = "answering" | "correct" | "incorrect" | "finished";
 
 export interface State {
-  index: number;
-  queue: Card[];
-  queueIndex: number;
-  queueMode: boolean;
+  deck: Card[]; // cards in the current round
+  deckIndex: number; // position in the current deck
+  nextQueue: Card[]; // wrong cards, carried to the next round
+  round: number; // 1-based round counter
   phase: Phase;
   termMode: boolean;
-  progressMode: boolean;
-  correctCounts: Record<string, number>;
-  wrongAttempt: boolean;
+  totalAnswers: number;
+  correctAnswers: number;
 }
 
 export type Action =
@@ -25,105 +19,80 @@ export type Action =
       input: string;
       correctAnswer: string;
       card: Card;
-      cards: Card[];
     }
-  | { type: "SHOW_ANSWER" }
-  | { type: "ADVANCE"; cards: Card[] }
+  | { type: "ADVANCE" }
   | { type: "TOGGLE_TERM_MODE" }
-  | { type: "TOGGLE_PROGRESS" }
-  | { type: "RESET_WRONG_ATTEMPT" };
+  | { type: "RESET"; cards: Card[] };
 
-export default function learnReducer(state: State, action: Action): State {
+export function makeInitialState(cards: Card[]): State {
+  return {
+    deck: cards,
+    deckIndex: 0,
+    nextQueue: [],
+    round: 1,
+    phase: cards.length === 0 ? "finished" : "answering",
+    termMode: true,
+    totalAnswers: 0,
+    correctAnswers: 0,
+  };
+}
+
+const normalize = (s: string) => s.trim().toLowerCase();
+
+export default function speedyReducer(state: State, action: Action): State {
   switch (action.type) {
     case "SUBMIT_ANSWER": {
-      const isCorrect = action.input === action.correctAnswer;
-      // Timer expiry dispatches with empty input; typed wrong answers have non-empty input
-      const isTimerExpiry = !isCorrect && action.input === "";
-
-      const newCounts = { ...state.correctCounts };
-      const current = newCounts[action.card.id] ?? 0;
+      const isCorrect =
+        normalize(action.input) === normalize(action.correctAnswer);
+      const totalAnswers = state.totalAnswers + 1;
 
       if (isCorrect) {
-        newCounts[action.card.id] = Math.min(current + 1, 2);
-      } else if (isTimerExpiry && current >= 2) {
-        newCounts[action.card.id] = 1;
-      }
-
-      const allMastered =
-        isCorrect &&
-        action.cards.every((card) => (newCounts[card.id] ?? 0) >= 2);
-
-      if (allMastered) {
-        return {
-          ...state,
-          correctCounts: newCounts,
-          phase: "showProgress",
-          progressMode: true,
-          wrongAttempt: false,
-        };
-      }
-
-      if (isCorrect) {
+        // Correct once -> card is done, not carried to next round.
         return {
           ...state,
           phase: "correct",
-          correctCounts: newCounts,
-          wrongAttempt: false,
+          totalAnswers,
+          correctAnswers: state.correctAnswers + 1,
         };
       }
 
-      if (isTimerExpiry) {
-        // Timer ran out: add to queue and advance
-        return {
-          ...state,
-          phase: "incorrect",
-          queue: [...state.queue, action.card],
-          correctCounts: newCounts,
-          wrongAttempt: false,
-        };
-      }
-
-      // Typed wrong answer: stay on same card, let user retry
+      // Typed wrong OR timer expiry -> card returns in the next round.
       return {
         ...state,
-        phase: "answering",
-        wrongAttempt: true,
+        phase: "incorrect",
+        totalAnswers,
+        nextQueue: [...state.nextQueue, action.card],
       };
     }
 
-    case "SHOW_ANSWER":
-      return { ...state, phase: "showAnswer" };
-
     case "ADVANCE": {
-      const allMastered = action.cards.every(
-        (card) => (state.correctCounts[card.id] || 0) >= 2,
-      );
+      const nextIndex = state.deckIndex + 1;
 
-      if (allMastered) {
-        return { ...state, phase: "showProgress", progressMode: true };
+      if (nextIndex < state.deck.length) {
+        return { ...state, deckIndex: nextIndex, phase: "answering" };
       }
 
-      let idx = (state.index + 1) % action.cards.length;
-
-      let attempts = 0;
-      while ((state.correctCounts[action.cards[idx]?.id] || 0) >= 2) {
-        idx = (idx + 1) % action.cards.length;
-        attempts++;
-        if (attempts >= action.cards.length) {
-          return { ...state, phase: "showProgress", progressMode: true };
-        }
+      // Reached the end of the current deck (round complete).
+      if (state.nextQueue.length === 0) {
+        return { ...state, phase: "finished" };
       }
-      return { ...state, index: idx, phase: "answering", wrongAttempt: false };
+
+      // Start the next round with the queued cards.
+      return {
+        ...state,
+        deck: state.nextQueue,
+        nextQueue: [],
+        deckIndex: 0,
+        round: state.round + 1,
+        phase: "answering",
+      };
     }
 
     case "TOGGLE_TERM_MODE":
       return { ...state, termMode: !state.termMode };
 
-    case "TOGGLE_PROGRESS":
-      return { ...state, progressMode: !state.progressMode };
-
-    case "RESET_WRONG_ATTEMPT":
-      return { ...state, wrongAttempt: false };
+    case "RESET":
+      return makeInitialState(action.cards);
 
     default:
       return state;

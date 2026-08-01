@@ -143,7 +143,7 @@ export class UserService {
     return {
       totalsets: sets.length,
       timeLearned: stats.reduce(
-        (pv: number, sesh: StudysessionResponse) => pv + sesh.durationMin,
+        (pv: number, sesh: Studysession) => pv + (sesh?.durationMin ?? 0),
         0,
       ),
       totalCards: cds.length,
@@ -208,7 +208,7 @@ export class UserService {
           type: sesh.setType,
           progress: seshCards.reduce(
             (pv: number, card: SessionCardResponse) =>
-              pv + (card.cardViewcount || 0),
+              pv + ((card.cardViewcount > 1 && 1) || 0),
             0,
           ),
           length: setCards.length,
@@ -237,7 +237,7 @@ export class UserService {
           type: sesh.setType,
           progress: seshPins.reduce(
             (pv: number, pin: SessionPinResponse) =>
-              pv + (pin.pinViewcount || 0),
+              pv + ((pin.pinViewcount > 1 && 1) || 0),
             0,
           ),
           length: setImages.length,

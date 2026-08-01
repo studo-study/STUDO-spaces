@@ -20,21 +20,23 @@ import { IoIosAdd } from "react-icons/io";
 import { LuLink } from "react-icons/lu";
 import { useCreateCourse } from "@/hooks/app/courses/useCreateCourse";
 
-interface CreateFlowBoardProps {
+const DEFAULT_ICON = "blue:bookopen";
+
+interface CreateCourseProps {
   createOpen: boolean;
   setCreateOpen: (open: boolean) => void;
   board_title?: string;
   board_id?: string;
 }
 
-const CreateFlowBoard = (props: CreateFlowBoardProps) => {
+const CreateCourse = (props: CreateCourseProps) => {
   const { createOpen, setCreateOpen, board_title, board_id } = props;
   const router = useRouter();
   const popupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   //states
-  const [selectedIcon, setSelectedIcon] = useState<string>("blue:bookopen");
+  const [selectedIcon, setSelectedIcon] = useState<string>(DEFAULT_ICON);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [examDate, setExamDate] = useState<string>("");
@@ -52,7 +54,8 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
     setDescription("");
     setExamDate("");
     setLink("");
-    setSelectedIcon("emerald:default");
+    setDays([]);
+    setSelectedIcon(DEFAULT_ICON);
     setErrors({});
   };
 
@@ -89,9 +92,6 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
     }
   }, [createOpen]);
 
-  useEffect(() => {
-    console.log(days.join("-"));
-  }, [days]);
   //validate data
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -202,6 +202,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
             setValue={setTitle}
             textSize={"lg"}
             error={!title ? errors.title : undefined}
+            ref={inputRef}
           />
           <TextArea
             placeholder={t("description")}
@@ -255,6 +256,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
         />
         <div className={"w-full flex flex-row justify-end gap-2 px-3 py-3"}>
           <BaseButton
+            size={"sm"}
             iconLeft={showMetadata ? <FiMinus /> : <IoIosAdd size={20} />}
             onSubmit={onShowMetadata}
             bg={"bg-transparent border-transparent"}
@@ -262,6 +264,7 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
           />
 
           <BaseButton
+            size={"sm"}
             onSubmit={onSubmit}
             bg={"bg-blue-500"}
             label={t("create_btn")}
@@ -272,5 +275,5 @@ const CreateFlowBoard = (props: CreateFlowBoardProps) => {
   );
 };
 
-CreateFlowBoard.displayName = "CreateFlowBoard";
-export default CreateFlowBoard;
+CreateCourse.displayName = "CreateCourse";
+export default CreateCourse;

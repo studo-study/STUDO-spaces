@@ -18,6 +18,8 @@ import { useInView } from "react-intersection-observer";
 import { SuggestionImage } from "@studo/types";
 import InputSelect from "@/components/ui/design_system/select/InputSelect";
 import ComboBox from "@/components/ui/design_system/select/ComboBox";
+import CreateCourse from "@/components/ui/app/private/create-studoset/CreateCourse";
+import CourseAdd from "@/components/ui/app/private/course/layout/AddPopup";
 
 const LANGUAGES = [
   { code: "en", name: "English" },
@@ -399,6 +401,7 @@ export default function CreateStudosetForm() {
                     value: c.id,
                     label: c.title,
                   }))}
+                  createButton={<CreateCourse />}
                   value={flowcourseId}
                   onChange={(value) => {
                     setFlowcourseId(String(value));

@@ -4,7 +4,7 @@ import BreadCrumbs from "@/components/ui/app/private/board/BreadCrumbs";
 import { usePathname } from "@/i18n/routing";
 import { useFlowStore } from "@/store/slices/flow/flowStore";
 import { useFlowBoard } from "@/hooks/app/flow/useFlowData";
-import CreateFlowCourse from "@/components/ui/app/private/board/CreateFlowCourse";
+import CreateCourse from "@/components/ui/app/private/create-flowcourse/CreateCourse";
 
 const BoardHeader = () => {
   const data = useFlowBoard().data;
@@ -22,7 +22,7 @@ const BoardHeader = () => {
     return (
       <div className={"w-full"}>
         <FlowBoardOverviewHeader />
-        <CreateFlowCourse
+        <CreateCourse
           createOpen={createCourseOpen}
           setCreateOpen={setCreateCourseOpen}
           board_title={data.title}
@@ -40,7 +40,7 @@ const BoardHeader = () => {
         course_id={courseId}
         course_title={course?.title ?? ""}
       />
-      <CreateFlowCourse
+      <CreateCourse
         createOpen={createCourseOpen}
         setCreateOpen={setCreateCourseOpen}
         board_title={data.title}

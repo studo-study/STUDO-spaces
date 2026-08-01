@@ -5,17 +5,18 @@ import { useSpeedyContext } from "./SpeedyContext";
 const CIRCUMFERENCE = 2 * Math.PI * 90;
 
 const WordTimer = () => {
-  const { state, dispatch, currentCard, cards, gameStarted } =
-    useSpeedyContext();
+  const { state, dispatch, currentCard, gameStarted } = useSpeedyContext();
   const progressRef = useRef<SVGPathElement>(null);
 
+  const card = currentCard.card;
+  // termMode: you answer with the definition, so the term is shown (and vice versa).
+  const prompt = state.termMode ? card?.term : card?.definition;
+
   useEffect(() => {
-    if (state.phase !== "answering" || !gameStarted) return;
+    if (state.phase !== "answering" || !gameStarted || !card) return;
     if (!progressRef.current) return;
 
-    const length = state.termMode
-      ? currentCard.card.term.length
-      : currentCard.card.definition.length;
+    const length = (prompt ?? "").length;
     const duration = length * 1000 + 5000;
 
     const animation = progressRef.current.animate(
@@ -24,25 +25,22 @@ const WordTimer = () => {
     );
 
     animation.onfinish = () => {
-      const correctAnswer = state.termMode
-        ? currentCard.card.definition
-        : currentCard.card.term;
+      const correctAnswer = state.termMode ? card.definition : card.term;
       dispatch({
         type: "SUBMIT_ANSWER",
         input: "",
         correctAnswer,
-        card: currentCard.card,
-        cards,
+        card,
       });
     };
 
     return () => animation.cancel();
-  }, [currentCard, state.termMode, state.phase, gameStarted, dispatch, cards]);
+  }, [card, prompt, state.termMode, state.phase, gameStarted, dispatch]);
 
   return (
     <div className="relative flex items-center justify-center w-full h-fit">
-      <span className="absolute text-lg font-bold z-10">
-        {currentCard.card.term}
+      <span className="absolute text-lg font-bold z-10 text-center px-10">
+        {prompt}
       </span>
       <svg
         viewBox="0 0 200 200"
@@ -66,7 +64,7 @@ const WordTimer = () => {
           d="M 100 10 A 90 90 0 0 1 190 100 A 90 90 0 0 1 100 190 A 90 90 0 0 1 10 100 A 90 90 0 0 1 100 10"
           fill="none"
           strokeWidth="3"
-          className={`${state.wrongAttempt ? "stroke-rose-400" : "stroke-emerald-500"} rounded-3xl`}
+          className={`${state.phase === "incorrect" ? "stroke-rose-400" : "stroke-emerald-500"} rounded-3xl`}
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={0}
         />
