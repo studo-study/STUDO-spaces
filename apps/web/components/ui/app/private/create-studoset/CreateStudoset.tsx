@@ -19,7 +19,6 @@ import { SuggestionImage } from "@studo/types";
 import InputSelect from "@/components/ui/design_system/select/InputSelect";
 import ComboBox from "@/components/ui/design_system/select/ComboBox";
 import CreateCourse from "@/components/ui/app/private/create-studoset/CreateCourse";
-import CourseAdd from "@/components/ui/app/private/course/layout/AddPopup";
 
 const LANGUAGES = [
   { code: "en", name: "English" },

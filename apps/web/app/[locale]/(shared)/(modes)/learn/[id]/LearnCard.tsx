@@ -17,7 +17,7 @@ import { GrPowerReset } from "react-icons/gr";
 import { useUpdateSession } from "@/hooks/app/session/useUpdateSession";
 import { useQueryClient } from "@tanstack/react-query";
 import type { UpdateStudysession } from "@studo/types";
-import { ArrowRight, CircleQuestionMark, Eye } from "lucide-react";
+import { ArrowRight, CircleQuestionMark } from "lucide-react";
 
 const normalize = (input: string) =>
   input.trim().toLowerCase().replace(/\s+/g, " ");

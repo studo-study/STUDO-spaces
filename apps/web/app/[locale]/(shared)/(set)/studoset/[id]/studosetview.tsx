@@ -17,13 +17,7 @@ import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useRouter } from "next/navigation";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
 import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useInView } from "react-intersection-observer";

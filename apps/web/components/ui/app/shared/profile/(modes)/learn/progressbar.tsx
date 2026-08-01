@@ -20,7 +20,6 @@ export default function ProgressBar({
   queueIndex = 0,
   position = "right",
   subtle,
-  phase,
   errorMode = false,
 }: ProgressBarProps) {
   const index = queueMode ? queueIndex : cardIndex;
