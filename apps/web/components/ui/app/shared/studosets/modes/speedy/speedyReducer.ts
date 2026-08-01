@@ -37,7 +37,7 @@ export function makeInitialState(cards: Card[]): State {
   };
 }
 
-const normalize = (s: string) => s.trim().toLowerCase();
+const normalize = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ");
 
 export default function speedyReducer(state: State, action: Action): State {
   switch (action.type) {
