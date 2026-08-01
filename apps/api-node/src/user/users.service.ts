@@ -33,7 +33,6 @@ import {
   SessionCardResponse,
   SessionPinResponse,
   Studysession,
-  StudysessionResponse,
   StudysetResponse,
   TotalStats,
   UserListResponse,
