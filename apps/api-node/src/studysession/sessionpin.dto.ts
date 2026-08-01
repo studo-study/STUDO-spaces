@@ -59,6 +59,13 @@ export class updateSessionPinDTO {
   @IsString({ name: 'owner_id', maxLength: 64 })
   @IsOptional()
   ownerId?: string;
+
+  @ApiPropertyOptional({
+    example: 1,
+    description: 'of pin geflagged is in de sessie',
+  })
+  @IsBoolean()
+  flagged?: boolean;
 }
 
 export class SessionPinResponseDTO {
@@ -131,4 +138,11 @@ export class SessionPinResponseDTO {
   })
   @Expose()
   ownerId: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'of pin geflagged is in de sessie',
+  })
+  @Expose()
+  flagged: boolean;
 }

@@ -5,10 +5,16 @@ import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useTranslations } from "next-intl";
 import { MdEdit } from "react-icons/md";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
-import { CardResponse } from "@studo/types";
+import {
+  CardResponse,
+  SessionCardResponse,
+  StudysessionListResponse,
+  StudysessionResponse,
+} from "@studo/types";
 
 interface CardListProps {
   cards: CardResponse[] | undefined;
+  session: SessionCardResponse[];
   isOwner: boolean;
   setId: string;
   isPublic?: boolean;
@@ -16,6 +22,7 @@ interface CardListProps {
 
 export default function CardList({
   cards,
+  session,
   isOwner,
   setId,
   isPublic,
@@ -26,10 +33,10 @@ export default function CardList({
 
   // Sync server cards into store on mount / when set changes
   useEffect(() => {
-    setStudosetCards(cards ?? []);
-  }, [cards, setStudosetCards]);
+    setStudosetCards(cards ?? [], session ?? []);
+  }, [cards, session, setStudosetCards]);
 
-  const displayCards = studosetCards.length > 0 ? studosetCards : cards;
+  const displayCards = studosetCards.length > 0 ? studosetCards : [];
 
   return (
     <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 mb-8 sm:mb-10">
@@ -44,9 +51,9 @@ export default function CardList({
       )}
       {displayCards?.map((card, i) => (
         <CardItem
-          key={card.id}
+          key={card?.card?.id}
           index={i}
-          card={card}
+          fullCard={card}
           isOwner={isOwner}
           setId={setId}
           isPublic={isPublic}

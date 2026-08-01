@@ -73,26 +73,39 @@ export class StudysessionService {
     body: UpdateStudysessionDto,
   ): Promise<StudysessionResponseDto> {
     await this.updateStreak(userId);
-    const updated = await this.db
-      .update(studysessions)
-      .set({
-        startedAt: body.startedAt,
-        durationMin: body.durationMin,
-        endedAt: body.endedAt,
-        index: body.index,
-        accuracy: body.accuracy,
-        averageResponseTime: body.averageResponseTime,
-        longestFocusStreak: body.longestFocusStreak,
-        lastSeen: body.lastSeen,
-        lastStudied: body.lastStudied,
-      })
-      .where(
-        and(eq(studysessions.id, sessionId), eq(studysessions.userId, userId)),
-      )
-      .returning();
 
-    if (updated.length === 0) {
-      throw new NotFoundException('No user with this id exists');
+    // enkel de meegegeven session-velden updaten; een lege .set() gooit
+    // "No values to set" (bv. bij een flag-only PUT met alleen cards)
+    const sessionValues: Partial<typeof studysessions.$inferInsert> = {};
+    if (body.startedAt !== undefined) sessionValues.startedAt = body.startedAt;
+    if (body.durationMin !== undefined)
+      sessionValues.durationMin = body.durationMin;
+    if (body.endedAt !== undefined) sessionValues.endedAt = body.endedAt;
+    if (body.index !== undefined) sessionValues.index = body.index;
+    if (body.accuracy !== undefined) sessionValues.accuracy = body.accuracy;
+    if (body.averageResponseTime !== undefined)
+      sessionValues.averageResponseTime = body.averageResponseTime;
+    if (body.longestFocusStreak !== undefined)
+      sessionValues.longestFocusStreak = body.longestFocusStreak;
+    if (body.lastSeen !== undefined) sessionValues.lastSeen = body.lastSeen;
+    if (body.lastStudied !== undefined)
+      sessionValues.lastStudied = body.lastStudied;
+
+    if (Object.keys(sessionValues).length > 0) {
+      const updated = await this.db
+        .update(studysessions)
+        .set(sessionValues)
+        .where(
+          and(
+            eq(studysessions.id, sessionId),
+            eq(studysessions.userId, userId),
+          ),
+        )
+        .returning();
+
+      if (updated.length === 0) {
+        throw new NotFoundException('No user with this id exists');
+      }
     }
 
     if (body.cards && body.cards.length > 0) {
@@ -124,6 +137,7 @@ export class StudysessionService {
             inQueue: card.inQueue,
             mastered: card.mastered,
             timesRelearned: card.timesRelearned,
+            flagged: card.flagged,
           })
           .where(
             and(eq(sessioncards.id, card.id), eq(sessioncards.ownerId, userId)),

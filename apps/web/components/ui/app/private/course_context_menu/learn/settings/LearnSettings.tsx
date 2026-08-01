@@ -43,6 +43,7 @@ const LearnSettings = () => {
     learnSettings.setTwentyMode(false);
     learnSettings.setRevisionCount(2);
     learnSettings.setStrictnessLevel(2);
+    learnSettings.setFlaggedMode(false);
   };
 
   const isDifferent = learnSettings != DEFAULT_LEARN_SETTINGS;
@@ -83,6 +84,16 @@ const LearnSettings = () => {
           changeSection: "pomodoro",
           onchange: useLearnStore(
             (state) => state.learnSettings.setRevisionCount,
+          ),
+        },
+        {
+          label: "flagged_mode",
+          toggle: "toggle",
+          description: "flagged_description",
+          defaultToggle: learnSettings.flaggedMode,
+          changeSection: "flagged",
+          onchange: useLearnStore(
+            (state) => state.learnSettings.setFlaggedMode,
           ),
         },
       ],

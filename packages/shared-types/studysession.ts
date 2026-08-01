@@ -8,6 +8,7 @@ export interface UpdateSessionCard {
   timesRelearned?: number;
   sessionId?: string;
   ownerId?: string;
+  flagged?: boolean;
 }
 
 export interface SessionCardResponse {
@@ -21,6 +22,7 @@ export interface SessionCardResponse {
   cardId: string;
   sessionId: string;
   ownerId: string;
+  flagged: boolean;
 }
 
 export interface UpdateSessionPin {
@@ -31,6 +33,7 @@ export interface UpdateSessionPin {
   pinTotalViewcount?: number;
   sessionId?: string;
   ownerId?: string;
+  flagged?: boolean;
 }
 
 export interface SessionPinResponse {
@@ -44,6 +47,7 @@ export interface SessionPinResponse {
   pinId: string;
   sessionId: string;
   ownerId: string;
+  flagged: boolean;
 }
 
 export interface UpdateStudysession {

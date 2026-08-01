@@ -30,7 +30,7 @@ interface viewProps {
   id: string;
 }
 
-type Tab = "all" | "";
+type Tab = "all" | "flagged";
 type Filter = "learned" | "reviewed" | "not_learned" | "all";
 
 export default function StudosetView({ id }: viewProps) {
@@ -94,29 +94,42 @@ export default function StudosetView({ id }: viewProps) {
     : (data?.session?.cards ?? null);
 
   const filteredCards = useMemo(() => {
+    const flagged = tab === "flagged";
     if (filter === "not_learned") {
       return data?.cards?.filter((card) => {
         const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard ? sessionCard.cardViewcount === 0 : true;
+        return sessionCard
+          ? sessionCard.cardViewcount === 0 && flagged
+            ? sessionCard.flagged
+            : true
+          : true;
       });
     }
 
     if (filter === "reviewed") {
       return data?.cards?.filter((card) => {
         const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard ? sessionCard.cardViewcount === 1 : true;
+        return sessionCard
+          ? sessionCard.cardViewcount === 1 && flagged
+            ? sessionCard.flagged
+            : true
+          : true;
       });
     }
 
     if (filter === "learned") {
       return data?.cards?.filter((card) => {
         const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard ? sessionCard.cardViewcount >= 2 : true;
+        return sessionCard
+          ? sessionCard.cardViewcount >= 2 && flagged
+            ? sessionCard.flagged
+            : true
+          : true;
       });
     }
 
     return data?.cards;
-  }, [filter, data?.cards, sessionCards]);
+  }, [tab, filter, data?.cards, sessionCards]);
 
   const { not_studied, reviewed, studied } = useMemo(() => {
     if (!sessionCards) {
@@ -330,8 +343,8 @@ export default function StudosetView({ id }: viewProps) {
                   label: t("all"),
                 },
                 {
-                  key: "learned",
-                  label: t("s"),
+                  key: "flagged",
+                  label: t("flag"),
                 },
               ]}
               value={tab}
@@ -341,7 +354,12 @@ export default function StudosetView({ id }: viewProps) {
             />
           </div>
         </div>
-        <CardList cards={filteredCards} isOwner={isOwner} setId={id} />
+        <CardList
+          cards={filteredCards}
+          session={sessionCards ?? []}
+          isOwner={isOwner}
+          setId={id}
+        />
         <BottomCredits />
         <div ref={bottomRef} />
       </div>

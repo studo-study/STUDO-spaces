@@ -39,11 +39,11 @@ export default function TrackView() {
   console.log(result);
 
   return (
-    <div className=" mt-10 dark:text-white max-w-screen md:mt-0 min-h-screen h-fit flex flex-col items-center justify-baseline pt-20 sm:pt-25 md:pt-35 px-4 sm:px-6 lg:px-8">
-      <div className="flex min-h-screen  w-full sm:w-11/12 md:w-4/5 max-w-[900px] flex-col items-center gap-3 sm:gap-5">
+    <div className=" mt-10 dark:text-white w-full max-w-screen md:mt-0 h-full overflow-y-scroll scroll-hidden flex flex-col items-center justify-baseline px-4 sm:px-6 lg:px-8">
+      <div className="flex min-h-0 flex-1 w-full flex-col items-center gap-3 sm:gap-5">
         <div
           className={
-            "w-full pointer-events-none h-60 sm:h-72 md:h-80 relative overflow-hidden rounded-4xl"
+            "w-full pointer-events-none min-h-60 sm:min-h-72 md:min-h-80 relative overflow-hidden rounded-4xl"
           }
         >
           <div

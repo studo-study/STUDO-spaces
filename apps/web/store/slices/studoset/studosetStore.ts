@@ -1,12 +1,11 @@
 import { create } from "zustand";
-import { Card } from "@/types/types";
-import { CardResponse } from "@studo/types";
+import { Card, SessionCard } from "@/types/types";
 
 interface StudosetStore {
-  studosetCards: CardResponse[];
+  studosetCards: { card: Card; session: SessionCard | undefined }[];
   editingCardId: string | null;
   savingCardIds: string[];
-  setStudosetCards: (cards: Card[]) => void;
+  setStudosetCards: (cards: Card[], sessionCards: SessionCard[]) => void;
   updateCardOptimistic: (
     id: string,
     term: string,
@@ -14,6 +13,8 @@ interface StudosetStore {
     term_content_type?: "text" | "latex" | "code",
   ) => Card | undefined;
   rollbackCard: (card: Card) => void;
+  toggleFlagOptimistic: (cardId: string) => SessionCard | undefined;
+  restoreSession: (cardId: string, session: SessionCard) => void;
   setEditingCardId: (id: string | null) => void;
   addSavingCard: (id: string) => void;
   removeSavingCard: (id: string) => void;
@@ -24,18 +25,26 @@ export const useStudosetStore = create<StudosetStore>()((set, get) => ({
   editingCardId: null,
   savingCardIds: [],
 
-  setStudosetCards: (cards) => set({ studosetCards: cards }),
-
+  setStudosetCards: (cards, sessionCards) =>
+    set({
+      studosetCards: cards.map((card) => ({
+        card: card,
+        session: sessionCards.find((seshcard) => seshcard.cardId === card.id),
+      })),
+    }),
   updateCardOptimistic: (id, term, definition, term_content_type) => {
-    const old = get().studosetCards.find((c) => c.id === id);
+    const old = get().studosetCards.find((c) => c.card.id === id)?.card;
     set((state) => ({
       studosetCards: state.studosetCards.map((c) =>
-        c.id === id
+        c.card.id === id
           ? {
               ...c,
-              term,
-              definition,
-              ...(term_content_type !== undefined && { term_content_type }),
+              card: {
+                ...c.card,
+                term,
+                definition,
+                ...(term_content_type !== undefined && { term_content_type }),
+              },
             }
           : c,
       ),
@@ -46,7 +55,26 @@ export const useStudosetStore = create<StudosetStore>()((set, get) => ({
   rollbackCard: (card) =>
     set((state) => ({
       studosetCards: state.studosetCards.map((c) =>
-        c.id === card.id ? card : c,
+        c.card.id === card.id ? { ...c, card } : c,
+      ),
+    })),
+
+  toggleFlagOptimistic: (cardId) => {
+    const old = get().studosetCards.find((c) => c.card.id === cardId)?.session;
+    set((state) => ({
+      studosetCards: state.studosetCards.map((c) =>
+        c.card.id === cardId && c.session
+          ? { ...c, session: { ...c.session, flagged: !c.session.flagged } }
+          : c,
+      ),
+    }));
+    return old;
+  },
+
+  restoreSession: (cardId, session) =>
+    set((state) => ({
+      studosetCards: state.studosetCards.map((c) =>
+        c.card.id === cardId ? { ...c, session } : c,
       ),
     })),
 

@@ -1418,11 +1418,17 @@
     "added_to": "Toegevoegd aan",
     "rights": "Alle rechten voorbehouden.",
     "edit": "bewerken",
+    "save": "opslaan",
     "all": "Alle",
+    "flag": "Gemarkeerd",
     "ns": "Niet geleerd",
     "edit_set": "bewerk set",
     "set_private": "Studoset is privé",
-    "cant_load": "Set kan niet geladen worden"
+    "cant_load": "Set kan niet geladen worden",
+    "open_course": "Open in cursus",
+    "flag_card": "Markeer kaart",
+    "unflag_card": "Demarkeer kaart",
+    "flag_failed": "Markeren mislukt"
   },
   "trackview": {
     "tracks": "Tracks",
@@ -1678,7 +1684,9 @@
     "reset_progress": "Voortgang resetten",
     "reset_settings": "default instellingen",
     "type_description": "Kies hoe op welke manier je wilt antwoorden",
-    "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt"
+    "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt",
+    "flagged_mode": "Gemarkeerde kaarten",
+    "flagged_description": "Leer alleen je gemarkeerde kaarten"
   },
   "learn": {
     "enter_continue": "*druk op enter om verder te gaan",

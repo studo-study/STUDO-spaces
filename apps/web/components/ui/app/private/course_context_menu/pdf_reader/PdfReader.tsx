@@ -1,18 +1,22 @@
 "use client";
-import DoubleButton from "@/components/ui/design_system/button/DoubleButton";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import DoubleButton from "@/components/ui/design_system/button/ButtonRow";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
 import ToggleAbleSearchbar from "@/components/ui/design_system/search/ToggleAbleSearchbar";
 import PdfIndex from "@/components/ui/app/private/course_context_menu/pdf_reader/PdfIndex";
 import { useRef } from "react";
 import PdfCanvas from "@/components/ui/app/private/course_context_menu/pdf_reader/PdfCanvas";
 import { mockDocument } from "@/components/ui/app/private/course_context_menu/pdf_reader/mock/mock";
 import { usePdfReader } from "@/store/coursecontextmenu/PdfStore";
+import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
+import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
 
 const PdfReader: React.FC = () => {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const pdf = mockDocument;
   const currentPage = usePdfReader((state) => state.currentPage);
   const pageCount = usePdfReader((state) => state.pageCount);
+  const setMenuInfo = useSideMenu((state) => state.setMenuInfo);
+
   return (
     <div className={"w-full min-h-0 flex flex-col bg-studogrey/5 flex-1"}>
       <div className={"flex flex-row items-center justify-between p-5 gap-3"}>
@@ -28,9 +32,19 @@ const PdfReader: React.FC = () => {
         </span>
         <div>
           <ToggleAbleSearchbar />
-          <DoubleButton
-            buttonIconLeft={<ChevronUp />}
-            buttonIconRight={<ChevronDown />}
+          <ButtonRow
+            buttons={[
+              {
+                icon: <ChevronUp size={15} />,
+              },
+              {
+                icon: <ChevronDown size={15} />,
+              },
+              {
+                icon: <X size={15} />,
+                onClick: () => setMenuInfo({ isOpen: false, origin: null }),
+              },
+            ]}
           />
         </div>
       </div>
