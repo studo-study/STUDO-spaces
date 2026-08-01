@@ -2,11 +2,11 @@
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { Plus } from "lucide-react";
 import CreateCoursePopup from "@/components/ui/app/private/create-flowcourse/CreateCourse";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { useTranslations } from "next-intl";
 
-const CreateCourse: React.FC = () => {
+const CreateCourse: FC = () => {
   const t = useTranslations("createstudoset");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
