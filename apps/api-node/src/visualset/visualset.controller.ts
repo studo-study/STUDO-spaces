@@ -113,9 +113,6 @@ export class VisualsetController {
   }
 
   // CREATE VISUALSET -----------------------------------------------
-
-  // @ts-ignore
-  // @ts-ignore
   @ApiOperation({ summary: 'Maak een nieuwe ((visualset)) aan met images.' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
