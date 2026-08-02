@@ -26,6 +26,7 @@ import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
+import classNames from "@/utils/classnames";
 
 interface viewProps {
   id: string;
@@ -278,9 +279,12 @@ export default function StudosetView({ id }: viewProps) {
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
           <div
             onClick={() => toggleTab("not_learned")}
-            className={
-              "w-full h-full cursor-pointer p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
-            }
+            className={classNames(
+              filter !== "all" && filter !== "not_learned"
+                ? "opacity-50"
+                : null,
+              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+            )}
           >
             <span className={"font-bold"}>{t("not_learned")}</span>
             <Progress
@@ -291,18 +295,20 @@ export default function StudosetView({ id }: viewProps) {
           </div>
           <div
             onClick={() => toggleTab("reviewed")}
-            className={
-              "w-full h-full p-5 cursor-pointer border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
-            }
+            className={classNames(
+              filter !== "all" && filter !== "reviewed" ? "opacity-50" : null,
+              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+            )}
           >
             <span className={"font-bold"}>{t("reviewed")}</span>
             <Progress length={totalCards ?? 0} progress={reviewed} reverse />
           </div>
           <div
             onClick={() => toggleTab("learned")}
-            className={
-              "w-full h-full p-5 cursor-pointer border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
-            }
+            className={classNames(
+              filter !== "all" && filter !== "learned" ? "opacity-50" : null,
+              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+            )}
           >
             <span className={"font-bold"}>{t("studied")}</span>
             <Progress length={totalCards ?? 0} progress={studied} />

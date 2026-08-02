@@ -100,6 +100,7 @@ export default function PublicStudosetView({ id }: viewProps) {
         </div>
         <CardList
           isPublic
+          session={[]}
           cards={data?.cards ?? []}
           isOwner={false}
           setId={id}

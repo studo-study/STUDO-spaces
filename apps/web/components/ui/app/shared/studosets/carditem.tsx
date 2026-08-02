@@ -31,7 +31,7 @@ export default function CardItem({
   fullCard,
   isOwner = false,
   setId,
-  isPublic,
+  isPublic = false,
 }: CarditemProps) {
   const {
     studosetCards,
@@ -51,9 +51,13 @@ export default function CardItem({
   const sessionCard = fullCard.session!;
   const { updateCards } = useUpdateCards(setId ?? "");
 
-  const updateSession = useUpdateSession(sessionCard.sessionId, setId ?? "", {
-    invalidateOnSettled: false,
-  });
+  const updateSession = useUpdateSession(
+    sessionCard?.sessionId ?? "",
+    setId ?? "",
+    {
+      invalidateOnSettled: false,
+    },
+  );
   const blurTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const userId = useUser().user?.id;
   const currentEntry = studosetCards.find((c) => c.card.id === card.id);
@@ -207,37 +211,43 @@ export default function CardItem({
       <div className="w-full h-10 bg-studogrey/30 flex pr-2 px-5 py-2 items-center justify-between border-b border-studoborder/30 shrink-0">
         <span className="text-sm">{index + 1}</span>
         <div className={"w-fit flex flex-row items-center gap-2"}>
-          <BaseTooltip content={t("open_course")}>
-            <button
-              type="button"
-              className="rounded-full hover:bg-studogrey px-1 py-1 cursor-pointer transition-all duration-150 flex items-center justify-center w-6 h-6"
-              onClick={lookUpCourse}
-              disabled={isSaving}
-              aria-label={"check in course"}
-            >
-              <BookOpen size={14} />
-            </button>
-          </BaseTooltip>
-          <BaseTooltip
-            content={currentSession.flagged ? t("unflag_card") : t("flag_card")}
-          >
-            <button
-              type="button"
-              className="rounded-full hover:bg-studogrey px-1 py-1 cursor-pointer transition-all duration-150 flex items-center justify-center w-6 h-6"
-              onClick={flagCard}
-              disabled={isSaving}
-              aria-label={"flag"}
-            >
-              <Flag
-                size={14}
-                className={classNames(
-                  currentSession.flagged
-                    ? "fill-studodarkblue dark:fill-white"
-                    : "",
-                )}
-              />
-            </button>
-          </BaseTooltip>
+          {!isPublic && (
+            <>
+              <BaseTooltip content={t("open_course")}>
+                <button
+                  type="button"
+                  className="rounded-full hover:bg-studogrey px-1 py-1 cursor-pointer transition-all duration-150 flex items-center justify-center w-6 h-6"
+                  onClick={lookUpCourse}
+                  disabled={isSaving}
+                  aria-label={"check in course"}
+                >
+                  <BookOpen size={14} />
+                </button>
+              </BaseTooltip>
+              <BaseTooltip
+                content={
+                  currentSession.flagged ? t("unflag_card") : t("flag_card")
+                }
+              >
+                <button
+                  type="button"
+                  className="rounded-full hover:bg-studogrey px-1 py-1 cursor-pointer transition-all duration-150 flex items-center justify-center w-6 h-6"
+                  onClick={flagCard}
+                  disabled={isSaving}
+                  aria-label={"flag"}
+                >
+                  <Flag
+                    size={14}
+                    className={classNames(
+                      currentSession.flagged
+                        ? "fill-studodarkblue dark:fill-white"
+                        : "",
+                    )}
+                  />
+                </button>
+              </BaseTooltip>
+            </>
+          )}
 
           {isOwner && (
             <BaseTooltip content={isEditing ? t("save") : t("edit")}>

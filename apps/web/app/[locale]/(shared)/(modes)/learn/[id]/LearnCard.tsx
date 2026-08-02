@@ -18,6 +18,8 @@ import { useUpdateSession } from "@/hooks/app/session/useUpdateSession";
 import { useQueryClient } from "@tanstack/react-query";
 import type { UpdateStudysession } from "@studo/types";
 import { ArrowRight, CircleQuestionMark } from "lucide-react";
+import HintCanvas from "@/app/[locale]/(shared)/(modes)/learn/[id]/HintCanvas";
+import classNames from "@/utils/classnames";
 
 const normalize = (input: string) =>
   input.trim().toLowerCase().replace(/\s+/g, " ");
@@ -48,6 +50,7 @@ const LearnCard = () => {
   const [value, setValue] = useState("");
   const [phase, setPhase] = useState<Phase>("input");
   const [wasCorrect, setWasCorrect] = useState(false);
+  const [showHint, setShowHint] = useState<boolean>(false);
   // herhaal-beurt: na een fout antwoord de kaart direct nog eens intypen
   const [retry, setRetry] = useState(false);
   // queue van kaart-indices die nog gemasterd moeten worden; head = huidige kaart
@@ -169,7 +172,7 @@ const LearnCard = () => {
     return {
       img_url: card?.suggestionImage?.displayUrl,
       displayWord:
-        settings.answerWith === "term" ? card?.definition : card?.term,
+        settings.answerWith === "term" ? card?.definition : (card?.term ?? ""),
       corrector: settings.answerWith === "term" ? card?.term : card?.definition,
     };
   }, [head, cards, settings.answerWith]);
@@ -276,6 +279,10 @@ const LearnCard = () => {
     if (correct) advanceTimer.current = setTimeout(() => next(true), 700);
   };
 
+  const handleHint = () => {
+    setShowHint(true);
+    setTimeout(() => setShowHint(false), 5000);
+  };
   const next = (correctArg?: boolean) => {
     if (advanceTimer.current) {
       clearTimeout(advanceTimer.current);
@@ -285,6 +292,7 @@ const LearnCard = () => {
     setValue("");
     setWasCorrect(false);
     setRetry(false);
+    setShowHint(false);
     if (!cards) return;
 
     // --- drill-pass: elke errorqueue-kaart één keer ---
@@ -357,6 +365,25 @@ const LearnCard = () => {
     next();
   };
 
+  // Enter werkt globaal in feedback (ook als focus op een knop staat, bv. na
+  // klik op "next"). advance via ref → altijd de laatste closure.
+  const advanceRef = useRef(advance);
+  useEffect(() => {
+    advanceRef.current = advance;
+  });
+  useEffect(() => {
+    if (phase !== "feedback") return;
+    const mountedAt = performance.now();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Enter" || e.repeat) return;
+      // negeer de Enter die 't feedback opende
+      if (performance.now() - mountedAt < 150) return;
+      advanceRef.current();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [phase]);
+
   const restart = () => {
     if (!cards) return;
     viewsRef.current = {};
@@ -376,6 +403,7 @@ const LearnCard = () => {
     setWasCorrect(false);
     setRetry(false);
     setPhase("input");
+    setShowHint(false);
   };
 
   if (!cards || !initialized) {
@@ -510,7 +538,7 @@ const LearnCard = () => {
           <>
             <div
               className={
-                "min-w-0 min-h-0 pt-10 flex-1 flex flex-col items-center justify-center gap-4"
+                "min-w-0 min-h-0 px-10 pt-10 flex-1 flex flex-col items-center justify-center gap-4"
               }
             >
               {(errorMode || retry) && (
@@ -538,13 +566,29 @@ const LearnCard = () => {
                       />
                     </div>
                   ) : (
-                    <span className={"text-3xl font-semibold font-georgia"}>
+                    <span
+                      className={classNames(
+                        "w-full text-3xl text-center font-semibold font-georgia",
+                        displayWord && displayWord.length > 30 && "text-2xl",
+                        displayWord && displayWord.length > 50 && "text-xl",
+                        displayWord && displayWord.length > 85 && "text-lg",
+                        displayWord && displayWord.length > 120 && "text-base",
+                      )}
+                    >
                       {displayWord}
                     </span>
                   )}
                 </div>
               ) : (
-                <span className={"text-3xl font-semibold font-georgia"}>
+                <span
+                  className={classNames(
+                    "w-full text-3xl text-center font-semibold font-georgia",
+                    displayWord && displayWord.length > 30 && "text-2xl",
+                    displayWord && displayWord.length > 50 && "text-xl",
+                    displayWord && displayWord.length > 85 && "text-lg",
+                    displayWord && displayWord.length > 120 && "text-base",
+                  )}
+                >
                   {displayWord}
                 </span>
               )}
@@ -566,6 +610,9 @@ const LearnCard = () => {
                 }
               >
                 <div>
+                  {phase === "input" && showHint && (
+                    <HintCanvas currentCard={corrector ?? ""} />
+                  )}
                   {phase === "feedback" && !wasCorrect && (
                     <span
                       className={"text-sm dark:text-studogrey text-black/30"}
@@ -581,6 +628,7 @@ const LearnCard = () => {
                     variant={"outline_link"}
                     className={"truncate"}
                     iconLeft={<CircleQuestionMark size={15} />}
+                    onClick={handleHint}
                   >
                     {t("hint")}
                   </BaseButton>
@@ -589,6 +637,10 @@ const LearnCard = () => {
                     variant={"outline_link"}
                     className={"truncate"}
                     iconLeft={<ArrowRight size={15} />}
+                    onClick={() => {
+                      setValue("");
+                      submit();
+                    }}
                   >
                     {t("next")}
                   </BaseButton>
@@ -615,8 +667,9 @@ const LearnCard = () => {
                   onChange={(e) => setValue(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key !== "Enter") return;
+                    // feedback → advance wordt globaal afgehandeld (werkt ook als
+                    // de focus niet op de input staat)
                     if (phase === "input") submit();
-                    else advance();
                   }}
                 />
               </div>

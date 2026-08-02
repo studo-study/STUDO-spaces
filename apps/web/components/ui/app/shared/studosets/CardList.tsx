@@ -25,7 +25,6 @@ export default function CardList({
   const t = useTranslations("studoset");
   const setStudosetCards = useStudosetStore((s) => s.setStudosetCards);
   const studosetCards = useStudosetStore((s) => s.studosetCards);
-
   // Sync server cards into store on mount / when set changes
   useEffect(() => {
     setStudosetCards(cards ?? [], session ?? []);
