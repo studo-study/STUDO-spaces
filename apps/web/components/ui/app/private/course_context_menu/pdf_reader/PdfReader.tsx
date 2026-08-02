@@ -1,5 +1,4 @@
 "use client";
-import DoubleButton from "@/components/ui/design_system/button/ButtonRow";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import ToggleAbleSearchbar from "@/components/ui/design_system/search/ToggleAbleSearchbar";
 import PdfIndex from "@/components/ui/app/private/course_context_menu/pdf_reader/PdfIndex";

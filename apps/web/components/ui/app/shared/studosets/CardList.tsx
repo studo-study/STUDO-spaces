@@ -5,12 +5,7 @@ import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useTranslations } from "next-intl";
 import { MdEdit } from "react-icons/md";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
-import {
-  CardResponse,
-  SessionCardResponse,
-  StudysessionListResponse,
-  StudysessionResponse,
-} from "@studo/types";
+import { CardResponse, SessionCardResponse } from "@studo/types";
 
 interface CardListProps {
   cards: CardResponse[] | undefined;
