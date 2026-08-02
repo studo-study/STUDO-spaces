@@ -432,6 +432,7 @@ export class VisualsetService {
             pinId: pin.id,
             sessionId: ssid,
             ownerId: userId,
+            flagged: false,
           })
           .returning();
         return created;

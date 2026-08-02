@@ -1524,7 +1524,16 @@
     "continue": "continue",
     "answer_with": "answer with",
     "definition": "Definition",
-    "term": "Term"
+    "term": "Term",
+    "type_definition": "type definition",
+    "type_term": "type term",
+    "round": "Round",
+    "restart": "restart",
+    "finished_title": "Set completed!",
+    "finished_expl": "Well done — here's your result.",
+    "stat_rounds": "Rounds",
+    "stat_time": "Time",
+    "stat_accuracy": "Accuracy"
   },
   "profile": {
     "ss": "Studosets",

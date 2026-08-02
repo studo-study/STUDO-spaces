@@ -40,6 +40,7 @@ import * as types from '@studo/types';
 import { SetLikeResponseDto } from '../studyset/setlike.dto';
 import * as types_1 from '@studo/types';
 import { StudysessionResponseDto } from '../studysession/studysession.dto';
+import { StudysessionResponse } from '@studo/types';
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {
@@ -112,7 +113,6 @@ export class VisualsetController {
   }
 
   // CREATE VISUALSET -----------------------------------------------
-
   @ApiOperation({ summary: 'Maak een nieuwe ((visualset)) aan met images.' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -301,7 +301,7 @@ export class VisualsetController {
   async createSession(
     @Param('set_id', ParseUUIDPipe) set_id: string,
     @Request() req: AuthenticatedRequest,
-  ): Promise<types_1.StudysessionResponse> {
+  ): Promise<StudysessionResponse> {
     const user_id = req.user.id;
     return this.VsService.createSession(user_id, set_id);
   }

@@ -1,15 +1,21 @@
 "use client";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useReducer,
+  useRef,
   useState,
   type Dispatch,
   type ReactNode,
 } from "react";
-import learnReducer, { type Action, type State } from "./speedyReducer";
+import speedyReducer, {
+  makeInitialState,
+  type Action,
+  type State,
+} from "./speedyReducer";
 import type { Card } from "@/types/types";
 import type { SessionCardResponse, StudysessionResponse } from "@studo/types";
 import { useUpdateSession } from "@/hooks/app/session/useUpdateSession";
@@ -17,10 +23,16 @@ import { useUpdateSession } from "@/hooks/app/session/useUpdateSession";
 interface SpeedyContextValue {
   state: State;
   dispatch: Dispatch<Action>;
-  currentCard: { card: Card; sessionCard: SessionCardResponse };
+  currentCard: { card: Card; sessionCard: SessionCardResponse | undefined };
   cards: Card[];
   gameStarted: boolean;
   setGameStarted: (v: boolean) => void;
+  startGame: () => void;
+  pause: () => void;
+  resume: () => void;
+  restart: () => void;
+  elapsedMs: number;
+  accuracy: number;
 }
 
 const SpeedyContext = createContext<SpeedyContextValue>(null!);
@@ -42,51 +54,99 @@ export function SpeedyProvider({
   setId,
   children,
 }: SpeedyProviderProps) {
-  const startIndex = session.index;
-
-  const initialCounts: Record<string, number> = {};
-  sessionCards.forEach((sc) => {
-    if (sc.mastered) initialCounts[sc.cardId] = 2;
-  });
-
-  const [state, dispatch] = useReducer(learnReducer, {
-    index: startIndex >= cards.length ? 0 : startIndex,
-    queue: [],
-    queueIndex: 0,
-    queueMode: false,
-    phase: startIndex >= cards.length ? "showProgress" : "answering",
-    termMode: true,
-    progressMode: startIndex >= cards.length,
-    correctCounts: initialCounts,
-    wrongAttempt: false,
-  });
-
-  const currentCard = useMemo(() => {
-    const safeIndex = state.index < cards.length ? state.index : 0;
-    return {
-      card: cards[safeIndex],
-      sessionCard: sessionCards[safeIndex],
-    };
-  }, [cards, sessionCards, state.index]);
-
+  const [state, dispatch] = useReducer(speedyReducer, cards, makeInitialState);
   const [gameStarted, setGameStarted] = useState(false);
+
   const updateSession = useUpdateSession(session.id, setId);
 
+  // Map card id -> session card so lookups keep working after the deck reorders.
+  const sessionCardByCardId = useMemo(() => {
+    const map: Record<string, SessionCardResponse> = {};
+    sessionCards.forEach((sc) => {
+      map[sc.cardId] = sc;
+    });
+    return map;
+  }, [sessionCards]);
+
+  const currentCard = useMemo(() => {
+    const card = state.deck[state.deckIndex];
+    return {
+      card,
+      sessionCard: card ? sessionCardByCardId[card.id] : undefined,
+    };
+  }, [state.deck, state.deckIndex, sessionCardByCardId]);
+
+  const accuracy =
+    state.totalAnswers > 0
+      ? Math.round((state.correctAnswers / state.totalAnswers) * 100)
+      : 0;
+
+  // Timer for the total session duration. elapsedMs is only ever written from
+  // event handlers or the interval callback (never synchronously in an effect,
+  // and never via Date.now() during render).
+  const startTimeRef = useRef<number>(0);
+  const [elapsedMs, setElapsedMs] = useState(0);
+
+  const startGame = useCallback(() => {
+    startTimeRef.current = Date.now();
+    setElapsedMs(0);
+    setGameStarted(true);
+  }, []);
+
+  const pause = useCallback(() => {
+    setElapsedMs(Date.now() - startTimeRef.current);
+    setGameStarted(false);
+  }, []);
+
+  const resume = useCallback(() => {
+    // Offset the start time so paused time is not counted.
+    startTimeRef.current = Date.now() - elapsedMs;
+    setGameStarted(true);
+  }, [elapsedMs]);
+
+  const restart = useCallback(() => {
+    dispatch({ type: "RESET", cards });
+    startTimeRef.current = Date.now();
+    setElapsedMs(0);
+    setGameStarted(true);
+  }, [cards]);
+
+  // Tick the elapsed time while playing; setState in a callback is allowed.
+  useEffect(() => {
+    if (!gameStarted || state.phase === "finished") return;
+    const interval = setInterval(
+      () => setElapsedMs(Date.now() - startTimeRef.current),
+      1000,
+    );
+    return () => clearInterval(interval);
+  }, [gameStarted, state.phase]);
+
+  // Persist per-card progress on each result.
   useEffect(() => {
     if (state.phase !== "correct" && state.phase !== "incorrect") return;
+    const sessionCard = currentCard.sessionCard;
+    if (!sessionCard) return;
 
-    const viewcount = state.correctCounts[currentCard.card.id] ?? 0;
-
+    const mastered = state.phase === "correct";
     updateSession.mutate({
       userId: session.userId,
       cards: [
         {
-          id: currentCard.sessionCard.id,
-          cardViewcount: viewcount,
-          mastered: viewcount >= 2,
-          inQueue: state.phase === "incorrect",
+          id: sessionCard.id,
+          mastered,
+          inQueue: !mastered,
         },
       ],
+    });
+  }, [state.phase]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Persist the final result once the set is finished.
+  useEffect(() => {
+    if (state.phase !== "finished") return;
+    updateSession.mutate({
+      userId: session.userId,
+      accuracy,
+      endedAt: new Date().toISOString(),
     });
   }, [state.phase]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -99,6 +159,12 @@ export function SpeedyProvider({
         cards,
         gameStarted,
         setGameStarted,
+        startGame,
+        pause,
+        resume,
+        restart,
+        elapsedMs,
+        accuracy,
       }}
     >
       {children}

@@ -461,6 +461,7 @@ export interface SessionCard {
   cardId: string;
   sessionId: string;
   ownerId: string;
+  flagged: boolean;
 }
 
 export interface SessionPin {
@@ -474,6 +475,7 @@ export interface SessionPin {
   pinId: string;
   sessionId: string;
   ownerId: string;
+  flagged: boolean;
 }
 
 // ============================================================

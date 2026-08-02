@@ -176,6 +176,13 @@
       "when": 1784219470109,
       "tag": "0024_hard_dracula",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1785607794721,
+      "tag": "0025_bumpy_blue_blade",
+      "breakpoints": true
     }
   ]
 }

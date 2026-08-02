@@ -69,6 +69,13 @@ export class updateSessionCardDTO {
   })
   @IsString({ maxLength: 64, optional: true })
   ownerId?: string;
+
+  @ApiPropertyOptional({
+    example: 1,
+    description: 'of card geflagged is in de sessie',
+  })
+  @IsBoolean()
+  flagged?: boolean;
 }
 
 export class SessionCardResponseDTO {
@@ -141,4 +148,11 @@ export class SessionCardResponseDTO {
   })
   @Expose()
   ownerId: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'of card geflagged is in de sessie',
+  })
+  @Expose()
+  flagged: boolean;
 }

@@ -996,7 +996,8 @@
     "delete_draft": "Verwijder Draft",
     "select_folder": "Kies een map",
     "select_language_term": "Kies een taal voor termen",
-    "select_language_def": "Kies een taal voor definities"
+    "select_language_def": "Kies een taal voor definities",
+    "create_course": "Creëer vak"
   },
   "editstudoset": {
     "edit": "Bewerk Studoset",
@@ -1417,11 +1418,18 @@
     "added_to": "Toegevoegd aan",
     "rights": "Alle rechten voorbehouden.",
     "edit": "bewerken",
+    "save": "opslaan",
     "all": "Alle",
+    "flag": "Gemarkeerd",
     "ns": "Niet geleerd",
     "edit_set": "bewerk set",
     "set_private": "Studoset is privé",
-    "cant_load": "Set kan niet geladen worden"
+    "cant_load": "Set kan niet geladen worden",
+    "open_course": "Open in cursus",
+    "flag_card": "Markeer kaart",
+    "unflag_card": "Demarkeer kaart",
+    "flag_failed": "Markeren mislukt",
+    "no_cards": "Geen kaarten"
   },
   "trackview": {
     "tracks": "Tracks",
@@ -1560,7 +1568,16 @@
     "continue": "ga verder",
     "answer_with": "antwoord met",
     "definition": "Definitie",
-    "term": "Term"
+    "term": "Term",
+    "type_definition": "typ definitie",
+    "type_term": "typ term",
+    "round": "Ronde",
+    "restart": "opnieuw",
+    "finished_title": "Set voltooid!",
+    "finished_expl": "Goed gedaan — hier is je resultaat.",
+    "stat_rounds": "Rondes",
+    "stat_time": "Tijd",
+    "stat_accuracy": "Nauwkeurigheid"
   },
   "profile": {
     "ss": "Studosets",
@@ -1668,7 +1685,9 @@
     "reset_progress": "Voortgang resetten",
     "reset_settings": "default instellingen",
     "type_description": "Kies hoe op welke manier je wilt antwoorden",
-    "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt"
+    "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt",
+    "flagged_mode": "Gemarkeerde kaarten",
+    "flagged_description": "Leer alleen je gemarkeerde kaarten"
   },
   "learn": {
     "enter_continue": "*druk op enter om verder te gaan",

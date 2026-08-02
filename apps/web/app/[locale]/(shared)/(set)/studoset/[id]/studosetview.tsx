@@ -17,13 +17,7 @@ import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useRouter } from "next/navigation";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
 import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useInView } from "react-intersection-observer";
@@ -31,12 +25,14 @@ import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBott
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
+import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
+import classNames from "@/utils/classnames";
 
 interface viewProps {
   id: string;
 }
 
-type Tab = "all" | "";
+type Tab = "all" | "flagged";
 type Filter = "learned" | "reviewed" | "not_learned" | "all";
 
 export default function StudosetView({ id }: viewProps) {
@@ -51,6 +47,7 @@ export default function StudosetView({ id }: viewProps) {
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const learnSettings = useLearnStore((state) => state.learnSettings);
 
   const jumpToTop = () => {
     topRef.current?.scrollIntoView({
@@ -100,29 +97,20 @@ export default function StudosetView({ id }: viewProps) {
     : (data?.session?.cards ?? null);
 
   const filteredCards = useMemo(() => {
-    if (filter === "not_learned") {
-      return data?.cards?.filter((card) => {
-        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard ? sessionCard.cardViewcount === 0 : true;
-      });
-    }
+    const get = (id: string) => sessionCards?.find((s) => s.cardId === id);
+    let cards = data?.cards ?? [];
 
-    if (filter === "reviewed") {
-      return data?.cards?.filter((card) => {
-        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard ? sessionCard.cardViewcount === 1 : true;
-      });
-    }
+    if (filter === "not_learned")
+      cards = cards.filter((c) => (get(c.id)?.cardViewcount ?? 0) === 0);
+    else if (filter === "reviewed")
+      cards = cards.filter((c) => get(c.id)?.cardViewcount === 1);
+    else if (filter === "learned")
+      cards = cards.filter((c) => (get(c.id)?.cardViewcount ?? 0) >= 2);
 
-    if (filter === "learned") {
-      return data?.cards?.filter((card) => {
-        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard ? sessionCard.cardViewcount >= 2 : true;
-      });
-    }
+    if (tab === "flagged") cards = cards.filter((c) => get(c.id)?.flagged);
 
-    return data?.cards;
-  }, [filter, data?.cards, sessionCards]);
+    return cards;
+  }, [tab, filter, data?.cards, sessionCards]);
 
   const { not_studied, reviewed, studied } = useMemo(() => {
     if (!sessionCards) {
@@ -291,9 +279,12 @@ export default function StudosetView({ id }: viewProps) {
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
           <div
             onClick={() => toggleTab("not_learned")}
-            className={
-              "w-full h-full cursor-pointer p-5 border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
-            }
+            className={classNames(
+              filter !== "all" && filter !== "not_learned"
+                ? "opacity-50"
+                : null,
+              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+            )}
           >
             <span className={"font-bold"}>{t("not_learned")}</span>
             <Progress
@@ -304,18 +295,20 @@ export default function StudosetView({ id }: viewProps) {
           </div>
           <div
             onClick={() => toggleTab("reviewed")}
-            className={
-              "w-full h-full p-5 cursor-pointer border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
-            }
+            className={classNames(
+              filter !== "all" && filter !== "reviewed" ? "opacity-50" : null,
+              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+            )}
           >
             <span className={"font-bold"}>{t("reviewed")}</span>
             <Progress length={totalCards ?? 0} progress={reviewed} reverse />
           </div>
           <div
             onClick={() => toggleTab("learned")}
-            className={
-              "w-full h-full p-5 cursor-pointer border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2"
-            }
+            className={classNames(
+              filter !== "all" && filter !== "learned" ? "opacity-50" : null,
+              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+            )}
           >
             <span className={"font-bold"}>{t("studied")}</span>
             <Progress length={totalCards ?? 0} progress={studied} />
@@ -336,18 +329,24 @@ export default function StudosetView({ id }: viewProps) {
                   label: t("all"),
                 },
                 {
-                  key: "learned",
-                  label: t("s"),
+                  key: "flagged",
+                  label: t("flag"),
                 },
               ]}
               value={tab}
               onChange={(key) => {
                 setTab(key as Tab);
+                learnSettings.setFlaggedMode(key === "flagged");
               }}
             />
           </div>
         </div>
-        <CardList cards={filteredCards} isOwner={isOwner} setId={id} />
+        <CardList
+          cards={filteredCards}
+          session={sessionCards ?? []}
+          isOwner={isOwner}
+          setId={id}
+        />
         <BottomCredits />
         <div ref={bottomRef} />
       </div>

@@ -5,10 +5,11 @@ import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useTranslations } from "next-intl";
 import { MdEdit } from "react-icons/md";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
-import { CardResponse } from "@studo/types";
+import { CardResponse, SessionCardResponse } from "@studo/types";
 
 interface CardListProps {
   cards: CardResponse[] | undefined;
+  session: SessionCardResponse[];
   isOwner: boolean;
   setId: string;
   isPublic?: boolean;
@@ -16,6 +17,7 @@ interface CardListProps {
 
 export default function CardList({
   cards,
+  session,
   isOwner,
   setId,
   isPublic,
@@ -23,30 +25,29 @@ export default function CardList({
   const t = useTranslations("studoset");
   const setStudosetCards = useStudosetStore((s) => s.setStudosetCards);
   const studosetCards = useStudosetStore((s) => s.studosetCards);
-
   // Sync server cards into store on mount / when set changes
   useEffect(() => {
-    setStudosetCards(cards ?? []);
-  }, [cards, setStudosetCards]);
+    setStudosetCards(cards ?? [], session ?? []);
+  }, [cards, session, setStudosetCards]);
 
-  const displayCards = studosetCards.length > 0 ? studosetCards : cards;
+  const displayCards = studosetCards.length > 0 ? studosetCards : [];
 
   return (
     <div className="w-full h-fit flex flex-col gap-3 sm:gap-4 md:gap-5 mb-8 sm:mb-10">
       {cards?.length === 0 && (
         <div
           className={
-            "w-full min-h-0 flex-1 flex justify-center items-center dark:text-studogrey text-black/20 font-medium"
+            "w-full min-h-50 h-50 max-h-50 flex justify-center items-center dark:text-studogrey text-black/20 font-medium"
           }
         >
-          <span>No cards</span>
+          <span>{t("no_cards")}</span>
         </div>
       )}
       {displayCards?.map((card, i) => (
         <CardItem
-          key={card.id}
+          key={card?.card?.id}
           index={i}
-          card={card}
+          fullCard={card}
           isOwner={isOwner}
           setId={setId}
           isPublic={isPublic}

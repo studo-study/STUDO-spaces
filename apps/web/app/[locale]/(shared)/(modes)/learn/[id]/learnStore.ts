@@ -15,6 +15,8 @@ interface LearnSettings {
   setPomodoroCount: (input: string) => void;
   twentyMode: boolean;
   setTwentyMode: (input: boolean) => void;
+  flaggedMode: boolean;
+  setFlaggedMode: (input: boolean) => void;
   twentyCount: string;
   setTwentyCount: (input: string) => void;
   answerWith: "term" | "definition" | string;
@@ -36,6 +38,7 @@ export const DEFAULT_LEARN_SETTINGS = {
   answerType: "both",
   revisionCount: 2,
   strictnessLevel: 5,
+  flaggedMode: false,
 };
 interface LearnStore {
   setId: string | null;
@@ -65,6 +68,11 @@ const createLearnStore = (setId: string | null): LearnStoreApi =>
             ...state.learnSettings,
             pomodoro: input,
           },
+        })),
+      setFlaggedMode: (input) =>
+        set((state) => ({
+          ...state,
+          learnSettings: { ...state.learnSettings, flaggedMode: input },
         })),
       setPomodoroCount: (input) =>
         set((state) => ({
