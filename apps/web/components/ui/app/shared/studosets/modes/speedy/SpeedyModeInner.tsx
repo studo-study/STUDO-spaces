@@ -24,7 +24,7 @@ interface SpeedyModeInnerProps {
 }
 
 function SpeedyModeContent({ id }: { id: string }) {
-  const { state, dispatch, setGameStarted, gameStarted, startGame, resume } =
+  const { state, dispatch, gameStarted, startGame, pause, resume } =
     useSpeedyContext();
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
@@ -94,11 +94,7 @@ function SpeedyModeContent({ id }: { id: string }) {
             </BaseButton>
           </BaseTooltip>
           <BaseTooltip content={t("pause")}>
-            <BaseButton
-              onClick={() => setGameStarted(false)}
-              variant="icon"
-              icon={<IoIosPause />}
-            />
+            <BaseButton onClick={pause} variant="icon" icon={<IoIosPause />} />
           </BaseTooltip>
         </div>
 

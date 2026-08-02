@@ -28,6 +28,7 @@ interface SpeedyContextValue {
   gameStarted: boolean;
   setGameStarted: (v: boolean) => void;
   startGame: () => void;
+  pause: () => void;
   resume: () => void;
   restart: () => void;
   elapsedMs: number;
@@ -80,7 +81,9 @@ export function SpeedyProvider({
       ? Math.round((state.correctAnswers / state.totalAnswers) * 100)
       : 0;
 
-  // Timer for the total session duration.
+  // Timer for the total session duration. elapsedMs is only ever written from
+  // event handlers or the interval callback (never synchronously in an effect,
+  // and never via Date.now() during render).
   const startTimeRef = useRef<number>(0);
   const [elapsedMs, setElapsedMs] = useState(0);
 
@@ -88,6 +91,11 @@ export function SpeedyProvider({
     startTimeRef.current = Date.now();
     setElapsedMs(0);
     setGameStarted(true);
+  }, []);
+
+  const pause = useCallback(() => {
+    setElapsedMs(Date.now() - startTimeRef.current);
+    setGameStarted(false);
   }, []);
 
   const resume = useCallback(() => {
@@ -103,11 +111,13 @@ export function SpeedyProvider({
     setGameStarted(true);
   }, [cards]);
 
+  // Tick the elapsed time while playing; setState in a callback is allowed.
   useEffect(() => {
     if (!gameStarted || state.phase === "finished") return;
-    const interval = setInterval(() => {
-      setElapsedMs(Date.now() - startTimeRef.current);
-    }, 1000);
+    const interval = setInterval(
+      () => setElapsedMs(Date.now() - startTimeRef.current),
+      1000,
+    );
     return () => clearInterval(interval);
   }, [gameStarted, state.phase]);
 
@@ -133,13 +143,10 @@ export function SpeedyProvider({
   // Persist the final result once the set is finished.
   useEffect(() => {
     if (state.phase !== "finished") return;
-    const finishedAt = Date.now();
-    const startedAt = startTimeRef.current || finishedAt;
-    setElapsedMs(finishedAt - startedAt);
     updateSession.mutate({
       userId: session.userId,
       accuracy,
-      endedAt: new Date(finishedAt).toISOString(),
+      endedAt: new Date().toISOString(),
     });
   }, [state.phase]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -153,6 +160,7 @@ export function SpeedyProvider({
         gameStarted,
         setGameStarted,
         startGame,
+        pause,
         resume,
         restart,
         elapsedMs,
