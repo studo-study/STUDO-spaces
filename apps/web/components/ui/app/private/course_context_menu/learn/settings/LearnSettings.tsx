@@ -11,6 +11,7 @@ import SimpleSlider from "@/components/ui/design_system/slider/SimpleSlider";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useResetSession } from "@/hooks/app/session/useResetSession";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
+import { ReactNode } from "react";
 
 type Tab = {
   label: string;
@@ -20,6 +21,7 @@ type Tab = {
 type LearnSettingsType = {
   label: string;
   subItems: {
+    icon?: ReactNode;
     label: string;
     toggle: string;
     defaultToggle?: boolean;
@@ -149,57 +151,64 @@ const LearnSettings = () => {
                 {t(section.label)}:
               </span>
               <hr className={"border-studoborder/30 h-px w-full mb-3"} />
-              {section.subItems.map((subItem) => (
-                <div
-                  key={subItem.label}
-                  className={
-                    "w-full flex flex-row mb-2 items-center justify-between"
-                  }
-                >
-                  <div className={"flex flex-col"}>
-                    <span className={"dark:text-white"}>
-                      {t(subItem.label)}
-                    </span>
-                    {subItem.description && (
-                      <p
+              {section.subItems.map((subItem) => {
+                return (
+                  <div
+                    key={subItem.label}
+                    className={
+                      "w-full flex flex-row mb-2 items-center justify-between"
+                    }
+                  >
+                    <div className={"flex flex-col"}>
+                      <span
                         className={
-                          "text-studogrey/30 text-xs dark:text-white/30"
+                          " gap-2 flex flex-row items-center text-base dark:text-white"
                         }
                       >
-                        {t(subItem.description)}
-                      </p>
+                        {subItem.icon}
+                        {t(subItem.label)}
+                      </span>
+                      {subItem.description && (
+                        <p
+                          className={
+                            "text-studogrey/30 text-xs dark:text-white/30"
+                          }
+                        >
+                          {t(subItem.description)}
+                        </p>
+                      )}
+                    </div>
+                    {subItem.toggle === "toggle" && (
+                      <SwitchToggle
+                        isChecked={subItem.defaultToggle as boolean}
+                        onChange={(input) =>
+                          (subItem.onchange as (v: boolean) => void)(input)
+                        }
+                      />
+                    )}
+                    {subItem.toggle === "slider" && (
+                      <SimpleSlider
+                        min={1}
+                        max={5}
+                        value={[subItem.value as number]}
+                        onValueChange={(value) =>
+                          (subItem.onchange as (v: number) => void)(value[0])
+                        }
+                      />
+                    )}
+                    {subItem.toggle === "tabs" && (
+                      <Tabs
+                        size={"sm"}
+                        tabs={subItem.options as Tab[]}
+                        value={subItem.value as string}
+                        onChange={(value) =>
+                          (subItem.onchange as (v: string) => void)(value)
+                        }
+                      />
                     )}
                   </div>
-                  {subItem.toggle === "toggle" && (
-                    <SwitchToggle
-                      isChecked={subItem.defaultToggle as boolean}
-                      onChange={(input) =>
-                        (subItem.onchange as (v: boolean) => void)(input)
-                      }
-                    />
-                  )}
-                  {subItem.toggle === "slider" && (
-                    <SimpleSlider
-                      min={1}
-                      max={5}
-                      value={[subItem.value as number]}
-                      onValueChange={(value) =>
-                        (subItem.onchange as (v: number) => void)(value[0])
-                      }
-                    />
-                  )}
-                  {subItem.toggle === "tabs" && (
-                    <Tabs
-                      size={"sm"}
-                      tabs={subItem.options as Tab[]}
-                      value={subItem.value as string}
-                      onChange={(value) =>
-                        (subItem.onchange as (v: string) => void)(value)
-                      }
-                    />
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           );
         })}

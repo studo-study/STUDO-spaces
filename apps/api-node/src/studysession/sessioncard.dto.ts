@@ -71,10 +71,11 @@ export class updateSessionCardDTO {
   ownerId?: string;
 
   @ApiPropertyOptional({
-    example: 1,
+    example: true,
     description: 'of card geflagged is in de sessie',
   })
   @IsBoolean()
+  @IsOptional()
   flagged?: boolean;
 }
 

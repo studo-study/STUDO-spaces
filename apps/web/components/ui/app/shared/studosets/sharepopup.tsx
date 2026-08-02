@@ -18,6 +18,7 @@ export default function SharePopup(props: SharePopupProps) {
   const locale = useLocale();
   const buildLink = window.location.origin + "/" + locale + "/" + pathname;
   const toast = useToast();
+  const isPrivate = studoset?.publicSet;
   const toggleCopy = () => {
     navigator.clipboard.writeText(buildLink);
     toast.success(t("copy_message"));
@@ -28,7 +29,7 @@ export default function SharePopup(props: SharePopupProps) {
       trigger={
         <div
           className="inline-flex  cursor-pointer active:scale-95 transition-[scale] duration-300 flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
-                    font-atrament font-normal text-[#2a3a42] justify-center text-xl
+                    font-atrament font-normal text-studodarkblue justify-center text-xl
                     rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
                     dark:text-white"
         >
@@ -38,7 +39,7 @@ export default function SharePopup(props: SharePopupProps) {
     >
       <div className={"w-full h-full flex group flex-col gap-1 pt-1"}>
         <span className={"font-bold"}>{t("pop_title")}:</span>
-        {!studoset?.publicSet && (
+        {isPrivate && (
           <span className={"text-xs text-studogrey"}>{t("isPrivate")}*</span>
         )}
         <div
@@ -46,7 +47,7 @@ export default function SharePopup(props: SharePopupProps) {
         />
         <div
           className={
-            "w-full h-10 rounded-lg flex p-2 gap-2 justify-between items-center gap-1 bg-studogrey/20 border border-studoborder/30"
+            "w-full h-10 rounded-lg flex p-2 justify-between items-center gap-1 bg-studogrey/20 border border-studoborder/30"
           }
         >
           <input

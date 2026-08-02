@@ -101,7 +101,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
             </>
           ) : (
             <main
-              className={`flex-1 min-h-0 h-full overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${sidebarOpen ? "pr-57" : "pr-30"} transition-[padding] duration-300`}
+              className={`flex-1 min-h-0 h-full overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] pr-20 [scrollbar-width:none] transition-[padding] duration-300`}
             >
               {children}
             </main>
