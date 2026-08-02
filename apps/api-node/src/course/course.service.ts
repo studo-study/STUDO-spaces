@@ -5,7 +5,7 @@ import {
 } from '../drizzle/drizzle.provider';
 import { courses, courseUsers } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
-import { Course, FullCourseResponse } from '@studo/types';
+import { Course, CreateCourse, FullCourseResponse } from '@studo/types';
 
 const iso = (d: Date | null): string | null => d?.toISOString() ?? null;
 
@@ -132,5 +132,18 @@ export class CourseService {
     };
   }
 
-  async createCourse() {}
+  async createCourse(body: CreateCourse): Promise<FullCourseResponse> {
+    const [course] = await this.db
+      .insert(courses)
+      .values({
+        title: body.title,
+        icon: body.icon,
+        academyYear: body.academyYear ?? null,
+        examDate: body.examDate || null,
+        institute: body.institute || null,
+      })
+      .returning();
+
+    return await this.getFullCourse(course.id);
+  }
 }

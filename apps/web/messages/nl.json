@@ -1259,10 +1259,11 @@
     "all": "Alle klassen",
     "last": "Recent toegetreden",
     "alphabetical": "Alfabetische volgorde",
-    "search": "Klassen zoeken...",
+    "search": "Jouw klassen zoeken...",
     "members": "leden",
     "member": "lid",
     "leave": "Klas verlaten",
+    "no_found": "Geen klassen gevonden",
     "external_window": "Open in nieuw tabblad"
   },
   "classroom": {

@@ -7,15 +7,15 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useSets } from "@/hooks/app/sets/useSets";
-import { useBoards } from "@/hooks/app/courses/useBoards";
+import { useCourses } from "@/hooks/app/courses/useCourses";
 
 const GetStarted = () => {
   const { sets, isLoading: setsLoading } = useSets();
-  const { data, isLoading: boardsLoading } = useBoards();
+  const { data: courses, isLoading: coursesLoading } = useCourses();
   const t = useTranslations("home");
 
-  if (setsLoading || boardsLoading) return null;
-  if (sets.length > 0 || (data?.boards ?? []).length > 0) return null;
+  if (setsLoading || coursesLoading) return null;
+  if (sets.length > 0 || (courses ?? []).length > 0) return null;
 
   return (
     <section className="flex flex-col gap-5 overflow-visible">

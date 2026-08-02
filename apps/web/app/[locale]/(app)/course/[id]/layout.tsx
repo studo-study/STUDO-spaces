@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import CoursePageHeader from "@/components/ui/app/private/course/layout/CoursePageHeader";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
-import FlowStoreInitializer from "@/components/providers/app/FlowStoreInitializer";
+import CourseStoreInitializer from "@/components/providers/app/CourseStoreInitializer";
 import { auth } from "@/auth";
 
 export default async function CoursepageLayout({
@@ -20,7 +20,7 @@ export default async function CoursepageLayout({
   const data = await res.json();
   return (
     <>
-      <FlowStoreInitializer course={data} />
+      <CourseStoreInitializer course={data} />
       <PageContainer>
         <CoursePageHeader />
         <div className={"flex flex-1 min-h-0 w-full"}>{children}</div>

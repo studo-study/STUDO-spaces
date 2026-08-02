@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
-// Flow data now lives in react-query (see hooks/app/flow/*). This store only
-// holds ephemeral UI state that never needs to be fetched or persisted.
-interface FlowUIState {
+// Course-data leeft in react-query (zie hooks/app/courses/*). Deze store houdt
+// enkel efemere UI-state die nooit gefetcht of gepersisteerd hoeft te worden.
+interface CourseUIState {
   createCourseOpen: boolean;
   courseView: "overview" | "cursus" | "flow" | "sets";
 
@@ -11,7 +11,7 @@ interface FlowUIState {
   setCourseView: (view: "overview" | "cursus" | "flow" | "sets") => void;
 }
 
-export const useFlowStore = create<FlowUIState>((set) => ({
+export const useCourseStore = create<CourseUIState>((set) => ({
   createCourseOpen: false,
   courseView: "overview",
 

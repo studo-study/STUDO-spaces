@@ -3,15 +3,15 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 import { useSets } from "@/hooks/app/sets/useSets";
-import { useBoards } from "@/hooks/app/courses/useBoards";
+import { useCourses } from "@/hooks/app/courses/useCourses";
 
 export default function CTABlock() {
   const { sets, isLoading: setsLoading } = useSets();
-  const { data, isLoading: boardsLoading } = useBoards();
+  const { data: courses, isLoading: coursesLoading } = useCourses();
   const t = useTranslations("home");
 
-  if (setsLoading || boardsLoading) return null;
-  if (sets.length > 0 || (data?.boards ?? []).length > 0) return null;
+  if (setsLoading || coursesLoading) return null;
+  if (sets.length > 0 || (courses ?? []).length > 0) return null;
 
   return (
     <div className="p-6 rounded-3xl shadow-2xl backdrop-blur-xl bg-gradient-to-br dark:from-emerald-500/10 dark:to-emerald-400/10 from-emerald-500/50 to-teal-500/50 border border-studoborder/30">

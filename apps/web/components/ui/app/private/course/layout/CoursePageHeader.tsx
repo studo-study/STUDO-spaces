@@ -9,8 +9,11 @@ import { CgDanger } from "react-icons/cg";
 import { IoWarningOutline } from "react-icons/io5";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useFlowStore } from "@/store/slices/flow/flowStore";
-import { useFlowCourse, useCourseTotals } from "@/hooks/app/flow/useFlowData";
+import { useCourseStore } from "@/store/slices/course/courseStore";
+import {
+  useActiveCourse,
+  useCourseTotals,
+} from "@/hooks/app/courses/useCourseData";
 import CourseItemProgress from "@/components/ui/app/private/course/layout/CourseItemProgress";
 import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
 import { Layers, NotebookText, Rows3, ScrollText } from "lucide-react";
@@ -22,8 +25,8 @@ const CoursePageHeader = () => {
   const t = useTranslations("flow.course");
   const tRow = useTranslations("flow.course.row");
   const courses = useCourses().data;
-  const data = useFlowCourse().data;
-  const setCourseView = useFlowStore((s) => s.setCourseView);
+  const data = useActiveCourse().data;
+  const setCourseView = useCourseStore((s) => s.setCourseView);
   const { totalLength, done, inProgress } = useCourseTotals();
   const router = useRouter();
   const segments = usePathname().split("/");

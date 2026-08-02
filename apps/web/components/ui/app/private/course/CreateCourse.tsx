@@ -7,9 +7,7 @@ import InputField from "@/components/ui/design_system/input/InputField";
 import IconPicker from "@/components/ui/app/private/course/layout/IconPicker";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import TagSelector from "@/components/ui/design_system/tag/TagSelector";
-import { HiCalendarDays } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
-import { useFlowBoardMutations } from "@/hooks/app/flow/useFlowMutations";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { FaChevronRight } from "react-icons/fa";
 import IconButton from "@/components/ui/design_system/button/IconButton";
@@ -17,8 +15,9 @@ import { IoClose } from "react-icons/io5";
 import TextArea from "@/components/ui/design_system/input/TextArea";
 import { FiMinus } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
-import { LuLink } from "react-icons/lu";
+import { CalendarCheck, Link, Presentation } from "lucide-react";
 import { useCreateCourse } from "@/hooks/app/courses/useCreateCourse";
+import { useToast } from "@/components/providers/app/ToastProvider";
 
 const DEFAULT_ICON = "blue:bookopen";
 
@@ -27,14 +26,21 @@ interface CreateCourseProps {
   setCreateOpen: (open: boolean) => void;
   board_title?: string;
   board_id?: string;
+  noRedirect?: boolean;
 }
 
 const CreateCourse = (props: CreateCourseProps) => {
-  const { createOpen, setCreateOpen, board_title, board_id } = props;
+  const {
+    createOpen,
+    setCreateOpen,
+    board_title,
+    board_id,
+    noRedirect = false,
+  } = props;
   const router = useRouter();
   const popupRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const toast = useToast();
   //states
   const [selectedIcon, setSelectedIcon] = useState<string>(DEFAULT_ICON);
   const [title, setTitle] = useState<string>("");
@@ -45,7 +51,6 @@ const CreateCourse = (props: CreateCourseProps) => {
   const [showMetadata, setShowMetadata] = useState<boolean>(false);
   const [days, setDays] = useState<string[]>([]);
   const t = useTranslations("flow.course");
-  const { addCourse } = useFlowBoardMutations();
   const { mutateAsync: createCourse } = useCreateCourse();
 
   //helper functions
@@ -96,8 +101,8 @@ const CreateCourse = (props: CreateCourseProps) => {
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!title.trim()) newErrors.title = t("error_title_required");
-    if (!selectedIcon) newErrors.icon = t("error_icon_required");
+    if (!title.trim()) toast.error(t("error_title_required"));
+    if (!selectedIcon) toast.error(t("error_icon_required"));
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -123,12 +128,7 @@ const CreateCourse = (props: CreateCourseProps) => {
       lessonDays: days.join("-"),
     });
 
-    addCourse(data);
-    if (board_id) {
-      router.push("/flow/" + board_id + "/" + data.id);
-    } else {
-      router.push("/course/" + data.id);
-    }
+    if (!noRedirect) router.push("/course/" + data.id);
     onClose();
   };
 
@@ -158,7 +158,7 @@ const CreateCourse = (props: CreateCourseProps) => {
                   "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
                 }
               >
-                {" "}
+                {""}
                 {board_title}
               </span>
               <FaChevronRight size={12} />
@@ -214,8 +214,7 @@ const CreateCourse = (props: CreateCourseProps) => {
             <div>
               <div className={"w-full flex flex-row gap-2 pt-5 scroll-hidden"}>
                 <TagSelector
-                  label="Link"
-                  icon={<LuLink size={14} />}
+                  icon={<Link size={16} />}
                   value={link}
                   onChange={setLink}
                   freeInput
@@ -224,16 +223,14 @@ const CreateCourse = (props: CreateCourseProps) => {
                 />
 
                 <TagSelector
-                  label="Exam date"
-                  icon={<HiCalendarDays size={14} />}
+                  icon={<CalendarCheck size={16} />}
                   value={examDate}
                   datePicker
                   onChange={setExamDate}
                 />
 
                 <TagSelector
-                  label="Lesson day(s)"
-                  icon={<HiCalendarDays size={14} />}
+                  icon={<Presentation size={16} />}
                   options={[
                     { value: "1", label: "Monday" },
                     { value: "2", label: "Tuesday" },

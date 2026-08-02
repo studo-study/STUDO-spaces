@@ -8,7 +8,7 @@ interface TagOption {
 }
 
 interface TagSelectorBaseProps {
-  label: string;
+  label?: string;
   icon?: ReactNode;
   options?: TagOption[];
   dot?: string;
@@ -163,7 +163,7 @@ const TagSelector = ({
           {displayIcon && (
             <span className="text-neutral-400">{displayIcon}</span>
           )}
-          <span className="truncate">{getDisplayLabel()}</span>
+          {label && <span className="truncate">{getDisplayLabel()}</span>}
         </button>
 
         <input
@@ -198,7 +198,7 @@ const TagSelector = ({
           <span className="text-neutral-400 shrink-0">{displayIcon}</span>
         )}
 
-        <span className="truncate">{getDisplayLabel()}</span>
+        {label && <span className="truncate">{getDisplayLabel()}</span>}
       </button>
 
       <div onClick={(e) => e.stopPropagation()} className={dropdownClass}>

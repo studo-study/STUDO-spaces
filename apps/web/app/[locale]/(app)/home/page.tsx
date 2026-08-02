@@ -10,7 +10,6 @@ import QuickStats from "@/components/ui/app/private/home/quick_stats/QuickStats"
 import YourSets from "@/components/ui/app/private/home/YourSets/YourSets";
 import Courses from "@/components/ui/app/private/home/courses/Courses";
 import EmptyFallback from "@/components/ui/app/private/home/EmptyFallback/EmptyFallback";
-import Flow from "@/components/ui/app/private/home/flows/Flow";
 export const metadata: Metadata = {
   title: "Home | Studo",
 };
@@ -48,8 +47,6 @@ export default async function HomePage() {
         <YourSets />
 
         <Courses />
-
-        <Flow />
       </div>
 
       <div className="fixed z-40 bottom-10 w-fit left-1/2 -translate-1/2 h-fit flex items-end justify-center">

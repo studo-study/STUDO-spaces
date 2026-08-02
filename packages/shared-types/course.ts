@@ -28,18 +28,6 @@ export type MimeType = "pdf" | "docx";
 
 // --- Entiteiten ---
 
-export interface Board {
-  id: string;
-  title: string;
-  icon: string;
-  publicBoard: boolean | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  academyYear: number | null;
-  examDate: string | null;
-  institute: string | null;
-}
-
 export interface Course {
   id: string;
   boardId: string | null; // null = standalone
@@ -56,15 +44,6 @@ export interface Course {
 export interface CourseMember {
   userId: string;
   courseId: string;
-  role: CourseRole;
-  displayName?: string;
-  imgUrl?: string;
-  createdAt: string | null;
-}
-
-export interface BoardMember {
-  boardId: string;
-  userId: string;
   role: CourseRole;
   displayName?: string;
   imgUrl?: string;
@@ -169,41 +148,8 @@ export interface FullCourseResponse extends CourseResponse {
   members: CourseMember[];
 }
 
-/** Gedeelde eigenaar/planning-velden (nog niet altijd door de API geleverd). */
-interface BoardMeta {
-  ownerId?: string;
-  ownerName?: string;
-  ownerPfp?: string;
-  year?: string | null;
-  semester?: string | null;
-  school?: string | null;
-  progress?: number;
-  totalDone?: number;
-  totalInProgress?: number;
-  totalLength?: number;
-}
-
-/** Board-overzicht met de courses eronder. */
-export interface BoardOverview extends Board, BoardMeta {
-  courses: CourseResponse[];
-  members: BoardMember[];
-}
-
-/** Compacte board-kaart (home): `courses` is het aantal, niet de lijst. */
-export interface BoardSummary extends Board, BoardMeta {
-  courses: number;
-}
-
 export interface CoursesResponse {
   courses: CourseResponse[];
-}
-
-export interface BoardsResponse {
-  boards: BoardOverview[];
-}
-
-export interface MyBoardsResponse {
-  boards: BoardSummary[];
 }
 
 // --- Create / update payloads ---

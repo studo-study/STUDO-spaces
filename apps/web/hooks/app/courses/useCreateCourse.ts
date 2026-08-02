@@ -4,10 +4,9 @@ import { courseKeys } from "./courseKeys";
 
 export function useCreateCourse() {
   const queryClient = useQueryClient();
-
   return useMutation<Course, Error, CreateCourse>({
     mutationFn: (body) =>
-      fetch("/api/flows/course", {
+      fetch("/api/courses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
