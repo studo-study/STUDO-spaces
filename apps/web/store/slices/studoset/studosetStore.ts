@@ -13,8 +13,6 @@ interface StudosetStore {
     term_content_type?: "text" | "latex" | "code",
   ) => Card | undefined;
   rollbackCard: (card: Card) => void;
-  toggleFlagOptimistic: (cardId: string) => SessionCard | undefined;
-  restoreSession: (cardId: string, session: SessionCard) => void;
   setEditingCardId: (id: string | null) => void;
   addSavingCard: (id: string) => void;
   removeSavingCard: (id: string) => void;
@@ -56,25 +54,6 @@ export const useStudosetStore = create<StudosetStore>()((set, get) => ({
     set((state) => ({
       studosetCards: state.studosetCards.map((c) =>
         c.card.id === card.id ? { ...c, card } : c,
-      ),
-    })),
-
-  toggleFlagOptimistic: (cardId) => {
-    const old = get().studosetCards.find((c) => c.card.id === cardId)?.session;
-    set((state) => ({
-      studosetCards: state.studosetCards.map((c) =>
-        c.card.id === cardId && c.session
-          ? { ...c, session: { ...c.session, flagged: !c.session.flagged } }
-          : c,
-      ),
-    }));
-    return old;
-  },
-
-  restoreSession: (cardId, session) =>
-    set((state) => ({
-      studosetCards: state.studosetCards.map((c) =>
-        c.card.id === cardId ? { ...c, session } : c,
       ),
     })),
 

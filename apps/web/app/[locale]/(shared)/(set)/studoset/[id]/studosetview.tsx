@@ -25,6 +25,7 @@ import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBott
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
+import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 
 interface viewProps {
   id: string;
@@ -45,6 +46,7 @@ export default function StudosetView({ id }: viewProps) {
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const learnSettings = useLearnStore((state) => state.learnSettings);
 
   const jumpToTop = () => {
     topRef.current?.scrollIntoView({
@@ -94,41 +96,19 @@ export default function StudosetView({ id }: viewProps) {
     : (data?.session?.cards ?? null);
 
   const filteredCards = useMemo(() => {
-    const flagged = tab === "flagged";
-    if (filter === "not_learned") {
-      return data?.cards?.filter((card) => {
-        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard
-          ? sessionCard.cardViewcount === 0 && flagged
-            ? sessionCard.flagged
-            : true
-          : true;
-      });
-    }
+    const get = (id: string) => sessionCards?.find((s) => s.cardId === id);
+    let cards = data?.cards ?? [];
 
-    if (filter === "reviewed") {
-      return data?.cards?.filter((card) => {
-        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard
-          ? sessionCard.cardViewcount === 1 && flagged
-            ? sessionCard.flagged
-            : true
-          : true;
-      });
-    }
+    if (filter === "not_learned")
+      cards = cards.filter((c) => (get(c.id)?.cardViewcount ?? 0) === 0);
+    else if (filter === "reviewed")
+      cards = cards.filter((c) => get(c.id)?.cardViewcount === 1);
+    else if (filter === "learned")
+      cards = cards.filter((c) => (get(c.id)?.cardViewcount ?? 0) >= 2);
 
-    if (filter === "learned") {
-      return data?.cards?.filter((card) => {
-        const sessionCard = sessionCards?.find((s) => s.cardId === card.id);
-        return sessionCard
-          ? sessionCard.cardViewcount >= 2 && flagged
-            ? sessionCard.flagged
-            : true
-          : true;
-      });
-    }
+    if (tab === "flagged") cards = cards.filter((c) => get(c.id)?.flagged);
 
-    return data?.cards;
+    return cards;
   }, [tab, filter, data?.cards, sessionCards]);
 
   const { not_studied, reviewed, studied } = useMemo(() => {
@@ -350,6 +330,7 @@ export default function StudosetView({ id }: viewProps) {
               value={tab}
               onChange={(key) => {
                 setTab(key as Tab);
+                learnSettings.setFlaggedMode(key === "flagged");
               }}
             />
           </div>

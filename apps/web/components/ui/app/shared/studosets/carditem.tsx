@@ -15,6 +15,8 @@ import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { useUpdateSession } from "@/hooks/app/session/useUpdateSession";
 import classNames from "@/utils/classnames";
 import { useUser } from "@/components/providers/auth/UserProvider";
+import { useQueryClient } from "@tanstack/react-query";
+import type { FullStudysetResponse } from "@studo/types";
 
 interface CarditemProps {
   index: number;
@@ -38,11 +40,10 @@ export default function CardItem({
     setEditingCardId,
     updateCardOptimistic,
     rollbackCard,
-    toggleFlagOptimistic,
-    restoreSession,
     addSavingCard,
     removeSavingCard,
   } = useStudosetStore();
+  const queryClient = useQueryClient();
 
   const t = useTranslations("studoset");
   const toast = useToast();
@@ -61,7 +62,7 @@ export default function CardItem({
   const isEditing = editingCardId === card.id;
   const isSaving = savingCardIds.includes(card.id);
   const menuInfo = useSideMenu((state) => state.setMenuInfo);
-
+  const isMenuOpen = useSideMenu((state) => state.menuInfo.isOpen);
   const [editTerm, setEditTerm] = useState(currentCard.term);
   const [editDefinition, setEditDefinition] = useState(currentCard.definition);
   const [contentType, setContentType] = useState(currentCard.termContentType);
@@ -154,36 +155,44 @@ export default function CardItem({
 
   const lookUpCourse = useCallback(() => {
     menuInfo({
-      isOpen: true,
+      isOpen: !isMenuOpen,
       origin: "course",
     });
-  }, [menuInfo]);
+  }, [isMenuOpen, menuInfo]);
 
   const flagCard = useCallback(async () => {
     const session = currentSession;
-    if (!session || !userId) return;
+    if (!session || !userId || !setId) return;
 
-    // optimistic toggle in de store; server krijgt de nieuwe waarde
-    const old = toggleFlagOptimistic(card.id);
+    const key = ["studosets", setId];
+    const prev = queryClient.getQueryData<FullStudysetResponse>(key);
+
+    // optimistisch in de react-query cache togglen zodat filter + props meelopen
+    queryClient.setQueryData<FullStudysetResponse>(key, (old) =>
+      old?.session
+        ? {
+            ...old,
+            session: {
+              ...old.session,
+              cards:
+                old.session.cards?.map((c) =>
+                  c.id === session.id ? { ...c, flagged: !c.flagged } : c,
+                ) ?? null,
+            },
+          }
+        : old,
+    );
+
     try {
       await updateSession.mutateAsync({
         userId,
         cards: [{ id: session.id, flagged: !session.flagged }],
       });
     } catch {
-      if (old) restoreSession(card.id, old);
+      if (prev) queryClient.setQueryData(key, prev);
       toast.error(t("flag_failed"));
     }
-  }, [
-    currentSession,
-    userId,
-    toggleFlagOptimistic,
-    card.id,
-    updateSession,
-    restoreSession,
-    t,
-    toast,
-  ]);
+  }, [currentSession, userId, setId, queryClient, updateSession, t, toast]);
 
   return (
     <div

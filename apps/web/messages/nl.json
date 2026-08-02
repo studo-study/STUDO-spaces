@@ -1428,7 +1428,8 @@
     "open_course": "Open in cursus",
     "flag_card": "Markeer kaart",
     "unflag_card": "Demarkeer kaart",
-    "flag_failed": "Markeren mislukt"
+    "flag_failed": "Markeren mislukt",
+    "no_cards": "Geen kaarten"
   },
   "trackview": {
     "tracks": "Tracks",

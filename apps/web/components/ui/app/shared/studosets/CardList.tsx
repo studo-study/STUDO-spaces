@@ -43,10 +43,10 @@ export default function CardList({
       {cards?.length === 0 && (
         <div
           className={
-            "w-full min-h-0 flex-1 flex justify-center items-center dark:text-studogrey text-black/20 font-medium"
+            "w-full min-h-50 h-50 max-h-50 flex justify-center items-center dark:text-studogrey text-black/20 font-medium"
           }
         >
-          <span>No cards</span>
+          <span>{t("no_cards")}</span>
         </div>
       )}
       {displayCards?.map((card, i) => (
