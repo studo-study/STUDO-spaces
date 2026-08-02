@@ -61,10 +61,11 @@ export class updateSessionPinDTO {
   ownerId?: string;
 
   @ApiPropertyOptional({
-    example: 1,
+    example: true,
     description: 'of pin geflagged is in de sessie',
   })
   @IsBoolean()
+  @IsOptional()
   flagged?: boolean;
 }
 

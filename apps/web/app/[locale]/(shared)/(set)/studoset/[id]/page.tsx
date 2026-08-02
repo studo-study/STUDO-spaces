@@ -3,6 +3,7 @@ import StudosetView from "@/app/[locale]/(shared)/(set)/studoset/[id]/studosetvi
 import MarketingLayout from "@/app/[locale]/(marketing)/layout";
 import StudosetSplashWrapper from "@/app/[locale]/(shared)/(set)/studoset/[id]/StudosetSplashWrapper";
 import PublicStudosetView from "@/app/[locale]/(shared)/(set)/studoset/[id]/PublicStudosetview";
+import { LearnStoreProvider } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 
 export default async function StudosetPage({
   params,
@@ -13,9 +14,11 @@ export default async function StudosetPage({
 
   if (session) {
     return (
-      <StudosetSplashWrapper id={id}>
-        <StudosetView id={id} />
-      </StudosetSplashWrapper>
+      <LearnStoreProvider setId={id}>
+        <StudosetSplashWrapper id={id}>
+          <StudosetView id={id} />
+        </StudosetSplashWrapper>
+      </LearnStoreProvider>
     );
   }
   return (

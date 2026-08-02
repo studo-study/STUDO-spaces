@@ -46,6 +46,16 @@ const LearnCard = () => {
 
   // een kaart is geleerd na `cap` juiste beurten (variabel via settings)
   const cap = Math.max(1, settings.revisionCount);
+  const flaggedFilter = settings.flaggedMode;
+  // cardIds die geflagd zijn (uit session-cards); flagged leeft op de session-card
+  const flaggedIds = new Set(
+    (set?.session?.cards ?? [])
+      .filter((sc) => sc.flagged)
+      .map((sc) => sc.cardId),
+  );
+  // predicate: kaart hoort in de sessie? (flagged-filter uit → altijd)
+  const passesFlagged = (cardId: string) =>
+    !flaggedFilter || flaggedIds.has(cardId);
 
   const [value, setValue] = useState("");
   const [phase, setPhase] = useState<Phase>("input");
@@ -97,14 +107,17 @@ const LearnCard = () => {
     cards.forEach((c) => {
       const vc = scById.get(c.id) ?? 0;
       views[c.id] = vc;
-      seededViews += Math.min(vc, cap);
+      // enkel kaarten in de sessie tellen mee voor de voortgang
+      if (passesFlagged(c.id)) seededViews += Math.min(vc, cap);
     });
     // eenmalige seeding (guarded door `initialized`) → veilig in render
     viewsRef.current = views;
     setTotalViews(seededViews);
     const seededQueue = cards
       .map((_, i) => i)
-      .filter((i) => (views[cards[i].id] ?? 0) < cap);
+      .filter((i) => (views[cards[i].id] ?? 0) < cap)
+      .filter((i) => passesFlagged(cards[i].id));
+
     // resume op de laatst geziene kaart: roteer de queue zodat die vooraan staat
     const lastSeen = set?.session?.lastSeen;
     const startPos = lastSeen
@@ -392,7 +405,10 @@ const LearnCard = () => {
     errorQueueRef.current = [];
     lastSeenRef.current = null;
     dirtyRef.current = true; // reset ook naar de backend syncen
-    setQueue(cards.map((_, i) => i));
+    const resetQueue = cards
+      .map((_, i) => i)
+      .filter((i) => passesFlagged(cards[i].id));
+    setQueue(resetQueue);
     setDrillQueue([]);
     setErrorMode(false);
     setTotalViews(0);
@@ -402,14 +418,19 @@ const LearnCard = () => {
     setValue("");
     setWasCorrect(false);
     setRetry(false);
-    setPhase("input");
+    // geen kaarten in de filter → meteen done, anders eerste kaart tonen
+    setPhase(resetQueue.length === 0 ? "done" : "input");
     setShowHint(false);
   };
 
   if (!cards || !initialized) {
     return (
-      <>
-        <div className={"max-w-200 flex flex-row"}>
+      <div
+        className={
+          "flex flex-col gap-10 min-h-190 w-full max-w-2xl 2xl:max-w-4xl px-10"
+        }
+      >
+        <div className={"w-full flex flex-row"}>
           <BaseButton
             size="sm"
             variant="icon"
@@ -418,17 +439,21 @@ const LearnCard = () => {
             <IoArrowBackOutline />
           </BaseButton>
         </div>
-        <div className="w-200 h-150 flex items-center justify-center text-studogrey">
+        <div className="w-full h-150 flex items-center justify-center text-studogrey">
           ...
         </div>
-      </>
+      </div>
     );
   }
 
   if (phase === "done") {
     return (
-      <div className={"flex flex-col gap-10"}>
-        <div className={"max-w-200 flex flex-row"}>
+      <div
+        className={
+          "flex min-h-190 flex-col gap-10 w-full max-w-2xl 2xl:max-w-4xl px-10"
+        }
+      >
+        <div className={"w-full flex flex-row"}>
           <BaseButton
             size="sm"
             variant="icon"
@@ -437,8 +462,8 @@ const LearnCard = () => {
             <IoArrowBackOutline />
           </BaseButton>
         </div>
-        <AnimateOnMount>
-          <div className={"w-200 h-150 relative"}>
+        <AnimateOnMount className={"w-full"}>
+          <div className={"w-full h-150 relative"}>
             <div
               className={
                 "side-a animate__fadeInLeft animate__animate backface-hidden top-0 left-0 absolute w-full shadow-2xl h-full flex items-center justify-center rounded-4xl border border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20"
@@ -467,7 +492,10 @@ const LearnCard = () => {
                     {t("all_set")}
                   </span>
                   <span className={"text-studogrey"}>
-                    {cards.length} kaarten in {totalAttempts} beurten
+                    {flaggedFilter
+                      ? cards.filter((c) => flaggedIds.has(c.id)).length
+                      : cards.length}{" "}
+                    kaarten in {totalAttempts} beurten
                   </span>
                 </div>
 
@@ -499,12 +527,19 @@ const LearnCard = () => {
 
   const { displayWord, corrector } = currentCard();
 
-  // voortgang richting doel = alle kaarten cap× juist
-  const goal = cards.length * cap;
+  // voortgang richting doel = alle kaarten (in de filter) cap× juist
+  const activeCards = flaggedFilter
+    ? cards.filter((c) => flaggedIds.has(c.id))
+    : cards;
+  const goal = activeCards.length * cap;
   const reviewItems = history.slice(-INTERVAL);
   return (
-    <div className={"flex flex-col gap-10"}>
-      <div className={"max-w-200 flex flex-row"}>
+    <div
+      className={
+        "flex flex-col gap-10 min-h-190 w-full max-w-2xl 2xl:max-w-4xl px-10"
+      }
+    >
+      <div className={"w-full flex flex-row"}>
         <BaseButton
           size="sm"
           variant="icon"
@@ -515,7 +550,7 @@ const LearnCard = () => {
       </div>
       <div
         className={
-          "w-200 h-150 bg-studogrey/30 border shadow-lg border-studoborder/30 hover:border-studoborder transition-colors duration-300 rounded-4xl flex flex-col justify-between gap-3 p-3"
+          "w-full h-150 bg-studogrey/30 border shadow-lg border-studoborder/30 hover:border-studoborder transition-colors duration-300 rounded-4xl flex flex-col justify-between gap-3 p-3"
         }
       >
         <div
@@ -629,6 +664,7 @@ const LearnCard = () => {
                     className={"truncate"}
                     iconLeft={<CircleQuestionMark size={15} />}
                     onClick={handleHint}
+                    isDisabled={showHint}
                   >
                     {t("hint")}
                   </BaseButton>

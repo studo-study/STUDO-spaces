@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import LearnController from "@/app/[locale]/(shared)/(modes)/learn/[id]/learncontroller";
 import { LearnStoreProvider } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
+import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 
 export default async function LearnPage({
   params,
@@ -14,11 +15,17 @@ export default async function LearnPage({
     next: { revalidate: 60 },
   }).then((res) => res.json());
 
+  // zelfde verticale framing als de flashcard-pagina (PageContainer), maar
+  // zonder de max-width zodat de bredere learn-card niet geclipt wordt
   return (
-    <div className="w-full h-full flex flex-col dark:text-white items-center justify-center gap-10 scroll-hidden">
-      <LearnStoreProvider setId={id}>
-        <LearnController data={data} />
-      </LearnStoreProvider>
+    <div className="w-full h-full flex flex-col items-center justify-center 2xl:py-15 xl:py-5 2xl:pt-5 scroll-hidden dark:text-white text-studodarkblue">
+      <div className="relative w-full min-h-full h-full gap-5 flex items-center flex-col scroll-hidden">
+        <AnimateOnMount className="w-full flex-1 min-h-1/5">
+          <LearnStoreProvider setId={id}>
+            <LearnController data={data} />
+          </LearnStoreProvider>
+        </AnimateOnMount>
+      </div>
     </div>
   );
 }

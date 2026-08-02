@@ -43,11 +43,14 @@ export default function StudosetView({ id }: viewProps) {
   const router = useRouter();
   const { data, isPlaceholderData, isError, error } = useStudoset(id);
   const [filter, setFilter] = useState<Filter>("all");
-  const [tab, setTab] = useState<Tab>("all");
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const learnSettings = useLearnStore((state) => state.learnSettings);
+  // init tab uit de store zodat de tab-visual matcht met de opgeslagen setting
+  const [tab, setTab] = useState<Tab>(
+    learnSettings.flaggedMode ? "flagged" : "all",
+  );
 
   const jumpToTop = () => {
     topRef.current?.scrollIntoView({
@@ -170,10 +173,11 @@ export default function StudosetView({ id }: viewProps) {
           {(data && data.title) || t("set_title")}
         </span>
         <div className="w-full sm:w-1/3 flex h-full gap-2 sm:gap-3 flex-row items-center justify-start sm:justify-end flex-wrap">
-          <BaseTooltip content={t("edit")}>
-            <EditToggle id={id} />
-          </BaseTooltip>
-
+          {isOwner && (
+            <BaseTooltip content={t("edit")}>
+              <EditToggle id={id} />
+            </BaseTooltip>
+          )}
           <BaseTooltip content={t("share")}>
             <SharePopup id={id} />
           </BaseTooltip>
