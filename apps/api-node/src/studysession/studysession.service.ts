@@ -138,6 +138,8 @@ export class StudysessionService {
             mastered: card.mastered,
             timesRelearned: card.timesRelearned,
             flagged: card.flagged,
+            totalAttempts: card.totalAttempts,
+            totalCorrect: card.totalCorrect,
           })
           .where(
             and(eq(sessioncards.id, card.id), eq(sessioncards.ownerId, userId)),
@@ -156,6 +158,8 @@ export class StudysessionService {
             pinTotalViewcount: pin.pinTotalViewcount,
             sessionId: pin.sessionId,
             ownerId: pin.ownerId,
+            totalAttempts: pin.totalAttempts,
+            totalCorrect: pin.totalCorrect,
           })
           .where(
             and(eq(sessionpins.id, pin.id), eq(sessionpins.ownerId, userId)),

@@ -3,7 +3,7 @@
 
 @import "tailwindcss";
 body {
-    background-color: rgb(239, 246, 255); /* light mode: bg-blue-50 */
+    background-color: var(--color-sky-50); /* light mode: bg-blue-50 */
     scrollbar-width: none;
     -ms-overflow-style: none;
     font-family: var(--font-sfpro);
@@ -16,7 +16,10 @@ body::-webkit-scrollbar {
 /* Voor dark mode */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: rgb(31, 41, 55); /* dark mode: bg-gray-800 */
+        background-color: var(--color-slate-900) /* dark mode: bg-gray-800 */
+    }
+    @theme {
+        --color-studoborder: rgb(131, 131, 131, 0.5);
     }
 }
 
@@ -63,14 +66,17 @@ body::-webkit-scrollbar {
     --font-georgia: "georgia", sans-serif;
     --color-studogreen: #8bcca3;
     --color-studoblue: #4f83ff;
-    --color-studodarkblue: #2a3a42;
+    --color-studodarkblue: #262626FF;
+    /*--color-studodarkblue: #2a3a42;*/
     --color-bg-white: rgb(239, 246, 255);
-    --color-bg-dark: rgb(31, 41, 55);
-    --color-studodark: rgba(224, 224, 224, 0.19);
+    --color-bg-dark: var(--color-slate-900);
+    /*--color-bg-dark: rgb(31, 41, 55);*/
+    --color-studodark: var(--color-slate-500);
+    /*--color-studodark: rgba(224, 224, 224, 0.19);*/
     --color-studogrey: rgba(200, 210, 210, 0.5);
     --color-studowhite: rgba(224, 224, 224, 0.19);
     --color-inputcolor: rgba(255, 255, 255, 0.175);
-    --color-studoborder: rgb(131, 131, 131, 0.5);
+    --color-studoborder: rgb(131, 131, 131);
     --breakpoint-3xl: 1800px;
     --font-montserrat: "Montserrat", sans-serif;
 

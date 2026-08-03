@@ -20,6 +20,7 @@ import type { UpdateStudysession } from "@studo/types";
 import { ArrowRight, CircleQuestionMark } from "lucide-react";
 import HintCanvas from "@/app/[locale]/(shared)/(modes)/learn/[id]/HintCanvas";
 import classNames from "@/utils/classnames";
+import { CardCorrector } from "@/app/[locale]/(shared)/(modes)/learn/[id]/FuzzyMatch";
 
 const normalize = (input: string) =>
   input.trim().toLowerCase().replace(/\s+/g, " ");
@@ -83,8 +84,12 @@ const LearnCard = () => {
     [],
   );
 
-  // juiste-view-teller per cardId (ref → synchroon, geen stale closure)
+  // studie-status per cardId (cardViewcount: 0 ongezien, 1 gezien, 2+ geleerd)
+  // → voedt het studoset-overzicht; NIET de voortgangsbalk.
   const viewsRef = useRef<Record<string, number>>({});
+  // mastery-teller per cardId (enkel juiste views richting cap) → voedt de bar,
+  // de queue-removal en de session-index. Gepersisteerd via `timesRelearned`.
+  const masteryRef = useRef<Record<string, number>>({});
   const attemptsRef = useRef(0);
   // persistente errorqueue: foute kaarten, na elke 5 één keer overlopen
   const errorQueueRef = useRef<number[]>([]);
@@ -100,22 +105,28 @@ const LearnCard = () => {
   if (cards && !initialized) {
     setInitialized(true);
     const scById = new Map(
-      (set?.session?.cards ?? []).map((sc) => [sc.cardId, sc.cardViewcount]),
+      (set?.session?.cards ?? []).map((sc) => [
+        sc.cardId,
+        { viewcount: sc.cardViewcount, mastery: sc.timesRelearned },
+      ]),
     );
     const views: Record<string, number> = {};
+    const mastery: Record<string, number> = {};
     let seededViews = 0;
     cards.forEach((c) => {
-      const vc = scById.get(c.id) ?? 0;
-      views[c.id] = vc;
-      // enkel kaarten in de sessie tellen mee voor de voortgang
-      if (passesFlagged(c.id)) seededViews += Math.min(vc, cap);
+      const sc = scById.get(c.id);
+      views[c.id] = sc?.viewcount ?? 0;
+      mastery[c.id] = sc?.mastery ?? 0;
+      // enkel kaarten in de sessie tellen mee voor de voortgang (op mastery)
+      if (passesFlagged(c.id)) seededViews += Math.min(mastery[c.id], cap);
     });
     // eenmalige seeding (guarded door `initialized`) → veilig in render
     viewsRef.current = views;
+    masteryRef.current = mastery;
     setTotalViews(seededViews);
     const seededQueue = cards
       .map((_, i) => i)
-      .filter((i) => (views[cards[i].id] ?? 0) < cap)
+      .filter((i) => (mastery[cards[i].id] ?? 0) < cap)
       .filter((i) => passesFlagged(cards[i].id));
 
     // resume op de laatst geziene kaart: roteer de queue zodat die vooraan staat
@@ -201,18 +212,20 @@ const LearnCard = () => {
       const scId = scByCardId.get(c.id);
       if (!scId) return [];
       const vc = viewsRef.current[c.id] ?? 0;
+      const mastery = masteryRef.current[c.id] ?? 0;
       return [
         {
           id: scId,
           number: c.number,
           cardViewcount: vc,
-          mastered: vc >= cap,
-          inQueue: vc < cap,
+          timesRelearned: mastery,
+          mastered: mastery >= cap,
+          inQueue: mastery < cap,
         },
       ];
     });
     const index = cards.reduce(
-      (s, c) => s + Math.min(viewsRef.current[c.id] ?? 0, cap),
+      (s, c) => s + Math.min(masteryRef.current[c.id] ?? 0, cap),
       0,
     );
     const attempts = attemptsRef.current;
@@ -259,7 +272,7 @@ const LearnCard = () => {
     const card = cards?.[head];
     const { corrector } = currentCard();
     if (!card || !corrector) return;
-    const correct = normalize(value) === normalize(corrector);
+    const correct = CheckInput(corrector);
     setWasCorrect(correct);
     lastSeenRef.current = card.id;
     dirtyRef.current = true;
@@ -267,9 +280,23 @@ const LearnCard = () => {
     if (!retry) {
       // accuracy enkel op hoofdbeurten (net als attempts) → geen >100%
       if (correct && !errorMode) correctRef.current += 1;
-      // enkel juiste beurten tellen mee voor mastery (cap-guard → geen overshoot)
-      if (correct && (viewsRef.current[card.id] ?? 0) < cap) {
-        viewsRef.current[card.id] = (viewsRef.current[card.id] ?? 0) + 1;
+      const inErrorQueue = errorQueueRef.current.includes(head);
+
+      // cardViewcount = studie-status (voor studoset-overzicht). Eerste keer fout
+      // → 1 ("gezien"); juist → ophogen. Beweegt de bar NIET.
+      const views = viewsRef.current[card.id] ?? 0;
+      if (correct && views < cap && !inErrorQueue) {
+        viewsRef.current[card.id] = views + 1;
+      } else if (!correct && views === 0) {
+        viewsRef.current[card.id] = 1;
+      }
+
+      // mastery = enkel juiste views richting cap → stuurt de bar. Fout telt niet.
+      // zat de kaart nog in de errorqueue? dan telt een juist antwoord ook niet —
+      // die wordt eerst uit de queue gehaald en later opnieuw getoond ter controle.
+      const mastery = masteryRef.current[card.id] ?? 0;
+      if (correct && mastery < cap && !inErrorQueue) {
+        masteryRef.current[card.id] = mastery + 1;
         setTotalViews((tv) => tv + 1);
       }
       if (!errorMode) {
@@ -292,10 +319,20 @@ const LearnCard = () => {
     if (correct) advanceTimer.current = setTimeout(() => next(true), 700);
   };
 
+  const CheckInput = (corrector: string) => {
+    // slider is 5-10; map naar similarity-threshold 0.5-1.0 (hoger = strenger).
+    const threshold = settings.strictnessLevel / 10;
+    if (threshold >= 1) {
+      return normalize(value) === normalize(corrector);
+    }
+    return CardCorrector(normalize(value), normalize(corrector), threshold);
+  };
+
   const handleHint = () => {
     setShowHint(true);
     setTimeout(() => setShowHint(false), 5000);
   };
+
   const next = (correctArg?: boolean) => {
     if (advanceTimer.current) {
       clearTimeout(advanceTimer.current);
@@ -338,7 +375,7 @@ const LearnCard = () => {
 
     // --- hoofdqueue ---
     const id = cards[head].id;
-    const mastered = (viewsRef.current[id] ?? 0) >= cap;
+    const mastered = (masteryRef.current[id] ?? 0) >= cap;
     // gemasterd → uit queue; anders achteraan opnieuw
     const nextQueue = mastered ? queue.slice(1) : [...queue.slice(1), head];
     setQueue(nextQueue);
@@ -400,6 +437,7 @@ const LearnCard = () => {
   const restart = () => {
     if (!cards) return;
     viewsRef.current = {};
+    masteryRef.current = {};
     attemptsRef.current = 0;
     correctRef.current = 0;
     errorQueueRef.current = [];

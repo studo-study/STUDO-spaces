@@ -77,6 +77,18 @@ export class updateSessionCardDTO {
   @IsBoolean()
   @IsOptional()
   flagged?: boolean;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  totalAttempts?: number;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  totalCorrect?: number;
 }
 
 export class SessionCardResponseDTO {
@@ -156,4 +168,16 @@ export class SessionCardResponseDTO {
   })
   @Expose()
   flagged: boolean;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  totalAttempts: number;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  totalCorrect: number;
 }

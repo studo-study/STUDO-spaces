@@ -27,6 +27,7 @@ import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import classNames from "@/utils/classnames";
+import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
 
 interface viewProps {
   id: string;
@@ -277,9 +278,12 @@ export default function StudosetView({ id }: viewProps) {
         </div>
 
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
-        <span className="w-full h-fit font-bold text-sm sm:text-base">
-          {t("progress_title")}:
-        </span>
+        <div className={"flex items-center justify-between w-full"}>
+          <span className="w-full h-fit font-bold text-sm sm:text-base">
+            {t("progress_title")}
+          </span>
+          <ProgressPopUpTrigger />
+        </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
           <div
             onClick={() => toggleTab("not_learned")}
@@ -287,7 +291,7 @@ export default function StudosetView({ id }: viewProps) {
               filter !== "all" && filter !== "not_learned"
                 ? "opacity-50"
                 : null,
-              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[opacity, colors] duration-300 border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("not_learned")}</span>
@@ -301,7 +305,7 @@ export default function StudosetView({ id }: viewProps) {
             onClick={() => toggleTab("reviewed")}
             className={classNames(
               filter !== "all" && filter !== "reviewed" ? "opacity-50" : null,
-              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[colors, opacity] duration-300  border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("reviewed")}</span>
@@ -311,7 +315,7 @@ export default function StudosetView({ id }: viewProps) {
             onClick={() => toggleTab("learned")}
             className={classNames(
               filter !== "all" && filter !== "learned" ? "opacity-50" : null,
-              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[opacity, colors]  duration-300 border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("studied")}</span>

@@ -140,10 +140,10 @@ export default function SvenImport({
       const VALID_CONTENT_TYPES = ["text", "latex", "code"] as const;
       const cards = data.map(
         (
-          card: Partial<CardData> & { special_content_type?: string },
+          card: Partial<CardData> & { specialContentType?: string },
           index: number,
         ) => {
-          const rawType = card.special_content_type ?? card.contentType;
+          const rawType = card.specialContentType ?? card.contentType;
           const contentType: "text" | "latex" | "code" =
             rawType &&
             (VALID_CONTENT_TYPES as readonly string[]).includes(rawType)
