@@ -1427,6 +1427,8 @@
     "save": "opslaan",
     "all": "Alle",
     "flag": "Gemarkeerd",
+    "share": "delen",
+    "settings": "instellingen",
     "ns": "Niet geleerd",
     "edit_set": "bewerk set",
     "set_private": "Studoset is privé",
@@ -1489,6 +1491,7 @@
     "courses": "vakken",
     "course_1": "vak",
     "course": {
+      "option": "Opties",
       "row": {
         "done": "afgewerkt",
         "doing": "bezig",

@@ -21,7 +21,7 @@ import { usePathname } from "@/i18n/routing";
 import { useCourses } from "@/hooks/app/courses/useCourses";
 import classNames from "@/utils/classnames";
 
-const CoursePageHeader = () => {
+const CourseHeader = () => {
   const t = useTranslations("flow.course");
   const tRow = useTranslations("flow.course.row");
   const courses = useCourses().data;
@@ -264,5 +264,5 @@ function ExamStatus({
   );
 }
 
-CoursePageHeader.displayName = "CoursePageHeader";
-export default CoursePageHeader;
+CourseHeader.displayName = "CourseDropdown";
+export default CourseHeader;

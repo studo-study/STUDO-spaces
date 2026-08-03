@@ -17,8 +17,9 @@ import "katex/dist/contrib/mhchem.mjs";
 import { codeToHtml } from "shiki";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import Image from "next/image";
-import { FaCheck } from "react-icons/fa";
 import { AiOutlineRise } from "react-icons/ai";
+import { Check, Flag } from "lucide-react";
+import { SessionCard } from "@/types/types";
 
 interface SuggestionImage {
   id: string;
@@ -41,6 +42,12 @@ interface Card {
   suggestionImage?: SuggestionImage | null;
 }
 
+/** Card + bijhorende sessiondata in één object, zodat beide bereikbaar zijn. */
+interface FlashcardItem {
+  card: Card;
+  session: SessionCard | null;
+}
+
 interface FlashcardProps {
   id: string;
   isHome?: boolean;
@@ -56,7 +63,7 @@ function persistState(id: string, s: FCState) {
       index: s.index,
       termMode: s.termMode,
       shuffleMode: s.shuffleMode,
-      shuffledIds: s.shuffled.map((c) => c.id),
+      shuffledIds: s.shuffled.map((i) => i.card.id),
       learntIds: s.learntIds,
     } satisfies PersistedState),
   );
@@ -92,34 +99,47 @@ interface FCState {
   index: number;
   termMode: boolean;
   shuffleMode: boolean;
-  shuffled: Card[];
+  shuffled: FlashcardItem[];
   learntIds: string[];
 }
 
 export default function FlashcardMode({ id, isHome }: FlashcardProps) {
   const data = useStudoset(id)?.data;
   const cards = useMemo<Card[]>(() => data?.cards ?? [], [data]);
+  const sessionCards = useMemo<SessionCard[]>(
+    () => data?.session?.cards ?? [],
+    [data],
+  );
 
-  if (cards.length === 0) return null;
+  // Join card + sessioncard op cardId zodat beide in één object zitten.
+  const items = useMemo<FlashcardItem[]>(() => {
+    const sessionByCard = new Map(sessionCards.map((s) => [s.cardId, s]));
+    return cards.map((card) => ({
+      card,
+      session: sessionByCard.get(card.id) ?? null,
+    }));
+  }, [cards, sessionCards]);
+
+  if (items.length === 0) return null;
   return (
     <div className={"w-full h-full flex flex-col items-center justify-center"}>
       <FlashcardModeInner
         id={id}
-        cards={cards}
+        items={items}
         isHome={isHome ? isHome : false}
       />
     </div>
   );
 }
 
-// Inner: cards zijn gegarandeerd beschikbaar, lazy initialisers werken hier
+// Inner: items zijn gegarandeerd beschikbaar, lazy initialisers werken hier
 function FlashcardModeInner({
   id,
-  cards,
+  items,
   isHome,
 }: {
   id: string;
-  cards: Card[];
+  items: FlashcardItem[];
   isHome: boolean;
 }) {
   const t = useTranslations("flashcards");
@@ -127,18 +147,18 @@ function FlashcardModeInner({
   const [state, setState] = useState<FCState>(() => {
     const saved = loadState(id);
     const learntIds = saved.learntIds.filter((lid) =>
-      cards.some((c) => c.id === lid),
+      items.some((i) => i.card.id === lid),
     );
-    const remaining = cards.filter((c) => !learntIds.includes(c.id));
+    const remaining = items.filter((i) => !learntIds.includes(i.card.id));
     const restoredShuffled =
       saved.shuffledIds.length > 0
         ? (() => {
             const ordered = saved.shuffledIds
-              .map((sid) => cards.find((c) => c.id === sid))
-              .filter(Boolean) as Card[];
-            // valid als alle huidige remaining cards erin zitten
-            const validIds = new Set(remaining.map((c) => c.id));
-            const filtered = ordered.filter((c) => validIds.has(c.id));
+              .map((sid) => items.find((i) => i.card.id === sid))
+              .filter(Boolean) as FlashcardItem[];
+            // valid als alle huidige remaining items erin zitten
+            const validIds = new Set(remaining.map((i) => i.card.id));
+            const filtered = ordered.filter((i) => validIds.has(i.card.id));
             return filtered.length === remaining.length ? filtered : remaining;
           })()
         : remaining;
@@ -193,7 +213,7 @@ function FlashcardModeInner({
       ...s,
       shuffleMode: newMode,
       index: 0,
-      shuffled: newMode ? shuffle(cards) : cards,
+      shuffled: newMode ? shuffle(items) : items,
     });
   };
 
@@ -201,7 +221,7 @@ function FlashcardModeInner({
     const s = stateRef.current;
     update({
       ...s,
-      shuffled: s.shuffleMode ? shuffle(cards) : cards,
+      shuffled: s.shuffleMode ? shuffle(items) : items,
       learntIds: [],
       index: 0,
     });
@@ -212,10 +232,10 @@ function FlashcardModeInner({
     update({ ...s, index: 0 });
   };
 
-  const toggleLearnt = (card: Card) => {
+  const toggleLearnt = (item: FlashcardItem) => {
     const s = stateRef.current;
-    const newShuffled = s.shuffled.filter((c) => c.id !== card.id);
-    const newLearntIds = [...s.learntIds, card.id];
+    const newShuffled = s.shuffled.filter((i) => i.card.id !== item.card.id);
+    const newLearntIds = [...s.learntIds, item.card.id];
     const newIndex =
       s.index >= newShuffled.length ? newShuffled.length : s.index;
     update({
@@ -252,14 +272,14 @@ function FlashcardModeInner({
         <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-studoborder/30">
           <div
             style={{
-              width: `${isFinished ? 100 : (learntIds.length / cards.length) * 100}%`,
+              width: `${isFinished ? 100 : (learntIds.length / items.length) * 100}%`,
             }}
             className="h-full bg-linear-90 from-emerald-400 to-emerald-500 transition-all duration-500"
           />
           {!isFinished && (
             <div
               style={{
-                width: `${shuffled.length > 0 ? (index / cards.length) * 100 : 0}%`,
+                width: `${shuffled.length > 0 ? (index / items.length) * 100 : 0}%`,
               }}
               className="h-full bg-linear-90 from-orange-400 to-orange-500 transition-all duration-300"
             />
@@ -311,10 +331,11 @@ function FlashcardModeInner({
           />
         ) : (
           <Card
-            card={shuffled[index]}
-            key={shuffled[index].id}
+            item={shuffled[index]}
+            key={shuffled[index].card.id}
             termMode={termMode}
             onLearnt={toggleLearnt}
+            isHome={isHome}
           />
         )}
       </div>
@@ -349,11 +370,14 @@ function FlashcardModeInner({
 }
 
 interface CardProps {
-  card: Card;
+  item: FlashcardItem;
   termMode: boolean;
-  onLearnt: (value: Card) => void;
+  onLearnt: (value: FlashcardItem) => void;
+  onFlag?: (value: SessionCard | null) => void;
+  isHome?: boolean;
 }
-function Card({ card, termMode, onLearnt }: CardProps) {
+function Card({ item, termMode, onLearnt, onFlag, isHome = false }: CardProps) {
+  const { card, session } = item;
   const [isFlipped, setIsFlipped] = useState(false);
   const t = useTranslations("card");
 
@@ -378,10 +402,16 @@ function Card({ card, termMode, onLearnt }: CardProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <BaseButton
-              iconLeft={<FaCheck />}
+              iconLeft={<Check size={15} />}
               label={t("learnt")}
-              onClick={() => onLearnt(card)}
+              onClick={() => onLearnt(item)}
             />
+            {isHome && onFlag && (
+              <BaseButton
+                icon={<Flag size={15} />}
+                onClick={() => onFlag(session)}
+              />
+            )}
           </div>
           <span
             className={
@@ -462,7 +492,7 @@ function Card({ card, termMode, onLearnt }: CardProps) {
   );
 }
 
-function shuffle(array: Card[]): Card[] {
+function shuffle(array: FlashcardItem[]): FlashcardItem[] {
   const arr = [...array];
   let currentIndex = arr.length;
   while (currentIndex !== 0) {

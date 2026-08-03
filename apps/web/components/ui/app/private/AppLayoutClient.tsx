@@ -24,7 +24,6 @@ const STUDOSET_ROUTES = [
   "/flashcards/",
   "/learn/",
   "/speedy/",
-  "/course",
   "/sets",
 ];
 
