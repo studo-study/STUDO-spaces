@@ -18,6 +18,7 @@ import { IoIosAdd } from "react-icons/io";
 import { CalendarCheck, Link, Presentation } from "lucide-react";
 import { useCreateCourse } from "@/hooks/app/courses/useCreateCourse";
 import { useToast } from "@/components/providers/app/ToastProvider";
+import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 
 const DEFAULT_ICON = "blue:bookopen";
 
@@ -189,7 +190,7 @@ const CreateCourse = (props: CreateCourseProps) => {
             icon={<IoClose size={15} />}
           />
         </div>
-        <div className={"w-full flex flex-col gap-2 pt-12 px-7"}>
+        <div className={"mi-w-full flex flex-col gap-2 pt-12 px-7"}>
           <IconPicker
             course
             value={selectedIcon}
@@ -203,6 +204,7 @@ const CreateCourse = (props: CreateCourseProps) => {
             textSize={"lg"}
             error={!title ? errors.title : undefined}
             ref={inputRef}
+            width={"full"}
           />
           <TextArea
             placeholder={t("description")}
@@ -212,36 +214,46 @@ const CreateCourse = (props: CreateCourseProps) => {
           />
           {showMetadata && (
             <div>
-              <div className={"w-full flex flex-row gap-2 pt-5 scroll-hidden"}>
-                <TagSelector
-                  icon={<Link size={16} />}
-                  value={link}
-                  onChange={setLink}
-                  freeInput
-                  link
-                  placeholder={t("add_link")}
-                />
+              <div
+                className={
+                  "relative z-99999 w-full flex flex-row gap-2 pt-5 scroll-hidden"
+                }
+              >
+                <BaseTooltip content={t("add_course_link")}>
+                  <TagSelector
+                    icon={<Link size={16} />}
+                    value={link}
+                    onChange={setLink}
+                    freeInput
+                    link
+                    placeholder={t("add_link")}
+                  />
+                </BaseTooltip>
 
-                <TagSelector
-                  icon={<CalendarCheck size={16} />}
-                  value={examDate}
-                  datePicker
-                  onChange={setExamDate}
-                />
+                <BaseTooltip content={t("add_exam_date")}>
+                  <TagSelector
+                    icon={<CalendarCheck size={16} />}
+                    value={examDate}
+                    datePicker
+                    onChange={setExamDate}
+                  />
+                </BaseTooltip>
 
-                <TagSelector
-                  icon={<Presentation size={16} />}
-                  options={[
-                    { value: "1", label: "Monday" },
-                    { value: "2", label: "Tuesday" },
-                    { value: "3", label: "Wednesday" },
-                    { value: "4", label: "Thursday" },
-                    { value: "5", label: "Friday" },
-                  ]}
-                  value={days}
-                  onChange={setDays}
-                  multiple
-                />
+                <BaseTooltip content={t("add_lesson_day")}>
+                  <TagSelector
+                    icon={<Presentation size={16} />}
+                    options={[
+                      { value: "1", label: "Monday" },
+                      { value: "2", label: "Tuesday" },
+                      { value: "3", label: "Wednesday" },
+                      { value: "4", label: "Thursday" },
+                      { value: "5", label: "Friday" },
+                    ]}
+                    value={days}
+                    onChange={setDays}
+                    multiple
+                  />
+                </BaseTooltip>
               </div>
             </div>
           )}

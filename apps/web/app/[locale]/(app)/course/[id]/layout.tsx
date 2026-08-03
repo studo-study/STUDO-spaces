@@ -1,30 +1,25 @@
-import { ReactNode } from "react";
+"use client";
+import { ReactNode, use } from "react";
 import CoursePageHeader from "@/components/ui/app/private/course/layout/CoursePageHeader";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
-import CourseStoreInitializer from "@/components/providers/app/CourseStoreInitializer";
-import { auth } from "@/auth";
+import { useCourse } from "@/hooks/app/courses/useCourse";
 
-export default async function CoursepageLayout({
+export default function CoursePageLayout({
   params,
   children,
 }: {
   params: Promise<{ id: string }>;
   children: ReactNode;
 }) {
-  const [{ id }, session] = await Promise.all([params, auth()]);
-  const token = session?.accessToken;
-  const res = await fetch(`${process.env.AUTH_API_URL}/flows/course/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-    method: "GET",
-  });
-  const data = await res.json();
+  const { id } = use(params);
+  // Vult de react-query cache (courseKeys.course(id)); CoursePageHeader en de
+  // children lezen dezelfde entry via useActiveCourse.
+  useCourse(id);
+
   return (
-    <>
-      <CourseStoreInitializer course={data} />
-      <PageContainer>
-        <CoursePageHeader />
-        <div className={"flex flex-1 min-h-0 w-full"}>{children}</div>
-      </PageContainer>
-    </>
+    <PageContainer>
+      <CoursePageHeader />
+      <div className={"flex flex-1 min-h-0 w-full"}>{children}</div>
+    </PageContainer>
   );
 }

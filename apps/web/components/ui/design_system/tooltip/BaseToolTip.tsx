@@ -86,7 +86,7 @@ const BaseTooltip = ({
         createPortal(
           <div
             role="tooltip"
-            className={`fixed z-9999 whitespace-nowrap rounded-full border border-studoborder/30
+            className={`fixed z-[100000] whitespace-nowrap rounded-full border border-studoborder/30
               bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg
               pointer-events-none backdrop-blur-sm
               transition-all duration-150 ease-out

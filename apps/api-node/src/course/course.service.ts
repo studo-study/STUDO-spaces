@@ -3,9 +3,21 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { courses, courseUsers } from '../drizzle/schema';
-import { eq } from 'drizzle-orm';
-import { Course, CreateCourse, FullCourseResponse } from '@studo/types';
+import {
+  courses,
+  courseUsers,
+  courseWidgets,
+  courseWorkspaces,
+  studysets,
+  visualsets,
+} from '../drizzle/schema';
+import { and, eq, inArray } from 'drizzle-orm';
+import {
+  Course,
+  CourseSetItem,
+  CreateCourse,
+  FullCourseResponse,
+} from '@studo/types';
 
 const iso = (d: Date | null): string | null => d?.toISOString() ?? null;
 
@@ -31,7 +43,21 @@ export class CourseService {
         updatedAt: iso(c.updatedAt),
       }));
   }
-  async getFullCourse(courseId: string): Promise<FullCourseResponse> {
+  async getFullCourse(
+    courseId: string,
+    userId: string,
+  ): Promise<FullCourseResponse> {
+    const user = await this.db.query.courseUsers.findMany({
+      where: and(
+        eq(courseUsers.userId, userId),
+        eq(courseUsers.courseId, courseId),
+      ),
+    });
+
+    if (!user) {
+      throw new NotFoundException('user not in course');
+    }
+
     const course = await this.db.query.courses.findFirst({
       where: eq(courses.id, courseId),
       with: {
@@ -40,6 +66,7 @@ export class CourseService {
         tables: { with: { rows: { with: { resources: true } } } },
         sets: true,
         documents: true,
+        workspaces: { with: { widgets: true } },
       },
     });
 
@@ -82,6 +109,59 @@ export class CourseService {
 
     const allRows = table?.rows ?? [];
 
+    const addedByBySet = new Map(course.sets.map((s) => [s.setId, s.addedBy]));
+    const studoIds = course.sets
+      .filter((s) => s.setType === 'studoset')
+      .map((s) => s.setId);
+    const visualIds = course.sets
+      .filter((s) => s.setType === 'visualset')
+      .map((s) => s.setId);
+
+    const [studoRows, visualRows] = await Promise.all([
+      studoIds.length
+        ? this.db
+            .select()
+            .from(studysets)
+            .where(inArray(studysets.id, studoIds))
+        : Promise.resolve([]),
+      visualIds.length
+        ? this.db
+            .select()
+            .from(visualsets)
+            .where(inArray(visualsets.id, visualIds))
+        : Promise.resolve([]),
+    ]);
+
+    const sets: CourseSetItem[] = [
+      ...studoRows.map((s) => ({
+        setType: 'studoset' as const,
+        addedBy: addedByBySet.get(s.id) ?? '',
+        id: s.id,
+        title: s.title,
+        globalTermLanguage: s.globalTermLanguage,
+        globalDefinitionLanguage: s.globalDefinitionLanguage,
+        createdAt: s.createdAt,
+        lastUpdated: s.lastUpdated,
+        publicSet: s.publicSet,
+        displayName: s.displayName,
+        imgUrl: s.imgUrl,
+        userId: s.userId,
+      })),
+      ...visualRows.map((s) => ({
+        setType: 'visualset' as const,
+        addedBy: addedByBySet.get(s.id) ?? '',
+        id: s.id,
+        title: s.title,
+        studoset: s.studoset,
+        createdAt: s.createdAt,
+        lastUpdated: s.lastUpdated,
+        publicSet: s.publicSet,
+        displayName: s.displayName,
+        imgUrl: s.imgUrl,
+        userId: s.userId,
+      })),
+    ];
+
     return {
       id: course.id,
       boardId: course.boardId,
@@ -97,14 +177,7 @@ export class CourseService {
       totalDone: allRows.filter((r) => r.status === 'done').length,
       totalInProgress: allRows.filter((r) => r.status === 'doing').length,
       table,
-      sets: course.sets.map((s) => ({
-        setId: s.setId,
-        setType: s.setType,
-        addedBy: s.addedBy,
-        courseId: s.courseId,
-        createdAt: iso(s.createdAt),
-        updatedAt: iso(s.updatedAt),
-      })),
+      sets,
       documents: course.documents.map((d) => ({
         id: d.id,
         courseId: d.courseId,
@@ -129,10 +202,27 @@ export class CourseService {
         imgUrl: m.user?.imgUrl,
         createdAt: iso(m.createdAt),
       })),
+      widgets: course.workspaces.flatMap((workspace) =>
+        workspace.widgets.map((w) => ({
+          id: w.id,
+          workspaceId: w.workspaceId,
+          type: w.type,
+          x: w.x,
+          y: w.y,
+          w: w.w,
+          h: w.h,
+          config: w.config,
+          createdAt: iso(w.createdAt) ?? '',
+          updatedAt: iso(w.updatedAt) ?? '',
+        })),
+      ),
     };
   }
 
-  async createCourse(body: CreateCourse): Promise<FullCourseResponse> {
+  async createCourse(
+    body: CreateCourse,
+    userId: string,
+  ): Promise<FullCourseResponse> {
     const [course] = await this.db
       .insert(courses)
       .values({
@@ -144,6 +234,13 @@ export class CourseService {
       })
       .returning();
 
-    return await this.getFullCourse(course.id);
+    // Koppel de maker als owner, anders verschijnt de course niet in zijn lijst.
+    await this.db.insert(courseUsers).values({
+      userId,
+      courseId: course.id,
+      role: 'owner',
+    });
+
+    return await this.getFullCourse(course.id, userId);
   }
 }

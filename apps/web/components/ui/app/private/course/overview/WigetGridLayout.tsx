@@ -35,7 +35,7 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
   useEffect(() => {
     if (!courseId) return;
     let cancelled = false;
-    fetch(`/api/flows/course/${courseId}/widgets`)
+    fetch(`/api/courses/${courseId}/widgets`)
       .then((res) => (res.ok ? res.json() : { widgets: [] }))
       .then((data: { widgets?: WidgetInstance[] }) => {
         if (!cancelled) hydrate(courseId, data.widgets ?? []);

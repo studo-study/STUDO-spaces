@@ -1,3 +1,6 @@
+import type { StudysetResponse } from "./studyset";
+import type { VisualsetResponse } from "./visualset";
+
 export type CourseRole = "owner" | "editor" | "viewer";
 export type SetType = "studoset" | "visualset";
 export type WidgetType =
@@ -63,7 +66,7 @@ export interface CourseWidget {
   y: number;
   w: number;
   h: number;
-  config: Record<string, unknown>;
+  config: Record<string, unknown> | unknown;
   createdAt: string;
   updatedAt: string;
 }
@@ -85,14 +88,18 @@ export interface CourseDocument {
   updatedAt: string | null;
 }
 
-export interface CourseSet {
-  setId: string;
-  setType: SetType;
+/** Volledige set-data zoals gekoppeld aan een course (join course_sets). */
+export interface CourseStudyset extends StudysetResponse {
+  setType: "studoset";
   addedBy: string;
-  courseId: string;
-  createdAt: string | null;
-  updatedAt: string | null;
 }
+
+export interface CourseVisualset extends VisualsetResponse {
+  setType: "visualset";
+  addedBy: string;
+}
+
+export type CourseSetItem = CourseStudyset | CourseVisualset;
 
 export interface CourseResource {
   id: string;
@@ -143,9 +150,10 @@ export interface CourseResponse extends Course {
 /** Volledige course incl. de (ene) planning-tabel, sets, documenten. */
 export interface FullCourseResponse extends CourseResponse {
   table: CourseTable | null; // max één tabel per course
-  sets: CourseSet[];
+  sets: CourseSetItem[];
   documents: CourseDocument[];
   members: CourseMember[];
+  widgets?: CourseWidget[];
 }
 
 export interface CoursesResponse {

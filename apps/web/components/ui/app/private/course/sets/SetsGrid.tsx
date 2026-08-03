@@ -3,46 +3,31 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import SetSearch from "@/components/ui/app/private/your-files/sets/search";
 import ListItems from "@/components/ui/app/private/your-files/sets/listitems";
-import { useSets } from "@/hooks/app/sets/useSets";
-import { StudysetResponse, type VisualsetResponse } from "@studo/types";
-
-export interface StudySetItem {
-  id: string;
-  title: string;
-  studoset?: boolean;
-  globalTermLanguage?: string;
-  globalDefinitionLanguage?: string;
-  createdAt: string;
-  lastUpdated: string;
-  publicSet: boolean;
-  displayName: string;
-  imgUrl: string;
-  userId: string;
-  type: "studyset" | "visualset";
-  flowcourseIcon?: string;
-}
+import type { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
+import { useCourse } from "@/hooks/app/courses/useCourse";
+import { useParams } from "next/navigation";
 
 export default function CourseSetsGrid() {
-  const { sets, visualsets } = useSets();
+  const { id } = useParams<{ id: string }>();
+  const courseSets = useCourse(id).data?.sets ?? [];
+
   const allSets: StudySetItem[] = useMemo(
-    () => [
-      ...sets.map((s: StudysetResponse) => ({
+    () =>
+      courseSets.map((s) => ({
         ...s,
-        type: "studyset" as const,
+        type:
+          s.setType === "studoset"
+            ? ("studyset" as const)
+            : ("visualset" as const),
       })),
-      ...visualsets.map((s: VisualsetResponse) => ({
-        ...s,
-        type: "visualset" as const,
-      })),
-    ],
-    [sets, visualsets],
+    [courseSets],
   );
 
   const [sortMode, setSortMode] = useState<"all" | "recent" | "created">("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredSets = useMemo(() => {
-    let result = allSets.filter((set) => set);
+    let result = allSets;
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       result = result.filter((s) => s.title.toLowerCase().includes(q));

@@ -997,7 +997,12 @@
     "select_folder": "Kies een map",
     "select_language_term": "Kies een taal voor termen",
     "select_language_def": "Kies een taal voor definities",
-    "create_course": "Creëer vak"
+    "create_course": "Creëer vak",
+    "english": "Engels",
+    "dutch": "Nederlands",
+    "french": "Frans",
+    "german": "Duits",
+    "spanish": "Spaans"
   },
   "editstudoset": {
     "edit": "Bewerk Studoset",
@@ -1499,8 +1504,11 @@
       "add_metadata": "Metadata toevoegen",
       "add_later": "Later toevoegen",
       "add_link": "Link toevoegen",
+      "add_course_link": "Connecteer leerportaal",
       "exam_date": "Examendatum",
+      "add_exam_date": "Voeg examendatum toe",
       "exam_status": "Examenstatus",
+      "add_lesson_day": "Voeg lesdagen toe",
       "behind": "Achter op schema",
       "slightly_behind": "Licht achter",
       "error_icon_required": "Kies een icoon",
@@ -1703,5 +1711,10 @@
   },
   "widgets": {
     "title": "Widgets"
+  },
+
+  "combobox": {
+    "options": "Opties",
+    "noResults": "Geen resultaten"
   }
 }
