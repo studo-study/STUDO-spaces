@@ -2,17 +2,13 @@
 
 import CourseToggle from "@/components/ui/app/private/course/layout/CourseToggle";
 import { Layers, NotebookText, Rows3, ScrollText } from "lucide-react";
-import { useRouter } from "next/navigation";
 import CourseItemProgress from "@/components/ui/app/private/course/layout/CourseItemProgress";
 import { useCourseTotals } from "@/hooks/app/courses/useCourseData";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import classNames from "@/utils/classnames";
-import Searchbar from "@/components/ui/app/public/landing_header/searchbar";
-
 const CourseSidebar: React.FC = () => {
   const t = useTranslations("flow.course");
-  const tRow = useTranslations("flow.course.row");
 
   const { totalLength, done, inProgress } = useCourseTotals();
   const segments = usePathname().split("/");

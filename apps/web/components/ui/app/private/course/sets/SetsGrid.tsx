@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 
 export default function CourseSetsGrid() {
   const { id } = useParams<{ id: string }>();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const courseSets = useCourse(id).data?.sets ?? [];
 
   const allSets: StudySetItem[] = useMemo(

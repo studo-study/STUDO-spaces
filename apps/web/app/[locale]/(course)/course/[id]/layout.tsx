@@ -1,7 +1,5 @@
 "use client";
 import { ReactNode, use } from "react";
-import CoursePageHeader from "@/components/ui/app/private/course/layout/CourseHeader";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 
 export default function CoursePageLayout({
