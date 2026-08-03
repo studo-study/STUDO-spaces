@@ -3,14 +3,7 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import {
-  courses,
-  courseUsers,
-  courseWidgets,
-  courseWorkspaces,
-  studysets,
-  visualsets,
-} from '../drizzle/schema';
+import { courses, courseUsers, studysets, visualsets } from '../drizzle/schema';
 import { and, eq, inArray } from 'drizzle-orm';
 import {
   Course,

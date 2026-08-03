@@ -5,7 +5,6 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
-  Put,
   Request,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
