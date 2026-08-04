@@ -50,6 +50,7 @@ export default function StudosetView({ id }: viewProps) {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const learnSettings = useLearnStore((state) => state.learnSettings);
+  const StudoSession = useStudosetStore((state) => state.studosetSession);
   const [showMessage] = useState(false);
   // init tab uit de store zodat de tab-visual matcht met de opgeslagen setting
   const [tab, setTab] = useState<Tab>(
@@ -149,8 +150,6 @@ export default function StudosetView({ id }: viewProps) {
       setFilter(input as Filter);
     }
   };
-
-  const isFinished = (totalCards ?? 0) <= studied;
 
   if (!data?.cards) return null;
 
@@ -300,7 +299,7 @@ export default function StudosetView({ id }: viewProps) {
           <span className="w-full h-fit font-bold text-sm sm:text-base">
             {t("progress_title")}
           </span>
-          {isFinished && (
+          {(StudoSession?.completions ?? 0) >= 1 && (
             <BaseTooltip content={t("progress_visualized")} z={999}>
               <ProgressPopUpTrigger />
             </BaseTooltip>

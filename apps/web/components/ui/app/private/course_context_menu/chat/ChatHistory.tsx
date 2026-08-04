@@ -2,7 +2,7 @@ import InputField from "@/components/ui/design_system/input/InputField";
 import { useChats } from "@/hooks/app/chat/useChats";
 import { ChatResponse } from "@studo/types/dist/chat";
 import { Pin } from "lucide-react";
-import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
+import { useSideMenu } from "@/store/coursecontextmenu/SideMenuStore";
 
 interface ChatItemProps {
   chat: ChatResponse;

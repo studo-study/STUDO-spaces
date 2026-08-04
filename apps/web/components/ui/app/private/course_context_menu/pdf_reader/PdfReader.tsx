@@ -7,7 +7,7 @@ import PdfCanvas from "@/components/ui/app/private/course_context_menu/pdf_reade
 import { mockDocument } from "@/components/ui/app/private/course_context_menu/pdf_reader/mock/mock";
 import { usePdfReader } from "@/store/coursecontextmenu/PdfStore";
 import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
-import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
+import { useSideMenu } from "@/store/coursecontextmenu/SideMenuStore";
 
 const PdfReader: React.FC = () => {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});

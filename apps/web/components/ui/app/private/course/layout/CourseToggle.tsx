@@ -23,14 +23,6 @@ const CourseToggle = () => {
 
   return (
     <div className={" flex flex-row items-center gap-3"}>
-      <Link
-        href={"/your-files/courses"}
-        className={
-          "w-fit h-fit p-1 hover:bg-studogrey/30 rounded-xl dark:text-white text-studodarkblue"
-        }
-      >
-        <ChevronLeft />
-      </Link>
       <div className={"relative min-w-0 flex-1"}>
         <div className={"flex flex-row gap-3 items-center w-full"}>
           <div

@@ -1,16 +1,29 @@
 "use client";
-import { useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import SetSearch from "@/components/ui/app/private/your-files/sets/search";
 import ListItems from "@/components/ui/app/private/your-files/sets/listitems";
 import type { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import { useParams } from "next/navigation";
+import { useCourseStore } from "@/store/course/couresStore";
 
 export default function CourseSetsGrid() {
   const { id } = useParams<{ id: string }>();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const courseSets = useCourse(id).data?.sets ?? [];
+
+  //nav
+  const setNav = useCourseStore((state) => state.setNav);
+  useEffect(() => {
+    setNav([
+      {
+        title: "Sets",
+        href: "sets",
+        isLast: true,
+      },
+    ]);
+  }, [setNav]);
 
   const allSets: StudySetItem[] = useMemo(
     () =>

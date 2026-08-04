@@ -9,7 +9,10 @@ import {
   Settings,
   SlidersHorizontal,
 } from "lucide-react";
-import { MenuOrigin, useSideMenu } from "@/store/coursecontextmenu/CourseStore";
+import {
+  MenuOrigin,
+  useSideMenu,
+} from "@/store/coursecontextmenu/SideMenuStore";
 import { usePathname } from "@/i18n/routing";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import { MenuConfig, resolveMenuConfig } from "./config";

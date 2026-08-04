@@ -632,6 +632,18 @@ body::-webkit-scrollbar {
     }
 }
 
+@KeyFrames rotate {
+    0% {
+        rotate: 0deg;
+    }
+    50% {
+        rotate: 180deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
+
 .aiBorderAnimation {
     background: conic-gradient(
             from var(--angle, 90deg),
