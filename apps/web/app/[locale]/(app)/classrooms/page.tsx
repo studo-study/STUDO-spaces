@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function ClassroomsPage() {
   return (
-    <div className="w-full h-full">
+    <div className="min-h-0 min-w-0 flex-1">
       <Grid />
     </div>
   );

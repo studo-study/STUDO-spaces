@@ -1,3 +1,6 @@
+import type { StudysetResponse } from "./studyset";
+import type { VisualsetResponse } from "./visualset";
+
 export type CourseRole = "owner" | "editor" | "viewer";
 export type SetType = "studoset" | "visualset";
 export type WidgetType =
@@ -28,18 +31,6 @@ export type MimeType = "pdf" | "docx";
 
 // --- Entiteiten ---
 
-export interface Board {
-  id: string;
-  title: string;
-  icon: string;
-  publicBoard: boolean | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  academyYear: number | null;
-  examDate: string | null;
-  institute: string | null;
-}
-
 export interface Course {
   id: string;
   boardId: string | null; // null = standalone
@@ -62,15 +53,6 @@ export interface CourseMember {
   createdAt: string | null;
 }
 
-export interface BoardMember {
-  boardId: string;
-  userId: string;
-  role: CourseRole;
-  displayName?: string;
-  imgUrl?: string;
-  createdAt: string | null;
-}
-
 export interface CourseWorkspace {
   id: string;
   courseId: string;
@@ -84,7 +66,7 @@ export interface CourseWidget {
   y: number;
   w: number;
   h: number;
-  config: Record<string, unknown>;
+  config: Record<string, unknown> | unknown;
   createdAt: string;
   updatedAt: string;
 }
@@ -106,14 +88,18 @@ export interface CourseDocument {
   updatedAt: string | null;
 }
 
-export interface CourseSet {
-  setId: string;
-  setType: SetType;
+/** Volledige set-data zoals gekoppeld aan een course (join course_sets). */
+export interface CourseStudyset extends StudysetResponse {
+  setType: "studoset";
   addedBy: string;
-  courseId: string;
-  createdAt: string | null;
-  updatedAt: string | null;
 }
+
+export interface CourseVisualset extends VisualsetResponse {
+  setType: "visualset";
+  addedBy: string;
+}
+
+export type CourseSetItem = CourseStudyset | CourseVisualset;
 
 export interface CourseResource {
   id: string;
@@ -164,46 +150,14 @@ export interface CourseResponse extends Course {
 /** Volledige course incl. de (ene) planning-tabel, sets, documenten. */
 export interface FullCourseResponse extends CourseResponse {
   table: CourseTable | null; // max één tabel per course
-  sets: CourseSet[];
+  sets: CourseSetItem[];
   documents: CourseDocument[];
   members: CourseMember[];
-}
-
-/** Gedeelde eigenaar/planning-velden (nog niet altijd door de API geleverd). */
-interface BoardMeta {
-  ownerId?: string;
-  ownerName?: string;
-  ownerPfp?: string;
-  year?: string | null;
-  semester?: string | null;
-  school?: string | null;
-  progress?: number;
-  totalDone?: number;
-  totalInProgress?: number;
-  totalLength?: number;
-}
-
-/** Board-overzicht met de courses eronder. */
-export interface BoardOverview extends Board, BoardMeta {
-  courses: CourseResponse[];
-  members: BoardMember[];
-}
-
-/** Compacte board-kaart (home): `courses` is het aantal, niet de lijst. */
-export interface BoardSummary extends Board, BoardMeta {
-  courses: number;
+  widgets?: CourseWidget[];
 }
 
 export interface CoursesResponse {
   courses: CourseResponse[];
-}
-
-export interface BoardsResponse {
-  boards: BoardOverview[];
-}
-
-export interface MyBoardsResponse {
-  boards: BoardSummary[];
 }
 
 // --- Create / update payloads ---

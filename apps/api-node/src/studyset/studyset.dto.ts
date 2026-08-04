@@ -28,15 +28,22 @@ export class CreateStudysetDto {
     example: 'en',
     description: 'Language of the terms of the studoset (ISO 639-1 code)',
   })
-  @IsString({ name: 'global_term_language', maxLength: 2 })
+  @IsString({ maxLength: 2 })
   globalTermLanguage: string;
 
   @ApiProperty({
     example: 'nl-NL',
     description: 'Language of the definitions of the studoset (ISO 639-1 code)',
   })
-  @IsString({ name: 'global_definition_language', maxLength: 2 })
+  @IsString({ maxLength: 2 })
   globalDefinitionLanguage: string;
+
+  @ApiProperty({
+    description: 'Optional course to attach the new studoset to',
+    required: false,
+  })
+  @IsString({ optional: true })
+  flowcourseId?: string;
 
   @IsArray()
   @ValidateNested({ each: true })

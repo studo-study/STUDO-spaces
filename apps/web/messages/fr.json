@@ -712,5 +712,36 @@
     "stat_rounds": "Manches",
     "stat_time": "Temps",
     "stat_accuracy": "Précision"
+  },
+  "studoset": {
+    "stats": {
+      "title": "Progression",
+      "general_title": "Général",
+      "cards_title": "Par carte",
+      "graph": "Graphique",
+      "list": "Liste",
+      "accuracy": "Précision",
+      "avg_time": "Temps de réponse moyen",
+      "longest_streak": "Plus longue série",
+      "completions": "Fois terminé",
+      "time_studied": "Temps étudié",
+      "learned": "Appris",
+      "learned_seg": "Appris",
+      "in_progress_seg": "En cours",
+      "not_started_seg": "Pas commencé",
+      "hardest_title": "Cartes difficiles",
+      "no_mistakes": "Aucune erreur 🎉",
+      "wrong_axis": "Faux",
+      "attempts_label": "essayé",
+      "wrong_label": "faux",
+      "avg_time_label": "temps moy.",
+      "accuracy_label": "précision",
+      "wrong_suffix": "faux",
+      "hour_unit": "h",
+      "min_unit": "m",
+      "axis_time": "Temps de réponse moyen (s)",
+      "axis_accuracy": "Précision (%)",
+      "no_data": "Pas encore de données"
+    }
   }
 }

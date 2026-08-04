@@ -108,6 +108,39 @@ export class UpdateStudysessionDto {
   longestFocusStreak?: number;
 
   @ApiProperty({
+    description: 'Cumulatief aantal beurten',
+    example: 120,
+    required: false,
+  })
+  @IsNumber({
+    type: 'integer',
+    optional: true,
+  })
+  totalAttempts?: number;
+
+  @ApiProperty({
+    description: 'Cumulatief aantal juiste beurten',
+    example: 95,
+    required: false,
+  })
+  @IsNumber({
+    type: 'integer',
+    optional: true,
+  })
+  totalCorrect?: number;
+
+  @ApiProperty({
+    description: 'Aantal keer volledig afgewerkt',
+    example: 3,
+    required: false,
+  })
+  @IsNumber({
+    type: 'integer',
+    optional: true,
+  })
+  completions?: number;
+
+  @ApiProperty({
     description: 'Laatst bestudeerd',
     example: '2024-01-15T11:15:00.000Z',
     required: false,
@@ -213,6 +246,24 @@ export class StudysessionDTO {
   longestFocusStreak: number;
 
   @ApiProperty({
+    description: 'Cumulatief aantal beurten',
+    example: 120,
+  })
+  totalAttempts: number;
+
+  @ApiProperty({
+    description: 'Cumulatief aantal juiste beurten',
+    example: 95,
+  })
+  totalCorrect: number;
+
+  @ApiProperty({
+    description: 'Aantal keer volledig afgewerkt',
+    example: 3,
+  })
+  completions: number;
+
+  @ApiProperty({
     description: 'Laatst gezien item',
     example: 'card_123',
   })
@@ -294,6 +345,24 @@ export class StudysessionResponseDto {
     example: 10,
   })
   longestFocusStreak: number;
+
+  @ApiProperty({
+    description: 'Cumulatief aantal beurten',
+    example: 120,
+  })
+  totalAttempts: number;
+
+  @ApiProperty({
+    description: 'Cumulatief aantal juiste beurten',
+    example: 95,
+  })
+  totalCorrect: number;
+
+  @ApiProperty({
+    description: 'Aantal keer volledig afgewerkt',
+    example: 3,
+  })
+  completions: number;
 
   @ApiProperty({
     description: 'Laatst gezien item',

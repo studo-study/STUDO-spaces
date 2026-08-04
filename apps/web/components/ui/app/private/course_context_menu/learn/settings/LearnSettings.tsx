@@ -28,6 +28,8 @@ type LearnSettingsType = {
     description?: string;
     changeSection?: string;
     value?: string | number;
+    min?: number;
+    max?: number;
     options?: Tab[];
     onchange: (input: never) => void;
   }[];
@@ -83,6 +85,8 @@ const LearnSettings = () => {
           toggle: "slider",
           description: "revision_count_description",
           value: learnSettings.revisionCount,
+          min: 2,
+          max: 5,
           changeSection: "pomodoro",
           onchange: useLearnStore(
             (state) => state.learnSettings.setRevisionCount,
@@ -96,6 +100,18 @@ const LearnSettings = () => {
           changeSection: "flagged",
           onchange: useLearnStore(
             (state) => state.learnSettings.setFlaggedMode,
+          ),
+        },
+        {
+          label: "strictness_level",
+          toggle: "slider",
+          description: "strictness_level_description",
+          value: learnSettings.strictnessLevel,
+          min: 5,
+          max: 10,
+          changeSection: "pomodoro",
+          onchange: useLearnStore(
+            (state) => state.learnSettings.setStrictnessLevel,
           ),
         },
       ],
@@ -188,8 +204,8 @@ const LearnSettings = () => {
                     )}
                     {subItem.toggle === "slider" && (
                       <SimpleSlider
-                        min={1}
-                        max={5}
+                        min={subItem.min ?? 0}
+                        max={subItem.max ?? 0}
                         value={[subItem.value as number]}
                         onValueChange={(value) =>
                           (subItem.onchange as (v: number) => void)(value[0])

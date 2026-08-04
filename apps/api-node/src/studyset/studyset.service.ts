@@ -28,6 +28,7 @@ import {
   classrooms,
   classroomsets,
   classroomusers,
+  courseSets,
   pins,
   sessioncards,
   setlikes,
@@ -123,6 +124,17 @@ export class StudysetService {
     if (CARDS.length > 0) {
       await this.db.insert(cards).values(CARDS);
     }
+
+    // Optioneel: koppel de nieuwe set aan een course.
+    if (data.flowcourseId) {
+      await this.db.insert(courseSets).values({
+        setId,
+        setType: 'studoset',
+        addedBy: userId,
+        courseId: data.flowcourseId,
+      });
+    }
+
     await this.invalidateSyncCache(userId);
     return set;
   }

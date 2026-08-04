@@ -8,9 +8,9 @@ export default function ClassroomsLayout({
 }) {
   return (
     <>
-      <section className={"w-full h-fit"}>
+      <section className={"w-full flex flex-col  min-h-0 min-w-0 flex-1"}>
         <ClassroomsHeader />
-        <div>{children}</div>
+        <div className={"flex min-h-0 min-w-0 flex-1"}>{children}</div>
       </section>
     </>
   );

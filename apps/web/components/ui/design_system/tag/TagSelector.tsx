@@ -8,7 +8,7 @@ interface TagOption {
 }
 
 interface TagSelectorBaseProps {
-  label: string;
+  label?: string;
   icon?: ReactNode;
   options?: TagOption[];
   dot?: string;
@@ -120,7 +120,7 @@ const TagSelector = ({
   };
 
   const triggerClass = `
-        flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
+        flex items-center gap-1.5 px-3 min-h-8.5 py-1.5 rounded-full text-sm font-medium
         transition-all cursor-pointer select-none
         ${error ? "border-rose-500" : "border-white/10 dark:border-white/10"}
         ${
@@ -163,7 +163,10 @@ const TagSelector = ({
           {displayIcon && (
             <span className="text-neutral-400">{displayIcon}</span>
           )}
-          <span className="truncate">{getDisplayLabel()}</span>
+          {value && <span className={"truncate"}>{value}</span>}
+          {label && !value && (
+            <span className="truncate">{getDisplayLabel()}</span>
+          )}
         </button>
 
         <input
@@ -198,7 +201,12 @@ const TagSelector = ({
           <span className="text-neutral-400 shrink-0">{displayIcon}</span>
         )}
 
-        <span className="truncate">{getDisplayLabel()}</span>
+        {freeInput && value && (
+          <span className={"truncate max-w-15"}>{value}</span>
+        )}
+        {label && !value && (
+          <span className="truncate">{getDisplayLabel()}</span>
+        )}
       </button>
 
       <div onClick={(e) => e.stopPropagation()} className={dropdownClass}>

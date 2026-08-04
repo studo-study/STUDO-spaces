@@ -76,7 +76,7 @@ export class SvenService {
           enum: ['none', 'term', 'definition'],
         },
       },
-      required: ['term', 'definition', 'special_content_type', 'special_side'],
+      required: ['term', 'definition', 'specialContentType', 'specialSide'],
     },
   };
 

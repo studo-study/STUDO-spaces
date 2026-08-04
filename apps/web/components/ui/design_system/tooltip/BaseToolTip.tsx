@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
+import classNames from "@/utils/classnames";
 
 interface BaseTooltipProps {
   children: React.ReactNode;
@@ -8,6 +9,7 @@ interface BaseTooltipProps {
   position?: "top" | "bottom" | "left" | "right";
   delay?: number;
   hidden?: boolean;
+  z?: number;
 }
 
 const BaseTooltip = ({
@@ -16,6 +18,7 @@ const BaseTooltip = ({
   position = "top",
   delay = 200,
   hidden,
+  z = 100000,
 }: BaseTooltipProps) => {
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -86,14 +89,17 @@ const BaseTooltip = ({
         createPortal(
           <div
             role="tooltip"
-            className={`fixed z-9999 whitespace-nowrap rounded-full border border-studoborder/30
-              bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg
-              pointer-events-none backdrop-blur-sm
-              transition-all duration-150 ease-out
-              ${visible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+            className={classNames(
+              "fixed whitespace-nowrap rounded-full border border-studoborder/30",
+              "bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg",
+              "pointer-events-none backdrop-blur-sm",
+              "transition-all duration-150 ease-out",
+              visible ? "opacity-100 scale-100" : "opacity-0 scale-95",
+            )}
             style={{
               top: coords.top,
               left: coords.left,
+              zIndex: z,
               transform: `${transformMap[position]} ${visible ? "" : ""}`,
             }}
             onTransitionEnd={() => {

@@ -67,6 +67,18 @@ export class updateSessionPinDTO {
   @IsBoolean()
   @IsOptional()
   flagged?: boolean;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  totalAttempts?: number;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  totalCorrect?: number;
 }
 
 export class SessionPinResponseDTO {
@@ -146,4 +158,16 @@ export class SessionPinResponseDTO {
   })
   @Expose()
   flagged: boolean;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  totalAttempts: number;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  totalCorrect: number;
 }

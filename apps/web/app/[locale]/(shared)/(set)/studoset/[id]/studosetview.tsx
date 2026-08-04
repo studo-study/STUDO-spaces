@@ -12,6 +12,7 @@ import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
 import { useTranslations } from "next-intl";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
+import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useToast } from "@/components/providers/app/ToastProvider";
@@ -27,6 +28,8 @@ import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import classNames from "@/utils/classnames";
+import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
+import SvenMessage from "@/components/ui/app/shared/studosets/SvenMessage";
 
 interface viewProps {
   id: string;
@@ -47,6 +50,7 @@ export default function StudosetView({ id }: viewProps) {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const learnSettings = useLearnStore((state) => state.learnSettings);
+  const [showMessage] = useState(false);
   // init tab uit de store zodat de tab-visual matcht met de opgeslagen setting
   const [tab, setTab] = useState<Tab>(
     learnSettings.flaggedMode ? "flagged" : "all",
@@ -69,6 +73,12 @@ export default function StudosetView({ id }: viewProps) {
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
+
+  // session-level stats naar de store (voor de progress-popup)
+  const setStudosetSession = useStudosetStore((s) => s.setStudosetSession);
+  useEffect(() => {
+    setStudosetSession(data?.session);
+  }, [data?.session, setStudosetSession]);
 
   // Reset the pomodoro when leaving the studoset page.
   useEffect(() => {
@@ -140,6 +150,8 @@ export default function StudosetView({ id }: viewProps) {
     }
   };
 
+  const isFinished = (totalCards ?? 0) <= studied;
+
   if (!data?.cards) return null;
 
   return (
@@ -203,7 +215,13 @@ export default function StudosetView({ id }: viewProps) {
               className="min-h-4 h-5 sm:min-h-5 dark:invert dark:brightness-0"
             />
             <span>
-              {t("added_to")}: {data?.classrooms[0]?.name}
+              {t("added_to")}:{" "}
+              <Link
+                href={"/classroom/" + data?.classrooms[0].id}
+                className={"hover:underline"}
+              >
+                {data?.classrooms[0]?.name}
+              </Link>
             </span>
           </div>
         )}
@@ -221,6 +239,7 @@ export default function StudosetView({ id }: viewProps) {
           </span>
         </div>
       </div>
+      {showMessage && <SvenMessage />}
       <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center pt-5 items-center">
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
@@ -277,9 +296,16 @@ export default function StudosetView({ id }: viewProps) {
         </div>
 
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
-        <span className="w-full h-fit font-bold text-sm sm:text-base">
-          {t("progress_title")}:
-        </span>
+        <div className={"flex items-center justify-between w-full"}>
+          <span className="w-full h-fit font-bold text-sm sm:text-base">
+            {t("progress_title")}
+          </span>
+          {isFinished && (
+            <BaseTooltip content={t("progress_visualized")} z={999}>
+              <ProgressPopUpTrigger />
+            </BaseTooltip>
+          )}
+        </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
           <div
             onClick={() => toggleTab("not_learned")}
@@ -287,7 +313,7 @@ export default function StudosetView({ id }: viewProps) {
               filter !== "all" && filter !== "not_learned"
                 ? "opacity-50"
                 : null,
-              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[opacity, colors] duration-300 border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("not_learned")}</span>
@@ -301,7 +327,7 @@ export default function StudosetView({ id }: viewProps) {
             onClick={() => toggleTab("reviewed")}
             className={classNames(
               filter !== "all" && filter !== "reviewed" ? "opacity-50" : null,
-              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[colors, opacity] duration-300  border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("reviewed")}</span>
@@ -311,7 +337,7 @@ export default function StudosetView({ id }: viewProps) {
             onClick={() => toggleTab("learned")}
             className={classNames(
               filter !== "all" && filter !== "learned" ? "opacity-50" : null,
-              "w-full h-full cursor-pointer p-5 transition-opacity border border-studoborder/30 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[opacity, colors]  duration-300 border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("studied")}</span>

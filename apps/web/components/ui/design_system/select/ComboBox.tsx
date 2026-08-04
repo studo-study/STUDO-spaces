@@ -89,7 +89,7 @@ const ComboBox = ({
 
   const s = sizeMap[size];
   const selected = options.find((o) => String(o.value) === String(value));
-  const t = useTranslations("select");
+  const t = useTranslations("combobox");
 
   const filtered = React.useMemo(() => {
     if (!query.trim()) return options;
@@ -249,7 +249,11 @@ const ComboBox = ({
             }
           >
             {filtered.length === 0 && !showCreate ? (
-              <div className={`text-zinc-400 ${s.item}`}>{t("noResults")}</div>
+              <div
+                className={`text-zinc-400 w-full flex items-center justify-center ${s.item}`}
+              >
+                {t("noResults")}
+              </div>
             ) : (
               <>
                 {filtered.map((option, idx) => {

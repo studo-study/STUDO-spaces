@@ -7,7 +7,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
     <div className={"scroll-hidden"}>
       <LandingHeader />
       <main>{children}</main>
-      <div className={"absolute z-[999999] w-full h-fit scroll-hidden"}>
+      <div className={"absolute z-999999 w-full h-fit scroll-hidden"}>
         <LandingFooter />
       </div>
     </div>

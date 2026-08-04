@@ -20,14 +20,6 @@ import InputSelect from "@/components/ui/design_system/select/InputSelect";
 import ComboBox from "@/components/ui/design_system/select/ComboBox";
 import CreateCourse from "@/components/ui/app/private/create-studoset/CreateCourse";
 
-const LANGUAGES = [
-  { code: "en", name: "English" },
-  { code: "nl", name: "Dutch" },
-  { code: "fr", name: "French" },
-  { code: "de", name: "German" },
-  { code: "es", name: "Spanish" },
-];
-
 const DRAFT_KEY = "create-studoset-draft";
 
 type Draft = {
@@ -51,11 +43,19 @@ const firstCard = (): CardData => ({
 
 export default function CreateStudosetForm() {
   const t = useTranslations("createstudoset");
+  const LANGUAGES = [
+    { code: "en", name: t("english") },
+    { code: "nl", name: t("dutch") },
+    { code: "fr", name: t("french") },
+    { code: "de", name: t("german") },
+    { code: "es", name: t("spanish") },
+  ];
+
   const [showImporter, setShowImporter] = useState(false);
   const router = useRouter();
   const mutation = useCreateStudyset();
   const toast = useToast();
-  const { data: flowcourses = [] } = useCourses();
+  const { data: courses = [] } = useCourses();
   const { ref, inView } = useInView();
   const topRef = useRef<HTMLFormElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -123,6 +123,7 @@ export default function CreateStudosetForm() {
     };
     const hasContent =
       d.title.trim() !== "" ||
+      d.flowcourseId.trim() !== "" ||
       d.cardArray.some(
         (c) => c.term.trim() !== "" || c.definition.trim() !== "",
       );
@@ -396,7 +397,7 @@ export default function CreateStudosetForm() {
               <div className="w-full gap-1 flex flex-col h-fit">
                 <ComboBox
                   title={t("course_placeholder")}
-                  options={flowcourses.map((c) => ({
+                  options={courses?.map((c) => ({
                     value: c.id,
                     label: c.title,
                   }))}
@@ -418,13 +419,11 @@ export default function CreateStudosetForm() {
               <div className="w-full sm:w-1/2 gap-1 flex flex-col">
                 <InputSelect
                   title={t("select_language_term")}
-                  options={[
-                    { value: "", label: t("term_language") },
-                    ...LANGUAGES.map((lang) => ({
-                      value: lang.code,
-                      label: lang.name,
-                    })),
-                  ]}
+                  placeholder={t("term_language")}
+                  options={LANGUAGES.map((lang) => ({
+                    value: lang.code,
+                    label: lang.name,
+                  }))}
                   value={termLang}
                   onChange={(value) => {
                     setTermLang(String(value));
@@ -439,13 +438,11 @@ export default function CreateStudosetForm() {
               <div className="w-full sm:w-1/2 gap-1 flex flex-col">
                 <InputSelect
                   title={t("select_language_def")}
-                  options={[
-                    { value: "", label: t("def_language") },
-                    ...LANGUAGES.map((lang) => ({
-                      value: lang.code,
-                      label: lang.name,
-                    })),
-                  ]}
+                  placeholder={t("def_language")}
+                  options={LANGUAGES.map((lang) => ({
+                    value: lang.code,
+                    label: lang.name,
+                  }))}
                   value={defLang}
                   onChange={(value) => {
                     setDefLang(String(value));

@@ -997,7 +997,12 @@
     "select_folder": "Kies een map",
     "select_language_term": "Kies een taal voor termen",
     "select_language_def": "Kies een taal voor definities",
-    "create_course": "Creëer vak"
+    "create_course": "Creëer vak",
+    "english": "Engels",
+    "dutch": "Nederlands",
+    "french": "Frans",
+    "german": "Duits",
+    "spanish": "Spaans"
   },
   "editstudoset": {
     "edit": "Bewerk Studoset",
@@ -1259,10 +1264,11 @@
     "all": "Alle klassen",
     "last": "Recent toegetreden",
     "alphabetical": "Alfabetische volgorde",
-    "search": "Klassen zoeken...",
+    "search": "Jouw klassen zoeken...",
     "members": "leden",
     "member": "lid",
     "leave": "Klas verlaten",
+    "no_found": "Geen klassen gevonden",
     "external_window": "Open in nieuw tabblad"
   },
   "classroom": {
@@ -1421,6 +1427,8 @@
     "save": "opslaan",
     "all": "Alle",
     "flag": "Gemarkeerd",
+    "share": "delen",
+    "settings": "instellingen",
     "ns": "Niet geleerd",
     "edit_set": "bewerk set",
     "set_private": "Studoset is privé",
@@ -1429,7 +1437,25 @@
     "flag_card": "Markeer kaart",
     "unflag_card": "Demarkeer kaart",
     "flag_failed": "Markeren mislukt",
-    "no_cards": "Geen kaarten"
+    "no_cards": "Geen kaarten",
+    "progress_visualized": "Gevisualiseerde progressie",
+    "stats": {
+      "title": "Progressie",
+      "graph": "Grafiek",
+      "list": "Lijst",
+      "general_title": "Algemeen",
+      "cards_title": "Per kaart",
+      "accuracy": "Nauwkeurigheid",
+      "avg_time": "Gem. antwoordtijd",
+      "longest_streak": "Langste reeks",
+      "completions": "Keer afgewerkt",
+      "time_studied": "Tijd gestudeerd",
+      "learned": "Geleerd",
+      "min_unit": "min",
+      "axis_time": "Gem. antwoordtijd (s)",
+      "axis_accuracy": "Nauwkeurigheid (%)",
+      "no_data": "Nog geen data"
+    }
   },
   "trackview": {
     "tracks": "Tracks",
@@ -1483,6 +1509,7 @@
     "courses": "vakken",
     "course_1": "vak",
     "course": {
+      "option": "Opties",
       "row": {
         "done": "afgewerkt",
         "doing": "bezig",
@@ -1498,8 +1525,11 @@
       "add_metadata": "Metadata toevoegen",
       "add_later": "Later toevoegen",
       "add_link": "Link toevoegen",
+      "add_course_link": "Connecteer leerportaal",
       "exam_date": "Examendatum",
+      "add_exam_date": "Voeg examendatum toe",
       "exam_status": "Examenstatus",
+      "add_lesson_day": "Voeg lesdagen toe",
       "behind": "Achter op schema",
       "slightly_behind": "Licht achter",
       "error_icon_required": "Kies een icoon",
@@ -1702,5 +1732,9 @@
   },
   "widgets": {
     "title": "Widgets"
+  },
+  "combobox": {
+    "options": "Opties",
+    "noResults": "Geen resultaten"
   }
 }

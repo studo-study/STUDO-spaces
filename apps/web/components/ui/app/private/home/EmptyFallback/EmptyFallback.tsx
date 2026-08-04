@@ -2,15 +2,15 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useSets } from "@/hooks/app/sets/useSets";
-import { useBoards } from "@/hooks/app/courses/useBoards";
+import { useCourses } from "@/hooks/app/courses/useCourses";
 
 const EmptyFallback = () => {
   const { sets, isLoading: setsLoading } = useSets();
-  const { data, isLoading: boardsLoading } = useBoards();
+  const { data: courses, isLoading: coursesLoading } = useCourses();
   const t = useTranslations("home.fallback");
 
-  if (setsLoading && boardsLoading) return null;
-  if (sets.length > 0 || (data?.boards ?? []).length > 0) return null;
+  if (setsLoading && coursesLoading) return null;
+  if (sets.length > 0 || (courses ?? []).length > 0) return null;
 
   return (
     <div

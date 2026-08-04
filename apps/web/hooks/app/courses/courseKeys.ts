@@ -3,7 +3,5 @@
 // optimistische cache-writes altijd dezelfde entries raken.
 export const courseKeys = {
   all: ["courses"] as const,
-  boards: ["courses", "boards"] as const,
-  board: (id: string) => ["courses", "board", id] as const,
   course: (id: string) => ["courses", "course", id] as const,
 };

@@ -276,6 +276,9 @@ export const studysessions = pgTable(
     accuracy: integer('accuracy').notNull(),
     averageResponseTime: integer('average_response_time').notNull(),
     longestFocusStreak: integer('longest_focus_streak').notNull(),
+    totalAttempts: integer('total_attempts').notNull().default(0),
+    totalCorrect: integer('total_correct').notNull().default(0),
+    completions: integer('completions').notNull().default(0),
     lastSeen: varchar('last_seen', { length: 64 }).notNull(),
     lastStudied: varchar('last_studied').notNull(),
   },
@@ -294,6 +297,9 @@ export const sessioncards = pgTable(
     inQueue: boolean('inQueue').notNull(),
     mastered: boolean('mastered').notNull(),
     timesRelearned: integer('times_relearned').notNull(),
+    totalAttempts: integer('total_attempts').notNull().default(0),
+    totalCorrect: integer('total_correct').notNull().default(0),
+    responseSumMs: integer('response_sum_ms').notNull().default(0),
     flagged: boolean('flagged').notNull().default(false),
     cardId: uuid('card_id')
       .references(() => cards.id, { onDelete: 'cascade' })
@@ -327,6 +333,8 @@ export const sessionpins = pgTable(
     mastered: boolean('mastered').notNull(),
     timesRelearned: integer('times_relearned').notNull(),
     flagged: boolean('flagged').notNull().default(false),
+    totalAttempts: integer('total_attempts').notNull().default(0),
+    totalCorrect: integer('total_correct').notNull().default(0),
     pinId: uuid('pin_id')
       .references(() => pins.id, { onDelete: 'cascade' }) // ✅ CHANGED: consistent gedrag
       .notNull(),
