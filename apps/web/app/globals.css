@@ -2,6 +2,7 @@
 /*@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');*/
 
 @import "tailwindcss";
+
 body {
     background-color: var(--color-sky-50); /* light mode: bg-blue-50 */
     scrollbar-width: none;
@@ -18,6 +19,7 @@ body::-webkit-scrollbar {
     body {
         background-color: var(--color-slate-900) /* dark mode: bg-gray-800 */
     }
+
     @theme {
         --color-studoborder: rgb(131, 131, 131, 0.5);
     }
@@ -54,8 +56,6 @@ body::-webkit-scrollbar {
 }
 
 
-
-
 @theme {
     --font-akira: akira, sans-serif;
     --font-bodoni: Bodoni Std, serif;
@@ -90,11 +90,11 @@ body::-webkit-scrollbar {
 
 
 .montserrat-black {
-                 font-family: "Montserrat", sans-serif;
-                 font-optical-sizing: auto;
-                 font-weight: 900;
-                 font-style: normal;
-             }
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+}
 
 .nav {
     width: 50px;
@@ -481,6 +481,7 @@ body::-webkit-scrollbar {
         opacity: 0.1 !important;
     }
 }
+
 .custom-select {
     position: relative;
 }
@@ -633,12 +634,8 @@ body::-webkit-scrollbar {
 
 .aiBorderAnimation {
     background: conic-gradient(
-            from var(--angle, 0deg),
-            #FFCE52,
-            #4CD2ED,
-            #BF79ED,
-            #FC3A74,
-            #FFCE52
+            from var(--angle, 90deg),
+            #6366f1, #c026d3, #fb7185, #38bdf8, #6366f1
     );
     animation: rotate 2s linear infinite;
 }
@@ -650,7 +647,9 @@ body::-webkit-scrollbar {
 }
 
 @keyframes rotate {
-    to { --angle: 360deg; }
+    to {
+        --angle: 360deg;
+    }
 }
 
 
@@ -960,10 +959,12 @@ body::-webkit-scrollbar {
     display: flex;
     width: 100%;
 }
+
 .segmented-controls-stretch > button {
     flex: 1 1 0%;
     min-width: 0;
 }
+
 .segmented-controls-stretch .segmented-controls-tab {
     display: flex;
     width: 100%;

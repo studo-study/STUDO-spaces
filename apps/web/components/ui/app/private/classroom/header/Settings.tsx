@@ -21,7 +21,7 @@ export default function TriggerSettings({
   };
 
   return (
-    <button
+    <div
       onClick={togglePopUp}
       ref={containerRef}
       className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
@@ -39,7 +39,7 @@ export default function TriggerSettings({
         containerRef={containerRef}
         toggleSettings={toggleSettings}
       />
-    </button>
+    </div>
   );
 }
 

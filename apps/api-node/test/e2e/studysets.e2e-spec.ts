@@ -216,8 +216,8 @@ describe('Studysets', () => {
     it('zou een nieuwe studoset moeten aanmaken', async () => {
       const newStudyset = {
         title: 'New Test Set',
-        global_term_language: 'en',
-        global_definition_language: 'nl',
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'nl',
         cardlist: [
           {
             term: 'Test Term 1',
@@ -272,8 +272,8 @@ describe('Studysets', () => {
     it('zou lege cardlist moeten rejecten', async () => {
       const invalidStudyset = {
         title: 'Test Set',
-        global_term_language: 'en',
-        global_definition_language: 'nl',
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'nl',
         cardlist: [],
       };
 
@@ -289,8 +289,8 @@ describe('Studysets', () => {
     it('zou unknown fields moeten rejecten', async () => {
       const studysetWithUnknownField = {
         title: 'Test Set',
-        global_term_language: 'en',
-        global_definition_language: 'nl',
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'nl',
         unknownField: 'should be rejected',
         cardlist: [
           {
@@ -490,8 +490,8 @@ describe('Studysets', () => {
       // Create a temporary studoset as authToken user (paulallen)
       const tempSet = {
         title: 'Temporary Set To Delete',
-        global_term_language: 'en',
-        global_definition_language: 'en',
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'en',
         cardlist: [
           {
             term: 'Temp',
@@ -553,8 +553,8 @@ describe('Studysets', () => {
     it('zou special characters in title moeten kunnen handelen', async () => {
       const specialSet = {
         title: 'Test & <Special> "Characters"',
-        global_term_language: 'en',
-        global_definition_language: 'nl',
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'nl',
         cardlist: [
           {
             term: 'Test',
@@ -581,8 +581,8 @@ describe('Studysets', () => {
     it('zou unicode in card content moeten kunnen handelen', async () => {
       const unicodeSet = {
         title: 'Unicode Test',
-        global_term_language: 'en',
-        global_definition_language: 'en',
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'en',
         cardlist: [
           {
             term: 'Japanese',
@@ -619,8 +619,8 @@ describe('Studysets', () => {
     it('zou card volgorde moeten behouden', async () => {
       const orderedSet = {
         title: 'Ordered Set',
-        global_term_language: 'en',
-        global_definition_language: 'en',
+        globalTermLanguage: 'en',
+        globalDefinitionLanguage: 'en',
         cardlist: [
           { term: 'First', definition: 'First def', number: 1 },
           { term: 'Second', definition: 'Second def', number: 2 },

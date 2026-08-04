@@ -29,6 +29,7 @@ import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import classNames from "@/utils/classnames";
 import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
+import SvenMessage from "@/components/ui/app/shared/studosets/SvenMessage";
 
 interface viewProps {
   id: string;
@@ -49,6 +50,7 @@ export default function StudosetView({ id }: viewProps) {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const learnSettings = useLearnStore((state) => state.learnSettings);
+  const [showMessage] = useState(false);
   // init tab uit de store zodat de tab-visual matcht met de opgeslagen setting
   const [tab, setTab] = useState<Tab>(
     learnSettings.flaggedMode ? "flagged" : "all",
@@ -213,7 +215,13 @@ export default function StudosetView({ id }: viewProps) {
               className="min-h-4 h-5 sm:min-h-5 dark:invert dark:brightness-0"
             />
             <span>
-              {t("added_to")}: {data?.classrooms[0]?.name}
+              {t("added_to")}:{" "}
+              <Link
+                href={"/classroom/" + data?.classrooms[0].id}
+                className={"hover:underline"}
+              >
+                {data?.classrooms[0]?.name}
+              </Link>
             </span>
           </div>
         )}
@@ -231,6 +239,7 @@ export default function StudosetView({ id }: viewProps) {
           </span>
         </div>
       </div>
+      {showMessage && <SvenMessage />}
       <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center pt-5 items-center">
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
         <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
