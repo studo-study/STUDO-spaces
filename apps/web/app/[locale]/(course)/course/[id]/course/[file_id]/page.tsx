@@ -1,6 +1,4 @@
 "use client";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { IoArrowBackOutline } from "react-icons/io5";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useCourseStore } from "@/store/course/couresStore";
 import { useEffect } from "react";

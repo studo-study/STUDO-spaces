@@ -1,7 +1,6 @@
-import { ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
 import CourseSidebar from "@/components/ui/app/private/course/layout/CourseSidebar";
-import AppHeader from "@/components/ui/app/private/app_header/AppHeader";
 import LayoutHeader from "@/components/ui/app/private/course/layout/LayoutHeader";
 
 export default function CourseLayout({ children }: { children: ReactNode }) {

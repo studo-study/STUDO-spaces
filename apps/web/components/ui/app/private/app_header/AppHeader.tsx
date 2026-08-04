@@ -1,6 +1,5 @@
 // components/app/app_header/header.tsx
 "use client";
-import { useLocale } from "next-intl";
 import TriggerAddPopup from "@/components/ui/app/private/app_header/popups/AddPopup";
 import { useEffect, useRef, useState } from "react";
 import TriggerNotif from "@/components/ui/app/private/app_header/popups/NotificationsPopup";

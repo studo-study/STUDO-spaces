@@ -10,7 +10,7 @@ interface ImportButtonProps {
 
 export default function ImportButton({ setShowImporter }: ImportButtonProps) {
   const t = useTranslations("createstudoset");
-  const [showGlow, setShowGlow] = useState(true);
+  const [showGlow] = useState(true);
   return (
     <ComposerAura>
       <div className="relative group">

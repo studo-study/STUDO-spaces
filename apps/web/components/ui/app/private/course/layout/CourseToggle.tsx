@@ -5,8 +5,6 @@ import { useCourses } from "@/hooks/app/courses/useCourses";
 import { useActiveCourse } from "@/hooks/app/courses/useCourseData";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ChevronLeft } from "lucide-react";
-import { Link } from "@/i18n/routing";
 
 const CourseToggle = () => {
   const courses = useCourses().data;
