@@ -91,6 +91,8 @@ export class StudysessionService {
       sessionValues.totalAttempts = body.totalAttempts;
     if (body.totalCorrect !== undefined)
       sessionValues.totalCorrect = body.totalCorrect;
+    if (body.completions !== undefined)
+      sessionValues.completions = body.completions;
     if (body.lastSeen !== undefined) sessionValues.lastSeen = body.lastSeen;
     if (body.lastStudied !== undefined)
       sessionValues.lastStudied = body.lastStudied;
@@ -144,6 +146,7 @@ export class StudysessionService {
             flagged: card.flagged,
             totalAttempts: card.totalAttempts,
             totalCorrect: card.totalCorrect,
+            responseSumMs: card.responseSumMs,
           })
           .where(
             and(eq(sessioncards.id, card.id), eq(sessioncards.ownerId, userId)),

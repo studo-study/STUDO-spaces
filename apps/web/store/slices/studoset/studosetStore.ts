@@ -1,11 +1,14 @@
 import { create } from "zustand";
 import { Card, SessionCard } from "@/types/types";
+import type { Studysession } from "@studo/types";
 
 interface StudosetStore {
   studosetCards: { card: Card; session: SessionCard | undefined }[];
+  studosetSession: Studysession | undefined;
   editingCardId: string | null;
   savingCardIds: string[];
   setStudosetCards: (cards: Card[], sessionCards: SessionCard[]) => void;
+  setStudosetSession: (session: Studysession | undefined) => void;
   updateCardOptimistic: (
     id: string,
     term: string,
@@ -20,6 +23,7 @@ interface StudosetStore {
 
 export const useStudosetStore = create<StudosetStore>()((set, get) => ({
   studosetCards: [],
+  studosetSession: undefined,
   editingCardId: null,
   savingCardIds: [],
 
@@ -30,6 +34,8 @@ export const useStudosetStore = create<StudosetStore>()((set, get) => ({
         session: sessionCards.find((seshcard) => seshcard.cardId === card.id),
       })),
     }),
+
+  setStudosetSession: (session) => set({ studosetSession: session }),
   updateCardOptimistic: (id, term, definition, term_content_type) => {
     const old = get().studosetCards.find((c) => c.card.id === id)?.card;
     set((state) => ({

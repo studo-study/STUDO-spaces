@@ -49,7 +49,7 @@ export default function ClassroomGrid() {
     <div className="w-full h-full min-h-0 min-w-0 flex-1 flex flex-col gap-5 scroll-hidden overflow-visible">
       <div
         className={
-          "w-full h-20 z-20  bg-gray-800 py-8 flex flex-row items-center justify-between gap-3 overflow-visible"
+          "w-full h-20 z-20  py-8 flex flex-row items-center justify-between gap-3 overflow-visible"
         }
       >
         <div className={"w-fit flex flex-row gap-5 items-center"}>

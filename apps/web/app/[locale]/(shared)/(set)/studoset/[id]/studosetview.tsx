@@ -12,6 +12,7 @@ import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
 import { useTranslations } from "next-intl";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
+import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useToast } from "@/components/providers/app/ToastProvider";
@@ -70,6 +71,12 @@ export default function StudosetView({ id }: viewProps) {
   useEffect(() => {
     if (data?.cards) setLoaded(true);
   }, [data?.cards, setLoaded]);
+
+  // session-level stats naar de store (voor de progress-popup)
+  const setStudosetSession = useStudosetStore((s) => s.setStudosetSession);
+  useEffect(() => {
+    setStudosetSession(data?.session);
+  }, [data?.session, setStudosetSession]);
 
   // Reset the pomodoro when leaving the studoset page.
   useEffect(() => {
@@ -140,6 +147,8 @@ export default function StudosetView({ id }: viewProps) {
       setFilter(input as Filter);
     }
   };
+
+  const isFinished = (totalCards ?? 0) <= studied;
 
   if (!data?.cards) return null;
 
@@ -282,11 +291,11 @@ export default function StudosetView({ id }: viewProps) {
           <span className="w-full h-fit font-bold text-sm sm:text-base">
             {t("progress_title")}
           </span>
-          <ProgressPopUpTrigger
-            session={data?.session}
-            sessionCards={sessionCards ?? []}
-            totalCards={totalCards}
-          />
+          {isFinished && (
+            <BaseTooltip content={t("progress_visualized")} z={999}>
+              <ProgressPopUpTrigger />
+            </BaseTooltip>
+          )}
         </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
           <div

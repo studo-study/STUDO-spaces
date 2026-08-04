@@ -278,6 +278,7 @@ export const studysessions = pgTable(
     longestFocusStreak: integer('longest_focus_streak').notNull(),
     totalAttempts: integer('total_attempts').notNull().default(0),
     totalCorrect: integer('total_correct').notNull().default(0),
+    completions: integer('completions').notNull().default(0),
     lastSeen: varchar('last_seen', { length: 64 }).notNull(),
     lastStudied: varchar('last_studied').notNull(),
   },
@@ -298,6 +299,7 @@ export const sessioncards = pgTable(
     timesRelearned: integer('times_relearned').notNull(),
     totalAttempts: integer('total_attempts').notNull().default(0),
     totalCorrect: integer('total_correct').notNull().default(0),
+    responseSumMs: integer('response_sum_ms').notNull().default(0),
     flagged: boolean('flagged').notNull().default(false),
     cardId: uuid('card_id')
       .references(() => cards.id, { onDelete: 'cascade' })

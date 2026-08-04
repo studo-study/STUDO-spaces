@@ -38,6 +38,7 @@ export function buildNewSession(params: {
     longestFocusStreak: 0,
     totalAttempts: 0,
     totalCorrect: 0,
+    completions: 0,
     deviceType: 'unknown',
     lastSeen: iso,
     lastStudied: iso,

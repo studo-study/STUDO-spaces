@@ -458,6 +458,9 @@ export interface SessionCard {
   inQueue: boolean;
   mastered: boolean;
   timesRelearned: number;
+  totalAttempts: number;
+  totalCorrect: number;
+  responseSumMs: number;
   cardId: string;
   sessionId: string;
   ownerId: string;

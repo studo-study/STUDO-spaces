@@ -6,6 +6,9 @@ export interface UpdateSessionCard {
   inQueue?: boolean;
   mastered?: boolean;
   timesRelearned?: number;
+  totalAttempts?: number;
+  totalCorrect?: number;
+  responseSumMs?: number;
   sessionId?: string;
   ownerId?: string;
   flagged?: boolean;
@@ -19,6 +22,9 @@ export interface SessionCardResponse {
   inQueue: boolean;
   mastered: boolean;
   timesRelearned: number;
+  totalAttempts: number;
+  totalCorrect: number;
+  responseSumMs: number;
   cardId: string;
   sessionId: string;
   ownerId: string;
@@ -62,6 +68,7 @@ export interface UpdateStudysession {
   longestFocusStreak?: number;
   totalAttempts?: number;
   totalCorrect?: number;
+  completions?: number;
   lastStudied?: string;
   userId: string;
   lastSeen?: string;
@@ -80,6 +87,7 @@ export interface Studysession {
   longestFocusStreak: number;
   totalAttempts: number;
   totalCorrect: number;
+  completions: number;
   lastSeen: string;
   lastStudied: string;
   userId: string;

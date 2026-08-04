@@ -1438,12 +1438,23 @@
     "unflag_card": "Demarkeer kaart",
     "flag_failed": "Markeren mislukt",
     "no_cards": "Geen kaarten",
+    "progress_visualized": "Gevisualiseerde progressie",
     "stats": {
-      "title": "Set statistieken",
+      "title": "Progressie",
       "graph": "Grafiek",
       "list": "Lijst",
       "general_title": "Algemeen",
-      "cards_title": "Per kaart"
+      "cards_title": "Per kaart",
+      "accuracy": "Nauwkeurigheid",
+      "avg_time": "Gem. antwoordtijd",
+      "longest_streak": "Langste reeks",
+      "completions": "Keer afgewerkt",
+      "time_studied": "Tijd gestudeerd",
+      "learned": "Geleerd",
+      "min_unit": "min",
+      "axis_time": "Gem. antwoordtijd (s)",
+      "axis_accuracy": "Nauwkeurigheid (%)",
+      "no_data": "Nog geen data"
     }
   },
   "trackview": {
@@ -1722,7 +1733,6 @@
   "widgets": {
     "title": "Widgets"
   },
-
   "combobox": {
     "options": "Opties",
     "noResults": "Geen resultaten"

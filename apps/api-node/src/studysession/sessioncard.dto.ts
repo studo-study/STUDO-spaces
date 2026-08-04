@@ -78,17 +78,26 @@ export class updateSessionCardDTO {
   @IsOptional()
   flagged?: boolean;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 0,
+    description: 'Aantal beurten voor deze kaart',
   })
-  @Expose()
+  @IsNumber({ optional: true })
   totalAttempts?: number;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 0,
+    description: 'Aantal juiste beurten voor deze kaart',
   })
-  @Expose()
+  @IsNumber({ optional: true })
   totalCorrect?: number;
+
+  @ApiPropertyOptional({
+    example: 0,
+    description: 'Som van de antwoordtijden (ms) voor deze kaart',
+  })
+  @IsNumber({ optional: true })
+  responseSumMs?: number;
 }
 
 export class SessionCardResponseDTO {
@@ -180,4 +189,10 @@ export class SessionCardResponseDTO {
   })
   @Expose()
   totalCorrect: number;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @Expose()
+  responseSumMs: number;
 }

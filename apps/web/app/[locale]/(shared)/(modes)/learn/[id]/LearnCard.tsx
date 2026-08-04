@@ -112,6 +112,14 @@ const LearnCard = () => {
   const focusMaxRef = useRef(0);
   const focusCurRef = useRef(0);
 
+  // per-kaart stats (cumulatief, geseed uit de session-cards)
+  const cardAttemptsRef = useRef<Record<string, number>>({});
+  const cardCorrectRef = useRef<Record<string, number>>({});
+  const cardRespSumRef = useRef<Record<string, number>>({}); // ms
+  // aantal keer de set volledig afgewerkt (over sessies heen)
+  const completionsRef = useRef(0);
+  const completionCountedRef = useRef(false); // deze run al geteld?
+
   // init zodra de kaarten geladen zijn (render-time, geen effect).
   // resume-on-load: seed voortgang uit de bestaande session-cards.
   if (cards && !initialized) {
@@ -124,26 +132,43 @@ const LearnCard = () => {
     prevAvgRef.current = sesh?.averageResponseTime ?? 0;
     prevAttemptsRef.current = sesh?.totalAttempts ?? 0;
     focusMaxRef.current = sesh?.longestFocusStreak ?? 0;
+    completionsRef.current = sesh?.completions ?? 0;
+    completionCountedRef.current = false;
     sessionStartMsRef.current = Date.now();
     const scById = new Map(
       (set?.session?.cards ?? []).map((sc) => [
         sc.cardId,
-        { viewcount: sc.cardViewcount, mastery: sc.timesRelearned },
+        {
+          viewcount: sc.cardViewcount,
+          mastery: sc.timesRelearned,
+          attempts: sc.totalAttempts,
+          correct: sc.totalCorrect,
+          respSum: sc.responseSumMs,
+        },
       ]),
     );
     const views: Record<string, number> = {};
     const mastery: Record<string, number> = {};
+    const cAttempts: Record<string, number> = {};
+    const cCorrect: Record<string, number> = {};
+    const cRespSum: Record<string, number> = {};
     let seededViews = 0;
     cards.forEach((c) => {
       const sc = scById.get(c.id);
       views[c.id] = sc?.viewcount ?? 0;
       mastery[c.id] = sc?.mastery ?? 0;
+      cAttempts[c.id] = sc?.attempts ?? 0;
+      cCorrect[c.id] = sc?.correct ?? 0;
+      cRespSum[c.id] = sc?.respSum ?? 0;
       // enkel kaarten in de sessie tellen mee voor de voortgang (op mastery)
       if (passesFlagged(c.id)) seededViews += Math.min(mastery[c.id], cap);
     });
     // eenmalige seeding (guarded door `initialized`) → veilig in render
     viewsRef.current = views;
     masteryRef.current = mastery;
+    cardAttemptsRef.current = cAttempts;
+    cardCorrectRef.current = cCorrect;
+    cardRespSumRef.current = cRespSum;
     setTotalViews(seededViews);
     const seededQueue = cards
       .map((_, i) => i)
@@ -170,6 +195,15 @@ const LearnCard = () => {
     },
     [],
   );
+
+  // set volledig afgewerkt (na afronden, niet bij resume-op-done) → completions++
+  useEffect(() => {
+    if (phase === "done" && finishing && !completionCountedRef.current) {
+      completionsRef.current += 1;
+      completionCountedRef.current = true;
+      dirtyRef.current = true;
+    }
+  }, [phase, finishing]);
 
   // checkpoint: sync bij elk intermezzo en bij done
   useEffect(() => {
@@ -247,6 +281,9 @@ const LearnCard = () => {
           timesRelearned: mastery,
           mastered: mastery >= cap,
           inQueue: mastery < cap,
+          totalAttempts: cardAttemptsRef.current[c.id] ?? 0,
+          totalCorrect: cardCorrectRef.current[c.id] ?? 0,
+          responseSumMs: cardRespSumRef.current[c.id] ?? 0,
         },
       ];
     });
@@ -276,6 +313,7 @@ const LearnCard = () => {
         attempts > 0 ? Math.round((correctRef.current / attempts) * 100) : 0,
       totalAttempts: attempts,
       totalCorrect: correctRef.current,
+      completions: completionsRef.current,
       averageResponseTime,
       longestFocusStreak: focusMaxRef.current,
       durationMin,
@@ -347,11 +385,17 @@ const LearnCard = () => {
       }
       if (!errorMode) {
         attemptsRef.current += 1;
-        // antwoordtijd van deze beurt bijhouden (voor gem. antwoordtijd)
-        respSumMsRef.current += Math.max(
-          0,
-          Date.now() - cardShownAtRef.current,
-        );
+        // antwoordtijd van deze beurt (voor gem. antwoordtijd, sessie + per kaart)
+        const rt = Math.max(0, Date.now() - cardShownAtRef.current);
+        respSumMsRef.current += rt;
+        // per-kaart stats bijwerken (attempts/correct/responstijd)
+        cardAttemptsRef.current[card.id] =
+          (cardAttemptsRef.current[card.id] ?? 0) + 1;
+        cardRespSumRef.current[card.id] =
+          (cardRespSumRef.current[card.id] ?? 0) + rt;
+        if (correct)
+          cardCorrectRef.current[card.id] =
+            (cardCorrectRef.current[card.id] ?? 0) + 1;
         // focus streak: juist → +1, fout → reset; hoogste onthouden
         if (correct) {
           focusCurRef.current += 1;
@@ -510,6 +554,11 @@ const LearnCard = () => {
     cardShownAtRef.current = Date.now();
     focusMaxRef.current = 0;
     focusCurRef.current = 0;
+    cardAttemptsRef.current = {};
+    cardCorrectRef.current = {};
+    cardRespSumRef.current = {};
+    completionsRef.current = 0;
+    completionCountedRef.current = false;
     dirtyRef.current = true; // reset ook naar de backend syncen
     const resetQueue = cards
       .map((_, i) => i)
