@@ -1,10 +1,10 @@
 "use client";
-import { useCourseStore } from "@/store/course/couresStore";
+import { useCourseNavStore } from "@/store/course/courseNavStore";
 import { ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 
 const BreadCrumbs = () => {
-  const nav = useCourseStore((state) => state.nav);
+  const nav = useCourseNavStore((state) => state.nav);
   if (nav.length === 0) {
     return;
   }

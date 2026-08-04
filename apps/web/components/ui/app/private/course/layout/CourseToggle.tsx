@@ -1,6 +1,6 @@
 import classNames from "@/utils/classnames";
 import { HiChevronUpDown } from "react-icons/hi2";
-import { getFlowIcon } from "@/components/ui/design_system/icons/iconRegistry";
+import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import { useCourses } from "@/hooks/app/courses/useCourses";
 import { useActiveCourse } from "@/hooks/app/courses/useCourseData";
 import { useRouter } from "next/navigation";
@@ -11,8 +11,6 @@ const CourseToggle = () => {
   const data = useActiveCourse().data;
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-
-  const { Icon, color } = getFlowIcon(data?.icon ?? "");
 
   const openDropDown = () => {
     if (courses && courses?.length <= 1) return;
@@ -32,11 +30,11 @@ const CourseToggle = () => {
                 "hover:bg-studogrey/30 cursor-pointer",
             )}
           >
-            <div
-              className={`bg-${color}-400/20 text-${color}-500 min-w-8 min-h-8 w-8 h-8 rounded-xl flex items-center justify-center`}
-            >
-              <Icon size={15} />
-            </div>
+            <FlowIcon
+              icon={data?.icon ?? ""}
+              size={15}
+              className={"min-w-8 min-h-8 w-8 h-8 rounded-xl"}
+            />
             <span className={"font-bold select-none truncate min-w-0 flex-1"}>
               {data?.title}
             </span>
@@ -59,7 +57,6 @@ const CourseToggle = () => {
                 `}
           >
             {courses?.map((course) => {
-              const { Icon, color } = getFlowIcon(course.icon);
               const isActive = course.id === data?.id;
               return (
                 <button
@@ -75,11 +72,11 @@ const CourseToggle = () => {
                             : "text-neutral-600 dark:text-neutral-300 hover:bg-white/10 dark:hover:bg-white/5"
                         }`}
                 >
-                  <span
-                    className={`bg-${color}-400/20 text-${color}-500 w-6 h-6 rounded-lg flex items-center justify-center shrink-0`}
-                  >
-                    <Icon size={12} />
-                  </span>
+                  <FlowIcon
+                    icon={course.icon}
+                    size={12}
+                    className={"w-6 h-6 rounded-lg shrink-0"}
+                  />
                   <span className="truncate">{course.title}</span>
                   {isActive && (
                     <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />

@@ -7,7 +7,8 @@ export default function CourseLayout({ children }: { children: ReactNode }) {
   return (
     <div className={"w-screen h-screen flex flex-col"}>
       <LayoutHeader />
-      <div className={"w-screen min-h-0 flex-1 flex"}>
+      <div className={"w-screen min-h-0 flex-1 flex flex-row"}>
+        <CourseSidebar />
         <ResizablePanelLayout
           storageKey="studoset-sidebar"
           panels={[
@@ -20,11 +21,6 @@ export default function CourseLayout({ children }: { children: ReactNode }) {
             { id: "main", defaultSize: 2000, minSize: 40 },
           ]}
         >
-          <ResizablePanelLayout.Panel panelId="sidebar">
-            <div className={"min-h-0 min-w-0 flex-1"}>
-              <CourseSidebar />
-            </div>
-          </ResizablePanelLayout.Panel>
           <ResizablePanelLayout.Panel panelId="main">
             <div className={"min-h-0 min-w-0 flex-1 flex relative px-5 pb-5"}>
               <div

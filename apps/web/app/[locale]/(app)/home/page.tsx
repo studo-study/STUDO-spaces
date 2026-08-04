@@ -25,7 +25,7 @@ export default async function HomePage() {
   return (
     <>
       <section
-        className={`w-full h-fit mb-3 gap-5 flex flex-col sticky top-0 z-20 pb-3 dark:bg-bg-dark bg-bg-white`}
+        className={`w-full h-fit mb-3 gap-5 flex flex-col sticky top-0 z-20 pb-3 dark:bg-slate-800 bg-bg-white`}
       >
         <div className={"w-full flex-1 flex flex-col gap-2"}>
           <div className="w-full h-fit flex flex-col gap-2 ">
@@ -56,7 +56,7 @@ export default async function HomePage() {
       </div>
       <div
         className={
-          "fixed z-10 bottom-0 h-25 w-2/3 bg-linear-0 dark:from-bg-dark from-bg-white to-transparent"
+          "fixed z-10 bottom-5.5 h-25 w-2/3 bg-linear-0 dark:from-slate-800 from-bg-white to-transparent"
         }
       />
     </>

@@ -5,24 +5,12 @@ import CourseRow from "@/components/ui/app/private/course/flow/CourseRow";
 import { FaListCheck } from "react-icons/fa6";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import { useParams } from "next/navigation";
-import { useCourseStore } from "@/store/course/couresStore";
-import { useEffect } from "react";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const CourseTable = () => {
   const id = useParams().id;
-  //nav
-  const setNav = useCourseStore((state) => state.setNav);
-  useEffect(() => {
-    setNav([
-      {
-        title: "Flow",
-        href: "flow",
-        isLast: true,
-      },
-    ]);
-  }, [setNav]);
+  useCourseNav([{ title: "Flow", href: "flow", isLast: true }]);
   const t = useTranslations("flow.course.row");
-  console.log(id);
   const data = useCourse(id as string).data;
   const rows = data?.table?.rows;
 

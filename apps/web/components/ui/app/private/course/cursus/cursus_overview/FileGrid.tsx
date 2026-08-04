@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import { useParams } from "next/navigation";
 import { CourseDocument } from "@studo/types";
-import { useCourseStore } from "@/store/course/couresStore";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const MAX_FILES = 3;
 const ACCEPTED = ["application/pdf", "document/docx", "xlsx"];
@@ -15,17 +15,7 @@ const FileGrid: React.FC = () => {
   const t = useTranslations("");
   const id = useParams().id;
 
-  //nav
-  const setNav = useCourseStore((state) => state.setNav);
-  useEffect(() => {
-    setNav([
-      {
-        title: "Course",
-        href: "course",
-        isLast: true,
-      },
-    ]);
-  }, [setNav]);
+  useCourseNav([{ title: "Course", href: "course", isLast: true }]);
 
   // server-documenten = bron van waarheid
   const documents: CourseDocument[] =
