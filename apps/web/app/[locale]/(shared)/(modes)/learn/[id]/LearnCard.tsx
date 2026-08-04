@@ -95,15 +95,36 @@ const LearnCard = () => {
   const errorQueueRef = useRef<number[]>([]);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // sync-boekhouding
-  const correctRef = useRef(0); // alle juiste antwoorden (voor accuracy)
+  const correctRef = useRef(0); // cumulatief juiste antwoorden (voor accuracy)
   const lastSeenRef = useRef<string | null>(null); // laatst getoonde cardId
   const dirtyRef = useRef(false); // iets te syncen sinds laatste flush?
   const flushRef = useRef<() => void>(() => {});
+
+  // ── cumulatieve stats (geseed uit de bestaande sessie, absoluut geflusht) ──
+  const durationBaseRef = useRef(0); // reeds gelogde minuten (uit sessie)
+  const sessionStartMsRef = useRef(Date.now()); // start van dit bezoek
+  // gemiddelde antwoordtijd = lopend gemiddelde over álle beurten:
+  const prevAvgRef = useRef(0); // opgeslagen gem. (ms) vóór dit bezoek
+  const prevAttemptsRef = useRef(0); // beurten vóór dit bezoek (vaste basis)
+  const respSumMsRef = useRef(0); // som antwoordtijden (ms) dit bezoek
+  const cardShownAtRef = useRef(Date.now()); // wanneer huidige kaart getoond
+  // langste juist-op-rij (focus streak), over sessies heen:
+  const focusMaxRef = useRef(0);
+  const focusCurRef = useRef(0);
 
   // init zodra de kaarten geladen zijn (render-time, geen effect).
   // resume-on-load: seed voortgang uit de bestaande session-cards.
   if (cards && !initialized) {
     setInitialized(true);
+    // cumulatieve session-stats seeden (resume over sessies heen)
+    const sesh = set?.session;
+    attemptsRef.current = sesh?.totalAttempts ?? 0;
+    correctRef.current = sesh?.totalCorrect ?? 0;
+    durationBaseRef.current = sesh?.durationMin ?? 0;
+    prevAvgRef.current = sesh?.averageResponseTime ?? 0;
+    prevAttemptsRef.current = sesh?.totalAttempts ?? 0;
+    focusMaxRef.current = sesh?.longestFocusStreak ?? 0;
+    sessionStartMsRef.current = Date.now();
     const scById = new Map(
       (set?.session?.cards ?? []).map((sc) => [
         sc.cardId,
@@ -191,6 +212,11 @@ const LearnCard = () => {
 
   // huidige kaart: in drill uit de drillQueue, anders uit de hoofdqueue
   const head = errorMode ? drillQueue[0] : queue[0];
+
+  // reset de antwoordtimer telkens een nieuwe kaart in beeld komt
+  useEffect(() => {
+    if (phase === "input") cardShownAtRef.current = Date.now();
+  }, [phase, head]);
   const currentCard = useCallback(() => {
     const card = cards?.[head];
     return {
@@ -229,12 +255,32 @@ const LearnCard = () => {
       0,
     );
     const attempts = attemptsRef.current;
+    // gem. antwoordtijd (ms) als lopend gemiddelde: oude gem × oude beurten +
+    // som van dit bezoek, gedeeld door het totaal aantal beurten.
+    const averageResponseTime =
+      attempts > 0
+        ? Math.round(
+            (prevAvgRef.current * prevAttemptsRef.current +
+              respSumMsRef.current) /
+              attempts,
+          )
+        : 0;
+    const now = new Date();
+    const durationMin =
+      durationBaseRef.current +
+      Math.floor((now.getTime() - sessionStartMsRef.current) / 60000);
     const body: UpdateStudysession = {
       userId: session.userId,
       index,
       accuracy:
         attempts > 0 ? Math.round((correctRef.current / attempts) * 100) : 0,
-      lastStudied: new Date().toISOString(),
+      totalAttempts: attempts,
+      totalCorrect: correctRef.current,
+      averageResponseTime,
+      longestFocusStreak: focusMaxRef.current,
+      durationMin,
+      endedAt: now.toISOString(),
+      lastStudied: now.toISOString(),
       ...(lastSeenRef.current ? { lastSeen: lastSeenRef.current } : {}),
       cards: cardUpdates,
     };
@@ -301,6 +347,19 @@ const LearnCard = () => {
       }
       if (!errorMode) {
         attemptsRef.current += 1;
+        // antwoordtijd van deze beurt bijhouden (voor gem. antwoordtijd)
+        respSumMsRef.current += Math.max(
+          0,
+          Date.now() - cardShownAtRef.current,
+        );
+        // focus streak: juist → +1, fout → reset; hoogste onthouden
+        if (correct) {
+          focusCurRef.current += 1;
+          if (focusCurRef.current > focusMaxRef.current)
+            focusMaxRef.current = focusCurRef.current;
+        } else {
+          focusCurRef.current = 0;
+        }
         // fout → toevoegen aan de persistente errorqueue (dedup)
         if (!correct && !errorQueueRef.current.includes(head)) {
           errorQueueRef.current = [...errorQueueRef.current, head];
@@ -442,6 +501,15 @@ const LearnCard = () => {
     correctRef.current = 0;
     errorQueueRef.current = [];
     lastSeenRef.current = null;
+    // cumulatieve stats terug naar nul
+    durationBaseRef.current = 0;
+    sessionStartMsRef.current = Date.now();
+    prevAvgRef.current = 0;
+    prevAttemptsRef.current = 0;
+    respSumMsRef.current = 0;
+    cardShownAtRef.current = Date.now();
+    focusMaxRef.current = 0;
+    focusCurRef.current = 0;
     dirtyRef.current = true; // reset ook naar de backend syncen
     const resetQueue = cards
       .map((_, i) => i)

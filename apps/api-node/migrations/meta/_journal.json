@@ -190,6 +190,13 @@
       "when": 1785793124145,
       "tag": "0026_pink_agent_zero",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1785794003518,
+      "tag": "0027_brainy_toro",
+      "breakpoints": true
     }
   ]
 }

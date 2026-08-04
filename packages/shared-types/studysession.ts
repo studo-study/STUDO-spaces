@@ -9,8 +9,6 @@ export interface UpdateSessionCard {
   sessionId?: string;
   ownerId?: string;
   flagged?: boolean;
-  totalAttempts?: boolean;
-  totalCorrect?: boolean;
 }
 
 export interface SessionCardResponse {
@@ -25,8 +23,6 @@ export interface SessionCardResponse {
   sessionId: string;
   ownerId: string;
   flagged: boolean;
-  totalAttempts: boolean;
-  totalCorrect: boolean;
 }
 
 export interface UpdateSessionPin {
@@ -38,8 +34,6 @@ export interface UpdateSessionPin {
   sessionId?: string;
   ownerId?: string;
   flagged?: boolean;
-  totalAttempts?: boolean;
-  totalCorrect?: boolean;
 }
 
 export interface SessionPinResponse {
@@ -54,8 +48,6 @@ export interface SessionPinResponse {
   sessionId: string;
   ownerId: string;
   flagged: boolean;
-  totalAttempts: boolean;
-  totalCorrect: boolean;
 }
 
 export interface UpdateStudysession {
@@ -68,6 +60,8 @@ export interface UpdateStudysession {
   accuracy?: number;
   averageResponseTime?: number;
   longestFocusStreak?: number;
+  totalAttempts?: number;
+  totalCorrect?: number;
   lastStudied?: string;
   userId: string;
   lastSeen?: string;
@@ -84,6 +78,8 @@ export interface Studysession {
   accuracy: number;
   averageResponseTime: number;
   longestFocusStreak: number;
+  totalAttempts: number;
+  totalCorrect: number;
   lastSeen: string;
   lastStudied: string;
   userId: string;

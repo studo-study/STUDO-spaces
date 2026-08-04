@@ -1437,7 +1437,14 @@
     "flag_card": "Markeer kaart",
     "unflag_card": "Demarkeer kaart",
     "flag_failed": "Markeren mislukt",
-    "no_cards": "Geen kaarten"
+    "no_cards": "Geen kaarten",
+    "stats": {
+      "title": "Set statistieken",
+      "graph": "Grafiek",
+      "list": "Lijst",
+      "general_title": "Algemeen",
+      "cards_title": "Per kaart"
+    }
   },
   "trackview": {
     "tracks": "Tracks",

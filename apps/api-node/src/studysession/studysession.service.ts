@@ -87,6 +87,10 @@ export class StudysessionService {
       sessionValues.averageResponseTime = body.averageResponseTime;
     if (body.longestFocusStreak !== undefined)
       sessionValues.longestFocusStreak = body.longestFocusStreak;
+    if (body.totalAttempts !== undefined)
+      sessionValues.totalAttempts = body.totalAttempts;
+    if (body.totalCorrect !== undefined)
+      sessionValues.totalCorrect = body.totalCorrect;
     if (body.lastSeen !== undefined) sessionValues.lastSeen = body.lastSeen;
     if (body.lastStudied !== undefined)
       sessionValues.lastStudied = body.lastStudied;

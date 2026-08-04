@@ -282,7 +282,11 @@ export default function StudosetView({ id }: viewProps) {
           <span className="w-full h-fit font-bold text-sm sm:text-base">
             {t("progress_title")}
           </span>
-          <ProgressPopUpTrigger />
+          <ProgressPopUpTrigger
+            session={data?.session}
+            sessionCards={sessionCards ?? []}
+            totalCards={totalCards}
+          />
         </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
           <div

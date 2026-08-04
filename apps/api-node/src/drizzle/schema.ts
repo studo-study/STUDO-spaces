@@ -276,6 +276,8 @@ export const studysessions = pgTable(
     accuracy: integer('accuracy').notNull(),
     averageResponseTime: integer('average_response_time').notNull(),
     longestFocusStreak: integer('longest_focus_streak').notNull(),
+    totalAttempts: integer('total_attempts').notNull().default(0),
+    totalCorrect: integer('total_correct').notNull().default(0),
     lastSeen: varchar('last_seen', { length: 64 }).notNull(),
     lastStudied: varchar('last_studied').notNull(),
   },
