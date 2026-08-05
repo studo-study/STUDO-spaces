@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // gegenereerd door copy-pdf-worker (predev/prebuild), niet linten
+    "public/pdf.worker.min.mjs",
   ]),
 ]);
 
