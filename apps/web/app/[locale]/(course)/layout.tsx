@@ -3,8 +3,6 @@ import { ReactNode } from "react";
 import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
 import CourseSidebar from "@/components/ui/app/private/course/layout/CourseSidebar";
 import LayoutHeader from "@/components/ui/app/private/course/layout/LayoutHeader";
-import SideMenu from "@/components/ui/app/private/course_context_menu/SideMenu";
-import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
 
 export default function CourseLayout({ children }: { children: ReactNode }) {
   return (

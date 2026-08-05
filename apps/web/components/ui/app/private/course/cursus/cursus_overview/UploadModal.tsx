@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { SetStateAction, useCallback, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { HiSparkles } from "react-icons/hi";
@@ -35,14 +29,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
   const t = useTranslations("svenimport");
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const abortControllerRef = useRef<AbortController | null>(null);
   const [files, setFiles] = useState<File[]>([]);
-
-  useEffect(() => {
-    return () => {
-      abortControllerRef.current?.abort();
-    };
-  }, []);
 
   const onClose = useCallback(() => {
     setIsDragging(false);
