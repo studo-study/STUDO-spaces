@@ -11,6 +11,8 @@ export interface ICourseBreadCrumb {
 interface CourseNavStore {
   nav: ICourseBreadCrumb[];
   setNav: (input: ICourseBreadCrumb[]) => void;
+  document: string;
+  setDocument: (input: string) => void;
 }
 
 // Breadcrumb-navigatie voor de course-layout. LayoutHeader/BreadCrumbs leest
@@ -18,4 +20,6 @@ interface CourseNavStore {
 export const useCourseNavStore = create<CourseNavStore>((set) => ({
   nav: [],
   setNav: (input) => set({ nav: input }),
+  document: "",
+  setDocument: (input) => set({ document: input }),
 }));

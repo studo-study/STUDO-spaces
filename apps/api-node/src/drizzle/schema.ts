@@ -24,6 +24,7 @@ import {
   rowPriorityEnum,
   setTypeEnum,
   widgetTypeEnum,
+  documentTagsEnum,
 } from './enums';
 
 export const users = pgTable(
@@ -727,19 +728,20 @@ export const courseDocuments = pgTable('course_documents', {
   title: varchar('title').notNull(),
   author: varchar('author'),
   publishingDate: date('publishing_date'),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
   pageCount: integer('page_count'),
+  documentTag: documentTagsEnum('document_tag').default('document').notNull(),
   wordCount: integer('word_count'),
-  status: courseDocumentStatusEnum('status').default('uploading'),
+  status: courseDocumentStatusEnum('status').default('uploading').notNull(),
   storageKey: varchar('storage_key').notNull(),
-  mimeType: mimeTypeEnum('mime_type').notNull().default('pdf'),
+  mimeType: varchar('mime_type').notNull().default('pdf'),
   fileSize: integer('file_size'),
   checksum: integer('checksum'),
 });
 
 export const courseDocumentChunks = pgTable('course_document_chunks', {
-  id: uuid('id').primaryKey().defaultRandom(),
+  id: uuid('id').primaryKey().defaultRandom().notNull(),
   documentId: uuid('document_id')
     .references(() => courseDocuments.id, {
       onDelete: 'cascade',

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import {
   ICourseBreadCrumb,
   useCourseNavStore,
-} from "@/store/course/courseNavStore";
+} from "@/store/course/CourseNavStore";
 
 // Zet de breadcrumb-nav voor de huidige course-pagina. Vervangt de per-pagina
 // gedupliceerde setNav-useEffects.

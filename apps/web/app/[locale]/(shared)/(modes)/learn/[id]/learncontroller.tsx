@@ -1,8 +1,8 @@
 "use client";
 import LearnCard from "@/app/[locale]/(shared)/(modes)/learn/[id]/LearnCard";
 import type { FullStudysetResponse } from "@studo/types";
-import { useSideMenu } from "@/store/coursecontextmenu/SideMenuStore";
-import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
+import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
+import { pomodoroStore } from "@/store/course_context_menu/PomodoroStore";
 import Image from "next/image";
 import classNames from "@/utils/classnames";
 

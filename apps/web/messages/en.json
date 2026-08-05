@@ -1493,7 +1493,17 @@
       "error_icon_required": "Icon required",
       "error_title_required": "Title required",
       "n": "n",
-      "cta_add_t": "Add row"
+      "cta_add_t": "Add row",
+      "all": "All",
+      "course": "Course",
+      "notes": "Notes",
+      "summary": "Summary",
+      "upload_doc": "Upload document",
+      "no_files_title": "No documents yet",
+      "no_files_paragraph": "Upload a PDF, Word or Excel file to get started.",
+      "pending_upload": "uploading…",
+      "error_file_types": "Only PDF, Word and Excel files are allowed.",
+      "error_upload": "Something went wrong while uploading."
     }
   },
   "courses": {

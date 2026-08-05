@@ -4,6 +4,9 @@ import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import React, { ReactNode, useState } from "react";
 import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
+import { useCourseNavStore } from "@/store/course/CourseNavStore";
+import { useFile } from "@/hooks/app/courses/useFile";
+import { useCourse } from "@/hooks/app/courses/useCourse";
 export default function CourseDetailPage({
   children,
 }: {
@@ -12,11 +15,18 @@ export default function CourseDetailPage({
   const path = usePathname().split("/");
   const courseId = path[2];
   const docId = path[4];
-  const [title, setTitle] = useState("");
+  const metaData = useCourse(courseId)?.data?.documents.find(
+    (doc) => doc.id === docId,
+  );
+  const document = useFile(courseId, docId)?.data;
+  console.log(document);
+  const title = metaData?.title ?? document?.title;
+
+  const setTitle = useCourseNavStore((state) => state.setDocument);
   useCourseNav([
     { title: "Course", href: `/course/${courseId}/course`, isLast: false },
     {
-      title: "Document title",
+      title: title ?? "",
       href: `/course/${courseId}/course/${docId}`,
       isLast: true,
     },

@@ -5,7 +5,7 @@ import "react-grid-layout/css/styles.css";
 import {
   useWidgetMenu,
   type WidgetInstance,
-} from "@/store/coursecontextmenu/WidgetMenuStore";
+} from "@/store/course_context_menu/WidgetMenuStore";
 import {
   GRID_COLS,
   WIDGET_REGISTRY,

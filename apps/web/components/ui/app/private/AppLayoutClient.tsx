@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
 import CourseSidebar from "@/components/ui/app/private/course_context_menu/CourseSidebar";
 import SideMenu from "@/components/ui/app/private/course_context_menu/SideMenu";
-import { useSideMenu } from "@/store/coursecontextmenu/SideMenuStore";
+import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
 const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
 
@@ -25,6 +25,9 @@ const STUDOSET_ROUTES = [
   "/learn/",
   "/speedy/",
   "/sets",
+  "/home",
+  "/your-files/",
+  "/classrooms",
 ];
 
 function AppLayoutInner({ children }: { children: ReactNode }) {

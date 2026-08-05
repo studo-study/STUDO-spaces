@@ -21,6 +21,19 @@ export class CourseService {
     private readonly db: DatabaseProvider,
   ) {}
 
+  async CourseUserCheck(userId: string, courseId: string) {
+    const user = await this.db.query.courseUsers.findFirst({
+      where: and(
+        eq(courseUsers.userId, userId),
+        eq(courseUsers.courseId, courseId),
+      ),
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not in course');
+    }
+  }
+
   async getAllUserCourses(userId: string): Promise<Course[]> {
     const rows = await this.db.query.courseUsers.findMany({
       where: eq(courseUsers.userId, userId),
@@ -40,16 +53,7 @@ export class CourseService {
     courseId: string,
     userId: string,
   ): Promise<FullCourseResponse> {
-    const user = await this.db.query.courseUsers.findMany({
-      where: and(
-        eq(courseUsers.userId, userId),
-        eq(courseUsers.courseId, courseId),
-      ),
-    });
-
-    if (!user) {
-      throw new NotFoundException('user not in course');
-    }
+    await this.CourseUserCheck(userId, courseId);
 
     const course = await this.db.query.courses.findFirst({
       where: eq(courses.id, courseId),
@@ -184,8 +188,9 @@ export class CourseService {
         pageCount: d.pageCount,
         wordCount: d.wordCount,
         fileSize: d.fileSize,
-        createdAt: iso(d.createdAt),
-        updatedAt: iso(d.updatedAt),
+        createdAt: d.createdAt,
+        updatedAt: d.updatedAt,
+        documentTag: d.documentTag,
       })),
       members: course.members.map((m) => ({
         userId: m.userId,

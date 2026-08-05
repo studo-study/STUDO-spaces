@@ -72,7 +72,7 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
             )}
           >
             <div
-              className={`transition-colors duration-200 flex gap-5 rounded-4xl dark:hover:bg-studogrey hover:bg-slate-200 ${isActive(item.link) ? "dark:bg-studogrey bg-slate-200" : ""} flex-row justify-baseline px-5 items-center w-full h-10`}
+              className={`transition-colors duration-200 flex gap-5 rounded-4xl dark:hover:bg-studogrey/30 hover:bg-slate-200 ${isActive(item.link) ? "dark:bg-studogrey/30 bg-slate-200" : ""} flex-row justify-baseline px-5 items-center w-full h-10`}
             >
               <div className="flex items-center min-w-10 justify-center cursor-pointer text-2xl dark:text-white">
                 {item.icon}
@@ -107,7 +107,7 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
             )}
           >
             <div
-              className={`transition-colors duration-200 flex gap-5 rounded-4xl dark:hover:bg-studogrey hover:bg-slate-200 ${isActive(item.link) ? "dark:bg-studogrey bg-slate-200" : ""} flex-row justify-baseline px-5 items-center w-full h-10`}
+              className={`transition-colors duration-200 flex gap-5 rounded-4xl dark:hover:bg-studogrey/30 hover:bg-slate-200 ${isActive(item.link) ? "dark:bg-studogrey/30 bg-slate-200" : ""} flex-row justify-baseline px-5 items-center w-full h-10`}
             >
               <div className="flex items-center min-w-10 justify-center cursor-pointer text-2xl dark:text-white">
                 {item.icon}
@@ -135,7 +135,7 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
           onClick={toggleSearch}
           className="w-full h-10 aria-selected:opacity-100 px-5 opacity-50 cursor-pointer"
         >
-          <div className="transition-colors duration-200 flex gap-5 select-none rounded-4xl dark:hover:bg-studogrey hover:bg-slate-200 flex-row justify-baseline px-5 items-center w-full h-10">
+          <div className="transition-colors duration-200 flex gap-5 select-none rounded-4xl dark:hover:bg-studogrey/30 hover:bg-slate-200 flex-row justify-baseline px-5 items-center w-full h-10">
             <div className="flex items-center min-w-10 justify-center cursor-pointer text-2xl dark:text-white">
               <Search size={20} />
             </div>

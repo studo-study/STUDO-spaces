@@ -689,7 +689,17 @@
         "due_date": "échéance",
         "priorité": "priorité",
         "priority": "priorité"
-      }
+      },
+      "all": "Tout",
+      "course": "Cours",
+      "notes": "Notes",
+      "summary": "Résumé",
+      "upload_doc": "Importer un document",
+      "no_files_title": "Aucun document pour l'instant",
+      "no_files_paragraph": "Importez un fichier PDF, Word ou Excel pour commencer.",
+      "pending_upload": "en cours d'envoi…",
+      "error_file_types": "Seuls les fichiers PDF, Word et Excel sont autorisés.",
+      "error_upload": "Une erreur est survenue lors de l'envoi."
     }
   },
   "speedy": {

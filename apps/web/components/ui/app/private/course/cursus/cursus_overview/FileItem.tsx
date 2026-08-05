@@ -7,6 +7,7 @@ import ExtendCoursePopup from "@/components/ui/app/private/course/cursus/cursus_
 import { useState } from "react";
 import { CourseDocument } from "@studo/types";
 import { useParams } from "next/navigation";
+import { useCourseNavStore } from "@/store/course/CourseNavStore";
 
 interface FileItemProps {
   file: CourseDocument;
@@ -15,11 +16,13 @@ const FileItem: React.FC<FileItemProps> = (props) => {
   const { file } = props;
   const locale = useParams().locale;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const setDocument = useCourseNavStore((state) => state.setDocument);
   const path = usePathname();
   return (
     <>
       <Link
         href={path + "/" + file.id}
+        onClick={() => setDocument(file.title)}
         className={
           "flex items-center mb-5 group justify-center max-h-85 cursor-pointer"
         }
@@ -54,7 +57,9 @@ const FileItem: React.FC<FileItemProps> = (props) => {
             <div className={"flex flex-col w-full"}>
               <span className={"font-semibold"}>{file.title}</span>
               <span className={"text-studogrey text-xs"}>
-                {new Date(file?.createdAt as string).toLocaleDateString(locale)}
+                {new Date(
+                  file?.createdAt as unknown as string,
+                ).toLocaleDateString(locale)}
               </span>
             </div>
           </div>

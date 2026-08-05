@@ -49,3 +49,19 @@ export const rowPriorityEnum = pgEnum('row_priority', [
   'medium',
   'high',
 ]);
+
+export const documentTagsEnum = pgEnum('document_tag', [
+  'overview',
+  'course',
+  'notes',
+  'summary',
+  'exercises',
+  'exam',
+  'slides',
+  'lab',
+  'assignment',
+  'cheatsheet',
+  'document',
+]);
+
+export type documentTag = typeof documentTagsEnum.enumValues;

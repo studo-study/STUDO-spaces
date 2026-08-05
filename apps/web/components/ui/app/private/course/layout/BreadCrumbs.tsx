@@ -1,5 +1,5 @@
 "use client";
-import { useCourseNavStore } from "@/store/course/courseNavStore";
+import { useCourseNavStore } from "@/store/course/CourseNavStore";
 import { ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 

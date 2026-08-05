@@ -9,19 +9,26 @@ import {
   TableOfContents,
 } from "lucide-react";
 import SearchBar from "@/components/ui/app/private/app_header/SearchContainer";
-import React, { useState } from "react";
+import React, { SetStateAction } from "react";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
+import { CourseTab } from "@/components/ui/app/private/course/cursus/cursus_overview/FileGrid";
 
-type CourseTab = "all" | "summary" | "course" | "notes";
-const CourseOverviewHeader = () => {
+interface CourseOverviewHeaderProps {
+  setIsOpen: React.Dispatch<SetStateAction<boolean>>;
+  isUploading: boolean;
+  files: File[];
+  tab: CourseTab;
+  setTab: React.Dispatch<SetStateAction<CourseTab>>;
+}
+const CourseOverviewHeader: React.FC<CourseOverviewHeaderProps> = (props) => {
+  const { setIsOpen, isUploading, files, tab, setTab } = props;
   const t = useTranslations("flow.course");
-  const [tab, setTab] = useState<CourseTab>("all");
 
   return (
     <div>
-      <BottomProgress />
+      {isUploading && <BottomProgress files={files} />}
       <div className={"flex justify-between items-center p-5 gap-5"}>
         <div>
           <Tabs
@@ -67,7 +74,12 @@ const CourseOverviewHeader = () => {
             width={"w-65 h-8 text-sm"}
           />
           <BaseTooltip content={t("upload_doc")} position={"left"}>
-            <BaseButton variant={"plus"} shape={"circle"} icon={<Plus />} />
+            <BaseButton
+              variant={"plus"}
+              shape={"circle"}
+              icon={<Plus />}
+              onClick={() => setIsOpen((prev) => !prev)}
+            />
           </BaseTooltip>
         </div>
       </div>

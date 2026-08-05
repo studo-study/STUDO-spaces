@@ -25,7 +25,7 @@ import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBottom";
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
+import { pomodoroStore } from "@/store/course_context_menu/PomodoroStore";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import classNames from "@/utils/classnames";
 import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";

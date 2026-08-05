@@ -1,7 +1,11 @@
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { LoaderCircle, File } from "lucide-react";
 
-const BottomProgress = () => {
+interface BottomProgressProps {
+  files: File[];
+}
+const BottomProgress: React.FC<BottomProgressProps> = (props) => {
+  const { files } = props;
   return (
     <div
       className={

@@ -12,7 +12,7 @@ import {
 import {
   MenuOrigin,
   useSideMenu,
-} from "@/store/coursecontextmenu/SideMenuStore";
+} from "@/store/course_context_menu/SideMenuStore";
 import { usePathname } from "@/i18n/routing";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import { MenuConfig, resolveMenuConfig } from "./config";
