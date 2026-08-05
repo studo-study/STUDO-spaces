@@ -255,18 +255,6 @@ function FlashcardModeInner({
   const Router = useRouter();
   return (
     <div className="w-full min-h-170 h-full max-h-190 flex flex-col gap-3 sm:gap-5  px-10">
-      {!isHome && (
-        <div className="w-full flex">
-          <BaseButton
-            size="sm"
-            variant="icon"
-            onClick={() => Router.push("/studoset/" + id)}
-          >
-            <IoArrowBackOutline />
-          </BaseButton>
-        </div>
-      )}
-
       {/* Toolbar */}
       <div className="w-full flex flex-row gap-2 sm:gap-5 items-center">
         <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-studoborder/30">
@@ -320,7 +308,7 @@ function FlashcardModeInner({
         </BaseTooltip>
       </div>
 
-      <div className="flex-1 pb-10 min-h-0 max-h-130">
+      <div className="flex-1 pb-10 min-h-0 max-h-130 lg:max-h-150">
         {index >= shuffled.length ? (
           <FinishedScreen
             progress={toggleResetProgress}
@@ -527,7 +515,7 @@ const CodeBlock = ({ value, lang }: { value: string; lang: string }) => {
   if (!html) return <span className="font-mono text-sm">{value}</span>;
   return (
     <p
-      className="text-lg px-5 flex-1 max-w-full scroll-hidden overflow-auto [&>pre]:bg-transparent! [&>pre]:p-0 [&>pre]:font-mono [&>pre]:!whitespace-pre-wrap [&>pre]:wrap-break-word! [&>pre_span]:whitespace-pre-wrap!"
+      className="text-lg px-5 flex-1 max-w-full scroll-hidden overflow-auto [&>pre]:bg-transparent! [&>pre]:p-0 [&>pre]:font-mono [&>pre]:whitespace-pre-wrap! [&>pre]:wrap-break-word! [&>pre_span]:whitespace-pre-wrap!"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

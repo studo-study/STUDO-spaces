@@ -1536,7 +1536,8 @@
       "error_title_required": "Titel is verplicht",
       "n": "n",
       "cta_add_t": "Rij toevoegen",
-      "flow_title": "Planning"
+      "flow_title": "Planning",
+      "upload_doc": "Document toevoegen"
     }
   },
   "courses": {

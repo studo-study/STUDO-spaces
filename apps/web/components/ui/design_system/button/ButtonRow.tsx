@@ -12,6 +12,7 @@ interface IButtonRowItem extends Omit<
   type?: "button" | "submit" | "reset";
   error?: string;
   icon?: ReactNode;
+  className?: string;
 }
 
 interface ButtonRowProps {
@@ -30,9 +31,10 @@ const ButtonRow: React.FC<ButtonRowProps> = (props) => {
       {buttons.map((btn) => (
         <button
           key={btn.label}
-          className={
-            "cursor-pointer w-7 h-7 rounded-full flex items-center justify-center border transition-transform active:scale-95 duration-300 border-studoborder/30 bg-studogrey/30"
-          }
+          className={classNames(
+            "cursor-pointer w-7 h-7 rounded-full flex items-center justify-center border transition-transform active:scale-95 duration-300 border-studoborder/30 bg-studogrey/30",
+            btn.className,
+          )}
           type={btn.type}
           disabled={btn.disabled || btn.isLoading}
           onClick={btn.onClick}

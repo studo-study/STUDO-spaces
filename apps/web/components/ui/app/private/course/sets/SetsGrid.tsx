@@ -7,6 +7,7 @@ import type { StudySetItem } from "@/components/ui/app/private/your-files/sets/g
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import { useParams } from "next/navigation";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
+import Select from "@/components/ui/design_system/select/Select";
 
 export default function CourseSetsGrid() {
   const { id } = useParams<{ id: string }>();
@@ -27,7 +28,7 @@ export default function CourseSetsGrid() {
     [courseSets],
   );
 
-  const [sortMode, setSortMode] = useState<"all" | "recent" | "created">("all");
+  const [sortMode, setSortMode] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredSets = useMemo(() => {
@@ -52,31 +53,29 @@ export default function CourseSetsGrid() {
   const t = useTranslations("y_f.your_sets");
 
   return (
-    <div className="relative w-full flex-1 flex flex-col gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">
-      <div className="sticky top-0 w-full h-20 z-20 backdrop-blur-2xl py-8 flex overflow-visible flex-row items-center justify-between gap-3">
+    <div className="p-5 relative min-w-0 flex-1 flex flex-col gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">
+      <div className="sticky top-0 w-full z-20 backdrop-blur-2xl flex overflow-visible flex-row items-center justify-between gap-3">
         <div className="w-fit flex flex-row gap-5 items-center">
-          <select
-            name="sort sets"
+          <Select
+            placeholder="sort sets"
+            size={"sm"}
             value={sortMode}
-            onChange={(e) =>
-              setSortMode(e.target.value as "all" | "recent" | "created")
-            }
-            className="
-                            px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
-                            border dark:border-studogrey/30 border-gray-200
-                            bg-white/50 dark:bg-gray-700
-                            text-studodarkblue dark:text-white
-                            font-medium text-xs sm:text-sm
-                            shadow-sm hover:shadow-md
-                            transition-all duration-200
-                            cursor-pointer w-45 text-center
-                            focus:outline-none focus:ring-2 focus:ring-studogrey/50
-                            appearance-none"
-          >
-            <option value="all">{t("all")}</option>
-            <option value="recent">{t("recent")}</option>
-            <option value="created">{t("created")}</option>
-          </select>
+            onChange={(input) => setSortMode(input as string)}
+            options={[
+              {
+                label: t("all"),
+                value: "all",
+              },
+              {
+                value: "recent",
+                label: t("recent"),
+              },
+              {
+                value: "created",
+                label: t("created"),
+              },
+            ]}
+          />
         </div>
         <SetSearch sets={allSets} setSearchQuery={setSearchQuery} />
       </div>

@@ -7,7 +7,7 @@ const PageContainer = (props: PageContainerProps) => {
   return (
     <div
       className={
-        "w-full h-full flex flex-col items-center justify-center  2xl:py-15 xl:py-5 2xl:pt-5 scroll-hidden"
+        "w-full h-full flex flex-col items-center justify-center  2xl:py-15 xl:py-15 2xl:pt-15 scroll-hidden"
       }
     >
       <div

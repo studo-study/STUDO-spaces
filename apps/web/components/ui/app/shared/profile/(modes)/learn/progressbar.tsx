@@ -1,5 +1,5 @@
 import classNames from "@/utils/classnames";
-import { Phase } from "@/app/[locale]/(shared)/(modes)/learn/[id]/LearnCard";
+import { Phase } from "@/app/[locale]/(shared)/(modes)/learn/[id]/useLearnCard";
 
 interface ProgressBarProps {
   cardIndex: number;

@@ -1,12 +1,15 @@
 "use client";
 import { usePathname } from "@/i18n/routing";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
+import { useState } from "react";
+import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
+import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 
 export default function CourseDetailPage() {
   const path = usePathname().split("/");
   const courseId = path[2];
   const docId = path[4];
-
+  const [title, setTitle] = useState("");
   useCourseNav([
     { title: "Course", href: `/course/${courseId}/course`, isLast: false },
     {
@@ -17,9 +20,29 @@ export default function CourseDetailPage() {
   ]);
 
   return (
-    <div className={"w-full h-full flex flex-col"}>
-      <div className={"h-10 w-full flex flex-row items-center gap-3 mb-2"}>
-        <span>title</span>
+    <div className={"min-w-0 min-h-0 flex-1 flex flex-col"}>
+      <div
+        className={
+          "w-full flex flex-row items-center justify-between gap-3 p-5 border-b border-studoborder/30"
+        }
+      >
+        <input
+          className={"font-bold text-lg outline-none truncate"}
+          type={"text"}
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
+        <ButtonRow
+          buttons={[
+            { icon: <ChevronDown size={15} /> },
+            {
+              icon: <ChevronUp size={15} />,
+            },
+            {
+              icon: <Plus size={15} />,
+            },
+          ]}
+        />
       </div>
       <div></div>
     </div>

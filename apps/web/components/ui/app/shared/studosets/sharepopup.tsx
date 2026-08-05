@@ -18,7 +18,7 @@ export default function SharePopup(props: SharePopupProps) {
   const locale = useLocale();
   const buildLink = window.location.origin + "/" + locale + "/" + pathname;
   const toast = useToast();
-  const isPrivate = studoset?.publicSet;
+  const isPublic = studoset?.publicSet;
   const toggleCopy = () => {
     navigator.clipboard.writeText(buildLink);
     toast.success(t("copy_message"));
@@ -39,7 +39,7 @@ export default function SharePopup(props: SharePopupProps) {
     >
       <div className={"w-full h-full flex group flex-col gap-1 pt-1"}>
         <span className={"font-bold"}>{t("pop_title")}:</span>
-        {isPrivate && (
+        {!isPublic && (
           <span className={"text-xs text-studogrey"}>{t("isPrivate")}*</span>
         )}
         <div

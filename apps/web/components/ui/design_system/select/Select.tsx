@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { FaChevronDown } from "react-icons/fa";
 import { useTranslations } from "next-intl";
+import { ChevronDown } from "lucide-react";
 
 interface SelectOption {
   value: string;
@@ -100,7 +100,7 @@ const Select = ({
   const t = useTranslations("select");
 
   return (
-    <div ref={containerRef} className={"relative"}>
+    <div ref={containerRef} className={"relative min-w-fit"}>
       {label && (
         <label htmlFor={id} className={`text-zinc-400 ${s.label}`}>
           {label}
@@ -111,12 +111,12 @@ const Select = ({
         id={id}
         disabled={disabled}
         onClick={() => !disabled && setOpen((prev) => !prev)}
-        className={`w-full rounded-full flex flex-row cursor-pointer items-center justify-between outline-none ring-0 border border-studoborder/30  bg-studogrey/30 text-left disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
+        className={`w-full rounded-full flex gap-2 flex-row cursor-pointer items-center justify-between outline-none ring-0 border border-studoborder/30  bg-studogrey/30 text-left disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
       >
         <span className={selected ? "" : "text-zinc-400"}>
           {selected ? selected.label : placeholder}
         </span>
-        <FaChevronDown
+        <ChevronDown
           size={s.chevron}
           opacity={0.5}
           className={`transition-transform duration-200 ${
@@ -126,9 +126,9 @@ const Select = ({
       </button>
 
       <div
-        className={`absolute left-0 right-0 top-full mt-2
-          z-[9999] p-3 border border-studoborder/30
-          rounded-2xl backdrop-blur-2xl min-w-30
+        className={`absolute left-0 right-0 top-full mt-2 min-w-fit
+          z-9999 p-2 py-2 border border-studoborder/30
+          rounded-2xl backdrop-blur-2xl
           glass-rgb gap-2 flex flex-col h-fit
           shadow-xl shadow-black/10 dark:shadow-black/30
           transition-all duration-300 ease-out origin-top
@@ -140,13 +140,13 @@ const Select = ({
         `}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={"w-full flex flex-col gap-1"}>
+        <div className={"w-full flex flex-col gap-1 min-w-fit"}>
           <span className={`w-full text-zinc-400 ${s.label}`}>
             {label ?? t("options")}
           </span>
           <div
             className={
-              "w-full h-fit flex flex-col max-h-60 scroll-hidden overflow-y-auto"
+              "w-full h-fit flex flex-col max-h-60 scroll-hidden overflow-y-auto gap-1"
             }
           >
             {options.map((option) => {
@@ -156,11 +156,11 @@ const Select = ({
                   key={String(option.value)}
                   type={"button"}
                   onClick={() => handleSelect(option.value)}
-                  className={`w-full hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50 rounded-lg flex flex-row items-center justify-between cursor-pointer ${
+                  className={`w-full hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50 rounded-full px-3 flex flex-row items-center justify-between cursor-pointer ${
                     s.item
                   } ${isSelected ? "dark:bg-zinc-400/20 bg-zinc-200/50" : ""}`}
                 >
-                  <span>{option.label}</span>
+                  <span className={"truncate"}>{option.label}</span>
                   {isSelected && (
                     <span className={"text-xs text-zinc-500"}>✓</span>
                   )}

@@ -1,6 +1,8 @@
 import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import PageContainer from "@/components/ui/design_system/page/PageContainer";
+import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import { ArrowLeft } from "lucide-react";
 
 export default async function FlashCardPage({
   params,
@@ -10,10 +12,20 @@ export default async function FlashCardPage({
   const { id } = await params;
 
   return (
-    <PageContainer>
-      <AnimateOnMount className="w-full flex-1 min-h-1/5">
-        <FlashcardMode id={id} />
-      </AnimateOnMount>
-    </PageContainer>
+    <>
+      <LinkButton
+        href={"/studoset/" + id}
+        variant={"icon"}
+        icon={<ArrowLeft size={15} />}
+        className={
+          "absolute left-5 top-5 z-999 dark:text-white text-studodarkblue"
+        }
+      />
+      <PageContainer>
+        <AnimateOnMount className="w-full flex-1 min-h-0">
+          <FlashcardMode id={id} />
+        </AnimateOnMount>
+      </PageContainer>
+    </>
   );
 }

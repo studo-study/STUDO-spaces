@@ -10,6 +10,7 @@ import QuickStats from "@/components/ui/app/private/home/quick_stats/QuickStats"
 import YourSets from "@/components/ui/app/private/home/YourSets/YourSets";
 import Courses from "@/components/ui/app/private/home/courses/Courses";
 import EmptyFallback from "@/components/ui/app/private/home/EmptyFallback/EmptyFallback";
+import PageContainer from "@/components/ui/design_system/page/PageContainer";
 export const metadata: Metadata = {
   title: "Home | Studo",
 };
@@ -25,9 +26,9 @@ export default async function HomePage() {
   return (
     <>
       <section
-        className={`w-full h-fit mb-3 gap-5 flex flex-col sticky top-0 z-20 pb-3 dark:bg-slate-800 bg-bg-white`}
+        className={`w-full max-h-fit mb-3 gap-5 flex flex-col sticky top-0 z-20 pb-3 dark:bg-slate-800 bg-bg-white`}
       >
-        <div className={"w-full flex-1 flex flex-col gap-2"}>
+        <div className={"w-full flex-1 min-w-0 flex flex-col gap-2"}>
           <div className="w-full h-fit flex flex-col gap-2 ">
             <span className="font-georgia font-bold dark:text-white text-studodarkblue text-2xl">
               {welcome}

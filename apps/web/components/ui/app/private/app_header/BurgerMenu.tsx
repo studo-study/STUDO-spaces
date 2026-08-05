@@ -53,7 +53,7 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
   return (
     <div
       className={`h-full select-none border-studoborder/30
-            transition-[width] duration-300 flex flex-col gap-3 py-10 pb-20
+            transition-[width] duration-300 flex flex-col gap-3 py-10 pb-5
             ${burgerOpen ? "w-57" : "w-30"}`}
     >
       {main.map((item, index) => (

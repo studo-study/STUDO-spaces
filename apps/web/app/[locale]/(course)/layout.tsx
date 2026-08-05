@@ -25,7 +25,7 @@ export default function CourseLayout({ children }: { children: ReactNode }) {
             <div className={"min-h-0 min-w-0 flex-1 flex relative px-5 pb-5"}>
               <div
                 className={
-                  "border border-studoborder/30 rounded-3xl bg-studogrey/10 min-h-0 min-w-0 flex-1 flex "
+                  "border border-studoborder/30 rounded-4xl dark:bg-slate-800 min-h-0 min-w-0 flex-1 flex "
                 }
               >
                 {children}

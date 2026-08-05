@@ -54,11 +54,6 @@ function SpeedyModeContent({ id }: { id: string }) {
   if (state.phase === "finished") {
     return (
       <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
-        <div className="w-full flex">
-          <BaseButton size="sm" variant="icon" onClick={returnToSet}>
-            <IoArrowBackOutline />
-          </BaseButton>
-        </div>
         <SpeedyEndScreen back={returnToSet} />
       </div>
     );
@@ -66,12 +61,6 @@ function SpeedyModeContent({ id }: { id: string }) {
 
   return (
     <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
-      <div className="w-full flex">
-        <BaseButton size="sm" variant="icon" onClick={returnToSet}>
-          <IoArrowBackOutline />
-        </BaseButton>
-      </div>
-
       <div className="w-2/3 flex flex-col gap-5 items-center justify-center">
         <div className="flex flex-row items-center w-full gap-3">
           <span className="text-xs sm:text-sm whitespace-nowrap opacity-75">

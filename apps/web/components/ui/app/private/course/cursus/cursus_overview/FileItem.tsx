@@ -21,7 +21,7 @@ const FileItem: React.FC<FileItemProps> = (props) => {
       <Link
         href={path + "/" + file.id}
         className={
-          "flex min-w-1/4 items-center mb-5 group justify-center max-h-85 cursor-pointer"
+          "flex items-center mb-5 group justify-center max-h-85 cursor-pointer"
         }
       >
         <div className={"w-fit flex flex-col gap-2"}>

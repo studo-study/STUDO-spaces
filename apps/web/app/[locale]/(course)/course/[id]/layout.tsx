@@ -17,12 +17,10 @@ export default function CoursePageLayout({
   return (
     <div
       className={
-        "min-w-0 min-h-0 flex-1 flex py-15 justify-center dark:text-white text-studodarkblue"
+        "min-w-0 min-h-0 flex-1 flex justify-center dark:text-white text-studodarkblue"
       }
     >
-      <div className={"flex flex-1 min-h-0 justify-start max-w-4/5"}>
-        {children}
-      </div>
+      {children}
     </div>
   );
 }

@@ -8,10 +8,10 @@ interface JumpToBottomProps {
 }
 const JumpToBottom = ({ jumpToTop, jumpToBottom }: JumpToBottomProps) => {
   return (
-    <AnimateOnScroll className={"fixed top-1/2 right-5 "}>
+    <AnimateOnScroll className={"fixed top-1/2 right-10 "}>
       <div
         className={
-          "h-20 w-10 rounded-3xl flex items-center justify-between flex-col border border-studoborder/30 bg-studogrey/30"
+          "h-20 w-10 rounded-3xl flex items-center justify-between flex-col border border-studoborder/30 hover:border-studoborder transition-colors duration-300 bg-studogrey/30 shadow-lg"
         }
       >
         <BaseButton

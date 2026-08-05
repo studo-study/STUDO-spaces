@@ -99,7 +99,7 @@ const JumpBackIn = () => {
               atStart ? "opacity-0 pointer-events-none" : "opacity-100",
             )}
           >
-            <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-bg-white dark:from-bg-dark to-transparent" />
+            <div className="absolute inset-y-0 left-0 w-16 bg-linear-to-r from-bg-white dark:from-slate-800 to-transparent" />
             <button
               onClick={handleBackward}
               aria-label={t("jump-back-in_previous")}
@@ -128,7 +128,7 @@ const JumpBackIn = () => {
               atEnd ? "opacity-0 pointer-events-none" : "opacity-100",
             )}
           >
-            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-bg-white dark:from-bg-dark to-transparent" />
+            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-bg-white from-slate-800 to-transparent" />
             <button
               onClick={handleForward}
               aria-label={t("jump-back-in_next")}

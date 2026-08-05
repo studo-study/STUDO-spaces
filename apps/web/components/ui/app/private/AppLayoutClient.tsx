@@ -73,7 +73,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
 
           <div
             className={
-              "relative border rounded-3xl border-studoborder/30 min-w-0 min-h-0 flex-1 flex mb-5 mx-5 dark:bg-slate-800 overflow-hidden"
+              "relative border rounded-4xl border-studoborder/30 min-w-0 min-h-0 flex-1 flex mb-5 mx-5 dark:bg-slate-800 overflow-hidden"
             }
           >
             {showStudoSidebar ? (
