@@ -4,7 +4,6 @@ import type { SessionCardResponse, StudysessionResponse } from "@studo/types";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { IoArrowBackOutline } from "react-icons/io5";
 import ProgressBar from "@/components/ui/app/shared/profile/(modes)/learn/progressbar";
 import WordTimer from "@/components/ui/app/shared/studosets/modes/speedy/WordTimer";
 import SpeedyInput from "@/components/ui/app/shared/studosets/modes/speedy/SpeedyInput";

@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Chart from "chart.js/auto";
-import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { Card, SessionCard } from "@/types/types";
 
