@@ -15,6 +15,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 // ~A4 op 96dpi (210mm ≈ 794px); lees-breedte, niet uitgerekt
 const MAX_WIDTH = 794;
 const A4_RATIO = 1 / 1.4142; // width / height (210 × 297 mm)
+// headroom zodat de canvas scherp blijft tot ~dit zoom-niveau
+const ZOOM_MAX_QUALITY = 2;
 
 interface PdfReaderProps {
   file: FullCourseDocument;
@@ -27,6 +29,7 @@ const PdfReader: React.FC<PdfReaderProps> = ({ file }) => {
   // reader-state komt uit de store; bouw je eigen controls erbovenop.
   const numPages = usePdfReader((s) => s.numPages);
   const zoom = usePdfReader((s) => s.zoom);
+  const currentPage = usePdfReader((s) => s.currentPage);
   const setNumPages = usePdfReader((s) => s.setNumPages);
   const setCurrentPage = usePdfReader((s) => s.setCurrentPage);
   const setZoom = usePdfReader((s) => s.setZoom);
@@ -34,6 +37,25 @@ const PdfReader: React.FC<PdfReaderProps> = ({ file }) => {
   const reset = usePdfReader((s) => s.reset);
 
   const [containerWidth, setContainerWidth] = useState(0);
+  // base-breedte waarop pdf.js de canvas rastert. Gedebounced zodat resizen
+  // niet elk frame re-rastert (= wit knipperen). Zoom gaat via CSS (zie onder).
+  const [rasterWidth, setRasterWidth] = useState(0);
+  useEffect(() => {
+    if (containerWidth === 0) return;
+    // eerste meting meteen; daarna debounce tijdens resizen
+    const delay = rasterWidth === 0 ? 0 : 150;
+    const id = setTimeout(() => setRasterWidth(containerWidth), delay);
+    return () => clearTimeout(id);
+  }, [containerWidth, rasterWidth]);
+
+  // pixeldichtheid waarop pdf.js rastert. Hoger = scherper bij inzoomen (CSS
+  // schaalt dan een al fijne canvas op). Cap tegen geheugen/perf. Lazy init met
+  // SSR-guard; canvas rendert toch enkel client-side.
+  const [dpr] = useState(() =>
+    typeof window === "undefined"
+      ? 2
+      : Math.min((window.devicePixelRatio || 1) * ZOOM_MAX_QUALITY, 3),
+  );
 
   // store vullen met dit document; opruimen bij verlaten
   useEffect(() => {
@@ -115,29 +137,59 @@ const PdfReader: React.FC<PdfReaderProps> = ({ file }) => {
     };
   }, [setZoom]);
 
+  // page-nodes bijhouden zodat we er programmatisch naartoe kunnen scrollen.
+  const pageEls = useRef(new Map<number, HTMLDivElement>());
+  // laatste pagina die de IntersectionObserver zag → onderscheidt "scroll
+  // veranderde currentPage" van "iemand zette currentPage" (voorkomt loop).
+  const ioPageRef = useRef(1);
+
   // welke pagina staat in beeld → store.currentPage
   const registerPage = useCallback(
     (node: HTMLDivElement | null, pageNumber: number) => {
-      if (!node) return;
+      if (!node) {
+        pageEls.current.delete(pageNumber);
+        return;
+      }
+      pageEls.current.set(pageNumber, node);
+      // detectie via een dunne band in het verticale midden i.p.v. % zichtbaar:
+      // een A4 is vaak hoger dan het scherm, dus 50%-zichtbaar wordt nooit
+      // gehaald → teller bleef hangen. De band pakt de pagina die 't midden
+      // kruist, ongeacht paginagrootte.
       const io = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setCurrentPage(pageNumber);
+          if (entry.isIntersecting) {
+            ioPageRef.current = pageNumber;
+            setCurrentPage(pageNumber);
+          }
         },
-        { threshold: 0.5 },
+        { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
       );
       io.observe(node);
-      return () => io.disconnect();
+      return () => {
+        io.disconnect();
+        pageEls.current.delete(pageNumber);
+      };
     },
     [setCurrentPage],
   );
 
-  const pageWidth = Math.min(containerWidth - 60, MAX_WIDTH) * zoom;
+  // externe currentPage-wijziging (bv. pager-knop) → scroll ernaartoe.
+  // Slaat over als de wijziging van de scroll zelf kwam.
+  useEffect(() => {
+    if (currentPage === ioPageRef.current) return;
+    pageEls.current
+      .get(currentPage)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [currentPage]);
+
+  // base-breedte; zoom is puur CSS (geen re-render), scherpte komt van dpr.
+  const pageWidth = Math.min(rasterWidth - 60, MAX_WIDTH);
 
   return (
     <div
       ref={containerRef}
       style={{ touchAction: "pan-x pan-y" }}
-      className="relative w-full h-full min-h-0 flex-1 overflow-auto flex flex-col items-center scroll-hidden gap-6 py-8 bg-studogrey/5 dark:bg-bg-dark"
+      className="relative w-full h-full z-0 min-h-0 flex-1 overflow-auto flex flex-col items-center scroll-hidden gap-6 py-8 bg-studogrey/5 dark:bg-bg-dark"
     >
       <Document
         file={file.url}
@@ -157,31 +209,36 @@ const PdfReader: React.FC<PdfReaderProps> = ({ file }) => {
         }
         className="flex flex-col items-center gap-6"
       >
-        {Array.from({ length: numPages }, (_, i) => (
-          <div
-            key={i}
-            ref={(node) => void registerPage(node, i + 1)}
-            className="overflow-hidden shadow-lg rounded-xl border border-studoborder/30"
-          >
-            <Page
-              pageNumber={i + 1}
-              width={pageWidth > 0 ? pageWidth : undefined}
-              renderTextLayer
-              renderAnnotationLayer={false}
-              loading={
-                <div
-                  style={{ width: pageWidth, aspectRatio: A4_RATIO }}
-                  className="flex items-center justify-center bg-studogrey/10"
-                >
-                  <LoaderCircle
-                    size={16}
-                    className="animate-spin text-studodarkblue/40 dark:text-white/40"
-                  />
-                </div>
-              }
-            />
-          </div>
-        ))}
+        {/* live zoom via CSS `zoom` (schaalt layout mee → scroll klopt). De
+            canvas wordt op hogere dpr gerasterd, dus opschalen blijft scherp. */}
+        <div style={{ zoom }} className="flex flex-col items-center gap-6">
+          {Array.from({ length: numPages }, (_, i) => (
+            <div
+              key={i}
+              ref={(node) => void registerPage(node, i + 1)}
+              className="overflow-hidden shadow-lg rounded-xl border border-studoborder/30"
+            >
+              <Page
+                pageNumber={i + 1}
+                width={pageWidth > 0 ? pageWidth : undefined}
+                devicePixelRatio={dpr}
+                renderTextLayer
+                renderAnnotationLayer={false}
+                loading={
+                  <div
+                    style={{ width: pageWidth, aspectRatio: A4_RATIO }}
+                    className="flex items-center justify-center bg-studogrey/10"
+                  >
+                    <LoaderCircle
+                      size={16}
+                      className="animate-spin text-studodarkblue/40 dark:text-white/40"
+                    />
+                  </div>
+                }
+              />
+            </div>
+          ))}
+        </div>
       </Document>
     </div>
   );

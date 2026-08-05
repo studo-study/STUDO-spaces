@@ -16,16 +16,22 @@ interface PdfReaderState {
   currentPage: number;
   pageCount: number;
   zoom: number;
-  // acties
-  setDoc: (doc: { doc_id: string; fileName: string; r2Key: string }) => void;
+  // acties — per veld
+  setDocId: (id: string) => void;
+  setFileName: (name: string) => void;
+  setR2Key: (key: string) => void;
   setNumPages: (n: number) => void;
   setCurrentPage: (n: number) => void;
   setPageCount: (n: number) => void;
   setZoom: (z: number) => void;
+  // acties — samengesteld
+  setDoc: (doc: { doc_id: string; fileName: string; r2Key: string }) => void;
   zoomIn: () => void;
   zoomOut: () => void;
   resetZoom: () => void;
   reset: () => void;
+  // generieke partiële update (typed alternatief voor usePdfReader.setState)
+  set: (partial: Partial<PdfReaderState>) => void;
 }
 
 const initial = {
@@ -43,13 +49,20 @@ const initial = {
 // store te lezen en de acties te callen.
 export const usePdfReader = create<PdfReaderState>((set) => ({
   ...initial,
-  setDoc: (doc) => set(doc),
+  // per veld
+  setDocId: (id) => set({ doc_id: id }),
+  setFileName: (name) => set({ fileName: name }),
+  setR2Key: (key) => set({ r2Key: key }),
   setNumPages: (n) => set({ numPages: n }),
   setCurrentPage: (n) => set({ currentPage: n }),
   setPageCount: (n) => set({ pageCount: n }),
   setZoom: (z) => set({ zoom: clampZoom(z) }),
+  // samengesteld
+  setDoc: (doc) => set(doc),
   zoomIn: () => set((s) => ({ zoom: clampZoom(s.zoom + ZOOM_STEP) })),
   zoomOut: () => set((s) => ({ zoom: clampZoom(s.zoom - ZOOM_STEP) })),
   resetZoom: () => set({ zoom: 1 }),
   reset: () => set(initial),
+  // generiek
+  set: (partial) => set(partial),
 }));
