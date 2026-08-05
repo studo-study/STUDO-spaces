@@ -547,11 +547,11 @@ const FinishedScreen = ({
         }
       >
         {!isHome && (
-          <>
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-clip [overflow-clip-margin:100vmin]">
             <div className={"firework"} />
             <div className={"firework"} />
             <div className={"firework"} />
-          </>
+          </div>
         )}
 
         <AnimateOnMount

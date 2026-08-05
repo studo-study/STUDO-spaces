@@ -8,16 +8,15 @@ import { useCourse } from "@/hooks/app/courses/useCourse";
 import { useParams } from "next/navigation";
 import { CourseDocument } from "@studo/types";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { Plus } from "lucide-react";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import CourseOverviewHeader from "@/components/ui/app/private/course/cursus/cursus_overview/CourseOverviewHeader";
+import EmptyFallback from "@/components/ui/design_system/EmptyFallback";
 
 const MAX_FILES = 3;
 const ACCEPTED = ["application/pdf", "document/docx", "xlsx"];
+
 const FileGrid: React.FC = () => {
   const t = useTranslations("flow.course");
   const id = useParams().id;
-
   useCourseNav([{ title: "Course", href: "course", isLast: true }]);
 
   // server-documenten = bron van waarheid
@@ -58,39 +57,44 @@ const FileGrid: React.FC = () => {
   };
 
   return (
-    <div className={"min-w-0 flex-1 flex flex-col gap-5 p-5"}>
-      <div className={"flex justify-end"}>
-        <BaseTooltip content={t("upload_doc")} position={"left"}>
-          <BaseButton variant={"plus"} shape={"circle"} icon={<Plus />} />
-        </BaseTooltip>
-      </div>
-      <div className={"relative min-w-0 min-h-0 flex-1 flex px-10"}>
-        <div
-          onDragOver={(e) => {
-            e.preventDefault();
-            if (!isUploading) setIsDragging(true);
-          }}
-          onDragLeave={(e) => {
-            if (e.currentTarget.contains(e.relatedTarget as Node)) return;
-            setIsDragging(false);
-          }}
-          onDrop={handleDrop}
-          className={"w-full h-full relative "}
-        >
+    <div className={"relative min-w-0 flex-1 flex flex-col gap-5"}>
+      <CourseOverviewHeader />
+      <div className={"min-w-0 flex-1 flex justify-center"}>
+        <div className={"relative min-w-0 min-h-0 flex-1 flex max-w-220"}>
           <div
-            className={classNames(
-              "absolute h-full w-full z-40 border-3 rounded-4xl border-studoblue",
-              isDragging ? "visible" : "hidden",
-            )}
-          />
-          <div className={"flex flex-row flex-wrap w-full"}>
-            {documents.map((file, index) => (
-              <FileItem file={file} key={file.id + index} />
-            ))}
-            {pending.length > 0 && (
-              <span className={"text-sm text-studogrey"}>
-                {pending.length} {t("pending_upload")}
-              </span>
+            onDragOver={(e) => {
+              e.preventDefault();
+              if (!isUploading) setIsDragging(true);
+            }}
+            onDragLeave={(e) => {
+              if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+              setIsDragging(false);
+            }}
+            onDrop={handleDrop}
+            className={"min-h-0 min-w-0 flex-1 flex relative "}
+          >
+            <div
+              className={classNames(
+                "absolute h-full w-full z-40 border-3 rounded-4xl border-studoblue",
+                isDragging ? "visible" : "hidden",
+              )}
+            />
+            {documents.length === 0 ? (
+              <EmptyFallback
+                title={t("no_files_title")}
+                message={t("no_files_paragraph")}
+              />
+            ) : (
+              <div className={"flex flex-row flex-wrap w-full"}>
+                {documents.map((file, index) => (
+                  <FileItem file={file} key={file.id + index} />
+                ))}
+                {pending.length > 0 && (
+                  <span className={"text-sm text-studogrey"}>
+                    {pending.length} {t("pending_upload")}
+                  </span>
+                )}
+              </div>
             )}
           </div>
         </div>

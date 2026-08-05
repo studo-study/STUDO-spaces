@@ -27,9 +27,11 @@ const LearnDone = ({
       <AnimateOnMount className="w-full">
         <div className="w-full h-150">
           <div className="side-a animate__fadeInLeft animate__animate backface-hidden top-0 left-0 absolute w-full shadow-2xl h-full flex items-center justify-center rounded-4xl border border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20">
-            <div className="firework" />
-            <div className="firework" />
-            <div className="firework" />
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-clip [overflow-clip-margin:100vmin]">
+              <div className="firework" />
+              <div className="firework" />
+              <div className="firework" />
+            </div>
 
             <AnimateOnMount className="w-fit flex flex-col gap-5 items-center justify-center">
               <div className="gap-2 flex-col flex items-center justify-center">

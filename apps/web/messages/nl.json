@@ -1537,7 +1537,13 @@
       "n": "n",
       "cta_add_t": "Rij toevoegen",
       "flow_title": "Planning",
-      "upload_doc": "Document toevoegen"
+      "upload_doc": "Document toevoegen",
+      "summary": "Samenvattingen",
+      "all": "Overzicht",
+      "course": "Cursussen",
+      "notes": "Notities",
+      "no_files_title": "Nog geen bestanden",
+      "no_files_paragraph": "Upload een bestand om te beginnen"
     }
   },
   "courses": {
