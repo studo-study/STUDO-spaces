@@ -18,7 +18,6 @@ import { sql } from 'drizzle-orm';
 import {
   courseDocumentStatusEnum,
   courseRolesEnum,
-  mimeTypeEnum,
   rowStatusEnum,
   rowTypeEnum,
   rowPriorityEnum,
