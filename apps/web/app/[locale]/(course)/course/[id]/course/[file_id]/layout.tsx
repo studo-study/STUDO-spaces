@@ -3,10 +3,7 @@ import { usePathname } from "@/i18n/routing";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import React, { ReactNode, useState } from "react";
 import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
-import { ChevronDown, ChevronLeft, ChevronUp, Plus } from "lucide-react";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-
+import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 export default function CourseDetailPage({
   children,
 }: {

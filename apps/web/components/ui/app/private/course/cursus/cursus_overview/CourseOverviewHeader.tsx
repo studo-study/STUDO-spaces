@@ -63,9 +63,7 @@ const CourseOverviewHeader = () => {
               throw new Error("Function not implemented.");
             }}
             Search={false}
-            setSearch={function (value: React.SetStateAction<boolean>): void {
-              throw new Error("Function not implemented.");
-            }}
+            setSearch={() => {}}
             width={"w-65 h-8 text-sm"}
           />
           <BaseTooltip content={t("upload_doc")} position={"left"}>

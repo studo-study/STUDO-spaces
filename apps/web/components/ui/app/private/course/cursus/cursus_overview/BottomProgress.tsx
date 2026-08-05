@@ -1,5 +1,5 @@
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { ChevronUp, LoaderCircle, File } from "lucide-react";
+import { LoaderCircle, File } from "lucide-react";
 
 const BottomProgress = () => {
   return (
