@@ -1546,7 +1546,8 @@
       "no_files_paragraph": "Upload een bestand om te beginnen",
       "pending_upload": "uploaden…",
       "error_file_types": "Alleen PDF-, Word- en Excel-bestanden zijn toegestaan.",
-      "error_upload": "Er ging iets mis bij het uploaden."
+      "error_upload": "Er ging iets mis bij het uploaden.",
+      "doc_error": "Kan document niet laden"
     }
   },
   "courses": {

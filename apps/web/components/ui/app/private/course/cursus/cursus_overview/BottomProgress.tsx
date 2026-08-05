@@ -25,10 +25,10 @@ const BottomProgress: React.FC<BottomProgressProps> = (props) => {
         />
         <span className={"dark:text-white text-studodarkblue font-normal"}>
           1
-        </span>{" "}
+        </span>
         /
         <span className={"dark:text-white text-studodarkblue font-normal"}>
-          1
+          {files.length}
         </span>
       </div>
       <BaseButton

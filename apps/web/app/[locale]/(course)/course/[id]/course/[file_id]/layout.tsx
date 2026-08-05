@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "@/i18n/routing";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { useCourseNavStore } from "@/store/course/CourseNavStore";
