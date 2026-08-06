@@ -1,13 +1,14 @@
 "use client";
 import { Link, usePathname } from "@/i18n/routing";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { Plus } from "lucide-react";
+import { CircleX, LoaderCircle, Plus } from "lucide-react";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import ExtendCoursePopup from "@/components/ui/app/private/course/cursus/cursus_overview/ExtendCoursePopup";
 import { useState } from "react";
 import { CourseDocument } from "@studo/types";
 import { useParams } from "next/navigation";
 import { useCourseNavStore } from "@/store/course/CourseNavStore";
+import { useTranslations } from "next-intl";
 
 interface FileItemProps {
   file: CourseDocument;
@@ -15,6 +16,7 @@ interface FileItemProps {
 const FileItem: React.FC<FileItemProps> = (props) => {
   const { file } = props;
   const locale = useParams().locale;
+  const t = useTranslations("flow.course");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const setDocument = useCourseNavStore((state) => state.setDocument);
   const path = usePathname();
@@ -33,6 +35,26 @@ const FileItem: React.FC<FileItemProps> = (props) => {
               "relative max-w-50 w-50 group h-70 max-h-70 bg-white dark:group-hover:border-studogrey border border-studogrey/30 rounded-2xl"
             }
           >
+            {file.status === "failed" && (
+              <div
+                className={
+                  "absolute top-2 left-2 p-1 px-2 text-xs rounded-full backdrop-blur-2xl flex flex-row gap-2 items-center text-rose-500 glass-rgb"
+                }
+              >
+                <CircleX size={10} className={"text-rose-500"} />
+                {t("failed")}
+              </div>
+            )}
+            {file.status != "finished" && file.status != "failed" && (
+              <div
+                className={
+                  "absolute bottom-2 left-2 p-1 px-2 text-xs rounded-full backdrop-blur-2xl flex flex-row gap-2 items-center text-studodarkblue glass-rgb"
+                }
+              >
+                <LoaderCircle size={10} className={"animate-spin"} />
+                {t("processing")}
+              </div>
+            )}
             <div
               className={
                 "absolute group-hover:opacity-100 opacity-0  transition-all duration-300 top-2 right-2"

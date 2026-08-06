@@ -9,11 +9,12 @@ import {
   TableOfContents,
 } from "lucide-react";
 import SearchBar from "@/components/ui/app/private/app_header/SearchContainer";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useRef, useState } from "react";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
 import { CourseTab } from "@/components/ui/app/private/course/cursus/cursus_overview/FileGrid";
+import { CourseDocument } from "@studo/types";
 
 interface CourseOverviewHeaderProps {
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -21,15 +22,24 @@ interface CourseOverviewHeaderProps {
   files: File[];
   tab: CourseTab;
   setTab: React.Dispatch<SetStateAction<CourseTab>>;
+  setQuery: (input: string) => void;
+  documents: CourseDocument[];
 }
 const CourseOverviewHeader: React.FC<CourseOverviewHeaderProps> = (props) => {
-  const { setIsOpen, isUploading, files, tab, setTab } = props;
+  const { setIsOpen, isUploading, files, tab, setTab, setQuery, documents } =
+    props;
   const t = useTranslations("flow.course");
+  const searchRef = useRef<HTMLInputElement>(null);
+  const [search, setSearch] = useState<boolean>(false);
+  const processing = documents.filter((doc) => doc.status === "processing");
 
   return (
     <div>
-      {isUploading && <BottomProgress files={files} />}
-      <div className={"flex justify-between items-center p-5 gap-5"}>
+      {isUploading ||
+        (processing.length != 0 && (
+          <BottomProgress files={files} processingDocs={processing} />
+        ))}
+      <div className={"flex justify-between items-start p-5 gap-5"}>
         <div>
           <Tabs
             size={"md"}
@@ -65,13 +75,11 @@ const CourseOverviewHeader: React.FC<CourseOverviewHeaderProps> = (props) => {
         </div>
         <div className={"flex flex-row items-center gap-3"}>
           <SearchBar
-            searchRef={null}
-            toggleSearch={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            Search={false}
-            setSearch={() => {}}
+            searchRef={searchRef}
+            Search={search}
+            setSearch={setSearch}
             width={"w-65 h-8 text-sm"}
+            setValue={setQuery}
           />
           <BaseTooltip content={t("upload_doc")} position={"left"}>
             <BaseButton

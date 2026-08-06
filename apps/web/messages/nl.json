@@ -1547,7 +1547,13 @@
       "pending_upload": "uploaden…",
       "error_file_types": "Alleen PDF-, Word- en Excel-bestanden zijn toegestaan.",
       "error_upload": "Er ging iets mis bij het uploaden.",
-      "doc_error": "Kan document niet laden"
+      "doc_error": "Kan document niet laden",
+      "processing": "verwerken",
+      "failed": "fout",
+      "overview": "Overzicht",
+      "flow": "Flow",
+      "documents": "Documenten",
+      "sets": "Sets"
     }
   },
   "courses": {

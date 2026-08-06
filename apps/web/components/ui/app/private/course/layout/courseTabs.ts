@@ -19,6 +19,6 @@ export interface CourseTab {
 export const COURSE_TABS: CourseTab[] = [
   { key: "overview", slug: "overview", label: "Overview", Icon: LayoutGrid },
   { key: "flow", slug: "flow", label: "Flow", Icon: SquareCheck },
-  { key: "course", slug: "course", label: "Cursus", Icon: BookText },
+  { key: "documents", slug: "documents", label: "Cursus", Icon: BookText },
   { key: "sets", slug: "sets", label: "Sets", Icon: Layers },
 ];

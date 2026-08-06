@@ -1,11 +1,13 @@
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { LoaderCircle, File } from "lucide-react";
+import { CourseDocument } from "@studo/types";
 
 interface BottomProgressProps {
   files: File[];
+  processingDocs: CourseDocument[];
 }
 const BottomProgress: React.FC<BottomProgressProps> = (props) => {
-  const { files } = props;
+  const { files, processingDocs } = props;
   return (
     <div
       className={

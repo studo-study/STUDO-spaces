@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode, use } from "react";
 import { useCourse } from "@/hooks/app/courses/useCourse";
+import CourseSplashWrapper from "@/app/[locale]/(course)/course/[id]/CourseSplashWrapper";
 
 export default function CoursePageLayout({
   params,
@@ -20,7 +21,7 @@ export default function CoursePageLayout({
         "min-w-0 min-h-0 flex-1 flex justify-center dark:text-white text-studodarkblue"
       }
     >
-      {children}
+      <CourseSplashWrapper id={id}>{children}</CourseSplashWrapper>
     </div>
   );
 }

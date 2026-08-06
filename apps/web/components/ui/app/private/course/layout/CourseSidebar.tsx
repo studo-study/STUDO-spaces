@@ -60,7 +60,7 @@ const CourseSidebar: React.FC = () => {
               )}
             >
               <Icon size={20} strokeWidth={1.5} />
-              {label}
+              {t(slug)}
             </Link>
           ))}
       </div>

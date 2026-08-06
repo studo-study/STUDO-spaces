@@ -1,7 +1,7 @@
 "use client";
 import FileItem from "./FileItem";
 import classNames from "@/utils/classnames";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useTranslations } from "next-intl";
 import { useCourse } from "@/hooks/app/courses/useCourse";
@@ -35,6 +35,7 @@ const FileGrid: React.FC = () => {
 
   // server-documenten = bron van waarheid
   const documents: CourseDocument[] = useCourse(id).data?.documents ?? [];
+
   const [isDragging, setIsDragging] = useState(false);
   const toast = useToast();
   const [uploadModalOpen, setIsUploadModalOpen] = useState<boolean>(false);
@@ -65,12 +66,24 @@ const FileGrid: React.FC = () => {
 
   //tabs & filters
   const [tab, setTab] = useState<CourseTab>("all");
+  const [query, setQuery] = useState<string>("");
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     if (e.dataTransfer.files) addFiles(e.dataTransfer.files);
   };
+
+  const filteredDocs = useMemo(() => {
+    return documents
+      .filter((doc) => tab === "all" || doc.documentTag === tab) // tab-filter
+      .filter(
+        (
+          doc, // zoek-filter
+        ) =>
+          doc.title.toLowerCase().trim().includes(query.toLowerCase().trim()),
+      );
+  }, [documents, query, tab]);
 
   return (
     <div className={"relative min-w-0 flex-1 flex flex-col gap-5"}>
@@ -80,6 +93,8 @@ const FileGrid: React.FC = () => {
         isUploading={isUploading}
         tab={tab}
         setTab={setTab}
+        setQuery={setQuery}
+        documents={documents}
       />
       <UploadModal
         addFiles={addFiles}
@@ -106,14 +121,14 @@ const FileGrid: React.FC = () => {
                 isDragging ? "visible" : "hidden",
               )}
             />
-            {documents.length === 0 ? (
+            {filteredDocs.length === 0 ? (
               <EmptyFallback
                 title={t("no_files_title")}
                 message={t("no_files_paragraph")}
               />
             ) : (
               <div className={"flex flex-row gap-5  flex-wrap w-full"}>
-                {documents.map((file, index) => (
+                {filteredDocs.map((file, index) => (
                   <FileItem file={file} key={file.id + index} />
                 ))}
                 {files.length > 0 && (

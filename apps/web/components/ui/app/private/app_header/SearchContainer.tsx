@@ -6,10 +6,12 @@ import classNames from "@/utils/classnames";
 
 interface SearchProps {
   searchRef: Ref<HTMLInputElement>;
-  toggleSearch: () => void;
-  Search: boolean;
+  toggleSearch?: () => void;
+  Search?: boolean;
   setSearch: React.Dispatch<React.SetStateAction<boolean>>;
   width?: string;
+  value?: string;
+  setValue?: (input: string) => void;
 }
 export default function SearchBar({
   searchRef,
@@ -17,6 +19,7 @@ export default function SearchBar({
   setSearch,
   Search,
   width,
+  setValue,
 }: SearchProps) {
   const [searches] = useState<string | null>(() => {
     if (typeof window === "undefined") return null;
@@ -38,6 +41,7 @@ export default function SearchBar({
         onFocus={() => setSearch(true)}
         onBlur={() => setSearch(false)}
         type="text"
+        onChange={(e) => setValue && setValue(e.target.value)}
         className={" w-full h-full outline-none focus:ring-0"}
       />
       <button className={"w-fit cursor-pointer"}>

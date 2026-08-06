@@ -77,7 +77,11 @@ export default function CourseSetsGrid() {
             ]}
           />
         </div>
-        <SetSearch sets={allSets} setSearchQuery={setSearchQuery} />
+        <SetSearch
+          sets={allSets}
+          setSearchQuery={setSearchQuery}
+          className={"h-8"}
+        />
       </div>
       <div className="w-full flex-1 h-fit gap-2 flex flex-col">
         <ListItems items={filteredSets} />

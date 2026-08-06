@@ -3,7 +3,7 @@ import { usePathname } from "@/i18n/routing";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import React, { ReactNode } from "react";
 import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
-import { ChevronDown, ChevronUp, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp, LoaderCircle, Plus } from "lucide-react";
 import { useCourseNavStore } from "@/store/course/CourseNavStore";
 import { useFile } from "@/hooks/app/courses/useFile";
 import { useCourse } from "@/hooks/app/courses/useCourse";
@@ -31,10 +31,10 @@ export default function CourseDetailPage({
 
   const setTitle = useCourseNavStore((state) => state.setDocument);
   useCourseNav([
-    { title: "Course", href: `/course/${courseId}/course`, isLast: false },
+    { title: "Course", href: `/course/${courseId}/documents`, isLast: false },
     {
       title: title ?? "",
-      href: `/course/${courseId}/course/${docId}`,
+      href: `/course/${courseId}/documents/${docId}`,
       isLast: true,
     },
   ]);
@@ -60,12 +60,18 @@ export default function CourseDetailPage({
           "w-full flex flex-row items-center justify-between gap-3 p-5 border-b border-studoborder/30"
         }
       >
-        <input
-          className={"font-bold text-lg outline-none truncate"}
-          type={"text"}
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
+        <div className={"flex flex-row items-center gap-2"}>
+          {document?.status === "processing" ||
+            (document?.status === "uploading" && (
+              <LoaderCircle size={12} className={"animate-spin"} />
+            ))}
+          <input
+            className={"font-bold text-lg outline-none truncate"}
+            type={"text"}
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+        </div>
         <div className={"items-center flex flex-row gap-2"}>
           <ButtonRow
             buttons={[
