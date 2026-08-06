@@ -1,13 +1,11 @@
 "use client";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 export default function AdminHeader() {
   const t = useTranslations("admin");
