@@ -19,6 +19,8 @@ type SelectProps = {
   id?: string;
   disabled?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
+  // uitlijning van het dropdown-paneel t.o.v. de trigger
+  align?: "start" | "end";
 };
 
 const sizeMap = {
@@ -63,6 +65,7 @@ const Select = ({
   id,
   disabled,
   size = "lg",
+  align = "start",
 }: SelectProps) => {
   const [open, setOpen] = React.useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -126,15 +129,16 @@ const Select = ({
       </button>
 
       <div
-        className={`absolute left-0 right-0 top-full mt-2 min-w-fit
+        className={`absolute z-1000 top-full mt-2 min-w-full w-max max-w-[min(90vw,20rem)]
+          ${align === "end" ? "right-0 origin-top-right" : "left-0 origin-top-left"}
           z-9999 p-2 py-2 border border-studoborder/30
-          rounded-2xl backdrop-blur-2xl
-          glass-rgb gap-2 flex flex-col h-fit
+          rounded-2xl dark:bg-slate-800 bg-slate-100
+          gap-2 flex flex-col h-fit
           shadow-xl shadow-black/10 dark:shadow-black/30
-          transition-all duration-300 ease-out origin-top
+          transition-all duration-300 ease-out
           ${
             open
-              ? "opacity-100 scale-100 translate-y-0 visible pointer-events-auto"
+              ? "opacity-100 scale-100  translate-y-0 visible pointer-events-auto"
               : "opacity-0 scale-95 -translate-y-2 invisible pointer-events-none"
           }
         `}

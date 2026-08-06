@@ -1179,6 +1179,7 @@
     "courses": "Vakken",
     "your_sets": {
       "title": "Jouw sets",
+      "course_title": "Vak sets",
       "cards": "kaarten",
       "pins": "pins",
       "studied": "gestudeerd",
@@ -1771,6 +1772,7 @@
     "library": "Bibliotheek",
     "courses": "Vakken",
     "groups": "Groepen",
+    "classrooms": "Klassen",
     "studoset": "Studoset",
     "edit": "Bewerken",
     "learn": "Leren",
