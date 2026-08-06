@@ -32,7 +32,7 @@ const CourseToggle = ({ burgerOpen }: CourseToggleProps) => {
       <FlowIcon
         icon={data?.icon ?? ""}
         size={13}
-        className={"min-w-8 min-h-8 w-8 h-8 rounded-lg shrink-0"}
+        className={"min-w-8 min-h-8 w-8 h-8 rounded-full shrink-0"}
       />
       <span
         className={classNames(
@@ -73,7 +73,7 @@ const CourseToggle = ({ burgerOpen }: CourseToggleProps) => {
             type="button"
             onClick={() => router.push(`/course/${course.id}/overview`)}
             className={classNames(
-              "w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-colors cursor-pointer",
+              "w-full flex items-center gap-2 p-1 pr-2 rounded-lg text-sm transition-colors cursor-pointer",
               isActive
                 ? "bg-studogrey/20 text-studodarkblue dark:text-white"
                 : "text-studodarkblue/60 dark:text-neutral-300 hover:bg-studogrey/10",
@@ -81,8 +81,8 @@ const CourseToggle = ({ burgerOpen }: CourseToggleProps) => {
           >
             <FlowIcon
               icon={course.icon}
-              size={12}
-              className={"w-6 h-6 rounded-lg shrink-0"}
+              size={14}
+              className={"w-8 h-8 rounded-full shrink-0"}
             />
             <span className="truncate">{course.title}</span>
             {isActive && (
