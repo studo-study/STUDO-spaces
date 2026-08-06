@@ -7,6 +7,7 @@ import { useCourses } from "@/hooks/app/courses/useCourses";
 import { useActiveCourse } from "@/hooks/app/courses/useCourseData";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { ChevronsUpDown } from "lucide-react";
 
 interface CourseToggleProps {
   burgerOpen: boolean;
@@ -45,10 +46,11 @@ const CourseToggle = ({ burgerOpen }: CourseToggleProps) => {
         {data?.title ?? t("select_course")}
       </span>
       {canOpen && (
-        <HiChevronUpDown
+        <ChevronsUpDown
+          size={15}
           className={classNames(
             "shrink-0 transition-[opacity,max-width] duration-500 ease-in-out",
-            burgerOpen ? "opacity-50 max-w-5" : "opacity-0 max-w-0",
+            burgerOpen ? "opacity-50" : "opacity-0 max-w-0",
           )}
         />
       )}
