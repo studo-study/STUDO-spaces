@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import CourseGrid from "@/components/ui/app/private/your-files/courses/CourseGrid";
+import CourseGrid from "@/components/ui/app/private/library/courses/CourseGrid";
 
 export const metadata: Metadata = {
   title: "courses | Studo",

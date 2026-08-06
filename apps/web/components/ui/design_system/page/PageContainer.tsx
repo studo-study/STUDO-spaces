@@ -13,7 +13,11 @@ const PageContainer = (props: PageContainerProps) => {
   const { gap, children } = props;
 
   if (coursePath) {
-    return <div className={"min-w-0 min-h-0 flex-1 flex"}>{children}</div>;
+    return (
+      <div className={"min-w-0 min-h-0 flex-1 flex h-full w-full"}>
+        {children}
+      </div>
+    );
   }
   return (
     <div

@@ -68,7 +68,7 @@ export default function AccountHeader() {
             </div>
 
             <Link
-              href={"/apps/web/components/ui/app/app/settings"}
+              href={"/settings"}
               className={
                 "text-sm h-fit text-blue-500 flex gap-1 items-center hover:underline "
               }

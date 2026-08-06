@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Grid from "@/components/ui/app/private/your-files/sets/grid";
+import Grid from "@/components/ui/app/private/library/sets/grid";
 
 export const metadata: Metadata = {
   title: "Sets | Studo",

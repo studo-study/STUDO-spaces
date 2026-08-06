@@ -19,14 +19,12 @@ const MemoizedHeader = memo(AppHeader);
 const MemoizedBurger = memo(BurgerMenu);
 
 const STUDOSET_ROUTES = [
-  "/studoset/",
-  "/visualset/",
-  "/flashcards/",
-  "/learn/",
-  "/speedy/",
-  "/sets",
-  "/library/",
-  "/classrooms",
+  "studoset",
+  "visualset",
+  "flashcards",
+  "learn",
+  "speedy",
+  "course",
 ];
 
 function AppLayoutInner({ children }: { children: ReactNode }) {
@@ -41,17 +39,16 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
     requestAnimationFrame(() => setCreateOpen(true));
   };
 
-  const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, "");
-  const showStudoSidebar = STUDOSET_ROUTES.some((r) =>
-    pathWithoutLocale.includes(r),
-  );
+  const pathWithoutLocale = pathname.split("/")[2];
+  console.log(pathWithoutLocale);
+  const showStudoSidebar = STUDOSET_ROUTES.includes(pathWithoutLocale);
   useEffect(() => {
     setMenuOpen({ isOpen: false, origin: null });
   }, [pathname, setMenuOpen]);
 
   return (
     <AppLayoutContext.Provider value={{ toggleCreate }}>
-      <div className="h-screen min-w-screen flex flex-col overflow-hidden">
+      <div className="h-screen min-w-screen flex flex-col overflow-hidden ">
         <MemoizedHeader
           burgerOpen={sidebarOpen}
           Search={Search}
@@ -74,7 +71,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
 
           <div
             className={
-              "relative border rounded-4xl border-studoborder/30 min-w-0 min-h-0 flex-1 flex mb-5 mx-5 dark:bg-slate-800 overflow-hidden"
+              "relative border rounded-4xl border-studoborder/30 min-w-0 min-h-0 flex-1 flex mb-5 mx-5 dark:bg-slate-800  overflow-hidden"
             }
           >
             {showStudoSidebar ? (
@@ -106,7 +103,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
               </>
             ) : (
               <main
-                className={`flex-1 min-h-0 flex h-full overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transition-[padding] duration-300`}
+                className={`flex-1 min-h-0 flex justify-center items-center w-full h-full overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transition-[padding] duration-300`}
               >
                 {children}
               </main>

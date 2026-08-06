@@ -3,7 +3,7 @@ import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
 import Container from "@/components/ui/design_system/container/Container";
 import { useTranslations } from "next-intl";
 import { PiBooks } from "react-icons/pi";
-import CourseItem from "@/components/ui/app/private/your-files/courses/courseItem";
+import CourseItem from "@/components/ui/app/private/library/courses/courseItem";
 import { useCourses } from "@/hooks/app/courses/useCourses";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 

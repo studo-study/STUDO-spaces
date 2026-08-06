@@ -190,7 +190,7 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
         <CollapsibleSection
           title={t("account")}
           burgerOpen={burgerOpen}
-          defaultOpen={false}
+          defaultOpen={true}
         >
           <MenuRow
             icon={<User size={20} />}

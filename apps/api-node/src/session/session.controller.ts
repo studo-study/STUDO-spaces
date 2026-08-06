@@ -12,7 +12,11 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth/auth.service';
-import { LoginRequestDto, LoginResponseDto } from './session.dto';
+import {
+  ImpersonateDto,
+  LoginRequestDto,
+  LoginResponseDto,
+} from './session.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { AuthDelayInterceptor } from '../auth/interceptors/authDelay.interceptors';
 import {
@@ -25,6 +29,9 @@ import type { Request } from 'express';
 import type { Response } from 'express';
 
 import { AuthGuard } from '@nestjs/passport';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/roles';
+import { CurrentUser } from '../auth/decorators/currentUser.decorator';
 
 @ApiTags('sessions')
 @ApiBearerAuth()
@@ -55,6 +62,24 @@ export class SessionController {
   @HttpCode(HttpStatus.OK)
   async signIn(@Body() loginDto: LoginRequestDto): Promise<LoginResponseDto> {
     const token = await this.authService.login(loginDto);
+    return { token };
+  }
+
+  // impersoneren (admin) -------------------------------------------------
+  @ApiOperation({ summary: 'Impersonate een user (enkel admin).' })
+  @ApiResponse({
+    status: 200,
+    description: 'Kortlevende impersonatie-token',
+    type: LoginResponseDto,
+  })
+  @Roles(Role.ADMIN)
+  @Post('impersonate')
+  @HttpCode(HttpStatus.OK)
+  async impersonate(
+    @CurrentUser() admin: { id: string },
+    @Body() body: ImpersonateDto,
+  ): Promise<LoginResponseDto> {
+    const token = await this.authService.impersonate(body, admin.id);
     return { token };
   }
 

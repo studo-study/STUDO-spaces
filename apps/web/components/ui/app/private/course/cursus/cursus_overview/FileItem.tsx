@@ -26,7 +26,7 @@ const FileItem: React.FC<FileItemProps> = (props) => {
         href={path + "/" + file.id}
         onClick={() => setDocument(file.title)}
         className={
-          "flex items-center mb-5 group justify-center max-h-85 cursor-pointer"
+          "flex items-center mb-5 group justify-center max-h-85 max-w-50 cursor-pointer"
         }
       >
         <div className={"w-fit flex flex-col gap-2"}>
@@ -75,9 +75,15 @@ const FileItem: React.FC<FileItemProps> = (props) => {
               </BaseTooltip>
             </div>
           </div>
-          <div className={"flex flex-row w-full justify-between"}>
-            <div className={"flex flex-col w-full"}>
-              <span className={"font-semibold"}>{file.title}</span>
+          <div className={"flex flex-row min-w-0 flex-1 justify-between"}>
+            <div className={"flex flex-col w-full overflow-hidden"}>
+              <span
+                className={
+                  "font-semibold truncate overflow-hidden min-w-0 flex-1 max-w-50"
+                }
+              >
+                {file.title}
+              </span>
               <span className={"text-studogrey text-xs"}>
                 {new Date(
                   file?.createdAt as unknown as string,

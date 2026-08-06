@@ -1173,8 +1173,8 @@
     }
   },
   "y_f": {
-    "title": "Jouw bestanden",
-    "subtitle": "Beheer je studiemateriaal",
+    "title": "Jouw bibliotheek",
+    "subtitle": "Een overzicht van al je vakken en sets",
     "sets": "Sets",
     "folders": "Mappen",
     "courses": "Vakken",
@@ -1262,6 +1262,7 @@
   },
   "classrooms": {
     "title": "Jouw klassen",
+    "subtitle": "Al jouw klassen, groepen en communities",
     "all": "Alle klassen",
     "last": "Recent toegetreden",
     "alphabetical": "Alfabetische volgorde",

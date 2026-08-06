@@ -119,7 +119,7 @@ const AdminUserDetail = ({ userId }: Props) => {
   }
 
   return (
-    <div className="flex w-full flex-col gap-8 pb-16">
+    <div className="min-h-0 min-w-0 overflow-y-scroll scroll-hidden flex w-full flex-col gap-8 pb-16">
       <div className="flex flex-col gap-4 rounded-3xl bg-studogrey/20 border border-studoborder/30 p-6 sm:flex-row sm:items-center sm:gap-6">
         <Avatar displayName={data.displayName} id={data.id} size={72} />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
