@@ -1515,13 +1515,6 @@
     "course_1": "vak",
     "course": {
       "option": "Opties",
-      "row": {
-        "done": "afgewerkt",
-        "doing": "bezig",
-        "not_started": "niet gestart",
-        "due_date": "deadline",
-        "priority": "prioriteit"
-      },
       "add_title": "Titel toevoegen",
       "create_title": "Nieuwe cursus",
       "create_course": "Cursus aanmaken",
@@ -1556,12 +1549,17 @@
       "processing": "verwerken",
       "failed": "fout",
       "overview": "Overzicht",
-      "flow": "Flow",
+      "flow": "Flow board",
       "documents": "Documenten",
       "sets": "Sets",
+      "sven": "Sven",
       "stop_processing": "Stop verwerken",
       "stop_upload": "Stop uploaden",
-      "select_course": "Kies een vak"
+      "select_course": "Kies een vak",
+      "table": {
+        "title": "Voeg een titel toe...",
+        "description": "Voeg een beschrijving toe..."
+      }
     }
   },
   "courses": {

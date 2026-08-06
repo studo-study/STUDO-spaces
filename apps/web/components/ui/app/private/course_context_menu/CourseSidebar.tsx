@@ -16,6 +16,7 @@ import {
 import { usePathname } from "@/i18n/routing";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import { MenuConfig, resolveMenuConfig } from "./config";
+import SvenIcon from "@/components/ui/overige/icons/SvenLogo";
 
 const CourseSidebar: React.FC = () => {
   const menuOpen = useSideMenu((state) => state.menuInfo);
@@ -59,7 +60,7 @@ const CourseSidebar: React.FC = () => {
       key: "chat",
       tooltip: "Ask Sven",
       onclick: () => toggleMenu("chat"),
-      icon: <Flower size={17} />,
+      icon: <SvenIcon size={18} />,
       isEnabled: true,
     },
     {
