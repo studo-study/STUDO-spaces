@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import SetSearch from "@/components/ui/app/private/your-files/sets/search";
 import { useMemo, useState } from "react";
 import CourseAdd from "@/components/ui/app/private/course/layout/AddPopup";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const CourseGrid = () => {
   const t = useTranslations("courses");
@@ -21,6 +22,22 @@ const CourseGrid = () => {
 
     return result;
   }, [courses, searchQuery]);
+
+  useCourseNav([
+    {
+      title: "library",
+      href: `/library`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "courses",
+      href: `/library/courses`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
+
   if (courses.length === 0) {
     return (
       <div className="w-full h-fit flex-1 flex-col gap-2 flex dark:text-white text-studodarkblue font-bold items-center pt-40">

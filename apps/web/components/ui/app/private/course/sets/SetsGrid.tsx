@@ -11,10 +11,25 @@ import Select from "@/components/ui/design_system/select/Select";
 
 export default function CourseSetsGrid() {
   const { id } = useParams<{ id: string }>();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const courseSets = useCourse(id).data?.sets ?? [];
 
-  useCourseNav([{ title: "Sets", href: "sets", isLast: true }]);
+  const course = useCourse(id)?.data;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const courseSets = course?.sets ?? [];
+
+  useCourseNav([
+    {
+      title: course?.title ?? "",
+      href: `/course/${id}/overview`,
+      isLast: false,
+      translate: false,
+    },
+    {
+      title: "sets",
+      href: `/course/${id}/sets`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
 
   const allSets: StudySetItem[] = useMemo(
     () =>

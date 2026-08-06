@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/app/private/course/overview/widgetRegistry";
 import WidgetItem from "@/components/ui/app/private/course/overview/WidgetItem";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
+import { useCourse } from "@/hooks/app/courses/useCourse";
 
 const COLS = GRID_COLS;
 const START_ROWS = 3;
@@ -26,8 +27,22 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
   const editMode = useWidgetMenu((s) => s.editMode);
   const hydrate = useWidgetMenu((s) => s.hydrate);
   const applyLayout = useWidgetMenu((s) => s.applyLayout);
+  const course = useCourse(courseId)?.data;
 
-  useCourseNav([{ title: "Overview", href: "overview", isLast: true }]);
+  useCourseNav([
+    {
+      title: course?.title ?? "",
+      href: `/course/${courseId}/overview`,
+      isLast: false,
+      translate: false,
+    },
+    {
+      title: "overview",
+      href: `/course/${courseId}`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
 
   const { width, containerRef, mounted } = useContainerWidth();
 

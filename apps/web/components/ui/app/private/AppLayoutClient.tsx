@@ -25,8 +25,7 @@ const STUDOSET_ROUTES = [
   "/learn/",
   "/speedy/",
   "/sets",
-  "/home",
-  "/your-files/",
+  "/library/",
   "/classrooms",
 ];
 
@@ -70,7 +69,6 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
             <MemoizedBurger
               burgerOpen={sidebarOpen}
               toggleSearch={() => setSearch(true)}
-              toggleCreate={toggleCreate}
             />
           </div>
 
@@ -108,7 +106,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
               </>
             ) : (
               <main
-                className={`flex-1 min-h-0 h-full overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] pr-20 [scrollbar-width:none] transition-[padding] duration-300`}
+                className={`flex-1 min-h-0 flex h-full overflow-y-scroll scroll-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] transition-[padding] duration-300`}
               >
                 {children}
               </main>

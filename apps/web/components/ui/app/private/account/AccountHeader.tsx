@@ -6,10 +6,19 @@ import { useUser } from "@/components/providers/auth/UserProvider";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import Image from "next/image";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 export default function AccountHeader() {
   const t = useTranslations("account");
   const user = useUser().user;
+  useCourseNav([
+    {
+      title: "account",
+      href: `/account`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
   console.log(user);
   return (
     <div

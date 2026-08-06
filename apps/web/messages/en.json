@@ -952,7 +952,12 @@
     "nonotif": "no notifications",
     "allup": "all up to date",
     "search": "search...",
-    "search_btn": "Search"
+    "search_btn": "Search",
+    "create_f": "Create folder",
+    "create_b": "Create board",
+    "create_btn": "Create",
+    "all_sets": "All sets",
+    "library": "Library"
   },
   "createfolder": {
     "title": "create a folder",
@@ -991,7 +996,16 @@
     "saving": "Saving...",
     "submit_error": "Something went wrong, please try again",
     "draft": "(draft)",
-    "delete_draft": "Verwijder Draft"
+    "delete_draft": "Verwijder Draft",
+    "select_folder": "Choose a folder",
+    "select_language_term": "Choose a language for terms",
+    "select_language_def": "Choose a language for definitions",
+    "create_course": "Create subject",
+    "english": "English",
+    "dutch": "Dutch",
+    "french": "French",
+    "german": "German",
+    "spanish": "Spanish"
   },
   "createvisualset": {
     "title": "Create new Visualset",
@@ -1024,7 +1038,10 @@
     "Term": "Term",
     "click_turn": "click to flip",
     "click_flip_back": "click to flip back",
-    "learnt": "Learned"
+    "learnt": "Learned",
+    "image_suggestion": "Suggestions",
+    "no_term": "no term",
+    "no_suggestions": "no suggestions found"
   },
   "notfound": {
     "404": "404",
@@ -1165,7 +1182,8 @@
       "edit_set": "Edit set",
       "share_folder": "Share folder",
       "see_more": "see more"
-    }
+    },
+    "folders": "Folders"
   },
   "select": {
     "pricing": "Pricing",
@@ -1180,7 +1198,8 @@
     "popular": "Popular",
     "korting_school": "Studo offers discounts for schools, companies and families",
     "try_edu": "Try Studo for Education",
-    "group": "Want to order for a larger group?"
+    "group": "Want to order for a larger group?",
+    "options": "options"
   },
   "phrases": {
     "Nice work": "Nice work",
@@ -1234,7 +1253,8 @@
     "members": "members",
     "member": "member",
     "leave": "Leave class",
-    "external_window": "Open in new tab"
+    "external_window": "Open in new tab",
+    "no_found": "No classes found"
   },
   "classroom": {
     "overview": "Overview",
@@ -1369,7 +1389,8 @@
       "total_cards": "Total cards",
       "time_studied": "Study time",
       "total_sets": "Total sets"
-    }
+    },
+    "verified": "Verified"
   },
   "studoset": {
     "created": "Created by",
@@ -1418,7 +1439,20 @@
       "axis_time": "Avg. response time (s)",
       "axis_accuracy": "Accuracy (%)",
       "no_data": "No data yet"
-    }
+    },
+    "save": "save",
+    "all": "All",
+    "flag": "Flagged",
+    "share": "share",
+    "settings": "settings",
+    "ns": "Not learned",
+    "edit_set": "edit set",
+    "open_course": "Open in course",
+    "flag_card": "Flag card",
+    "unflag_card": "Unflag card",
+    "flag_failed": "Flagging failed",
+    "no_cards": "No cards",
+    "progress_visualized": "Visualized progress"
   },
   "trackview": {
     "tracks": "Tracks",
@@ -1433,7 +1467,20 @@
   "import": {
     "excel": "Excel import",
     "sven": "SVEN import",
-    "import": "import"
+    "import": "import",
+    "text": "Text import",
+    "paste_here": "Paste your text here",
+    "text_import_title": "Settings",
+    "result": "Result",
+    "term_definition_separator": "Separator between term and definition",
+    "card_separator": "Separator between cards",
+    "by_comma": "Comma",
+    "by_tab": "Tab",
+    "by_newline": "New line",
+    "by_semicolon": "Semicolon",
+    "by_dash": "Dash",
+    "result_empty": "Paste text to see a preview",
+    "cards_found": "{count} cards found"
   },
   "flow": {
     "title": "Your Flow Boards",
@@ -1503,7 +1550,21 @@
       "no_files_paragraph": "Upload a PDF, Word or Excel file to get started.",
       "pending_upload": "uploading…",
       "error_file_types": "Only PDF, Word and Excel files are allowed.",
-      "error_upload": "Something went wrong while uploading."
+      "error_upload": "Something went wrong while uploading.",
+      "option": "Options",
+      "add_course_link": "Connect learning portal",
+      "add_exam_date": "Add exam date",
+      "add_lesson_day": "Add lesson days",
+      "doc_error": "Can't load document",
+      "processing": "processing",
+      "failed": "failed",
+      "overview": "Overview",
+      "flow": "Flow",
+      "documents": "Documents",
+      "sets": "Sets",
+      "stop_processing": "Stop processing",
+      "stop_upload": "Stop uploading",
+      "select_course": "Select a course"
     }
   },
   "courses": {
@@ -1532,7 +1593,8 @@
     "progress": "reset progress",
     "login_wall_title": "Log in to continue",
     "login_wall_subtitle": "You've reached the free preview of 5 cards. Create a free account to study the full set.",
-    "login_wall_cta": "Log in"
+    "login_wall_cta": "Log in",
+    "register_wall_cta": "Register"
   },
   "popup": {
     "folders": {
@@ -1542,7 +1604,8 @@
     },
     "share": {
       "pop_title": "Share set",
-      "copy_message": "Added to clipboard"
+      "copy_message": "Added to clipboard",
+      "isPrivate": "Set is private"
     },
     "settings": {
       "pop_title": "Settings",
@@ -1613,6 +1676,107 @@
     "twenty_description": "20 min study, 20 sec look away, 2 min break",
     "pomodoro_timer": "Pomodoro timer",
     "pomodoro_description": "A timer that helps you get into hyperfocus.",
-    "reset_progress": "Reset progress"
+    "reset_progress": "Reset progress",
+    "reset_settings": "default settings",
+    "type_description": "Choose how you want to answer",
+    "revision_count_description": "Set how many times a card is repeated",
+    "flagged_mode": "Flagged cards",
+    "flagged_description": "Study only your flagged cards"
+  },
+  "editstudoset": {
+    "edit": "Edit Studoset",
+    "title_placeholder": "Enter a title...",
+    "course_placeholder": "Enter a subject...",
+    "term_language": "Term language...",
+    "def_language": "Definition language...",
+    "create": "Edit Set",
+    "add_card": "Add card",
+    "title_error": "title is required",
+    "course_error": "subject is required",
+    "term_lang_error": "select a language",
+    "def_lang_error": "select a language",
+    "card_error": "there are empty cards",
+    "saving": "Saving...",
+    "submit_error": "Something went wrong, please try again",
+    "draft": "(draft)",
+    "delete_draft": "Delete Draft"
+  },
+  "svenchat": {
+    "quote": "Sven is happy to help with course questions",
+    "new-chat": "New chat",
+    "history": "History",
+    "recommended_title": "Recommended"
+  },
+  "svenchatTimed": {
+    "0": [
+      "Past midnight and still going strong!",
+      "Keep it up!",
+      "Past midnight and still doing great!"
+    ],
+    "2": [
+      "Hey night owl",
+      "Ready to answer your questions!",
+      "What's the question?",
+      "Still at it or just getting started!?",
+      "{name} is back!"
+    ],
+    "4": [
+      "Isn't it bedtime?",
+      "Go to sleep!",
+      "Still awake... how!?",
+      "Not cool bro, go crash",
+      "Grind, shower, Studo..",
+      "Honestly I could almost crash myself",
+      "Okaaay letsgooo"
+    ],
+    "7": [
+      "Good morning {name}",
+      "You're awake, first small win of the day",
+      "Good morning morning, good day",
+      ""
+    ],
+    "11": [
+      "Welcome back, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": ["Good afternoon {name}", "Doing great, keep it up", "You got this!"],
+    "19": [
+      "Good evening {name}",
+      "Welcome back",
+      "Evening shift activated",
+      "Let's Go Champ!"
+    ],
+    "22": [
+      "Welcome back, the evening is still young, good luck",
+      "Working late, doing great!",
+      "Time for a romantic evening date with your study material"
+    ],
+    "new-chat": "New chat",
+    "history": "History"
+  },
+  "pomodoro": {
+    "title": "Pomodoro Timer",
+    "play": "Start",
+    "pause": "Pause",
+    "focus_mode": "20 min of focused studying"
+  },
+  "learn": {
+    "enter_continue": "*press enter to continue",
+    "type_answer": "type your answer...",
+    "reset": "reset",
+    "all_set": "You've gone through the whole set!",
+    "back": "back to set",
+    "restart": "practice again",
+    "revision": "revision",
+    "hint": "show hint",
+    "next": "next"
+  },
+  "widgets": {
+    "title": "Widgets"
+  },
+  "combobox": {
+    "options": "Options",
+    "noResults": "No results"
   }
 }

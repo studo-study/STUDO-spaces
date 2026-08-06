@@ -1,9 +1,24 @@
 "use client";
 import { IoMdSearch } from "react-icons/io";
 import { useTranslations } from "next-intl";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const AdminSearch = () => {
   const t = useTranslations("admin");
+  useCourseNav([
+    {
+      title: "admin",
+      href: `/admin`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "search",
+      href: `/admin/search`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
   return (
     <div
       className={`min-w-1/3 lg:w-1/2 w-full h-14 flex flex-row items-center  px-7 bg-gray-300/30 dark:bg-gray-500/10

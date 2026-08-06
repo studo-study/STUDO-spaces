@@ -15,6 +15,8 @@ interface SimpleMenuProps {
   side?: Side;
   align?: Align;
   variant?: Variant;
+  // trigger de volle breedte van de parent laten vullen i.p.v. w-fit
+  fullWidth?: boolean;
 }
 
 const sideClasses: Record<Side, string> = {
@@ -49,6 +51,7 @@ const SimpleMenu = (props: SimpleMenuProps) => {
     side = "bottom",
     align = "end",
     variant = "default",
+    fullWidth = false,
   } = props;
   const [isOpen, setIsopen] = useState<boolean>(isOpenProp ?? false);
   const [isAnimated, setIsAnimated] = useState<boolean>(false);
@@ -93,7 +96,10 @@ const SimpleMenu = (props: SimpleMenuProps) => {
         );
 
   return (
-    <div className={"relative w-fit h-fit"} ref={containerRef}>
+    <div
+      className={classNames("relative h-fit", fullWidth ? "w-full" : "w-fit")}
+      ref={containerRef}
+    >
       <div
         onClick={() => {
           const next = !isOpen;

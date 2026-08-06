@@ -31,14 +31,15 @@ const CourseOverviewHeader: React.FC<CourseOverviewHeaderProps> = (props) => {
   const t = useTranslations("flow.course");
   const searchRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState<boolean>(false);
-  const processing = documents.filter((doc) => doc.status === "processing");
+  const processing = documents.filter(
+    (doc) => doc.status === "processing" || doc.status === "uploading",
+  );
 
   return (
     <div>
-      {isUploading ||
-        (processing.length != 0 && (
-          <BottomProgress files={files} processingDocs={processing} />
-        ))}
+      {(isUploading || processing.length) != 0 && (
+        <BottomProgress files={files} processingDocs={processing} />
+      )}
       <div className={"flex justify-between items-start p-5 gap-5"}>
         <div>
           <Tabs

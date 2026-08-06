@@ -26,7 +26,21 @@ export type CourseTab = "all" | "summary" | "course" | "notes";
 const FileGrid: React.FC = () => {
   const t = useTranslations("flow.course");
   const id = useParams().id as string;
-  useCourseNav([{ title: "Course", href: "course", isLast: true }]);
+  const course = useCourse(id)?.data;
+  useCourseNav([
+    {
+      title: course?.title ?? "",
+      href: `/course/${id}/overview`,
+      isLast: false,
+      translate: false,
+    },
+    {
+      title: "documents",
+      href: `/course/${id}/documents`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
   const setDocument = useCourseNavStore((state) => state.setDocument);
 
   useEffect(() => {
@@ -34,6 +48,7 @@ const FileGrid: React.FC = () => {
   }, [setDocument]);
 
   // server-documenten = bron van waarheid
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const documents: CourseDocument[] = useCourse(id).data?.documents ?? [];
 
   const [isDragging, setIsDragging] = useState(false);

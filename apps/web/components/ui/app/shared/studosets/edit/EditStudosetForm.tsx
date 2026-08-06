@@ -15,6 +15,7 @@ import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBott
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { SuggestionImage } from "@studo/types";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 interface EditsetProps {
   id: string;
@@ -48,6 +49,21 @@ export default function EditStudosetForm({ id }: EditsetProps) {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const Router = useRouter();
+
+  useCourseNav([
+    {
+      title: set?.title ?? "",
+      href: `/studoset/${id}`,
+      isLast: false,
+      translate: false,
+    },
+    {
+      title: "edit",
+      href: `/studoset/${id}/edit`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
   const jumpToTop = () => {
     topRef.current?.scrollIntoView({
       behavior: "smooth",

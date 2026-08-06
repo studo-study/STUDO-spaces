@@ -30,6 +30,7 @@ import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnS
 import classNames from "@/utils/classnames";
 import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
 import SvenMessage from "@/components/ui/app/shared/studosets/SvenMessage";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 interface viewProps {
   id: string;
@@ -56,6 +57,15 @@ export default function StudosetView({ id }: viewProps) {
   const [tab, setTab] = useState<Tab>(
     learnSettings.flaggedMode ? "flagged" : "all",
   );
+
+  useCourseNav([
+    {
+      title: data?.title ?? "",
+      href: `/studoset/${id}`,
+      isLast: true,
+      translate: false,
+    },
+  ]);
 
   const jumpToTop = () => {
     topRef.current?.scrollIntoView({

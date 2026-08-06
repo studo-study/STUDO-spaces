@@ -69,7 +69,7 @@ const variantMap = {
   icon: "h-fit px-0  py-0 rounded-full border border-studoborder/30 bg-studogrey/30",
   plus: "shadow-2xl bg-blue-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder",
   hover:
-    "hover:bg-studogrey/30 text-studodarkblue dark:text-white transition-[colors, scale] duration-200 border-none",
+    "hover:bg-studogrey/30 text-studodarkblue dark:text-white transition-[colors, scale] duration-200 border-none truncate",
 } as const;
 
 const shapeMap = {
@@ -118,7 +118,7 @@ const BaseButton = (props: BaseButtonProps) => {
         ? `rounded-${rounded}`
         : "rounded-full",
     "cursor-pointer active:scale-95 transition-all duration-300",
-    "disabled:opacity-20 disabled:cursor-not-allowed",
+    "disabled:opacity-20 disabled:cursor-not-allowed truncate",
     "font-bold flex flex-row gap-2 items-center justify-center",
     gradient ? gradientMap[gradient] : variantMap[variant],
     sizeMap[size],

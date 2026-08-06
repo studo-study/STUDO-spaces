@@ -8,13 +8,22 @@ import { useParams } from "next/navigation";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const CourseTable = () => {
-  const id = useParams().id;
-  useCourseNav([{ title: "Flow", href: "flow", isLast: true }]);
+  const id = useParams()?.id;
+  const course = useCourse(id)?.data;
+
+  useCourseNav([
+    {
+      title: course?.title ?? "",
+      href: `/course/${id}/overview`,
+      isLast: false,
+      translate: false,
+    },
+    { title: "flow", href: "flow", isLast: true, translate: true },
+  ]);
   const t = useTranslations("flow.course.row");
   const data = useCourse(id as string).data;
   const rows = data?.table?.rows;
 
-  console.log("data in questie", data);
   if (!rows) {
     return;
   }

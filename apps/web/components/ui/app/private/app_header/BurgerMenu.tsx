@@ -2,155 +2,220 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import UserPopup from "@/components/ui/app/private/app_header/popups/BurgerPopup";
 import classNames from "@/utils/classnames";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import { BookOpen, GraduationCap, House, Layers, Search } from "lucide-react";
+import {
+  ChevronDown,
+  GraduationCap,
+  House,
+  LibraryBig,
+  Plus,
+  Search,
+  Settings,
+  ShieldCheck,
+  User,
+} from "lucide-react";
+import { ReactNode, useState } from "react";
+import CourseSidebar from "@/components/ui/app/private/course/layout/CourseSidebar";
+import { useAppLayout } from "@/components/context/AppLayoutContext";
+import { useUser } from "@/components/providers/auth/UserProvider";
 
 interface BurgerProps {
   burgerOpen: boolean;
   toggleSearch: () => void;
-  toggleCreate: () => void;
 }
 
-const main = [
-  {
-    icon: <House size={20} />,
-    iconSelect: <House size={20} />,
-    link: "/home",
-    label: "home",
-  },
-  {
-    icon: <Layers size={20} />,
-    link: "/your-files/sets",
-    label: "sets",
-  },
-  {
-    icon: <BookOpen size={20} />,
-    link: "/your-files/courses",
-    label: "courses",
-  },
-];
+function MenuRow({
+  icon,
+  text,
+  burgerOpen,
+  href,
+  active = false,
+  onClick,
+}: {
+  icon: ReactNode;
+  text: string;
+  burgerOpen: boolean;
+  href?: string;
+  active?: boolean;
+  onClick?: () => void;
+}) {
+  const inner = (
+    <div
+      className={classNames(
+        "flex items-center h-10 w-full rounded-4xl overflow-hidden pr-3",
+        "transition-[padding,background-color] duration-500 ease-in-out",
+        "dark:hover:bg-studogrey/30 hover:bg-slate-200",
+        // icon glijdt van links (open) naar centraal (collapsed) via padding
+        burgerOpen ? "pl-3" : "pl-[calc(50%-0.75rem)]",
+        active ? "dark:bg-studogrey/30 bg-slate-200" : "",
+      )}
+    >
+      <div className="flex items-center justify-center shrink-0 w-6 text-2xl dark:text-white">
+        {icon}
+      </div>
+      <span
+        className={classNames(
+          "dark:text-white select-none whitespace-nowrap transition-[opacity,max-width,margin] duration-500 ease-in-out",
+          burgerOpen ? "opacity-100 max-w-40 ml-3" : "opacity-0 max-w-0 ml-0",
+        )}
+      >
+        {text}
+      </span>
+    </div>
+  );
 
-const sec = [
-  {
-    icon: <GraduationCap size={20} />,
-    link: "/classrooms",
-    label: "classrooms",
-  },
-];
+  const className = classNames(
+    "w-full h-10",
+    onClick ? "cursor-pointer" : "",
+    active ? "opacity-75" : "opacity-50",
+  );
+
+  return (
+    <BaseTooltip content={text} position={"right"} hidden={burgerOpen}>
+      {href ? (
+        <Link href={href} className={className}>
+          {inner}
+        </Link>
+      ) : (
+        <div onClick={onClick} className={className}>
+          {inner}
+        </div>
+      )}
+    </BaseTooltip>
+  );
+}
+
+// Inklapbare sectie i.p.v. een kale divider. Bij een dichtgeklapte burger valt
+// de header weg en tonen we enkel de kinderen (icoon-rijen).
+function CollapsibleSection({
+  title,
+  burgerOpen,
+  defaultOpen = true,
+  children,
+}: {
+  title: string;
+  burgerOpen: boolean;
+  defaultOpen?: boolean;
+  children: ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  // collapsed burger negeert de sectie-toggle (alles zichtbaar). Structuur
+  // blijft identiek (spacer i.p.v. header, zelfde children-wrapper) zodat de
+  // rijen niet remounten bij open/dicht → hun transitions blijven vloeiend.
+  const showChildren = !burgerOpen || open;
+
+  return (
+    <div className="flex flex-col gap-1">
+      {burgerOpen ? (
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="flex items-center justify-between px-3 py-1 min-h-6 max-h-6 rounded-full select-none cursor-pointer text-[11px] uppercase tracking-wider font-medium text-studodarkblue/40 dark:text-white/30 hover:bg-studogrey/10 transition-colors duration-200"
+        >
+          <span>{title}</span>
+          <ChevronDown
+            size={14}
+            className={classNames(
+              "transition-transform duration-200",
+              !open && "-rotate-90",
+            )}
+          />
+        </button>
+      ) : (
+        <div className="min-h-6 max-h-6" />
+      )}
+      {showChildren && <div className="flex flex-col gap-1">{children}</div>}
+    </div>
+  );
+}
 
 export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
   const t = useTranslations("header");
+  const { toggleCreate } = useAppLayout();
+  const { isModerator } = useUser();
   const pathname = usePathname();
-  const isActive = (link: string) => {
-    const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, "");
-    return (
-      pathWithoutLocale === link || pathWithoutLocale.startsWith(link + "/")
-    );
-  };
+  const pathWithoutLocale = pathname.replace(/^\/(nl|en|fr|de)/, "");
+  const isActive = (link: string) =>
+    pathWithoutLocale === link || pathWithoutLocale.startsWith(link + "/");
 
   return (
     <div
       className={`h-full select-none border-studoborder/30
-            transition-[width] duration-300 flex flex-col gap-3 py-10 pb-5
+            transition-[width] duration-500 ease-in-out flex flex-col gap-10 py-10 pb-5 px-3
             ${burgerOpen ? "w-57" : "w-30"}`}
     >
-      {main.map((item, index) => (
-        <BaseTooltip
-          key={item.label}
-          content={t(item.label)}
-          position={"right"}
-          hidden={burgerOpen}
-        >
-          <Link
-            href={item.link}
-            key={index}
-            className={classNames(
-              `w-full h-10 px-5`,
-              isActive(item.link) ? "opacity-75" : "opacity-50",
-            )}
-          >
-            <div
-              className={`transition-colors duration-200 flex gap-5 rounded-4xl dark:hover:bg-studogrey/30 hover:bg-slate-200 ${isActive(item.link) ? "dark:bg-studogrey/30 bg-slate-200" : ""} flex-row justify-baseline px-5 items-center w-full h-10`}
-            >
-              <div className="flex items-center min-w-10 justify-center cursor-pointer text-2xl dark:text-white">
-                {item.icon}
-              </div>
-              <span
-                className={`dark:text-white select-none whitespace-nowrap transition-[opacity,transform] duration-200
-                            ${burgerOpen ? "opacity-100 translate-x-0 delay-100" : "opacity-0 -translate-x-4 pointer-events-none"}`}
-              >
-                {t(item.label)}
-              </span>
-            </div>
-          </Link>
-        </BaseTooltip>
-      ))}
+      <MenuRow
+        icon={<House size={20} />}
+        text={t("home")}
+        burgerOpen={burgerOpen}
+        href="/home"
+        active={isActive("/home")}
+      />
 
-      <div className="w-full px-10 my-3 opacity-30">
-        <div className="w-full h-0.5 rounded-4xl dark:bg-white bg-studodarkblue" />
-      </div>
-      {sec.map((item, index) => (
-        <BaseTooltip
-          key={item.label}
-          content={t(item.label)}
-          position={"right"}
-          hidden={burgerOpen}
-        >
-          <Link
-            href={item.link}
-            key={index}
-            className={classNames(
-              `w-full h-10 px-5`,
-              isActive(item.link) ? "opacity-75" : "opacity-50",
-            )}
-          >
-            <div
-              className={`transition-colors duration-200 flex gap-5 rounded-4xl dark:hover:bg-studogrey/30 hover:bg-slate-200 ${isActive(item.link) ? "dark:bg-studogrey/30 bg-slate-200" : ""} flex-row justify-baseline px-5 items-center w-full h-10`}
-            >
-              <div className="flex items-center min-w-10 justify-center cursor-pointer text-2xl dark:text-white">
-                {item.icon}
-              </div>
-              <span
-                className={classNames(
-                  `dark:text-white select-none whitespace-nowrap transition-[opacity,transform] duration-200`,
-                  burgerOpen
-                    ? "opacity-100 translate-x-0 delay-100"
-                    : "opacity-0 -translate-x-4 pointer-events-none",
-                )}
-              >
-                {t(item.label)}
-              </span>
-            </div>
-          </Link>
-        </BaseTooltip>
-      ))}
-      <BaseTooltip
-        content={t("search_btn")}
-        position={"right"}
-        hidden={burgerOpen}
-      >
-        <div
+      <CollapsibleSection title={t("courses")} burgerOpen={burgerOpen}>
+        <CourseSidebar burgerOpen={burgerOpen} />
+        <MenuRow
+          icon={<Plus size={20} />}
+          text={t("create_btn")}
+          burgerOpen={burgerOpen}
+          onClick={toggleCreate}
+        />
+      </CollapsibleSection>
+
+      <CollapsibleSection title={t("library")} burgerOpen={burgerOpen}>
+        <MenuRow
+          icon={<LibraryBig size={20} />}
+          text={t("library")}
+          burgerOpen={burgerOpen}
+          href="/library/courses"
+          active={isActive("/library/")}
+        />
+        <MenuRow
+          icon={<GraduationCap size={20} />}
+          text={t("classrooms")}
+          burgerOpen={burgerOpen}
+          href="/classrooms"
+          active={isActive("/classrooms")}
+        />
+        <MenuRow
+          icon={<Search size={20} />}
+          text={t("search_btn")}
+          burgerOpen={burgerOpen}
           onClick={toggleSearch}
-          className="w-full h-10 aria-selected:opacity-100 px-5 opacity-50 cursor-pointer"
-        >
-          <div className="transition-colors duration-200 flex gap-5 select-none rounded-4xl dark:hover:bg-studogrey/30 hover:bg-slate-200 flex-row justify-baseline px-5 items-center w-full h-10">
-            <div className="flex items-center min-w-10 justify-center cursor-pointer text-2xl dark:text-white">
-              <Search size={20} />
-            </div>
-            <span
-              className={`dark:text-white select-none whitespace-nowrap transition-[opacity,transform] duration-200
-                        ${burgerOpen ? "opacity-100 translate-x-0 delay-100" : "opacity-0 -translate-x-4 pointer-events-none"}`}
-            >
-              {t("search_btn")}
-            </span>
-          </div>
-        </div>
-      </BaseTooltip>
+        />
+      </CollapsibleSection>
 
-      <div className="w-full h-full flex flex-col gap-3 justify-end items-baseline">
-        <UserPopup burgerOpen={burgerOpen} />
+      <div className="mt-auto">
+        <CollapsibleSection
+          title={t("account")}
+          burgerOpen={burgerOpen}
+          defaultOpen={false}
+        >
+          <MenuRow
+            icon={<User size={20} />}
+            text={t("account")}
+            burgerOpen={burgerOpen}
+            href="/account"
+            active={isActive("/account")}
+          />
+          <MenuRow
+            icon={<Settings size={20} />}
+            text={t("settings")}
+            burgerOpen={burgerOpen}
+            href="/settings"
+            active={isActive("/settings")}
+          />
+          {isModerator && (
+            <MenuRow
+              icon={<ShieldCheck size={20} />}
+              text={t("ad")}
+              burgerOpen={burgerOpen}
+              href="/admin/stats"
+              active={isActive("/admin")}
+            />
+          )}
+        </CollapsibleSection>
       </div>
     </div>
   );

@@ -21,7 +21,6 @@ export default async function HomePage() {
     auth(),
   ]);
   const welcome = getWelcomeMsg(tTimed, session?.user?.displayName ?? "");
-
   return (
     <>
       <section
@@ -44,9 +43,8 @@ export default async function HomePage() {
         <EmptyFallback />
 
         <JumpBackIn />
-        <YourSets />
-
         <Courses />
+        <YourSets />
       </div>
 
       <div className="fixed z-40 bottom-10 w-fit left-1/2 -translate-1/2 h-fit flex items-end justify-center">

@@ -6,6 +6,7 @@ export interface ICourseBreadCrumb {
   title: string;
   href: string;
   isLast: boolean;
+  translate?: boolean;
 }
 
 interface CourseNavStore {

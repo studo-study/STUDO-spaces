@@ -699,7 +699,8 @@
       "no_files_paragraph": "Importez un fichier PDF, Word ou Excel pour commencer.",
       "pending_upload": "en cours d'envoi…",
       "error_file_types": "Seuls les fichiers PDF, Word et Excel sont autorisés.",
-      "error_upload": "Une erreur est survenue lors de l'envoi."
+      "error_upload": "Une erreur est survenue lors de l'envoi.",
+      "select_course": "Choisir un cours"
     }
   },
   "speedy": {
@@ -753,5 +754,17 @@
       "axis_accuracy": "Précision (%)",
       "no_data": "Pas encore de données"
     }
+  },
+  "header": {
+    "create_btn": "Créer",
+    "all_sets": "Tous les sets",
+    "library": "Bibliothèque",
+    "home": "Accueil",
+    "courses": "Cours",
+    "classrooms": "Classes",
+    "search_btn": "Rechercher",
+    "account": "Compte",
+    "settings": "Paramètres",
+    "ad": "Admin"
   }
 }

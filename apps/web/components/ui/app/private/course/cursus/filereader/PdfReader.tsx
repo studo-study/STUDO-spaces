@@ -34,6 +34,7 @@ const PdfReader: React.FC<PdfReaderProps> = ({ file }) => {
   const setCurrentPage = usePdfReader((s) => s.setCurrentPage);
   const setZoom = usePdfReader((s) => s.setZoom);
   const setDoc = usePdfReader((s) => s.setDoc);
+  const setDocLoaded = usePdfReader((s) => s.setDocLoaded);
   const reset = usePdfReader((s) => s.reset);
 
   const [containerWidth, setContainerWidth] = useState(0);
@@ -224,6 +225,9 @@ const PdfReader: React.FC<PdfReaderProps> = ({ file }) => {
                 devicePixelRatio={dpr}
                 renderTextLayer
                 renderAnnotationLayer={false}
+                // splash pas weg als pagina 1 echt geschilderd is (canvas
+                // klaar), niet al bij document-parse → geen flash
+                onRenderSuccess={i === 0 ? () => setDocLoaded(true) : undefined}
                 loading={
                   <div
                     style={{ width: pageWidth, aspectRatio: A4_RATIO }}

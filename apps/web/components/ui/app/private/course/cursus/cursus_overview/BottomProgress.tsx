@@ -1,6 +1,7 @@
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { LoaderCircle, File } from "lucide-react";
 import { CourseDocument } from "@studo/types";
+import { useTranslations } from "next-intl";
 
 interface BottomProgressProps {
   files: File[];
@@ -8,6 +9,7 @@ interface BottomProgressProps {
 }
 const BottomProgress: React.FC<BottomProgressProps> = (props) => {
   const { files, processingDocs } = props;
+  const t = useTranslations("flow.course");
   return (
     <div
       className={
@@ -20,7 +22,7 @@ const BottomProgress: React.FC<BottomProgressProps> = (props) => {
         }
       >
         <BaseButton
-          label={"title of document"}
+          label={processingDocs[0].title}
           variant={"hover"}
           size={"sm"}
           iconLeft={<File size={12} />}
@@ -30,11 +32,11 @@ const BottomProgress: React.FC<BottomProgressProps> = (props) => {
         </span>
         /
         <span className={"dark:text-white text-studodarkblue font-normal"}>
-          {files.length}
+          {files.length + processingDocs.length}
         </span>
       </div>
       <BaseButton
-        label={"Stop upload"}
+        label={files.length === 0 ? t("stop_processing") : t("stop_upload")}
         size={"sm"}
         iconLeft={<LoaderCircle className={"animate-spin"} size={14} />}
       />

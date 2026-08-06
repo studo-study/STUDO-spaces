@@ -1,7 +1,7 @@
 // components/app/app_header/header.tsx
 "use client";
 import TriggerAddPopup from "@/components/ui/app/private/app_header/popups/AddPopup";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import TriggerNotif from "@/components/ui/app/private/app_header/popups/NotificationsPopup";
 import StreakPopup from "@/components/ui/app/private/app_header/StreakPopup";
 import TriggerProfile from "@/components/ui/app/private/app_header/popups/ProfilePopup";
@@ -13,6 +13,8 @@ import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection"
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
 import { ArrowRight, PanelRightOpen } from "lucide-react";
 import { HiMenuAlt4 } from "react-icons/hi";
+import { usePathname } from "next/navigation";
+import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
 import {
   SpecialeDag,
   SpecialeDagTitel,
@@ -25,13 +27,14 @@ interface HeaderProps {
   createOpen: boolean;
   setCreateOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleCreate: () => void;
-  user: StudoUser | null; // <- nieuw
-  isLoading: boolean; // <- nieuw
+  user: StudoUser | null;
+  isLoading: boolean;
 }
 
 export default function AppHeader({
   burgerOpen,
   Search,
+  setSearch,
   toggleCreate,
   user,
   isLoading,
@@ -42,15 +45,8 @@ export default function AppHeader({
   const [StreakOpen, setStreakOpen] = useState(false);
   const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === "true";
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
-  const searchRef = useRef<HTMLInputElement>(null);
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
   const premium = process.env.NEXT_PUBLIC_PREMIUM === "true";
-
-  useEffect(() => {
-    if (Search && searchRef.current) {
-      searchRef.current.focus();
-    }
-  }, [Search]);
 
   return (
     <div className={"h-fit z-100 top-0 w-screen flex flex-col"}>
@@ -78,7 +74,7 @@ export default function AppHeader({
       )}
       <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-gray-300 gap-5">
         {/* Left section */}
-        <div className="flex items-center gap-8 min-w-1/4">
+        <div className="flex items-center gap-8 w-fit">
           <button
             onClick={toggleSidebar}
             className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb"
@@ -130,10 +126,16 @@ export default function AppHeader({
             </Link>
           )}
         </div>
+        <div className={"min-w-fit truncate flex-row flex items-center"}>
+          <BreadCrumbs />
+        </div>
 
         <div className={"w-full h-fit flex justify-end items-center gap-2"}>
           <OnlineScanner />
-          <AppSearchbar />
+          <AppSearchbar
+            focusSignal={Search}
+            onFocused={() => setSearch(false)}
+          />
         </div>
 
         {/* Right section */}

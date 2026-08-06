@@ -38,6 +38,33 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
       {(isOpen: boolean) => {
         return (
           <div className="relative flex flex-col gap-1">
+            <div
+              onClick={toggleCreate}
+              className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl
+                text-studodarkblue dark:text-white cursor-pointer
+                hover:bg-linear-to-r hover:from-violet-400 to-purple-500 hover:text-white
+                transition-all duration-200 ease-out
+                ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
+              `}
+              style={{
+                transitionDelay: isOpen ? `${0}ms` : "0ms",
+              }}
+            >
+              <div
+                className={`flex items-center justify-center w-8 h-8 rounded-lg
+                bg-linear-to-br from-violet-400 to-purple-500
+                shadow-md shadow-black/10
+                group-hover:scale-110 group-hover:shadow-lg
+                transition-all duration-200`}
+              >
+                <FiBookOpen />
+              </div>
+              <span className="font-medium text-sm">{t("create_c")}</span>
+              <FaChevronRight
+                size={10}
+                className="ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+              />
+            </div>
             {menuItems.map((item, index) => (
               <Link
                 key={item.to}
@@ -49,7 +76,7 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
                 ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
               `}
                 style={{
-                  transitionDelay: isOpen ? `${index * 50}ms` : "0ms",
+                  transitionDelay: isOpen ? `${(index + 2) * 50}ms` : "0ms",
                 }}
               >
                 <div
@@ -70,33 +97,6 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
                 />
               </Link>
             ))}
-            <div
-              onClick={toggleCreate}
-              className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl
-                text-studodarkblue dark:text-white cursor-pointer
-                hover:bg-linear-to-r hover:from-violet-400 to-purple-500 hover:text-white
-                transition-all duration-200 ease-out
-                ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}
-              `}
-              style={{
-                transitionDelay: isOpen ? `${menuItems.length * 50}ms` : "0ms",
-              }}
-            >
-              <div
-                className={`flex items-center justify-center w-8 h-8 rounded-lg
-                bg-linear-to-br from-violet-400 to-purple-500
-                shadow-md shadow-black/10
-                group-hover:scale-110 group-hover:shadow-lg
-                transition-all duration-200`}
-              >
-                <FiBookOpen />
-              </div>
-              <span className="font-medium text-sm">{t("create_c")}</span>
-              <FaChevronRight
-                size={10}
-                className="ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
-              />
-            </div>
           </div>
         );
       }}

@@ -941,7 +941,6 @@
     "logout": "Uitloggen",
     "ad": "Admin",
     "home": "Home",
-    "sets": "Sets",
     "courses": "Vakken",
     "planner": "Planner",
     "flow": "Flow",
@@ -954,7 +953,9 @@
     "search": "zoeken...",
     "search_btn": "Zoeken",
     "create_c": "Creëer vak",
-    "create_b": "Creëer board"
+    "create_b": "Creëer board",
+    "create_btn": "Aanmaken",
+    "library": "Bibliotheek"
   },
   "createfolder": {
     "title": "maak een map",
@@ -1553,7 +1554,10 @@
       "overview": "Overzicht",
       "flow": "Flow",
       "documents": "Documenten",
-      "sets": "Sets"
+      "sets": "Sets",
+      "stop_processing": "Stop verwerken",
+      "stop_upload": "Stop uploaden",
+      "select_course": "Kies een vak"
     }
   },
   "courses": {
@@ -1753,5 +1757,21 @@
   "combobox": {
     "options": "Opties",
     "noResults": "Geen resultaten"
+  },
+  "breadcrumbs": {
+    "home": "home",
+    "course": "vak",
+    "overview": "overzicht",
+    "documents": "documenten",
+    "flow": "flow",
+    "sets": "sets",
+    "library": "bibliotheek",
+    "courses": "vakken",
+    "classrooms": "klassen",
+    "studoset": "studoset",
+    "edit": "bewerken",
+    "learn": "leren",
+    "speedy": "tijdsstrijd",
+    "flashcards": "flashkaarten"
   }
 }

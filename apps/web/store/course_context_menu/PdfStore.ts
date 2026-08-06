@@ -16,10 +16,13 @@ interface PdfReaderState {
   currentPage: number;
   pageCount: number;
   zoom: number;
+  // true zodra react-pdf het document effectief inlaadde (onLoadSuccess)
+  docLoaded: boolean;
   // acties — per veld
   setDocId: (id: string) => void;
   setFileName: (name: string) => void;
   setR2Key: (key: string) => void;
+  setDocLoaded: (v: boolean) => void;
   setNumPages: (n: number) => void;
   setCurrentPage: (n: number) => void;
   setPageCount: (n: number) => void;
@@ -42,6 +45,7 @@ const initial = {
   currentPage: 1,
   pageCount: 0,
   zoom: 1,
+  docLoaded: false,
 };
 
 // Centrale state voor de PDF-reader. PdfReader schrijft numPages/currentPage
@@ -53,6 +57,7 @@ export const usePdfReader = create<PdfReaderState>((set) => ({
   setDocId: (id) => set({ doc_id: id }),
   setFileName: (name) => set({ fileName: name }),
   setR2Key: (key) => set({ r2Key: key }),
+  setDocLoaded: (v) => set({ docLoaded: v }),
   setNumPages: (n) => set({ numPages: n }),
   setCurrentPage: (n) => set({ currentPage: n }),
   setPageCount: (n) => set({ pageCount: n }),

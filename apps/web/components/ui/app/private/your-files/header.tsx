@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const header = [
-  { url: "/your-files/sets", label: "sets" },
-  { url: "/your-files/courses", label: "courses" },
+  { url: "/library/courses", label: "courses" },
+  { url: "/library/sets", label: "sets" },
 ];
 export default function FileHeader() {
   const t = useTranslations("y_f");

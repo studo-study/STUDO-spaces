@@ -5,13 +5,30 @@ import { useRouter } from "next/navigation";
 import { useLoadingStore } from "@/store/slices/loading/loadingStore";
 import { useLocale } from "next-intl";
 
-export default function AppSearchbar() {
+interface AppSearchbarProps {
+  // extern signaal (bv. burger-knop) om de input te focussen
+  focusSignal?: boolean;
+  onFocused?: () => void;
+}
+
+export default function AppSearchbar({
+  focusSignal,
+  onFocused,
+}: AppSearchbarProps) {
   //variables
   const [query, setQuery] = useState("");
   const locale = useLocale();
   const router = useRouter();
   const inputFieldRef = useRef<HTMLInputElement>(null);
   const setLoading = useLoadingStore((s) => s.setLoading);
+
+  // focus wanneer het signaal aankomt, en reset het meteen
+  useEffect(() => {
+    if (focusSignal && inputFieldRef.current) {
+      inputFieldRef.current.focus();
+      onFocused?.();
+    }
+  }, [focusSignal, onFocused]);
 
   //toggles
   const toggleSearch = () => {
