@@ -606,20 +606,3 @@ const FinishedScreen = ({
     </div>
   );
 };
-
-const BreadCrumbs = () => {
-  useCourseNav([
-    {
-      title: data?.title ?? "",
-      href: `/studoset/${data?.id}`,
-      isLast: false,
-      translate: false,
-    },
-    {
-      title: "learn",
-      href: `/studoset/${data?.id}/learn`,
-      isLast: true,
-      translate: true,
-    },
-  ]);
-};

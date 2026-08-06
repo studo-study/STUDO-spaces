@@ -13,7 +13,6 @@ import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection"
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
 import { ArrowRight, PanelRightOpen } from "lucide-react";
 import { HiMenuAlt4 } from "react-icons/hi";
-import { usePathname } from "next/navigation";
 import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
 import {
   SpecialeDag,
