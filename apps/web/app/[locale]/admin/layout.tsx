@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import AdminHeader from "@/components/ui/app/private/admin/adminheader";
-import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
