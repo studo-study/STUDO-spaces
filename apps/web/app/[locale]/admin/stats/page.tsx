@@ -24,7 +24,7 @@ export default async function ModeratorPage() {
         </span>
         <QuickStats />
       </div>
-      <div className={"w-full h-3/4 flex flex-col gap-5"}>
+      <div className={"w-full min-h-0 flex-1 flex flex-col gap-5"}>
         <span
           className={
             "w-full h-fit font-bold dark:text-white text-studodarkblue flex gap-2 items-center"

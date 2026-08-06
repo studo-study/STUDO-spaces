@@ -5,8 +5,11 @@ interface PageContainerProps extends React.HTMLProps<HTMLDivElement> {
   gap?: number;
 }
 
+const PageContainerRoutes = ["course", "admin"];
 const PageContainer = (props: PageContainerProps) => {
-  const coursePath = usePathname().includes("/course/");
+  const path = usePathname().split("/")[1];
+  console.log(path);
+  const coursePath = PageContainerRoutes.includes(path);
   const { gap, children } = props;
 
   if (coursePath) {
