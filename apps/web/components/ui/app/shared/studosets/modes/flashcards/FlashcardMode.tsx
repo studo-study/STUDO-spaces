@@ -20,7 +20,6 @@ import Image from "next/image";
 import { AiOutlineRise } from "react-icons/ai";
 import { Check, Flag } from "lucide-react";
 import { SessionCard } from "@/types/types";
-import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 interface SuggestionImage {
   id: string;
