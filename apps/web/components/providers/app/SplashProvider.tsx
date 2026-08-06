@@ -21,9 +21,16 @@ export const useSplash = () => {
 const SplashProvider = ({
   children,
   initialLoaded = false,
+  timeoutMs = 5000,
+  onTimeout,
 }: {
   children: React.ReactNode;
   initialLoaded?: boolean;
+  timeoutMs?: number;
+  // Wat te doen als de timeout verloopt zonder dat er geladen is. Default:
+  // toast + terug naar /home. Geef een eigen handler om enkel te dismissen
+  // (bv. document-view: gewoon de splash weg, op de pagina blijven).
+  onTimeout?: () => void;
 }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(initialLoaded);
   const [timedOut, setTimedOut] = useState<boolean>(false);
@@ -44,13 +51,17 @@ const SplashProvider = ({
     const timer = setTimeout(() => {
       setIsLoaded((loaded) => {
         if (!loaded) {
-          toast.error("Can't load set");
-          router.push("/home");
           setTimedOut(true);
+          if (onTimeout) {
+            onTimeout();
+          } else {
+            toast.error("Can't load set");
+            router.push("/home");
+          }
         }
         return loaded;
       });
-    }, 5000);
+    }, timeoutMs);
 
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps

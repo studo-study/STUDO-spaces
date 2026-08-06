@@ -5,6 +5,7 @@ import { IoIosRocket, IoIosTrendingDown } from "react-icons/io";
 import { BiSolidPlaneAlt } from "react-icons/bi";
 import { useTranslations } from "next-intl";
 import { useAdminStats } from "@/hooks/app/admin/useAdminStats";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 function refactor(number: number) {
   const numberArray = number.toString().split("").reverse();
@@ -94,6 +95,20 @@ function StatCard({
 }
 
 export default function QuickStats() {
+  useCourseNav([
+    {
+      title: "admin",
+      href: `/admin`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "stats",
+      href: `/admin/stats`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
   const t = useTranslations("admin");
   const { data, isLoading } = useAdminStats();
 

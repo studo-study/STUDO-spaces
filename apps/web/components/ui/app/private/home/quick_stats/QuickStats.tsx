@@ -1,22 +1,20 @@
 "use client";
 import { useTranslations } from "next-intl";
 import StatItem from "@/components/ui/app/private/home/quick_stats/StatItem";
-import { LuTimer } from "react-icons/lu";
-import { FaCheck, FaRegEye } from "react-icons/fa";
 import { useSets } from "@/hooks/app/sets/useSets";
 import StatItemSkeleton from "@/components/ui/app/private/home/quick_stats/StatItemSkeleton";
+import { Check, Eye, Layers, Timer } from "lucide-react";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const STATS_CONFIG = [
   {
-    color:
-      "dark:from-orange-500/20 dark:to-orange-600/20 from-orange-400 to-orange-500 text-white",
+    color: "dark:text-orange-400 text-orange-500",
     measurement: "days",
     label: "Streak",
     extra: "",
   },
   {
-    color:
-      "dark:from-purple-500/20 dark:to-purple-400/20 from-purple-500 to-purple-500 text-white",
+    color: "dark:text-purple-400 text-purple-500",
     icon: "/icons/studyset.svg",
     measurement: "cards",
     label: "totCards",
@@ -24,8 +22,7 @@ const STATS_CONFIG = [
     invert: true,
   },
   {
-    color:
-      "dark:from-blue-500/20 dark:to-blue-500/20 from-blue-400 to-blue-500 text-white",
+    color: "dark:text-blue-400 text-blue-500",
     icon: "/icons/clock.svg",
     measurement: "min",
     label: "tmStd",
@@ -33,8 +30,7 @@ const STATS_CONFIG = [
     invert: true,
   },
   {
-    color:
-      "dark:from-emerald-500/20 dark:to-emerald-600/20 from-emerald-400 to-emerald-500 text-white",
+    color: "dark:text-emerald-400 text-emerald-500",
     iconComponent: true,
     measurement: "cards",
     label: "mastered",
@@ -45,6 +41,14 @@ const STATS_CONFIG = [
 const QuickStats = () => {
   const { stats, isLoading } = useSets();
   const t = useTranslations("home");
+  useCourseNav([
+    {
+      title: "home",
+      href: `/home`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
 
   if (isLoading || !stats) {
     return (
@@ -64,7 +68,7 @@ const QuickStats = () => {
             ? "bg-stuodgrey/30 opacity-50 "
             : STATS_CONFIG[0].color
         }
-        image={"/icons/studyset.svg"}
+        icon={<Layers size={13} className={STATS_CONFIG[0].color} />}
         title={
           stats.totalsets +
           " " +
@@ -77,7 +81,7 @@ const QuickStats = () => {
             ? "bg-stuodgrey/30 opacity-50 "
             : STATS_CONFIG[1].color
         }
-        icon={<FaRegEye />}
+        icon={<Eye size={13} className={STATS_CONFIG[1].color} />}
         title={
           stats.totalCards +
           " " +
@@ -90,7 +94,7 @@ const QuickStats = () => {
             ? "bg-stuodgrey/30 opacity-50 "
             : STATS_CONFIG[2].color
         }
-        icon={<FaCheck />}
+        icon={<Check size={13} className={STATS_CONFIG[2].color} />}
         title={
           stats.cardsLearned.toString() +
           " " +
@@ -103,7 +107,7 @@ const QuickStats = () => {
             ? "bg-stuodgrey/30 opacity-50 "
             : STATS_CONFIG[3].color
         }
-        icon={<LuTimer />}
+        icon={<Timer size={13} className={STATS_CONFIG[3].color} />}
         title={TimeParser(stats.timeLearned, t)}
       />
     </section>

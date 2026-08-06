@@ -17,6 +17,7 @@ import {
 } from "react-icons/tb";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import SetItem from "@/components/ui/app/private/home/YourSets/SetItem";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 interface Props {
   userId: string;
@@ -75,7 +76,32 @@ function SessionRow({
 
 const AdminUserDetail = ({ userId }: Props) => {
   const { data, isLoading, isError } = useAdminUserDetail(userId);
-
+  useCourseNav([
+    {
+      title: "admin",
+      href: `/admin`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "users",
+      href: `/admin/users`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "users",
+      href: `/admin/users`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: data?.displayName ?? "user",
+      href: `/admin/users/` + data?.id,
+      isLast: true,
+      translate: false,
+    },
+  ]);
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center opacity-40">

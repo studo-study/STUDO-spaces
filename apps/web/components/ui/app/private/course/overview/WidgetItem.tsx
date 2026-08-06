@@ -1,6 +1,6 @@
 import classNames from "@/utils/classnames";
 import { EllipsisVertical, Grip, Trash2 } from "lucide-react";
-import { useWidgetMenu } from "@/store/coursecontextmenu/WidgetMenuStore";
+import { useWidgetMenu } from "@/store/course_context_menu/WidgetMenuStore";
 import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
 import {
   WIDGET_REGISTRY,

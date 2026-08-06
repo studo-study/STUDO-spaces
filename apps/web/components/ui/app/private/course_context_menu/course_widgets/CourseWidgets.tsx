@@ -1,7 +1,7 @@
 "use client";
 import { Check, Pencil, Plus } from "lucide-react";
 import ContextMenuHeader from "@/components/ui/app/private/course_context_menu/ContextMenuHeader";
-import { useWidgetMenu } from "@/store/coursecontextmenu/WidgetMenuStore";
+import { useWidgetMenu } from "@/store/course_context_menu/WidgetMenuStore";
 import {
   WIDGET_REGISTRY,
   WIDGET_TYPES,

@@ -8,6 +8,7 @@ import ListItems from "@/components/ui/app/private/your-files/sets/listitems";
 import Image from "next/image";
 import { useSets } from "@/hooks/app/sets/useSets";
 import { StudysetResponse, type VisualsetResponse } from "@studo/types";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 export interface StudySetItem {
   id: string;
@@ -40,6 +41,21 @@ export default function Grid() {
     ],
     [sets, visualsets],
   );
+
+  useCourseNav([
+    {
+      title: "library",
+      href: `/library`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "sets",
+      href: `/library/sets`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
 
   const containerRef = useRef(null);
   const [AddIsOpen, setAddIsOpen] = useState(false);

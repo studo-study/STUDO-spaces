@@ -1,8 +1,7 @@
 // components/app/app_header/header.tsx
 "use client";
-import { useLocale } from "next-intl";
 import TriggerAddPopup from "@/components/ui/app/private/app_header/popups/AddPopup";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import TriggerNotif from "@/components/ui/app/private/app_header/popups/NotificationsPopup";
 import StreakPopup from "@/components/ui/app/private/app_header/StreakPopup";
 import TriggerProfile from "@/components/ui/app/private/app_header/popups/ProfilePopup";
@@ -14,6 +13,11 @@ import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection"
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
 import { ArrowRight, PanelRightOpen } from "lucide-react";
 import { HiMenuAlt4 } from "react-icons/hi";
+import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
+import {
+  SpecialeDag,
+  SpecialeDagTitel,
+} from "@/components/ui/app/private/app_header/SpecialeDag";
 
 interface HeaderProps {
   burgerOpen: boolean;
@@ -22,13 +26,14 @@ interface HeaderProps {
   createOpen: boolean;
   setCreateOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleCreate: () => void;
-  user: StudoUser | null; // <- nieuw
-  isLoading: boolean; // <- nieuw
+  user: StudoUser | null;
+  isLoading: boolean;
 }
 
 export default function AppHeader({
   burgerOpen,
   Search,
+  setSearch,
   toggleCreate,
   user,
   isLoading,
@@ -39,22 +44,11 @@ export default function AppHeader({
   const [StreakOpen, setStreakOpen] = useState(false);
   const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === "true";
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
-  const searchRef = useRef<HTMLInputElement>(null);
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
   const premium = process.env.NEXT_PUBLIC_PREMIUM === "true";
 
-  useEffect(() => {
-    if (Search && searchRef.current) {
-      searchRef.current.focus();
-    }
-  }, [Search]);
-
   return (
-    <div
-      className={
-        "h-fit z-100 top-0 w-screen flex flex-col border-b border-b-studoborder/30"
-      }
-    >
+    <div className={"h-fit z-100 top-0 w-screen flex flex-col"}>
       <div className={"w-screen h-0.5"}></div>
       {openbrein && (
         <div
@@ -79,7 +73,7 @@ export default function AppHeader({
       )}
       <div className=" w-screen h-20 flex items-center justify-between px-10 py-2 backdrop-blur-2xl border-gray-300 gap-5">
         {/* Left section */}
-        <div className="flex items-center gap-8 min-w-1/4">
+        <div className="flex items-center gap-8 w-fit">
           <button
             onClick={toggleSidebar}
             className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb"
@@ -131,10 +125,16 @@ export default function AppHeader({
             </Link>
           )}
         </div>
+        <div className={"min-w-fit truncate flex-row flex items-center"}>
+          <BreadCrumbs />
+        </div>
 
         <div className={"w-full h-fit flex justify-end items-center gap-2"}>
           <OnlineScanner />
-          <AppSearchbar />
+          <AppSearchbar
+            focusSignal={Search}
+            onFocused={() => setSearch(false)}
+          />
         </div>
 
         {/* Right section */}
@@ -277,140 +277,4 @@ function getStreakConfig(streak: number) {
     textColor: "",
     glow: false,
   };
-}
-
-function SpecialeDag() {
-  const date: Date = new Date();
-  const dag = date.getDate();
-  const maand = date.getMonth();
-  const jaar = date.getFullYear();
-  const feestdagen = {
-    christmas:
-      "from-rose-600 via-rose-500 to-rose-400 dark:from-white dark:to-rose-200",
-    christmasDay:
-      "from-red-600 via-red-500 to-red-400 dark:from-white dark:to-red-200",
-    newYear:
-      "from-yellow-700 via-amber-500 to-yellow-400 dark:from-white dark:to-amber-200",
-    threeKings:
-      "from-amber-600 via-amber-500 to-yellow-500 dark:from-white dark:to-yellow-200",
-    labour:
-      "from-red-600 via-red-500 to-red-400 dark:from-white dark:to-red-200",
-    valentine:
-      "from-pink-600 via-pink-500 to-pink-400 dark:from-pink-300 dark:via-pink-300 dark:to-pink-400",
-    halloween:
-      "from-orange-600 via-orange-500 to-orange-400 dark:from-white dark:to-orange-200",
-    easter:
-      "from-violet-500 via-violet-400 to-purple-400 dark:from-white dark:to-violet-200",
-    stPatricks:
-      "from-green-600 via-green-500 to-green-400 dark:from-white dark:to-green-200",
-    mothersDay:
-      "from-pink-500 via-pink-400 to-rose-400 dark:from-white dark:to-pink-200",
-    fathersDay:
-      "from-sky-600 via-sky-500 to-sky-400 dark:from-white dark:to-sky-200",
-    carnival:
-      "from-fuchsia-600 via-fuchsia-500 to-fuchsia-400 dark:from-white dark:via-fuchsia-200 dark:to-fuchsia-200",
-    kingsDay:
-      "from-orange-500 via-orange-400 to-amber-400 dark:from-white dark:to-orange-200",
-    midsummer:
-      "from-blue-400 via-green-300 to-amber-300 dark:from-white dark:to-sky-200",
-    vs: "from-blue-600 to-red-700 dark:from-blue-600 dark:to-red-400",
-    nederland:
-      "from-orange-400 via-amber-500 to-orange-300 dark:from-orange-400 dark:via-amber-500 dark:to-orange-300",
-  };
-
-  const pasen = berekenPasen(jaar);
-  const pasenDatum = new Date(jaar, pasen.maand - 1, pasen.dag);
-
-  const carnaval = new Date(pasenDatum);
-  carnaval.setDate(carnaval.getDate() - 49);
-
-  if (dag === pasen.dag && maand === pasen.maand - 1) {
-    return feestdagen.easter;
-  }
-  if (dag === carnaval.getDate() && maand === carnaval.getMonth()) {
-    return feestdagen.carnival;
-  }
-
-  const key: string = `${dag}/${maand}`;
-  const vasteDagen: Record<string, string> = {
-    "1/0": feestdagen.newYear,
-    "6/0": feestdagen.threeKings,
-    "14/1": feestdagen.valentine,
-    "17/2": feestdagen.stPatricks,
-    "1/4": feestdagen.labour,
-    "21/5": feestdagen.midsummer,
-    "31/9": feestdagen.halloween,
-    "24/11": feestdagen.christmas,
-    "25/11": feestdagen.christmasDay,
-    "31/11": feestdagen.newYear,
-  };
-
-  return (
-    vasteDagen[key] ||
-    "from-emerald-500 to-emerald-400 dark:from-white dark:to-blue-200"
-  );
-}
-
-function berekenPasen(jaar: number) {
-  const a = jaar % 19;
-  const b = Math.floor(jaar / 100);
-  const c = jaar % 100;
-  const d = Math.floor(b / 4);
-  const e = b % 4;
-  const f = Math.floor((b + 8) / 25);
-  const g = Math.floor((b - f + 1) / 3);
-  const h = (19 * a + b - d - g + 15) % 30;
-  const i = Math.floor(c / 4);
-  const k = c % 4;
-  const l = (32 + 2 * e + 2 * i - h - k) % 7;
-  const m = Math.floor((a + 11 * h + 22 * l) / 451);
-
-  const maand = Math.floor((h + l - 7 * m + 114) / 31);
-  const dag = ((h + l - 7 * m + 114) % 31) + 1;
-
-  return { dag, maand };
-}
-
-function SpecialeDagTitel() {
-  const date: Date = new Date();
-  const dag = date.getDate();
-  const maand = date.getMonth();
-  const jaar = date.getFullYear();
-  const locale = useLocale();
-  const pasen = berekenPasen(jaar);
-  const pasenDatum = new Date(jaar, pasen.maand - 1, pasen.dag);
-
-  const carnaval = new Date(pasenDatum);
-  carnaval.setDate(carnaval.getDate() - 49);
-
-  if (dag === pasen.dag && maand === pasen.maand - 1) {
-    return "easters";
-  }
-  if (dag === carnaval.getDate() && maand === carnaval.getMonth()) {
-    return "Vrolijk Carnaval";
-  }
-
-  const key: string = `${dag}/${maand}`;
-  const vasteDagen: Record<string, string> = {
-    "1/0": "Happy New Year!",
-    "6/0": "Happy Three Kings' Day",
-    "14/1": "Happy Valentine's Day",
-    "17/2": "Happy St. Patrick's Day",
-    "1/4": "Happy Labour Day",
-    "21/5": "Happy Midsummer",
-    "31/9": "Happy Halloween",
-    "24/11": "Merry Christmas",
-    "25/11": "Merry Christmas",
-    "31/11": "Happy New Year's Eve",
-  };
-
-  if (locale === "nl" && key === "21/6") {
-    return "Nationale Feestdag";
-  }
-
-  if (locale === "nl" && key === "27/3") {
-    return "Koningsdag";
-  }
-
-  return vasteDagen[key] || "Holiday";
 }

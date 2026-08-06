@@ -9,7 +9,10 @@ import {
   Settings,
   SlidersHorizontal,
 } from "lucide-react";
-import { MenuOrigin, useSideMenu } from "@/store/coursecontextmenu/CourseStore";
+import {
+  MenuOrigin,
+  useSideMenu,
+} from "@/store/course_context_menu/SideMenuStore";
 import { usePathname } from "@/i18n/routing";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import { MenuConfig, resolveMenuConfig } from "./config";
@@ -82,7 +85,7 @@ const CourseSidebar: React.FC = () => {
     },
   ];
   return (
-    <div className="shrink-0 w-20 h-full border-l border-studoborder/30 flex flex-col gap-5 py-5 items-center justify-start">
+    <div className="shrink-0 w-20 h-full border-studoborder/30 shadow-3xl border-l bg-studogrey/10 flex flex-col gap-5 py-5 items-center justify-start">
       {MenuItems.filter((item) => menuConfig[item.key] && item.isEnabled).map(
         (item) => (
           <BaseTooltip key={item.key} content={item.tooltip} position={"left"}>

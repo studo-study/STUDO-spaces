@@ -8,6 +8,7 @@ import { IoFilter } from "react-icons/io5";
 import ReportColumn from "@/components/ui/app/private/admin/reports/ReportColumn";
 import mockReports from "@/data/mocks/reportMock";
 import { Issue } from "@/types/types";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const data: Issue[] = mockReports;
 
@@ -15,6 +16,20 @@ export default function TicketingGrid() {
   //refs
   const itemContainerRef = useRef<HTMLDivElement>(null);
 
+  useCourseNav([
+    {
+      title: "admin",
+      href: `/admin`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "reports",
+      href: `/admin/reports`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
   // Eén state voor de items per status
   const [columns, setColumns] = useState<Record<string, Issue[]>>({
     to_do: data.filter((item) => item.status === "to_do"),

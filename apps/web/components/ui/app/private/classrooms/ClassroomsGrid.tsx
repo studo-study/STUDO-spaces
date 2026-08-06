@@ -7,6 +7,7 @@ import ClassSearch from "@/components/ui/app/private/classrooms/ClassroomSearchb
 import ClassroomOverviewItem from "@/components/ui/app/private/classrooms/ClassroomOverviewItem";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useClassrooms } from "@/hooks/app/classrooms/useClassrooms";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 export default function ClassroomGrid() {
   const { classrooms, isLoading } = useClassrooms();
@@ -16,6 +17,14 @@ export default function ClassroomGrid() {
   const [filteredClasses, setFilteredClasses] =
     useState<FullClassroom[]>(classrooms);
 
+  useCourseNav([
+    {
+      title: "classrooms",
+      href: `/classrooms`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
   const filterClasses = () => {
     if (selectionRef.current && User) {
       const value = selectionRef.current.value;

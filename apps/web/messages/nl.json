@@ -941,7 +941,6 @@
     "logout": "Uitloggen",
     "ad": "Admin",
     "home": "Home",
-    "sets": "Sets",
     "courses": "Vakken",
     "planner": "Planner",
     "flow": "Flow",
@@ -954,7 +953,9 @@
     "search": "zoeken...",
     "search_btn": "Zoeken",
     "create_c": "Creëer vak",
-    "create_b": "Creëer board"
+    "create_b": "Creëer board",
+    "create_btn": "Aanmaken",
+    "library": "Bibliotheek"
   },
   "createfolder": {
     "title": "maak een map",
@@ -1536,7 +1537,27 @@
       "error_title_required": "Titel is verplicht",
       "n": "n",
       "cta_add_t": "Rij toevoegen",
-      "flow_title": "Planning"
+      "flow_title": "Planning",
+      "upload_doc": "Document toevoegen",
+      "summary": "Samenvattingen",
+      "all": "Overzicht",
+      "course": "Cursussen",
+      "notes": "Notities",
+      "no_files_title": "Nog geen bestanden",
+      "no_files_paragraph": "Upload een bestand om te beginnen",
+      "pending_upload": "uploaden…",
+      "error_file_types": "Alleen PDF-, Word- en Excel-bestanden zijn toegestaan.",
+      "error_upload": "Er ging iets mis bij het uploaden.",
+      "doc_error": "Kan document niet laden",
+      "processing": "verwerken",
+      "failed": "fout",
+      "overview": "Overzicht",
+      "flow": "Flow",
+      "documents": "Documenten",
+      "sets": "Sets",
+      "stop_processing": "Stop verwerken",
+      "stop_upload": "Stop uploaden",
+      "select_course": "Kies een vak"
     }
   },
   "courses": {
@@ -1736,5 +1757,21 @@
   "combobox": {
     "options": "Opties",
     "noResults": "Geen resultaten"
+  },
+  "breadcrumbs": {
+    "home": "home",
+    "course": "vak",
+    "overview": "overzicht",
+    "documents": "documenten",
+    "flow": "flow",
+    "sets": "sets",
+    "library": "bibliotheek",
+    "courses": "vakken",
+    "classrooms": "klassen",
+    "studoset": "studoset",
+    "edit": "bewerken",
+    "learn": "leren",
+    "speedy": "tijdsstrijd",
+    "flashcards": "flashkaarten"
   }
 }

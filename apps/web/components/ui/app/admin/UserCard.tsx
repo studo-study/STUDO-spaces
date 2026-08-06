@@ -23,7 +23,7 @@ const Field = ({ label, children }: FieldProps) => (
 const UserCard = ({ user }: UserCardProps) => {
   return (
     <Link
-      href={"/apps/web/components/ui/app/app/admin/users/" + user.id}
+      href={"/admin/users/" + user.id}
       className="grid h-20 grid-cols-[auto_1.5fr_2fr_1fr_1fr_1fr] items-center gap-6 rounded-2xl border hover:border-studoborder border-studoborder/30 px-5"
     >
       <Avatar displayName={user.displayName} id={user.id} />

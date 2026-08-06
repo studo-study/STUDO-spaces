@@ -1,6 +1,6 @@
 import ChatInput from "@/components/ui/app/private/course_context_menu/chat/ChatInput";
 import ChatCanvas from "./ChatCanvas";
-import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
+import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { History, X, Plus, MessagesSquare } from "lucide-react";
 import BaseToolTip from "@/components/ui/design_system/tooltip/BaseToolTip";

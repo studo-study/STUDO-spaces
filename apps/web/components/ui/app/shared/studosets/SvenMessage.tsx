@@ -9,7 +9,7 @@ interface SvenMessageProps {
 const SvenMessage: React.FC<SvenMessageProps> = (props) => {
   const { description } = props;
   return (
-    <div className={"my-5"}>
+    <div className={"my-5 group"}>
       <ComposerAura>
         <div
           className={

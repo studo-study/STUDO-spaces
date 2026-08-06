@@ -26,7 +26,7 @@ export default function CardList({
   const setStudosetCards = useStudosetStore((s) => s.setStudosetCards);
   const studosetCards = useStudosetStore((s) => s.studosetCards);
   useEffect(() => {
-    setStudosetCards(cards ?? [], session ?? []);
+    return setStudosetCards(cards ?? [], session ?? []);
   }, [cards, session, setStudosetCards]);
 
   const displayCards = studosetCards.length > 0 ? studosetCards : [];

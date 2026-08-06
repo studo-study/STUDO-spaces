@@ -27,7 +27,6 @@ export type CourseDocumentStatus =
   | "processing"
   | "finished"
   | "failed";
-export type MimeType = "pdf" | "docx";
 
 // --- Entiteiten ---
 
@@ -76,16 +75,34 @@ export interface CourseDocument {
   courseId: string;
   uploaderId: string;
   title: string;
-  author: string | null;
-  publishingDate: string | null;
-  status: CourseDocumentStatus;
+  author?: string | null;
+  publishingDate?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  pageCount?: number | null;
+  wordCount?: number | null;
+  status: string;
   storageKey: string;
-  mimeType: MimeType;
-  pageCount: number | null;
-  wordCount: number | null;
-  fileSize: number | null;
-  createdAt: string | null;
-  updatedAt: string | null;
+  mimeType: string;
+  fileSize?: number | null;
+  checksum?: number | null;
+  documentTag: string;
+}
+
+export interface CourseDocumentChunk {
+  id: string;
+  documentId: string;
+  pageStart: number | null;
+  pageEnd: number | null;
+  chunkIndex: number;
+  text: string;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+}
+
+export interface FullCourseDocument extends CourseDocument {
+  url: string;
+  chunks: CourseDocumentChunk[] | undefined | null;
 }
 
 /** Volledige set-data zoals gekoppeld aan een course (join course_sets). */
@@ -193,3 +210,10 @@ export interface CreateCourseRow {
 }
 
 export type UpdateCourseRow = Partial<Omit<CreateCourseRow, "tableId">>;
+
+interface UploadDocs {
+  courseId: string;
+  files: File[];
+}
+
+export default UploadDocs;

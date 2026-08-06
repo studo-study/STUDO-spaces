@@ -25,11 +25,12 @@ import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBottom";
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import { pomodoroStore } from "@/store/coursecontextmenu/PomodoroStore";
+import { pomodoroStore } from "@/store/course_context_menu/PomodoroStore";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import classNames from "@/utils/classnames";
 import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
 import SvenMessage from "@/components/ui/app/shared/studosets/SvenMessage";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 interface viewProps {
   id: string;
@@ -50,11 +51,21 @@ export default function StudosetView({ id }: viewProps) {
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const learnSettings = useLearnStore((state) => state.learnSettings);
+  const StudoSession = useStudosetStore((state) => state.studosetSession);
   const [showMessage] = useState(false);
   // init tab uit de store zodat de tab-visual matcht met de opgeslagen setting
   const [tab, setTab] = useState<Tab>(
     learnSettings.flaggedMode ? "flagged" : "all",
   );
+
+  useCourseNav([
+    {
+      title: data?.title ?? "",
+      href: `/studoset/${id}`,
+      isLast: true,
+      translate: false,
+    },
+  ]);
 
   const jumpToTop = () => {
     topRef.current?.scrollIntoView({
@@ -149,8 +160,6 @@ export default function StudosetView({ id }: viewProps) {
       setFilter(input as Filter);
     }
   };
-
-  const isFinished = (totalCards ?? 0) <= studied;
 
   if (!data?.cards) return null;
 
@@ -300,7 +309,7 @@ export default function StudosetView({ id }: viewProps) {
           <span className="w-full h-fit font-bold text-sm sm:text-base">
             {t("progress_title")}
           </span>
-          {isFinished && (
+          {(StudoSession?.completions ?? 0) >= 1 && (
             <BaseTooltip content={t("progress_visualized")} z={999}>
               <ProgressPopUpTrigger />
             </BaseTooltip>

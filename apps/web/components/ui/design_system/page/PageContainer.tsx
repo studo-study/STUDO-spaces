@@ -1,13 +1,21 @@
+"use client";
+import { usePathname } from "@/i18n/routing";
+
 interface PageContainerProps extends React.HTMLProps<HTMLDivElement> {
   gap?: number;
 }
 
 const PageContainer = (props: PageContainerProps) => {
+  const coursePath = usePathname().includes("/course/");
   const { gap, children } = props;
+
+  if (coursePath) {
+    return <div className={"min-w-0 min-h-0 flex-1 flex"}>{children}</div>;
+  }
   return (
     <div
       className={
-        "w-full h-full flex flex-col items-center justify-center  2xl:py-15 xl:py-5 2xl:pt-5 scroll-hidden"
+        "w-full h-full flex flex-col items-center justify-center  2xl:py-15 xl:py-15 2xl:pt-15 scroll-hidden"
       }
     >
       <div

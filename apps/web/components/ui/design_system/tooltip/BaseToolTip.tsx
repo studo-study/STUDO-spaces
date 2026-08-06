@@ -31,10 +31,10 @@ const BaseTooltip = ({
       if (!triggerRef.current) return;
       const rect = triggerRef.current.getBoundingClientRect();
       const posMap = {
-        top: { top: rect.top - 8, left: rect.left + rect.width / 2 },
-        bottom: { top: rect.bottom + 8, left: rect.left + rect.width / 2 },
-        left: { top: rect.top + rect.height / 2, left: rect.left - 8 },
-        right: { top: rect.top + rect.height / 2, left: rect.right + 8 },
+        top: { top: rect.top - 10, left: rect.left + rect.width / 2 },
+        bottom: { top: rect.bottom + 10, left: rect.left + rect.width / 2 },
+        left: { top: rect.top + rect.height / 2, left: rect.left - 12 },
+        right: { top: rect.top + rect.height / 2, left: rect.right + 12 },
       };
 
       let { top, left } = posMap[position];
@@ -70,10 +70,10 @@ const BaseTooltip = ({
 
   // arrow zit aan de tegenovergestelde kant van waar de tooltip staat
   const arrowMap = {
-    top: "bottom-[-4px] left-1/2 -translate-x-1/2",
-    bottom: "top-[-4px] left-1/2 -translate-x-1/2",
-    left: "right-[-4px] top-1/2 -translate-y-1/2",
-    right: "left-[-4px] top-1/2 -translate-y-1/2",
+    top: "bottom-[-3px] left-1/2 -translate-x-1/2 border-b border-r",
+    bottom: "top-[-3px] left-1/2 -translate-x-1/2 border-t border-l",
+    left: "right-[-4px] top-1/2 -translate-y-1/2 border-t border-r",
+    right: "left-[-4px] top-1/2 -translate-y-1/2 border-b border-l",
   };
 
   return (

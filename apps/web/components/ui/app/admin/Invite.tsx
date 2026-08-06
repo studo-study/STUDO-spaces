@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useBetaInvite } from "@/hooks/app/admin/useBetaInvite";
 import BaseButton from "../../design_system/button/BaseButton";
 import { IoSend } from "react-icons/io5";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const Invite = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +12,20 @@ const Invite = () => {
     useBetaInvite();
 
   const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
+  useCourseNav([
+    {
+      title: "admin",
+      href: `/admin`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "invite",
+      href: `/admin/invite`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
   const handleSend = () => {
     if (!isValid || isPending) return;
     mutate(

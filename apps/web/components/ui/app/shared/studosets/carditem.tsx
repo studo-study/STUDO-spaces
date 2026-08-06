@@ -10,7 +10,7 @@ import SafeKaTeX from "@/components/ui/design_system/input/SafeKaTeX";
 import { codeToHtml } from "shiki";
 import { useTranslations } from "next-intl";
 import { BookOpen, Flag } from "lucide-react";
-import { useSideMenu } from "@/store/coursecontextmenu/CourseStore";
+import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { useUpdateSession } from "@/hooks/app/session/useUpdateSession";
 import classNames from "@/utils/classnames";

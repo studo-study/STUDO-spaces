@@ -1,0 +1,252 @@
+"use client";
+import { Document, Page, pdfjs } from "react-pdf";
+import "react-pdf/dist/Page/TextLayer.css";
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import { FullCourseDocument } from "@studo/types";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { LoaderCircle, FileWarning } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { usePdfReader } from "@/store/course_context_menu/PdfStore";
+
+// worker self-gehost in /public (Turbopack kan de bare specifier in new URL()
+// niet resolven; bestand komt uit pdfjs-dist/build, versie 5.4.296).
+pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+
+// ~A4 op 96dpi (210mm ≈ 794px); lees-breedte, niet uitgerekt
+const MAX_WIDTH = 794;
+const A4_RATIO = 1 / 1.4142; // width / height (210 × 297 mm)
+// headroom zodat de canvas scherp blijft tot ~dit zoom-niveau
+const ZOOM_MAX_QUALITY = 2;
+
+interface PdfReaderProps {
+  file: FullCourseDocument;
+}
+
+const PdfReader: React.FC<PdfReaderProps> = ({ file }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("flow.course");
+
+  // reader-state komt uit de store; bouw je eigen controls erbovenop.
+  const numPages = usePdfReader((s) => s.numPages);
+  const zoom = usePdfReader((s) => s.zoom);
+  const currentPage = usePdfReader((s) => s.currentPage);
+  const setNumPages = usePdfReader((s) => s.setNumPages);
+  const setCurrentPage = usePdfReader((s) => s.setCurrentPage);
+  const setZoom = usePdfReader((s) => s.setZoom);
+  const setDoc = usePdfReader((s) => s.setDoc);
+  const setDocLoaded = usePdfReader((s) => s.setDocLoaded);
+  const reset = usePdfReader((s) => s.reset);
+
+  const [containerWidth, setContainerWidth] = useState(0);
+  // base-breedte waarop pdf.js de canvas rastert. Gedebounced zodat resizen
+  // niet elk frame re-rastert (= wit knipperen). Zoom gaat via CSS (zie onder).
+  const [rasterWidth, setRasterWidth] = useState(0);
+  useEffect(() => {
+    if (containerWidth === 0) return;
+    // eerste meting meteen; daarna debounce tijdens resizen
+    const delay = rasterWidth === 0 ? 0 : 150;
+    const id = setTimeout(() => setRasterWidth(containerWidth), delay);
+    return () => clearTimeout(id);
+  }, [containerWidth, rasterWidth]);
+
+  // pixeldichtheid waarop pdf.js rastert. Hoger = scherper bij inzoomen (CSS
+  // schaalt dan een al fijne canvas op). Cap tegen geheugen/perf. Lazy init met
+  // SSR-guard; canvas rendert toch enkel client-side.
+  const [dpr] = useState(() =>
+    typeof window === "undefined"
+      ? 2
+      : Math.min((window.devicePixelRatio || 1) * ZOOM_MAX_QUALITY, 3),
+  );
+
+  // store vullen met dit document; opruimen bij verlaten
+  useEffect(() => {
+    setDoc({ doc_id: file.id, fileName: file.title, r2Key: file.storageKey });
+    setNumPages(file.pageCount ?? 0);
+    return () => reset();
+  }, [
+    file.id,
+    file.title,
+    file.storageKey,
+    file.pageCount,
+    setDoc,
+    setNumPages,
+    reset,
+  ]);
+
+  // spiegel van zoom zodat de gesture-listeners de actuele waarde lezen
+  // zonder her-attachen (anders breekt de pinch mid-gesture).
+  const zoomRef = useRef(zoom);
+  useEffect(() => {
+    zoomRef.current = zoom;
+  }, [zoom]);
+
+  // container-breedte volgen zodat paginas responsive schalen.
+  // clientWidth i.p.v. contentRect.width → scrollbar wordt afgetrokken,
+  // anders zijn de paginas net te breed en clippen ze horizontaal.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const measure = () => setContainerWidth(el.clientWidth);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // pinch-zoom: trackpad (wheel + ctrlKey) en touch (twee vingers).
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey) return; // trackpad-pinch komt binnen als ctrl+wheel
+      e.preventDefault();
+      setZoom(zoomRef.current - e.deltaY * 0.01);
+    };
+
+    let startDist = 0;
+    let startZoom = 1;
+    const dist = (touches: TouchList) =>
+      Math.hypot(
+        touches[0].clientX - touches[1].clientX,
+        touches[0].clientY - touches[1].clientY,
+      );
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 2) return;
+      startDist = dist(e.touches);
+      startZoom = zoomRef.current;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 2 || startDist === 0) return;
+      e.preventDefault();
+      setZoom(startZoom * (dist(e.touches) / startDist));
+    };
+    const onTouchEnd = () => {
+      startDist = 0;
+    };
+
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("touchstart", onTouchStart, { passive: false });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd);
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [setZoom]);
+
+  // page-nodes bijhouden zodat we er programmatisch naartoe kunnen scrollen.
+  const pageEls = useRef(new Map<number, HTMLDivElement>());
+  // laatste pagina die de IntersectionObserver zag → onderscheidt "scroll
+  // veranderde currentPage" van "iemand zette currentPage" (voorkomt loop).
+  const ioPageRef = useRef(1);
+
+  // welke pagina staat in beeld → store.currentPage
+  const registerPage = useCallback(
+    (node: HTMLDivElement | null, pageNumber: number) => {
+      if (!node) {
+        pageEls.current.delete(pageNumber);
+        return;
+      }
+      pageEls.current.set(pageNumber, node);
+      // detectie via een dunne band in het verticale midden i.p.v. % zichtbaar:
+      // een A4 is vaak hoger dan het scherm, dus 50%-zichtbaar wordt nooit
+      // gehaald → teller bleef hangen. De band pakt de pagina die 't midden
+      // kruist, ongeacht paginagrootte.
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            ioPageRef.current = pageNumber;
+            setCurrentPage(pageNumber);
+          }
+        },
+        { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+      );
+      io.observe(node);
+      return () => {
+        io.disconnect();
+        pageEls.current.delete(pageNumber);
+      };
+    },
+    [setCurrentPage],
+  );
+
+  // externe currentPage-wijziging (bv. pager-knop) → scroll ernaartoe.
+  // Slaat over als de wijziging van de scroll zelf kwam.
+  useEffect(() => {
+    if (currentPage === ioPageRef.current) return;
+    pageEls.current
+      .get(currentPage)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [currentPage]);
+
+  // base-breedte; zoom is puur CSS (geen re-render), scherpte komt van dpr.
+  const pageWidth = Math.min(rasterWidth - 60, MAX_WIDTH);
+
+  return (
+    <div
+      ref={containerRef}
+      style={{ touchAction: "pan-x pan-y" }}
+      className="relative w-full h-full z-0 min-h-0 flex-1 overflow-auto flex flex-col items-center scroll-hidden gap-6 py-8 bg-studogrey/5 dark:bg-bg-dark"
+    >
+      <Document
+        file={file.url}
+        onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+        loading={
+          <div className="flex min-h-0 flex-1 items-center justify-center h-full w-full text-studodarkblue/50 dark:text-white/50">
+            <LoaderCircle size={18} className="animate-spin" />
+          </div>
+        }
+        error={
+          <div className="flex flex-col items-center justify-center w-full text-studodarkblue/50 dark:text-white/50">
+            <div className={"flex flex-col items-center"}>
+              <FileWarning size={22} />
+              <span className="text-sm">{t("doc_error")}</span>
+            </div>
+          </div>
+        }
+        className="flex flex-col items-center gap-6"
+      >
+        {/* live zoom via CSS `zoom` (schaalt layout mee → scroll klopt). De
+            canvas wordt op hogere dpr gerasterd, dus opschalen blijft scherp. */}
+        <div style={{ zoom }} className="flex flex-col items-center gap-6">
+          {Array.from({ length: numPages }, (_, i) => (
+            <div
+              key={i}
+              ref={(node) => void registerPage(node, i + 1)}
+              className="overflow-hidden shadow-lg rounded-xl border border-studoborder/30"
+            >
+              <Page
+                pageNumber={i + 1}
+                width={pageWidth > 0 ? pageWidth : undefined}
+                devicePixelRatio={dpr}
+                renderTextLayer
+                renderAnnotationLayer={false}
+                // splash pas weg als pagina 1 echt geschilderd is (canvas
+                // klaar), niet al bij document-parse → geen flash
+                onRenderSuccess={i === 0 ? () => setDocLoaded(true) : undefined}
+                loading={
+                  <div
+                    style={{ width: pageWidth, aspectRatio: A4_RATIO }}
+                    className="flex items-center justify-center bg-studogrey/10"
+                  >
+                    <LoaderCircle
+                      size={16}
+                      className="animate-spin text-studodarkblue/40 dark:text-white/40"
+                    />
+                  </div>
+                }
+              />
+            </div>
+          ))}
+        </div>
+      </Document>
+    </div>
+  );
+};
+
+PdfReader.displayName = "PdfReader";
+export default PdfReader;

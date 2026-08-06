@@ -2,11 +2,27 @@
 import { useAdminUser } from "@/hooks/app/admin/useAdminUser";
 import { useState } from "react";
 import UserCard from "@/components/ui/app/admin/UserCard";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const UserSearch = () => {
   const [credential, setCredential] = useState("");
   const [search, setSearch] = useState("");
   const userQuery = useAdminUser(search);
+  useCourseNav([
+    {
+      title: "admin",
+      href: `/admin`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "users",
+      href: `/admin/users`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
+
   return (
     <div className={"w-full h-full flex flex-1 flex-col gap-5"}>
       <div

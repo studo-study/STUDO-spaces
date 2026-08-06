@@ -19,6 +19,7 @@ import { SuggestionImage } from "@studo/types";
 import InputSelect from "@/components/ui/design_system/select/InputSelect";
 import ComboBox from "@/components/ui/design_system/select/ComboBox";
 import CreateCourse from "@/components/ui/app/private/create-studoset/CreateCourse";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const DRAFT_KEY = "create-studoset-draft";
 
@@ -50,6 +51,21 @@ export default function CreateStudosetForm() {
     { code: "de", name: t("german") },
     { code: "es", name: t("spanish") },
   ];
+
+  useCourseNav([
+    {
+      title: "home",
+      href: `/home`,
+      isLast: false,
+      translate: true,
+    },
+    {
+      title: "create_studoset",
+      href: `/create-studost`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
 
   const [showImporter, setShowImporter] = useState(false);
   const router = useRouter();

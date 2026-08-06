@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import {
   pomodoroStore,
   POMODORO_DURATION,
-} from "@/store/coursecontextmenu/PomodoroStore";
+} from "@/store/course_context_menu/PomodoroStore";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 
 interface ClockProps {

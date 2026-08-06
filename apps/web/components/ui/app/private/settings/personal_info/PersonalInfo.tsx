@@ -2,12 +2,22 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 export default function PersonalInfo() {
   const t = useTranslations("settings");
   const [editName, setEditName] = useState<boolean>(false);
   const [editMail, setEditMail] = useState<boolean>(false);
   const [editRole, setEditRole] = useState<boolean>(false);
+
+  useCourseNav([
+    {
+      title: "settings",
+      href: "/settings",
+      isLast: true,
+      translate: true,
+    },
+  ]);
 
   const toggleEditName = () => {
     setEditName(!editName);

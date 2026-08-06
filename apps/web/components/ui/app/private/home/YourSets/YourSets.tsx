@@ -17,13 +17,13 @@ const YourSets = () => {
   if (items.length === 0) return null;
 
   return (
-    <AnimateOnMount delay={100}>
+    <AnimateOnMount delay={200}>
       <section className="flex flex-col gap-5 overflow-visible">
         <SectionHeader
           sectionIcon={<BsCollection />}
           title={t("set_overview_title")}
           linkText={t("all_sets")}
-          href={"/your-files/sets"}
+          href={"/library/sets"}
         />
         <Container>
           <div className={"w-full grid grid-cols-2 gap-5"}>
