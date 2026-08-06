@@ -21,7 +21,7 @@ function ColumnWrapper({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full h-full rounded-4xl dark:bg-studogrey/10 bg-studogrey border border-studoborder/30 p-7 flex flex-col gap-1">
+    <div className="min-w-0 min-h-0 rounded-4xl dark:bg-studogrey/10 bg-studogrey border border-studoborder/30 p-7 flex flex-col gap-1">
       <span className="w-full font-bold dark:text-white/50 text-sm text-studodarkblue/50 items-baseline flex gap-2 flex-row">
         {title}
       </span>
@@ -51,11 +51,13 @@ export default function Overview() {
   }
 
   return (
-    <div className="w-full h-full grid grid-rows-1 grid-cols-3 gap-5 scroll-hidden">
+    <div className="min-h-0 flex-1 w-full grid grid-rows-1 grid-cols-3 gap-5 scroll-hidden">
       {/* Popular sets */}
       <ColumnWrapper title={t("most_pp_set")}>
         {data.popularSets.length === 0 ? (
-          <p className="text-sm opacity-40">Geen data</p>
+          <p className="text-sm opacity-40 min-w-0 min-h-0 flex-1 flex items-center justify-center dark:text-white">
+            Geen data
+          </p>
         ) : (
           data.popularSets.map((set) => (
             <div
@@ -85,13 +87,15 @@ export default function Overview() {
       {/* Recent activity */}
       <ColumnWrapper title={t("activity")}>
         {data.recentActivity.length === 0 ? (
-          <p className="text-sm opacity-40">Geen activiteit</p>
+          <p className="text-sm opacity-40 min-w-0 min-h-0 flex-1 flex items-center justify-center dark:text-white">
+            Geen activiteit
+          </p>
         ) : (
           data.recentActivity.map((act) => (
             <Link
               key={act.id}
               href={`/apps/web/components/ui/app/app/admin/users/${act.userId}`}
-              className="w-full flex items-center gap-3 rounded-2xl border border-studoborder/20 px-4 py-3 hover:border-studoborder transition-colors"
+              className="w-full flex items-center gap-3 rounded-full bg-studogrey/20 dark:text-white text-studodarkblue border border-studoborder/20 px-4 py-3 hover:border-studoborder transition-colors"
             >
               <Avatar displayName={act.displayName} id={act.userId} size={32} />
               <div className="min-w-0 flex-1">
@@ -114,7 +118,7 @@ export default function Overview() {
           <Link
             key={user.id}
             href={`/apps/web/components/ui/app/app/admin/users/${user.id}`}
-            className="w-full flex items-center gap-3 rounded-2xl border border-studoborder/20 px-4 py-3 hover:border-studoborder transition-colors"
+            className="w-full flex items-center gap-3 rounded-full border border-studoborder/30 bg-studogrey/20 dark:text-white text-studodarkblue px-4 py-3 hover:border-studoborder transition-colors"
           >
             <Avatar displayName={user.displayName} id={user.id} size={32} />
             <div className="min-w-0 flex-1">

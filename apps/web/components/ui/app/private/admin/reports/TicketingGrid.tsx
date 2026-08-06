@@ -100,7 +100,7 @@ export default function TicketingGrid() {
   return (
     <div
       className={
-        "w-full h-full flex flex-col gap-5 dark:text-white text-studodarkblue"
+        "min-w-0 min-h-0 flex-1 flex flex-col gap-5 dark:text-white text-studodarkblue"
       }
     >
       <div

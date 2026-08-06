@@ -64,7 +64,7 @@ export default function ReportColumn({
   }, [status, onMove]);
 
   return (
-    <div className="w-full max-h-165 min-h-165 flex flex-col gap-5 border border-studoborder/30 bg-studogrey/10 rounded-3xl p-5">
+    <div className="w-full min-w-0 min-h-0 flex-1 flex flex-col gap-5 border border-studoborder/30 bg-studogrey/10 rounded-3xl p-5">
       <GridHeader
         title={title}
         icon={icon}
