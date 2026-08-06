@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { getSvenWelcomeMsg } from "@/components/ui/app/private/course_context_menu/chat/GetSvenWelcomeMsg";
-import { Flower } from "lucide-react";
 import SvenIcon from "@/components/ui/overige/icons/SvenLogo";
 
 const ChatCanvas = () => {

@@ -4,7 +4,6 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import {
   BookSearch,
   Clock,
-  Flower,
   LayoutGrid,
   Settings,
   SlidersHorizontal,
