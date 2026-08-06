@@ -31,6 +31,12 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
 
   useCourseNav([
     {
+      title: "home",
+      href: `/home`,
+      isLast: false,
+      translate: true,
+    },
+    {
       title: course?.title ?? "",
       href: `/course/${courseId}/overview`,
       isLast: false,

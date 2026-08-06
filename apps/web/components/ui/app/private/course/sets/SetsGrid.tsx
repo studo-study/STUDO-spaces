@@ -18,6 +18,12 @@ export default function CourseSetsGrid() {
 
   useCourseNav([
     {
+      title: "home",
+      href: `/home`,
+      isLast: false,
+      translate: true,
+    },
+    {
       title: course?.title ?? "",
       href: `/course/${id}/overview`,
       isLast: false,

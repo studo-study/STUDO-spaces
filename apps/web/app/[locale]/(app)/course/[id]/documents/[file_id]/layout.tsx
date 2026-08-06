@@ -31,6 +31,12 @@ export default function CourseDetailPage({
   const setTitle = useCourseNavStore((state) => state.setDocument);
   useCourseNav([
     {
+      title: "home",
+      href: `/home`,
+      isLast: false,
+      translate: true,
+    },
+    {
       title: course?.title ?? "",
       href: `/course/${courseId}/overview`,
       isLast: false,

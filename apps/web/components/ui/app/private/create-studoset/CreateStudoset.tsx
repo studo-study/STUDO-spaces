@@ -54,6 +54,12 @@ export default function CreateStudosetForm() {
 
   useCourseNav([
     {
+      title: "home",
+      href: `/home`,
+      isLast: false,
+      translate: true,
+    },
+    {
       title: "create_studoset",
       href: `/create-studost`,
       isLast: true,
