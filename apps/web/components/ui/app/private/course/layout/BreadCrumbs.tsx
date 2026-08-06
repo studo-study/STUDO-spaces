@@ -85,12 +85,13 @@ const BreadCrumbs = () => {
     const derived: Crumb[] = [];
 
     if (SET_ROOTS.has(segments[0]) && segments[1]) {
-      // set/mode-pagina → start vanaf de set-naam (geen Home)
+      // set/mode-pagina → Home, dan de set-naam, dan eventueel de mode
       const root = segments[0];
       const id = segments[1];
       const title =
         queryClient.getQueryData<{ title?: string }>(["studosets", id])
           ?.title ?? labelFor("studoset");
+      derived.push({ label: labelFor("home"), href: "/home", isLast: false });
       derived.push({ label: title, href: `/studoset/${id}`, isLast: false });
       // modes (learn/flashcards/speedy) krijgen een tweede crumb; de
       // overview-roots (studoset/visualset) blijven één crumb breed
