@@ -1,7 +1,19 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  OnModuleInit,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
+
+// veilige narrowing van een unknown catch-error
+const errMessage = (e: unknown): string =>
+  e instanceof Error ? e.message : String(e);
+const errStack = (e: unknown): string | undefined =>
+  e instanceof Error ? e.stack : undefined;
 
 @Injectable()
 export class ScalewayStorageService implements OnModuleInit {
@@ -68,12 +80,13 @@ export class ScalewayStorageService implements OnModuleInit {
       this.logger.log(`Image uploaded successfully: ${publicUrl}`);
 
       return publicUrl;
-    } catch (error) {
+    } catch (error: unknown) {
+      // volledige detail server-side loggen, generieke boodschap naar de client
       this.logger.error(
-        `Failed to upload image: ${error.message}`,
-        error.stack,
+        `Failed to upload image (${fileName}): ${errMessage(error)}`,
+        errStack(error),
       );
-      throw new Error(`Image upload failed: ${error.message}`);
+      throw new InternalServerErrorException('Image upload failed');
     }
   }
 
@@ -104,7 +117,7 @@ export class ScalewayStorageService implements OnModuleInit {
       const match = imageUrl.match(urlPattern);
 
       if (!match || !match[1]) {
-        throw new Error('Invalid image URL format');
+        throw new BadRequestException('Invalid image URL format');
       }
 
       const key = match[1];
@@ -117,9 +130,14 @@ export class ScalewayStorageService implements OnModuleInit {
 
       await this.s3Client.send(command);
       this.logger.log(`Image deleted successfully: ${key}`);
-    } catch (error) {
-      this.logger.error(`Failed to delete image: ${error.message}`);
-      throw new Error(`Image deletion failed: ${error.message}`);
+    } catch (error: unknown) {
+      // BadRequest (ongeldige URL) niet omzetten naar een 500
+      if (error instanceof BadRequestException) throw error;
+      this.logger.error(
+        `Failed to delete image: ${errMessage(error)}`,
+        errStack(error),
+      );
+      throw new InternalServerErrorException('Image deletion failed');
     }
   }
 }
