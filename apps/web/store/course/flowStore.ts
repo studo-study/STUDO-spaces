@@ -17,11 +17,19 @@ export interface IFlowBoardStore {
   courseId: string;
   title: string;
   description: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | null;
+  updatedAt: Date | null;
   table: IFlowTable | null;
 }
 
 // Breadcrumb-navigatie voor de course-layout. LayoutHeader/BreadCrumbs leest
 // `nav`; elke course-pagina zet z'n crumbs via de useCourseNav-hook.
-export const useCourseNavStore = create<IFlowBoardStore>((set) => ({}));
+export const useCourseNavStore = create<IFlowBoardStore>((set) => ({
+  id: "",
+  courseId: "",
+  title: "",
+  description: "",
+  createdAt: null,
+  updatedAt: null,
+  table: null,
+}));

@@ -25,21 +25,18 @@ const FlowHeading: React.FC<FlowHeadingProps> = (props) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <BaseButton
-          variant={"hover"}
-          className={"w-fit"}
-          label={"add table"}
-          size={"sm"}
-          iconLeft={<Grid2x2Plus size={15} />}
-        />
       </div>
 
-      <input
+      <textarea
         placeholder={t("description")}
-        className={"font-medium outline-none"}
-        type="text"
+        className="font-medium outline-none resize-none overflow-hidden"
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={(e) => {
+          setDescription(e.target.value);
+
+          e.target.style.height = "auto";
+          e.target.style.height = `${e.target.scrollHeight}px`;
+        }}
       />
     </div>
   );

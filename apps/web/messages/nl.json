@@ -1179,7 +1179,7 @@
     "courses": "Vakken",
     "your_sets": {
       "title": "Jouw sets",
-      "course_title": "Vak sets",
+      "course_title": "Sets binnen vak",
       "cards": "kaarten",
       "pins": "pins",
       "studied": "gestudeerd",
@@ -1516,9 +1516,16 @@
     "course_1": "vak",
     "course": {
       "option": "Opties",
+      "row": {
+        "done": "afgewerkt",
+        "doing": "bezig",
+        "not_started": "niet gestart",
+        "due_date": "deadline",
+        "priority": "prioriteit"
+      },
       "add_title": "Titel toevoegen",
-      "create_title": "Nieuwe cursus",
-      "create_course": "Cursus aanmaken",
+      "create_title": "Nieuw vak",
+      "create_course": "Vak aanmaken",
       "create_btn": "Aanmaken",
       "description": "Beschrijving",
       "add_metadata": "Metadata toevoegen",
@@ -1550,16 +1557,26 @@
       "processing": "verwerken",
       "failed": "fout",
       "overview": "Overzicht",
-      "flow": "Flow board",
+      "flow": "Flow",
       "documents": "Documenten",
       "sets": "Sets",
-      "sven": "Sven",
       "stop_processing": "Stop verwerken",
       "stop_upload": "Stop uploaden",
       "select_course": "Kies een vak",
+      "sven": "Sven",
       "table": {
-        "title": "Voeg een titel toe...",
-        "description": "Voeg een beschrijving toe..."
+        "title": "Voeg title toe...",
+        "description": "Voeg beschrijving toe...",
+        "header": {
+          "title": "titel",
+          "status": "status",
+          "createdAt": "gecreëerd",
+          "description": "beschrijving",
+          "priority": "prioriteit",
+          "dueDate": "deadline",
+          "type": "type",
+          "resource": "bijlage"
+        }
       }
     }
   },
@@ -1742,7 +1759,9 @@
     "type_description": "Kies hoe op welke manier je wilt antwoorden",
     "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt",
     "flagged_mode": "Gemarkeerde kaarten",
-    "flagged_description": "Leer alleen je gemarkeerde kaarten"
+    "flagged_description": "Leer alleen je gemarkeerde kaarten",
+    "strictness_level": "Striktheid",
+    "strictness_level_description": "Stel in hoe streng verbeterd wordt"
   },
   "learn": {
     "enter_continue": "*druk op enter om verder te gaan",
