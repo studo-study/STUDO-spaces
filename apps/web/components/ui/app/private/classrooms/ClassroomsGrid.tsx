@@ -1,20 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useRef, useState } from "react";
+import { FullClassroom } from "@/types/types";
 import { useTranslations } from "next-intl";
 import ClassSearch from "@/components/ui/app/private/classrooms/ClassroomSearchbar";
 import ClassroomOverviewItem from "@/components/ui/app/private/classrooms/ClassroomOverviewItem";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useClassrooms } from "@/hooks/app/classrooms/useClassrooms";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import Select from "@/components/ui/design_system/select/Select";
 
 export default function ClassroomGrid() {
   const { classrooms, isLoading } = useClassrooms();
   const User = useUser().user;
-  const [sortMode, setSortMode] = useState<string>("all");
-  const [query, setQuery] = useState<string>("");
-  const t = useTranslations("classrooms");
+  const selectionRef = useRef<HTMLSelectElement>(null);
+  const t = useTranslations("groups");
+  const [filteredClasses, setFilteredClasses] =
+    useState<FullClassroom[]>(classrooms);
 
   useCourseNav([
     {
@@ -24,35 +25,34 @@ export default function ClassroomGrid() {
       translate: true,
     },
   ]);
-
-  // afgeleide lijst: eerst zoeken (query), dan sorteren (sortMode)
-  const filteredClasses = useMemo(() => {
-    let list = classrooms ?? [];
-
-    if (query) {
-      list = list.filter(
-        (item) =>
-          item.name.toLowerCase().includes(query) ||
-          item.school.toLowerCase().includes(query) ||
-          item.ownerId.toLowerCase().includes(query),
-      );
-    }
-
-    if (sortMode === "alphabetical") {
-      list = list.toSorted((a, b) => a.name.localeCompare(b.name));
-    } else if (sortMode === "last" && User) {
-      list = list.toSorted((a, b) => {
-        const timeA = a.users.find((u) => u.userId === User.id)?.joinedAt;
-        const timeB = b.users.find((u) => u.userId === User.id)?.joinedAt;
-        return (
-          (timeB ? new Date(timeB).getTime() : 0) -
-          (timeA ? new Date(timeA).getTime() : 0)
+  const filterClasses = () => {
+    if (selectionRef.current && User) {
+      const value = selectionRef.current.value;
+      if (value === "all") setFilteredClasses(classrooms);
+      if (value === "alphabetical")
+        setFilteredClasses(
+          classrooms.toSorted((a, b) => a.name.localeCompare(b.name)),
         );
-      });
-    }
+      if (value === "last") {
+        setFilteredClasses(
+          classrooms.toSorted((a, b) => {
+            const userA = a.users.find((u) => u.userId === User.id);
+            const userB = b.users.find((u) => u.userId === User.id);
 
-    return list;
-  }, [classrooms, query, sortMode, User]);
+            const timeA = userA?.joinedAt
+              ? new Date(userA.joinedAt).getTime()
+              : 0;
+
+            const timeB = userB?.joinedAt
+              ? new Date(userB.joinedAt).getTime()
+              : 0;
+
+            return timeB - timeA;
+          }),
+        );
+      }
+    }
+  };
 
   return (
     <div className="w-full h-full min-h-0 min-w-0 flex-1 flex flex-col gap-5 scroll-hidden overflow-visible">
@@ -62,30 +62,33 @@ export default function ClassroomGrid() {
         }
       >
         <div className={"w-fit flex flex-row gap-5 items-center"}>
-          <Select
-            placeholder="sort sets"
-            align={"start"}
-            size={"sm"}
-            value={sortMode}
-            onChange={(input) => setSortMode(input as string)}
-            options={[
-              {
-                label: t("all"),
-                value: "all",
-              },
-              {
-                value: "last",
-                label: t("last"),
-              },
-              {
-                value: "alphabetical",
-                label: t("alphabetical"),
-              },
-            ]}
-          />
+          <select
+            name="sort sets"
+            onChange={filterClasses}
+            ref={selectionRef}
+            defaultValue="all"
+            className="
+                                px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
+                                border border-studogrey/30
+                                bg-white dark:bg-gray-700
+                                text-studodarkblue dark:text-white
+                                font-medium text-xs sm:text-sm
+                                shadow-sm hover:shadow-md
+                                transition-all duration-200
+                                cursor-pointer w-45 text-center
+                                focus:outline-none focus:ring-2 focus:ring-studogrey/50
+                                appearance-none"
+          >
+            <option value="all">{t("all")}</option>
+            <option value="last">{t("last")}</option>
+            <option value="alphabetical">{t("alphabetical")}</option>
+          </select>
         </div>
         <div className={"w-fit flex flex-row gap-5 items-center"}>
-          <ClassSearch onQueryChange={setQuery} />
+          <ClassSearch
+            classes={classrooms}
+            setFilteredClasses={setFilteredClasses}
+          />
         </div>
       </div>
       <div
