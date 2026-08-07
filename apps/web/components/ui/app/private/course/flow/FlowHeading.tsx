@@ -1,8 +1,6 @@
 "use client";
 import { SetStateAction } from "react";
 import { useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { Grid2x2Plus } from "lucide-react";
 
 interface FlowHeadingProps {
   title: string;

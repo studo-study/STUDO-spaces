@@ -22,10 +22,9 @@ export interface IFlowBoardStore {
   table: IFlowTable | null;
 }
 
-// Breadcrumb-navigatie voor de course-layout. LayoutHeader/BreadCrumbs leest
-// `nav`; elke course-pagina zet z'n crumbs via de useCourseNav-hook.
 export const useCourseNavStore = create<IFlowBoardStore>((set) => ({
   id: "",
+  setId: (input: string) => set({ id: input }),
   courseId: "",
   title: "",
   description: "",
