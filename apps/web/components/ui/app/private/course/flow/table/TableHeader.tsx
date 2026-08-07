@@ -9,12 +9,24 @@ import type { CSSProperties } from "react";
 
 interface TableHeaderProps {
   offset: number;
+  gap: number;
 }
 
-const TableHeader = ({ offset }: TableHeaderProps) => {
+// controls-kolom zit 80px links van de content-origin (-mx-20), de eerste
+// gepinde datakolom valt op de origin.
+const CONTROLS_CELL_X = -80;
+const PINNED_COL_X = 0;
+
+const TableHeader = ({ offset, gap }: TableHeaderProps) => {
   const t = useTranslations("flow.course.table.header");
-  const pinStyle = (pinned: boolean): CSSProperties =>
-    pinned ? { transform: `translateX(${-offset}px)`, zIndex: 10 } : {};
+  // gepinde cel pant mee tot de pagina-rand en blijft daar plakken.
+  const pinStyle = (pinned: boolean, cellX: number): CSSProperties =>
+    pinned
+      ? {
+          transform: `translateX(${Math.max(0, -gap - cellX - offset)}px)`,
+          zIndex: 10,
+        }
+      : {};
   const pinClass = (pinned: boolean) =>
     pinned ? "relative bg-white dark:bg-slate-800" : "";
 
@@ -28,7 +40,7 @@ const TableHeader = ({ offset }: TableHeaderProps) => {
       className={"w-full max-h-10 -mx-20 text-studogrey"}
     >
       <div
-        style={pinStyle(true)}
+        style={pinStyle(true, CONTROLS_CELL_X)}
         className={classNames("h-full w-full", pinClass(true))}
       >
         <div
@@ -54,7 +66,7 @@ const TableHeader = ({ offset }: TableHeaderProps) => {
               width: col.width,
               minWidth: col.minWidth,
               maxWidth: col.maxWidth,
-              ...pinStyle(col.isPinned),
+              ...pinStyle(col.isPinned, PINNED_COL_X),
             }}
           >
             <div className={"px-3 gap-2 min-h-0 flex-1 flex items-center"}>

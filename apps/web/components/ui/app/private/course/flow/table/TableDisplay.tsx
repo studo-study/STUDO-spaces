@@ -26,6 +26,25 @@ const TableDisplay = () => {
   const content = useRef<HTMLDivElement>(null);
   const drag = useRef<Drag | null>(null);
 
+  // afstand van de viewport-linkerrand tot de pagina-rand ([data-flow-boundary]).
+  // gepinde kolommen pannen mee tot ze die rand raken en blijven daar plakken.
+  const [gap, setGap] = useState(0);
+  useEffect(() => {
+    const measure = () => {
+      const vp = viewport.current;
+      const boundary = vp?.closest<HTMLElement>("[data-flow-boundary]");
+      if (!vp || !boundary) return;
+      const padLeft = parseFloat(getComputedStyle(boundary).paddingLeft) || 0;
+      setGap(
+        vp.getBoundingClientRect().left -
+          (boundary.getBoundingClientRect().left + padLeft),
+      );
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
   const clamp = useCallback((x: number) => {
     const max =
       (content.current?.scrollWidth ?? 0) -
@@ -101,10 +120,10 @@ const TableDisplay = () => {
           style={{ transform: `translateX(${offset}px)` }}
         >
           <div className={"min-w-0 h-fit flex flex-col"}>
-            <TableHeader offset={offset} />
-            <TableRow offset={offset} />
-            <TableRow offset={offset} />
-            <TableRow offset={offset} />
+            <TableHeader offset={offset} gap={gap} />
+            <TableRow offset={offset} gap={gap} />
+            <TableRow offset={offset} gap={gap} />
+            <TableRow offset={offset} gap={gap} />
           </div>
         </div>
       </div>

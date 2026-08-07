@@ -34,15 +34,22 @@ export default function CourseFlowPage() {
     },
   ]);
   return (
-    <div className="relative flex scroll-hidden min-h-0 flex-1 w-full flex-col gap-5 items-center overflow-y-auto overflow-x-clip p-5">
-      <div className="flex h-fit w-200 max-w-full flex-col gap-5 pb-20">
-        <FlowHeading
-          title={title}
-          setTitle={setTitle}
-          description={description}
-          setDescription={setDescription}
-        />
-        <FlowTable />
+    <div
+      data-flow-boundary
+      className="relative flex scroll-hidden min-h-0 flex-1 w-full flex-col gap-5 items-center overflow-y-auto overflow-x-clip p-5"
+    >
+      <div
+        className={"overflow-x-hidden w-full h-full flex-col flex items-center"}
+      >
+        <div className="flex h-fit w-200 max-w-full flex-col gap-5 pb-20">
+          <FlowHeading
+            title={title}
+            setTitle={setTitle}
+            description={description}
+            setDescription={setDescription}
+          />
+          <FlowTable />
+        </div>
       </div>
     </div>
   );

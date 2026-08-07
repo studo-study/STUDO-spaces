@@ -8,13 +8,24 @@ import type { CSSProperties } from "react";
 
 interface TableRowProps {
   offset: number;
+  gap: number;
 }
 
-const TableRow = ({ offset }: TableRowProps) => {
-  // gepinde cel: counter-transform tegen de pan zodat hij vast blijft staan,
-  // + eigen bg/z zodat de meepannende kolommen eronder verdwijnen.
-  const pinStyle = (pinned: boolean): CSSProperties =>
-    pinned ? { transform: `translateX(${-offset}px)`, zIndex: 10 } : {};
+// de controls-kolom zit door de -mx-20 (5rem) 80px links van de content-origin,
+// de eerste gepinde datakolom valt exact op de origin.
+const CONTROLS_CELL_X = -80;
+const PINNED_COL_X = 0;
+
+const TableRow = ({ offset, gap }: TableRowProps) => {
+  // gepinde cel pant mee tot de pagina-rand en blijft daar plakken:
+  // clamp de counter-transform op de afstand tot die rand (gap).
+  const pinStyle = (pinned: boolean, cellX: number): CSSProperties =>
+    pinned
+      ? {
+          transform: `translateX(${Math.max(0, -gap - cellX - offset)}px)`,
+          zIndex: 10,
+        }
+      : {};
   const pinClass = (pinned: boolean) =>
     pinned ? "relative bg-white dark:bg-slate-800" : "";
 
@@ -28,7 +39,7 @@ const TableRow = ({ offset }: TableRowProps) => {
       }}
     >
       <div
-        style={pinStyle(true)}
+        style={pinStyle(true, CONTROLS_CELL_X)}
         className={classNames("h-full w-full", pinClass(true))}
       >
         <div
@@ -49,7 +60,7 @@ const TableRow = ({ offset }: TableRowProps) => {
               width: col.width,
               minWidth: col.minWidth,
               maxWidth: col.maxWidth,
-              ...pinStyle(col.isPinned),
+              ...pinStyle(col.isPinned, PINNED_COL_X),
             }}
             className={classNames(
               "flex flex-row group/cell h-10 w-full border-b border-studoborder/30",
