@@ -13,14 +13,14 @@ export default function ClassroomGrid() {
   const { classrooms, isLoading } = useClassrooms();
   const User = useUser().user;
   const selectionRef = useRef<HTMLSelectElement>(null);
-  const t = useTranslations("classrooms");
+  const t = useTranslations("groups");
   const [filteredClasses, setFilteredClasses] =
     useState<FullClassroom[]>(classrooms);
 
   useCourseNav([
     {
-      title: "classrooms",
-      href: `/classrooms`,
+      title: "groups",
+      href: `/groups`,
       isLast: true,
       translate: true,
     },

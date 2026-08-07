@@ -173,10 +173,10 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
         />
         <MenuRow
           icon={<GraduationCap size={20} />}
-          text={t("classrooms")}
+          text={t("groups")}
           burgerOpen={burgerOpen}
-          href="/classrooms"
-          active={isActive("/classrooms")}
+          href="/groups"
+          active={isActive("/groups")}
         />
         <MenuRow
           icon={<Search size={20} />}
@@ -211,8 +211,8 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
               icon={<ShieldCheck size={20} />}
               text={t("ad")}
               burgerOpen={burgerOpen}
-              href="/admin/stats"
-              active={isActive("/admin")}
+              href="/backoffice/stats"
+              active={isActive("/backoffice")}
             />
           )}
         </CollapsibleSection>

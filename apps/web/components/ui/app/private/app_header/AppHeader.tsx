@@ -11,13 +11,15 @@ import { StudoUser } from "@/types/types";
 import { useAppStore } from "@/store/useAppStore";
 import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection";
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
-import { ArrowRight, PanelRightOpen } from "lucide-react";
+import { ArrowRight, OctagonX, PanelRightOpen } from "lucide-react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
 import {
   SpecialeDag,
   SpecialeDagTitel,
 } from "@/components/ui/app/private/app_header/SpecialeDag";
+import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
 
 interface HeaderProps {
   burgerOpen: boolean;
@@ -46,6 +48,7 @@ export default function AppHeader({
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
   const premium = process.env.NEXT_PUBLIC_PREMIUM === "true";
+  const { impersonating, stop } = useImpersonation();
 
   return (
     <div className={"h-fit z-100 top-0 w-screen flex flex-col"}>
@@ -130,6 +133,16 @@ export default function AppHeader({
         </div>
 
         <div className={"w-full h-fit flex justify-end items-center gap-2"}>
+          {impersonating && (
+            <BaseButton
+              label={"stop impersonating"}
+              iconLeft={<OctagonX size={15} />}
+              className={"max-h-10"}
+              size={"sm"}
+              variant={"danger"}
+              onClick={() => stop()}
+            />
+          )}
           <OnlineScanner />
           <AppSearchbar
             focusSignal={Search}

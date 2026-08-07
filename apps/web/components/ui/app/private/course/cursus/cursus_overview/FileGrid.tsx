@@ -148,7 +148,7 @@ const FileGrid: React.FC = () => {
                 message={t("no_files_paragraph")}
               />
             ) : (
-              <div className={"flex flex-row gap-5  flex-wrap w-full"}>
+              <div className={"grid grid-cols-4 gap-2  flex-wrap w-full"}>
                 {filteredDocs.map((file, index) => (
                   <FileItem file={file} key={file.id + index} />
                 ))}

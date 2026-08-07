@@ -29,6 +29,8 @@ declare module "next-auth" {
     user: StudoUser;
     accessToken: string;
     error?: "AccessTokenExpired";
+    // true wanneer de huidige sessie een user impersoneert
+    impersonating?: boolean;
   }
 
   interface User extends StudoUser {
@@ -41,5 +43,9 @@ declare module "next-auth/jwt" {
     accessToken: string;
     user: StudoUser;
     error?: "AccessTokenExpired";
+    // impersonatie-state (zie auth.ts jwt-callback). `user` bewust los getypeerd
+    // (dubbele StudoUser-augmentatie botst anders) — runtime is de sessie-user.
+    impersonating?: boolean;
+    original?: { accessToken: string; user: unknown };
   }
 }

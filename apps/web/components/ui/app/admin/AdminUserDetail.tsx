@@ -18,6 +18,10 @@ import {
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import SetItem from "@/components/ui/app/private/home/YourSets/SetItem";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
+import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
+import BaseButton from "../../design_system/button/BaseButton";
+import { OctagonX, VenetianMask } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   userId: string;
@@ -76,28 +80,30 @@ function SessionRow({
 
 const AdminUserDetail = ({ userId }: Props) => {
   const { data, isLoading, isError } = useAdminUserDetail(userId);
+  const { impersonating, start, stop } = useImpersonation();
+  const Router = useRouter();
   useCourseNav([
     {
-      title: "admin",
-      href: `/admin`,
+      title: "backoffice",
+      href: `/backoffice`,
       isLast: false,
       translate: true,
     },
     {
       title: "users",
-      href: `/admin/users`,
+      href: `/backoffice/users`,
       isLast: false,
       translate: true,
     },
     {
       title: "users",
-      href: `/admin/users`,
+      href: `/backoffice/users`,
       isLast: false,
       translate: true,
     },
     {
       title: data?.displayName ?? "user",
-      href: `/admin/users/` + data?.id,
+      href: `/backoffice/users/` + data?.id,
       isLast: true,
       translate: false,
     },
@@ -120,46 +126,71 @@ const AdminUserDetail = ({ userId }: Props) => {
 
   return (
     <div className="min-h-0 min-w-0 overflow-y-scroll scroll-hidden flex w-full flex-col gap-8 pb-16">
-      <div className="flex flex-col gap-4 rounded-3xl bg-studogrey/20 border border-studoborder/30 p-6 sm:flex-row sm:items-center sm:gap-6">
-        <Avatar displayName={data.displayName} id={data.id} size={72} />
-        <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <h1 className="text-2xl font-bold">{data.displayName}</h1>
-            <span
-              className={`flex items-center rounded-full border px-2 py-0.5 text-xs ${
-                data.banned
-                  ? "border-rose-400/30 bg-rose-300/20 text-rose-500"
-                  : "border-emerald-400/30 bg-emerald-300/20 text-emerald-500"
-              }`}
-            >
-              <GoDotFill size={15} />
-              {data.banned ? "banned" : "active"}
-            </span>
-            {data.verified && (
-              <RiVerifiedBadgeFill className={"text-blue-500"} />
-            )}
-          </div>
-          <p className="text-sm opacity-50">{data.email}</p>
-          <div className="mt-1 flex flex-wrap gap-4 text-xs opacity-40">
-            <span className="flex items-center gap-1">
-              <TbHash size={12} />
-              {data.joinNumber}
-            </span>
-            <span className="flex items-center gap-1">
-              <TbCalendar size={12} />
-              {new Date(data.joinDate).toLocaleDateString("nl-BE")}
-            </span>
-            <span className="flex items-center gap-1">
-              <TbUser size={12} />
-              {data.publicRole}
-            </span>
-            {data.streakCount !== null && (
-              <span className="flex items-center gap-1 text-orange-400">
-                <TbFlameFilled size={12} />
-                {data.streakCount} dag streak
+      <div className="flex row justify-between items-start gap-4 rounded-4xl bg-studogrey/20 border border-studoborder/30 p-6">
+        <div
+          className={"flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6"}
+        >
+          <Avatar displayName={data.displayName} id={data.id} size={72} />
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="text-2xl font-bold">{data.displayName}</h1>
+              <span
+                className={`flex items-center rounded-full border px-2 py-0.5 text-xs ${
+                  data.banned
+                    ? "border-rose-400/30 bg-rose-300/20 text-rose-500"
+                    : "border-emerald-400/30 bg-emerald-300/20 text-emerald-500"
+                }`}
+              >
+                <GoDotFill size={15} />
+                {data.banned ? "banned" : "active"}
               </span>
-            )}
+              {data.verified && (
+                <RiVerifiedBadgeFill className={"text-blue-500"} />
+              )}
+            </div>
+            <p className="text-sm opacity-50">{data.email}</p>
+            <div className="mt-1 flex flex-wrap gap-4 text-xs opacity-40">
+              <span className="flex items-center gap-1">
+                <TbHash size={12} />
+                {data.joinNumber}
+              </span>
+              <span className="flex items-center gap-1">
+                <TbCalendar size={12} />
+                {new Date(data.joinDate).toLocaleDateString("nl-BE")}
+              </span>
+              <span className="flex items-center gap-1">
+                <TbUser size={12} />
+                {data.publicRole}
+              </span>
+              {data.streakCount !== null && (
+                <span className="flex items-center gap-1 text-orange-400">
+                  <TbFlameFilled size={12} />
+                  {data.streakCount} dag streak
+                </span>
+              )}
+            </div>
           </div>
+        </div>
+        <div className={"w-fit max-h-10"}>
+          <BaseButton
+            className={"max-h-10"}
+            label={impersonating ? "stop impersonating" : "impersonate"}
+            variant={impersonating ? "default" : "primary"}
+            iconLeft={
+              impersonating ? (
+                <OctagonX size={18} />
+              ) : (
+                <VenetianMask size={18} />
+              )
+            }
+            onClick={() => {
+              if (impersonating) {
+                stop();
+              } else {
+                start(data.id).then(() => Router.push("/home"));
+              }
+            }}
+          />
         </div>
       </div>
 

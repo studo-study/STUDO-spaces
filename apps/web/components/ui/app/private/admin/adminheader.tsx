@@ -60,7 +60,7 @@ export default function AdminHeader() {
         value={tab}
         onChange={(input) => {
           setTab(input);
-          Router.push("/admin/" + input);
+          Router.push("/backoffice/" + input);
         }}
       />
     </div>

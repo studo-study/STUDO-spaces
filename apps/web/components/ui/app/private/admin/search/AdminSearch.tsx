@@ -7,14 +7,14 @@ const AdminSearch = () => {
   const t = useTranslations("admin");
   useCourseNav([
     {
-      title: "admin",
-      href: `/admin`,
+      title: "backoffice",
+      href: `/backoffice`,
       isLast: false,
       translate: true,
     },
     {
       title: "search",
-      href: `/admin/search`,
+      href: `/backoffice/search`,
       isLast: true,
       translate: true,
     },

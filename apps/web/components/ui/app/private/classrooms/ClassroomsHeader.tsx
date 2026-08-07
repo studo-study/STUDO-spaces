@@ -5,7 +5,7 @@ import { useState } from "react";
 import CreateClassroom from "@/components/ui/app/private/classrooms/CreateClassroomPopup";
 
 export default function ClassroomsHeader() {
-  const t = useTranslations("classrooms");
+  const t = useTranslations("groups");
   const [classroomIsOpen, setClassroomIsOpen] = useState(false);
   const togglePopUp = () => {
     setClassroomIsOpen((prev) => !prev);

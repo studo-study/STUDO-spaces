@@ -31,6 +31,7 @@ import classNames from "@/utils/classnames";
 import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
 import SvenMessage from "@/components/ui/app/shared/studosets/SvenMessage";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
+import { CreditCard, Pencil, Zap } from "lucide-react";
 
 interface viewProps {
   id: string;
@@ -39,6 +40,29 @@ interface viewProps {
 type Tab = "all" | "flagged";
 type Filter = "learned" | "reviewed" | "not_learned" | "all";
 
+const LEARN_OPTIONS = [
+  {
+    href: "/learn/",
+    icon: Pencil,
+    color: "bg-emerald-700 text-emerald-300",
+    label: "learn",
+    desc: "learn_desc",
+  },
+  {
+    href: "/speedy/",
+    icon: Zap,
+    color: "bg-amber-500 text-amber-50",
+    label: "speedy",
+    desc: "speedy_desc",
+  },
+  {
+    href: "/flashcards/",
+    icon: CreditCard,
+    color: "bg-blue-500 text-blue-100",
+    label: "flashcards",
+    desc: "flashcards_desc",
+  },
+];
 export default function StudosetView({ id }: viewProps) {
   const t = useTranslations("studoset");
   const userId = useUser().user?.id;
@@ -249,58 +273,47 @@ export default function StudosetView({ id }: viewProps) {
         </div>
       </div>
       {showMessage && <SvenMessage />}
-      <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center pt-5 items-center">
+      <div className="w-full h-fit flex flex-col gap-5 justify-center pt-5 items-center">
         <hr className="w-full border-0.5 border-solid border-studoborder/30" />
-        <div className="w-full grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-3">
-          <LinkButton
-            href={`/learn/` + id}
-            icon={
-              <Image
-                width={20}
-                height={20}
-                src={"/icons/pencil.svg"}
-                alt=""
-                className="h-4  sm:h-5 dark:invert dark:brightness-0 shrink-0"
-              />
-            }
-            label={t("learn")}
-            type="button"
-            variant="outline_link"
-          />
-          <LinkButton
-            href={`/speedy/` + id}
-            className="w-full"
-            icon={
-              <Image
-                width={20}
-                height={20}
-                src={"/icons/clock.svg"}
-                alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
-              />
-            }
-            label={t("speedy")}
-            type="button"
-            variant="outline_link"
-          />
-          <LinkButton
-            href={`/flashcards/${id}`}
-            icon={
-              <Image
-                width={20}
-                height={20}
-                src="/icons/cards.svg"
-                alt=""
-                className="h-4 sm:h-5 dark:invert dark:brightness-0 shrink-0"
-              />
-            }
-            label={t("flashcards")}
-            type="button"
-            variant="outline_link"
-          />
+        <div className={"flex flex-col gap-2 w-full h-fit"}>
+          <div className="w-full grid gap-3 grid-cols-1 sm:grid-cols-3">
+            {LEARN_OPTIONS.map((option) => {
+              const Icon = option.icon;
+              return (
+                <Link
+                  href={option.href + id}
+                  key={option.label}
+                  className={
+                    "w-full p-2 flex transition-colors bg-studogrey/30 hover:border-studoborder duration-300 items-center justify-center flex-row gap-2 border border-studogrey/30 rounded-full"
+                  }
+                >
+                  <div
+                    className={classNames(
+                      "rounded-full shadow-lg h-12 w-12 max-w-12 max-h-12 flex justify-center items-center",
+                      option.color,
+                    )}
+                  >
+                    <Icon size={20} />
+                  </div>
+                  <div className={"flex flex-col min-w-0 flex-1"}>
+                    <span
+                      className={
+                        "dark:text-white capitalize text-lg font-bold text-studodarkblue"
+                      }
+                    >
+                      {t(option.label)}
+                    </span>
+                    <span className={"text-sm text-studogrey/75"}>
+                      {t(option.desc)}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
-        <hr className="w-full border-0.5 border-solid border-studoborder/30" />
-        <div ref={ref} className={"w-full max-h-300 min-h-130 h-165 "}>
+        <hr className="w-full mb-8  border-0.5 border-solid border-studoborder/30" />
+        <div ref={ref} className={"w-full max-h-300 p-0 min-h-130 h-190 "}>
           <FlashcardMode id={id} isHome />
         </div>
 

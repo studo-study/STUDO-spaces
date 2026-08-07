@@ -20,15 +20,15 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 const classroom: Classroom = mockFullClassrooms[0];
 
 export default function PrivateClassroomHeader() {
-  const t = useTranslations("classroom");
+  const t = useTranslations("group");
   const pathname = usePathname();
   const items = [
-    { link: `/classroom/${classroom.id}/sets`, label: "set_title" },
-    { link: `/classroom/${classroom.id}/members`, label: "users" },
+    { link: `/group/${classroom.id}/sets`, label: "set_title" },
+    { link: `/group/${classroom.id}/members`, label: "users" },
   ];
   const rest = [
     {
-      link: `/classroom/${classroom.id}/challenges`,
+      link: `/group/${classroom.id}/challenges`,
       label: "challenges_title",
     },
   ];

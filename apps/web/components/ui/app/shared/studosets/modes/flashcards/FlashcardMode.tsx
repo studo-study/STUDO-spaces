@@ -20,6 +20,7 @@ import Image from "next/image";
 import { AiOutlineRise } from "react-icons/ai";
 import { Check, Flag } from "lucide-react";
 import { SessionCard } from "@/types/types";
+import classNames from "@/utils/classnames";
 
 interface SuggestionImage {
   id: string;
@@ -254,9 +255,14 @@ function FlashcardModeInner({
 
   const Router = useRouter();
   return (
-    <div className="w-full min-h-170 h-full max-h-190 flex flex-col gap-3 sm:gap-5  px-10">
+    <div
+      className={classNames(
+        "w-full min-h-170 h-full max-h-190 flex flex-col gap-3 sm:gap-5",
+        !isHome && "px-10",
+      )}
+    >
       {/* Toolbar */}
-      <div className="w-full flex flex-row gap-2 sm:gap-5 items-center">
+      <div className="w-full flex flex-row gap-2 sm:gap-5 items-center min-h-10">
         <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-studoborder/30">
           <div
             style={{
@@ -308,7 +314,7 @@ function FlashcardModeInner({
         </BaseTooltip>
       </div>
 
-      <div className="flex-1 pb-10 min-h-0 max-h-130 lg:max-h-150">
+      <div className="flex-1 pb-10 min-h-0 h-full max-h-130 lg:max-h-170">
         {index >= shuffled.length ? (
           <FinishedScreen
             progress={toggleResetProgress}
