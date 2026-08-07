@@ -10,7 +10,6 @@ import QuickStats from "@/components/ui/app/private/home/quick_stats/QuickStats"
 import YourSets from "@/components/ui/app/private/home/YourSets/YourSets";
 import Courses from "@/components/ui/app/private/home/courses/Courses";
 import EmptyFallback from "@/components/ui/app/private/home/EmptyFallback/EmptyFallback";
-import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
 import BottomShade from "@/components/ui/app/private/home/BottomShade";
 export const metadata: Metadata = {
   title: "Home | Studo",

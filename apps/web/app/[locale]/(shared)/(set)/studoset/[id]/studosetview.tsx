@@ -9,7 +9,6 @@ import SharePopup from "@/components/ui/app/shared/studosets/sharepopup";
 import SettingsPopup from "@/components/ui/app/shared/studosets/settingspopup";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
 import { useTranslations } from "next-intl";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";

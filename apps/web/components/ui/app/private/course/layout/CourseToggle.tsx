@@ -1,6 +1,5 @@
 "use client";
 import classNames from "@/utils/classnames";
-import { HiChevronUpDown } from "react-icons/hi2";
 import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
 import { useCourses } from "@/hooks/app/courses/useCourses";
