@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 const CourseTable = () => {
-  const id = useParams()?.id ?? "";
+  const id = (useParams()?.id as string) ?? "";
   const course = useCourse(id)?.data;
 
   useCourseNav([
