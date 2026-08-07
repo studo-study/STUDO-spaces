@@ -3,7 +3,6 @@ import {
   Calendar,
   CalendarClock,
   ChartNoAxesColumnIncreasing,
-  CircleAlert,
   CircleDashed,
   Paperclip,
   TextAlignJustify,
@@ -11,25 +10,27 @@ import {
 } from "lucide-react";
 
 export const COURSE_GRID_TEMPLATE =
-  "8rem 1fr 10rem 1fr 10rem 10rem 10rem 10rem 10rem";
+  "5rem 1fr 8rem 10rem 1fr 10rem 10rem 10rem 10rem";
 export const TableColumns = [
-  {
-    colId: "statusColumn",
-    label: "status",
-    icon: CircleDashed,
-    rowIndex: 1,
-    width: "8rem",
-    maxWidth: "15rem",
-    minWidth: "8rem",
-  },
   {
     colId: "titleColumn",
     label: "title",
     icon: TextAlignJustify,
-    rowIndex: 2,
+    rowIndex: 1,
     width: "1fr",
     maxWidth: "40rem",
     minWidth: "20rem",
+    isPinned: false,
+  },
+  {
+    colId: "statusColumn",
+    label: "status",
+    icon: CircleDashed,
+    rowIndex: 2,
+    width: "8rem",
+    maxWidth: "15rem",
+    minWidth: "8rem",
+    isPinned: false,
   },
   {
     colId: "createdAtColumn",
@@ -39,6 +40,7 @@ export const TableColumns = [
     width: "10rem",
     maxWidth: "15rem",
     minWidth: "10rem",
+    isPinned: false,
   },
   {
     colId: "descriptionColumn",
@@ -48,6 +50,7 @@ export const TableColumns = [
     width: "1fr",
     maxWidth: "50rem",
     minWidth: "25rem",
+    isPinned: false,
   },
   {
     colId: "priorityColumn",
@@ -57,6 +60,7 @@ export const TableColumns = [
     width: "10rem",
     maxWidth: "",
     minWidth: "10rem",
+    isPinned: false,
   },
   {
     colId: "dueDateColumn",
@@ -66,6 +70,7 @@ export const TableColumns = [
     width: "10rem",
     maxWidth: "",
     minWidth: "10rem",
+    isPinned: false,
   },
   {
     colId: "typeColumn",
@@ -75,6 +80,7 @@ export const TableColumns = [
     width: "10rem",
     maxWidth: "",
     minWidth: "10rem",
+    isPinned: false,
   },
   {
     colId: "resourceColumn",
@@ -84,14 +90,6 @@ export const TableColumns = [
     width: "10rem",
     maxWidth: "",
     minWidth: "10rem",
-  },
-  {
-    colId: "priorityColumn",
-    label: "priority",
-    icon: CircleAlert,
-    rowIndex: 9,
-    width: "10rem",
-    maxWidth: "",
-    minWidth: "10rem",
+    isPinned: false,
   },
 ];

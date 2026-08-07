@@ -34,13 +34,6 @@ const TableControls = () => {
         size={"sm"}
         shape={"circle"}
       />
-      <BaseButton
-        variant={"submit"}
-        className={"w-fit max-h-8 px-2"}
-        label={"add row"}
-        size={"sm"}
-        iconLeft={<Grid2x2Plus size={15} />}
-      />
     </div>
   );
 };
