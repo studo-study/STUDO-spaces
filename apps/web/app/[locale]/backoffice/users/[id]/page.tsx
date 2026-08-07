@@ -7,7 +7,7 @@ export default async function AdminUserPage({
 }) {
   const { id } = await params;
   return (
-    <div className="w-full h-full flex flex-col gap-5">
+    <div className="min-w-0 min-h-0 flex-1 overflow-y-scroll scroll-hidden flex flex-col gap-5">
       <AdminUserDetail userId={id} />
     </div>
   );

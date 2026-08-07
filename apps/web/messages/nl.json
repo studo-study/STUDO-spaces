@@ -939,14 +939,13 @@
     "settings": "Instellingen",
     "privacy": "Privacy",
     "logout": "Uitloggen",
-    "ad": "Admin",
+    "ad": "Backoffice",
     "home": "Home",
     "courses": "Vakken",
     "planner": "Planner",
     "flow": "Flow",
-    "folders": "Mappen",
     "create": "Aanmaken",
-    "classrooms": "Klassen",
+    "groups": "Groepen",
     "account": "Account",
     "nonotif": "geen meldingen",
     "allup": "alles up-to-date",
@@ -1173,8 +1172,8 @@
     }
   },
   "y_f": {
-    "title": "Jouw bestanden",
-    "subtitle": "Beheer je studiemateriaal",
+    "title": "Jouw bibliotheek",
+    "subtitle": "Een overzicht van al je vakken en sets",
     "sets": "Sets",
     "folders": "Mappen",
     "courses": "Vakken",
@@ -1260,19 +1259,20 @@
     "phrase_2": " dag op rij gestudeerd",
     "d_s": "dagstreak"
   },
-  "classrooms": {
-    "title": "Jouw klassen",
-    "all": "Alle klassen",
+  "groups": {
+    "title": "Jouw groepen",
+    "subtitle": "Al jouw groepen, klassen en communities",
+    "all": "Alle groepen",
     "last": "Recent toegetreden",
     "alphabetical": "Alfabetische volgorde",
-    "search": "Jouw klassen zoeken...",
+    "search": "Jouw groepen zoeken...",
     "members": "leden",
     "member": "lid",
-    "leave": "Klas verlaten",
-    "no_found": "Geen klassen gevonden",
+    "leave": "Groep verlaten",
+    "no_found": "Geen groepen gevonden",
     "external_window": "Open in nieuw tabblad"
   },
-  "classroom": {
+  "group": {
     "overview": "Overzicht",
     "set_title": "Sets",
     "users": "Leden",
@@ -1440,6 +1440,10 @@
     "flag_failed": "Markeren mislukt",
     "no_cards": "Geen kaarten",
     "progress_visualized": "Gevisualiseerde progressie",
+    "learn_desc": "Uitgebreid studeren",
+    "speedy_desc": "Razendsnel studeren",
+    "flashcards_desc": "Kort overlopen",
+    "classics": "Klassieke leermodi",
     "stats": {
       "title": "Progressie",
       "graph": "Grafiek",
@@ -1562,7 +1566,8 @@
   },
   "courses": {
     "nothing_title": "Nog geen vakken",
-    "nothing_paragraph": "Je hebt nog geen sets aangemaakt met een vak"
+    "nothing_paragraph": "Je hebt nog geen sets aangemaakt met een vak",
+    "search_course": "vak zoeken..."
   },
   "colorPicker": {
     "search_ph": "zoeken..."
@@ -1759,19 +1764,20 @@
     "noResults": "Geen resultaten"
   },
   "breadcrumbs": {
-    "home": "home",
-    "course": "vak",
-    "overview": "overzicht",
-    "documents": "documenten",
-    "flow": "flow",
-    "sets": "sets",
-    "library": "bibliotheek",
-    "courses": "vakken",
-    "classrooms": "klassen",
-    "studoset": "studoset",
-    "edit": "bewerken",
-    "learn": "leren",
-    "speedy": "tijdsstrijd",
-    "flashcards": "flashkaarten"
+    "home": "Home",
+    "course": "Vak",
+    "overview": "Overzicht",
+    "documents": "Documenten",
+    "flow": "Flow",
+    "sets": "Sets",
+    "library": "Bibliotheek",
+    "courses": "Vakken",
+    "groups": "Groepen",
+    "studoset": "Studoset",
+    "edit": "Bewerken",
+    "learn": "Leren",
+    "speedy": "Tijdsstrijd",
+    "flashcards": "Flashkaarten",
+    "backoffice": "Backoffice"
   }
 }

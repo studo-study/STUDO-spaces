@@ -14,14 +14,14 @@ const Invite = () => {
   const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   useCourseNav([
     {
-      title: "admin",
-      href: `/admin`,
+      title: "backoffice",
+      href: `/backoffice`,
       isLast: false,
       translate: true,
     },
     {
       title: "invite",
-      href: `/admin/invite`,
+      href: `/backoffice/invite`,
       isLast: true,
       translate: true,
     },

@@ -13,7 +13,7 @@ export default function ClassSearch({
   classes,
   setFilteredClasses,
 }: ClassSearchProps) {
-  const t = useTranslations("classrooms");
+  const t = useTranslations("groups");
   const [search, setSearch] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const searching = () => {

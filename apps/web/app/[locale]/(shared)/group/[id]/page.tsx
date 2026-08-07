@@ -6,5 +6,5 @@ export default async function Page({
   params: Promise<{ id: string; locale: string }>;
 }) {
   const { id, locale } = await params;
-  redirect(`/${locale}/classroom/${id}/sets`);
+  redirect(`/${locale}/group/${id}/sets`);
 }

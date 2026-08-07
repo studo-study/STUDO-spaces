@@ -94,7 +94,7 @@ export default function Overview() {
           data.recentActivity.map((act) => (
             <Link
               key={act.id}
-              href={`/apps/web/components/ui/app/app/admin/users/${act.userId}`}
+              href={`/backoffice/users/${act.userId}`}
               className="w-full flex items-center gap-3 rounded-full bg-studogrey/20 dark:text-white text-studodarkblue border border-studoborder/20 px-4 py-3 hover:border-studoborder transition-colors"
             >
               <Avatar displayName={act.displayName} id={act.userId} size={32} />
@@ -117,7 +117,7 @@ export default function Overview() {
         {data.recentUsers.map((user) => (
           <Link
             key={user.id}
-            href={`/apps/web/components/ui/app/app/admin/users/${user.id}`}
+            href={`/backoffice/users/${user.id}`}
             className="w-full flex items-center gap-3 rounded-full border border-studoborder/30 bg-studogrey/20 dark:text-white text-studodarkblue px-4 py-3 hover:border-studoborder transition-colors"
           >
             <Avatar displayName={user.displayName} id={user.id} size={32} />

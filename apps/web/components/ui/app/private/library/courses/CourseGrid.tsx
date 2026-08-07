@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import CourseItem from "@/components/ui/app/private/your-files/courses/courseItem";
+import CourseItem from "@/components/ui/app/private/library/courses/courseItem";
 import { useCourses } from "@/hooks/app/courses/useCourses";
 import { useTranslations } from "next-intl";
-import SetSearch from "@/components/ui/app/private/your-files/sets/search";
+import SetSearch from "@/components/ui/app/private/library/sets/search";
 import { useMemo, useState } from "react";
 import CourseAdd from "@/components/ui/app/private/course/layout/AddPopup";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";

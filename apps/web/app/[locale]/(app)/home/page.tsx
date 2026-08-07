@@ -10,6 +10,7 @@ import QuickStats from "@/components/ui/app/private/home/quick_stats/QuickStats"
 import YourSets from "@/components/ui/app/private/home/YourSets/YourSets";
 import Courses from "@/components/ui/app/private/home/courses/Courses";
 import EmptyFallback from "@/components/ui/app/private/home/EmptyFallback/EmptyFallback";
+import BottomShade from "@/components/ui/app/private/home/BottomShade";
 export const metadata: Metadata = {
   title: "Home | Studo",
 };
@@ -24,7 +25,7 @@ export default async function HomePage() {
   return (
     <>
       <section
-        className={`w-full max-h-fit mb-3 gap-5 flex flex-col sticky top-0 z-20 pb-3 dark:bg-slate-800 bg-bg-white`}
+        className={`w-full max-h-fit mb-3 gap-5 flex flex-col sticky top-0 z-20 pb-3`}
       >
         <div className={"w-full flex-1 min-w-0 flex flex-col gap-2"}>
           <div className="w-full h-fit flex flex-col gap-2 ">
@@ -38,7 +39,6 @@ export default async function HomePage() {
         </div>
         <QuickStats />
       </section>
-
       <div className={"w-full grid grid-cols-1 gap-10 pb-10"}>
         <EmptyFallback />
 
@@ -46,17 +46,12 @@ export default async function HomePage() {
         <Courses />
         <YourSets />
       </div>
-
       <div className="fixed z-40 bottom-10 w-fit left-1/2 -translate-1/2 h-fit flex items-end justify-center">
         <AnimateOnMount delay={2000}>
           <CTABlock />
         </AnimateOnMount>
       </div>
-      <div
-        className={
-          "fixed z-10 bottom-5.5 h-25 w-2/3 bg-linear-0 dark:from-slate-800 from-bg-white to-transparent"
-        }
-      />
+      <BottomShade />
     </>
   );
 }

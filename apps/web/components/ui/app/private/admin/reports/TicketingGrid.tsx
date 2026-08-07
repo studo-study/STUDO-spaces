@@ -18,14 +18,14 @@ export default function TicketingGrid() {
 
   useCourseNav([
     {
-      title: "admin",
-      href: `/admin`,
+      title: "backoffice",
+      href: `/backoffice`,
       isLast: false,
       translate: true,
     },
     {
       title: "reports",
-      href: `/admin/reports`,
+      href: `/backoffice/reports`,
       isLast: true,
       translate: true,
     },

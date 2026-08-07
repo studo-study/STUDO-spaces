@@ -3,7 +3,10 @@ import { AuthConfig, ServerConfig } from '../config/configuration';
 import { User } from '../types/user';
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
+  Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginRequest, RegisterUserRequest } from '@studo/types';
@@ -17,9 +20,12 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtPayload } from '../types/auth';
 import { Role } from './roles';
+import { ImpersonateDto } from '../session/session.dto';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     @InjectDrizzle()
     private readonly db: DatabaseProvider,
@@ -335,5 +341,44 @@ export class AuthService {
     }
     const token = this.signJwt(user!);
     return { token, user: user! };
+  }
+
+  /**
+   * Mint een kortlevende impersonatie-token voor `body.userId`, aangevraagd
+   * door admin `actorId`. De token draagt de rollen van de DOEL-user (geen
+   * privilege-escalatie), een `act`-claim (RFC 8693) voor audit, en een
+   * `impersonated`-flag zodat gevoelige endpoints kunnen weigeren.
+   */
+  async impersonate(body: ImpersonateDto, actorId: string): Promise<string> {
+    const target = await this.db.query.users.findFirst({
+      where: eq(users.id, body.userId),
+    });
+
+    if (!target) {
+      throw new NotFoundException('User to impersonate not found');
+    }
+
+    const targetRoles = (target.roles as string[]) ?? [];
+    // een admin mag geen andere admin impersonaten
+    if (targetRoles.includes(Role.ADMIN)) {
+      throw new ForbiddenException('Cannot impersonate an admin');
+    }
+
+    const token = this.jwtService.sign(
+      {
+        sub: target.id,
+        email: target.email,
+        roles: targetRoles,
+        act: { sub: actorId }, // RFC 8693 actor-claim
+        impersonated: true,
+      },
+      { expiresIn: '30m' },
+    );
+
+    this.logger.warn(
+      `IMPERSONATION start: admin=${actorId} target=${target.id}`,
+    );
+
+    return token;
   }
 }

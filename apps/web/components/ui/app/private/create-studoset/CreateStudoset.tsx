@@ -374,7 +374,7 @@ export default function CreateStudosetForm() {
       <form
         ref={topRef}
         onSubmit={handleSubmit}
-        className="w-full scroll-hidden text-studodarkblue dark:text-white h-fit mt-10 md:mt-0 flex text-sm sm:text-base flex-col items-center justify-baseline pt-20 px-10"
+        className="w-full scroll-hidden text-studodarkblue dark:text-white h-fit flex text-sm sm:text-base flex-col items-center justify-baseline"
         data-cy="studyset_form"
         onKeyDown={(event) => {
           if (
@@ -386,9 +386,9 @@ export default function CreateStudosetForm() {
         }}
       >
         <div className="flex w-full flex-col items-center justify-center gap-3">
-          <div className="w-full text-2xl sm:text-3xl flex flex-row gap-2 items-end text-studodarkblue font-bold dark:text-white">
+          <div className="w-full font-georgia text-3xl sm:text-2xl flex flex-row gap-2 items-end text-studodarkblue font-bold dark:text-white">
             {t("title")}
-            <span className={"text-lg opacity-50"}>
+            <span className={"text-sm opacity-50 font-sfpro pb-1"}>
               {hasDraft && t("draft")}
             </span>
           </div>

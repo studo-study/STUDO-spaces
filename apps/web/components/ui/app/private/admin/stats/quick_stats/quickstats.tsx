@@ -97,14 +97,14 @@ function StatCard({
 export default function QuickStats() {
   useCourseNav([
     {
-      title: "admin",
-      href: `/admin`,
+      title: "backoffice",
+      href: `/backoffice`,
       isLast: false,
       translate: true,
     },
     {
       title: "stats",
-      href: `/admin/stats`,
+      href: `/backoffice/stats`,
       isLast: true,
       translate: true,
     },

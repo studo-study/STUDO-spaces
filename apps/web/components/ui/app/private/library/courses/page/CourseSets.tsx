@@ -1,9 +1,9 @@
 "use client";
 import { useSets } from "@/hooks/app/sets/useSets";
 import { StudysetResponse, type VisualsetResponse } from "@studo/types";
-import { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
+import { StudySetItem } from "@/components/ui/app/private/library/sets/grid";
 import Image from "next/image";
-import ListItems from "@/components/ui/app/private/your-files/sets/listitems";
+import ListItems from "@/components/ui/app/private/library/sets/listitems";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import { FaChevronLeft } from "react-icons/fa";

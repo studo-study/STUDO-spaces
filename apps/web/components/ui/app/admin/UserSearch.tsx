@@ -10,14 +10,14 @@ const UserSearch = () => {
   const userQuery = useAdminUser(search);
   useCourseNav([
     {
-      title: "admin",
-      href: `/admin`,
+      title: "backoffice",
+      href: `/backoffice`,
       isLast: false,
       translate: true,
     },
     {
       title: "users",
-      href: `/admin/users`,
+      href: `/backoffice/users`,
       isLast: true,
       translate: true,
     },

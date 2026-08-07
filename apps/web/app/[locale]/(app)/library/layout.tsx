@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import FileHeader from "@/components/ui/app/private/your-files/header";
+import FileHeader from "@/components/ui/app/private/library/header";
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <section className="relative w-full flex-1 flex flex-col overflow-hidden">

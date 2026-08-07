@@ -4,7 +4,43 @@ import Credentials from "next-auth/providers/credentials";
 import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
 import GoogleProvider from "next-auth/providers/google";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+// backend user-shape (snake_case) → session user-shape (camelCase), zelfde
+// mapping als de credentials-login.
+interface BackendUser {
+  id: string;
+  email: string;
+  displayName: string;
+  img_url: string;
+  join_date: string;
+  joinNumber: number;
+  totalSets: number;
+  streak_count: number;
+  streak_last_update: string;
+  publicRole: "user" | "owner" | "admin";
+  verified: boolean;
+  stats: { totalsets: number; timeLearned: number; cardsLearned: number };
+  lastTen: unknown[];
+}
+
+function mapBackendUser(u: BackendUser) {
+  return {
+    id: u.id,
+    email: u.email,
+    displayName: u.displayName,
+    imgUrl: u.img_url,
+    joinDate: u.join_date,
+    joinNumber: u.joinNumber,
+    totalSets: u.totalSets,
+    streakCount: u.streak_count,
+    streakLastUpdate: u.streak_last_update,
+    publicRole: u.publicRole,
+    verified: u.verified,
+    stats: u.stats,
+    lastTen: u.lastTen,
+  };
+}
+
+export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   providers: [
     Credentials({
       credentials: {
@@ -75,7 +111,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // ========================================
     // JWT CALLBACK
     // ========================================
-    jwt: async ({ token, user, account, profile }) => {
+    jwt: async ({ token, user, account, profile, trigger, session }) => {
+      // ── Impersonatie ────────────────────────────────────────────────
+      // Admin swapt naar een backend-minted token; de admin-identiteit
+      // bewaren we in `original` zodat "stop" geen re-login vereist.
+      const update = session as
+        | { impersonate?: { token: string }; stopImpersonate?: boolean }
+        | undefined;
+
+      if (trigger === "update" && update?.impersonate) {
+        // admin-check zit al in de server action + de backend (die enkel voor
+        // admins een token mint). We swappen enkel de meegegeven token in.
+        const impToken = update.impersonate.token;
+        const res = await fetch(`${process.env.AUTH_API_URL}/users/me`, {
+          headers: { Authorization: `Bearer ${impToken}` },
+        });
+        if (!res.ok) return token;
+        const raw = (await res.json()) as BackendUser;
+        token.original = { accessToken: token.accessToken, user: token.user };
+        token.accessToken = impToken;
+        token.user = mapBackendUser(raw) as typeof token.user;
+        token.impersonating = true;
+        return token;
+      }
+
+      if (trigger === "update" && update?.stopImpersonate && token.original) {
+        token.accessToken = token.original.accessToken;
+        token.user = token.original.user as typeof token.user;
+        token.impersonating = false;
+        token.original = undefined;
+        return token;
+      }
+
       // Check of de backend JWT token verlopen is (enkel als er geen nieuwe login is)
       if (!user && token.accessToken) {
         try {
@@ -179,6 +246,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         user: token.user,
         accessToken: token.accessToken,
         error: token.error,
+        impersonating: token.impersonating ?? false,
       };
     },
   },

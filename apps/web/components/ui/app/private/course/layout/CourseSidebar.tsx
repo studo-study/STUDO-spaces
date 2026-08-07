@@ -20,9 +20,6 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({ burgerOpen }) => {
   return (
     <div className="w-full h-fit flex flex-col gap-1">
       <CourseToggle burgerOpen={burgerOpen} />
-
-      {/* tabs altijd gemount → glad in-/uitklappen bij binnenkomen van een vak
-          én bij het inklappen van de burger */}
       <div
         aria-hidden={!(isCourseRoute && burgerOpen)}
         className={classNames(

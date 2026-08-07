@@ -1,9 +1,9 @@
 "use client";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import SetSearch from "@/components/ui/app/private/your-files/sets/search";
-import ListItems from "@/components/ui/app/private/your-files/sets/listitems";
-import type { StudySetItem } from "@/components/ui/app/private/your-files/sets/grid";
+import SetSearch from "@/components/ui/app/private/library/sets/search";
+import ListItems from "@/components/ui/app/private/library/sets/listitems";
+import type { StudySetItem } from "@/components/ui/app/private/library/sets/grid";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import { useParams } from "next/navigation";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";

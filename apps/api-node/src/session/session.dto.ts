@@ -39,3 +39,16 @@ export class LoginResponseDto {
   })
   token: string;
 }
+
+export class ImpersonateDto {
+  @ApiProperty({
+    example: '1f0c076e-f30c-64b0-a0f3-d5a021c6a9cb',
+    description: 'id of the user to impersonate',
+    required: true,
+  })
+  @IsString({
+    name: 'userId',
+    maxLength: 255,
+  })
+  userId: string;
+}
