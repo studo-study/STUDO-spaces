@@ -1,5 +1,13 @@
-mod schema;
+use tracing::info;
 
-fn main() {
-    println!("Hello, world!");
+mod schema;
+mod pipeline;
+mod queue;
+mod storage;
+
+#[tokio::main]
+async fn main() {
+    tracing_subscriber::fmt::init();
+    info!("Logging initialized");
+    info!("Worker initialized");
 }
