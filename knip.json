@@ -1,10 +1,11 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "tags": ["-lintignore"],
-  "ignore": ["apps/legacy/**", "apps/mobile/**"],
+  "ignore": ["apps/mobile/**"],
   "workspaces": {
     "apps/web": {},
     "apps/api-node": {},
+    "workers/*": {},
     "packages/*": {}
   },
   "rules": {

@@ -1,3 +1,4 @@
 #!/bin/sh
 export PATH="/home/pj/.local/share/pnpm:$PATH"
 pnpm lint-staged
+pnpm knip

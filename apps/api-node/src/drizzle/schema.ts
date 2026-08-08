@@ -393,12 +393,9 @@ export const classroomusers = pgTable(
     joinedAt: varchar('joined_at', { length: 24 }).notNull(),
     position: integer('position').notNull(),
   },
-  (table) => [
-    uniqueIndex('idx_user_classroom_unique').on(
-      table.userId,
-      table.classroomId,
-    ),
-  ],
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.classroomId] }),
+  }),
 );
 
 export const classroomsets = pgTable(
@@ -411,9 +408,9 @@ export const classroomsets = pgTable(
       .references(() => classrooms.id, { onDelete: 'cascade' })
       .notNull(),
   },
-  (table) => [
-    uniqueIndex('idx_set_classroom_unique').on(table.setId, table.classroomId),
-  ],
+  (t) => ({
+    pk: primaryKey({ columns: [t.setId, t.classroomId] }),
+  }),
 );
 
 export const classroomactivities = pgTable('classroomactivity', {
@@ -457,12 +454,9 @@ export const studoprofilecommunities = pgTable(
       .references(() => studoprofiles.id, { onDelete: 'cascade' }) // FK naar studoprofiles
       .notNull(),
   },
-  (table) => [
-    uniqueIndex('idx_set_trackcommunities_unique').on(
-      table.classroomId,
-      table.studoprofileId,
-    ),
-  ],
+  (t) => ({
+    pk: primaryKey({ columns: [t.classroomId, t.studoprofileId] }),
+  }),
 );
 
 export const popular_sets = pgTable('popular_sets', {
@@ -639,7 +633,9 @@ export const courses = pgTable('course', {
   icon: varchar('icon').notNull().default(''),
   publicCourse: boolean('public_course').default(false),
   createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date()),
   academyYear: integer('academy_year'),
   examDate: date('exam_date'),
   institute: varchar('institute'),
@@ -673,7 +669,9 @@ export const courseUsers = pgTable(
       .notNull(),
     role: courseRolesEnum('role').notNull().default('viewer'),
     createdAt: timestamp('created_at').defaultNow(),
-    updatedAt: timestamp('updated_at').defaultNow(),
+    updatedAt: timestamp('updated_at')
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
   (t) => ({
     pk: primaryKey({ columns: [t.userId, t.courseId] }),
@@ -728,7 +726,10 @@ export const courseDocuments = pgTable('course_documents', {
   author: varchar('author'),
   publishingDate: date('publishing_date'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
   pageCount: integer('page_count'),
   documentTag: documentTagsEnum('document_tag').default('document').notNull(),
   wordCount: integer('word_count'),
@@ -737,7 +738,10 @@ export const courseDocuments = pgTable('course_documents', {
   mimeType: varchar('mime_type').notNull().default('pdf'),
   fileSize: integer('file_size'),
   checksum: integer('checksum'),
-  lastOpened: timestamp('last_opened').defaultNow().notNull(),
+  lastOpened: timestamp('last_opened')
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export const courseDocumentChunks = pgTable('course_document_chunks', {
@@ -753,7 +757,9 @@ export const courseDocumentChunks = pgTable('course_document_chunks', {
   chunkIndex: integer('chunk_index').notNull(),
   text: text('text').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date()),
   embeddingModel: varchar('embedding_model'),
   embedding: vector('embedding', { dimensions: 1536 }),
 });
@@ -772,11 +778,13 @@ export const courseSets = pgTable(
       .references(() => courses.id, { onDelete: 'cascade' })
       .notNull(),
     createdAt: timestamp('created_at').defaultNow(),
-    updatedAt: timestamp('updated_at').defaultNow(),
+    updatedAt: timestamp('updated_at')
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
-  (table) => [
-    uniqueIndex('idx_course_sets_unique').on(table.setId, table.courseId),
-  ],
+  (t) => ({
+    pk: primaryKey({ columns: [t.setId, t.courseId] }),
+  }),
 );
 
 export const courseTables = pgTable('course_tables', {
@@ -789,8 +797,11 @@ export const courseTables = pgTable('course_tables', {
     .notNull()
     .unique(),
   title: varchar('title').notNull(),
+  description: varchar('description'),
   createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
 export const courseRows = pgTable('course_rows', {
@@ -811,6 +822,10 @@ export const courseRows = pgTable('course_rows', {
   description: text('description'),
   type: rowTypeEnum('type').default('task'),
   dueDate: date('due_date'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
 export const courseResources = pgTable('course_resources', {
@@ -828,7 +843,9 @@ export const boards = pgTable('boards', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
   title: varchar('title').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date()),
   icon: varchar('icon').notNull().default(''),
   publicBoard: boolean('public_board').default(false),
   academyYear: integer('academy_year'),
@@ -839,19 +856,25 @@ export const boards = pgTable('boards', {
 export const boardUsers = pgTable(
   'board_users',
   {
-    boardId: uuid('board_id').references(() => boards.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
-    userId: uuid('user_id').references(() => users.id, {
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    }),
+    boardId: uuid('board_id')
+      .references(() => boards.id, {
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      })
+      .notNull(),
+    userId: uuid('user_id')
+      .references(() => users.id, {
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      })
+      .notNull(),
     role: courseRolesEnum('role').notNull().default('viewer'),
     createdAt: timestamp('created_at').defaultNow(),
-    updatedAt: timestamp('updated_at').defaultNow(),
+    updatedAt: timestamp('updated_at')
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
-  (table) => [
-    uniqueIndex('idx_board_users_unique').on(table.boardId, table.userId),
-  ],
+  (t) => ({
+    pk: primaryKey({ columns: [t.boardId, t.userId] }),
+  }),
 );
