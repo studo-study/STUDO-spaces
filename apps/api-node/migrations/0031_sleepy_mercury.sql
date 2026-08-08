@@ -1,0 +1,1 @@
+ALTER TABLE "course_documents" ADD COLUMN "last_opened" timestamp DEFAULT now() NOT NULL;

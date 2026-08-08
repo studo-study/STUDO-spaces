@@ -9,7 +9,6 @@ import { useCourse } from "@/hooks/app/courses/useCourse";
 export default function CourseFlowPage() {
   //effectieve data
   const { id } = useParams<{ id: string }>();
-
   const course = useCourse(id)?.data;
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");

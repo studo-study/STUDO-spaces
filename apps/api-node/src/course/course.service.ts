@@ -10,6 +10,7 @@ import {
   CourseSetItem,
   CreateCourse,
   FullCourseResponse,
+  UpdateCourse,
 } from '@studo/types';
 
 const iso = (d: Date | null): string | null => d?.toISOString() ?? null;
@@ -164,6 +165,7 @@ export class CourseService {
       boardId: course.boardId,
       title: course.title,
       icon: course.icon,
+      description: course.description,
       publicCourse: course.publicCourse,
       createdAt: iso(course.createdAt),
       updatedAt: iso(course.updatedAt),
@@ -191,6 +193,7 @@ export class CourseService {
         createdAt: d.createdAt,
         updatedAt: d.updatedAt,
         documentTag: d.documentTag,
+        lastOpened: d.lastOpened,
       })),
       members: course.members.map((m) => ({
         userId: m.userId,
@@ -225,6 +228,7 @@ export class CourseService {
       .insert(courses)
       .values({
         title: body.title,
+        description: body?.description,
         icon: body.icon,
         academyYear: body.academyYear ?? null,
         examDate: body.examDate || null,
@@ -240,5 +244,22 @@ export class CourseService {
     });
 
     return await this.getFullCourse(course.id, userId);
+  }
+
+  async updateCourse(courseId: string, body: UpdateCourse) {
+    await this.db
+      .update(courses)
+      .set({
+        academyYear: body?.academyYear,
+        boardId: body?.boardId,
+        examDate: body?.examDate,
+        icon: body?.icon,
+        institute: body?.institute,
+        publicCourse: body?.publicCourse,
+        title: body?.title,
+        updatedAt: new Date(),
+        description: body?.description,
+      })
+      .where(eq(courses.id, courseId));
   }
 }

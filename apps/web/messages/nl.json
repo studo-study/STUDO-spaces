@@ -1,4 +1,7 @@
 {
+  "datepicker": {
+    "placeholder": "Kies een datum"
+  },
   "admin": {
     "title": "Back Office",
     "subtitle_stats": "Snelle statistieken (deze maand)",
@@ -1548,7 +1551,7 @@
       "all": "Overzicht",
       "course": "Cursussen",
       "notes": "Notities",
-      "no_files_title": "Nog geen bestanden",
+      "no_files_title": "Nog geen documenten",
       "no_files_paragraph": "Upload een bestand om te beginnen",
       "pending_upload": "uploaden…",
       "error_file_types": "Alleen PDF-, Word- en Excel-bestanden zijn toegestaan.",
@@ -1564,6 +1567,11 @@
       "stop_upload": "Stop uploaden",
       "select_course": "Kies een vak",
       "sven": "Sven",
+      "no_docs": "Nog geen documenten",
+      "cta": "Upload je cursus",
+      "set_course_title": "Vaktitel...",
+      "set_course_description": "Voeg beschrijving toe...",
+      "no_title_error": "Geef een titel op",
       "table": {
         "title": "Voeg title toe...",
         "description": "Voeg beschrijving toe...",

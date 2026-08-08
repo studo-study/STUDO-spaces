@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import type { FullCourseResponse } from "@studo/types";
 import { courseKeys } from "./courseKeys";
 
-/** Volledige course (tables → rows → resources, sets, documents, members). */
 export function useCourse(id: string) {
   return useQuery<FullCourseResponse>({
     queryKey: courseKeys.course(id),
@@ -17,3 +16,7 @@ export function useCourse(id: string) {
       }),
   });
 }
+
+export const useCourseTable = (id: string) => useCourse(id).data?.table;
+export const useCourseSets = (id: string) => useCourse(id).data?.sets;
+export const useCourseDocs = (id: string) => useCourse(id).data?.documents;

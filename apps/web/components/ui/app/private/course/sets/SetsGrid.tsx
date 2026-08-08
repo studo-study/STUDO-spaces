@@ -75,8 +75,8 @@ export default function CourseSetsGrid() {
 
   return (
     <div className="p-5 relative min-w-0 flex-1 flex flex-col  items-center gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">
-      <div className="sticky top-0 w-full z-20 backdrop-blur-2xl flex overflow-visible flex-row items-center justify-between gap-3">
-        <span>{t("course_title")}</span>
+      <div className="sticky top-0 w-full z-20 backdrop-blur-2xl flex overflow-visible flex-row items-start justify-between gap-3">
+        <span className={"font-bold text-2xl"}>{t("title")}</span>
         <div className={"flex flex-row items-center gap-5"}>
           <Select
             placeholder="sort sets"

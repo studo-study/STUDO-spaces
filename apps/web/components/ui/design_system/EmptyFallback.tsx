@@ -1,12 +1,23 @@
 "use client";
 import Image from "next/image";
+import { ReactNode } from "react";
+
+const IconLib: Record<string, string> = {
+  default: "/vectors/workplace.png",
+  archive: "/vectors/archive.png",
+  folders: "/vectors/folders.png",
+  boxes: "/vectors/empty_box.png",
+};
 
 interface EmptyFallbackProps {
   title?: string;
   message?: string;
+  cta?: ReactNode;
+  icon?: "default" | "archive" | "folders" | "boxes";
 }
 const EmptyFallback: React.FC<EmptyFallbackProps> = (props) => {
-  const { title, message } = props;
+  const { title, message, cta, icon = "default" } = props;
+  const img = IconLib[icon];
   return (
     <div
       className={
@@ -14,7 +25,7 @@ const EmptyFallback: React.FC<EmptyFallbackProps> = (props) => {
       }
     >
       <Image
-        src={"/vectors/workplace.png"}
+        src={img}
         alt={"lamp"}
         width={200}
         height={200}
@@ -24,6 +35,7 @@ const EmptyFallback: React.FC<EmptyFallbackProps> = (props) => {
       <div className={"flex flex-col items-center justify-center gap-2"}>
         <span className={"dark:text-white text-2xl font-bold"}>{title}</span>
         <p className={"dark:text-studogrey text-gray-400 text-sm"}>{message}</p>
+        <div className={"max-h-8 h-8 mt-3"}>{cta}</div>
       </div>
     </div>
   );

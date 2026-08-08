@@ -635,11 +635,11 @@ export const courses = pgTable('course', {
     onUpdate: 'cascade',
   }),
   title: varchar('title').notNull(),
+  description: varchar('description'),
   icon: varchar('icon').notNull().default(''),
   publicCourse: boolean('public_course').default(false),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
-  // academische velden = override; effectief = course.x ?? board.x
   academyYear: integer('academy_year'),
   examDate: date('exam_date'),
   institute: varchar('institute'),
@@ -737,6 +737,7 @@ export const courseDocuments = pgTable('course_documents', {
   mimeType: varchar('mime_type').notNull().default('pdf'),
   fileSize: integer('file_size'),
   checksum: integer('checksum'),
+  lastOpened: timestamp('last_opened').defaultNow().notNull(),
 });
 
 export const courseDocumentChunks = pgTable('course_document_chunks', {

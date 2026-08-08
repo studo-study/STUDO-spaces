@@ -1,7 +1,7 @@
-import { ComposerAura } from "@/components/ui/design_system/ComposeAura/ComposerAura";
 import { ReactNode } from "react";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import SvenIcon from "@/components/ui/overige/icons/SvenLogo";
+import { ComposerAura } from "@/components/ui/design_system/composer_aura/ComposerAura";
 
 interface SvenMessageProps {
   description?: string;

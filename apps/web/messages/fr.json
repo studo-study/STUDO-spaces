@@ -1,4 +1,7 @@
 {
+  "datepicker": {
+    "placeholder": "Choisir une date"
+  },
   "landing": {
     "header": {
       "LogIn": "Se connecter",

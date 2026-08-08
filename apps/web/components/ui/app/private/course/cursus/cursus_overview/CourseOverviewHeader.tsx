@@ -41,7 +41,8 @@ const CourseOverviewHeader: React.FC<CourseOverviewHeaderProps> = (props) => {
         <BottomProgress files={files} processingDocs={processing} />
       )}
       <div className={"flex justify-between items-start p-5 gap-5"}>
-        <div>
+        <div className={"flex flex-col gap-5"}>
+          <span className={"font-bold text-2xl"}>{t("documents")}</span>
           <Tabs
             size={"md"}
             onChange={(input) => setTab(input as CourseTab)}
