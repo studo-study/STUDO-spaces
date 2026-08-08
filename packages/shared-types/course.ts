@@ -34,6 +34,7 @@ export interface Course {
   id: string;
   boardId: string | null; // null = standalone
   title: string;
+  description: string | null;
   icon: string;
   publicCourse: boolean | null;
   createdAt: string | null;
@@ -87,6 +88,7 @@ export interface CourseDocument {
   fileSize?: number | null;
   checksum?: number | null;
   documentTag: string;
+  lastOpened: Date;
 }
 
 export interface CourseDocumentChunk {

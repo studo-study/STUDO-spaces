@@ -13,6 +13,9 @@ import CourseOverviewHeader from "@/components/ui/app/private/course/cursus/curs
 import EmptyFallback from "@/components/ui/design_system/EmptyFallback";
 import UploadModal from "@/components/ui/app/private/course/cursus/cursus_overview/UploadModal";
 import { useCourseNavStore } from "@/store/course/CourseNavStore";
+import { ComposerAura } from "@/components/ui/design_system/composer_aura/ComposerAura";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import { Sparkles } from "lucide-react";
 
 const MAX_FILES = 3;
 const ACCEPTED = [
@@ -145,7 +148,26 @@ const FileGrid: React.FC = () => {
             {filteredDocs.length === 0 ? (
               <EmptyFallback
                 title={t("no_files_title")}
-                message={t("no_files_paragraph")}
+                cta={
+                  <ComposerAura>
+                    <BaseButton
+                      onClick={() => setIsUploadModalOpen(true)}
+                      type="button"
+                      variant="submit"
+                      className={"border-studoblue"}
+                      label={t("no_files_paragraph")}
+                      iconLeft={
+                        <Sparkles
+                          size={17}
+                          className={
+                            "dark:fill-white fill-studodarkblue stroke-0.5"
+                          }
+                        />
+                      }
+                    />
+                  </ComposerAura>
+                }
+                icon={"folders"}
               />
             ) : (
               <div className={"grid grid-cols-4 gap-2  flex-wrap w-full"}>

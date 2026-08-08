@@ -1,0 +1,84 @@
+import {
+  COURSE_GRID_TEMPLATE,
+  TableColumns,
+} from "@/components/ui/app/private/course/flow/table/TableColumns";
+import { GripVertical, Plus } from "lucide-react";
+import classNames from "@/utils/classnames";
+import type { CSSProperties } from "react";
+
+interface TableRowProps {
+  offset: number;
+  gap: number;
+}
+
+// de controls-kolom zit door de -mx-20 (5rem) 80px links van de content-origin,
+// de eerste gepinde datakolom valt exact op de origin.
+const CONTROLS_CELL_X = -80;
+const PINNED_COL_X = 0;
+
+const TableRow = ({ offset, gap }: TableRowProps) => {
+  // gepinde cel pant mee tot de pagina-rand en blijft daar plakken:
+  // clamp de counter-transform op de afstand tot die rand (gap).
+  const pinStyle = (pinned: boolean, cellX: number): CSSProperties =>
+    pinned
+      ? {
+          transform: `translateX(${Math.max(0, -gap - cellX - offset)}px)`,
+          zIndex: 10,
+        }
+      : {};
+  const pinClass = (pinned: boolean) =>
+    pinned ? "relative bg-white dark:bg-slate-800" : "";
+
+  return (
+    <div
+      className={
+        "h-10 max-h-10 min-h-10 min-w-0 -mx-20 flex-1 w-full grid group/row"
+      }
+      style={{
+        gridTemplateColumns: COURSE_GRID_TEMPLATE,
+      }}
+    >
+      <div
+        style={pinStyle(true, CONTROLS_CELL_X)}
+        className={classNames("h-full w-full", pinClass(true))}
+      >
+        <div
+          className={
+            "opacity-0 group-hover/row:opacity-100 cursor-pointer transition-opacity duration-300 gap-2 h-full w-full flex items-center justify-between px-2"
+          }
+        >
+          <Plus />
+          <GripVertical />
+          <input type={"checkbox"} />
+        </div>
+      </div>
+      {TableColumns.map((col, index) => {
+        return (
+          <div
+            key={col.colId + index}
+            style={{
+              width: col.width,
+              minWidth: col.minWidth,
+              maxWidth: col.maxWidth,
+              ...pinStyle(col.isPinned, PINNED_COL_X),
+            }}
+            className={classNames(
+              "flex flex-row group/cell h-10 w-full border-b border-studoborder/30",
+              pinClass(col.isPinned),
+            )}
+          >
+            <div className={"min-w-0 min-h-0 flex-1 px-3"}></div>
+            <div
+              className={
+                "h-full border-r border-studoborder/30 group-last-of-type/cell:border-none"
+              }
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+TableRow.displayName = "TableRow";
+export default TableRow;

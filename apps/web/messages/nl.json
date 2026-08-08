@@ -1,4 +1,7 @@
 {
+  "datepicker": {
+    "placeholder": "Kies een datum"
+  },
   "admin": {
     "title": "Back Office",
     "subtitle_stats": "Snelle statistieken (deze maand)",
@@ -1179,6 +1182,7 @@
     "courses": "Vakken",
     "your_sets": {
       "title": "Jouw sets",
+      "course_title": "Sets binnen vak",
       "cards": "kaarten",
       "pins": "pins",
       "studied": "gestudeerd",
@@ -1523,8 +1527,8 @@
         "priority": "prioriteit"
       },
       "add_title": "Titel toevoegen",
-      "create_title": "Nieuwe cursus",
-      "create_course": "Cursus aanmaken",
+      "create_title": "Nieuw vak",
+      "create_course": "Vak aanmaken",
       "create_btn": "Aanmaken",
       "description": "Beschrijving",
       "add_metadata": "Metadata toevoegen",
@@ -1547,7 +1551,7 @@
       "all": "Overzicht",
       "course": "Cursussen",
       "notes": "Notities",
-      "no_files_title": "Nog geen bestanden",
+      "no_files_title": "Nog geen documenten",
       "no_files_paragraph": "Upload een bestand om te beginnen",
       "pending_upload": "uploaden…",
       "error_file_types": "Alleen PDF-, Word- en Excel-bestanden zijn toegestaan.",
@@ -1561,7 +1565,27 @@
       "sets": "Sets",
       "stop_processing": "Stop verwerken",
       "stop_upload": "Stop uploaden",
-      "select_course": "Kies een vak"
+      "select_course": "Kies een vak",
+      "sven": "Sven",
+      "no_docs": "Nog geen documenten",
+      "cta": "Upload je cursus",
+      "set_course_title": "Vaktitel...",
+      "set_course_description": "Voeg beschrijving toe...",
+      "no_title_error": "Geef een titel op",
+      "table": {
+        "title": "Voeg title toe...",
+        "description": "Voeg beschrijving toe...",
+        "header": {
+          "title": "titel",
+          "status": "status",
+          "createdAt": "gecreëerd",
+          "description": "beschrijving",
+          "priority": "prioriteit",
+          "dueDate": "deadline",
+          "type": "type",
+          "resource": "bijlage"
+        }
+      }
     }
   },
   "courses": {
@@ -1743,7 +1767,9 @@
     "type_description": "Kies hoe op welke manier je wilt antwoorden",
     "revision_count_description": "Bepaal hoeveel keer een kaart herhaal wordt",
     "flagged_mode": "Gemarkeerde kaarten",
-    "flagged_description": "Leer alleen je gemarkeerde kaarten"
+    "flagged_description": "Leer alleen je gemarkeerde kaarten",
+    "strictness_level": "Striktheid",
+    "strictness_level_description": "Stel in hoe streng verbeterd wordt"
   },
   "learn": {
     "enter_continue": "*druk op enter om verder te gaan",
@@ -1773,6 +1799,7 @@
     "library": "Bibliotheek",
     "courses": "Vakken",
     "groups": "Groepen",
+    "classrooms": "Klassen",
     "studoset": "Studoset",
     "edit": "Bewerken",
     "learn": "Leren",

@@ -119,6 +119,7 @@ export class FileService {
     docId: string,
     userId: string,
   ): Promise<FullCourseDocument> {
+    const datum = new Date();
     await this.CourseUserCheck(userId, courseId);
     const record = await this.db.query.courseDocuments.findFirst({
       where: and(
@@ -147,8 +148,16 @@ export class FileService {
       throw new NotFoundException('url is not fetched');
     }
 
+    await this.db
+      .update(courseDocuments)
+      .set({
+        lastOpened: datum,
+      })
+      .where(eq(courseDocuments.id, docId));
+
     return {
       ...record,
+      lastOpened: datum,
       chunks: record?.chunks.map((chunk) => ({
         id: chunk.id,
         documentId: chunk.documentId,

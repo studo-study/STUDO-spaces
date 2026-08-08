@@ -217,6 +217,7 @@ function Streak({ streak, StreakOpen, setStreakOpen }: StreakProps) {
           src={config.icon}
           alt=""
           width={0}
+          loading={"eager"}
           height={0}
           className={`w-5 ${config.saturation}`}
         />

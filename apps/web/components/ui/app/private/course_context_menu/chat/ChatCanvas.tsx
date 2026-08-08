@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { getSvenWelcomeMsg } from "@/components/ui/app/private/course_context_menu/chat/GetSvenWelcomeMsg";
-import { Flower } from "lucide-react";
+import SvenIcon from "@/components/ui/overige/icons/SvenLogo";
 
 const ChatCanvas = () => {
   const tTimed = useTranslations("svenchatTimed");
@@ -17,7 +17,7 @@ const ChatCanvas = () => {
           "flex flex-col dark:text-white gap-1 items-center px-10 text-center"
         }
       >
-        <Flower size={40} className={"mb-2"} />
+        <SvenIcon size={50} className={"mb-2"} />
         <p className={"font-georgia font-bold text-xl dark:text-white"}>
           {welcome}
         </p>

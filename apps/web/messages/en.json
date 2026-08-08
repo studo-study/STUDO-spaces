@@ -1,4 +1,7 @@
 {
+  "datepicker": {
+    "placeholder": "Pick a date"
+  },
   "admin": {
     "title": "Admin Dashboard",
     "subtitle_stats": "Quick stats (this month)",

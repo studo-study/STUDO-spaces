@@ -74,11 +74,13 @@ export default function CourseSetsGrid() {
   const t = useTranslations("y_f.your_sets");
 
   return (
-    <div className="p-5 relative min-w-0 flex-1 flex flex-col gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">
-      <div className="sticky top-0 w-full z-20 backdrop-blur-2xl flex overflow-visible flex-row items-center justify-between gap-3">
-        <div className="w-fit flex flex-row gap-5 items-center">
+    <div className="p-5 relative min-w-0 flex-1 flex flex-col  items-center gap-5 scroll-hidden overflow-y-scroll overflow-x-visible">
+      <div className="sticky top-0 w-full z-20 backdrop-blur-2xl flex overflow-visible flex-row items-start justify-between gap-3">
+        <span className={"font-bold text-2xl"}>{t("title")}</span>
+        <div className={"flex flex-row items-center gap-5"}>
           <Select
             placeholder="sort sets"
+            align={"start"}
             size={"sm"}
             value={sortMode}
             onChange={(input) => setSortMode(input as string)}
@@ -97,14 +99,14 @@ export default function CourseSetsGrid() {
               },
             ]}
           />
+          <SetSearch
+            sets={allSets}
+            setSearchQuery={setSearchQuery}
+            className={"h-8"}
+          />
         </div>
-        <SetSearch
-          sets={allSets}
-          setSearchQuery={setSearchQuery}
-          className={"h-8"}
-        />
       </div>
-      <div className="w-full flex-1 h-fit gap-2 flex flex-col">
+      <div className="w-full flex-1 h-fit gap-2 flex flex-col max-w-200">
         <ListItems items={filteredSets} />
       </div>
     </div>

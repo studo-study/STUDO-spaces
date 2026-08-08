@@ -21,7 +21,6 @@ export function getSvenWelcomeMsg(
 
   try {
     const messages = t.raw(match.key) as string[];
-    console.log(t(messages[1]));
     return messages[Math.floor(Math.random() * messages.length)].replace(
       "{name}",
       name,

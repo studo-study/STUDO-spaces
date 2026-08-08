@@ -1,10 +1,10 @@
-/// <reference types="multer" />
 import {
   Body,
   Controller,
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
   Request,
   UploadedFiles,
@@ -96,5 +96,14 @@ export class CourseController {
     @Request() req: AuthenticatedRequest,
   ) {
     return this.fileService.getDocument(courseId, docId, req.user.id);
+  }
+
+  @Roles(Role.USER, Role.ADMIN)
+  @Patch(':course_id')
+  async updateDocument(
+    @Body() body: types.UpdateCourse,
+    @Param('course_id', ParseUUIDPipe) courseId: string,
+  ) {
+    return this.courseService.updateCourse(courseId, body);
   }
 }

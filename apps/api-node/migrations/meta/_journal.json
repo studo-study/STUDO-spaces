@@ -218,6 +218,20 @@
       "when": 1785960001113,
       "tag": "0030_legal_warbound",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1786135718174,
+      "tag": "0031_sleepy_mercury",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1786146237232,
+      "tag": "0032_narrow_jazinda",
+      "breakpoints": true
     }
   ]
 }
