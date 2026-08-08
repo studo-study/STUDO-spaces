@@ -2,6 +2,7 @@
 import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import classNames from "@/utils/classnames";
 
 type DatePickerProps = {
   /** geselecteerde datum (controlled) */
@@ -180,9 +181,12 @@ const DatePicker = ({
         id={id}
         disabled={disabled}
         onClick={() => !disabled && setOpen((prev) => !prev)}
-        className={`flex flex-row gap-2 items-center cursor-pointer ${
-          error ? "border-red-500" : "border-studoborder/30"
-        } ${s.trigger}`}
+        className={classNames(
+          `flex flex-row gap-2 items-center cursor-pointer ${
+            error ? "border-red-500" : "border-studoborder/30"
+          } ${s.trigger}`,
+          style,
+        )}
       >
         <Calendar
           size={s.icon}

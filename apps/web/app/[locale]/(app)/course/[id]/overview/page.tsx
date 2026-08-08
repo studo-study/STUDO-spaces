@@ -4,16 +4,13 @@ import { useParams } from "next/navigation";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import EmptyFallback from "@/components/ui/design_system/EmptyFallback";
 import { useTranslations } from "next-intl";
-import { ReactNode, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import UploadModal from "@/components/ui/app/private/course/cursus/cursus_overview/UploadModal";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useUploadFile } from "@/hooks/app/courses/useUploadFile";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { Sparkles } from "lucide-react";
 import { ComposerAura } from "@/components/ui/design_system/composer_aura/ComposerAura";
-import { useUpdateCourse } from "@/hooks/app/courses/useUpdateCourse";
-import { FullCourseResponse } from "@studo/types";
-import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import OverviewTitle from "@/components/ui/app/private/course/overview/OverviewTitle";
 
 const MAX_FILES = 3;

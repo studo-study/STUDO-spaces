@@ -1,7 +1,7 @@
 import { FullCourseResponse } from "@studo/types";
 import { ReactNode, useCallback } from "react";
 import { useToast } from "@/components/providers/app/ToastProvider";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useUpdateCourse } from "@/hooks/app/courses/useUpdateCourse";
 import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import classNames from "@/utils/classnames";
