@@ -71,27 +71,25 @@ export class FileService {
     courseId: string,
     userId: string,
   ): Promise<CourseDocument | null> {
+    const uuid = uuidv4();
+    const extension = file.originalname.split('.').pop();
+    const key = `course/${courseId}/${uuid}.${extension}`;
+
+    const [record] = await this.db
+      .insert(courseDocuments)
+      .values({
+        id: uuid,
+        courseId: courseId,
+        uploaderId: userId,
+        title: file.originalname,
+        status: 'uploading',
+        storageKey: key,
+        mimeType: file.mimetype,
+        fileSize: file.size,
+      })
+      .returning();
+
     try {
-      const uuid = uuidv4();
-      const extension = file.originalname.split('.').pop();
-      const key = `course/${courseId}/${uuid}.${extension}`;
-
-      //record in DB
-      const [record] = await this.db
-        .insert(courseDocuments)
-        .values({
-          id: uuid,
-          courseId: courseId,
-          uploaderId: userId,
-          title: file.originalname,
-          status: 'uploading',
-          storageKey: key,
-          mimeType: file.mimetype,
-          fileSize: file.size,
-        })
-        .returning();
-
-      //R2
       await this.s3.send(
         new PutObjectCommand({
           Bucket: process.env.R2_BUCKET_NAME,
@@ -100,18 +98,31 @@ export class FileService {
           ContentType: file.mimetype,
         }),
       );
+
       await this.redis.xadd(
-        'parse_stream',
+        'studo:documents:parse',
+        'MAXLEN',
+        '~',
+        10000,
         '*',
-        'documentId',
-        record.id,
-        'r2Key',
-        record.storageKey,
+        'payload',
+        JSON.stringify({
+          v: 1,
+          mimeType: record.mimeType,
+          courseId: courseId,
+          documentId: record.id,
+          r2Key: record.storageKey,
+        }),
       );
-      return record;
-    } catch (err) {
-      throw new Error(err as string);
+    } catch (e) {
+      await this.db
+        .update(courseDocuments)
+        .set({ status: 'failed' })
+        .where(eq(courseDocuments.id, record.id));
+      throw e;
     }
+
+    return record;
   }
 
   async getDocument(
