@@ -41,6 +41,7 @@ export const users = pgTable(
     streakCount: integer('streak_count'),
     streakLastUpdate: timestamp('streak_last_update'),
     lastLogin: timestamp('last_login').notNull(),
+    lastOnline: timestamp('last_online'),
     roles: jsonb('roles').notNull(),
     publicRole: varchar('public_role', { length: 24 }).notNull(),
     verified: boolean('verified').notNull(),

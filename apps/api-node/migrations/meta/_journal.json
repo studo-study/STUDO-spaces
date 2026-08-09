@@ -253,6 +253,13 @@
       "when": 1786197614414,
       "tag": "0035_massive_forge",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1786278119268,
+      "tag": "0036_grey_vision",
+      "breakpoints": true
     }
   ]
 }
