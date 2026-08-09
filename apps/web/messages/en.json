@@ -1373,7 +1373,16 @@
       "save_s": "Create Set",
       "del_c": "Delete last card",
       "sven_i": "Use SVEN import"
-    }
+    },
+    "dev_mode": "Developer mode",
+    "debug_mode": "Debug mode",
+    "reprocessing_toggle": "Reprocessing toggle",
+    "developer": "Developer",
+    "save": "save",
+    "toast_update_success": "Setting updated",
+    "toast_update_error": "Failed to update setting",
+    "dnd": "Do not disturb",
+    "system": "System"
   },
   "account": {
     "role": "role",

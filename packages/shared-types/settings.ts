@@ -30,6 +30,8 @@ export interface SettingsResponse {
 
   accountStatus: AccountStatus;
   onlineStatus: OnlineStatus;
+  showStreak: boolean;
+  limitTracking: boolean;
 }
 
 export interface UpdateSettings {
@@ -53,4 +55,7 @@ export interface UpdateSettings {
 
   accountStatus?: AccountStatus;
   onlineStatus?: OnlineStatus;
+
+  showStreak?: boolean;
+  limitTracking?: boolean;
 }

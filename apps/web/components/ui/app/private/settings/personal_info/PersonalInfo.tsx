@@ -4,12 +4,17 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
+import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import classNames from "@/utils/classnames";
+import { useUser } from "@/components/providers/auth/UserProvider";
 export default function PersonalInfo(props: SettingsSection) {
   const { isVisible } = props;
   const t = useTranslations("settings");
+  const user = useUser().user;
   const [editName, setEditName] = useState<boolean>(false);
   const [editMail, setEditMail] = useState<boolean>(false);
   const [editRole, setEditRole] = useState<boolean>(false);
+  const [editPassword, setEditPassword] = useState<boolean>(false);
 
   useCourseNav([
     {
@@ -21,17 +26,52 @@ export default function PersonalInfo(props: SettingsSection) {
   ]);
 
   const toggleEditName = () => {
-    setEditName(!editName);
+    setEditName((prev) => !prev);
   };
   const toggleEditMail = () => {
-    setEditMail(!editMail);
+    setEditMail((prev) => !prev);
   };
   const toggleEditRole = () => {
-    setEditRole(!editRole);
+    setEditRole((prev) => !prev);
+  };
+
+  const toggleEditPassword = () => {
+    setEditPassword((prev) => !prev);
   };
   if (isVisible != "account") {
     return;
   }
+
+  const personalInfo = [
+    {
+      label: t("username"),
+      editMode: editName,
+      value: user?.displayName,
+      type: "text",
+      onclick: toggleEditName,
+    },
+    {
+      label: t("email"),
+      editMode: editMail,
+      value: user?.email,
+      type: "text",
+      onclick: toggleEditMail,
+    },
+    {
+      label: t("role"),
+      editMode: editRole,
+      value: user?.publicRole,
+      type: "text",
+      onclick: toggleEditRole,
+    },
+    {
+      label: t("password"),
+      editMode: editPassword,
+      value: "wachtwoord",
+      type: "password",
+      onclick: toggleEditPassword,
+    },
+  ];
   return (
     <section className={"flex flex-col gap-5 w-full min-h-fit"}>
       <span className={"w-full text-base font-bold h-fit"}>
@@ -39,112 +79,47 @@ export default function PersonalInfo(props: SettingsSection) {
       </span>
       <div
         className={
-          "w-full min-h-40 h-fit rounded-3xl border border-studoborder "
+          "w-full min-h-40 h-fit rounded-3xl border border-studoborder/30 divide-studoborder/30 divide-y "
         }
       >
-        <div
-          className={
-            "w-full border-b gap-4 border-studoborder  p-10 flex flex-col"
-          }
-        >
-          <span className={"w-full text-base font-bold h-fit"}>
-            {t("username")}
-          </span>
-          <div className={"w-full flex flex-row justify-between"}>
-            {editName ? (
-              <input
-                value={"username"}
-                autoFocus={editName}
-                className={"w-3/5 outline-none"}
-                type="text"
-              />
-            ) : (
-              <span>username</span>
-            )}
-            <button
-              onClick={toggleEditName}
-              className={"font-bold text-blue-500 cursor-pointer"}
+        {personalInfo.map((option, index) => {
+          return (
+            <div
+              key={option.label + index}
+              className={"w-full gap-2 p-5 flex flex-col"}
             >
-              {t("edit")}
-            </button>
-          </div>
-        </div>
-        <div
-          className={
-            "w-full border-b gap-4 border-studoborder p-10 flex flex-col"
-          }
-        >
-          <span className={"w-full text-base font-bold h-fit"}>
-            {t("email")}
-          </span>
-          <div className={"w-full flex flex-row justify-between"}>
-            {editMail ? (
-              <input
-                value={"email"}
-                autoFocus={editMail}
-                className={"w-3/5 outline-none"}
-                type="text"
-              />
-            ) : (
-              <span>email</span>
-            )}
-            <button
-              onClick={toggleEditMail}
-              className={"font-bold text-blue-500 cursor-pointer"}
-            >
-              {t("edit")}
-            </button>
-          </div>
-        </div>
-        <div
-          className={
-            "w-full border-b gap-4 border-studoborder p-10 flex flex-col"
-          }
-        >
-          <span className={"w-full text-base font-bold h-fit"}>
-            {t("role")}
-          </span>
-          <div className={"w-full flex flex-row justify-between"}>
-            {editRole ? (
-              <select className={"w-4/5"} name="role" id="role">
-                <option>{t("student")}</option>
-                <option>{t("teacher")}</option>
-                <option>{t("professor")}</option>
-              </select>
-            ) : (
-              <span>student</span>
-            )}
-            <button
-              onClick={toggleEditRole}
-              className={"font-bold text-blue-500 cursor-pointer"}
-            >
-              {t("edit")}
-            </button>
-          </div>
-        </div>
-        <div className={"w-full gap-4  p-10 flex flex-col"}>
-          <span className={"w-full text-base font-bold h-fit"}>
-            {t("password")}
-          </span>
-          <div className={"w-full flex flex-row justify-between"}>
-            {editName ? (
-              <input
-                value={"password"}
-                autoFocus={editName}
-                className={"w-3/5 outline-none"}
-                type="text"
-              />
-            ) : (
-              <span>password</span>
-            )}
-            <button
-              onClick={toggleEditName}
-              className={"font-bold text-blue-500 cursor-pointer"}
-            >
-              {t("edit")}
-            </button>
-          </div>
-        </div>
+              <span className={"w-full text-xs opacity-50 font-bold h-fit"}>
+                {option.label}
+              </span>
+              <div
+                className={"w-full flex items-center flex-row justify-between"}
+              >
+                <input
+                  value={option.value}
+                  disabled={!option.editMode}
+                  autoFocus={option.editMode}
+                  className={classNames(
+                    " w-fit max-w-fit outline-none border-b border-transparent",
+                    option.editMode && " border-studoblue",
+                  )}
+                  type={option.type}
+                />
+                <BaseButton
+                  size={"sm"}
+                  variant={"hover"}
+                  onClick={option.onclick}
+                  className={
+                    option.editMode
+                      ? "bg-studoblue hover:bg-studoblue"
+                      : "text-blue-500"
+                  }
+                >
+                  {option.editMode ? t("save") : t("edit")}
+                </BaseButton>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

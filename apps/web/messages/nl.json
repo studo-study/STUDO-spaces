@@ -1398,7 +1398,12 @@
     "access": "Toegankelijkheid",
     "debug_mode": "Debug modus",
     "reprocessing_toggle": "Reprocessing toggle",
-    "dev_mode": "Developer modus"
+    "dev_mode": "Developer modus",
+    "save": "opslaan",
+    "toast_update_success": "Instelling opgeslagen",
+    "toast_update_error": "Opslaan mislukt",
+    "dnd": "Niet storen",
+    "system": "Systeem"
   },
   "account": {
     "role": "rol",

@@ -20,12 +20,18 @@ import {
   SlidersHorizontal,
   UserRoundCog,
 } from "lucide-react";
+import { useSettings } from "@/hooks/app/settings/useSettings";
+import { useUpdateSettings } from "@/hooks/app/settings/useUpdateSettings";
 export default function SettingsPage() {
   const t = useTranslations("settings");
   const [tab, setTab] = useState("account");
+  const settings = useSettings()?.data;
+  const { mutate, isSuccess } = useUpdateSettings();
   return (
     <>
-      <span className={"w-full h-fit font-bold text-3xl"}>{t("title")}:</span>
+      <span className={"w-full h-fit font-bold text-3xl gap-10"}>
+        {t("title")}:
+      </span>
       <div className={"w-full flex-row flex mb-5"}>
         <Tabs
           value={tab}
@@ -64,16 +70,63 @@ export default function SettingsPage() {
           ]}
         />
       </div>
-      <PersonalInfo isVisible={tab} />
-      <DevOptions isVisible={tab} />
-      <Shortcuts isVisible={tab} />
-      <CurrentPlan isVisible={tab} />
-      <Accessibility isVisible={tab} />
-      <Notifications isVisible={tab} />
-      <LearnSettings isVisible={tab} />
-      <ClassroomSettings isVisible={tab} />
-      <AccountPrivacy isVisible={tab} />
-      <BottomCredits />
+      <div className={"flex flex-col gap-20 min-w-0 flex-1 min-h-0 w-full"}>
+        <PersonalInfo
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <DevOptions
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <Shortcuts
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <CurrentPlan
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <Accessibility
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <Notifications
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <LearnSettings
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <ClassroomSettings
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <AccountPrivacy
+          isVisible={tab}
+          settings={settings}
+          mutate={mutate}
+          isSuccess={isSuccess}
+        />
+        <BottomCredits />
+      </div>
     </>
   );
 }

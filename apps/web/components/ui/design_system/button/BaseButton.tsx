@@ -13,7 +13,7 @@ interface BaseButtonProps extends Omit<
   bg?: string;
   rounded?: string;
   px?: string;
-  variant?: keyof typeof variantMap;
+  variant?: BaseButtonVariant;
   size?: keyof typeof sizeMap;
   gradient?: keyof typeof gradientMap;
   textColor?: keyof typeof textColorMap;
@@ -22,6 +22,8 @@ interface BaseButtonProps extends Omit<
   shape?: keyof typeof shapeMap;
   error?: string;
 }
+
+export type BaseButtonVariant = keyof typeof variantMap;
 
 const textColorMap = {
   white: "text-white",

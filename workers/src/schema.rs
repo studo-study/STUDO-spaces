@@ -513,6 +513,11 @@ diesel::table! {
         streak_reminders -> Bool,
         account_status -> AccountStatus,
         online_status -> OnlineStatus,
+        all_sets_private -> Bool,
+        experimental_group_features -> Bool,
+        group_notifications -> Bool,
+        limit_tracking -> Bool,
+        show_streak -> Bool,
     }
 }
 

@@ -281,6 +281,13 @@
       "when": 1786290273649,
       "tag": "0039_curious_butterfly",
       "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "7",
+      "when": 1786308997874,
+      "tag": "0040_magenta_gorgon",
+      "breakpoints": true
     }
   ]
 }

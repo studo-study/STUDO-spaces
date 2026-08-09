@@ -9,6 +9,8 @@ import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { useToast } from "@/components/providers/app/ToastProvider";
+import { BadgeCheck } from "lucide-react";
+import Verified from "@/components/ui/overige/icons/Verified";
 interface ProfileTriggerPopupProps {
   ProfileIsOpen: boolean;
   setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -83,7 +85,7 @@ function ProfilePopup({
   };
 
   const mod = {
-    link: "/admin/stats",
+    link: "/backoffice/stats",
     label: "ad",
     icon: <MdOutlineVerifiedUser />,
     color: "from-violet-500 to-purple-600",
@@ -116,7 +118,7 @@ function ProfilePopup({
     <div
       ref={popupRef}
       className={`absolute top-full right-0 mt-4
-        z-[9999] w-75 truncate h-fit
+        z-9999 w-75 truncate h-fit
         rounded-2xl
         bg-white/80 dark:bg-[#1e293b]/90
         backdrop-blur-xl
@@ -144,13 +146,19 @@ function ProfilePopup({
                 "w-full h-full flex flex-col items-baseline justify-center"
               }
             >
-              <span
+              <div
                 className={
-                  "text-studodarkblue dark:text-white text-start font-bold text-xl truncate overflow-hidden w-full"
+                  "text-studodarkblue dark:text-white text-start flex flex-row gap-2 items-center font-bold text-xl truncate overflow-hidden w-full"
                 }
               >
-                {user?.displayName}
-              </span>
+                <span className={"truncate"}>{user?.displayName}</span>
+                {user?.verified && (
+                  <Verified
+                    variant={user?.publicRole === "owner" ? "gold" : "blue"}
+                    size={18}
+                  />
+                )}
+              </div>
               <span className={"text-zinc-400 truncate"}>{user?.email}</span>
             </div>
           </Link>

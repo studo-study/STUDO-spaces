@@ -86,6 +86,8 @@ export const settings = pgTable(
       .default('all_good')
       .notNull(),
     onlineStatus: OnlineStatusEnum('online_status').default('active').notNull(),
+    limitTracking: boolean('limit_tracking').default(false).notNull(),
+    showStreak: boolean('show_streak').default(true).notNull(),
   },
   (table) => [uniqueIndex('idx_user_settings').on(table.userId)],
 );
