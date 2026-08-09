@@ -3486,6 +3486,7 @@ dependencies = [
  "diesel",
  "diesel-async",
  "dotenvy",
+ "log",
  "pdfium-render",
  "pgvector",
  "redis",
