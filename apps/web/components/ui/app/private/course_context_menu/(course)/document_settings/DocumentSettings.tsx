@@ -12,11 +12,10 @@ const DocumentSettings = () => {
   const courseId = path[2];
   const docId = path[path.length - 1];
 
-  const {
-    mutate: reprocess,
-    isPending: isResetting,
-    status,
-  } = useReprocessDocument(courseId, docId);
+  const { mutate: reprocess, isPending: isResetting } = useReprocessDocument(
+    courseId,
+    docId,
+  );
 
   return (
     <div className={"min-h-0 w-full flex flex-col flex-1 gap-2"}>

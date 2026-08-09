@@ -8,10 +8,6 @@ import { useCourseNavStore } from "@/store/course/CourseNavStore";
 import { useFile } from "@/hooks/app/courses/useFile";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import { usePdfReader } from "@/store/course_context_menu/PdfStore";
-import CourseSidebar from "@/components/ui/app/private/course_context_menu/CourseSidebar";
-import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
-import SideMenu from "@/components/ui/app/private/course_context_menu/SideMenu";
-import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
 import DocumentSplashWrapper from "@/app/[locale]/(app)/course/[id]/documents/[file_id]/DocumentSplashWrapper";
 export default function CourseDetailPage({
   children,
@@ -22,7 +18,6 @@ export default function CourseDetailPage({
   const courseId = path[2];
   const docId = path[4];
   const { currentPage, setCurrentPage, numPages } = usePdfReader();
-  const menuOpen = useSideMenu((state) => state.menuInfo);
   const course = useCourse(courseId).data;
   const metaData = course?.documents.find((doc) => doc.id === docId);
   const document = useFile(courseId, docId)?.data;
