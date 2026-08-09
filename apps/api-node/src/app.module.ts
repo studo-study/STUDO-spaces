@@ -31,6 +31,7 @@ import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis'
 import type Redis from 'ioredis';
 import { REDIS_CLIENT } from './redis/redis.provider';
 import { ChatModule } from './chat/chat.module';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { ChatModule } from './chat/chat.module';
     AdminModule,
     CourseModule,
     ChatModule,
+    SettingsModule,
   ],
   controllers: [AppController, HealthController],
   providers: [

@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "idx_user_settings" ON "settings" USING btree ("user_id");

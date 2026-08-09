@@ -10,7 +10,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginRequest, RegisterUserRequest } from '@studo/types';
-import { profiles, users } from '../drizzle/schema';
+import { profiles, settings, users } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
 import {
   type DatabaseProvider,
@@ -147,6 +147,9 @@ export class AuthService {
       })
       .returning({ id: users.id });
 
+    await this.db.insert(settings).values({
+      userId: uid,
+    });
     await this.db.insert(profiles).values({
       userId: uid,
       displayName: params.displayName,
@@ -257,6 +260,11 @@ export class AuthService {
         banned: false,
       })
       .returning({ id: users.id });
+
+    // Settings
+    await this.db.insert(settings).values({
+      userId: uid,
+    });
 
     // Profile
     await this.db.insert(profiles).values({

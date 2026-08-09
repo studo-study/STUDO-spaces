@@ -1,7 +1,14 @@
 import { useTranslations } from "next-intl";
+import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
 
-export default function Notifications() {
+export default function Notifications(props: SettingsSection) {
+  const { isVisible } = props;
   const t = useTranslations("settings");
+
+  if (isVisible != "notifications") {
+    return;
+  }
+
   return (
     <section className={"flex flex-col gap-5 w-full min-h-fit"}>
       <span className={"w-full text-base font-bold h-fit"}>

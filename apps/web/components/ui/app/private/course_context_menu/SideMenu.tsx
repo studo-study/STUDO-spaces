@@ -4,7 +4,8 @@ import PomodorTimer from "@/components/ui/app/private/course_context_menu/learn/
 import LearnSettings from "@/components/ui/app/private/course_context_menu/learn/settings/LearnSettings";
 import ExtraOptions from "@/components/ui/app/private/course_context_menu/extra_options/ExtraOptions";
 import { usePathname } from "@/i18n/routing";
-import CourseWidgets from "@/components/ui/app/private/course_context_menu/course_widgets/CourseWidgets";
+import CourseWidgets from "@/components/ui/app/private/course_context_menu/(course)/course_widgets/CourseWidgets";
+import DocumentSettings from "@/components/ui/app/private/course_context_menu/(course)/document_settings/DocumentSettings";
 
 interface SideMenuProps {
   origin: string;
@@ -24,6 +25,7 @@ const SideMenu: React.FC<SideMenuProps> = (props) => {
       {origin === "course" && <PdfReader />}
       {origin === "quick_actions" && <ExtraOptions />}
       {origin === "widgets" && <CourseWidgets />}
+      {origin === "doc_settings" && <DocumentSettings />}
     </div>
   );
 };

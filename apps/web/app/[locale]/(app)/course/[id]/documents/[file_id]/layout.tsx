@@ -114,30 +114,7 @@ export default function CourseDetailPage({
         </div>
       </div>
       <div className={"min-w-0 min-h-0 flex-1 flex flex-row"}>
-        <ResizablePanelLayout
-          storageKey="studoset-sidebar"
-          panels={[
-            { id: "main", defaultSize: 78, minSize: 40 },
-            {
-              id: "contextmenu",
-              defaultSize: 30,
-              minSize: 30,
-              maxSize: 45,
-            },
-          ]}
-        >
-          <ResizablePanelLayout.Panel panelId="main">
-            <DocumentSplashWrapper docId={docId}>
-              {children}
-            </DocumentSplashWrapper>
-          </ResizablePanelLayout.Panel>
-          {menuOpen.isOpen && (
-            <ResizablePanelLayout.Panel panelId="contextmenu">
-              <SideMenu origin={menuOpen?.origin ?? ""} />
-            </ResizablePanelLayout.Panel>
-          )}
-        </ResizablePanelLayout>
-        <CourseSidebar />
+        <DocumentSplashWrapper docId={docId}>{children}</DocumentSplashWrapper>
       </div>
     </div>
   );

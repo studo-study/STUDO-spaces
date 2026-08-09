@@ -36,6 +36,7 @@ import {
   courseResources,
   boards,
   boardUsers,
+  settings,
 } from './schema';
 
 export const usersRelations = relations(users, ({ many, one }) => ({
@@ -57,6 +58,17 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   courseMemberships: many(courseUsers),
   uploadedDocuments: many(courseDocuments),
   boardMemberships: many(boardUsers),
+  settings: one(settings, {
+    fields: [users.id],
+    references: [settings.userId],
+  }),
+}));
+
+export const SettingsRelations = relations(settings, ({ one }) => ({
+  user: one(users, {
+    fields: [settings.userId],
+    references: [users.id],
+  }),
 }));
 
 export const profilesRelations = relations(profiles, ({ one }) => ({

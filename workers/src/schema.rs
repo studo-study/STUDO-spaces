@@ -2,6 +2,14 @@
 
 pub mod sql_types {
     #[derive(diesel::sql_types::SqlType)]
+    #[diesel(postgres_type(name = "account_status"))]
+    pub struct AccountStatus;
+
+    #[derive(diesel::sql_types::SqlType)]
+    #[diesel(postgres_type(name = "app_theme"))]
+    pub struct AppTheme;
+
+    #[derive(diesel::sql_types::SqlType)]
     #[diesel(postgres_type(name = "course_document_status"))]
     pub struct CourseDocumentStatus;
 
@@ -12,6 +20,10 @@ pub mod sql_types {
     #[derive(diesel::sql_types::SqlType)]
     #[diesel(postgres_type(name = "document_tag"))]
     pub struct DocumentTag;
+
+    #[derive(diesel::sql_types::SqlType)]
+    #[diesel(postgres_type(name = "online_status"))]
+    pub struct OnlineStatus;
 
     #[derive(diesel::sql_types::SqlType)]
     #[diesel(postgres_type(name = "row_priority"))]
@@ -479,6 +491,32 @@ diesel::table! {
 }
 
 diesel::table! {
+    use diesel::sql_types::*;
+    use super::sql_types::AppTheme;
+    use super::sql_types::AccountStatus;
+    use super::sql_types::OnlineStatus;
+
+    settings (id) {
+        id -> Uuid,
+        user_id -> Uuid,
+        dev_mode -> Bool,
+        debug_mode -> Bool,
+        show_reprocessing -> Bool,
+        visible_streak -> Bool,
+        share_group_progress -> Bool,
+        allow_group_invites -> Bool,
+        auto_group_participation -> Bool,
+        theme -> AppTheme,
+        email_notifications -> Bool,
+        in_app_notifications -> Bool,
+        progress_notifications -> Bool,
+        streak_reminders -> Bool,
+        account_status -> AccountStatus,
+        online_status -> OnlineStatus,
+    }
+}
+
+diesel::table! {
     studoprofilecommunities (classroom_id, studoprofile_id) {
         classroom_id -> Uuid,
         #[max_length = 20]
@@ -613,6 +651,7 @@ diesel::table! {
         public_role -> Varchar,
         verified -> Bool,
         banned -> Bool,
+        last_online -> Nullable<Timestamp>,
     }
 }
 
@@ -680,6 +719,7 @@ diesel::joinable!(sessionpins -> pins (pin_id));
 diesel::joinable!(sessionpins -> studysessions (session_id));
 diesel::joinable!(sessionpins -> users (owner_id));
 diesel::joinable!(setlikes -> users (user_id));
+diesel::joinable!(settings -> users (user_id));
 diesel::joinable!(studoprofilecommunities -> classrooms (classroom_id));
 diesel::joinable!(studoprofilecommunities -> studoprofiles (studoprofile_id));
 diesel::joinable!(studoprofiles -> users (user_id));
@@ -721,6 +761,7 @@ diesel::allow_tables_to_appear_in_same_query!(
     sessioncards,
     sessionpins,
     setlikes,
+    settings,
     studoprofilecommunities,
     studoprofiles,
     studotracks,

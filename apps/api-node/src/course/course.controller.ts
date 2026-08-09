@@ -106,4 +106,13 @@ export class CourseController {
   ) {
     return this.courseService.updateCourse(courseId, body);
   }
+
+  @Roles(Role.USER, Role.ADMIN)
+  @Patch(':course_id/docs/:doc_id/reprocess')
+  async reprocessDocument(
+    @Param('course_id', ParseUUIDPipe) courseId: string,
+    @Param('doc_id', ParseUUIDPipe) docId: string,
+  ) {
+    return this.fileService.reprocess(courseId, docId);
+  }
 }

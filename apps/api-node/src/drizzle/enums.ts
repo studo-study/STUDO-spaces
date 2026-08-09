@@ -65,3 +65,23 @@ export const documentTagsEnum = pgEnum('document_tag', [
 ]);
 
 export type documentTag = typeof documentTagsEnum.enumValues;
+
+export const OnlineStatusEnum = pgEnum('online_status', [
+  'active',
+  'away',
+  'dnd',
+]);
+export type OnlineStatus = typeof OnlineStatusEnum.enumValues;
+
+export const AccountStatusEnum = pgEnum('account_status', [
+  'all_good',
+  'limited',
+  'very_limited',
+  'at_risk',
+  'banned',
+  'perma_banned',
+]);
+export type AccountStatus = typeof AccountStatusEnum.enumValues;
+
+export const AppThemeEnum = pgEnum('app_theme', ['light', 'dark', 'system']);
+export type AppTheme = typeof AppThemeEnum.enumValues;

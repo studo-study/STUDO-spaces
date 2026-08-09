@@ -2,12 +2,17 @@
 
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
 
-export default function AccountPrivacy() {
+export default function AccountPrivacy(props: SettingsSection) {
+  const { isVisible } = props;
   const t = useTranslations("settings");
   const statusRef = useRef<HTMLSelectElement>(null);
   const [status, setStatus] = useState<string>("active");
 
+  if (isVisible != "account") {
+    return;
+  }
   const toggleStatus = () => {
     if (statusRef.current) {
       setStatus(statusRef.current.value);

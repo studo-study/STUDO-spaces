@@ -1,7 +1,9 @@
 use anyhow::Context;
-use log::info;
+use tracing::{info};
 use redis::aio::ConnectionManager;
 
+pub(crate) mod consumer;
+mod job;
 const GROUP: &str = "workers";
 
 pub async fn ensure_group(connection: &mut ConnectionManager) -> anyhow::Result<()> {
@@ -9,21 +11,34 @@ pub async fn ensure_group(connection: &mut ConnectionManager) -> anyhow::Result<
 
     //stream key ophalen
     info!("reading STREAM key");
-    let stream = std::env::var("REDIS_DOCUMENT_DUEUE_KEY")
+    let stream = std::env::var("REDIS_DOCUMENT_QUEUE_KEY")
         .context("Redis queue key is missing in environment")?;
 
-    tracing::info!("STREAM key loaded");
+    info!("STREAM key loaded");
 
     //Groep opzetten bij init
-    let redis_queue: redis::RedisResult<()> = redis::cmd("XGROUP")
+    let result: redis::RedisResult<()> = redis::cmd("XGROUP")
         .arg("CREATE")
-        .arg(stream)
+        .arg(&stream)
         .arg(GROUP)
         .arg("$")
         .arg("MKSTREAM")
         .query_async(connection)
-        .await
-        .context("failed to read queue")?;
+        .await;
 
-    Ok(())
+    match result {
+        Ok(_) => {
+            info!("XGROUP created");
+            Ok(())
+        }
+        Err(e) if e.code() == Some("BUSYGROUP") => {
+            info!("XGROUP already existed");
+            Ok(())
+        }
+        Err(e) => {
+            return Err(e).context("XGROUP CREATE failed");
+        }
+    }
+
+
 }

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-
-export default function PersonalInfo() {
+import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
+export default function PersonalInfo(props: SettingsSection) {
+  const { isVisible } = props;
   const t = useTranslations("settings");
   const [editName, setEditName] = useState<boolean>(false);
   const [editMail, setEditMail] = useState<boolean>(false);
@@ -28,6 +29,9 @@ export default function PersonalInfo() {
   const toggleEditRole = () => {
     setEditRole(!editRole);
   };
+  if (isVisible != "account") {
+    return;
+  }
   return (
     <section className={"flex flex-col gap-5 w-full min-h-fit"}>
       <span className={"w-full text-base font-bold h-fit"}>

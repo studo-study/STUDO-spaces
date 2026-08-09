@@ -31,14 +31,15 @@ async fn main() -> anyhow::Result<()> {
     info!("{} , redis reachable", pong);
 
 
+    //effectieve queue
+    queue::ensure_group(&mut connection).await.context("REDIS GROUP failed")?;
+    queue::consumer::read_batch(&mut connection, 10, 0).await.context("Queue reading failed")?;
+
     //gracefull shutdown
     tokio::signal::ctrl_c()
         .await
         .context("catching signal failed")?;
-    info!("shutdown signaal received");
-
-    //effectieve queue
-    queue::ensure_group(&mut connection).await.context("Queue failed")?;
+    info!("shutdown signal received");
 
     Ok(())
 }

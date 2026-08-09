@@ -211,9 +211,8 @@ make start-docker-api-seeded
 
 ```
 # aantal lijnen checken
-cloc . \
-  --exclude-dir=node_modules,.next,dist,build,Pods \
-  --exclude-ext=json,svg,txt, yaml, swift, ASM, php
+cloc --vcs=git --exclude-dir=node_modules,.next,dist,build,target \
+     --not-match-f='(package-lock|pnpm-lock)\.(json|yaml)|\.gen\.ts$'
 ```
 
 ## Licentie

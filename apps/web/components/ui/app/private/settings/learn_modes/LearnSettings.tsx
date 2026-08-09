@@ -1,12 +1,18 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
 
-export default function LearnSettings() {
+export default function LearnSettings(props: SettingsSection) {
+  const { isVisible } = props;
   const t = useTranslations("settings");
   const [streak, setStreak] = useState(true);
   const [pomodoro, setPomodoro] = useState(false);
   const [twentytwenty, setTwentytwenty] = useState(false);
+
+  if (isVisible != "app") {
+    return;
+  }
 
   const togglePomodoro = () => {
     setPomodoro((prev) => {

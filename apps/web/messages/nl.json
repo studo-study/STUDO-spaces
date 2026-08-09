@@ -1390,7 +1390,15 @@
       "save_s": "Creëer Set",
       "del_c": "Verwijder laatste kaart",
       "sven_i": "Gebruik SVEN import"
-    }
+    },
+    "account": "Account",
+    "developer": "Developer",
+    "select": "Select",
+    "app": "App",
+    "access": "Toegankelijkheid",
+    "debug_mode": "Debug modus",
+    "reprocessing_toggle": "Reprocessing toggle",
+    "dev_mode": "Developer modus"
   },
   "account": {
     "role": "rol",
@@ -1585,6 +1593,9 @@
           "type": "type",
           "resource": "bijlage"
         }
+      },
+      "document_settings": {
+        "reprocess_btn": "Herverwerk document"
       }
     }
   },
