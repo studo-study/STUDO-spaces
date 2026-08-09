@@ -42,7 +42,7 @@ export default function AppHeader({
   const [AddIsOpen, setAddIsOpen] = useState(false);
   const [NotifIsOpen, setNotifIsOpen] = useState(false);
   const [ProfileIsOpen, setProfileIsOpen] = useState(false);
-  const [StreakOpen, setStreakOpen] = useState(false);
+  const [setStreakOpen] = useState(false);
   const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === "true";
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
@@ -176,11 +176,7 @@ export default function AppHeader({
           {isLoading ? (
             <div className="min-w-20 h-8 rounded-4xl bg-studogrey/30 animate-pulse" />
           ) : (
-            <Streak
-              streak={user?.streakCount ?? 0}
-              StreakOpen={false}
-              setStreakOpen={setStreakOpen}
-            />
+            <Streak streak={user?.streakCount ?? 0} />
           )}
         </div>
       </div>

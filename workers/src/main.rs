@@ -1,4 +1,4 @@
-use anyhow::Context;
+use anyhow::{Context};
 use redis::AsyncCommands;
 use tracing::info;
 
@@ -32,8 +32,8 @@ async fn main() -> anyhow::Result<()> {
 
 
     //effectieve queue
-    queue::ensure_group(&mut connection).await.context("REDIS GROUP failed")?;
-    queue::consumer::read_batch(&mut connection, 10, 0).await.context("Queue reading failed")?;
+    queue::consumer::ensure_group(&mut connection).await.context("REDIS GROUP failed")?;
+    queue::consumer::read_batch(&mut connection, 10).await.context("Queue reading failed")?;
 
     //gracefull shutdown
     tokio::signal::ctrl_c()

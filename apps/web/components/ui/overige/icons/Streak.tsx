@@ -8,8 +8,8 @@ interface StreakProps {
   size?: number;
   popup?: boolean;
   streak: number;
-  StreakOpen: boolean;
-  setStreakOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  StreakOpen?: boolean;
+  setStreakOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Streak({
@@ -26,8 +26,8 @@ export default function Streak({
       <Link
         href={"/streak"}
         ref={containerRef}
-        onMouseEnter={() => setStreakOpen(true)}
-        onMouseLeave={() => setStreakOpen(false)}
+        onMouseEnter={() => setStreakOpen && setStreakOpen(true)}
+        onMouseLeave={() => setStreakOpen && setStreakOpen(false)}
         className="min-w-20 max-w-20 max-h-8 flex items-center cursor-pointer active:scale-95 transition-all duration-300 justify-center relative"
       >
         {config.glow && (
@@ -46,12 +46,14 @@ export default function Streak({
           />
           <span className={`w-fit ${config.textColor}`}>{streak}</span>
         </div>
-        <StreakPopup
-          Streak={streak}
-          StreakOpen={StreakOpen}
-          setStreakOpen={setStreakOpen}
-          containerRef={containerRef}
-        />
+        {StreakOpen && setStreakOpen && (
+          <StreakPopup
+            Streak={streak}
+            StreakOpen={StreakOpen}
+            setStreakOpen={setStreakOpen}
+            containerRef={containerRef}
+          />
+        )}
       </Link>
     );
   }
