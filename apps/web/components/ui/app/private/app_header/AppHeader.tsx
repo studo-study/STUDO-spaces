@@ -1,11 +1,9 @@
 // components/app/app_header/header.tsx
 "use client";
 import TriggerAddPopup from "@/components/ui/app/private/app_header/popups/AddPopup";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import TriggerNotif from "@/components/ui/app/private/app_header/popups/NotificationsPopup";
-import StreakPopup from "@/components/ui/app/private/app_header/StreakPopup";
 import TriggerProfile from "@/components/ui/app/private/app_header/popups/ProfilePopup";
-import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { StudoUser } from "@/types/types";
 import { useAppStore } from "@/store/useAppStore";

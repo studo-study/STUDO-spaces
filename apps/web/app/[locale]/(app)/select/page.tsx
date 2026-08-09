@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 import { FaCheck } from "react-icons/fa";
 import Link from "next/link";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
-import { BadgeCheck } from "lucide-react";
 
 const free = [
   { feature: "Create basic Studosets" },

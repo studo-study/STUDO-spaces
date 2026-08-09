@@ -9,7 +9,6 @@ import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { useToast } from "@/components/providers/app/ToastProvider";
-import { BadgeCheck } from "lucide-react";
 import Verified from "@/components/ui/overige/icons/Verified";
 interface ProfileTriggerPopupProps {
   ProfileIsOpen: boolean;
