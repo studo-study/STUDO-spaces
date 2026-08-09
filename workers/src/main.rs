@@ -1,10 +1,10 @@
-use tracing::info;
 use anyhow::Context;
 use redis::AsyncCommands;
+use tracing::info;
 
-mod schema;
 mod pipeline;
 mod queue;
+mod schema;
 mod storage;
 
 #[tokio::main]
@@ -16,27 +16,27 @@ async fn main() -> anyhow::Result<()> {
 
     //inlezen vn .env
     dotenvy::dotenv().ok();
-    let redis_url = std::env::var("REDIS_URL")
-        .context("Redis url is missing in environment")?;
+    let redis_url = std::env::var("REDIS_URL").context("Redis url is missing in environment")?;
     info!("Redis config loaded");
 
     //redis client ping
-    let client = redis::Client::open(redis_url)
-        .context("Redis client setup failed")?;
+    let client = redis::Client::open(redis_url).context("Redis client setup failed")?;
 
-    let mut connection = client.get_connection_manager()
+    let mut connection = client
+        .get_connection_manager()
         .await
         .context("Connection manager failed")?;
 
-    let pong: String =connection
-        .ping()
-        .await
-        .context("Connection failed")?;
+    let pong: String = connection.ping().await.context("Connection failed")?;
 
     info!("{} , redis reachable", pong);
 
+    //gracefull shutdown
+    tokio::signal::ctrl_c()
+        .await
+        .context("catching signal failed")?;
+
+    info!("shutdown signaal received");
+
     Ok(())
-
-
-
 }
