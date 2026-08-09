@@ -5,6 +5,7 @@ export interface MenuConfig {
   check_course: boolean;
   quick_actions: boolean;
   widgets: boolean;
+  doc_settings: boolean;
 }
 export const context_course: Record<string, MenuConfig> = {
   learn: {
@@ -14,6 +15,7 @@ export const context_course: Record<string, MenuConfig> = {
     check_course: true,
     quick_actions: true,
     widgets: false,
+    doc_settings: false,
   },
   "your-files": {
     pomodoro: false,
@@ -22,6 +24,7 @@ export const context_course: Record<string, MenuConfig> = {
     check_course: true,
     quick_actions: true,
     widgets: false,
+    doc_settings: false,
   },
   studoset: {
     pomodoro: false,
@@ -30,6 +33,7 @@ export const context_course: Record<string, MenuConfig> = {
     check_course: true,
     quick_actions: true,
     widgets: false,
+    doc_settings: false,
   },
   overview: {
     pomodoro: false,
@@ -38,6 +42,7 @@ export const context_course: Record<string, MenuConfig> = {
     check_course: false,
     quick_actions: false,
     widgets: true,
+    doc_settings: false,
   },
   course: {
     pomodoro: false,
@@ -46,6 +51,16 @@ export const context_course: Record<string, MenuConfig> = {
     check_course: false,
     quick_actions: false,
     widgets: false,
+    doc_settings: false,
+  },
+  documents: {
+    pomodoro: false,
+    learn_settings: false,
+    chat: true,
+    check_course: false,
+    quick_actions: false,
+    widgets: false,
+    doc_settings: true,
   },
 };
 
@@ -56,20 +71,32 @@ const emptyConfig: MenuConfig = {
   check_course: false,
   quick_actions: false,
   widgets: false,
+  doc_settings: true,
 };
 
 export const resolveMenuConfig = (pathname: string): MenuConfig => {
   const segments = pathname.split("/").filter(Boolean);
-  const keys = Object.keys(context_course).sort(
-    (a, b) => b.split("/").length - a.split("/").length,
-  );
-  for (const key of keys) {
+
+  let best: { config: MenuConfig; offset: number; length: number } | null =
+    null;
+
+  for (const key of Object.keys(context_course)) {
     const keyParts = key.split("/");
     for (let i = 0; i + keyParts.length <= segments.length; i++) {
-      if (keyParts.every((part, j) => segments[i + j] === part)) {
-        return context_course[key];
+      if (!keyParts.every((part, j) => segments[i + j] === part)) continue;
+      if (
+        !best ||
+        i > best.offset ||
+        (i === best.offset && keyParts.length > best.length)
+      ) {
+        best = {
+          config: context_course[key],
+          offset: i,
+          length: keyParts.length,
+        };
       }
     }
   }
-  return emptyConfig;
+
+  return best?.config ?? emptyConfig;
 };

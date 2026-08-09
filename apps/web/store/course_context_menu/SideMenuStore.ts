@@ -7,7 +7,8 @@ export type MenuOrigin =
   | "quick_actions"
   | "pomodoro"
   | "settings"
-  | "widgets";
+  | "widgets"
+  | "doc_settings";
 export interface menuInfo {
   isOpen: boolean;
   origin: MenuOrigin | null;

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { LuDelete } from "react-icons/lu";
+import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
 interface Shortcut {
   title: string;
   keys: ("command" | "delete" | string)[];
@@ -21,12 +22,18 @@ const shortcuts: Shortcut[] = [
   { title: "sven_i", keys: ["command", "i"], premium: true },
 ];
 
-export function Shortcuts() {
+export function Shortcuts(props: SettingsSection) {
+  const { isVisible } = props;
+
   const t = useTranslations("settings");
   const [isMac] = useState(
     () =>
       typeof navigator !== "undefined" && navigator.platform.includes("Mac"),
   );
+
+  if (isVisible != "access") {
+    return;
+  }
 
   return (
     <section className={"flex flex-col gap-5 w-full min-h-fit"}>

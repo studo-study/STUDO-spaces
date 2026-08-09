@@ -45,7 +45,7 @@ export class SessionController {
   // Build the frontend auth-callback redirect URL for a signed token.
   private buildCallbackRedirect(res: Response, token: string) {
     const frontendUrl =
-      this.configService.get<string>('url.url') || 'http://localhost:5173';
+      this.configService.get<string>('url.url') || 'http://localhost:4000';
     return res.redirect(`${frontendUrl}/auth/callback?token=${token}`);
   }
 

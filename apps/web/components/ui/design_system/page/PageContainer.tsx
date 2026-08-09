@@ -5,7 +5,7 @@ interface PageContainerProps extends React.HTMLProps<HTMLDivElement> {
   gap?: number;
 }
 
-const PageContainerRoutes = ["course", "admin"];
+const PageContainerRoutes = ["course", "admin", "select"];
 const PageContainer = (props: PageContainerProps) => {
   const path = usePathname().split("/")[1];
   console.log(path);

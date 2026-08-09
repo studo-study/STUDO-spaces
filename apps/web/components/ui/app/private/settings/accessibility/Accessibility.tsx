@@ -1,107 +1,64 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
+import type { AppTheme } from "@studo/types";
+import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
+import {
+  SettingsCard,
+  SettingsMenuOption,
+} from "@/components/ui/app/private/settings/SettingsCard";
+import { useSettingSaver } from "@/hooks/app/settings/useSettingSaver";
 
-export default function Accessibility() {
+export default function Accessibility(props: SettingsSection) {
+  const { isVisible, settings, mutate } = props;
   const t = useTranslations("settings");
-  return (
-    <section className={"flex flex-col gap-5 w-full min-h-fit"}>
-      <span className={"w-full text-base font-bold h-fit"}>
-        {t("accessibility")}
-      </span>
-      <div
-        className={
-          "w-full min-h-40 h-fit rounded-3xl border dark:border-studoborder border-zinc-300"
-        }
-      >
-        <div
-          className={
-            "w-full border-b gap-4 dark:border-studoborder border-zinc-300 px-10 py-8 flex flex-col"
-          }
-        >
-          <div className={"w-full flex flex-row justify-between items-center"}>
-            <span className={"w-full text-base font-bold h-fit"}>
-              {t("page_color")}
-            </span>
-            <select
-              name="sort sets"
-              defaultValue="all"
-              className="
-                                px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
-                                border border-studogrey/30
-                                bg-white dark:bg-gray-700
-                                text-studodarkblue dark:text-white
-                                font-medium text-xs sm:text-sm
-                                shadow-sm hover:shadow-md
-                                transition-all duration-200
-                                cursor-pointer w-30 text-center
-                                focus:outline-none focus:ring-2 focus:ring-studogrey/50
-                                appearance-none"
-            >
-              <option value="all">{t("auto")}</option>
-              <option value="studyset">{t("dark")}</option>
-              <option value="visualset">{t("light")}</option>
-            </select>
-          </div>
-        </div>
-        <div
-          className={
-            "w-full border-b gap-4 dark:border-studoborder border-zinc-300 px-10 py-8 flex flex-col"
-          }
-        >
-          <div className={"w-full flex flex-row justify-between items-center"}>
-            <span className={"w-full text-base font-bold h-fit"}>
-              {t("font_size")}
-            </span>
-            <select
-              name="sort sets"
-              defaultValue="all"
-              className="
-                                px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
-                                border border-studogrey/30
-                                bg-white dark:bg-gray-700
-                                text-studodarkblue dark:text-white
-                                font-medium text-xs sm:text-sm
-                                shadow-sm hover:shadow-md
-                                transition-all duration-200
-                                cursor-pointer w-30 text-center
-                                focus:outline-none focus:ring-2 focus:ring-studogrey/50
-                                appearance-none"
-            >
-              <option value="all">{t("auto")}</option>
-              <option value="lg">{t("lg")}</option>
-              <option value="xl">{t("xl")}</option>
-              <option value="xxl">{t("xxl")}</option>
-            </select>
-          </div>
-        </div>
-        <div className={"w-full gap-4  px-10 py-8 flex flex-col"}>
-          <div className={"w-full flex flex-row justify-between items-center"}>
-            <span className={"w-full text-base font-bold h-fit"}>
-              {t("language")}
-            </span>
-            <select
-              name="sort sets"
-              defaultValue="all"
-              className="
-                                px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
-                                border border-studogrey/30
-                                bg-white dark:bg-gray-700
-                                text-studodarkblue dark:text-white
-                                font-medium text-xs sm:text-sm
-                                shadow-sm hover:shadow-md
-                                transition-all duration-200
-                                cursor-pointer w-30 text-center
-                                focus:outline-none focus:ring-2 focus:ring-studogrey/50
-                                appearance-none"
-            >
-              <option value="all">English</option>
-              <option value="studyset">Nederlands</option>
-              <option value="visualset">Français</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  const save = useSettingSaver(mutate);
+
+  // font_size and language have no backing settings field yet — kept local for now.
+  const [fontSize, setFontSize] = useState<string>("auto");
+  const [language, setLanguage] = useState<string>("en");
+
+  if (isVisible != "access") {
+    return;
+  }
+
+  const items: SettingsMenuOption[] = [
+    {
+      label: t("page_color"),
+      type: "select",
+      value: settings?.theme ?? "system",
+      onChange: (v) => save({ theme: v as AppTheme }),
+      options: [
+        { value: "system", label: t("system") },
+        { value: "dark", label: t("dark") },
+        { value: "light", label: t("light") },
+      ],
+    },
+    {
+      label: t("font_size"),
+      type: "select",
+      value: fontSize,
+      onChange: (v) => setFontSize(v),
+      options: [
+        { value: "auto", label: t("auto") },
+        { value: "lg", label: t("lg") },
+        { value: "xl", label: t("xl") },
+        { value: "xxl", label: t("xxl") },
+      ],
+    },
+    {
+      label: t("language"),
+      type: "select",
+      value: language,
+      onChange: (v) => setLanguage(v),
+      options: [
+        { value: "en", label: "English" },
+        { value: "nl", label: "Nederlands" },
+        { value: "fr", label: "Français" },
+      ],
+    },
+  ];
+
+  return <SettingsCard title={t("accessibility")} items={items} />;
 }

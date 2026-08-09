@@ -83,6 +83,13 @@ const CourseSidebar: React.FC = () => {
       icon: <LayoutGrid size={17} />,
       isEnabled: true,
     },
+    {
+      key: "doc_settings",
+      tooltip: "Document Settings",
+      onclick: () => toggleMenu("doc_settings"),
+      icon: <Settings size={17} />,
+      isEnabled: true,
+    },
   ];
   return (
     <div className="shrink-0 w-20 h-full border-studoborder/30 shadow-3xl border-l bg-studogrey/10 flex flex-col gap-5 py-5 items-center justify-start">

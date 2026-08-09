@@ -16,7 +16,8 @@ import { LoggerMiddleware } from './lib/logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { SessionModule } from './session/session.module';
 import { AuthGuard } from './auth/guards/auth.guard';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { OnlineTrackerInterceptor } from './lib/online-tracker.interceptor';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { HealthController } from './health/health.controller';
 import { StudoprofileModule } from './studoprofile/studoprofile.module';
@@ -30,6 +31,7 @@ import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis'
 import type Redis from 'ioredis';
 import { REDIS_CLIENT } from './redis/redis.provider';
 import { ChatModule } from './chat/chat.module';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
   imports: [
@@ -63,6 +65,7 @@ import { ChatModule } from './chat/chat.module';
     AdminModule,
     CourseModule,
     ChatModule,
+    SettingsModule,
   ],
   controllers: [AppController, HealthController],
   providers: [
@@ -77,6 +80,10 @@ import { ChatModule } from './chat/chat.module';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: OnlineTrackerInterceptor,
     },
     AppService,
   ],

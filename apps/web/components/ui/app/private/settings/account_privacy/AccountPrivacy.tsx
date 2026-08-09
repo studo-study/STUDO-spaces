@@ -1,122 +1,70 @@
 "use client";
 
-import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Circle } from "lucide-react";
+import type { OnlineStatus } from "@studo/types";
+import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
+import {
+  SettingsCard,
+  SettingsMenuOption,
+} from "@/components/ui/app/private/settings/SettingsCard";
+import { useSettingSaver } from "@/hooks/app/settings/useSettingSaver";
 
-export default function AccountPrivacy() {
+export default function AccountPrivacy(props: SettingsSection) {
+  const { isVisible, settings, mutate } = props;
   const t = useTranslations("settings");
-  const statusRef = useRef<HTMLSelectElement>(null);
-  const [status, setStatus] = useState<string>("active");
+  const save = useSettingSaver(mutate);
 
-  const toggleStatus = () => {
-    if (statusRef.current) {
-      setStatus(statusRef.current.value);
-    }
-  };
-  return (
-    <section className={"flex flex-col gap-5 w-full min-h-fit"}>
-      <span className={"w-full text-base font-bold h-fit"}>
-        {t("account_privacy")}
-      </span>
-      <div
-        className={
-          "w-full min-h-40 h-fit rounded-3xl border border-studoborder"
-        }
-      >
-        <div
-          className={
-            "w-full border-b gap-4 border-studoborder px-10 py-8 flex flex-col"
-          }
-        >
-          <div className={"w-full flex flex-row justify-between items-center"}>
-            <span className={"w-full text-base font-bold h-fit"}>
-              {t("private_allsets")}
-            </span>
-            <div className="checkbox-wrapper-2">
-              <input type="checkbox" className="sc-gJwTLC ikxBAC" />
-            </div>
-          </div>
-        </div>
-        <div
-          className={
-            "w-full border-b gap-4 border-studoborder px-10 py-8 flex flex-col"
-          }
-        >
-          <div className={"w-full flex flex-row justify-between items-center"}>
-            <span className={"w-full text-base font-bold h-fit"}>
-              {t("status")}
-            </span>
-            <div className="w-fit gap-3 flex flex-row items-center justify-center">
-              <div
-                className="
-                                px-4 sm:px-6 py-2 sm:py-2.5 rounded-full
-                                border border-studogrey/30
-                                bg-white dark:bg-gray-700
-                                text-studodarkblue dark:text-white
-                                font-medium text-xs sm:text-sm
-                                shadow-sm hover:shadow-md
-                                transition-all duration-200 flex items-center justify-center flex-row gap-2
-                                cursor-pointer w-30 text-center
-                                focus:outline-none focus:ring-2 focus:ring-studogrey/50
-                                appearance-none"
-              >
-                <div
-                  className={`w-3 h-3 rounded-full ${status === "inactive" ? "bg-rose-500" : status === "away" ? "bg-amber-300" : "bg-emerald-500"}`}
-                ></div>
-                <select
-                  onChange={toggleStatus}
-                  ref={statusRef}
-                  className={"w-fit appearance-none"}
-                >
-                  <option value="inactive">{t("inactive")}</option>
-                  <option value="away">{t("away")}</option>
-                  <option value="active" selected>
-                    {t("active")}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className={
-            "w-full border-b gap-4 border-studoborder px-10 py-8 flex flex-col"
-          }
-        >
-          <div className={"w-full flex flex-row justify-between items-center"}>
-            <div className={"w-full h-fit flex flex-col gap-3"}>
-              <span className={"w-full text-base font-bold h-fit"}>
-                {t("request_verf")}
-              </span>
-              <span className={"text-sm"}>{t("request_subt")}</span>
-            </div>
-            <button
-              className={
-                "font-bold cursor-pointer px-5 py-2 rounded-4xl bg-gray-500"
-              }
-            >
-              {t("request")}
-            </button>
-          </div>
-        </div>
-        <div className={"w-full gap-4  px-10 py-8 flex flex-col"}>
-          <div className={"w-full flex flex-row justify-between items-center"}>
-            <div className={"w-full h-fit flex flex-col gap-3"}>
-              <span className={"w-full text-base font-bold h-fit"}>
-                {t("delete_title")}
-              </span>
-              <span className={"text-sm"}>{t("delete_info")}</span>
-            </div>
-            <button
-              className={
-                "font-bold cursor-pointer px-5 py-2 rounded-4xl bg-rose-500"
-              }
-            >
-              {t("delete")}
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  if (isVisible != "account") {
+    return;
+  }
+
+  const items: SettingsMenuOption[] = [
+    {
+      label: t("private_allsets"),
+      type: "checkbox",
+      value: settings?.allSetsPrivate ?? false,
+      onChange: (v) => save({ allSetsPrivate: v }),
+    },
+    {
+      label: t("status"),
+      type: "select",
+      value: settings?.onlineStatus ?? "active",
+      onChange: (v) => save({ onlineStatus: v as OnlineStatus }),
+      options: [
+        {
+          value: "active",
+          label: t("active"),
+          icon: <Circle size={13} className={"text-emerald-500"} />,
+        },
+        {
+          value: "away",
+          label: t("away"),
+          icon: <Circle size={13} className={"text-amber-500"} />,
+        },
+        {
+          value: "dnd",
+          label: t("dnd"),
+          icon: <Circle size={13} className={"text-rose-500"} />,
+        },
+      ],
+    },
+    {
+      label: t("request_verf"),
+      description: t("request_subt"),
+      type: "button",
+      onClick: () => {},
+      btnLabel: t("request"),
+    },
+    {
+      label: t("delete_title"),
+      description: t("delete_info"),
+      type: "button",
+      onClick: () => {},
+      btnLabel: t("delete"),
+      btnVariant: "danger",
+    },
+  ];
+
+  return <SettingsCard title={t("account_privacy")} items={items} />;
 }

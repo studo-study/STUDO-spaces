@@ -4,12 +4,15 @@ import Link from "next/link";
 import { IoMdSettings } from "react-icons/io";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
-import Image from "next/image";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
+import Verified from "@/components/ui/overige/icons/Verified";
+import Streak from "@/components/ui/overige/icons/Streak";
+import { useState } from "react";
 
 export default function AccountHeader() {
   const t = useTranslations("account");
+  const [streakOpen, setStreakOpen] = useState<boolean>(false);
   const user = useUser().user;
   useCourseNav([
     {
@@ -19,7 +22,7 @@ export default function AccountHeader() {
       translate: true,
     },
   ]);
-  console.log(user);
+
   return (
     <div
       className={
@@ -46,31 +49,42 @@ export default function AccountHeader() {
               "w-full h-fit text-2xl flex flex-row items-center gap-3 font-bold dark:text-white text-studodarkblue justify-between"
             }
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span>{user?.displayName}</span>
-              {user && (
-                <BaseTooltip content={user.joinNumber}>
-                  <span className={"text-base cursor-pointer"}>#</span>
-                </BaseTooltip>
-              )}
+              <div
+                className={
+                  "flex flex-row items-center gap-1 px-2 py-1 rounded-full bg-studogrey/30"
+                }
+              >
+                {user && (
+                  <BaseTooltip content={user.joinNumber}>
+                    <span className={"text-base cursor-pointer mx-0.5"}>#</span>
+                  </BaseTooltip>
+                )}
 
-              {user && user.streakCount != 0 && (
-                <Link href={"/streak"}>
-                  <Image
-                    width={20}
-                    height={20}
-                    src="/icons/streak.svg"
-                    alt="streak-icon"
-                    className="w-4 h-4 cursor-pointer"
+                {user?.streakCount != 0 && (
+                  <Link href={"/streak"} className={"h-full flex items-center"}>
+                    <Streak
+                      popup={false}
+                      streak={user?.streakCount ?? 0}
+                      StreakOpen={streakOpen}
+                      setStreakOpen={setStreakOpen}
+                    />
+                  </Link>
+                )}
+                {user?.verified && (
+                  <Verified
+                    variant={user?.publicRole === "owner" ? "gold" : "blue"}
+                    size={18}
                   />
-                </Link>
-              )}
+                )}
+              </div>
             </div>
 
             <Link
               href={"/settings"}
               className={
-                "text-sm h-fit text-blue-500 flex gap-1 items-center hover:underline "
+                "text-sm h-fit text-blue-500 flex gap-2 items-center hover:underline "
               }
             >
               <IoMdSettings />

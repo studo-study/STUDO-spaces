@@ -24,6 +24,9 @@ import {
   setTypeEnum,
   widgetTypeEnum,
   documentTagsEnum,
+  OnlineStatusEnum,
+  AccountStatusEnum,
+  AppThemeEnum,
 } from './enums';
 
 export const users = pgTable(
@@ -41,12 +44,52 @@ export const users = pgTable(
     streakCount: integer('streak_count'),
     streakLastUpdate: timestamp('streak_last_update'),
     lastLogin: timestamp('last_login').notNull(),
+    lastOnline: timestamp('last_online'),
     roles: jsonb('roles').notNull(),
     publicRole: varchar('public_role', { length: 24 }).notNull(),
     verified: boolean('verified').notNull(),
     banned: boolean('banned').notNull(),
   },
   (table) => [uniqueIndex('idx_user_email_unique').on(table.email)],
+);
+
+export const settings = pgTable(
+  'settings',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id')
+      .references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' })
+      .notNull(),
+    devMode: boolean('dev_mode').default(false).notNull(),
+    debugMode: boolean('debug_mode').default(false).notNull(),
+    showReprocessing: boolean('show_reprocessing').default(false).notNull(),
+
+    visibleStreak: boolean('visible_streak').default(true).notNull(),
+    allSetsPrivate: boolean('all_sets_private').default(false).notNull(),
+    shareGroupProgress: boolean('share_group_progress').default(true).notNull(),
+    allowGroupInvites: boolean('allow_group_invites').default(true).notNull(),
+    autoGroupParticipation: boolean('auto_group_participation')
+      .default(true)
+      .notNull(),
+    experimentalGroupFeatures: boolean('experimental_group_features')
+      .default(false)
+      .notNull(),
+    theme: AppThemeEnum('theme').default('system').notNull(),
+    emailNotifications: boolean('email_notifications').default(true).notNull(),
+    inAppNotifications: boolean('in_app_notifications').default(true).notNull(),
+    progressNotifications: boolean('progress_notifications')
+      .default(false)
+      .notNull(),
+    streakReminders: boolean('streak_reminders').default(true).notNull(),
+    groupNotifications: boolean('group_notifications').default(true).notNull(),
+    accountStatus: AccountStatusEnum('account_status')
+      .default('all_good')
+      .notNull(),
+    onlineStatus: OnlineStatusEnum('online_status').default('active').notNull(),
+    limitTracking: boolean('limit_tracking').default(false).notNull(),
+    showStreak: boolean('show_streak').default(true).notNull(),
+  },
+  (table) => [uniqueIndex('idx_user_settings').on(table.userId)],
 );
 
 export const profiles = pgTable(

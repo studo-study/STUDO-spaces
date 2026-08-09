@@ -385,8 +385,6 @@ export class UserService {
     const userClassrooms = await this.db.query.classroomusers.findMany({
       where: eq(classroomusers.userId, userId),
     });
-
-    // Bereken datum van 2 dagen geleden
     const twoDaysAgo = new Date();
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 

@@ -182,4 +182,38 @@ export class FileService {
       url: url,
     };
   }
+
+  async reprocess(courseId: string, docId: string) {
+    const document = await this.db.query.courseDocuments.findFirst({
+      where: eq(courseDocuments.id, docId),
+    });
+
+    if (!document) {
+      throw new NotFoundException("document doesn't exist");
+    }
+
+    try {
+      await this.redis.xadd(
+        'studo:documents:parse',
+        'MAXLEN',
+        '~',
+        10000,
+        '*',
+        'payload',
+        JSON.stringify({
+          v: 1,
+          mimeType: document.mimeType,
+          courseId: courseId,
+          documentId: document.id,
+          r2Key: document.storageKey,
+        }),
+      );
+    } catch (e) {
+      await this.db
+        .update(courseDocuments)
+        .set({ status: 'failed' })
+        .where(eq(courseDocuments.id, document.id));
+      throw e;
+    }
+  }
 }
