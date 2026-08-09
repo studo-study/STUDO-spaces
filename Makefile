@@ -8,7 +8,7 @@ init-api:
 
 init-rust-workers:
 	@echo "compiling rust workers"
-	cd apps/services/rust-services && cargo build
+	cd workers && cargo build
 
 init-swift-workers:
 	@echo "spinning up vapor"
@@ -86,13 +86,3 @@ analyze:
 deps:
 	pnpm outdated -r
 	pnpm audit
-
-#qdrant documentatie
-pull-qdrant-docu:
-	docker pull qdrant/qdrant
-
-
-qdrant-docu:
-	docker run -p 6333:6333 -p 6334:6334 \
-		-v "$(PWD)/qdrant_storage:/qdrant/storage:z" \
-		qdrant/qdrant

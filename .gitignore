@@ -13,6 +13,14 @@ dist/
 build/
 out/
 
+# Rust
+debug
+target
+**/*.rs.bk
+*.pdb
+**/mutants.out*/
+rustc-ice-*.txt
+
 # Next.js
 .next/
 .next-dev/          # soms gebruikt Turbopack
