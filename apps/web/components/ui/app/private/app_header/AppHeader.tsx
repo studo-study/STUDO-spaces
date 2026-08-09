@@ -42,7 +42,6 @@ export default function AppHeader({
   const [AddIsOpen, setAddIsOpen] = useState(false);
   const [NotifIsOpen, setNotifIsOpen] = useState(false);
   const [ProfileIsOpen, setProfileIsOpen] = useState(false);
-  const [setStreakOpen] = useState(false);
   const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === "true";
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
