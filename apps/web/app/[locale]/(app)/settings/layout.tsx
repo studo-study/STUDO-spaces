@@ -21,9 +21,9 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <span className={"w-full h-fit font-bold text-3xl gap-10"}>
+      <h1 className={"w-full h-fit font-bold text-2xl font-georgia gap-10"}>
         {t("title")}:
-      </span>
+      </h1>
       <div className={"w-full flex-row flex mb-5"}>
         <Tabs
           value={active}

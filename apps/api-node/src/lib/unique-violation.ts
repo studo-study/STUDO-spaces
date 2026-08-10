@@ -24,7 +24,13 @@ export function rethrowAsConflict(error: unknown): never {
   const e = error as { code?: string; constraint?: string };
   if (e?.code === PG_UNIQUE_VIOLATION && e.constraint) {
     const mapped = CONSTRAINT_CODES[e.constraint];
-    if (mapped) throw new ConflictException(mapped);
+    // Code in `details` want de HttpExceptionFilter bewaart enkel message + details.
+    if (mapped) {
+      throw new ConflictException({
+        message: mapped.message,
+        details: { code: mapped.code },
+      });
+    }
   }
   throw error;
 }

@@ -317,8 +317,8 @@ export class UserService {
 
       if (existingUser) {
         throw new ConflictException({
-          code: 'EMAIL_TAKEN',
           message: 'There is already a user with this email address',
+          details: { code: 'EMAIL_TAKEN' },
         });
       }
     }
@@ -334,8 +334,8 @@ export class UserService {
 
       if (clash) {
         throw new ConflictException({
-          code: 'DISPLAY_NAME_TAKEN',
           message: 'There is already a user with this display name',
+          details: { code: 'DISPLAY_NAME_TAKEN' },
         });
       }
     }

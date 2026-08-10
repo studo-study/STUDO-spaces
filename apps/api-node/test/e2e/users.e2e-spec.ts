@@ -299,7 +299,7 @@ describe('Users', () => {
   describe('PUT /api/users/:user_id', () => {
     it('moet 200 retourneren en geüpdatete user tonen', async () => {
       const response = await request(server)
-        .put(`${baseUrl}/${userId2}`)
+        .patch(`${baseUrl}/${userId2}`)
         .auth(userAuthToken, { type: 'bearer' })
         .send({
           displayName: 'Updated Name',
@@ -328,7 +328,7 @@ describe('Users', () => {
       });
 
       const response = await request(server)
-        .put(`${baseUrl}/${newUser!.id}`)
+        .patch(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
           password: 'newpassword123',
@@ -351,7 +351,7 @@ describe('Users', () => {
       });
 
       const response = await request(server)
-        .put(`${baseUrl}/${newUser!.id}`)
+        .patch(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
           streakStarted: '2024-01-01',
@@ -377,7 +377,7 @@ describe('Users', () => {
       });
 
       const response = await request(server)
-        .put(`${baseUrl}/${newUser!.id}`)
+        .patch(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
           imgUrl: 'https://example.com/new-image.png',
@@ -402,7 +402,7 @@ describe('Users', () => {
 
       const loginTime = new Date().toISOString();
       const response = await request(server)
-        .put(`${baseUrl}/${newUser!.id}`)
+        .patch(`${baseUrl}/${newUser!.id}`)
         .auth(newToken, { type: 'bearer' })
         .send({
           last_login: loginTime,
@@ -413,7 +413,7 @@ describe('Users', () => {
 
     it('moet 409 retourneren bij duplicate email', async () => {
       const response = await request(server)
-        .put(`${baseUrl}/${userId2}`)
+        .patch(`${baseUrl}/${userId2}`)
         .auth(userAuthToken, { type: 'bearer' })
         .send({
           email: 'charles@test.com',
@@ -427,7 +427,7 @@ describe('Users', () => {
 
     it('moet 404 retourneren bij niet-bestaande user', async () => {
       const response = await request(server)
-        .put(`${baseUrl}/00000000-0000-0000-0000-000000000000`)
+        .patch(`${baseUrl}/00000000-0000-0000-0000-000000000000`)
         .auth(adminAuthToken, { type: 'bearer' })
         .send({
           displayName: 'Test',
@@ -439,7 +439,7 @@ describe('Users', () => {
 
     it('moet 403 retourneren wanneer user andere user probeert te updaten', async () => {
       const response = await request(server)
-        .put(`${baseUrl}/${userId1}`)
+        .patch(`${baseUrl}/${userId1}`)
         .auth(userAuthToken, { type: 'bearer' })
         .send({
           displayName: 'Hacked Name',
@@ -449,7 +449,7 @@ describe('Users', () => {
     });
 
     testAuthHeader(() =>
-      request(server).put(`${baseUrl}/${userId1}`).send({
+      request(server).patch(`${baseUrl}/${userId1}`).send({
         displayName: 'Changed name',
       }),
     );

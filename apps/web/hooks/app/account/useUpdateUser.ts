@@ -8,11 +8,13 @@ import { useToast } from "@/components/providers/app/ToastProvider";
 // Persoonlijke velden die de gebruiker zelf mag aanpassen in de settings.
 export type UpdateUser = UpdateUserRequest;
 
-// Leest de conflict-code uit een 409-body ('{"code":"...","message":"..."}').
+// Leest de conflict-code uit een 409-body. De backend-filter zet de code in
+// `details` ('{"message":"...","details":{"code":"..."}}').
 function conflictCode(error: unknown): string | null {
   if (!(error instanceof ApiError) || error.status !== 409) return null;
   try {
-    return (JSON.parse(error.message) as { code?: string }).code ?? null;
+    const body = JSON.parse(error.message) as { details?: { code?: string } };
+    return body.details?.code ?? null;
   } catch {
     return null;
   }
