@@ -1,10 +1,10 @@
 import type { SVGProps } from "react";
 
-export type FlagProps = SVGProps<SVGSVGElement> & {
+export type IconProps = SVGProps<SVGSVGElement> & {
   size?: number | string;
 };
 
-const DutchFlag = ({ size = 40, ...props }: FlagProps) => (
+const DutchFlag = ({ size = 40, ...props }: IconProps) => (
   <svg
     id="Layer_1"
     xmlns="http://www.w3.org/2000/svg"

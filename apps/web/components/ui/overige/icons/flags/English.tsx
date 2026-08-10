@@ -1,6 +1,6 @@
-import { FlagProps } from "@/components/ui/overige/icons/flags/Dutch";
+import { IconProps } from "@/components/ui/overige/icons/flags/Dutch";
 
-const EnglishFlag = ({ size = 40, ...props }: FlagProps) => (
+const EnglishFlag = ({ size = 40, ...props }: IconProps) => (
   <svg
     id="Layer_1"
     xmlns="http://www.w3.org/2000/svg"

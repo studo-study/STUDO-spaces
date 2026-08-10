@@ -7,7 +7,7 @@ import type { routing } from "@/i18n/routing";
 
 export type Locale = (typeof routing.locales)[number];
 
-export function useChangeLocale(lang: string) {
+export function useChangeLocale() {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();

@@ -31,7 +31,11 @@ interface LaTexInputProps {
   placeholder?: string;
   error?: string;
   className?: string;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  // Het onderliggende InputField is hier een textarea, dus het event-element is
+  // een union — anders klopt de handler-type niet met de textarea-variant.
+  onKeyDown?: (
+    e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   hidden?: boolean;
   contentType: "text" | "latex" | "code";
   setContentType: (value: "text" | "latex" | "code") => void;

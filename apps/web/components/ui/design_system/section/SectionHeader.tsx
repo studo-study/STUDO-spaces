@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
+import { ChevronRight } from "lucide-react";
 
 interface SectionHeaderProps {
   title: string;
@@ -23,7 +24,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
           className="w-1/2 flex flex-row justify-end items-center gap-2 text-studodarkblue dark:text-white opacity-30"
         >
           {linkText}
-          <IoIosArrowForward />
+          <ChevronRight size={20} />
         </Link>
       )}
     </div>

@@ -904,12 +904,15 @@
     "log into account": "log in to your account",
     "or log in with": "or log in with",
     "Loading": "Loading...",
-    "Google": "Google",
-    "Microsoft": "Microsoft",
-    "Smartschool": "Smartschool",
+    "Google": "Continue with Google",
+    "Microsoft": "Continue with Microsoft",
+    "Apple": "Continue with Apple",
+    "Smartschool": "Continue with Smartschool",
     "Don't have an account?": "Don't have an account?",
     "sign up": "sign up",
-    "successful_login": "Successfully logged in"
+    "successful_login": "Successfully logged in",
+    "failed": "Incorrect email or password",
+    "loading": "Loading..."
   },
   "register": {
     "Create account": "Create account",
@@ -929,7 +932,11 @@
     "Register": "Register",
     "other_register": "or register with",
     "Already": "Already registered?",
-    "log in": "Log in"
+    "log in": "Log in",
+    "email_taken": "This email address is already in use",
+    "name_taken": "This username is already in use",
+    "failed": "Registration failed",
+    "success": "Account created"
   },
   "header": {
     "create_ss": "Create Studoset",
@@ -1403,7 +1410,9 @@
     "toast_update_success": "Setting updated",
     "toast_update_error": "Failed to update setting",
     "dnd": "Do not disturb",
-    "system": "System"
+    "system": "System",
+    "email_taken": "This email address is already in use",
+    "name_taken": "This username is already in use"
   },
   "account": {
     "role": "role",

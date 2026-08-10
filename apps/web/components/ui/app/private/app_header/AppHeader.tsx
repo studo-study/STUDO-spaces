@@ -9,8 +9,7 @@ import { StudoUser } from "@/types/types";
 import { useAppStore } from "@/store/useAppStore";
 import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection";
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
-import { ArrowRight, OctagonX, PanelRightOpen } from "lucide-react";
-import { HiMenuAlt4 } from "react-icons/hi";
+import { ArrowRight, Menu, OctagonX, PanelRightOpen } from "lucide-react";
 import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
 import {
   SpecialeDag,
@@ -82,9 +81,9 @@ export default function AppHeader({
             className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb"
           >
             {burgerOpen ? (
-              <PanelRightOpen className={"dark:opacity-30"} />
+              <PanelRightOpen size={20} className={"dark:opacity-30"} />
             ) : (
-              <HiMenuAlt4 className={"dark:opacity-30"} />
+              <Menu size={20} className={"dark:opacity-30"} />
             )}
           </button>
           <Link

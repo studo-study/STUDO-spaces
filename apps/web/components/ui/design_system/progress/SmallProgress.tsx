@@ -27,11 +27,11 @@ const SmallProgress = (props: SmallProgressProps) => {
 };
 
 function getStrokeColor(prog: number) {
-  if (prog === 100) return "bg-emerald-500";
-  if (prog >= 95) return "bg-green-500";
-  if (prog >= 85) return "bg-green-400";
-  if (prog >= 75) return "bg-green-300";
-  if (prog >= 65) return "bg-green-300";
+  if (prog === 100) return "bg-green-500";
+  if (prog >= 95) return "bg-emerald-500";
+  if (prog >= 85) return "bg-emerald-400";
+  if (prog >= 75) return "bg-emerald-300";
+  if (prog >= 65) return "bg-emerald-300";
   if (prog >= 50) return "bg-amber-500";
   if (prog >= 30) return "bg-orange-500";
   if (prog > 0) return "bg-red-400";

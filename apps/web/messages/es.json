@@ -909,7 +909,10 @@
     "Smartschool": "Smartschool",
     "Don't have an account?": "¿Aún no tienes cuenta?",
     "sign up": "regístrate",
-    "successful_login": "Sesión iniciada correctamente"
+    "successful_login": "Sesión iniciada correctamente",
+    "failed": "Correo o contraseña incorrectos",
+    "loading": "Cargando...",
+    "Apple": "Continuar con Apple"
   },
   "register": {
     "Create account": "Crear cuenta",
@@ -929,7 +932,11 @@
     "Register": "Registrarse",
     "other_register": "o regístrate con",
     "Already": "¿Ya estás registrado?",
-    "log in": "Iniciar sesión"
+    "log in": "Iniciar sesión",
+    "email_taken": "Esta dirección de correo ya está en uso",
+    "name_taken": "Este nombre de usuario ya está en uso",
+    "failed": "Error en el registro",
+    "success": "Cuenta creada"
   },
   "header": {
     "create_ss": "Crear Studoset",
@@ -1399,7 +1406,9 @@
     "toast_update_success": "Ajuste guardado",
     "toast_update_error": "Error al guardar el ajuste",
     "dnd": "No molestar",
-    "system": "Sistema"
+    "system": "Sistema",
+    "email_taken": "Esta dirección de correo ya está en uso",
+    "name_taken": "Este nombre de usuario ya está en uso"
   },
   "account": {
     "role": "rol",

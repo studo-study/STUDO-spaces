@@ -41,25 +41,51 @@ export function useRegisterForm() {
         redirect: false,
       });
 
+      // Account is aangemaakt; enkel de auto-login faalde. Geen foutmelding met
+      // een rauwe next-auth-code tonen — meld succes en laat manueel inloggen.
       if (result?.error) {
-        toast.error(result.error);
+        toast.success(t("success"));
         router.push("/login?registered=true");
         return;
       }
 
-      toast.success("Succesfully registered");
+      toast.success(t("success"));
       router.push(callbackUrl);
     } catch (error: unknown) {
-      setServerError(
-        error instanceof Error ? error.message : "Registratie mislukt",
-      );
+      // registerUser gooit de ruwe response-body ({ message, code }) door, geen
+      // Error-instance. Lees code/message eruit en toon een gerichte melding.
+      const body = (error && typeof error === "object" ? error : {}) as {
+        message?: string;
+        code?: string;
+      };
+
+      // Veld-fouten renderen via t(errors.<field>.message) in het formulier,
+      // dus zetten we de translation-key als message. De toast krijgt de
+      // vertaalde tekst.
+      if (body.code === "EMAIL_TAKEN") {
+        form.setError("email", { message: "email_taken" });
+        toast.error(t("email_taken"));
+      } else if (body.code === "DISPLAY_NAME_TAKEN") {
+        form.setError("displayName", { message: "name_taken" });
+        toast.error(t("name_taken"));
+      } else {
+        toast.error(body.message ?? t("failed"));
+      }
+
+      setServerError(body.message ?? t("failed"));
     }
+  };
+
+  // Validatiefouten → toast de eerste veld-fout (message is een translation-key).
+  const onInvalid = (fieldErrors: typeof form.formState.errors) => {
+    const first = Object.values(fieldErrors)[0];
+    if (first?.message) toast.error(t(first.message as string));
   };
 
   const loginGoogle = useCallback(() => signIn("google"), []);
   const loginMicrosoft = useCallback(() => signIn("microsoft-entra-id"), []);
   const loginSmartschool = useCallback(() => {
-    window.location.href = "http://localhost:3000/api/sessions/smartschool";
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/sessions/smartschool`;
   }, []);
 
   return {
@@ -69,7 +95,7 @@ export function useRegisterForm() {
     showPassword,
     toggleShowPassword,
     serverError,
-    onSubmit: form.handleSubmit(onSubmit),
+    onSubmit: form.handleSubmit(onSubmit, onInvalid),
     loginGoogle,
     loginMicrosoft,
     loginSmartschool,

@@ -1,7 +1,7 @@
 import { LastStudied } from "@studo/types";
-import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import SmallProgress from "@/components/ui/design_system/progress/SmallProgress";
+import { GalleryVerticalEnd, Images } from "lucide-react";
 
 interface SetItemProps {
   item: LastStudied;
@@ -19,18 +19,13 @@ const HomePageSetItem = (props: SetItemProps) => {
         "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
       }
     >
-      <div className={"flex flex-row gap-2"}>
-        <Image
-          alt="settype"
-          src={
-            item.type === "studyset"
-              ? "/icons/studyset.svg"
-              : "/icons/visualset.svg"
-          }
-          width={5}
-          height={5}
-          className={"w-4 dark:invert dark:brightness-0"}
-        />
+      <div className={"flex flex-row items-center gap-2"}>
+        {item.type === "studyset" ? (
+          <GalleryVerticalEnd size={15} />
+        ) : (
+          <Images size={15} />
+        )}
+
         <span className={"font-bold dark:text-white text-studodarkblue"}>
           {item.title}
         </span>

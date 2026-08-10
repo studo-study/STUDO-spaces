@@ -6,19 +6,15 @@ init-api:
 	@echo "installing dependencies for api"
 	cd apps/api-node/ && pnpm install
 
-init-rust-workers:
+init-workers:
 	@echo "compiling rust workers"
 	cd workers && cargo build
-
-init-swift-workers:
-	@echo "spinning up vapor"
-	cd apps/services/swift-services && swift run App
 
 init-dev-tools:
 	@echo "intalling dependencies for devtools"
 	cd apps/dev-tools && pnpm install
 
-init-all: init-web init-api init-dev-tools
+init-all: init-web init-api init-dev-tools init-workers
 	@echo "installing all dependencies"
 
 start-docker:
@@ -33,7 +29,7 @@ start-docker-api-seeded:
 	@echo "starting up full seeded api in docker container... "
 	docker compose -f docker-compose-backend.yml --profile seed up
 
-stop-docker-api:
+stop-docker:
 	docker compose down
 
 
@@ -48,6 +44,10 @@ start-api:
 start-dev-tools:
 	@echo "starting up the api..."
 	cd apps/dev-tools/ && pnpm run dev
+
+start-rust-workers:
+	@echo "starting up the api..."
+	cd workers/ && cargo run
 
 clean-frontend:
 	@echo "cleaning up cache..."
@@ -86,3 +86,7 @@ analyze:
 deps:
 	pnpm outdated -r
 	pnpm audit
+
+count-lines:
+	cloc --vcs=git --exclude-dir=node_modules,.next,dist,build,target \
+         --not-match-f='(package-lock|pnpm-lock)\.(json|yaml)|\.gen\.ts$'

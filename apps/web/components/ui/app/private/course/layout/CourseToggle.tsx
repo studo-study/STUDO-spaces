@@ -20,6 +20,10 @@ const CourseToggle = ({ burgerOpen }: CourseToggleProps) => {
 
   const canOpen = !!courses && (courses.length > 1 || !data);
 
+  if (courses?.length === 0) {
+    return;
+  }
+
   const trigger = (
     <div
       className={classNames(

@@ -2,7 +2,6 @@
 
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
 export default function CurrentPlan() {
   const t = useTranslations("settings");

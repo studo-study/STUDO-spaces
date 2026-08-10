@@ -24,7 +24,7 @@ export default function Accessibility(props: SettingsSection) {
   // font_size and language have no backing settings field yet — kept local for now.
   const [fontSize, setFontSize] = useState<string>("auto");
   const [language, setLanguage] = useState<string>(local);
-  const { changeLocale: switcher } = useChangeLocale(language);
+  const { changeLocale: switcher } = useChangeLocale();
 
   const toggleLanguage = (lang: string) => {
     setLanguage(lang);

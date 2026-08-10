@@ -1,11 +1,8 @@
 "use client";
-import { FaChevronRight } from "react-icons/fa";
-import { FiBookOpen } from "react-icons/fi";
-import { TbCards } from "react-icons/tb";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
-import { Plus } from "lucide-react";
+import { BookOpen, ChevronRight, GalleryVerticalEnd, Plus } from "lucide-react";
 
 interface TriggerAddProps {
   AddIsOpen: boolean;
@@ -57,11 +54,11 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
                 group-hover:scale-110 group-hover:shadow-lg
                 transition-all duration-200`}
               >
-                <FiBookOpen />
+                <BookOpen size={15} />
               </div>
               <span className="font-medium text-sm">{t("create_c")}</span>
-              <FaChevronRight
-                size={10}
+              <ChevronRight
+                size={20}
                 className="ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
               />
             </div>
@@ -91,8 +88,8 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
                 <div className="font-medium text-sm flex flex-row items-center justify-between w-full">
                   <span>{t(item.label)}</span>
                 </div>
-                <FaChevronRight
-                  size={10}
+                <ChevronRight
+                  size={20}
                   className="ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
                 />
               </Link>
@@ -107,7 +104,7 @@ export default function TriggerAddPopup({ toggleCreate }: TriggerAddProps) {
 const menuItems = [
   {
     to: "/create-studoset",
-    icon: <TbCards />,
+    icon: <GalleryVerticalEnd size={15} />,
     label: "create_ss",
     color: "from-emerald-400 to-teal-500",
     key: "s",

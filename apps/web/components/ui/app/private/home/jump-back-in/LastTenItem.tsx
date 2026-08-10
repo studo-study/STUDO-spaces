@@ -2,10 +2,14 @@ import Container from "@/components/ui/design_system/container/Container";
 import { LastStudied } from "@studo/types";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
-import { FaArrowRight } from "react-icons/fa";
-import Image from "next/image";
 import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
 import Link from "next/link";
+import {
+  ArrowRight,
+  ChevronRight,
+  GalleryVerticalEnd,
+  Images,
+} from "lucide-react";
 
 interface LastTenItemProps {
   data: LastStudied;
@@ -19,18 +23,12 @@ const LastTenItem = (props: LastTenItemProps) => {
       <div className="absolute -z-10 w-full h-full bg-linear-0 from-blue-400/5 to-transparent  left-0" />
       <div className={"w-full flex flex-row gap-5"}>
         <div className={"p-5 w-2/3 flex flex-col gap-2"}>
-          <div className={"flex flex-row gap-2 "}>
-            <Image
-              alt="settype"
-              src={
-                data.type === "studyset"
-                  ? "/icons/studyset.svg"
-                  : "/icons/visualset.svg"
-              }
-              width={5}
-              height={5}
-              className={"w-5 dark:invert dark:brightness-0"}
-            />
+          <div className={"flex flex-row gap-2 items-center "}>
+            {data.type === "studyset" ? (
+              <GalleryVerticalEnd size={20} />
+            ) : (
+              <Images size={20} />
+            )}
             <span
               className={
                 "text-xl font-bold dark:text-white truncate overflow-hidden text-studodarkblue"
@@ -59,7 +57,7 @@ const LastTenItem = (props: LastTenItemProps) => {
             <BaseButton
               label={t("continue")}
               bg={"bg-studoblue"}
-              iconRight={<FaArrowRight />}
+              iconRight={<ArrowRight size={13} />}
             />
           </Link>
         </div>
