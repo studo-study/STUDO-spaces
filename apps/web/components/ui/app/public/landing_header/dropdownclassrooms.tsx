@@ -6,7 +6,6 @@ import { IoHourglassOutline, IoSchoolOutline } from "react-icons/io5";
 import { FaUserFriends } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
 import { GiPodium, GiSwordsEmblem } from "react-icons/gi";
-import Image from "next/image";
 import { ChevronUp } from "lucide-react";
 
 interface TriggerClassroomProps {
