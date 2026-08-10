@@ -7,6 +7,7 @@ import { FaUserFriends } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
 import { GiPodium, GiSwordsEmblem } from "react-icons/gi";
 import Image from "next/image";
+import { ChevronUp } from "lucide-react";
 
 interface TriggerClassroomProps {
   ClassOpen: boolean;
@@ -28,16 +29,12 @@ export default function TriggerClassrooms({
     <div
       ref={containerRef}
       className={
-        "relative w-fit min-w-fit h-fit flex flex-row gap-3 cursor-pointer"
+        "relative w-fit dark:text-white text-studodarkblue min-w-fit h-fit flex flex-row gap-3 cursor-pointer"
       }
       onClick={togglePopUp}
     >
-      <Image
-        width={20}
-        height={20}
-        src={"/icons/down.svg"}
-        className={`${ClassOpen ? "rotate-180" : ""} transition-transform duration-300 dark:brightness-0 dark:invert h-7`}
-        alt=""
+      <ChevronUp
+        className={`${ClassOpen ? "rotate-180" : ""} transition-all duration-300 `}
       />
       <span className={"dark:text-white text-studodarkblue truncate"}>
         {t("classrooms")}

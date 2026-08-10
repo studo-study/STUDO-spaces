@@ -13,7 +13,7 @@ export default function DesktopForm() {
     form: {
       register,
       control,
-      formState: { errors, isSubmitting },
+      formState: { isSubmitting },
     },
     t,
     language,

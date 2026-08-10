@@ -2,7 +2,6 @@
 import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
 import { useTranslations } from "next-intl";
 import { MdReplay } from "react-icons/md";
-import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
 import LastTenItem from "@/components/ui/app/private/home/jump-back-in/LastTenItem";
 import { useSets } from "@/hooks/app/sets/useSets";

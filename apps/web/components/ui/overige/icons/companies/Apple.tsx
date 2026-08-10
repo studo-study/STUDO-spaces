@@ -2,11 +2,12 @@ import { IconProps } from "@/components/ui/overige/icons/flags/Dutch";
 
 const AppleIcon = ({ size = 40, ...props }: IconProps) => (
   <svg
-    width="800px"
-    height="800px"
+    width={size}
+    height={size}
     viewBox="-1.5 0 20 20"
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <title>apple [#173]</title>
     <desc>Created with Sketch.</desc>

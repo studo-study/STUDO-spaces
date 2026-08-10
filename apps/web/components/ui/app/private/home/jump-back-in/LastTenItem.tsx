@@ -4,12 +4,7 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
 import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
 import Link from "next/link";
-import {
-  ArrowRight,
-  ChevronRight,
-  GalleryVerticalEnd,
-  Images,
-} from "lucide-react";
+import { ArrowRight, GalleryVerticalEnd, Images } from "lucide-react";
 
 interface LastTenItemProps {
   data: LastStudied;

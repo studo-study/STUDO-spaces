@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { ChevronUp } from "lucide-react";
 interface TriggerToolsProps {
   ToolsOpen: boolean;
   setToolsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,16 +24,12 @@ export default function TriggerTools({
     <div
       ref={containerRef}
       className={
-        "relative w-fit min-w-fit h-fit flex flex-row gap-3 cursor-pointer"
+        "relative w-fit min-w-fit dark:text-white text-studodarkblue h-fit flex flex-row gap-3 cursor-pointer"
       }
       onClick={togglePopUp}
     >
-      <Image
-        width={49}
-        height={49}
-        src={"/icons/down.svg"}
-        className={`${ToolsOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
-        alt="go down icon"
+      <ChevronUp
+        className={`${ToolsOpen ? "rotate-180" : ""} transition-all duration-300 `}
       />
       <span className={"dark:text-white text-studodarkblue truncate"}>
         {t("tools")}

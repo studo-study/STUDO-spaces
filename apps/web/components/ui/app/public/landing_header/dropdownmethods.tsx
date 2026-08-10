@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { ChevronUp } from "lucide-react";
 
 interface TriggerMethodsProps {
   MethodsOpen: boolean;
@@ -25,16 +26,12 @@ export default function TriggerMethods({
     <div
       ref={containerRef}
       className={
-        "relative min-w-fit w-fit h-fit flex flex-row gap-3 cursor-pointer"
+        "relative min-w-fit dark:text-white text-studodarkblue w-fit h-fit flex flex-row gap-3 cursor-pointer"
       }
       onClick={togglePopUp}
     >
-      <Image
-        width={20}
-        height={20}
-        src={"/icons/down.svg"}
-        className={`${MethodsOpen ? "rotate-180" : ""} transition-all duration-300 dark:brightness-0 dark:invert h-7`}
-        alt=""
+      <ChevronUp
+        className={`${MethodsOpen ? "rotate-180" : ""} transition-all duration-300 `}
       />
       <span className={"dark:text-white text-studodarkblue truncate"}>
         {t("modes")}

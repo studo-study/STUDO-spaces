@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import HeroBackground from "@/components/ui/app/public/landing_welcome/hero_background";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
 import { ArrowLeft } from "lucide-react";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";

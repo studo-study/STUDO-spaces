@@ -1,4 +1,3 @@
-import { useTranslations } from "next-intl";
 import LoginForm from "@/components/ui/app/auth/login/LoginForm";
 
 export async function generateMetadata({
