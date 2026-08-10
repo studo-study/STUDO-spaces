@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { LuDelete } from "react-icons/lu";
-import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
 interface Shortcut {
   title: string;
   keys: ("command" | "delete" | string)[];
@@ -22,24 +21,18 @@ const shortcuts: Shortcut[] = [
   { title: "sven_i", keys: ["command", "i"], premium: true },
 ];
 
-export function Shortcuts(props: SettingsSection) {
-  const { isVisible } = props;
-
+export function Shortcuts() {
   const t = useTranslations("settings");
   const [isMac] = useState(
     () =>
       typeof navigator !== "undefined" && navigator.platform.includes("Mac"),
   );
 
-  if (isVisible != "access") {
-    return;
-  }
-
   return (
     <section className={"flex flex-col gap-5 w-full min-h-fit"}>
       <span className="w-full text-base font-bold h-fit">{t("shortcuts")}</span>
 
-      <div className="flex flex-col divide-y divide-studoborder p-5 rounded-3xl border border-studoborder">
+      <div className="flex flex-col divide-y divide-studoborder/30 px-5 py-3  rounded-3xl border border-studoborder/30">
         {shortcuts.map((s, i) => (
           <ShortcutItem key={i} shortcut={s} isMac={isMac} />
         ))}
@@ -78,7 +71,7 @@ function ShortcutItem({
   };
 
   return (
-    <div className="w-full flex flex-row px-5 py-2 justify-between items-center">
+    <div className="w-full flex flex-row px-5 py-2 justify-between items-center min-h-15">
       <span className="font-bold">{t(shortcut.title)}</span>
       <div className="flex gap-2 items-center text-sm">
         {shortcut.premium && <Select />}

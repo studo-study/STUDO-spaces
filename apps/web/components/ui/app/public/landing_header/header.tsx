@@ -167,7 +167,7 @@ export default function LandingHeader() {
               />
               <div className={"w-fit flex flex-row gap-1 h-fit"}>
                 <span
-                  className={`relative z-10 bg-gradient-to-r font-bold ${specialeDag(useLocale())} bg-clip-text text-transparent transition-all duration-300`}
+                  className={`relative z-10 bg-linear-to-r font-bold ${specialeDag(useLocale())} bg-clip-text text-transparent transition-all duration-300`}
                 >
                   Studo
                 </span>
@@ -196,7 +196,7 @@ export default function LandingHeader() {
             </nav>
           </div>
 
-          <div className="flex items-center justify-end gap-3 lg:gap-5 flex-shrink-0">
+          <div className="flex items-center justify-end gap-3 lg:gap-5 shrink-0">
             {!homePage && (
               <AnimateOnMount
                 delay={300}
@@ -211,9 +211,9 @@ export default function LandingHeader() {
                   href={"/login"}
                   className="inline-flex font-semibold text-white truncate
                     flex-row gap-2 justify-center items-center p-2 pl-7 pr-7 rounded-4xl cursor-pointer
-                    active:scale-105 transition-transform z-[2]
+                    active:scale-105 transition-transform z-2
                     border-[0.5px] border-solid border-[#8181812f]
-                    shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
+                    shadow-[3px_3px_6px_#35557138,-3px_-3px_6px_#ffffff4a]
                     dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
                     bg-emerald-400 dark:bg-white dark:text-studodarkblue"
                 >
@@ -231,9 +231,9 @@ export default function LandingHeader() {
                 href={"/waitinglist"}
                 className="inline-flex font-semibold text-white
                     flex-row gap-2 justify-center items-center p-2 xl:px-7 px-3 rounded-4xl cursor-pointer
-                    active:scale-105 transition-transform z-[2] lg:text-base text-sm text-center
+                    active:scale-105 transition-transform z-2 lg:text-base text-sm text-center
                     border-[0.5px] border-solid border-[#8181812f]
-                    shadow-[3px_3px_6px_#35557138,_-3px_-3px_6px_#ffffff4a]
+                    shadow-[3px_3px_6px_#35557138,-3px_-3px_6px_#ffffff4a]
                     dark:shadow-[8px_8px_16px_#1a1a2a,-8px_-8px_16px_#1a1a2a]
                     bg-emerald-400 dark:bg-white dark:text-studodarkblue"
               >
@@ -253,7 +253,7 @@ export default function LandingHeader() {
       </header>
       {
         <div
-          className={`fixed inset-0 z-[99999] flex flex-col justify-end md:hidden
+          className={`fixed inset-0 z-99999 flex flex-col justify-end md:hidden
 					bg-black/50 transition-opacity duration-300
 					${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}
 				  `}
@@ -293,7 +293,7 @@ export default function LandingHeader() {
                       {/* Icon Container */}
                       <div
                         className={`flex items-center justify-center min-w-9 h-9 rounded-xl
-												bg-gradient-to-br ${item.color}
+												bg-linear-to-br ${item.color}
 												shadow-md shadow-black/10 overflow-hidden
 												transition-all duration-200`}
                       >
@@ -338,7 +338,7 @@ export default function LandingHeader() {
                         {/* Icon Container */}
                         <div
                           className={`flex items-center justify-center min-w-9 min-h-9 rounded-xl
-													  bg-gradient-to-br ${item.gradient}
+													  bg-linear-to-br ${item.gradient}
 													  shadow-md shadow-black/10 overflow-hidden
 													  transition-all duration-200`}
                         >

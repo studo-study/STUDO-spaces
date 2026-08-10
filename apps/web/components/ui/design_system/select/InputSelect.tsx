@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { ReactNode } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 
 interface SelectOption {
   value: string;
   label: string;
+  icon?: ReactNode;
 }
 
 type SelectProps = {
@@ -121,9 +122,12 @@ const InputSelect = ({
         onClick={() => !disabled && setOpen((prev) => !prev)}
         className={`w-full flex flex-row items-center justify-between cursor-pointer rounded-4xl glass-rgb border border-studoborder/30 shadow-2xl text-studodarkblue dark:text-white text-left transition-all duration-300 outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
       >
-        <span className={selected ? "" : "text-zinc-400"}>
-          {selected ? selected.label : placeholder}
-        </span>
+        <div className={"flex flex-row gap-2 items-center"}>
+          {selected && selected.icon}
+          <span className={selected ? "" : "text-zinc-400"}>
+            {selected ? selected.label : placeholder}
+          </span>
+        </div>
         <FaChevronDown
           size={s.chevron}
           opacity={0.5}
@@ -135,7 +139,7 @@ const InputSelect = ({
 
       <div
         className={`absolute left-0 right-0 top-full mt-2
-          z-[9999] p-3 border border-studoborder/30
+          z-9999 p-3 border border-studoborder/30
           rounded-2xl backdrop-blur-2xl min-w-30
           glass-rgb gap-2 flex flex-col h-fit
           shadow-xl shadow-black/10 dark:shadow-black/30
@@ -168,7 +172,9 @@ const InputSelect = ({
                     s.item
                   } ${isSelected ? "dark:bg-zinc-400/20 bg-zinc-200/50" : ""}`}
                 >
-                  <span>{option.label}</span>
+                  <span className={"flex flex-row gap-2 items-center truncate"}>
+                    {option.icon} {option.label}
+                  </span>
                   {isSelected && (
                     <span className={"text-xs text-zinc-500"}>✓</span>
                   )}

@@ -116,8 +116,19 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
       // Admin swapt naar een backend-minted token; de admin-identiteit
       // bewaren we in `original` zodat "stop" geen re-login vereist.
       const update = session as
-        | { impersonate?: { token: string }; stopImpersonate?: boolean }
+        | {
+            impersonate?: { token: string };
+            stopImpersonate?: boolean;
+            user?: Partial<(typeof token)["user"]>;
+          }
         | undefined;
+
+      // Generieke user-update (bv. persoonlijke data uit settings): merge de
+      // meegegeven velden in de token-user zodat de session ze bewaart.
+      if (trigger === "update" && update?.user) {
+        token.user = { ...token.user, ...update.user } as typeof token.user;
+        return token;
+      }
 
       if (trigger === "update" && update?.impersonate) {
         // admin-check zit al in de server action + de backend (die enkel voor

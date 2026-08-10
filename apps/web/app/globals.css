@@ -1021,3 +1021,47 @@ body::-webkit-scrollbar {
 .animate-widget-wiggle {
     animation: widget-wiggle 0.3s ease-in-out infinite;
 }
+
+/* Firefox */
+input:autofill,
+input:-moz-autofill,
+input:-moz-autofill-preview,
+textarea:autofill,
+select:autofill {
+    filter: none;
+    background-image: none;
+    background-color: transparent;
+    -moz-text-fill-color: inherit;
+}
+
+/* Chrome, Edge, Safari */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-text-fill-color: inherit;
+    caret-color: inherit;
+    /* de UA background-color is !important, maar de transitie ernaartoe niet.
+       9999s betekent dat hij praktisch nooit aankomt. */
+    transition: background-color 100000s ease-in-out 0s;
+}
+
+/* Native reveal/clear/password-key knoppen verbergen zodat enkel onze eigen
+   iconRight-UI zichtbaar is (Edge, Safari, Chrome). */
+.input-clean::-ms-reveal,
+.input-clean::-ms-clear {
+    display: none;
+}
+
+.input-clean::-webkit-credentials-auto-fill-button,
+.input-clean::-webkit-strong-password-auto-fill-button,
+.input-clean::-webkit-contacts-auto-fill-button,
+.input-clean::-webkit-caps-lock-indicator {
+    display: none !important;
+    visibility: hidden;
+    pointer-events: none;
+    margin: 0;
+    width: 0;
+}

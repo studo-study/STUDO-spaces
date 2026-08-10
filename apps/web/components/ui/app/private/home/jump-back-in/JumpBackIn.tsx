@@ -2,13 +2,13 @@
 import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
 import { useTranslations } from "next-intl";
 import { MdReplay } from "react-icons/md";
-import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
 import LastTenItem from "@/components/ui/app/private/home/jump-back-in/LastTenItem";
 import { useSets } from "@/hooks/app/sets/useSets";
 import { LastStudied } from "@studo/types";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import classNames from "@/utils/classnames";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const JumpBackIn = () => {
   const { lastTen } = useSets();
@@ -105,7 +105,7 @@ const JumpBackIn = () => {
               aria-label={t("jump-back-in_previous")}
               className="relative z-10 ml-2 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-sm border border-studoborder shadow-sm cursor-pointer active:scale-95 transition-transform duration-150 dark:text-white text-studodarkblue"
             >
-              <IoChevronBack size={14} />
+              <ChevronLeft size={15} />
             </button>
           </div>
 
@@ -128,13 +128,13 @@ const JumpBackIn = () => {
               atEnd ? "opacity-0 pointer-events-none" : "opacity-100",
             )}
           >
-            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-bg-white from-slate-800 to-transparent" />
+            <div className="absolute inset-y-0 right-0 w-16 bg-linear-to-l from-bg-white dark:from-slate-800 to-transparent" />
             <button
               onClick={handleForward}
               aria-label={t("jump-back-in_next")}
               className="relative z-10 mr-2 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-sm border border-studoborder shadow-sm cursor-pointer active:scale-95 transition-transform duration-150 dark:text-white text-studodarkblue"
             >
-              <IoChevronForward size={14} />
+              <ChevronRight size={15} />
             </button>
           </div>
         </div>

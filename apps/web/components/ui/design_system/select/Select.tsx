@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 
 interface SelectOption {
   value: string;
   label: string;
+  icon?: ReactNode;
 }
 
 type SelectProps = {
@@ -116,7 +117,12 @@ const Select = ({
         onClick={() => !disabled && setOpen((prev) => !prev)}
         className={`w-full rounded-full flex gap-2 flex-row cursor-pointer items-center justify-between outline-none ring-0 border border-studoborder/30  bg-studogrey/30 text-left disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
       >
-        <span className={selected ? "" : "text-zinc-400"}>
+        {selected && selected?.icon}
+        <span
+          className={
+            selected ? "" : "text-zinc-400 flex flex-row gap-1 items-center"
+          }
+        >
           {selected ? selected.label : placeholder}
         </span>
         <ChevronDown
@@ -164,7 +170,10 @@ const Select = ({
                     s.item
                   } ${isSelected ? "dark:bg-zinc-400/20 bg-zinc-200/50" : ""}`}
                 >
-                  <span className={"truncate"}>{option.label}</span>
+                  <span className={"truncate gap-2 flex flex-row items-center"}>
+                    {option.icon}
+                    {option.label}
+                  </span>
                   {isSelected && (
                     <span className={"text-xs text-zinc-500"}>✓</span>
                   )}

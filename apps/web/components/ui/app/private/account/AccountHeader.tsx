@@ -1,7 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { IoMdSettings } from "react-icons/io";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
@@ -9,6 +8,7 @@ import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import Verified from "@/components/ui/overige/icons/Verified";
 import Streak from "@/components/ui/overige/icons/Streak";
 import { useState } from "react";
+import { Settings } from "lucide-react";
 
 export default function AccountHeader() {
   const t = useTranslations("account");
@@ -82,12 +82,12 @@ export default function AccountHeader() {
             </div>
 
             <Link
-              href={"/settings"}
+              href={"/settings/account"}
               className={
                 "text-sm h-fit text-blue-500 flex gap-2 items-center hover:underline "
               }
             >
-              <IoMdSettings />
+              <Settings size={17} />
               {t("settings")}
             </Link>
           </div>

@@ -1,8 +1,7 @@
 import { useTranslations } from "next-intl";
-import { FaCheck } from "react-icons/fa";
 import Link from "next/link";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
+import { Check, Leaf, LucideVerified } from "lucide-react";
 
 const free = [
   { feature: "Create basic Studosets" },
@@ -42,12 +41,12 @@ export default function SelectPage() {
           <AnimateOnMount delay={200}>
             <h1
               className={
-                "font-sfpro gap-3 justify-center items-center  font-bold text-blue-300"
+                "font-sfpro flex gap-2 justify-center items-end  font-bold text-blue-300"
               }
             >
               <span
                 className={
-                  "font-akira text-5xl truncate dark:bg-gradient-to-r  dark:from-white  dark:to-blue-200 bg-clip-text dark:text-transparent text-blue-500 "
+                  "font-georgia text-5xl truncate dark:bg-linear-to-r  dark:from-white  dark:to-blue-200 bg-clip-text dark:text-transparent text-blue-500 "
                 }
               >
                 STUDO
@@ -85,7 +84,12 @@ export default function SelectPage() {
               className={`lg:w-1/3 w-full hover:scale-102 transition-all duration-300 border shadow-2xl bg-studogrey/10 backdrop-blur-2xl rounded-3xl
                         dark:border-studoborder/30 border-studoborder h-130 p-10 flex flex-col items-baseline gap-8`}
             >
-              <span className={"dark:text-emerald-500 font-semibold"}>
+              <span
+                className={
+                  "dark:text-emerald-500 flex-row items-center flex gap-2 font-semibold"
+                }
+              >
+                <Leaf />
                 {t("free")}
               </span>
               <h2
@@ -110,7 +114,7 @@ export default function SelectPage() {
                       "w-full flex items-center gap-3 text-studodarkblue dark:text-white font-bold"
                     }
                   >
-                    <FaCheck className={"text-emerald-500"} />
+                    <Check size={12} className={"text-emerald-500"} />
                     {item.feature}
                   </span>
                 ))}
@@ -129,7 +133,7 @@ export default function SelectPage() {
                   "dark:text-blue-500 font-semibold flex gap-2 items-center"
                 }
               >
-                <RiVerifiedBadgeFill />
+                <LucideVerified />
                 {t("select")}
               </span>
               <div
@@ -161,7 +165,7 @@ export default function SelectPage() {
                       "w-full flex items-center gap-3 dark:text-white font-bold"
                     }
                   >
-                    <FaCheck className={"text-studoblue"} />
+                    <Check size={12} className={"text-studoblue"} />
                     {item.feature}
                   </span>
                 ))}

@@ -2,10 +2,10 @@
 import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
 import Container from "@/components/ui/design_system/container/Container";
 import { useTranslations } from "next-intl";
-import { PiBooks } from "react-icons/pi";
 import CourseItem from "@/components/ui/app/private/library/courses/courseItem";
 import { useCourses } from "@/hooks/app/courses/useCourses";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
+import { BookOpen } from "lucide-react";
 
 const Courses = () => {
   const { data: courses = [] } = useCourses();
@@ -17,7 +17,7 @@ const Courses = () => {
     <AnimateOnMount delay={100}>
       <section className="flex flex-col gap-5 overflow-visible">
         <SectionHeader
-          sectionIcon={<PiBooks />}
+          sectionIcon={<BookOpen size={18} />}
           title={t("courses_overview_title")}
           linkText={t("all_courses")}
           href={"/library/courses"}

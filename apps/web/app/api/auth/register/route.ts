@@ -32,7 +32,13 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { success: false, message: data.message || "Registratie mislukt" },
+        {
+          success: false,
+          message: data.message || "Registratie mislukt",
+          // Conflict-code (EMAIL_TAKEN / DISPLAY_NAME_TAKEN) voor veld-fouten.
+          // Backend-filter stopt de code in `details`.
+          code: data.details?.code,
+        },
         { status: response.status },
       );
     }

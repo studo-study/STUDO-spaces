@@ -11,6 +11,7 @@ import { MdEditNote } from "react-icons/md";
 import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
 import { getCoverImage } from "@/utils/getCoverImage";
 import { useRouter } from "@/i18n/routing";
+import { GalleryVerticalEnd, Images } from "lucide-react";
 
 interface ListItemProps {
   items: StudySetItem[];
@@ -46,8 +47,6 @@ function ListItem({ set, t, locale }: SetItemProps) {
     .toLocaleDateString(locale)
     .split("-")
     .join("/");
-  const iconSrc =
-    set.type === "studyset" ? "/icons/studyset.svg" : "/icons/visualset.svg";
   const link =
     set.type === "studyset" ? `/studoset/${set.id}` : `/visualset/${set.id}`;
   const { mutate: deleteSet } = useDeleteStudoset();
@@ -89,13 +88,11 @@ function ListItem({ set, t, locale }: SetItemProps) {
               "w-full flex flex-row gap-2 items-center opacity-50 dark:text-white text-xs"
             }
           >
-            <Image
-              src={iconSrc}
-              alt={"type"}
-              height={15}
-              width={15}
-              className={"dark:invert dark:brightness-0 h-4"}
-            />
+            {set.type === "studyset" ? (
+              <GalleryVerticalEnd size={15} />
+            ) : (
+              <Images size={15} />
+            )}
             <span>{set.lastUpdated && date}</span>
           </div>
         </div>

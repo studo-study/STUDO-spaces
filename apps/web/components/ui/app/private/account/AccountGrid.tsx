@@ -10,6 +10,7 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { useSets } from "@/hooks/app/sets/useSets";
 import { StudysetResponse, type VisualsetResponse } from "@studo/types";
 import { StudySetItem } from "@/components/ui/app/private/library/sets/grid";
+import { LogOut } from "lucide-react";
 
 export default function AccountGrid() {
   const t = useTranslations("account");
@@ -79,6 +80,7 @@ export default function AccountGrid() {
 
       <div className={"w-full h-10 flex justify-end"}>
         <BaseButton
+          iconLeft={<LogOut size={18} />}
           variant={"submit"}
           onClick={() => signOut({ callbackUrl: "/" })}
         >

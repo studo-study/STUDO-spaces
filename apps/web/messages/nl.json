@@ -904,12 +904,15 @@
     "log into account": "log in bij je account",
     "or log in with": "of log in met",
     "Loading": "Laden...",
-    "Google": "Google",
-    "Microsoft": "Microsoft",
+    "Google": "Login met Google",
+    "Microsoft": "Login met Microsoft",
     "Smartschool": "Smartschool",
     "Don't have an account?": "Nog geen account?",
     "sign up": "registreren",
-    "successful_login": "Succesvol ingelogd"
+    "successful_login": "Succesvol ingelogd",
+    "loading": "laden...",
+    "failed": "Onjuiste e-mail of wachtwoord",
+    "Apple": "Ga verder met Apple"
   },
   "register": {
     "Create account": "Creër account",
@@ -929,7 +932,11 @@
     "Register": "Registeren",
     "other_register": "of registreer met",
     "Already": "Al geregistreerd?",
-    "log in": "Log in"
+    "log in": "Log in",
+    "email_taken": "Dit e-mailadres is al in gebruik",
+    "name_taken": "Deze gebruikersnaam is al in gebruik",
+    "failed": "Registratie mislukt",
+    "success": "Account aangemaakt"
   },
   "header": {
     "create_ss": "Maak Studoset",
@@ -1403,7 +1410,9 @@
     "toast_update_success": "Instelling opgeslagen",
     "toast_update_error": "Opslaan mislukt",
     "dnd": "Niet storen",
-    "system": "Systeem"
+    "system": "Systeem",
+    "email_taken": "Dit e-mailadres is al in gebruik",
+    "name_taken": "Deze gebruikersnaam is al in gebruik"
   },
   "account": {
     "role": "rol",
@@ -1821,6 +1830,22 @@
     "learn": "Leren",
     "speedy": "Tijdsstrijd",
     "flashcards": "Flashkaarten",
-    "backoffice": "Backoffice"
+    "backoffice": "Backoffice",
+    "account": "Account",
+    "settings": "Instellingen",
+    "visualset": "Visualset",
+    "streak": "Streak",
+    "select": "Studo Select",
+    "pay": "Betalen",
+    "sven": "Sven",
+    "admin": "Admin",
+    "invite": "Uitnodigen",
+    "reports": "Meldingen",
+    "search": "Zoeken",
+    "stats": "Statistieken",
+    "users": "Gebruikers",
+    "create-studoset": "Studoset maken",
+    "create-visualset": "Visualset maken",
+    "search-result": "Zoekresultaten"
   }
 }

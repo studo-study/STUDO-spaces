@@ -55,9 +55,7 @@ studo-spaces/
 │   │   ├── migrations/
 │   │   ├── test/
 │   │   └── drizzle.config.ts
-│   ├── services/
-│   │   ├── rust-services/    # Rust microservices
-│   │   └── swift-services/   # Swift API services
+│   │
 │   ├── web/                  # Next.js frontend
 │   │   ├── app/
 │   │   ├── components/
@@ -66,8 +64,12 @@ studo-spaces/
 │   │   ├── lib/
 │   │   ├── messages/         # i18n vertalingen
 │   │   └── types/
-│   ├── mobile/               # React Native (Expo) app
-│   └── legacy/               # Legacy Vue frontend
+│   │
+│   └── mobile/               # React Native (Expo) app
+│
+├── workers/
+│   └── rust-services/   # Rust microservices
+│
 ├── packages/
 │   └── shared-types/         # Gedeelde TypeScript types
 ├── turbo.json
@@ -99,6 +101,7 @@ make init-all
 # of
 make init-api
 make init-web
+make init-workers
 
 # Maak de root .env aan en distribueer naar alle apps
 cp .env.example .env   # vul de waarden in
@@ -137,6 +140,7 @@ make start-all
 # Of individueel
 make start-web      # Next.js op :4000
 make start-api      # NestJS op :3000
+make start-workers  # Rust workers
 ```
 
 ### Build
@@ -144,10 +148,13 @@ make start-api      # NestJS op :3000
 ```bash
 # Build alle apps
 pnpm build
+make build-workers
+
 
 # Of individueel
 pnpm build:web
 pnpm build:api
+make build-workers
 ```
 
 ### Docker Deployment
@@ -162,6 +169,9 @@ make start-docker-api
 # Met seeding
 make start-docker-api-seeded
 
+# Docker stoppen
+make stop-docker
+
 ```
 
 ---
@@ -171,16 +181,18 @@ make start-docker-api-seeded
 | Command                  | Beschrijving                                   |
 | ------------------------ | ---------------------------------------------- |
 | `make init-all`          | Installeert dependencies voor alle applicaties |
-| `make api`               | Installeert dependencies voor api              |
-| `make web`               | Installeert dependencies voor web              |
+| `make init-api`          | Installeert dependencies voor api              |
+| `make init-web`          | Installeert dependencies voor web              |
+| `make init-workers`      | Installeert dependencies voor workers          |
 | `pnpm build`             | Build alle apps                                |
 | `pnpm lint`              | Lint alle apps                                 |
 | `make start-all`         | Start alle apps via Turborepo                  |
 | `make start-docker`      | Start docker container op                      |
 | `make start-web`         | Start alleen de frontend                       |
-| `make start-api`         | Start alleen de backend                        |
+| `make start-api`         | Start alleen de api                            |
+| `make start-workers`     | Start alleen Rust workers                      |
 | `pnpm build:web`         | Build alleen de frontend                       |
-| `pnpm build:api`         | Build alleen de backend                        |
+| `pnpm build:api`         | Build alleen de api                            |
 | `pnpm env:sync`          | Distribueer root `.env` naar alle apps         |
 | `pnpm db:generate`       | Genereer migraties uit schema wijzigingen      |
 | `pnpm db:migrate`        | Voer migraties uit                             |
@@ -190,18 +202,19 @@ make start-docker-api-seeded
 | `make ci`                | Start alle ci tests                            |
 | `make analyze`           | Analyseert code base, zoekt naar leaks         |
 | `make clean-frontend`    | Wiped NextJS cache                             |
+| `make count-lines`       | Telt alle lijnen code in repo                  |
 
 ---
 
 ## Roadmap
 
 - [x] Studosets met spaced repetition & leermodi
-- [x] Visualsets met pin-based learning
+- [ ] Visualsets met pin-based learning
 - [x] Classrooms, Study Groups & Communities
 - [x] Zoekfunctie & ecosysteem
 - [x] Challenges (Time Attack, Duels, Mastery Tournament)
-- [ ] Statistieken dashboard
-- [ ] Studo Courses & Verified Sets
+- [x] Statistieken dashboard
+- [x] Studo Courses & Verified Sets
 - [ ] Studo Select (AI-laag met SVEN)
 - [ ] B2B schoollicenties
 

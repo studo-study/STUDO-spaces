@@ -20,6 +20,11 @@ import InputSelect from "@/components/ui/design_system/select/InputSelect";
 import ComboBox from "@/components/ui/design_system/select/ComboBox";
 import CreateCourse from "@/components/ui/app/private/create-studoset/CreateCourse";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
+import EnglishFlag from "@/components/ui/overige/icons/flags/English";
+import DutchFlag from "@/components/ui/overige/icons/flags/Dutch";
+import GermanFlag from "@/components/ui/overige/icons/flags/German";
+import FrenchFlag from "@/components/ui/overige/icons/flags/French";
+import SpanishFlag from "@/components/ui/overige/icons/flags/Spanish";
 
 const DRAFT_KEY = "create-studoset-draft";
 
@@ -45,11 +50,11 @@ const firstCard = (): CardData => ({
 export default function CreateStudosetForm() {
   const t = useTranslations("createstudoset");
   const LANGUAGES = [
-    { code: "en", name: t("english") },
-    { code: "nl", name: t("dutch") },
-    { code: "fr", name: t("french") },
-    { code: "de", name: t("german") },
-    { code: "es", name: t("spanish") },
+    { code: "en", name: t("english"), icon: <EnglishFlag size={15} /> },
+    { code: "nl", name: t("dutch"), icon: <DutchFlag size={15} /> },
+    { code: "fr", name: t("french"), icon: <FrenchFlag size={15} /> },
+    { code: "de", name: t("german"), icon: <GermanFlag size={15} /> },
+    { code: "es", name: t("spanish"), icon: <SpanishFlag size={15} /> },
   ];
 
   useCourseNav([
@@ -439,6 +444,7 @@ export default function CreateStudosetForm() {
                   options={LANGUAGES.map((lang) => ({
                     value: lang.code,
                     label: lang.name,
+                    icon: lang.icon,
                   }))}
                   value={termLang}
                   onChange={(value) => {
@@ -458,6 +464,7 @@ export default function CreateStudosetForm() {
                   options={LANGUAGES.map((lang) => ({
                     value: lang.code,
                     label: lang.name,
+                    icon: lang.icon,
                   }))}
                   value={defLang}
                   onChange={(value) => {

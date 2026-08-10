@@ -2,14 +2,18 @@
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { MdOutlinePrivacyTip, MdOutlineVerifiedUser } from "react-icons/md";
-import { LuLogOut, LuSettings } from "react-icons/lu";
-import { FaAngleRight } from "react-icons/fa6";
 import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import Verified from "@/components/ui/overige/icons/Verified";
+import {
+  ChevronRight,
+  HatGlasses,
+  LogOut,
+  Settings,
+  ShieldCheck,
+} from "lucide-react";
 interface ProfileTriggerPopupProps {
   ProfileIsOpen: boolean;
   setProfileIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -61,16 +65,16 @@ function ProfilePopup({
   const toast = useToast();
   const Items = [
     {
-      link: "/settings",
+      link: "/settings/account",
       label: "settings",
-      icon: <LuSettings />,
+      icon: <Settings size={15} />,
       color: "from-orange-500 to-amber-500",
       gradient: "to-amber-500",
     },
     {
       link: "/privacy",
       label: "privacy",
-      icon: <MdOutlinePrivacyTip />,
+      icon: <HatGlasses size={15} />,
       color: "from-emerald-500 to-studogreen",
       gradient: "to-emerald-500",
     },
@@ -78,7 +82,7 @@ function ProfilePopup({
   const logout = {
     link: "/logout",
     label: "logout",
-    icon: <LuLogOut />,
+    icon: <LogOut size={15} />,
     color: "from-cyan-500 to-cyan-600",
     gradient: "to-cyan-500",
   };
@@ -86,7 +90,7 @@ function ProfilePopup({
   const mod = {
     link: "/backoffice/stats",
     label: "ad",
-    icon: <MdOutlineVerifiedUser />,
+    icon: <ShieldCheck size={15} />,
     color: "from-violet-500 to-purple-600",
     gradient: "to-violet-500",
   };
@@ -189,7 +193,7 @@ function ProfilePopup({
                 </div>
                 <span>{t(mod.label)}</span>
 
-                <FaAngleRight className="w-4 h-4 text-white ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
+                <ChevronRight className="w-4 h-4 text-white ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
               </div>
             </Link>
           ) : null}
@@ -264,7 +268,7 @@ function ProfilePopup({
             >
               <div
                 className={`flex items-center justify-center w-8 h-8 rounded-lg
-                                  bg-gradient-to-br ${logout.color}
+                                  bg-linear-to-br ${logout.color}
                                   shadow-md shadow-black/10
                                   group-hover:scale-110 group-hover:shadow-lg
                                   transition-all duration-200`}

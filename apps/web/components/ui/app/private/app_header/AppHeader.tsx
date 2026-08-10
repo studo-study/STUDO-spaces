@@ -9,8 +9,7 @@ import { StudoUser } from "@/types/types";
 import { useAppStore } from "@/store/useAppStore";
 import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection";
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
-import { ArrowRight, OctagonX, PanelRightOpen } from "lucide-react";
-import { HiMenuAlt4 } from "react-icons/hi";
+import { ArrowRight, Menu, OctagonX, PanelRightOpen } from "lucide-react";
 import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
 import {
   SpecialeDag,
@@ -19,6 +18,7 @@ import {
 import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import Streak from "@/components/ui/overige/icons/Streak";
+import { useSettings } from "@/hooks/app/settings/useSettings";
 
 interface HeaderProps {
   burgerOpen: boolean;
@@ -46,6 +46,7 @@ export default function AppHeader({
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
   const premium = process.env.NEXT_PUBLIC_PREMIUM === "true";
+  const settings = useSettings()?.data;
   const { impersonating, stop } = useImpersonation();
 
   return (
@@ -80,9 +81,9 @@ export default function AppHeader({
             className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb"
           >
             {burgerOpen ? (
-              <PanelRightOpen className={"dark:opacity-30"} />
+              <PanelRightOpen size={20} className={"dark:opacity-30"} />
             ) : (
-              <HiMenuAlt4 className={"dark:opacity-30"} />
+              <Menu size={20} className={"dark:opacity-30"} />
             )}
           </button>
           <Link
@@ -175,7 +176,7 @@ export default function AppHeader({
           {isLoading ? (
             <div className="min-w-20 h-8 rounded-4xl bg-studogrey/30 animate-pulse" />
           ) : (
-            <Streak streak={user?.streakCount ?? 0} />
+            settings?.showStreak && <Streak streak={user?.streakCount ?? 0} />
           )}
         </div>
       </div>

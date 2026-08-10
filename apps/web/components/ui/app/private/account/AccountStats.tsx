@@ -1,8 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { PiMedalLight } from "react-icons/pi";
 import { useUser } from "@/components/providers/auth/UserProvider";
-import Image from "next/image";
+import { ClockFading, CreditCard, Trophy } from "lucide-react";
 
 export default function Stats() {
   const user = useUser().user;
@@ -18,12 +17,9 @@ export default function Stats() {
             "w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
           }
         >
-          <Image
-            width={20}
-            height={20}
-            src="/icons/studyset.svg"
-            alt="cards"
-            className={"w-5 dark:invert dark:brightness-0"}
+          <CreditCard
+            size={20}
+            className="dark:text-white text-studodarkblue"
           />
           <span>{t("total_cards")}:</span>
           {user?.stats?.cardsLearned ?? 0}
@@ -34,12 +30,9 @@ export default function Stats() {
             "w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
           }
         >
-          <Image
-            width={20}
-            height={20}
-            src="/icons/clock.svg"
-            alt="cards"
-            className={"w-5 dark:invert dark:brightness-0"}
+          <ClockFading
+            size={20}
+            className="dark:text-white text-studodarkblue"
           />
           <span>{t("time_studied")}:</span>
           {user?.stats?.timeLearned ?? 0}
@@ -50,10 +43,7 @@ export default function Stats() {
             "w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
           }
         >
-          <PiMedalLight
-            size={20}
-            className="dark:text-white text-studodarkblue"
-          />
+          <Trophy size={20} className="dark:text-white text-studodarkblue" />
           <span>{t("total_sets")}:</span>
           {user?.stats?.totalsets ?? 0}
         </div>
