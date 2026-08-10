@@ -7,7 +7,6 @@ import {
   HttpStatus,
   Param,
   Post,
-  Put,
   UseGuards,
   Request,
   NotFoundException,
