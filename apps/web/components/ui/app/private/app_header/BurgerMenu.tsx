@@ -86,8 +86,6 @@ function MenuRow({
   );
 }
 
-// Inklapbare sectie i.p.v. een kale divider. Bij een dichtgeklapte burger valt
-// de header weg en tonen we enkel de kinderen (icoon-rijen).
 function CollapsibleSection({
   title,
   burgerOpen,
@@ -100,9 +98,6 @@ function CollapsibleSection({
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(defaultOpen);
-  // collapsed burger negeert de sectie-toggle (alles zichtbaar). Structuur
-  // blijft identiek (spacer i.p.v. header, zelfde children-wrapper) zodat de
-  // rijen niet remounten bij open/dicht → hun transitions blijven vloeiend.
   const showChildren = !burgerOpen || open;
 
   return (
@@ -203,7 +198,7 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
             icon={<Settings size={20} />}
             text={t("settings")}
             burgerOpen={burgerOpen}
-            href="/settings"
+            href="/settings/account"
             active={isActive("/settings")}
           />
           {isModerator && (

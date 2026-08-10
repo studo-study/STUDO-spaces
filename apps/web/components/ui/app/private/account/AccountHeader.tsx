@@ -82,7 +82,7 @@ export default function AccountHeader() {
             </div>
 
             <Link
-              href={"/settings"}
+              href={"/settings/account"}
               className={
                 "text-sm h-fit text-blue-500 flex gap-2 items-center hover:underline "
               }

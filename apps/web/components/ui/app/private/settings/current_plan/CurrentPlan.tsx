@@ -2,14 +2,10 @@
 
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 
-export default function CurrentPlan(props: SettingsSection) {
-  const { isVisible } = props;
+export default function CurrentPlan() {
   const t = useTranslations("settings");
-  if (isVisible != "select") {
-    return;
-  }
   return (
     <section className={"flex flex-col gap-5 w-full min-h-fit"}>
       <span className={"w-full text-base font-bold h-fit"}>

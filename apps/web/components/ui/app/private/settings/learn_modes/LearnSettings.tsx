@@ -8,13 +8,9 @@ import {
 import { useSettingSaver } from "@/hooks/app/settings/useSettingSaver";
 
 export default function LearnSettings(props: SettingsSection) {
-  const { isVisible, settings, mutate } = props;
+  const { settings, mutate } = props;
   const t = useTranslations("settings");
   const save = useSettingSaver(mutate);
-
-  if (isVisible != "app") {
-    return;
-  }
 
   const items: SettingsMenuOption[] = [
     {

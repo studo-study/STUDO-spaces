@@ -50,9 +50,6 @@ const NL_LABELS: Record<string, string> = {
   "search-result": "Zoekresultaten",
 };
 
-const labelFor = (seg: string) =>
-  NL_LABELS[seg] ?? seg.charAt(0).toUpperCase() + seg.slice(1);
-
 interface Crumb {
   label: ReactNode;
   href: string;
@@ -62,6 +59,11 @@ interface Crumb {
 
 const BreadCrumbs = () => {
   const t = useTranslations("breadcrumbs");
+  // vertaal per route-segment; val terug op NL-labels als de key ontbreekt.
+  const labelFor = (seg: string) =>
+    t.has(seg)
+      ? t(seg)
+      : (NL_LABELS[seg] ?? seg.charAt(0).toUpperCase() + seg.slice(1));
   const nav = useCourseNavStore((state) => state.nav);
   const pathname = usePathname();
   const queryClient = useQueryClient();

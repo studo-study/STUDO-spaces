@@ -3,17 +3,20 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import classNames from "@/utils/classnames";
 import { useUser } from "@/components/providers/auth/UserProvider";
-export default function PersonalInfo(props: SettingsSection) {
-  const { isVisible } = props;
+import { useUpdateUser } from "@/hooks/app/account/useUpdateUser";
+export default function PersonalInfo() {
   const t = useTranslations("settings");
   const user = useUser().user;
+  const { mutate } = useUpdateUser();
   const [editName, setEditName] = useState<boolean>(false);
+  const [name, setName] = useState("");
   const [editMail, setEditMail] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
   const [editRole, setEditRole] = useState<boolean>(false);
+  const [role, setRole] = useState("");
   const [editPassword, setEditPassword] = useState<boolean>(false);
 
   useCourseNav([
@@ -26,21 +29,21 @@ export default function PersonalInfo(props: SettingsSection) {
   ]);
 
   const toggleEditName = () => {
+    if (editName) mutate({ displayName: name });
     setEditName((prev) => !prev);
   };
   const toggleEditMail = () => {
+    if (editMail) mutate({ email: email });
     setEditMail((prev) => !prev);
   };
   const toggleEditRole = () => {
+    if (editRole) mutate({ role: role });
     setEditRole((prev) => !prev);
   };
 
   const toggleEditPassword = () => {
     setEditPassword((prev) => !prev);
   };
-  if (isVisible != "account") {
-    return;
-  }
 
   const personalInfo = [
     {
@@ -49,6 +52,9 @@ export default function PersonalInfo(props: SettingsSection) {
       value: user?.displayName,
       type: "text",
       onclick: toggleEditName,
+      onchange: (input: string) => {
+        setName(input);
+      },
     },
     {
       label: t("email"),
@@ -56,6 +62,9 @@ export default function PersonalInfo(props: SettingsSection) {
       value: user?.email,
       type: "text",
       onclick: toggleEditMail,
+      onchange: (input: string) => {
+        setEmail(input);
+      },
     },
     {
       label: t("role"),
@@ -63,6 +72,9 @@ export default function PersonalInfo(props: SettingsSection) {
       value: user?.publicRole,
       type: "text",
       onclick: toggleEditRole,
+      onchange: (input: string) => {
+        setRole(input);
+      },
     },
     {
       label: t("password"),
@@ -70,6 +82,9 @@ export default function PersonalInfo(props: SettingsSection) {
       value: "wachtwoord",
       type: "password",
       onclick: toggleEditPassword,
+      onchange: (input: string) => {
+        setName(input);
+      },
     },
   ];
   return (
@@ -95,9 +110,10 @@ export default function PersonalInfo(props: SettingsSection) {
                 className={"w-full flex items-center flex-row justify-between"}
               >
                 <input
-                  value={option.value}
+                  defaultValue={option.value}
                   disabled={!option.editMode}
                   autoFocus={option.editMode}
+                  onChange={(e) => option.onchange(e.target.value)}
                   className={classNames(
                     " w-fit max-w-fit outline-none border-b border-transparent",
                     option.editMode && " border-studoblue",

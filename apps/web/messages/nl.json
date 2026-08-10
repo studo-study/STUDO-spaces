@@ -1821,6 +1821,22 @@
     "learn": "Leren",
     "speedy": "Tijdsstrijd",
     "flashcards": "Flashkaarten",
-    "backoffice": "Backoffice"
+    "backoffice": "Backoffice",
+    "account": "Account",
+    "settings": "Instellingen",
+    "visualset": "Visualset",
+    "streak": "Streak",
+    "select": "Studo Select",
+    "pay": "Betalen",
+    "sven": "Sven",
+    "admin": "Admin",
+    "invite": "Uitnodigen",
+    "reports": "Meldingen",
+    "search": "Zoeken",
+    "stats": "Statistieken",
+    "users": "Gebruikers",
+    "create-studoset": "Studoset maken",
+    "create-visualset": "Visualset maken",
+    "search-result": "Zoekresultaten"
   }
 }

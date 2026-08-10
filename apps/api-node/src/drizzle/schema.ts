@@ -50,7 +50,15 @@ export const users = pgTable(
     verified: boolean('verified').notNull(),
     banned: boolean('banned').notNull(),
   },
-  (table) => [uniqueIndex('idx_user_email_unique').on(table.email)],
+  // Case-insensitieve uniekheid: 'Bob@x.com' en 'bob@x.com' zijn dezelfde
+  // account. Uniek op lower(...) zodat casing-duplicaten onmogelijk zijn (ook
+  // bij races), niet enkel via de app-check.
+  (table) => [
+    uniqueIndex('users_email_lower_unique').on(sql`lower(${table.email})`),
+    uniqueIndex('users_displayname_lower_unique').on(
+      sql`lower(${table.displayName})`,
+    ),
+  ],
 );
 
 export const settings = pgTable(

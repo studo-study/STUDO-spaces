@@ -6,7 +6,7 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 // Supported locales
-const locales = ["en", "nl", "fr"]; // Pas aan naar jouw locales
+const locales = ["en", "nl", "fr", "es"]; // Pas aan naar jouw locales
 
 export default auth((request) => {
   const { pathname } = request.nextUrl;

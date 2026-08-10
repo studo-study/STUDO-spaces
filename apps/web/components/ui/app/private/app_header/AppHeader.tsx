@@ -19,6 +19,7 @@ import {
 import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import Streak from "@/components/ui/overige/icons/Streak";
+import { useSettings } from "@/hooks/app/settings/useSettings";
 
 interface HeaderProps {
   burgerOpen: boolean;
@@ -46,6 +47,7 @@ export default function AppHeader({
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
   const premium = process.env.NEXT_PUBLIC_PREMIUM === "true";
+  const settings = useSettings()?.data;
   const { impersonating, stop } = useImpersonation();
 
   return (
@@ -175,7 +177,7 @@ export default function AppHeader({
           {isLoading ? (
             <div className="min-w-20 h-8 rounded-4xl bg-studogrey/30 animate-pulse" />
           ) : (
-            <Streak streak={user?.streakCount ?? 0} />
+            settings?.showStreak && <Streak streak={user?.streakCount ?? 0} />
           )}
         </div>
       </div>

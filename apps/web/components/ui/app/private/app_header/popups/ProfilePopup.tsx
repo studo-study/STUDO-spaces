@@ -61,7 +61,7 @@ function ProfilePopup({
   const toast = useToast();
   const Items = [
     {
-      link: "/settings",
+      link: "/settings/account",
       label: "settings",
       icon: <LuSettings />,
       color: "from-orange-500 to-amber-500",

@@ -10,7 +10,8 @@ import {
 } from '../drizzle/drizzle.provider';
 import type { Redis } from 'ioredis';
 import { REDIS_CLIENT } from '../redis/redis.provider';
-import { and, eq, gte, inArray, ne } from 'drizzle-orm';
+import { and, eq, gte, inArray, ne, sql } from 'drizzle-orm';
+import { rethrowAsConflict } from '../lib/unique-violation';
 import {
   cards,
   classroomactivities,
@@ -305,14 +306,37 @@ export class UserService {
     }
 
     if (body.email) {
+      // Case-insensitive vergelijken en de eigen rij uitsluiten: een user die
+      // zijn (ongewijzigde) email opnieuw opstuurt mag geen conflict krijgen.
       const existingUser = await this.db.query.users.findFirst({
-        where: eq(users.email, body.email),
+        where: and(
+          sql`lower(${users.email}) = lower(${body.email})`,
+          ne(users.id, userId),
+        ),
       });
 
       if (existingUser) {
-        throw new ConflictException(
-          'There is already a user with this email address',
-        );
+        throw new ConflictException({
+          code: 'EMAIL_TAKEN',
+          message: 'There is already a user with this email address',
+        });
+      }
+    }
+
+    if (body.displayName) {
+      // Zelfde patroon als email: case-insensitief en de eigen rij uitsluiten.
+      const clash = await this.db.query.users.findFirst({
+        where: and(
+          sql`lower(${users.displayName}) = lower(${body.displayName})`,
+          ne(users.id, userId),
+        ),
+      });
+
+      if (clash) {
+        throw new ConflictException({
+          code: 'DISPLAY_NAME_TAKEN',
+          message: 'There is already a user with this display name',
+        });
       }
     }
 
@@ -323,7 +347,7 @@ export class UserService {
     await this.db
       .update(users)
       .set({
-        email: body.email ?? user.email,
+        email: body.email?.toLowerCase() ?? user.email,
         passwordHash: passwordhash ?? user.passwordHash,
         displayName: body.displayName ?? user.displayName,
         imgUrl: body.imgUrl ?? user.imgUrl,
@@ -337,7 +361,8 @@ export class UserService {
         lastLogin: body.lastLogin ? new Date(body.lastLogin) : user.lastLogin,
         roles: body.role ?? user.roles,
       })
-      .where(eq(users.id, userId));
+      .where(eq(users.id, userId))
+      .catch(rethrowAsConflict);
     return this.getById(userId);
   }
 

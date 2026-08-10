@@ -11,7 +11,8 @@ import {
 } from '@nestjs/common';
 import { LoginRequest, RegisterUserRequest } from '@studo/types';
 import { profiles, settings, users } from '../drizzle/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
+import { rethrowAsConflict } from '../lib/unique-violation';
 import {
   type DatabaseProvider,
   InjectDrizzle,
@@ -72,8 +73,9 @@ export class AuthService {
 
   //login functie
   async login({ email, password }: LoginRequest): Promise<string> {
+    // Case-insensitive: login moet werken ongeacht de casing van de email.
     const user = await this.db.query.users.findFirst({
-      where: eq(users.email, email),
+      where: sql`lower(${users.email}) = lower(${email})`,
     });
 
     if (!user) {
@@ -113,8 +115,10 @@ export class AuthService {
     tag: string;
     verified: boolean;
   }): Promise<User> {
+    // Case-insensitive: voorkom een duplicate account als de provider de email
+    // met andere casing teruggeeft dan de bestaande rij.
     const existing = await this.db.query.users.findFirst({
-      where: eq(users.email, params.email),
+      where: sql`lower(${users.email}) = lower(${params.email})`,
     });
 
     if (existing) {
@@ -130,7 +134,7 @@ export class AuthService {
     const [{ id: uid }] = await this.db
       .insert(users)
       .values({
-        email: params.email,
+        email: params.email.toLowerCase(),
         passwordHash: '',
         displayName: params.displayName,
         imgUrl: params.imgUrl,
@@ -230,21 +234,35 @@ export class AuthService {
     const date = new Date();
     const passwordHash = await this.hashPassword(password);
 
+    // Case-insensitive: A@x.com en a@x.com zijn dezelfde account.
     const existingUser = await this.db.query.users.findFirst({
-      where: eq(users.email, email),
+      where: sql`lower(${users.email}) = lower(${email})`,
     });
 
     if (existingUser) {
-      throw new ConflictException(
-        'There is already a user with this email address',
-      );
+      throw new ConflictException({
+        code: 'EMAIL_TAKEN',
+        message: 'There is already a user with this email address',
+      });
     }
 
-    // User
+    const displayNameClash = await this.db.query.users.findFirst({
+      where: sql`lower(${users.displayName}) = lower(${displayName})`,
+    });
+
+    if (displayNameClash) {
+      throw new ConflictException({
+        code: 'DISPLAY_NAME_TAKEN',
+        message: 'There is already a user with this display name',
+      });
+    }
+
+    // User. De insert kan alsnog 23505 gooien als een gelijktijdige registratie
+    // net langs de pre-check glipte; map dat naar een nette 409.
     const [{ id: uid }] = await this.db
       .insert(users)
       .values({
-        email: email,
+        email: email.toLowerCase(),
         passwordHash: passwordHash,
         displayName: displayName,
         imgUrl: 'default',
@@ -259,7 +277,8 @@ export class AuthService {
         verified: false,
         banned: false,
       })
-      .returning({ id: users.id });
+      .returning({ id: users.id })
+      .catch(rethrowAsConflict);
 
     // Settings
     await this.db.insert(settings).values({

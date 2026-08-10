@@ -5,13 +5,9 @@ import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSe
 import { useSettingSaver } from "@/hooks/app/settings/useSettingSaver";
 
 const DevOptions = (props: SettingsSection) => {
-  const { isVisible, settings, mutate } = props;
+  const { settings, mutate } = props;
   const t = useTranslations("settings");
   const save = useSettingSaver(mutate);
-
-  if (isVisible != "dev") {
-    return;
-  }
 
   const devOptions = [
     {

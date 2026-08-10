@@ -12,6 +12,7 @@ import {
   Request,
   NotFoundException,
   ForbiddenException,
+  Patch,
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import * as types from '@studo/types';
@@ -161,7 +162,7 @@ export class UserController {
   })
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER, Role.ADMIN)
-  @Put(':user_id')
+  @Patch(':user_id')
   async updateById(
     @Param('user_id', ParseUserIdPipe) userId: string,
     @Body() body: types.UpdateUser,
@@ -171,9 +172,7 @@ export class UserController {
     if (!userExists) {
       throw new NotFoundException('User does not exist');
     }
-
     this.assertSelfOrAdmin(req, userId);
-
     return this.userService.updateById(userId, body);
   }
 

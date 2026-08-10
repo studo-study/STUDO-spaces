@@ -2,6 +2,27 @@
   "datepicker": {
     "placeholder": "Choisir une date"
   },
+  "admin": {
+    "title": "Back Office",
+    "subtitle_stats": "Statistiques rapides (ce mois-ci)",
+    "subtitle_overview": "Aperçu",
+    "total_usr": "Total utilisateurs :",
+    "total_month": "MAU",
+    "total_ss": "Total Studosets",
+    "total_vs": "Total Visualsets",
+    "or": "ou",
+    "stats": "Stats",
+    "reports": "Rapports",
+    "users": "Utilisateurs",
+    "search": "Rechercher",
+    "invite": "Inviter",
+    "recently_usrs": "Utilisateurs récemment inscrits",
+    "most_pp_set": "Sets les plus populaires",
+    "graphs": "Graphiques STUDO",
+    "activity": "Autre activité utilisateur",
+    "search_a": "trouvez tout...",
+    "not_searched": "Entrez un terme de recherche"
+  },
   "landing": {
     "header": {
       "LogIn": "Se connecter",
@@ -35,11 +56,14 @@
       "aboutTitle": "à propos de studo",
       "selectTitle": "Select",
       "setTitle": "Sets",
+      "supportTitle": "Support",
       "ss": "studosets",
       "vs": "visualsets",
       "aboutBlock1": "À propos de nous",
       "aboutBlock2": "Confidentialité",
       "aboutBlock3": "Conditions d'utilisation",
+      "aboutBlock4": "Contact",
+      "aboutNewsroom": "Newsroom",
       "ssBlock1": "Créer un Studoset",
       "ssBlock2": "Studosets",
       "vsBlock1": "Créer un Visualset",
@@ -49,8 +73,17 @@
       "Version": "Version",
       "rights": "STUDO inc. Tous droits réservés.",
       "select": "Studo Select",
+      "pricing": "Tarifs",
       "edu": "Studo for Education",
-      "GDPR": "RGPD"
+      "supportFaq": "FAQ",
+      "supportCenter": "Support",
+      "supportContact": "Contact",
+      "GDPR": "RGPD",
+      "gdpr": "RGPD",
+      "compliant": "conforme",
+      "privacy": "Confidentialité",
+      "first": "d'abord",
+      "made_in_ghent": "Conçu à Gand"
     },
     "welcome": {
       "CreateCustom": "Crée tes propres sets",
@@ -89,6 +122,7 @@
       "stat1": "5 outils d'étude",
       "stat2": "création de sets illimitée",
       "stat3": "100% gratuit",
+      "search_static": "rechercher...",
       "search_sets": "rechercher des studosets...",
       "search_visuals": "rechercher des visualsets...",
       "search_people": "rechercher des profils...",
@@ -593,30 +627,997 @@
         "block3": "Fixe une deadline et défie ton groupe",
         "cta": "Lancer un Speed Run"
       }
+    },
+    "search_result": {
+      "title": "Résultats pour",
+      "all": "Tous les résultats",
+      "users": "Utilisateurs",
+      "classrooms": "Classes",
+      "tracks": "Studo Tracks",
+      "results": "résultats",
+      "result": "résultat",
+      "sets": "Sets",
+      "classroom": {
+        "classroom": "Classes",
+        "started_by": "démarré par",
+        "more": "plus",
+        "not_found": "aucune classe",
+        "classroom_type": "classroom",
+        "classroom_group": "classroom",
+        "studygroup": "groupe d'étude",
+        "community": "communauté",
+        "univeristy": "université",
+        "hogeschool": "haute école"
+      },
+      "set": {
+        "sets": "Sets",
+        "more": "plus",
+        "not_found": "aucun set",
+        "cards": "cartes",
+        "pins": "pins",
+        "like": "like",
+        "likes": "likes"
+      },
+      "user": {
+        "users": "Utilisateurs",
+        "more": "plus",
+        "not_found": "aucun utilisateur"
+      },
+      "studo": {
+        "users": "Studo Tracks",
+        "more": "plus",
+        "not_found": "aucun track trouvé"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "lastUpdated": "Dernière mise à jour : 19 avril 2026",
+      "intro1": "Nous serions ravis d'avoir de tes nouvelles. Que tu aies une question, envie de partager un retour, que tu aies rencontré un bug ou que tu souhaites collaborer, la porte est ouverte.",
+      "intro2": "Ci-dessous, tu trouveras le meilleur moyen de nous contacter, selon ce dont tu as besoin. Nous faisons de notre mieux pour répondre dans les 24 heures en semaine.",
+      "supportTitle": "Support général",
+      "supportText": "Tu as une question sur ton compte, besoin d'aide avec une fonctionnalité, ou quelque chose ne fonctionne pas comme prévu ? Envoie-nous un e-mail et nous t'aiderons le plus vite possible.",
+      "businessTitle": "Business & partenariats",
+      "businessText": "Tu représentes une école, une organisation ou une entreprise et penses que nous pourrions bien nous entendre ? Fais-le nous savoir. Nous sommes ouverts aux collaborations qui apportent une réelle valeur aux étudiants.",
+      "pressTitle": "Presse & médias",
+      "pressText": "Tu es journaliste, blogueur ou créateur de contenu et souhaites écrire sur Studo ? Nous partageons volontiers nos expériences, nos stats et notre vision. Contacte-nous via l'adresse presse ci-dessous.",
+      "feedbackTitle": "Feedback",
+      "feedbackText1": "Le feedback vaut de l'or pour nous. Studo a été construit en écoutant les étudiants, et nous comptons bien continuer. Qu'il s'agisse d'un petit détail à améliorer ou d'une grande idée pour une nouvelle fonctionnalité, nous lisons tout.",
+      "feedbackText2": "Pas besoin d'être formel. Écris simplement comme tu écrirais à un ami qui travaille sur une app. Honnête et direct, c'est toujours bienvenu.",
+      "bugTitle": "Rapports de bugs",
+      "bugText": "Quelque chose ne fonctionne pas ? Signale-le-nous et nous le corrigerons. Plus tu nous donnes d'infos, plus vite nous pourrons le résoudre. Utile à mentionner :",
+      "bug1": "Ce que tu faisais exactement quand ça a planté",
+      "bug2": "Quel appareil et quel navigateur tu utilises",
+      "bug3": "Une capture d'écran ou un enregistrement d'écran si possible",
+      "bug4": "Si cela se produit à chaque fois ou une seule fois",
+      "socialTitle": "Suis-nous",
+      "socialText": "Pour des updates, des astuces, du contenu en coulisses et de temps en temps un meme, suis-nous sur les réseaux. Nous publions régulièrement et lisons tous tes commentaires et DM.",
+      "responseTitle": "Temps de réponse",
+      "responseText1": "Nous visons une réponse dans les 24 heures en semaine. Le week-end, cela peut prendre un peu plus de temps, mais tu auras toujours une réponse, nous ne laissons aucun message sans suite.",
+      "responseText2": "Pendant les périodes d'examens, c'est plus chargé que d'habitude. Merci pour ta patience si cela prend alors un jour de plus."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "lastUpdated": "Dernière mise à jour : 19 avril 2026",
+      "intro1": "Bienvenue dans notre FAQ. Tu y trouveras les réponses aux questions que nous recevons le plus souvent des étudiants qui utilisent ou envisagent Studo.",
+      "intro2": "Tu ne trouves pas ta question ? Pas de souci, en bas de cette page tu trouveras comment nous contacter. Nous répondons généralement dans les 24 heures.",
+      "categories": {
+        "general": {
+          "title": "Général",
+          "q1": {
+            "question": "Qu'est-ce que Studo exactement ?",
+            "answer": "Studo est une plateforme d'étude tout-en-un pour les étudiants. Au lieu de jongler entre applis de flashcards, de notes, agendas et moteurs de recherche, tu trouves tout au même endroit : des Studosets et Visualsets pour étudier activement, des Classrooms pour collaborer, Flow pour suivre tes matières, et SVEN, notre coach IA, pour t'aider là où c'est nécessaire."
+          },
+          "q2": {
+            "question": "À qui s'adresse Studo ?",
+            "answer": "En premier lieu aux étudiants de l'enseignement supérieur, mais toute personne qui veut apprendre est la bienvenue. Du secondaire à l'université, de la médecine au droit en passant par l'informatique, Studo est conçu pour fonctionner avec n'importe quelle matière et n'importe quel style d'apprentissage."
+          },
+          "q3": {
+            "question": "Quelle est la différence entre Studo et les autres applis de flashcards ?",
+            "answer": "Les flashcards ne sont qu'une partie de Studo. Tu bénéficies aussi des Visualsets (idéaux pour l'anatomie ou la géographie), d'un véritable système de suivi via Flow, d'environnements d'apprentissage partagés via les Classrooms, et d'un soutien IA via SVEN. Ce n'est pas un outil isolé, mais un écosystème qui évolue avec tes études."
+          },
+          "q4": {
+            "question": "Dans quelles langues Studo est-il disponible ?",
+            "answer": "Nous prenons actuellement en charge le néerlandais, l'anglais, le français et l'espagnol. Nous travaillons sur d'autres langues et écoutons activement celles dont notre communauté a le plus besoin."
+          },
+          "q5": {
+            "question": "Existe-t-il une application mobile ?",
+            "answer": "Oui, nous avons une app iOS pour que tu puisses étudier en déplacement. Une version Android figure sur notre roadmap."
+          }
+        },
+        "studosets": {
+          "title": "Studosets & Visualsets",
+          "q1": {
+            "question": "Que sont les Studosets ?",
+            "answer": "Les Studosets sont des paires terme-définition que tu peux étudier de différentes façons. Tu peux les utiliser via Apprendre (répétition espacée qui continue de te tester jusqu'à ce que tu maîtrises tout), Time Attack (mode vitesse avec des manches), ou les Flashcards classiques. Chaque mode s'adapte à ton niveau."
+          },
+          "q2": {
+            "question": "Qu'est-ce qui rend les Visualsets uniques ?",
+            "answer": "Les Visualsets sont conçus pour les matières visuelles comme l'anatomie, la biologie et la géographie. Tu télécharges une image, y places des pins avec des définitions, et tu étudies via deux modes : Identifier (tu tapes ce que représente le pin) ou Pointer (le système donne une définition et tu indiques le bon pin). Parfait pour mémoriser des structures et des emplacements."
+          },
+          "q3": {
+            "question": "Comment créer rapidement un Studoset ?",
+            "answer": "Tu as plusieurs options. Saisir les termes un par un manuellement, importer depuis un document Word ou un fichier Excel, ou simplement par copier-coller. Pour les matières mathématiques, il y a le Math Mode qui affiche correctement les formules LaTeX. Tu peux aussi ajouter des images à tes termes."
+          },
+          "q4": {
+            "question": "Qu'est-ce que le Health Mode pendant l'étude ?",
+            "answer": "Le Health Mode te rappelle toutes les 20 minutes de te lever 2 minutes et de regarder dehors, la règle du 20-20-2. Un petit détail qui fait une grande différence pour tes yeux et ton dos lors de longues sessions d'étude. Il y a aussi un minuteur pomodoro intégré pour ceux qui travaillent par intervalles."
+          },
+          "q5": {
+            "question": "Puis-je rendre mes sets publics ou privés ?",
+            "answer": "C'est toi qui choisis. Les sets publics sont trouvables via notre fonction de recherche, ce qui est pratique si tu veux partager avec des camarades ou contribuer à la communauté. Les sets privés ne sont visibles que par toi ou les personnes que tu invites."
+          }
+        },
+        "classrooms": {
+          "title": "Classrooms & étudier ensemble",
+          "q1": {
+            "question": "Que sont les Classrooms ?",
+            "answer": "Les Classrooms sont des environnements d'apprentissage partagés où tu peux étudier, t'exercer et partager du matériel avec d'autres. Il en existe trois types : les Official Classrooms (liées à une école ou un enseignant), les Study Groups (groupes privés avec des amis ou des partenaires de projet), et les Communities (groupes publics ouverts autour d'une matière ou d'un sujet)."
+          },
+          "q2": {
+            "question": "Comment rejoindre une Classroom ?",
+            "answer": "Pour les Official Classrooms et les Study Groups, tu reçois généralement une invitation ou un code de l'organisateur. Les Communities sont ouvertes, tu les trouves via la fonction de recherche et tu peux les rejoindre directement."
+          },
+          "q3": {
+            "question": "Puis-je voir la progression des autres dans une Classroom ?",
+            "answer": "Dans les Classrooms et les Study Groups, tu peux éventuellement voir la progression et les statistiques des autres, ce qui est motivant pour étudier ensemble. Tu peux toujours désactiver cela complètement via tes paramètres de confidentialité, c'est toi qui décides ce que tu partages."
+          },
+          "q4": {
+            "question": "Que sont les compétitions et challenges ?",
+            "answer": "Au sein des Classrooms et des Study Groups, quelqu'un peut lancer un concours d'étude auquel d'autres peuvent participer. Idéal pour mémoriser de la matière ensemble avant un examen, avec une touche de compétition."
+          },
+          "q5": {
+            "question": "Si mon enseignant crée une Classroom, voit-il mes performances ?",
+            "answer": "Dans une Official Classroom, ton enseignant ou professeur peut suivre ta progression pour te donner un feedback ciblé. Cela est communiqué de façon transparente et est lié à la Classroom elle-même, en dehors de ce contexte tes statistiques restent les tiennes."
+          }
+        },
+        "flow": {
+          "title": "Studo Flow",
+          "q1": {
+            "question": "Qu'est-ce que Studo Flow ?",
+            "answer": "Flow est notre système de suivi pour gérer visuellement ton processus d'apprentissage. Organisé par année académique, par matière et par activité d'apprentissage. Imagine une version intelligente et visuelle du fichier Excel que beaucoup d'étudiants utilisent pour noter ce qu'ils ont déjà traité, mais avec des liens directs vers tes studosets et visualsets."
+          },
+          "q2": {
+            "question": "Comment Flow fonctionne-t-il en pratique ?",
+            "answer": "Flow est construit en trois couches : les Flowboards (ton année ou semestre d'étude), les Flowcourses (chaque matière) et les Flowrows (activités d'apprentissage concrètes comme un cours ou un exercice). Pendant le cours, tu tapes rapidement un titre et appuies sur Entrée, terminé. À la maison, tu peux structurer : modifier le statut, définir la priorité, lier des ressources."
+          },
+          "q3": {
+            "question": "Flow convient-il si je ne suis pas du genre à planifier ?",
+            "answer": "Absolument. Flow est délibérément conçu pour les power users comme pour les étudiants qui planifient au minimum. Saisir un titre suffit pour commencer. Tous les champs supplémentaires comme la priorité, le type ou l'échéance sont facultatifs. Tu peux le rendre aussi simple ou détaillé que tu le souhaites."
+          },
+          "q4": {
+            "question": "Comment voir ma progression ?",
+            "answer": "À deux niveaux. Par matière, tu vois en haut de la vue tableau une barre de progression indiquant combien d'éléments tu as terminés. Sur l'aperçu de ton Flowboard, chaque Flowcourse apparaît comme une carte avec une barre de progression compacte, un coup d'œil et tu sais où tu en es pour chaque matière."
+          }
+        },
+        "ai": {
+          "title": "SVEN & Studo Select",
+          "q1": {
+            "question": "Qu'est-ce que SVEN ?",
+            "answer": "SVEN est notre coach IA et fait partie de Studo Select, la version premium de la plateforme. SVEN t'aide à passer plus vite du matériel de cours à du contenu étudiable, comme générer automatiquement des Studosets à partir de documents, ou retrouver rapidement quelque chose dans ton cours."
+          },
+          "q2": {
+            "question": "SVEN peut-il créer automatiquement des sets à partir de mon cours ?",
+            "answer": "Oui. Tu télécharges un PDF ou un document Word et SVEN génère un Studoset avec des termes et des définitions. Tu gardes toujours le contrôle, tu peux évaluer, modifier et approuver définitivement le résultat de l'IA avant que le set ne soit finalisé. Nous ne publions jamais rien automatiquement."
+          },
+          "q3": {
+            "question": "Qu'est-ce que le course linking ?",
+            "answer": "Quand tu lies un cours à un Studoset, un bouton « Vérifier le cours » apparaît à côté de chaque terme et t'amène directement à la section concernée. Fini de chercher parmi des centaines de pages. Tu peux aussi effectuer une recherche sémantique dans tes cours téléchargés par mots-clés ou par phrases."
+          },
+          "q4": {
+            "question": "Le contenu généré par l'IA est-il toujours correct ?",
+            "answer": "L'IA se trompe parfois, c'est pourquoi tu vois toujours un avertissement t'invitant à vérifier le résultat. Nous travaillons avec des étapes de révision humaine et une boucle de feedback où tu peux évaluer chaque sortie de l'IA. Vérifie toujours toi-même le contenu important avant d'étudier avec."
+          }
+        },
+        "courses": {
+          "title": "Courses & Verified Sets",
+          "q1": {
+            "question": "Que sont les Studo Courses ?",
+            "answer": "Les Studo Courses sont des parcours d'apprentissage préconçus élaborés par l'équipe Studo elle-même afin de garantir la qualité. Un Course (par exemple Médecine) se compose de plusieurs Tracks, des modules autour d'un sujet ou d'un examen spécifique, chacun lié à des matières pertinentes et à des sets vérifiés."
+          },
+          "q2": {
+            "question": "Que signifie le badge Verified ?",
+            "answer": "Les sets portant un badge Verified sont créés ou vérifiés par l'équipe Studo, ont prouvé une précision de plus de 95 % aux examens, ou sont approuvés par un enseignant. Les sets vérifiés sont prioritaires dans les résultats de recherche et sont mis en avant sur les pages de matière."
+          },
+          "q3": {
+            "question": "Puis-je devenir Verified creator ?",
+            "answer": "Oui. Si tes sets répondent aux critères, tu obtiens le statut de Verified creator. Avantages : Studo Select gratuit, une place au classement des meilleurs créateurs, et dans des phases ultérieures un partage des revenus pour les sets populaires."
+          }
+        },
+        "account": {
+          "title": "Compte & confidentialité",
+          "q1": {
+            "question": "Comment créer un compte ?",
+            "answer": "Tu peux t'inscrire avec ton adresse e-mail, ton compte Google ou ton compte Microsoft. Cela prend moins d'une minute et tu as immédiatement accès à la plateforme."
+          },
+          "q2": {
+            "question": "Puis-je supprimer mon compte ?",
+            "answer": "Bien sûr. Dans les paramètres de ton compte, tu trouveras l'option pour supprimer définitivement ton compte. Toutes tes données seront alors effacées conformément à notre politique de confidentialité."
+          },
+          "q3": {
+            "question": "Qu'en est-il de la confidentialité dans les Classrooms ?",
+            "answer": "C'est toi qui décides ce que tu partages. Comparer la progression et partager des statistiques sont facultatifs et entièrement désactivables via tes paramètres. Tu peux aussi définir des préférences de confidentialité distinctes par Classroom."
+          },
+          "q4": {
+            "question": "J'ai oublié mon mot de passe, que faire ?",
+            "answer": "Clique sur « Mot de passe oublié » sur la page de connexion, saisis ton adresse e-mail et tu recevras un lien de réinitialisation. Vérifie aussi ton dossier spam si l'e-mail n'arrive pas tout de suite."
+          }
+        },
+        "pricing": {
+          "title": "Tarifs",
+          "q1": {
+            "question": "Studo est-il gratuit ?",
+            "answer": "Les fonctionnalités de base de Studo sont gratuites : Studosets, Visualsets, Classrooms, Flow et la recherche. Les fonctionnalités IA font partie de Studo Select, notre offre premium."
+          },
+          "q2": {
+            "question": "Qu'est-ce que j'obtiens avec Studo Select ?",
+            "answer": "Avec Studo Select, tu obtiens l'accès à SVEN, notre coach IA. Concrètement : jusqu'à 8 Go de téléchargements de fichiers, la génération automatique de sets à partir de documents, le course linking, la recherche sémantique dans tes cours, et 100 crédits de sets pour la génération de sets par SVEN."
+          },
+          "q3": {
+            "question": "Puis-je annuler Studo Select à tout moment ?",
+            "answer": "Absolument. Tu peux annuler à tout moment dans les paramètres de ton compte. Tu conserves l'accès aux fonctionnalités premium jusqu'à la fin de la période de facturation."
+          }
+        },
+        "technical": {
+          "title": "Technique",
+          "q1": {
+            "question": "Quels navigateurs sont pris en charge ?",
+            "answer": "Studo fonctionne sur tous les navigateurs modernes : Chrome, Firefox, Safari et Edge. Nous te recommandons de garder ton navigateur à jour pour une expérience optimale."
+          },
+          "q2": {
+            "question": "Studo fonctionne-t-il hors ligne ?",
+            "answer": "Certaines fonctionnalités comme la consultation des Studosets téléchargés fonctionnent hors ligne dans l'app iOS. La version web nécessite une connexion internet pour la plupart des fonctionnalités."
+          },
+          "q3": {
+            "question": "Mes données sont-elles sécurisées ?",
+            "answer": "Nous prenons la confidentialité au sérieux. Toutes tes données sont stockées de manière chiffrée et nous ne vendons jamais tes données à des tiers. Consulte notre politique de confidentialité pour tous les détails."
+          }
+        }
+      },
+      "stillTitle": "Encore des questions ?",
+      "stillText": "Tu ne trouves pas la réponse à ta question ici ? Pas de souci, n'hésite pas à nous envoyer un message. Nous répondons généralement dans les 24 heures."
+    },
+    "waitinglist": {
+      "title": "Inscris-toi",
+      "join_waitinglist": "Indique ton e-mail pour la liste d'attente",
+      "email": "e-mail",
+      "join": "inscris-toi",
+      "Loading": "chargement...",
+      "rights": "STUDO inc. Tous droits réservés.",
+      "hook": "étudiants déjà inscrits",
+      "Version": "Version",
+      "somethingWentWrong": "Une erreur s'est produite, réessaie",
+      "alreadyRegistered": "Cette adresse e-mail est déjà sur la liste"
+    },
+    "blog": {
+      "title": "Blog",
+      "lastUpdated": "Dernière mise à jour :"
     }
   },
-  "waitinglist": {
-    "title": "Rejoindre les listes d'attente",
-    "join_waitinglist": "inscris-toi avec ton e-mail",
-    "email": "e-mail",
-    "join": "rejoindre",
-    "Loading": "chargement...",
-    "rights": "STUDO inc. Tous droits réservés.",
-    "hook": "étudiants déjà inscrits",
+  "login": {
+    "hook": "étudiants étudient déjà",
     "Version": "Version",
-    "somethingWentWrong": "Quelque chose s'est mal passé, réessaie",
-    "alreadyRegistered": "Cette adresse e-mail est déjà sur la liste"
+    "rights": "STUDO inc. Tous droits réservés.",
+    "Welcome back": "Bon retour",
+    "email": "e-mail",
+    "password": "mot de passe",
+    "Log In": "Connexion",
+    "log into account": "connecte-toi à ton compte",
+    "or log in with": "ou connecte-toi avec",
+    "Loading": "Chargement...",
+    "Google": "Google",
+    "Microsoft": "Microsoft",
+    "Smartschool": "Smartschool",
+    "Don't have an account?": "Pas encore de compte ?",
+    "sign up": "s'inscrire",
+    "successful_login": "Connexion réussie"
   },
-  "notfound": {
-    "404": "404",
-    "return": "retournée"
+  "register": {
+    "Create account": "Créer un compte",
+    "create_account": "Créer un nouveau compte",
+    "information": "Infos personnelles",
+    "email": "e-mail",
+    "name": "nom",
+    "info_title": "Tes infos personnelles",
+    "password_title": "Ton mot de passe",
+    "password": "mot de passe",
+    "repeat password": "répète le mot de passe",
+    "role_title": "Tu es un(e)",
+    "teacher": "enseignant",
+    "student": "étudiant",
+    "professor": "professeur",
+    "Loading": "Inscription...",
+    "Register": "S'inscrire",
+    "other_register": "ou inscris-toi avec",
+    "Already": "Déjà inscrit ?",
+    "log in": "Se connecter"
+  },
+  "header": {
+    "create_ss": "Créer un Studoset",
+    "create_vs": "Créer un Visualset",
+    "create_f": "Créer un dossier",
+    "notifs": "notifications",
+    "day streak": "jours de suite",
+    "studied": "Tu as étudié ",
+    "days": " jours de suite",
+    "settings": "Paramètres",
+    "privacy": "Confidentialité",
+    "logout": "Déconnexion",
+    "ad": "Admin",
+    "home": "Accueil",
+    "courses": "Cours",
+    "planner": "Planner",
+    "flow": "Flow",
+    "create": "Créer",
+    "groups": "Groupes",
+    "account": "Compte",
+    "nonotif": "aucune notification",
+    "allup": "tout est à jour",
+    "search": "rechercher...",
+    "search_btn": "Rechercher",
+    "create_c": "Créer une matière",
+    "create_b": "Créer un board",
+    "create_btn": "Créer",
+    "library": "Bibliothèque"
+  },
+  "createfolder": {
+    "title": "créer un dossier",
+    "placeholder": "Entre un nom...",
+    "button": "créer"
+  },
+  "createclassroom": {
+    "title": "Créer une classroom",
+    "button": "créer",
+    "subtitle_title": "Nom de la classroom :",
+    "placeholder": "Entre un nom...",
+    "subtitle_options": "Type de classroom :",
+    "class": "Classe – classe officielle",
+    "study": "Groupe d'étude – entre amis",
+    "community": "Communauté – ouverte à tous",
+    "subtitle_school": "Nom de l'école :",
+    "placeholder_school": "nom de l'école...",
+    "studygroup": "Groupe d'étude – entre amis"
+  },
+  "createstudoset": {
+    "title": "Créer un nouveau Studoset",
+    "title_placeholder": "Entre un titre...",
+    "course_placeholder": "Entre une matière...",
+    "folder_placeholder": "Sélectionne un dossier...",
+    "term_language": "Langue du terme...",
+    "def_language": "Langue de la définition...",
+    "import": "Importer",
+    "create": "Créer le Set",
+    "add_card": "Ajouter une carte",
+    "title_error": "le titre est obligatoire",
+    "course_error": "la matière est obligatoire",
+    "folder_error": "sélectionne un dossier",
+    "term_lang_error": "sélectionne une langue",
+    "def_lang_error": "sélectionne une langue",
+    "card_error": "il y a des cartes vides",
+    "saving": "Enregistrement...",
+    "submit_error": "Une erreur s'est produite, réessaie",
+    "draft": "(brouillon)",
+    "delete_draft": "Supprimer le brouillon",
+    "select_folder": "Choisis un dossier",
+    "select_language_term": "Choisis une langue pour les termes",
+    "select_language_def": "Choisis une langue pour les définitions",
+    "create_course": "Créer une matière",
+    "english": "Anglais",
+    "dutch": "Néerlandais",
+    "french": "Français",
+    "german": "Allemand",
+    "spanish": "Espagnol"
+  },
+  "editstudoset": {
+    "edit": "Modifier le Studoset",
+    "title_placeholder": "Entre un titre...",
+    "course_placeholder": "Entre une matière...",
+    "term_language": "Langue du terme...",
+    "def_language": "Langue de la définition...",
+    "create": "Modifier le Set",
+    "add_card": "Ajouter une carte",
+    "title_error": "le titre est obligatoire",
+    "course_error": "la matière est obligatoire",
+    "term_lang_error": "sélectionne une langue",
+    "def_lang_error": "sélectionne une langue",
+    "card_error": "il y a des cartes vides",
+    "saving": "Enregistrement...",
+    "submit_error": "Une erreur s'est produite, réessaie",
+    "draft": "(brouillon)",
+    "delete_draft": "Supprimer le brouillon"
+  },
+  "createvisualset": {
+    "title": "Créer un nouveau Visualset",
+    "title_placeholder": "Entre un titre...",
+    "course_placeholder": "Entre une matière...",
+    "folder_placeholder": "Sélectionne un dossier...",
+    "create": "Créer le Visualset",
+    "saving": "Enregistrement...",
+    "title_required": "Le titre est obligatoire",
+    "title_max": "Titre max 100 caractères",
+    "course_required": "La matière est obligatoire",
+    "course_max": "Matière max 100 caractères",
+    "folder_required": "Le dossier est obligatoire",
+    "image_title": "Titre de l'image",
+    "image_title_placeholder": "Entre un titre pour cette image...",
+    "image_title_max": "Titre max 100 caractères",
+    "pins": "Pins",
+    "click_to_add_pins": "Clique sur l'image pour ajouter des pins",
+    "click_to_upload": "Clique pour télécharger une image",
+    "type_definition": "Tape une définition",
+    "definition_placeholder": "Définition...",
+    "cancel": "Annuler",
+    "add": "Ajouter",
+    "title_error": "le titre est obligatoire",
+    "course_error": "la matière est obligatoire",
+    "folder_error": "sélectionne un dossier"
   },
   "card": {
     "Definition": "Définition",
     "Term": "Terme",
     "click_turn": "cliquer pour retourner",
     "click_flip_back": "cliquer pour revenir",
-    "learnt": "Appris"
+    "learnt": "Appris",
+    "image_suggestion": "Suggestions",
+    "no_term": "aucun terme",
+    "no_suggestions": "aucune suggestion trouvée"
+  },
+  "notfound": {
+    "404": "404",
+    "return": "retournée"
+  },
+  "timed": {
+    "0": [
+      "Minuit est passé et toujours à fond !",
+      "Continue !",
+      "Minuit et toujours au top !"
+    ],
+    "2": [
+      "Content de te revoir, oiseau de nuit",
+      "Encore debout si tard ? Tu n'es pas le seul...",
+      "The night is still young.. and so are we 🎶",
+      "En train de study-maxxer on dirait",
+      "Encore en train ou déjà en train ???"
+    ],
+    "4": [
+      "Frère il est quand même bien tard",
+      "Va dormir !",
+      "Toujours réveillé... comment !?",
+      "Sérieux frère, va te coucher",
+      "Grind, douche, Studo..",
+      "J'irais presque dormir moi-même",
+      "Okaaay letsgooo"
+    ],
+    "7": [
+      "Bonjour {name}",
+      "Tu es réveillé, première petite victoire de la journée",
+      "Café et Studo (pas de meilleure combo)",
+      "You're finally awake"
+    ],
+    "11": [
+      "Bon retour, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": [
+      "Bon après-midi {name}",
+      "Continue comme ça, tiens bon",
+      "You got this!"
+    ],
+    "19": [
+      "Bonsoir {name}",
+      "Bon retour",
+      "Service du soir activé",
+      "Let's Go Champ!"
+    ],
+    "22": [
+      "Bon retour, la soirée est encore jeune, bonne chance",
+      "Au travail jusqu'à tard, bien joué !",
+      "L'heure d'un rendez-vous romantique en soirée avec ton matériel d'étude"
+    ]
+  },
+  "home": {
+    "jump-back-in_title": "Reprends",
+    "jump-back-in_next": "Suivant",
+    "jump-back-in_previous": "Précédent",
+    "jump-back-in_goto": "Aller à l'élément {index}",
+    "courses_overview_title": "Tes matières",
+    "flow_overview_title": "Tes boards",
+    "getstarted_overview_title": "Commence à créer",
+    "pinned_title": "Épinglé",
+    "stats": "Statistiques",
+    "Streak": "Streak",
+    "days": "jours",
+    "all_boards": "Tous les boards",
+    "ready": "Prêt à étudier ?",
+    "totCards": "Total cartes",
+    "tmStd": "Temps d'étude",
+    "min": "min",
+    "cards": "cartes consultées",
+    "pins": "pins",
+    "week": "par semaine",
+    "cards_learned": "cartes apprises",
+    "card_learned": "Carte apprise",
+    "dagen": "jours",
+    "Continue": "Sets",
+    "checkAll": "tous les sets",
+    "studied": "étudié",
+    "checkCourse": "toutes les matières",
+    "act": "Amis",
+    "CheckAct": "toute l'activité",
+    "create_ss": "Créer un Studoset",
+    "create_vs": "Créer un Visualset",
+    "create_block": "crée des sets de cartes ou de pins",
+    "checkStats": "plus de statistiques",
+    "continue": "continuer",
+    "last_studied": "dernière étude",
+    "day": "jour",
+    "hour": "heure",
+    "hours": "heures",
+    "minute": "min",
+    "minutes": "min",
+    "card": "carte consultée",
+    "set_studied": "set créé",
+    "sets_studied": "sets étudiés",
+    "lets_go": "Commence ici",
+    "set_overview_title": "Tes sets",
+    "all_courses": "Toutes les matières",
+    "all_sets": "Tous les sets",
+    "flows_overview_title": "Tes flowboards",
+    "visualset_btn_lbl": "Créer un Visualset",
+    "studoset_btn_lbl": "Créer un Studoset",
+    "fallback": {
+      "nothing_title": "Pas encore de sets",
+      "nothing_paragraph": "Tu n'as pas encore créé de sets"
+    },
+    "flow": {
+      "course": "matière",
+      "courses": "matières"
+    }
+  },
+  "y_f": {
+    "title": "Ta bibliothèque",
+    "subtitle": "Un aperçu de toutes tes matières et sets",
+    "sets": "Sets",
+    "folders": "Dossiers",
+    "courses": "Matières",
+    "your_sets": {
+      "title": "Tes sets",
+      "course_title": "Sets dans la matière",
+      "cards": "cartes",
+      "pins": "pins",
+      "studied": "étudié",
+      "recent": "Récemment étudié",
+      "full_studied": "Entièrement étudié",
+      "created": "Créé par toi",
+      "all": "Tous les sets",
+      "search": "rechercher un set...",
+      "no_sets": "pas encore de sets",
+      "no_results": "aucun résultat",
+      "nothing_title": "Pas encore de sets",
+      "nothing_paragraph": "Tu n'as pas encore créé de sets",
+      "delete": "Supprimer le set",
+      "delete_folder": "Supprimer le dossier",
+      "delete_course": "Supprimer la matière",
+      "external_window": "Ouvrir dans un nouvel onglet",
+      "edit_set": "Modifier le set",
+      "share_folder": "Partager le dossier",
+      "see_more": "voir plus"
+    }
+  },
+  "select": {
+    "pricing": "Tarifs",
+    "plan": "Studo Select est notre abonnement premium pour les étudiants qui veulent tirer le maximum de leurs études. Pas de pubs, pas de distractions — juste étudier plus intelligemment.",
+    "free": "Plan gratuit",
+    "select": "Studo Select",
+    "month": "/mois",
+    "free_expl": "Fonctions de base avec publicités.",
+    "select_expl": "Accès complet, SVEN AI et pas de publicités.",
+    "start_tdy": "commencer",
+    "current": "plan actuel",
+    "popular": "populaire",
+    "korting_school": "Studo propose des réductions pour les écoles, entreprises et familles",
+    "try_edu": "Essaie Studo for Education",
+    "group": "Tu veux commander pour un plus grand groupe ?",
+    "options": "options"
+  },
+  "phrases": {
+    "Nice work": "Beau travail",
+    "Well done": "Bien joué",
+    "Keep on going": "Continue !",
+    "You got this": "You got this",
+    "You're halfway there": "You're halfway there",
+    "You're doing great": "You're doing great",
+    "Keep pushing": "Keep pushing",
+    "Stay focused": "Stay focused",
+    "You can do it": "You can do it",
+    "Don't give up": "Don't give up",
+    "Nice progress": "Nice progress",
+    "You're improving": "You're improving",
+    "Keep up the good work": "Keep up the good work",
+    "Just a bit more": "Just a bit more",
+    "You're on the right track": "You're on the right track",
+    "Stay motivated": "Stay motivated",
+    "You're stronger than you think": "You're stronger than you think",
+    "Every step counts": "Every step counts",
+    "Believe in yourself": "Believe in yourself",
+    "Go Kylie, Go": "Go Kylie, Go",
+    "Look at you go": "Look at you go",
+    "You're doing amazing, sweetie": "You're doing amazing, sweetie",
+    "Slay the day away": "Slay the day away",
+    "Main character energy": "Main character energy",
+    "Look at you go, productivity queen": "Look at you go, productivity queen",
+    "Big brain moment": "Big brain moment",
+    "Somebody’s been studying": "Somebody’s been studying",
+    "Ate and left no crumbs": "Ate and left no crumbs",
+    "Who needs sleep when you have talent?": "Who needs sleep when you have talent?",
+    "You deserve a little dance break": "You deserve a little dance break",
+    "Certified genius mode unlocked": "Certified genius mode unlocked",
+    "Zero chill, maximum brainpower": "Zero chill, maximum brainpower",
+    "WOW WOW WOW": "WOW WOW WOW",
+    "Highkey crushing it right now": "Highkey crushing it right now",
+    "Congratulations, now get back to work": "Congratulations, now get back to work",
+    "yes, we can - Yoda": "yes, we can - Yoda"
+  },
+  "streak": {
+    "phrase_1": "Tu as étudié ",
+    "phrase_2": " jours de suite",
+    "d_s": "jours de suite"
+  },
+  "groups": {
+    "title": "Tes groupes",
+    "subtitle": "Tous tes groupes, classes et communautés",
+    "all": "Tous les groupes",
+    "last": "Récemment rejoints",
+    "alphabetical": "Ordre alphabétique",
+    "search": "Rechercher tes groupes...",
+    "members": "membres",
+    "member": "membre",
+    "leave": "Quitter le groupe",
+    "no_found": "Aucun groupe trouvé",
+    "external_window": "Ouvrir dans un nouvel onglet"
+  },
+  "group": {
+    "overview": "Aperçu",
+    "set_title": "Sets",
+    "users": "Membres",
+    "challenges_title": "Défis",
+    "copy": "Copier le lien",
+    "invite": "Inviter des personnes",
+    "recent_sets": "Récemment ajouté",
+    "members": "Membres",
+    "friends": "Amis",
+    "more": "afficher plus de sets",
+    "added_by": "ajouté par",
+    "more_members": "afficher plus de membres",
+    "no_sets": "pas encore de sets",
+    "pinned_sets": "Épinglé",
+    "no_pinned": "pas encore de sets épinglés",
+    "search_set": "rechercher des sets",
+    "search_user": "rechercher des membres...",
+    "requests": "Demandes",
+    "w_l_t_j": "veut rejoindre",
+    "this_week": "Ajouté cette semaine",
+    "joined": "a rejoint ",
+    "sets": {
+      "added by": "ajouté par",
+      "cards": "cartes",
+      "card": "carte",
+      "pins": "pins",
+      "pin": "pin",
+      "challenge": "Défi"
+    },
+    "invitepeople": {
+      "title": "Inviter des personnes",
+      "button": "Envoyer l'invitation",
+      "subtitle_title": "Trouve des personnes à inviter",
+      "placeholder": "rechercher des personnes...",
+      "subtitle_invited": "Invités"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "leave": "Quitter la classe",
+      "mute": "Couper les notifications"
+    },
+    "addset": {
+      "title": "Ajouter des sets",
+      "button_m": "importer des sets",
+      "button_e": "importer un set"
+    },
+    "challenges": {
+      "current_leaderboard": "Classement",
+      "running": "Défis actifs"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "personal info": "Infos personnelles",
+    "username": "Nom d'utilisateur",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "role": "Rôle",
+    "edit": "modifier",
+    "subscription": "Plan actuel",
+    "free": "Plan gratuit",
+    "upgrade": "améliorer",
+    "student": "étudiant",
+    "teacher": "enseignant",
+    "professor": "professeur",
+    "accessibility": "Apparence & accessibilité",
+    "language": "langue",
+    "page_color": "Thème",
+    "auto": "auto",
+    "dark": "sombre",
+    "light": "clair",
+    "account_privacy": "Compte & confidentialité",
+    "private_allsets": "Rendre tous les sets privés",
+    "delete_title": "Supprimer le compte",
+    "delete_info": "Supprimer ton compte effacera définitivement toutes tes données personnelles. Cette action est irréversible.",
+    "delete": "supprimer",
+    "status": "Ton statut",
+    "inactive": "inactif",
+    "away": "absent",
+    "active": "actif",
+    "streak": "Afficher le streak",
+    "learn_settings": "Paramètres d'apprentissage",
+    "class_settings": "Paramètres de classe",
+    "limit_tracking": "Suivi avancé de la progression",
+    "request_verf": "Demander la vérification",
+    "request_subt": "Être vérifié par Studo",
+    "request": "demander",
+    "healthy_learn_title": "Règle 20-20-2",
+    "healthy_learn_exp": "20 min de focus, 20 sec de repos des yeux, 2 min de mouvement",
+    "pomodoro": "Minuteur Pomodoro",
+    "pomodoro_exp": "25 min de focus, 5 min de pause",
+    "font_size": "Taille de police / mise à l'échelle",
+    "xl": "XL",
+    "lg": "LG",
+    "xxl": "XXL",
+    "share_progress": "Partager la progression",
+    "notifications": "Notifications",
+    "progress_notifications": "Notifications de progression",
+    "streak_notifications": "Rappels de streak",
+    "classroom_notifications": "Notifications de classe",
+    "classroom_invite": "Autoriser les invitations de classe",
+    "auto_participate": "Participer automatiquement aux concours",
+    "experimental": "Activer les fonctionnalités expérimentales de classe",
+    "shortcuts": "Raccourcis clavier",
+    "shortcut_titles": {
+      "create_ss": "Créer un nouveau Studoset",
+      "create_vs": "Créer un nouveau Visualset",
+      "create_f": "Créer un nouveau dossier",
+      "toggle_s": "Déclencher la recherche",
+      "add_c": "Ajouter une carte",
+      "save_s": "Créer le Set",
+      "del_c": "Supprimer la dernière carte",
+      "sven_i": "Utiliser l'import SVEN"
+    },
+    "account": "Compte",
+    "developer": "Développeur",
+    "select": "Select",
+    "app": "App",
+    "access": "Accessibilité",
+    "debug_mode": "Mode debug",
+    "reprocessing_toggle": "Bascule de retraitement",
+    "dev_mode": "Mode développeur",
+    "save": "enregistrer",
+    "toast_update_success": "Paramètre enregistré",
+    "toast_update_error": "Échec de l'enregistrement",
+    "dnd": "Ne pas déranger",
+    "system": "Système"
+  },
+  "account": {
+    "role": "rôle",
+    "phone": "numéro de téléphone",
+    "mail": "e-mail",
+    "settings": "modifier le compte",
+    "subtitle_sets": "Tes sets",
+    "log_out": "Déconnexion",
+    "delete": "Supprimer le compte",
+    "student": "Étudiant",
+    "teacher": "Enseignant",
+    "professor": "Professeur",
+    "verified": "Vérifié",
+    "owner": "Propriétaire",
+    "stats": {
+      "subtitle_stats": "Tes statistiques",
+      "total_cards": "Total cartes",
+      "time_studied": "Temps d'étude",
+      "total_sets": "Total sets"
+    }
+  },
+  "studoset": {
+    "created": "Créé par",
+    "set_title": "set sans titre",
+    "learn": "apprendre",
+    "speedy": "défi de vitesse",
+    "flashcards": "flashcards",
+    "progress_title": "Ta progression",
+    "cards_title": "Cartes",
+    "not_learned": "Non appris",
+    "reviewed": "Parcouru",
+    "studied": "Étudié",
+    "likes": "likes",
+    "like": "like",
+    "saved_in": "Enregistré dans",
+    "added_to": "Ajouté à",
+    "rights": "Tous droits réservés.",
+    "edit": "modifier",
+    "save": "enregistrer",
+    "all": "Tous",
+    "flag": "Marqué",
+    "share": "partager",
+    "settings": "paramètres",
+    "ns": "Non appris",
+    "edit_set": "modifier le set",
+    "set_private": "Le Studoset est privé",
+    "cant_load": "Impossible de charger le set",
+    "open_course": "Ouvrir dans le cours",
+    "flag_card": "Marquer la carte",
+    "unflag_card": "Démarquer la carte",
+    "flag_failed": "Échec du marquage",
+    "no_cards": "Aucune carte",
+    "progress_visualized": "Progression visualisée",
+    "learn_desc": "Étudier en profondeur",
+    "speedy_desc": "Étudier à toute vitesse",
+    "flashcards_desc": "Parcourir rapidement",
+    "classics": "Modes d'apprentissage classiques",
+    "stats": {
+      "title": "Progression",
+      "graph": "Graphique",
+      "list": "Liste",
+      "general_title": "Général",
+      "cards_title": "Par carte",
+      "accuracy": "Précision",
+      "avg_time": "Temps de réponse moyen",
+      "longest_streak": "Plus longue série",
+      "completions": "Fois terminé",
+      "time_studied": "Temps étudié",
+      "learned": "Appris",
+      "min_unit": "m",
+      "axis_time": "Temps de réponse moyen (s)",
+      "axis_accuracy": "Précision (%)",
+      "no_data": "Pas encore de données"
+    }
+  },
+  "trackview": {
+    "tracks": "Tracks",
+    "sets": "Sets",
+    "communities": "Communities",
+    "studosets": "Studosets",
+    "visualsets": "Visualsets",
+    "empty": "0 sets",
+    "vak": "matière",
+    "vakken": "matières"
+  },
+  "import": {
+    "text": "Import de texte",
+    "sven": "Import SVEN",
+    "import": "importer",
+    "paste_here": "Colle ton texte ici",
+    "text_import_title": "Paramètres",
+    "result": "Résultat",
+    "term_definition_separator": "Séparateur entre terme et définition",
+    "card_separator": "Séparateur entre cartes",
+    "by_comma": "Virgule",
+    "by_tab": "Tabulation",
+    "by_newline": "Nouvelle ligne",
+    "by_semicolon": "Point-virgule",
+    "by_dash": "Tiret",
+    "result_empty": "Colle du texte pour voir un aperçu",
+    "cards_found": "{count} cartes trouvées"
+  },
+  "flow": {
+    "title": "Tes Flow Boards",
+    "created_by": "Créé par",
+    "you": "(toi)",
+    "create_title": "Créer un nouveau Flow Board",
+    "add_title": "Nom du board",
+    "description": "Ajoute une courte description...",
+    "create_btn": "Créer le board",
+    "cancel_btn": "annuler",
+    "semester": "semestre",
+    "error_year_required": "L'année est obligatoire",
+    "add_metadata": "ajouter des détails",
+    "add_later": "masquer les détails",
+    "set_title": "titre du board...",
+    "set_year": "année du board...",
+    "set_semester": "semestre du board...",
+    "delete": "Supprimer",
+    "delete_course": "Supprimer la matière",
+    "overview": "Aperçu",
+    "add_course": "Ajouter une matière",
+    "your_courses": "Tes matières",
+    "external": "Ouvrir dans un nouvel onglet",
+    "courses": "matières",
+    "course_1": "matière",
+    "course": {
+      "option": "Options",
+      "row": {
+        "done": "terminé",
+        "doing": "en cours",
+        "not_started": "non commencé",
+        "due_date": "échéance",
+        "priority": "priorité"
+      },
+      "add_title": "Ajouter un titre",
+      "create_title": "Nouveau cours",
+      "create_course": "Créer un cours",
+      "create_btn": "Créer",
+      "description": "Description",
+      "add_metadata": "Ajouter des métadonnées",
+      "add_later": "Ajouter plus tard",
+      "add_link": "Ajouter un lien",
+      "add_course_link": "Connecter le portail d'apprentissage",
+      "exam_date": "Date d’examen",
+      "add_exam_date": "Ajouter une date d'examen",
+      "exam_status": "Statut de l’examen",
+      "add_lesson_day": "Ajouter des jours de cours",
+      "behind": "En retard",
+      "slightly_behind": "Légèrement en retard",
+      "error_icon_required": "Icône requise",
+      "error_title_required": "Titre requis",
+      "n": "n",
+      "cta_add_t": "Ajouter une ligne",
+      "flow_title": "Planning",
+      "upload_doc": "Importer un document",
+      "summary": "Résumé",
+      "all": "Tout",
+      "course": "Cours",
+      "notes": "Notes",
+      "no_files_title": "Aucun document pour l'instant",
+      "no_files_paragraph": "Importez un fichier PDF, Word ou Excel pour commencer.",
+      "pending_upload": "en cours d'envoi…",
+      "error_file_types": "Seuls les fichiers PDF, Word et Excel sont autorisés.",
+      "error_upload": "Une erreur est survenue lors de l'envoi.",
+      "doc_error": "Impossible de charger le document",
+      "processing": "traitement",
+      "failed": "échec",
+      "overview": "Aperçu",
+      "flow": "Flow",
+      "documents": "Documents",
+      "sets": "Sets",
+      "stop_processing": "Arrêter le traitement",
+      "stop_upload": "Arrêter le téléchargement",
+      "select_course": "Choisir un cours",
+      "sven": "Sven",
+      "no_docs": "Pas encore de documents",
+      "cta": "Télécharge ton cours",
+      "set_course_title": "Titre de la matière...",
+      "set_course_description": "Ajoute une description...",
+      "no_title_error": "Indique un titre",
+      "table": {
+        "title": "Ajoute un titre...",
+        "description": "Ajoute une description...",
+        "header": {
+          "title": "titre",
+          "status": "statut",
+          "createdAt": "créé",
+          "description": "description",
+          "priority": "priorité",
+          "dueDate": "échéance",
+          "type": "type",
+          "resource": "pièce jointe"
+        }
+      },
+      "document_settings": {
+        "reprocess_btn": "Retraiter le document"
+      }
+    }
+  },
+  "courses": {
+    "nothing_title": "Pas encore de matières",
+    "nothing_paragraph": "Tu n'as pas encore créé de sets avec une matière",
+    "search_course": "rechercher une matière..."
+  },
+  "colorPicker": {
+    "search_ph": "rechercher..."
+  },
+  "iconPicker": {
+    "no_icons_found": "Aucune icône trouvée"
+  },
+  "folders": {
+    "nothing_title": "Rien à voir ici",
+    "nothing_paragraph": "Tu n'as pas encore ajouté de sets à ce dossier"
   },
   "popup": {
     "folders": {
@@ -626,7 +1627,8 @@
     },
     "share": {
       "pop_title": "Partager le set",
-      "copy_message": "Copié dans le presse-papiers"
+      "copy_message": "Copié dans le presse-papiers",
+      "isPrivate": "Le set est privé"
     },
     "settings": {
       "pop_title": "Paramètres",
@@ -637,74 +1639,20 @@
       "delete_set": "Supprimer l'ensemble"
     }
   },
-  "svenimport": {
-    "title": "Laisse SVEN faire le travail",
-    "files_label": "Fichiers",
-    "max_files": "Max {max} fichiers par upload",
-    "selected": "Sélectionnés ({count}/{max})",
-    "no_files": "Aucun fichier sélectionné",
-    "drop_here": "Relâche pour ajouter…",
-    "drag_or_click": "Glisse un fichier ici ou clique pour choisir",
-    "error_file_types": "Type de fichier invalide",
-    "sum_wrong": "Une erreur s'est produite",
-    "loading": "Traitement…",
-    "upload": "Importer",
-    "server_error": "Le serveur a retourné une erreur ({status})",
-    "rate_limit": "Tu as atteint la limite quotidienne de 3 imports. Réessaie demain.",
-    "aborted": "Import annulé"
-  },
-  "learnsettings": {
-    "learning": "Paramètres généraux",
-    "answer_with": "Répondre avec",
-    "answer_type": "Type de réponse",
-    "revision_count": "Nombre de révisions",
-    "term_def_description": "Choisissez si vous répondez avec le terme ou la définition.",
-    "health": "Étude saine",
-    "twenty_twenty_two": "Apprentissage 20-20-2",
-    "twenty_description": "20 min d’étude, 20 sec de pause visuelle, 2 min de pause",
-    "pomodoro_timer": "Minuteur Pomodoro",
-    "pomodoro_description": "Un minuteur qui vous aide à atteindre l’hyperfocus.",
-    "reset_progress": "Réinitialiser la progression"
-  },
-  "flow": {
-    "course": {
-      "add_title": "Ajouter un titre",
-      "create_title": "Nouveau cours",
-      "create_course": "Créer un cours",
-      "create_btn": "Créer",
-      "description": "Description",
-      "add_metadata": "Ajouter des métadonnées",
-      "add_later": "Ajouter plus tard",
-      "add_link": "Ajouter un lien",
-      "exam_date": "Date d’examen",
-      "exam_status": "Statut de l’examen",
-      "behind": "En retard",
-      "slightly_behind": "Légèrement en retard",
-      "error_icon_required": "Icône requise",
-      "error_title_required": "Titre requis",
-      "n": "n",
-      "cta_add_t": "Ajouter une ligne",
-      "flow_title": "Planning",
-      "row": {
-        "done": "terminé",
-        "doing": "en cours",
-        "not_started": "non commencé",
-        "due_date": "échéance",
-        "priorité": "priorité",
-        "priority": "priorité"
-      },
-      "all": "Tout",
-      "course": "Cours",
-      "notes": "Notes",
-      "summary": "Résumé",
-      "upload_doc": "Importer un document",
-      "no_files_title": "Aucun document pour l'instant",
-      "no_files_paragraph": "Importez un fichier PDF, Word ou Excel pour commencer.",
-      "pending_upload": "en cours d'envoi…",
-      "error_file_types": "Seuls les fichiers PDF, Word et Excel sont autorisés.",
-      "error_upload": "Une erreur est survenue lors de l'envoi.",
-      "select_course": "Choisir un cours"
-    }
+  "flashcards": {
+    "definition": "Définition",
+    "term": "Terme",
+    "answer_with": "répondre avec",
+    "shuffle": "mélanger",
+    "reset": "réinitialiser",
+    "all_set": "Tu as terminé tout le set !",
+    "back": "retour au set",
+    "restart": "s'exercer encore",
+    "progress": "réinitialiser la progression",
+    "login_wall_title": "Connecte-toi pour continuer",
+    "login_wall_subtitle": "Tu as atteint l'aperçu gratuit de 5 cartes. Crée un compte gratuit pour étudier tout le set.",
+    "register_wall_cta": "S'inscrire",
+    "login_wall_cta": "Se connecter"
   },
   "speedy": {
     "modal_title": "Prêt ?",
@@ -727,47 +1675,164 @@
     "stat_time": "Temps",
     "stat_accuracy": "Précision"
   },
-  "studoset": {
-    "stats": {
-      "title": "Progression",
-      "general_title": "Général",
-      "cards_title": "Par carte",
-      "graph": "Graphique",
-      "list": "Liste",
-      "accuracy": "Précision",
-      "avg_time": "Temps de réponse moyen",
-      "longest_streak": "Plus longue série",
-      "completions": "Fois terminé",
-      "time_studied": "Temps étudié",
-      "learned": "Appris",
-      "learned_seg": "Appris",
-      "in_progress_seg": "En cours",
-      "not_started_seg": "Pas commencé",
-      "hardest_title": "Cartes difficiles",
-      "no_mistakes": "Aucune erreur 🎉",
-      "wrong_axis": "Faux",
-      "attempts_label": "essayé",
-      "wrong_label": "faux",
-      "avg_time_label": "temps moy.",
-      "accuracy_label": "précision",
-      "wrong_suffix": "faux",
-      "hour_unit": "h",
-      "min_unit": "m",
-      "axis_time": "Temps de réponse moyen (s)",
-      "axis_accuracy": "Précision (%)",
-      "no_data": "Pas encore de données"
-    }
+  "profile": {
+    "ss": "Studosets",
+    "vs": "Visualsets"
   },
-  "header": {
-    "create_btn": "Créer",
-    "all_sets": "Tous les sets",
-    "library": "Bibliothèque",
+  "offline": {
+    "offline": "Tu es hors ligne",
+    "progress_explanation": "La progression ne sera pas enregistrée"
+  },
+  "latex": {
+    "LaTeX": "LaTeX",
+    "Code": "Code"
+  },
+  "svenimport": {
+    "title": "Laisse SVEN faire le travail",
+    "files_label": "Fichiers",
+    "max_files": "Max {max} fichiers par upload",
+    "selected": "Sélectionnés ({count}/{max})",
+    "no_files": "Aucun fichier sélectionné",
+    "drop_here": "Relâche pour ajouter…",
+    "drag_or_click": "Glisse un fichier ici ou clique pour choisir",
+    "error_file_types": "Type de fichier invalide",
+    "sum_wrong": "Une erreur s'est produite",
+    "loading": "Traitement…",
+    "upload": "Importer",
+    "server_error": "Le serveur a retourné une erreur ({status})",
+    "rate_limit": "Tu as atteint la limite quotidienne de 3 imports. Réessaie demain.",
+    "aborted": "Import annulé"
+  },
+  "svenchat": {
+    "quote": "Sven aide volontiers avec les questions de cours",
+    "new-chat": "Nouveau chat",
+    "history": "Historique",
+    "recommended_title": "Recommandé"
+  },
+  "svenchatTimed": {
+    "0": [
+      "Minuit est passé et toujours à fond !",
+      "Continue !",
+      "Minuit passé et toujours au top !"
+    ],
+    "2": [
+      "Salut oiseau de nuit",
+      "Prêt à répondre à tes questions !",
+      "Quelle est la question ?",
+      "Encore en train ou tu débutes tout juste !?",
+      "{name} est de retour !"
+    ],
+    "4": [
+      "Ce n'est pas l'heure de dormir ?",
+      "Va dormir !",
+      "Toujours réveillé... comment !?",
+      "Pas cool frère, va te coucher",
+      "Grind, douche, Studo..",
+      "Franchement j'irais presque me coucher moi-même",
+      "Okaaay letsgooo"
+    ],
+    "7": [
+      "Bonjour {name}",
+      "Tu es réveillé, première petite victoire de la journée",
+      "Bon matin matin, bonne journée",
+      ""
+    ],
+    "11": [
+      "Bon retour, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": ["Bon après-midi {name}", "Bien joué, continue", "You got this!"],
+    "19": [
+      "Bonsoir {name}",
+      "Bon retour",
+      "Service du soir activé",
+      "Let's Go Champ!"
+    ],
+    "22": [
+      "Bon retour, la soirée est encore jeune, bonne chance",
+      "Au travail jusqu'à tard, bien joué !",
+      "L'heure d'un rendez-vous romantique en soirée avec ton matériel d'étude"
+    ],
+    "new-chat": "Nouveau chat",
+    "history": "Historique"
+  },
+  "pomodoro": {
+    "title": "Minuteur Pomodoro",
+    "play": "Démarrer",
+    "pause": "Pause",
+    "focus_mode": "20 min d'étude concentrée"
+  },
+  "learnsettings": {
+    "learning": "Paramètres généraux",
+    "answer_with": "Répondre avec",
+    "answer_type": "Type de réponse",
+    "revision_count": "Nombre de révisions",
+    "term_def_description": "Choisissez si vous répondez avec le terme ou la définition.",
+    "health": "Étude saine",
+    "twenty_twenty_two": "Apprentissage 20-20-2",
+    "twenty_description": "20 min d’étude, 20 sec de pause visuelle, 2 min de pause",
+    "pomodoro_timer": "Minuteur Pomodoro",
+    "pomodoro_description": "Un minuteur qui vous aide à atteindre l’hyperfocus.",
+    "reset_progress": "Réinitialiser la progression",
+    "reset_settings": "paramètres par défaut",
+    "type_description": "Choisis de quelle manière tu veux répondre",
+    "revision_count_description": "Définis combien de fois une carte est répétée",
+    "flagged_mode": "Cartes marquées",
+    "flagged_description": "N'étudie que tes cartes marquées",
+    "strictness_level": "Sévérité",
+    "strictness_level_description": "Définis la sévérité de la correction"
+  },
+  "learn": {
+    "enter_continue": "*appuie sur entrée pour continuer",
+    "type_answer": "tape ta réponse...",
+    "reset": "réinitialiser",
+    "all_set": "Tu as parcouru tout le set !",
+    "back": "retour au set",
+    "restart": "s'exercer encore",
+    "revision": "répétition",
+    "hint": "afficher l'indice",
+    "next": "suivant"
+  },
+  "widgets": {
+    "title": "Widgets"
+  },
+  "combobox": {
+    "options": "Options",
+    "noResults": "Aucun résultat"
+  },
+  "breadcrumbs": {
     "home": "Accueil",
-    "courses": "Cours",
+    "course": "Matière",
+    "overview": "Aperçu",
+    "documents": "Documents",
+    "flow": "Flow",
+    "sets": "Sets",
+    "library": "Bibliothèque",
+    "courses": "Matières",
+    "groups": "Groupes",
     "classrooms": "Classes",
-    "search_btn": "Rechercher",
+    "studoset": "Studoset",
+    "edit": "Modifier",
+    "learn": "Apprendre",
+    "speedy": "Time attack",
+    "flashcards": "Flashcards",
+    "backoffice": "Backoffice",
     "account": "Compte",
     "settings": "Paramètres",
-    "ad": "Admin"
+    "visualset": "Visualset",
+    "streak": "Streak",
+    "select": "Studo Select",
+    "pay": "Paiement",
+    "sven": "Sven",
+    "admin": "Admin",
+    "invite": "Inviter",
+    "reports": "Rapports",
+    "search": "Rechercher",
+    "stats": "Statistiques",
+    "users": "Utilisateurs",
+    "create-studoset": "Créer un studoset",
+    "create-visualset": "Créer un visualset",
+    "search-result": "Résultats de recherche"
   }
 }
