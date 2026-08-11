@@ -22,7 +22,6 @@ const Check: React.FC<CheckProps> = (props) => {
     className,
     width = 16,
     height = 16,
-    activeColor = "bg-studoblue",
   } = props;
 
   const id = useId();
