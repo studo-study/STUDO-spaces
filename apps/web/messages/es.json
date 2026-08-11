@@ -939,7 +939,9 @@
     "success": "Cuenta creada",
     "tos": "Acepto los ",
     "terms": "términos de servicio",
-    "accept_terms": "Acepta los términos para continuar"
+    "accept_terms": "Acepta los términos para continuar",
+    "and": "y la",
+    "privacy": "política de privacidad"
   },
   "header": {
     "create_ss": "Crear Studoset",

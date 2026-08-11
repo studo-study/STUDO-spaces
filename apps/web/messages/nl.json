@@ -438,7 +438,7 @@
           "notify": "Ons direct te melden bij vermoeden van onbevoegde toegang",
           "responsible": "Verantwoordelijk te zijn voor alle activiteit onder je account"
         },
-        "ageRequirement": "Je moet minimaal 16 zijn om een account aan te maken. Jonger dan 16? Dan heb je toestemming nodig van een ouder of voogd."
+        "ageRequirement": "Je moet minstens 13 jaar zijn (of de wettelijke leeftijd voor digitale toestemming in jouw land) om een account aan te maken. Jonger dan 13 (of 16)? Dan heb je toestemming nodig van een ouder of voogd."
       },
       "acceptableUse": {
         "title": "3. Acceptabel gebruik",
@@ -458,8 +458,8 @@
       },
       "yourContent": {
         "title": "4. Jouw content",
-        "ownership": "Je kunt content aanmaken en uploaden (studosets, visualsets, notities, etc. — \"Jouw Content\"). Je blijft eigenaar.",
-        "license": "Door te uploaden geef je STUDO een niet-exclusieve, wereldwijde, royaltyvrije licentie om Jouw Content op te slaan, te tonen en te verwerken — alleen om de Dienst aan jou te leveren. We verkopen of delen Jouw Content niet met derden voor hun eigen doeleinden.",
+        "ownership": "Je kunt content aanmaken en uploaden (studosets, visualsets, notities, etc. - \"Jouw Content\"). Je blijft eigenaar.",
+        "license": "Door te uploaden geef je STUDO een niet-exclusieve, wereldwijde, royaltyvrije licentie om Jouw Content op te slaan, te tonen en te verwerken, alleen om de Dienst aan jou te leveren. We verkopen of delen Jouw Content niet met derden voor hun eigen doeleinden.",
         "responsible": "Je bent verantwoordelijk voor Jouw Content. Je garandeert dat:",
         "rules": {
           "own": "Je eigenaar bent of het recht hebt om Jouw Content te gebruiken en delen",
@@ -482,7 +482,7 @@
       "intellectualProperty": {
         "title": "6. Intellectueel eigendom",
         "ownership": "STUDO en zijn originele content (exclusief Jouw Content), features en functionaliteit zijn eigendom van STUDO en beschermd door copyright en andere IP-wetgeving.",
-        "restrictions": "Je mag geen deel van onze Dienst of software kopiëren, wijzigen, verspreiden, verkopen of leasen, noch reverse-engineeren of broncode proberen te achterhalen — tenzij de wet dit verbiedt of je onze schriftelijke toestemming hebt.",
+        "restrictions": "Je mag geen deel van onze Dienst of software kopiëren, wijzigen, verspreiden, verkopen of leasen, noch reverse-engineeren of broncode proberen te achterhalen, tenzij de wet dit verbiedt of je onze schriftelijke toestemming hebt.",
         "trademarks": "De naam STUDO, logo en branding zijn trademarks van STUDO. Gebruik ze niet zonder onze voorafgaande schriftelijke toestemming."
       },
       "premium": {
@@ -605,7 +605,7 @@
     "challenges": {
       "mastery": {
         "title": "Bewijs dat je\nhet écht kent",
-        "subtitle": "Geen geluk, geen gokken — behaal 100% en verdien je badge",
+        "subtitle": "Geen geluk, geen gokken, behaal 100% en verdien je badge",
         "block1": "Geen enkele fout in de laatste ronde",
         "block2": "Of drie perfecte rondes op rij",
         "block3": "Verdien badges zoals 'Anatomy Master' of 'Chapter 3 Conqueror'",
@@ -614,14 +614,14 @@
       "duel": {
         "title": "Eén tegen één,\nbeste wint",
         "subtitle": "Daag een medestudent uit op dezelfde set en zie wie er bovenuit komt",
-        "block1": "Zelfde vragen, tijdslimiet per kaart — live of asynchroon",
+        "block1": "Zelfde vragen, tijdslimiet per kaart, live of asynchroon",
         "block2": "Winnaar bepaald op correctheid én snelheid",
         "block3": "Leer nog nooit zo snel samen...",
         "cta": "Daag iemand uit"
       },
       "speedrun": {
         "title": "Wie is het\nsnelst klaar?",
-        "subtitle": "Competitief studeren tegen de klok — race door de leerstof en zie wie bovenaan eindigt",
+        "subtitle": "Competitief studeren tegen de klok, race door de leerstof en zie wie bovenaan eindigt",
         "block1": "Ranking op minst aantal rondes, daarna snelste tijd",
         "block2": "Live leaderboard voor extra spanning",
         "block3": "Stel een deadline in en daag je groep uit",
@@ -939,7 +939,9 @@
     "success": "Account aangemaakt",
     "tos": "Ik accepteer de ",
     "terms": "gebruiksvoorwaarden",
-    "accept_terms": "Accepteer de voorwaarden om verder te gaan"
+    "accept_terms": "Accepteer de voorwaarden om verder te gaan",
+    "and": "en het",
+    "privacy": "privacybeleid"
   },
   "header": {
     "create_ss": "Maak Studoset",
@@ -1216,7 +1218,7 @@
   },
   "select": {
     "pricing": "Prijzen",
-    "plan": "Studo Select is ons premium abonnement voor studenten die alles uit hun studie willen halen. Geen advertenties, geen afleiding — gewoon slimmer studeren.",
+    "plan": "Studo Select is ons premium abonnement voor studenten die alles uit hun studie willen halen. Geen advertenties, geen afleiding, gewoon slimmer studeren.",
     "free": "Gratis plan",
     "select": "Studo Select",
     "month": "/maand",
@@ -1682,7 +1684,7 @@
     "round": "Ronde",
     "restart": "opnieuw",
     "finished_title": "Set voltooid!",
-    "finished_expl": "Goed gedaan — hier is je resultaat.",
+    "finished_expl": "Goed gedaan, hier is je resultaat.",
     "stat_rounds": "Rondes",
     "stat_time": "Tijd",
     "stat_accuracy": "Nauwkeurigheid"

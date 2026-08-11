@@ -20,7 +20,8 @@ export const registerSchemaBase = z.object({
 export const registerSchema = registerSchemaBase
   .extend({
     confirmPassword: z.string().min(1, "confirm_pwd"),
-    // In het formulier verplicht: aanvinken vóór registreren.
+    // In het formulier verplicht: aanvinken vóór registreren. De leeftijdseis
+    // staat in de gebruiksvoorwaarden zelf (Quizlet-aanpak).
     acceptedTerms: z.boolean().refine((v) => v, { message: "accept_terms" }),
   })
   .refine((data) => data.password === data.confirmPassword, {

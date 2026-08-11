@@ -99,14 +99,18 @@ const RegisterForm = () => {
             placeholder={t("repeat password")}
             {...register("confirmPassword")}
           />
-          <div className={"flex flex-row gap-2 items-center"}>
-            <Check
-              checked={!!acceptedTerms}
-              onChange={(check) =>
-                setValue("acceptedTerms", check, { shouldValidate: true })
-              }
-            />
-            <span className={"flex flex-row gap-1 text-sm text-studogrey"}>
+          <div className={"flex flex-row gap-2 items-start"}>
+            <div className={"pt-0.5"}>
+              <Check
+                checked={!!acceptedTerms}
+                onChange={(check) =>
+                  setValue("acceptedTerms", check, { shouldValidate: true })
+                }
+              />
+            </div>
+            <span
+              className={"flex flex-row flex-wrap gap-1 text-sm text-studogrey"}
+            >
               {t("tos")}
               <Link
                 href={"/terms-of-service"}
@@ -114,6 +118,10 @@ const RegisterForm = () => {
                 className={"underline"}
               >
                 {t("terms")}
+              </Link>
+              {t("and")}
+              <Link href={"/privacy"} target="_blank" className={"underline"}>
+                {t("privacy")}
               </Link>
             </span>
           </div>
