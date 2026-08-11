@@ -1417,7 +1417,16 @@
     "dnd": "Niet storen",
     "system": "Systeem",
     "email_taken": "Dit e-mailadres is al in gebruik",
-    "name_taken": "Deze gebruikersnaam is al in gebruik"
+    "name_taken": "Deze gebruikersnaam is al in gebruik",
+    "export_data": "Exporteer data",
+    "request_data": "Vraag je data op",
+    "export": "exporteer",
+    "withdraw": "intrekken",
+    "accept": "accepteren",
+    "accepted_terms": "Gebruiksvoorwaarden & privacybeleid",
+    "version": "Versie ",
+    "last_version": "Laatste versie: ",
+    "accepted_on": " geaccepteerd op "
   },
   "account": {
     "role": "rol",
