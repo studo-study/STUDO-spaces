@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Circle } from "lucide-react";
 import type { OnlineStatus } from "@studo/types";
 import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
@@ -9,12 +9,20 @@ import {
   SettingsMenuOption,
 } from "@/components/ui/app/private/settings/SettingsCard";
 import { useSettingSaver } from "@/hooks/app/settings/useSettingSaver";
+import { useUser } from "@/components/providers/auth/UserProvider";
 
 export default function AccountPrivacy(props: SettingsSection) {
   const { settings, mutate } = props;
   const t = useTranslations("settings");
+  const locale = useLocale();
   const save = useSettingSaver(mutate);
-
+  const user = useUser()?.user;
+  const acceptDatum = new Date(
+    user?.acceptedTermsDate ?? "",
+  ).toLocaleDateString(locale);
+  const description = user?.acceptedTerms
+    ? t("version") + user?.privacyVersion + t("accepted_on") + acceptDatum
+    : t("last_version") + user?.privacyVersion;
   const items: SettingsMenuOption[] = [
     {
       label: t("private_allsets"),
@@ -51,6 +59,20 @@ export default function AccountPrivacy(props: SettingsSection) {
       type: "button",
       onClick: () => {},
       btnLabel: t("request"),
+    },
+    {
+      label: t("export_data"),
+      description: t("request_data"),
+      type: "button",
+      onClick: () => {},
+      btnLabel: t("request"),
+    },
+    {
+      label: t("accepted_terms"),
+      description: description,
+      type: "button",
+      onClick: () => {},
+      btnLabel: user?.acceptedTerms ? t("withdraw") : t("accept"),
     },
     {
       label: t("delete_title"),

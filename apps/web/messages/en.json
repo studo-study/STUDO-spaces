@@ -936,7 +936,12 @@
     "email_taken": "This email address is already in use",
     "name_taken": "This username is already in use",
     "failed": "Registration failed",
-    "success": "Account created"
+    "success": "Account created",
+    "tos": "I agree to the ",
+    "terms": "terms of service",
+    "accept_terms": "Accept the terms to continue",
+    "and": "and the",
+    "privacy": "privacy policy"
   },
   "header": {
     "create_ss": "Create Studoset",

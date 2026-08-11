@@ -4,7 +4,7 @@ import { IoIosSettings } from "react-icons/io";
 import { useTranslations } from "next-intl";
 import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
 import { useRouter } from "@/i18n/routing";
-import CheckboxField from "@/components/ui/design_system/input/CheckBox";
+import CheckboxField from "@/components/ui/design_system/input/ToggleField";
 import { useUpdateStudyset } from "@/hooks/app/sets/useUpdateStudoset";
 import { useResetSession } from "@/hooks/app/session/useResetSession";
 import { useToast } from "@/components/providers/app/ToastProvider";

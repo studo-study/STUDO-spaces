@@ -657,6 +657,9 @@ diesel::table! {
         verified -> Bool,
         banned -> Bool,
         last_online -> Nullable<Timestamp>,
+        accepted_terms -> Bool,
+        accepted_terms_date -> Timestamp,
+        privacy_version -> Varchar,
     }
 }
 

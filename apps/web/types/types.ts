@@ -43,6 +43,9 @@ export interface RegisterUserRequest {
   password: string;
   displayName: string;
   role: string;
+  acceptedTerms?: boolean;
+  acceptedTermsDate?: string;
+  privacyVersion?: string;
 }
 
 export interface RegisterUserResponse {
@@ -70,6 +73,9 @@ export interface UpdateUserRequest {
   streakLastUpdate?: string;
   lastLogin?: string;
   role?: string;
+  acceptedTerms?: boolean;
+  acceptedTermsDate?: string;
+  privacyVersion?: string;
 }
 
 export interface User {
@@ -623,6 +629,9 @@ export interface StudoUser {
   streakLastUpdate: string;
   publicRole: "owner" | "admin" | "user"; // pas aan naar jouw rollen
   verified: boolean;
+  acceptedTerms: boolean;
+  acceptedTermsDate: string;
+  privacyVersion: string;
   stats: UserStats;
   lastTen: RecentSet[];
 }

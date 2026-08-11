@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import CheckBox from "@/components/ui/design_system/input/CheckBox";
+import CheckBox from "@/components/ui/design_system/input/ToggleField";
 import Select from "@/components/ui/design_system/select/Select";
 import BaseButton, {
   BaseButtonVariant,

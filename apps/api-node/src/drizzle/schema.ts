@@ -49,6 +49,9 @@ export const users = pgTable(
     publicRole: varchar('public_role', { length: 24 }).notNull(),
     verified: boolean('verified').notNull(),
     banned: boolean('banned').notNull(),
+    acceptedTerms: boolean('accepted_terms').notNull().default(false),
+    acceptedTermsDate: timestamp('accepted_terms_date').notNull().defaultNow(),
+    privacyVersion: varchar('privacy_version').notNull().default('v0.1'),
   },
   // Case-insensitieve uniekheid: 'Bob@x.com' en 'bob@x.com' zijn dezelfde
   // account. Uniek op lower(...) zodat casing-duplicaten onmogelijk zijn (ook

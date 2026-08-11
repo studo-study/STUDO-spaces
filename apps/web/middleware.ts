@@ -10,10 +10,6 @@ const locales = ["en", "nl", "fr", "es"]; // Pas aan naar jouw locales
 
 export default auth((request) => {
   const { pathname } = request.nextUrl;
-
-  // ========================================
-  // SKIP DEZE PATHS
-  // ========================================
   if (
     pathname.startsWith("/api") ||
     pathname.startsWith("/_next") ||
@@ -21,19 +17,9 @@ export default auth((request) => {
   ) {
     return NextResponse.next();
   }
-
-  // ========================================
-  // EXTRACT LOCALE EN PATH
-  // ========================================
   const segments = pathname.split("/").filter(Boolean);
   const locale = locales.includes(segments[0]) ? segments[0] : "en";
   const pathWithoutLocale = "/" + segments.slice(1).join("/");
-
-  // ========================================
-  // ROUTE DEFINITIONS
-  // ========================================
-
-  // Routes die GEEN login vereisen
 
   const publicRoutes = [
     "/welcome",
@@ -140,7 +126,11 @@ export default auth((request) => {
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
-  return intlMiddleware(request);
+  const response = intlMiddleware(request);
+  response.headers.set("x-pathname", pathname);
+  response.headers.set("x-pathname-clean", pathWithoutLocale);
+  response.headers.set("x-locale", locale);
+  return response;
 });
 
 export const config = {
