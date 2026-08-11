@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
-import CheckBox from "@/components/ui/design_system/input/CheckBox";
+import CheckBox from "@/components/ui/design_system/input/ToggleField";
 import { CardData } from "@/types/types";
 
 type ValueSeperator = "komma" | "tab" | "dash";

@@ -902,7 +902,7 @@
     "password": "wachtwoord",
     "Log In": "Log In",
     "log into account": "log in bij je account",
-    "or log in with": "of log in met",
+    "or log in with": "of",
     "Loading": "Laden...",
     "Google": "Login met Google",
     "Microsoft": "Login met Microsoft",
@@ -915,8 +915,8 @@
     "Apple": "Ga verder met Apple"
   },
   "register": {
-    "Create account": "Creër account",
-    "create_account": "Creër een nieuwe account",
+    "Create account": "Account maken",
+    "create_account": "Geef je gegevens op",
     "information": "Persoonlijke info",
     "email": "email",
     "name": "naam",
@@ -930,13 +930,16 @@
     "professor": "professor",
     "Loading": "Registeren...",
     "Register": "Registeren",
-    "other_register": "of registreer met",
+    "other_register": "of",
     "Already": "Al geregistreerd?",
     "log in": "Log in",
     "email_taken": "Dit e-mailadres is al in gebruik",
     "name_taken": "Deze gebruikersnaam is al in gebruik",
     "failed": "Registratie mislukt",
-    "success": "Account aangemaakt"
+    "success": "Account aangemaakt",
+    "tos": "Ik accepteer de ",
+    "terms": "gebruiksvoorwaarden",
+    "accept_terms": "Accepteer de voorwaarden om verder te gaan"
   },
   "header": {
     "create_ss": "Maak Studoset",

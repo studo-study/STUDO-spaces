@@ -3,7 +3,14 @@ import LinkButton from "@/components/ui/design_system/button/LinkButton";
 import { ArrowLeft } from "lucide-react";
 import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 import Image from "next/image";
-export default function AuthLayout({ children }: { children: ReactNode }) {
+import { headers } from "next/headers";
+export default async function AuthLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const pathname = (await headers()).get("x-pathname-clean") ?? "/";
+  const isLogin = pathname === "/login";
   return (
     <div
       className={
@@ -22,7 +29,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         >
           <div
             className={
-              "min-h-0 max-w-150 flex-1 h-full min-w-0 flex flex-col gap-5 "
+              "min-h-0 lg:max-w-150 flex-1 h-full min-w-0 flex flex-col gap-5 "
             }
           >
             <div className={"max-w-fit"}>
@@ -43,11 +50,25 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           </div>
           <div
             className={
-              "min-h-0 flex-1 h-full w-full overflow-hidden rounded-3xl bg-bg-dark relative flex flex-col gap-5"
+              "min-h-0 flex-1 max-h-full hidden lg:flex h-full w-full overflow-hidden rounded-3xl bg-bg-dark relative flex-col gap-5"
             }
           >
+            <Image
+              src={
+                isLogin
+                  ? "/images/boektoren_upscaled.jpg"
+                  : "/images/koepelzaal_upscaled.jpg"
+              }
+              fill
+              sizes={"(min-width: 768px) 50vw, 0px"}
+              alt={"login-img"}
+              className={"object-cover opacity-75 object-bottom"}
+              loading={"eager"}
+            />
             <div
-              className={"absolute right-10 top-5 flex flex-row items-center"}
+              className={
+                "absolute right-10 top-5 z-10 flex flex-row items-center"
+              }
             >
               <Image
                 src={"/logo/hat.svg"}
@@ -57,14 +78,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 className={"w-15"}
               />
             </div>
-            <Image
-              src={"/images/aula.jpg"}
-              height={4000}
-              width={4000}
-              alt={"login-img"}
-              className={"h-full dark:opacity-50"}
-              loading={"eager"}
-            />
           </div>
         </div>
       </div>

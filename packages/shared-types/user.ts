@@ -3,6 +3,10 @@ export interface RegisterUserRequest {
   password: string;
   displayName: string;
   role: string;
+  // Optioneel: de frontend stuurt ze mee, de server valt terug op defaults.
+  acceptedTerms?: boolean;
+  acceptedTermsDate?: string;
+  privacyVersion?: string;
 }
 
 export interface SocialLogin {
@@ -23,6 +27,9 @@ export interface UpdateUser {
   streakLastUpdate?: string;
   lastLogin?: string;
   role?: string;
+  acceptedTerms?: boolean;
+  acceptedTermsDate?: string;
+  privacyVersion?: string;
 }
 
 export interface UserResponse {
@@ -41,6 +48,9 @@ export interface UserResponse {
   publicRole: string;
   verified: boolean;
   banned: boolean;
+  acceptedTerms: boolean;
+  acceptedTermsDate: string;
+  privacyVersion: string;
 }
 
 export interface LastStudied {

@@ -936,7 +936,10 @@
     "email_taken": "Esta dirección de correo ya está en uso",
     "name_taken": "Este nombre de usuario ya está en uso",
     "failed": "Error en el registro",
-    "success": "Cuenta creada"
+    "success": "Cuenta creada",
+    "tos": "Acepto los ",
+    "terms": "términos de servicio",
+    "accept_terms": "Acepta los términos para continuar"
   },
   "header": {
     "create_ss": "Crear Studoset",

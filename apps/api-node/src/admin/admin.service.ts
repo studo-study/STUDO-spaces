@@ -45,6 +45,7 @@ export class AdminService {
       lastLogin: user.lastLogin.toISOString(),
       streakStarted: user.streakStarted?.toISOString() ?? null,
       streakLastUpdate: user.streakLastUpdate?.toISOString() ?? null,
+      acceptedTermsDate: user.acceptedTermsDate.toISOString(),
       roles: user.roles as string[],
     }));
   }

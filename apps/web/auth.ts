@@ -186,6 +186,9 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
           streakLastUpdate: user.streak_last_update,
           publicRole: user.publicRole as "user" | "owner" | "admin",
           verified: user.verified,
+          acceptedTerms: user.acceptedTerms,
+          acceptedTermsDate: user.acceptedTermsDate,
+          privacyVersion: user.privacyVersion,
           stats: user.stats,
           lastTen: user.lastTen,
         };

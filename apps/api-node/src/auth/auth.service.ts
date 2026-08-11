@@ -230,6 +230,9 @@ export class AuthService {
     email,
     password,
     role,
+    acceptedTerms,
+    acceptedTermsDate,
+    privacyVersion,
   }: RegisterUserRequest): Promise<string> {
     const date = new Date();
     const passwordHash = await this.hashPassword(password);
@@ -276,6 +279,13 @@ export class AuthService {
         publicRole: role,
         verified: false,
         banned: false,
+        acceptedTerms: acceptedTerms ?? false,
+        acceptedTermsDate: acceptedTermsDate
+          ? new Date(acceptedTermsDate)
+          : date,
+        // Client stuurt de huidige privacy-versie mee; val terug op de
+        // kolom-default als ze ontbreekt.
+        ...(privacyVersion ? { privacyVersion } : {}),
       })
       .returning({ id: users.id })
       .catch(rethrowAsConflict);

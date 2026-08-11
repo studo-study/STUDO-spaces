@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, type Resolver } from "react-hook-form";
@@ -8,6 +8,23 @@ import { signIn } from "next-auth/react";
 import { registerUser } from "@/lib/api/auth";
 import { RegisterFormData, registerSchema } from "@/lib/validations/auth";
 import { useToast } from "@/components/providers/app/ToastProvider";
+
+// Draft van de registratie in localStorage zodat een gebruiker die wegklikt
+// later verder kan. Wachtwoorden slaan we bewust NIET op (geen plain text op
+// disk); enkel de onschuldige velden.
+const REGISTER_DRAFT_KEY = "register-draft";
+type RegisterDraft = Pick<RegisterFormData, "email" | "displayName" | "role">;
+
+function loadRegisterDraft(): Partial<RegisterDraft> {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(
+      localStorage.getItem(REGISTER_DRAFT_KEY) ?? "{}",
+    ) as Partial<RegisterDraft>;
+  } catch {
+    return {};
+  }
+}
 
 export function useRegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,14 +43,43 @@ export function useRegisterForm() {
   const form = useForm<RegisterFormData>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(registerSchema as any) as Resolver<RegisterFormData>,
-    defaultValues: { role: "student" },
+    defaultValues: { role: "student", acceptedTerms: false },
   });
+
+  // Hydrateer na mount (client-only, voorkomt hydration-mismatch met de SSR).
+  useEffect(() => {
+    const draft = loadRegisterDraft();
+    if (Object.keys(draft).length) {
+      form.reset({ role: "student", ...draft });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Bewaar de draft bij elke wijziging — zonder de wachtwoordvelden.
+  useEffect(() => {
+    const sub = form.watch(({ email, displayName, role }) => {
+      localStorage.setItem(
+        REGISTER_DRAFT_KEY,
+        JSON.stringify({ email, displayName, role }),
+      );
+    });
+    return () => sub.unsubscribe();
+  }, [form]);
 
   const onSubmit = async (data: RegisterFormData) => {
     setServerError(null);
     try {
-      const { ...registerData } = data;
+      // Registratie indienen = akkoord met de voorwaarden. Datum + de huidige
+      // privacy-versie (uit de env) gaan mee naar de backend.
+      const registerData = {
+        ...data,
+        acceptedTermsDate: new Date().toISOString(),
+        privacyVersion: process.env.NEXT_PUBLIC_PRIVACY_VERSION,
+      };
       await registerUser(registerData);
+
+      // Account bestaat nu → draft is niet meer nodig.
+      localStorage.removeItem(REGISTER_DRAFT_KEY);
 
       const result = await signIn("credentials", {
         email: data.email,

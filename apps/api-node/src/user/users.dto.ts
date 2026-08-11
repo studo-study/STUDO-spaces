@@ -1,5 +1,10 @@
 import { IsString, IsNumber } from 'nestjs-swagger-dto';
-import { IsDefined } from 'class-validator';
+import {
+  IsBoolean,
+  IsDateString,
+  IsDefined,
+  IsOptional,
+} from 'class-validator';
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -55,6 +60,25 @@ export class RegisterUserRequestDto {
     canBeEmpty: false,
   })
   role: string;
+
+  @ApiProperty({
+    example: true,
+    required: false,
+    description: 'User accepted the terms',
+  })
+  @IsOptional()
+  @IsBoolean()
+  acceptedTerms?: boolean;
+
+  @ApiProperty({ required: false, description: 'When the terms were accepted' })
+  @IsOptional()
+  @IsDateString()
+  acceptedTermsDate?: string;
+
+  @ApiProperty({ required: false, description: 'Accepted privacy version' })
+  @IsOptional()
+  @IsString({ name: 'privacyVersion', maxLength: 50, optional: true })
+  privacyVersion?: string;
 }
 
 export class SocialLoginDto {
@@ -175,6 +199,21 @@ export class UpdateUserDTO {
     optional: true,
   })
   role?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsBoolean()
+  acceptedTerms?: boolean;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsDateString()
+  acceptedTermsDate?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString({ name: 'privacyVersion', maxLength: 50, optional: true })
+  privacyVersion?: string;
 }
 
 // ---------------------------------------------------------
@@ -281,6 +320,18 @@ export class UserResponseDto {
   })
   @Expose()
   banned: boolean;
+
+  @ApiProperty({ example: true, description: 'User accepted the terms' })
+  @Expose()
+  acceptedTerms: boolean;
+
+  @ApiProperty({ example: '2026-01-01T00:00:00.000Z' })
+  @Expose()
+  acceptedTermsDate: string;
+
+  @ApiProperty({ example: 'v0.1' })
+  @Expose()
+  privacyVersion: string;
 }
 
 // ---------------------------------------------------------

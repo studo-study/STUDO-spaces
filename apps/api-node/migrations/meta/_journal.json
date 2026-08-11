@@ -302,6 +302,13 @@
       "when": 1786362402138,
       "tag": "0042_case_insensitive_user_unique",
       "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "7",
+      "when": 1786442868710,
+      "tag": "0043_user_terms_privacy",
+      "breakpoints": true
     }
   ]
 }

@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import CheckBox from "@/components/ui/design_system/input/CheckBox";
+import CheckBox from "@/components/ui/design_system/input/ToggleField";
 import { SettingsSection } from "@/components/ui/app/private/settings/SettingsSection";
 import { useSettingSaver } from "@/hooks/app/settings/useSettingSaver";
 

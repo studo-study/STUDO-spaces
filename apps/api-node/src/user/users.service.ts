@@ -360,6 +360,11 @@ export class UserService {
           : user.streakLastUpdate,
         lastLogin: body.lastLogin ? new Date(body.lastLogin) : user.lastLogin,
         roles: body.role ?? user.roles,
+        acceptedTerms: body.acceptedTerms ?? user.acceptedTerms,
+        acceptedTermsDate: body.acceptedTermsDate
+          ? new Date(body.acceptedTermsDate)
+          : user.acceptedTermsDate,
+        privacyVersion: body.privacyVersion ?? user.privacyVersion,
       })
       .where(eq(users.id, userId))
       .catch(rethrowAsConflict);

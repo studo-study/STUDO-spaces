@@ -7,11 +7,14 @@ import GoogleIcon from "@/components/ui/overige/icons/companies/Google";
 import MicrosoftIcon from "@/components/ui/overige/icons/companies/Microsoft";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import { useRegisterForm } from "@/hooks/overige/useRegisterForm";
+import Check from "@/components/ui/design_system/input/Check";
 
 const RegisterForm = () => {
   const {
     form: {
       register,
+      watch,
+      setValue,
       formState: { isSubmitting },
     },
     t,
@@ -21,6 +24,9 @@ const RegisterForm = () => {
     loginGoogle,
     loginMicrosoft,
   } = useRegisterForm();
+
+  // Aan de RHF-waarde gebonden zodat validatie + submit-payload kloppen.
+  const acceptedTerms = watch("acceptedTerms");
 
   return (
     <form
@@ -56,7 +62,6 @@ const RegisterForm = () => {
             placeholder={t("name")}
             {...register("displayName")}
           />
-
           <InputField
             iconRight={
               <BaseButton
@@ -94,9 +99,27 @@ const RegisterForm = () => {
             placeholder={t("repeat password")}
             {...register("confirmPassword")}
           />
+          <div className={"flex flex-row gap-2 items-center"}>
+            <Check
+              checked={!!acceptedTerms}
+              onChange={(check) =>
+                setValue("acceptedTerms", check, { shouldValidate: true })
+              }
+            />
+            <span className={"flex flex-row gap-1 text-sm text-studogrey"}>
+              {t("tos")}
+              <Link
+                href={"/terms-of-service"}
+                target="_blank"
+                className={"underline"}
+              >
+                {t("terms")}
+              </Link>
+            </span>
+          </div>
           <div className={"max-h-10 my-5"}>
             <BaseButton
-              disabled={isSubmitting}
+              disabled={!acceptedTerms || isSubmitting}
               variant={"approve"}
               type={"submit"}
               iconRight={<ArrowRight size={18} strokeWidth={2.5} />}
