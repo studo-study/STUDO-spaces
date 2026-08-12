@@ -84,18 +84,18 @@ export class StudysessionController {
   @ApiParam({ name: 'session_id', type: 'uuid' })
   @ApiBody({ type: UpdateStudysessionDto })
   @ApiResponse({
-    status: 200,
+    status: 204,
     description: 'Studysession geüpdatet',
-    type: StudysessionResponseDto,
   })
   @UseGuards(CheckUserAccessGuard)
   @Roles(Role.USER)
   @Put(':session_id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async updateStudysessionById(
     @Request() req: AuthenticatedRequest,
     @Param('session_id', ParseUUIDPipe) session_id: string,
     @Body() update: UpdateStudysessionDto,
-  ): Promise<StudysessionResponseDto> {
+  ): Promise<void> {
     const user_id = req.user.id;
     return this.seshService.updateById(user_id, session_id, update);
   }

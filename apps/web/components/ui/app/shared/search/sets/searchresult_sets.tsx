@@ -6,6 +6,8 @@ import Link from "next/link";
 import { SetSearchResult } from "@studo/types";
 import { useSearchResult } from "@/hooks/app/search/useSearchResult";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
+import { GalleryVerticalEnd, Images } from "lucide-react";
 
 export default function SearchResultSets() {
   const searchParams = useSearchParams();
@@ -44,6 +46,7 @@ interface SetResultProps {
 }
 
 function SetResult({ item, t }: SetResultProps) {
+  const Router = useRouter();
   return (
     <Link
       href={
@@ -51,21 +54,15 @@ function SetResult({ item, t }: SetResultProps) {
           ? "visualset/" + item.id
           : "studoset/" + item.id
       }
-      className={`w-full min-h-40 rounded-2xl border border-studogrey/30
+      className={`w-full min-h-40 rounded-2xl border dark:text-white test-studodarkblue border-studogrey/30
                  glass-rgb drop-shadow-3xl p-5 flex flex-col gap-2`}
     >
       <div className={"w-full h-fit flex items-center justify-baseline gap-2"}>
-        <Image
-          src={
-            item.type === "visualset"
-              ? "/icons/visualset.svg"
-              : "/icons/studyset.svg"
-          }
-          alt=""
-          width={0}
-          height={0}
-          className={"w-5  dark:invert dark:brightness-0"}
-        />
+        {item.type === "visualset" ? (
+          <Images size={20} />
+        ) : (
+          <GalleryVerticalEnd size={20} />
+        )}
         <span className={"font-bold truncate"}>{item.title}</span>
       </div>
       <hr className={"w-full h-0.5 rounded-full bg-studogrey opacity-30"} />
@@ -81,8 +78,12 @@ function SetResult({ item, t }: SetResultProps) {
           {item.likes} {item.likes === 1 ? t("like") : t("likes")}
         </span>
       </div>
-      <Link
-        href={"/apps/web/components/ui/app/shared/profile" + item.ownerId}
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          Router.push("/profile/" + item.ownerId);
+        }}
         className={"w-full h-fit group flex flex-row gap-2 items-center"}
       >
         <Image
@@ -93,7 +94,7 @@ function SetResult({ item, t }: SetResultProps) {
           className={"w-5 h-5 rounded-full bg-gray-400/30 overflow-hidden"}
         />
         <span className={"group-hover:underline"}>{item.owner}</span>
-      </Link>
+      </div>
     </Link>
   );
 }

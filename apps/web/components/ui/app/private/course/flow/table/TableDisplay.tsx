@@ -2,6 +2,7 @@
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type PointerEvent as ReactPointerEvent,
@@ -10,6 +11,9 @@ import TableHeader from "@/components/ui/app/private/course/flow/table/TableHead
 import TableRow from "@/components/ui/app/private/course/flow/table/TableRow";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { Grid2x2Plus } from "lucide-react";
+import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
+import { usePathname } from "@/i18n/routing";
+import { useCourseTable } from "@/hooks/app/courses/useCourse";
 
 interface Drag {
   id: number;
@@ -25,6 +29,40 @@ const TableDisplay = () => {
   const viewport = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const drag = useRef<Drag | null>(null);
+  const courseId = usePathname().split("/")[2];
+  const table = useCourseTable(courseId);
+  //store
+  const rows = useCourseFlowStore((state) => state.rows);
+  // Stabiele lijst van rij-ids: selectie/navigatie werkt op id i.p.v. index,
+  // zodat een cel-selectie niet verspringt bij reorder/verwijderen.
+  const rowIds = useMemo(() => rows.map((row) => row.id), [rows]);
+  const add = useCourseFlowStore((state) => state.addRow);
+  const addRow = (index?: number) => {
+    if (!table) {
+      return;
+    }
+    const newRow = {
+      id: crypto.randomUUID(),
+      tableId: table.id,
+      rowIndex: index ?? table.rows.length,
+      createdBy: new Date().toLocaleDateString(),
+      status: null,
+      priority: null,
+      type: null,
+      description: null,
+      resources: [],
+      dueDate: null,
+      title: undefined,
+      studosetId: null,
+      visualsetId: null,
+      courseLink: null,
+      summaryLink: null,
+    };
+
+    add(newRow, index ?? rows.length);
+  };
+
+  const [selectedCell, setSelectedCell] = useState<string>("");
 
   // afstand van de viewport-linkerrand tot de pagina-rand ([data-flow-boundary]).
   // gepinde kolommen pannen mee tot ze die rand raken en blijven daar plakken.
@@ -106,7 +144,7 @@ const TableDisplay = () => {
     <div className={"flex flex-col gap-3 w-full"}>
       <div
         ref={viewport}
-        className="relative w-full overflow-visible cursor-grab select-none active:cursor-grabbing"
+        className="relative w-full  overflow-visible cursor-grab select-none active:cursor-grabbing"
         style={{ touchAction: "pan-y" }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -119,16 +157,27 @@ const TableDisplay = () => {
           className="w-max h-fit"
           style={{ transform: `translateX(${offset}px)` }}
         >
-          <div className={"min-w-0 h-fit flex flex-col"}>
-            <TableHeader offset={offset} gap={gap} />
-            <TableRow offset={offset} gap={gap} />
-            <TableRow offset={offset} gap={gap} />
-            <TableRow offset={offset} gap={gap} />
+          <div role="grid" className={"min-w-0 h-fit flex flex-col w-fit"}>
+            <TableHeader offset={offset} gap={gap} addRow={addRow} />
+            {rows.map((row, index) => (
+              <TableRow
+                selectedCell={selectedCell}
+                setSelectedCell={setSelectedCell}
+                key={row.id}
+                offset={offset}
+                gap={gap}
+                row={row}
+                addRow={addRow}
+                rowIndex={index}
+                rowIds={rowIds}
+              />
+            ))}
           </div>
         </div>
       </div>
       <div className={"max-h-8 h-8"}>
         <BaseButton
+          onClick={() => addRow()}
           variant={"hover"}
           className={"w-fit px-2 max-h-8"}
           label={"add row"}

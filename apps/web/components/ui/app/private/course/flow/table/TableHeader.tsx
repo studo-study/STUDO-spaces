@@ -5,11 +5,14 @@ import {
 import { useTranslations } from "next-intl";
 import classNames from "@/utils/classnames";
 import { GripVertical, Plus } from "lucide-react";
-import type { CSSProperties } from "react";
+import { CSSProperties } from "react";
+import Check from "@/components/ui/design_system/input/Check";
+import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
 
 interface TableHeaderProps {
   offset: number;
   gap: number;
+  addRow: (index: number) => void;
 }
 
 // controls-kolom zit 80px links van de content-origin (-mx-20), de eerste
@@ -17,7 +20,12 @@ interface TableHeaderProps {
 const CONTROLS_CELL_X = -80;
 const PINNED_COL_X = 0;
 
-const TableHeader = ({ offset, gap }: TableHeaderProps) => {
+const TableHeader = ({ offset, gap, addRow }: TableHeaderProps) => {
+  const checkedIds = useCourseFlowStore((state) => state.selectedIds);
+  const rows = useCourseFlowStore((state) => state.rows);
+  const unCertain = checkedIds.length != 0 && checkedIds.length != rows.length;
+  const checked = rows.length != 0 && checkedIds.length === rows.length;
+  const setChecked = useCourseFlowStore((state) => state.toggleAll);
   const t = useTranslations("flow.course.table.header");
   // gepinde cel pant mee tot de pagina-rand en blijft daar plakken.
   const pinStyle = (pinned: boolean, cellX: number): CSSProperties =>
@@ -45,12 +53,16 @@ const TableHeader = ({ offset, gap }: TableHeaderProps) => {
       >
         <div
           className={
-            "hover:opacity-100 cursor-pointer opacity-0 transition-opacity duration-300 gap-2 h-full w-full flex items-center justify-between px-2"
+            "group cursor-pointer transition-opacity text-white duration-300 gap-2 h-full w-full flex items-center justify-between px-2 border-b border-studoborder/30 border-r"
           }
         >
-          <Plus />
+          <Plus onClick={() => addRow(0)} />
           <GripVertical />
-          <input type={"checkbox"} />
+          <Check
+            unCertain={unCertain}
+            checked={checked}
+            onChange={() => setChecked(rows.map((row) => row.id))}
+          />
         </div>
       </div>
       {TableColumns.map((col, index) => {

@@ -20,7 +20,7 @@ export function useUpdateSession(
         const text = await r.text();
         throw new Error(`Failed to update session (${r.status}): ${text}`);
       }
-      return r.json();
+      // Response body is intentionally empty (204) — nothing to parse.
     },
     onSettled: invalidateOnSettled
       ? () => queryClient.invalidateQueries({ queryKey: ["studosets", setId] })

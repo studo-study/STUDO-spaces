@@ -8,7 +8,7 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, eq, inArray, isNull, lt, or, sql } from 'drizzle-orm';
 import {
   sessioncards,
   sessionpins,
@@ -71,7 +71,7 @@ export class StudysessionService {
     userId: string,
     sessionId: string,
     body: UpdateStudysessionDto,
-  ): Promise<StudysessionResponseDto> {
+  ): Promise<void> {
     await this.updateStreak(userId);
 
     // enkel de meegegeven session-velden updaten; een lege .set() gooit
@@ -178,7 +178,8 @@ export class StudysessionService {
       }
     }
 
-    return this.getById(userId, sessionId);
+    // No read-back: the client discards the response (204). Skipping getById
+    // avoids a full session+cards+pins SELECT on every per-card write.
   }
 
   async deleteById(userId: string, sessionId: string): Promise<void> {
@@ -241,45 +242,33 @@ export class StudysessionService {
   }
 
   async updateStreak(userId: string): Promise<void> {
-    const update_streak = await this.db.query.users.findFirst({
-      where: eq(users.id, userId),
-    });
-    if (!update_streak) {
-      throw new NotFoundException("User doesn't exist");
-    }
-    const today = new Date();
+    const now = new Date();
+    const today = new Date(now);
     today.setHours(0, 0, 0, 0);
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
+    // Dates interpolated inside sql`` bypass drizzle's column encoder and reach
+    // postgres-js as raw Date objects, which it can't serialize. Pass ISO
+    // strings for those; the plain .set()/.where() values stay as Dates.
+    const yesterdayIso = yesterday.toISOString();
+    const nowIso = now.toISOString();
 
-    const lastUpdate = update_streak.streakLastUpdate;
-    const lastUpdateDay = lastUpdate ? new Date(lastUpdate) : null;
-    if (lastUpdateDay) lastUpdateDay.setHours(0, 0, 0, 0);
-
-    const isToday = lastUpdateDay?.getTime() === today.getTime();
-    const isYesterday = lastUpdateDay?.getTime() === yesterday.getTime();
-
-    if (!isToday) {
-      if (isYesterday) {
-        await this.db
-          .update(users)
-          .set({
-            streakLastUpdate: new Date(),
-            streakCount: update_streak.streakCount
-              ? update_streak.streakCount + 1
-              : 1,
-          })
-          .where(eq(users.id, userId));
-      } else {
-        await this.db
-          .update(users)
-          .set({
-            streakLastUpdate: new Date(),
-            streakCount: 0,
-            streakStarted: new Date(),
-          })
-          .where(eq(users.id, userId));
-      }
-    }
+    // Single idempotent write, no read-back. The WHERE only matches when the
+    // streak hasn't been touched today, so repeated calls within a session
+    // (e.g. every batched card write) don't hit a row. Continued from
+    // yesterday -> +1, any older gap -> reset to 0 and restart.
+    await this.db
+      .update(users)
+      .set({
+        streakLastUpdate: now,
+        streakCount: sql`CASE WHEN ${users.streakLastUpdate} >= ${yesterdayIso} THEN COALESCE(${users.streakCount}, 0) + 1 ELSE 0 END`,
+        streakStarted: sql`CASE WHEN ${users.streakLastUpdate} >= ${yesterdayIso} THEN ${users.streakStarted} ELSE ${nowIso} END`,
+      })
+      .where(
+        and(
+          eq(users.id, userId),
+          or(isNull(users.streakLastUpdate), lt(users.streakLastUpdate, today)),
+        ),
+      );
   }
 }

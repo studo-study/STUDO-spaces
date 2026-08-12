@@ -1,6 +1,6 @@
 "use client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import type { CourseRow, FullCourseResponse } from "@studo/types";
 import { courseKeys } from "./courseKeys";
 
@@ -10,7 +10,13 @@ import { courseKeys } from "./courseKeys";
 /** Course id uit de route (`/course/[id]`). */
 function useCourseId(): string | undefined {
   const params = useParams<{ id?: string; course_id?: string }>();
-  return params?.course_id ?? params?.id;
+  const pathname = usePathname();
+  if (params?.course_id) return params.course_id;
+  // `params.id` is alleen een course-id op de /course/[id]-routes. Andere
+  // routes (bv. /studoset/[id]) hergebruiken `id` voor een ander entity, dus
+  // daar mogen we er geen course mee ophalen (anders 404 "User not in course").
+  if (pathname?.includes("/course/")) return params?.id;
+  return undefined;
 }
 
 /** De course van de huidige route, gehydrateerd of gefetcht. */

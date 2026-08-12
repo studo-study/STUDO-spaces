@@ -1,6 +1,5 @@
 "use client";
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/app/shared/studosets/CardList";
 import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
@@ -30,7 +29,7 @@ import classNames from "@/utils/classnames";
 import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
 import SvenMessage from "@/components/ui/app/shared/studosets/SvenMessage";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import { CreditCard, Pencil, Zap } from "lucide-react";
+import { CreditCard, GraduationCap, Pencil, Zap } from "lucide-react";
 
 interface viewProps {
   id: string;
@@ -239,13 +238,7 @@ export default function StudosetView({ id }: viewProps) {
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
         {data?.classrooms?.[0] && (
           <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
-            <Image
-              src={"/icons/classroom.svg"}
-              alt={"studeerhoed"}
-              width={17}
-              height={0}
-              className="min-h-4 h-5 sm:min-h-5 dark:invert dark:brightness-0"
-            />
+            <GraduationCap size={20} />
             <span>
               {t("added_to")}:{" "}
               <Link
@@ -257,6 +250,7 @@ export default function StudosetView({ id }: viewProps) {
             </span>
           </div>
         )}
+
         <div className={"w-full flex flex-row gap-2 items-center"}>
           <div
             onClick={() => {

@@ -24,6 +24,12 @@ export async function PUT(
       body: JSON.stringify(body),
     },
   );
-  const data = await response.json();
-  return NextResponse.json(data, { status: response.status });
+  // The client never reads the updated session back, so skip parsing and
+  // re-serialising the payload on the happy path. Only forward the body on
+  // failure so errors stay debuggable.
+  if (!response.ok) {
+    const data = await response.json().catch(() => null);
+    return NextResponse.json(data, { status: response.status });
+  }
+  return new NextResponse(null, { status: 204 });
 }

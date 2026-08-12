@@ -240,7 +240,7 @@ export async function seedStudo(
         bannerUrl: '',
         joinDate: new Date('2024-01-15T10:00:00.000Z'),
         streak: 29,
-        verified: false,
+        verified: true,
         tags: ['Studo Admin'],
       },
       {

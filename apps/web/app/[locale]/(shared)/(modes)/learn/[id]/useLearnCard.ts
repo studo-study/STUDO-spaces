@@ -66,6 +66,9 @@ export const useLearnCard = () => {
   const correctRef = useRef(0);
   const lastSeenRef = useRef<string | null>(null);
   const dirtyRef = useRef(false);
+  // Only cards touched since the last flush get written, so a flush no longer
+  // re-writes every row in the set.
+  const dirtyCardsRef = useRef<Set<string>>(new Set());
   const flushRef = useRef<() => void>(() => {});
 
   const durationBaseRef = useRef(0);
@@ -216,6 +219,7 @@ export const useLearnCard = () => {
       (session.cards ?? []).map((sc) => [sc.cardId, sc.id]),
     );
     const cardUpdates = cards.flatMap((c) => {
+      if (!dirtyCardsRef.current.has(c.id)) return [];
       const scId = scByCardId.get(c.id);
       if (!scId) return [];
       const vc = viewsRef.current[c.id] ?? 0;
@@ -268,9 +272,12 @@ export const useLearnCard = () => {
       cards: cardUpdates,
     };
     dirtyRef.current = false;
+    const flushedCardIds = [...dirtyCardsRef.current];
+    dirtyCardsRef.current = new Set();
     updateSession.mutate(body, {
       onError: () => {
         dirtyRef.current = true;
+        flushedCardIds.forEach((id) => dirtyCardsRef.current.add(id));
       },
     });
   };
@@ -312,6 +319,7 @@ export const useLearnCard = () => {
     setWasCorrect(correct);
     lastSeenRef.current = card.id;
     dirtyRef.current = true;
+    dirtyCardsRef.current.add(card.id);
     if (!retry) {
       if (correct && !errorMode) correctRef.current += 1;
       const inErrorQueue = errorQueueRef.current.includes(head);
@@ -476,6 +484,8 @@ export const useLearnCard = () => {
     completionsRef.current = 0;
     completionCountedRef.current = false;
     dirtyRef.current = true;
+    // A restart zeroes every card, so all of them must be persisted.
+    dirtyCardsRef.current = new Set(cards.map((c) => c.id));
     const resetQueue = cards
       .map((_, i) => i)
       .filter((i) => passesFlagged(cards[i].id));
