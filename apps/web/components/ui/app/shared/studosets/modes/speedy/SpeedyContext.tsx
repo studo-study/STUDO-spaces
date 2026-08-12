@@ -18,6 +18,7 @@ import speedyReducer, {
 } from "./speedyReducer";
 import type { Card } from "@/types/types";
 import type { SessionCardResponse, StudysessionResponse } from "@studo/types";
+import { useQueryClient } from "@tanstack/react-query";
 import { useUpdateSession } from "@/hooks/app/session/useUpdateSession";
 
 interface SpeedyContextValue {
@@ -57,7 +58,23 @@ export function SpeedyProvider({
   const [state, dispatch] = useReducer(speedyReducer, cards, makeInitialState);
   const [gameStarted, setGameStarted] = useState(false);
 
-  const updateSession = useUpdateSession(session.id, setId);
+  const queryClient = useQueryClient();
+  // Per-card writes must not trigger a full studoset refetch each time; we
+  // refresh the cache once when the game finishes.
+  const updateSession = useUpdateSession(session.id, setId, {
+    invalidateOnSettled: false,
+  });
+
+  // Card results are batched instead of written per card: keyed by
+  // sessioncard id so re-answering the same card just overwrites (latest
+  // result wins, no duplicate writes). Flushed every 10 answers plus on
+  // finish/pause/tab-hide so a crash loses at most the last few cards.
+  const FLUSH_EVERY = 10;
+  const pendingRef = useRef<
+    Map<string, { id: string; mastered: boolean; inQueue: boolean }>
+  >(new Map());
+  const answeredSinceFlushRef = useRef(0);
+  const flushRef = useRef<() => void>(() => {});
 
   // Map card id -> session card so lookups keep working after the deck reorders.
   const sessionCardByCardId = useMemo(() => {
@@ -96,6 +113,7 @@ export function SpeedyProvider({
   const pause = useCallback(() => {
     setElapsedMs(Date.now() - startTimeRef.current);
     setGameStarted(false);
+    flushRef.current();
   }, []);
 
   const resume = useCallback(() => {
@@ -105,11 +123,51 @@ export function SpeedyProvider({
   }, [elapsedMs]);
 
   const restart = useCallback(() => {
+    pendingRef.current.clear();
+    answeredSinceFlushRef.current = 0;
     dispatch({ type: "RESET", cards });
     startTimeRef.current = Date.now();
     setElapsedMs(0);
     setGameStarted(true);
   }, [cards]);
+
+  // Send whatever card results have piled up in one PUT, then clear the buffer.
+  const flush = useCallback(() => {
+    if (pendingRef.current.size === 0) return;
+    const cards = [...pendingRef.current.values()];
+    pendingRef.current.clear();
+    answeredSinceFlushRef.current = 0;
+    updateSession.mutate(
+      { userId: session.userId, cards },
+      {
+        onError: () => {
+          // Re-queue only cards that weren't answered again meanwhile.
+          for (const c of cards) {
+            if (!pendingRef.current.has(c.id)) pendingRef.current.set(c.id, c);
+          }
+        },
+      },
+    );
+  }, [updateSession, session.userId]);
+
+  useEffect(() => {
+    flushRef.current = flush;
+  });
+
+  // Flush pending writes when the tab is hidden or closed so progress survives.
+  useEffect(() => {
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") flushRef.current();
+    };
+    const onPagehide = () => flushRef.current();
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pagehide", onPagehide);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pagehide", onPagehide);
+      flushRef.current();
+    };
+  }, []);
 
   // Tick the elapsed time while playing; setState in a callback is allowed.
   useEffect(() => {
@@ -121,33 +179,41 @@ export function SpeedyProvider({
     return () => clearInterval(interval);
   }, [gameStarted, state.phase]);
 
-  // Persist per-card progress on each result.
+  // Buffer per-card progress; flush in batches instead of writing every card.
   useEffect(() => {
     if (state.phase !== "correct" && state.phase !== "incorrect") return;
     const sessionCard = currentCard.sessionCard;
     if (!sessionCard) return;
 
     const mastered = state.phase === "correct";
-    updateSession.mutate({
-      userId: session.userId,
-      cards: [
-        {
-          id: sessionCard.id,
-          mastered,
-          inQueue: !mastered,
-        },
-      ],
+    pendingRef.current.set(sessionCard.id, {
+      id: sessionCard.id,
+      mastered,
+      inQueue: !mastered,
     });
+    answeredSinceFlushRef.current += 1;
+    if (answeredSinceFlushRef.current >= FLUSH_EVERY) flushRef.current();
   }, [state.phase]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Persist the final result once the set is finished.
+  // Persist the final result once the set is finished: any buffered cards plus
+  // the session-level totals go out in a single PUT.
   useEffect(() => {
     if (state.phase !== "finished") return;
-    updateSession.mutate({
-      userId: session.userId,
-      accuracy,
-      endedAt: new Date().toISOString(),
-    });
+    const cards = [...pendingRef.current.values()];
+    pendingRef.current.clear();
+    answeredSinceFlushRef.current = 0;
+    updateSession.mutate(
+      {
+        userId: session.userId,
+        accuracy,
+        endedAt: new Date().toISOString(),
+        ...(cards.length > 0 ? { cards } : {}),
+      },
+      {
+        onSettled: () =>
+          queryClient.invalidateQueries({ queryKey: ["studosets", setId] }),
+      },
+    );
   }, [state.phase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

@@ -97,7 +97,7 @@ const BreadCrumbs = () => {
       derived.push({ label: title, href: `/studoset/${id}`, isLast: false });
       // modes (learn/flashcards/speedy) krijgen een tweede crumb; de
       // overview-roots (studoset/visualset) blijven één crumb breed
-      if (root !== "studoset" && root !== "visualset") {
+      if (root !== "studoset" && root !== "visualset" && root !== "profile") {
         derived.push({
           label: labelFor(root),
           href: `/${root}/${id}`,

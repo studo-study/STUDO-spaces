@@ -9,6 +9,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { StudysetResponse, VisualsetResponse } from "@studo/types";
+import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
+import { ArrowRight, GalleryVerticalEnd, Images } from "lucide-react";
+import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
 
 interface viewProps {
   id: string;
@@ -23,6 +26,14 @@ export default function ProfileView({ id, isPublic = false }: viewProps) {
   const profile = (isPublic ? publicResult : authenticatedResult)?.data;
   const t = useTranslations("profile");
   const [tab, setTab] = useState<Tab>("ss");
+  useCourseNav([
+    {
+      title: "account",
+      href: `/account`,
+      isLast: true,
+      translate: true,
+    },
+  ]);
 
   if (!profile) return null;
 
@@ -36,10 +47,12 @@ export default function ProfileView({ id, isPublic = false }: viewProps) {
               {
                 key: "ss",
                 label: t("ss"),
+                icon: <GalleryVerticalEnd size={15} />,
               },
               {
                 key: "vs",
                 label: t("vs"),
+                icon: <Images size={15} />,
               },
             ]}
             value={tab}
@@ -62,6 +75,7 @@ export default function ProfileView({ id, isPublic = false }: viewProps) {
           </div>
         )}
       </div>
+      <BottomCredits />
     </PageContainer>
   );
 }
@@ -74,23 +88,18 @@ const StudosetItem = ({ item }: StudosetItemProps) => {
     <Link
       href={"/studoset/" + item.id}
       className={
-        "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
+        "w-full cursor-pointer h-15 rounded-4xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
       }
     >
-      <div className={"flex flex-row gap-2"}>
-        <Image
-          alt="settype"
-          src={"/icons/studyset.svg"}
-          width={5}
-          height={5}
-          className={"w-4 dark:invert dark:brightness-0"}
-        />
+      <div className={"flex flex-row items-center gap-3"}>
+        <GalleryVerticalEnd size={18} />
         <div>
           <span className={"font-bold dark:text-white text-studodarkblue"}>
             {item.title}
           </span>
         </div>
       </div>
+      <ArrowRight size={20} />
     </Link>
   );
 };
@@ -104,23 +113,18 @@ const VisualsetItem = ({ item }: VisualsetItemProps) => {
     <Link
       href={"/visualset/" + item.id}
       className={
-        "w-full cursor-pointer h-10 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
+        "w-full cursor-pointer h-15 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
       }
     >
-      <div className={"flex flex-row gap-2"}>
-        <Image
-          alt="settype"
-          src={"/icons/visualset.svg"}
-          width={5}
-          height={5}
-          className={"w-4 dark:invert dark:brightness-0"}
-        />
+      <div className={"flex flex-row items-center gap-2"}>
+        <Images size={18} />
         <div>
           <span className={"font-bold dark:text-white text-studodarkblue"}>
             {item.title}
           </span>
         </div>
       </div>
+      <ArrowRight size={20} />
     </Link>
   );
 };

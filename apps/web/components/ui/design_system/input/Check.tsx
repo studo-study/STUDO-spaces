@@ -1,9 +1,10 @@
 import React, { useId } from "react";
 import classNames from "@/utils/classnames";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, Minus } from "lucide-react";
 
 interface CheckProps {
   checked: boolean;
+  unCertain?: boolean;
   onChange: (checked: boolean) => void;
   label?: string;
   disabled?: boolean;
@@ -16,6 +17,7 @@ interface CheckProps {
 const Check: React.FC<CheckProps> = (props) => {
   const {
     checked,
+    unCertain,
     onChange,
     label,
     disabled,
@@ -42,11 +44,23 @@ const Check: React.FC<CheckProps> = (props) => {
           disabled={disabled}
           onChange={(e) => onChange(e.target.checked)}
           className={classNames(
-            "appearance-none cursor-pointer relative w-full h-full rounded-sm border border-studoborder/30 hover:border-studoblue transition-colors duration-300 checked:border-studoblue checked:bg-studoblue disabled:cursor-not-allowed disabled:opacity-50",
+            "appearance-none cursor-pointer relative w-full h-full rounded-[5px] border border-studoborder/30 hover:border-indigo-500 transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50",
             className,
+            (checked || unCertain) && "bg-indigo-500 border-indigo-500",
           )}
         />
 
+        {unCertain && (
+          <span
+            style={{
+              width,
+              height,
+            }}
+            className="pointer-events-none absolute inset-0 h-full w-full flex items-center justify-center"
+          >
+            <Minus size={12} strokeWidth={2.7} />
+          </span>
+        )}
         {checked && (
           <span
             style={{

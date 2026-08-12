@@ -3,11 +3,11 @@
 import Banner from "@/components/ui/design_system/banner/Banner";
 import { ProfileResponse } from "@studo/types";
 import Avatar from "@/components/ui/design_system/avatar/Avatar";
-import { MdVerified } from "react-icons/md";
 import { useImageTextColor } from "@/hooks/overige/useImageTextColor";
 import BaseToolTip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import { useTranslations } from "next-intl";
-import { FaHashtag } from "react-icons/fa";
+import { useLocale, useTranslations } from "next-intl";
+import { Hash } from "lucide-react";
+import Verified from "@/components/ui/overige/icons/Verified";
 
 interface ProfileHeaderProps {
   profile: ProfileResponse;
@@ -18,8 +18,9 @@ const FALLBACK_BANNER =
 
 export default function ProfileHeader({ profile }: ProfileHeaderProps) {
   const pf = profile.profile;
+  const locale = useLocale();
   const bannerSrc = pf.bannerUrl || FALLBACK_BANNER;
-  const t = useTranslations("account");
+  const t = useTranslations("profile");
   const isDark = useImageTextColor(bannerSrc, {
     left: 100,
     top: 30,
@@ -27,29 +28,45 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
     height: 50,
   });
 
+  const joinDate = new Date(pf.joinDate)
+    .toLocaleDateString(locale)
+    .split("-")
+    .join("/");
   if (!pf.bannerUrl) {
     return (
       <div
         className={
-          "w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-30 bg-studogrey/30 rounded-3xl border border-studoborder/30"
+          "w-full flex flex-col gap-5 p-5 justify-center min-h-30 bg-studogrey/30 rounded-full border border-studoborder/30"
         }
       >
         <div className={"w-full h-fit relative flex gap-5"}>
           <Avatar size={80} id={pf.userId} displayName={pf.displayName} />
-          <div className={"w-fit flex items-center justify-center gap-2"}>
-            <span
-              className={`text-xl truncate dark:text-white text-studodarkblue`}
-            >
-              {pf?.displayName}
+          <div className={"flex flex-col justify-center gap-2"}>
+            <div className={"w-fit flex items-center justify-center gap-2"}>
+              <span
+                className={`text-xl truncate dark:text-white text-studodarkblue`}
+              >
+                {pf?.displayName}
+              </span>
+              <div
+                className={
+                  "flex flex-row items-center gap-1 px-2 py-1 rounded-full bg-studogrey/30"
+                }
+              >
+                {pf?.verified && (
+                  <Verified
+                    variant={pf?.joinNumber === 1 ? "gold" : "blue"}
+                    size={18}
+                  />
+                )}
+                <BaseToolTip content={pf.joinNumber}>
+                  <Hash size={15} />
+                </BaseToolTip>
+              </div>
+            </div>
+            <span className={"text-sm text-studogrey"}>
+              {t("joined")} {joinDate}
             </span>
-            {pf.verified && (
-              <BaseToolTip content={t("verified")}>
-                <span className={"text-blue-500"}>{<MdVerified />}</span>
-              </BaseToolTip>
-            )}
-            <BaseToolTip content={pf.joinNumber}>
-              <FaHashtag />
-            </BaseToolTip>
           </div>
         </div>
       </div>
@@ -76,9 +93,12 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
               >
                 {pf?.displayName}
               </span>
-              <span className={"text-blue-500"}>
-                {!pf.verified && <MdVerified />}
-              </span>
+              {pf?.verified && (
+                <Verified
+                  variant={pf?.joinNumber === 1 ? "gold" : "blue"}
+                  size={18}
+                />
+              )}
             </div>
           </div>
         </div>
