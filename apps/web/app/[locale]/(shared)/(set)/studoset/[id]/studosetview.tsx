@@ -1,6 +1,5 @@
 "use client";
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
 import { SessionCardResponse } from "@studo/types";
 import CardList from "@/components/ui/app/shared/studosets/CardList";
 import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
