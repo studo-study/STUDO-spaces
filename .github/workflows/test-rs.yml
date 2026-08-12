@@ -1,0 +1,28 @@
+name: CI-rs
+
+on:
+  workflow_call:
+  pull_request:
+    paths:
+      - "workers/**"
+    branches: ["**"]
+  push:
+    paths:
+      - "workers/**"
+    branches:
+      - main
+      - develop
+
+jobs:
+  clippy_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: workers
+      - name: Run Clippy
+        run: cd workers/ && cargo clippy --all-targets --all-features -- -D warnings

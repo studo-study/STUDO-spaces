@@ -3,6 +3,7 @@ use serde::Deserialize;
 use tracing::info;
 use uuid::Uuid;
 
+#[expect(dead_code)]
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ParseJob<> {

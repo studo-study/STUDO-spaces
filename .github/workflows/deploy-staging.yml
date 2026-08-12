@@ -6,14 +6,20 @@ on:
       - develop
 
 jobs:
-  test:
-    name: Run CI checks
-    uses: ./.github/workflows/test.yml
+  test-ts:
+    name: CI TypeScript
+    uses: ./.github/workflows/test-ts.yml
+    secrets: inherit
+
+  test-rs:
+    name: CI Rust
+    uses: ./.github/workflows/test-rs.yml
+    secrets: inherit
 
   deploy-web:
     name: Deploy Web to Vercel (preview)
     runs-on: ubuntu-latest
-    needs: test
+    needs: [test-rs, test-ts]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -48,7 +54,7 @@ jobs:
   deploy-api:
     name: Deploy API to Railway (staging)
     runs-on: ubuntu-latest
-    needs: test
+    needs: [test-rs, test-ts]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

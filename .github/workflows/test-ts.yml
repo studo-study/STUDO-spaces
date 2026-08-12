@@ -1,10 +1,14 @@
-name: CI
+name: CI-ts
 
 on:
   workflow_call:
   pull_request:
+    paths:
+      - "apps/**"
     branches: ["**"]
   push:
+    paths:
+      - "apps/**"
     branches:
       - main
       - develop

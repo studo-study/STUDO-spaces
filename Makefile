@@ -53,6 +53,10 @@ clean-frontend:
 	@echo "cleaning up cache..."
 	rm -rf apps/web/.next
 
+clippy:
+	@echo "running Clippy check..."
+	cd workers && cargo clippy --all-targets --all-features -- -D warnings
+
 ci:
 	@echo "running ci tests..."
 	@echo "running ESLint..."
@@ -68,6 +72,8 @@ ci:
 	pnpm --filter @studo/api-node test:e2e
 	@echo "installing dependencies..."
 	pnpm install --frozen-lockfile
+	@echo "clippy"
+	cd workers && cargo clippy --all-targets --all-features -- -D warnings
 	@echo "integration tests..."
 	pnpm --filter @studo/api-node db:migrate
 	pnpm --filter @studo/api-node exec drizzle-kit check

@@ -1,8 +1,8 @@
+use crate::queue::job;
 use anyhow::Context;
 use redis::aio::ConnectionManager;
 use redis::streams::StreamReadReply;
 use tracing::{info, warn};
-use crate::queue::job;
 
 const GROUP: &str = "workers";
 
@@ -36,7 +36,7 @@ pub async fn ensure_group(connection: &mut ConnectionManager) -> anyhow::Result<
             Ok(())
         }
         Err(e) => {
-            return Err(e).context("XGROUP CREATE failed");
+            Err(e).context("XGROUP CREATE failed")
         }
     }
 }
@@ -85,4 +85,7 @@ pub async fn read_batch(connection: &mut ConnectionManager, count: i32) -> anyho
     Ok(())
 }
 
-async fn ack(connection: &mut ConnectionManager, stream: &str, id: &str) -> anyhow::Result<()> {}
+#[expect(dead_code)]
+async fn ack(_connection: &mut ConnectionManager, _stream: &str, _id: &str) -> anyhow::Result<()> {
+    Ok(())
+}
