@@ -3,21 +3,283 @@ import {
   COURSE_GRID_TEMPLATE,
   TableColumns,
 } from "@/components/ui/app/private/course/flow/table/TableColumns";
-import { GripVertical, Plus } from "lucide-react";
+import {
+  BookOpen,
+  ChartNoAxesColumnIncreasing,
+  Circle,
+  GalleryVerticalEnd,
+  GripVertical,
+  NotebookPen,
+  Plus,
+  TriangleRight,
+  List,
+  Pencil,
+  SquareCheck,
+  ScrollText,
+} from "lucide-react";
 import classNames from "@/utils/classnames";
 import {
   CSSProperties,
-  ReactNode,
+  RefObject,
   SetStateAction,
   useEffect,
   useRef,
+  useState,
 } from "react";
-import { CourseRow } from "@studo/types";
+import { CourseRow, RowPriority, RowStatus, RowType } from "@studo/types";
 import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
 import Check from "@/components/ui/design_system/input/Check";
+import { useLocale, useTranslations } from "next-intl";
+import Select from "@/components/ui/design_system/select/Select";
+import DatePicker from "@/components/ui/design_system/date_picker/DatePicker";
+import ResourceCell from "@/components/ui/app/private/course/flow/table/ResourceCell";
+
+type UpdateRow = (id: string, patch: Partial<CourseRow>) => void;
+
+interface CellContentProps {
+  colId: string;
+  ref: RefObject<HTMLInputElement | null>;
+  row: CourseRow;
+  updateRow: UpdateRow;
+}
+const CellContent: React.FC<CellContentProps> = (props) => {
+  const { colId, ref, row, updateRow } = props;
+  const locale = useLocale();
+  const t = useTranslations("flow.course");
+
+  const creationDate =
+    row.createdAt &&
+    new Date(row.createdAt).toLocaleDateString(locale).split("-").join("/");
+  if (colId === "titleColumn") {
+    return (
+      <div className={"w-full h-full text-sm px-3"}>
+        {/* uncontrolled + key: pas persisteren op blur, reset bij server-wijziging */}
+        <input
+          key={row.title ?? ""}
+          ref={ref}
+          type="text"
+          defaultValue={row.title ?? ""}
+          onBlur={(e) => {
+            if (e.target.value !== (row.title ?? ""))
+              updateRow(row.id, { title: e.target.value });
+          }}
+          className={"outline-none h-full w-full"}
+          placeholder={t("title_in_row")}
+        />
+      </div>
+    );
+  }
+
+  if (colId === "statusColumn") {
+    return (
+      <div
+        className={
+          "w-full dark:text-white text-studodarkblue h-full flex items-center justify-center"
+        }
+      >
+        <Select
+          value={row.status ?? undefined}
+          onChange={(val) => updateRow(row.id, { status: val as RowStatus })}
+          className={
+            "text-sm px-2 w-full h-full z-9999 bg-none border-none bg-transparent"
+          }
+          size={"xs"}
+          align={"center"}
+          options={[
+            {
+              label: t("not_started"),
+              value: "not_started",
+              icon: <Circle size={15} className={"stroke-rose-500"} />,
+            },
+            {
+              label: t("doing"),
+              value: "doing",
+              icon: <Circle size={15} className={"stroke-amber-500"} />,
+            },
+            {
+              label: t("done"),
+              value: "done",
+              icon: <Circle size={15} className={"stroke-emerald-500"} />,
+            },
+          ]}
+          placeholder={t("select")}
+        />
+      </div>
+    );
+  }
+
+  if (colId === "createdAtColumn") {
+    return (
+      <div className={"w-full h-full px-3 flex items-center justify-center"}>
+        {creationDate && (
+          <span
+            className={
+              "min-w-fit text-center text-xs px-3 py-1.5 rounded-full bg-studogrey/30"
+            }
+          >
+            {creationDate}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  if (colId === "descriptionColumn") {
+    return (
+      <div className={"w-full h-full text-sm px-3"}>
+        <input
+          key={row.description ?? ""}
+          ref={ref}
+          type="text"
+          defaultValue={row.description ?? ""}
+          onBlur={(e) => {
+            if (e.target.value !== (row.description ?? ""))
+              updateRow(row.id, { description: e.target.value });
+          }}
+          className={"outline-none h-full w-full"}
+          placeholder={t("desc_in_row")}
+        />
+      </div>
+    );
+  }
+
+  if (colId === "priorityColumn") {
+    return (
+      <div className={"w-full h-full px-3 flex items-center justify-center"}>
+        <Select
+          value={row.priority ?? undefined}
+          onChange={(val) =>
+            updateRow(row.id, { priority: val as RowPriority })
+          }
+          className={
+            "text-sm px-2 w-full h-full z-9999 bg-none border-none bg-transparent"
+          }
+          size={"xs"}
+          align={"center"}
+          options={[
+            {
+              label: t("high"),
+              value: "high",
+              icon: (
+                <ChartNoAxesColumnIncreasing
+                  size={15}
+                  className={"stroke-rose-500"}
+                />
+              ),
+            },
+            {
+              label: t("medium"),
+              value: "medium",
+              icon: (
+                <ChartNoAxesColumnIncreasing
+                  size={15}
+                  className={"stroke-amber-500"}
+                />
+              ),
+            },
+            {
+              label: t("low"),
+              value: "low",
+              icon: (
+                <ChartNoAxesColumnIncreasing
+                  size={15}
+                  className={"stroke-emerald-500"}
+                />
+              ),
+            },
+            {
+              label: t("no_priority"),
+              value: "no_priority",
+              icon: <TriangleRight className={"opacity-50"} size={15} />,
+            },
+          ]}
+          placeholder={t("select")}
+        />
+      </div>
+    );
+  }
+
+  if (colId === "dueDateColumn") {
+    return (
+      <div className={"min-w-full h-full flex items-center justify-center"}>
+        <DatePicker
+          size={"sm"}
+          align={"start"}
+          variant={"default"}
+          className={"w-full flex-1 min-w-0 border-none text-sm bg-transparent"}
+          value={row.dueDate ? new Date(row.dueDate) : null}
+          onChange={(date) =>
+            updateRow(row.id, { dueDate: date.toISOString().slice(0, 10) })
+          }
+          placeholder={t("select")}
+        />
+      </div>
+    );
+  }
+
+  if (colId === "typeColumn") {
+    return (
+      <div className={"w-full h-full px-3 flex items-center justify-center"}>
+        <Select
+          value={row.type ?? undefined}
+          onChange={(val) => updateRow(row.id, { type: val as RowType })}
+          className={
+            "text-sm px-2 w-full h-full z-9999 bg-none border-none bg-transparent"
+          }
+          size={"xs"}
+          align={"center"}
+          options={[
+            {
+              label: t("course_label"),
+              value: "course",
+              icon: <BookOpen size={15} className={"stroke-blue-500"} />,
+            },
+            {
+              label: t("notes"),
+              value: "notes",
+              icon: <NotebookPen size={15} className={"stroke-blue-500"} />,
+            },
+            {
+              label: t("summary"),
+              value: "summary",
+              icon: <List size={15} className={"stroke-blue-500"} />,
+            },
+            {
+              label: t("abstract"),
+              value: "abstract",
+              icon: <ScrollText className={"stroke-blue-500"} size={15} />,
+            },
+            {
+              label: t("sample_exam"),
+              value: "sample_exam",
+              icon: <Pencil className={"stroke-blue-500"} size={15} />,
+            },
+            {
+              label: t("task"),
+              value: "task",
+              icon: <SquareCheck className={"stroke-blue-500"} size={15} />,
+            },
+            {
+              label: t("set"),
+              value: "set",
+              icon: (
+                <GalleryVerticalEnd className={"stroke-blue-500"} size={15} />
+              ),
+            },
+          ]}
+          placeholder={t("select")}
+        />
+      </div>
+    );
+  }
+
+  if (colId === "resourceColumn") {
+    return <ResourceCell row={row} updateRow={updateRow} />;
+  }
+  return <div></div>;
+};
 
 interface TableCellProps {
-  children?: ReactNode;
   rowIndex: number;
   rowId: string;
   rowIds: string[];
@@ -26,10 +288,11 @@ interface TableCellProps {
   selectedCell: string;
   setSelectedCell: React.Dispatch<SetStateAction<string>>;
   clearSelected: () => void;
+  row: CourseRow;
+  updateRow: UpdateRow;
 }
 
 const TableCell: React.FC<TableCellProps> = ({
-  children,
   rowIndex,
   rowId,
   rowIds,
@@ -38,9 +301,11 @@ const TableCell: React.FC<TableCellProps> = ({
   selectedCell,
   setSelectedCell,
   clearSelected,
+  row,
+  updateRow,
 }: TableCellProps) => {
   const cellRef = useRef<HTMLDivElement>(null);
-
+  const inputRef = useRef<HTMLInputElement>(null);
   // Cel-identiteit hangt aan row.id (niet index) zodat de selectie de rij volgt
   // bij reorder/verwijderen; navigatie gebruikt de positie in rowIds.
   const celId = `${colId}-${rowId}`;
@@ -50,6 +315,7 @@ const TableCell: React.FC<TableCellProps> = ({
   useEffect(() => {
     if (selected) {
       cellRef.current?.focus();
+      inputRef?.current?.focus();
     }
   }, [selected]);
 
@@ -118,22 +384,26 @@ const TableCell: React.FC<TableCellProps> = ({
       aria-selected={selected}
       tabIndex={selected ? 0 : -1}
       onClick={() => {
-        // Een cel selecteren = de rij-selectie loslaten.
         clearSelected();
         setSelectedCell(celId);
       }}
       onKeyDown={handleKeyDown}
       className={classNames(
-        "min-w-0 border-2 border-transparent rounded-xl rounded-br-none transition-colors duration-100 cursor-pointer z-[100] min-h-0 flex-1 outline-none",
+        "min-w-0 border-2 border-transparent rounded-xl rounded-br-none transition-colors duration-100 cursor-pointer z-100 min-h-0 flex-1 outline-none",
         selected && "border-indigo-500 bg-studogrey/10",
       )}
     >
-      {children}
+      <CellContent
+        colId={colId}
+        row={row}
+        ref={inputRef}
+        updateRow={updateRow}
+      />
       {selected && (
         <span
           aria-hidden
           className={
-            "bg-indigo-500 rounded-full h-2 absolute -bottom-0.5 -right-0.5 w-2"
+            "bg-indigo-500 rounded-full cursor-row-resize h-2 absolute -bottom-0.5 -right-0.5 w-2"
           }
         />
       )}
@@ -145,10 +415,18 @@ interface TableRowProps {
   gap: number;
   row: CourseRow;
   addRow: (input?: number) => void;
+  updateRow: UpdateRow;
+  removeRow: (id: string) => void;
+  removeSelected: () => void;
   rowIndex: number;
   rowIds: string[];
   selectedCell: string;
   setSelectedCell: React.Dispatch<SetStateAction<string>>;
+  onRowDragStart: (index: number) => void;
+  onRowDragOver: (index: number) => void;
+  onRowDrop: (index: number) => void;
+  onRowDragEnd: () => void;
+  isDragOver: boolean;
 }
 
 const CONTROLS_CELL_X = -80;
@@ -161,19 +439,38 @@ const TableRow = ({
   gap,
   row,
   addRow,
+  updateRow,
+  removeSelected,
   rowIndex,
   rowIds,
   selectedCell,
   setSelectedCell,
+  onRowDragStart,
+  onRowDragOver,
+  onRowDrop,
+  onRowDragEnd,
+  isDragOver,
 }: TableRowProps) => {
   // Predicate in de selector: rij abonneert enkel op zijn eigen selectie-status,
   // niet op de hele selectedIds-array (anders re-rendert elke rij bij elke toggle).
   const checked = useCourseFlowStore((state) =>
     state.selectedIds.includes(row.id),
   );
+  // buren-selectie: aangrenzende geselecteerde rijen vormen één blok → de
+  // border ertussen valt weg, ronding enkel aan de uiteinden van de groep.
+  const prevChecked = useCourseFlowStore(
+    (state) => rowIndex > 0 && state.selectedIds.includes(rowIds[rowIndex - 1]),
+  );
+  const nextChecked = useCourseFlowStore(
+    (state) =>
+      rowIndex < rowIds.length - 1 &&
+      state.selectedIds.includes(rowIds[rowIndex + 1]),
+  );
   const checkRow = useCourseFlowStore((state) => state.toggeSelectRow);
-  const removeSelected = useCourseFlowStore((state) => state.removeSelected);
   const clearSelected = useCourseFlowStore((state) => state.clearSelected);
+  // rij is enkel sleepbaar terwijl de grip ingedrukt wordt (anders breekt het
+  // tekstselectie in de cellen).
+  const [dragArmed, setDragArmed] = useState(false);
   const pinStyle = (pinned: boolean, cellX: number): CSSProperties =>
     pinned
       ? {
@@ -188,9 +485,24 @@ const TableRow = ({
     <div
       role="row"
       aria-selected={checked}
+      draggable={dragArmed}
+      onDragStart={() => onRowDragStart(rowIndex)}
+      onDragOver={(e) => {
+        e.preventDefault();
+        onRowDragOver(rowIndex);
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+        onRowDrop(rowIndex);
+      }}
+      onDragEnd={() => {
+        setDragArmed(false);
+        onRowDragEnd();
+      }}
       className={classNames(
         "h-10 max-h-10 z-100 relative min-h-10 min-w-0 -mx-20 flex-1 w-full grid group/row border-b border-studoborder/30",
         checked && "border-transparent",
+        isDragOver && "border-b-2 border-indigo-500",
       )}
       onKeyDown={(e) => {
         // Backspace verwijdert de geselecteerde rijen, maar niet terwijl je in
@@ -210,21 +522,25 @@ const TableRow = ({
       <div
         className={classNames(
           "absolute w-full h-full",
-          checked && "border-2 border-indigo-500 bg-studogrey/10",
+          checked && "border-x-2 border-indigo-500 bg-studogrey/10",
+          checked && !prevChecked && "border-t-2 rounded-t-xl",
+          checked && !nextChecked && "border-b-2 rounded-b-xl",
         )}
       />
       <div
         style={pinStyle(true, CONTROLS_CELL_X)}
         className={classNames(
-          "h-full relative border-b border-transparent w-full",
+          "h-full relative border-b border-studoborder/30 border-r w-full ",
+          checked && !nextChecked && "rounded-bl-2xl",
           pinClass(true),
         )}
       >
         <div
           className={classNames(
             "absolute w-full h-full",
-            checked &&
-              "border-l-2 border-b-2 border-t-2 border-indigo-500  rounded-tl-xl rounded-bl-xl  bg-studogrey/10",
+            checked && "border-l-2 border-indigo-500 bg-studogrey/10",
+            checked && !prevChecked && "border-t-2 rounded-tl-xl",
+            checked && !nextChecked && "border-b-2 rounded-bl-xl",
           )}
         />
         <div
@@ -234,7 +550,9 @@ const TableRow = ({
           }}
           className={classNames(
             "group cursor-pointer gap-2 h-full w-full flex items-center justify-between px-2 ",
-            checked && "bg-studogrey/30",
+            checked && "bg-studogrey/30 z-200",
+            checked && !prevChecked && "rounded-tl-2xl",
+            checked && !nextChecked && "rounded-bl-2xl",
           )}
         >
           <button
@@ -249,11 +567,17 @@ const TableRow = ({
               checked && "opacity-100",
             )}
           >
-            <Plus />
+            <Plus size={17} />
           </button>
           <GripVertical
+            // grip indrukken "wapent" de rij zodat native drag start; loslaten reset
+            onMouseDown={(e) => {
+              e.stopPropagation();
+              setDragArmed(true);
+            }}
+            onMouseUp={() => setDragArmed(false)}
             className={classNames(
-              "cursor-grab group-hover:opacity-100 opacity-0 transition-opacity duration-300",
+              "cursor-grab active:cursor-grabbing group-hover:opacity-100 opacity-0 transition-opacity duration-300",
               checked && "opacity-100",
             )}
           />
@@ -291,6 +615,7 @@ const TableRow = ({
           >
             <div className={"relative min-w-0 flex w-full min-h-0 flex-1"}>
               <TableCell
+                row={row}
                 colIds={COL_IDS}
                 colId={col.colId}
                 rowIndex={rowIndex}
@@ -299,7 +624,8 @@ const TableRow = ({
                 selectedCell={selectedCell}
                 setSelectedCell={setSelectedCell}
                 clearSelected={clearSelected}
-              ></TableCell>
+                updateRow={updateRow}
+              />
             </div>
             <div
               className={

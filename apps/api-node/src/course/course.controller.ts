@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -18,6 +19,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import * as types from '@studo/types';
 import { Request as ExpressRequest } from 'express';
 import { FileService } from './file.service';
+import { TableService } from './table.service';
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {
@@ -35,6 +37,7 @@ export class CourseController {
   constructor(
     private readonly courseService: CourseService,
     private readonly fileService: FileService,
+    private readonly tableService: TableService,
   ) {}
 
   @Roles(Role.USER, Role.ADMIN)
@@ -114,5 +117,20 @@ export class CourseController {
     @Param('doc_id', ParseUUIDPipe) docId: string,
   ) {
     return this.fileService.reprocess(courseId, docId);
+  }
+
+  @Roles(Role.USER, Role.ADMIN)
+  @Patch(':course_id/table')
+  async updateTable(
+    @Param('course_id', ParseUUIDPipe) courseId: string,
+    @Body() body: types.UpdateCourseTable,
+  ): Promise<types.CourseTable> {
+    return this.tableService.updateTable(courseId, body);
+  }
+
+  @Roles(Role.USER, Role.ADMIN)
+  @Delete(':course_id')
+  async deleteCourse(@Param('course_id', ParseUUIDPipe) courseId: string) {
+    return this.courseService.deleteCourse(courseId);
   }
 }

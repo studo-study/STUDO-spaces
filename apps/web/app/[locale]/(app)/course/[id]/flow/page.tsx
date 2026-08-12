@@ -1,17 +1,35 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlowHeading from "@/components/ui/app/private/course/flow/FlowHeading";
 import FlowTable from "@/components/ui/app/private/course/flow/table/FlowTable";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import { useParams } from "next/navigation";
 import { useCourse } from "@/hooks/app/courses/useCourse";
+import { useUpdateCourseTable } from "@/hooks/app/courses/useUpdateCourseTable";
 
 export default function CourseFlowPage() {
   //effectieve data
   const { id } = useParams<{ id: string }>();
   const course = useCourse(id)?.data;
+  const updateTable = useUpdateCourseTable(id);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+
+  // lokale state seeden vanuit de server-tabel
+  useEffect(() => {
+    setTitle(course?.table?.title ?? "");
+    setDescription(course?.table?.description ?? "");
+  }, [course?.table?.title, course?.table?.description]);
+
+  const handleHeadingBlur = () => {
+    if (
+      title === (course?.table?.title ?? "") &&
+      description === (course?.table?.description ?? "")
+    )
+      return;
+    updateTable.mutate({ title, description });
+  };
+
   useCourseNav([
     {
       title: "home",
@@ -32,6 +50,7 @@ export default function CourseFlowPage() {
       translate: true,
     },
   ]);
+
   return (
     <div
       data-flow-boundary
@@ -46,6 +65,7 @@ export default function CourseFlowPage() {
             setTitle={setTitle}
             description={description}
             setDescription={setDescription}
+            onBlur={handleHeadingBlur}
           />
           <FlowTable />
         </div>

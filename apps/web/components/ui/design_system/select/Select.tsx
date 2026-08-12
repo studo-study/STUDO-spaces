@@ -1,7 +1,9 @@
 "use client";
 import React, { ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
+import classNames from "@/utils/classnames";
 
 interface SelectOption {
   value: string;
@@ -20,8 +22,9 @@ type SelectProps = {
   id?: string;
   disabled?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-  // uitlijning van het dropdown-paneel t.o.v. de trigger
-  align?: "start" | "end";
+
+  align?: "start" | "end" | "center";
+  className?: string;
 };
 
 const sizeMap = {
@@ -67,18 +70,37 @@ const Select = ({
   disabled,
   size = "lg",
   align = "start",
+  className,
 }: SelectProps) => {
   const [open, setOpen] = React.useState(false);
+  const [coords, setCoords] = React.useState<{
+    top: number;
+    left: number;
+    width: number;
+  } | null>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const panelRef = React.useRef<HTMLDivElement>(null);
 
   const selected = options.find((o) => String(o.value) === String(value));
   const s = sizeMap[size];
 
+  // trigger-positie meten zodat het portal-paneel op scherm-coords staat
+  const updateCoords = React.useCallback(() => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setCoords({ top: rect.bottom + 8, left: rect.left, width: rect.width });
+  }, []);
+
+  React.useLayoutEffect(() => {
+    if (open) updateCoords();
+  }, [open, updateCoords]);
+
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
       if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
+        !containerRef.current?.contains(target) &&
+        !panelRef.current?.contains(target)
       ) {
         setOpen(false);
       }
@@ -86,15 +108,21 @@ const Select = ({
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
+    // fixed paneel bijhouden bij scroll/resize (bv. de tabel-pan)
+    const reposition = () => updateCoords();
     if (open) {
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleEscape);
+      window.addEventListener("scroll", reposition, true);
+      window.addEventListener("resize", reposition);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscape);
+      window.removeEventListener("scroll", reposition, true);
+      window.removeEventListener("resize", reposition);
     };
-  }, [open]);
+  }, [open, updateCoords]);
 
   const handleSelect = (optionValue: string | number) => {
     onChange?.(optionValue);
@@ -115,7 +143,10 @@ const Select = ({
         id={id}
         disabled={disabled}
         onClick={() => !disabled && setOpen((prev) => !prev)}
-        className={`w-full rounded-full flex gap-2 flex-row cursor-pointer items-center justify-between outline-none ring-0 border border-studoborder/30  bg-studogrey/30 text-left disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
+        className={classNames(
+          `w-full rounded-full flex gap-2 flex-row cursor-pointer items-center justify-between outline-none ring-0 border border-studoborder/30  bg-studogrey/30 text-left disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`,
+          className,
+        )}
       >
         {selected && selected?.icon}
         <span
@@ -134,55 +165,79 @@ const Select = ({
         />
       </button>
 
-      <div
-        className={`absolute z-1000 top-full mt-2 min-w-full w-max max-w-[min(90vw,20rem)]
-          ${align === "end" ? "right-0 origin-top-right" : "left-0 origin-top-left"}
-          z-9999 p-2 py-2 border border-studoborder/30
-          rounded-2xl dark:bg-slate-800 bg-slate-100
-          gap-2 flex flex-col h-fit
-          shadow-xl shadow-black/10 dark:shadow-black/30
-          transition-all duration-300 ease-out
-          ${
-            open
-              ? "opacity-100 scale-100  translate-y-0 visible pointer-events-auto"
-              : "opacity-0 scale-95 -translate-y-2 invisible pointer-events-none"
-          }
-        `}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className={"w-full flex flex-col gap-1 min-w-fit"}>
-          <span className={`w-full text-zinc-400 ${s.label}`}>
-            {label ?? t("options")}
-          </span>
+      {typeof document !== "undefined" &&
+        coords &&
+        createPortal(
           <div
-            className={
-              "w-full h-fit flex flex-col max-h-60 scroll-hidden overflow-y-auto gap-1"
-            }
+            ref={panelRef}
+            style={{
+              position: "fixed",
+              top: coords.top,
+              ...(align === "end"
+                ? {
+                    left: coords.left + coords.width,
+                    transform: "translateX(-100%)",
+                  }
+                : align === "center"
+                  ? {
+                      left: coords.left + coords.width / 2,
+                      transform: "translateX(-50%)",
+                    }
+                  : { left: coords.left }),
+              ...(align === "center" ? {} : { minWidth: coords.width }),
+            }}
+            className={`z-200 w-max max-w-[min(90vw,20rem)]
+              ${align === "end" ? "origin-top-right" : align === "center" ? "origin-top" : "origin-top-left"}
+              p-2 py-2 border border-studoborder/30 dark:text-white text-studodarkblue
+              rounded-2xl dark:bg-slate-800 bg-slate-100
+              gap-2 flex flex-col h-fit
+              shadow-xl shadow-black/10 dark:shadow-black/30
+              transition-all duration-300 ease-out min-w-fit
+              ${
+                open
+                  ? "opacity-100 scale-100 visible pointer-events-auto"
+                  : "opacity-0 scale-95 -translate-y-2 invisible pointer-events-none"
+              }
+            `}
+            onClick={(e) => e.stopPropagation()}
           >
-            {options.map((option) => {
-              const isSelected = String(option.value) === String(value);
-              return (
-                <button
-                  key={String(option.value)}
-                  type={"button"}
-                  onClick={() => handleSelect(option.value)}
-                  className={`w-full hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50 rounded-full px-3 flex flex-row items-center justify-between cursor-pointer ${
-                    s.item
-                  } ${isSelected ? "dark:bg-zinc-400/20 bg-zinc-200/50" : ""}`}
-                >
-                  <span className={"truncate gap-2 flex flex-row items-center"}>
-                    {option.icon}
-                    {option.label}
-                  </span>
-                  {isSelected && (
-                    <span className={"text-xs text-zinc-500"}>✓</span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+            <div className={"w-full flex flex-col gap-1 min-w-fit"}>
+              <span className={`w-full text-zinc-400 ${s.label}`}>
+                {label ?? t("options")}
+              </span>
+              <div
+                className={
+                  "w-full h-fit flex flex-col max-h-60 scroll-hidden overflow-y-auto gap-1"
+                }
+              >
+                {options.map((option) => {
+                  const isSelected = String(option.value) === String(value);
+                  return (
+                    <button
+                      key={String(option.value)}
+                      type={"button"}
+                      onClick={() => handleSelect(option.value)}
+                      className={`w-full hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50 rounded-full px-3 flex flex-row items-center justify-between cursor-pointer ${
+                        s.item
+                      } ${isSelected ? "dark:bg-zinc-400/20 bg-zinc-200/50" : ""}`}
+                    >
+                      <span
+                        className={"truncate gap-2 flex flex-row items-center"}
+                      >
+                        {option.icon}
+                        {option.label}
+                      </span>
+                      {isSelected && (
+                        <span className={"text-xs text-zinc-500"}>✓</span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 };

@@ -5,14 +5,17 @@ import {
 import { useTranslations } from "next-intl";
 import classNames from "@/utils/classnames";
 import { GripVertical, Plus } from "lucide-react";
-import { CSSProperties } from "react";
+import { CSSProperties, Dispatch, SetStateAction } from "react";
 import Check from "@/components/ui/design_system/input/Check";
 import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
+import type { CourseRow } from "@studo/types";
 
 interface TableHeaderProps {
   offset: number;
   gap: number;
   addRow: (index: number) => void;
+  rows: CourseRow[];
+  setSelectedCell: Dispatch<SetStateAction<string>>;
 }
 
 // controls-kolom zit 80px links van de content-origin (-mx-20), de eerste
@@ -20,9 +23,14 @@ interface TableHeaderProps {
 const CONTROLS_CELL_X = -80;
 const PINNED_COL_X = 0;
 
-const TableHeader = ({ offset, gap, addRow }: TableHeaderProps) => {
+const TableHeader = ({
+  offset,
+  gap,
+  addRow,
+  rows,
+  setSelectedCell,
+}: TableHeaderProps) => {
   const checkedIds = useCourseFlowStore((state) => state.selectedIds);
-  const rows = useCourseFlowStore((state) => state.rows);
   const unCertain = checkedIds.length != 0 && checkedIds.length != rows.length;
   const checked = rows.length != 0 && checkedIds.length === rows.length;
   const setChecked = useCourseFlowStore((state) => state.toggleAll);
@@ -45,7 +53,7 @@ const TableHeader = ({ offset, gap, addRow }: TableHeaderProps) => {
         gridTemplateColumns: COURSE_GRID_TEMPLATE,
         gridTemplateRows: "max-content",
       }}
-      className={"w-full max-h-10 -mx-20 text-studogrey"}
+      className={"w-full text-sm max-h-10 -mx-20 text-studogrey"}
     >
       <div
         style={pinStyle(true, CONTROLS_CELL_X)}
@@ -61,7 +69,10 @@ const TableHeader = ({ offset, gap, addRow }: TableHeaderProps) => {
           <Check
             unCertain={unCertain}
             checked={checked}
-            onChange={() => setChecked(rows.map((row) => row.id))}
+            onChange={() => {
+              setChecked(rows.map((row) => row.id));
+              setSelectedCell("");
+            }}
           />
         </div>
       </div>

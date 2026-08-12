@@ -3,7 +3,14 @@ import {
   type DatabaseProvider,
   InjectDrizzle,
 } from '../drizzle/drizzle.provider';
-import { courses, courseUsers, studysets, visualsets } from '../drizzle/schema';
+import {
+  courseRows,
+  courses,
+  courseTables,
+  courseUsers,
+  studysets,
+  visualsets,
+} from '../drizzle/schema';
 import { and, eq, inArray } from 'drizzle-orm';
 import {
   Course,
@@ -75,13 +82,13 @@ export class CourseService {
     const examDate = course.examDate ?? course.board?.examDate ?? null;
     const institute = course.institute ?? course.board?.institute ?? null;
 
-    // max één tabel per course
     const src = course.tables[0] ?? null;
     const table = src
       ? {
           id: src.id,
           courseId: src.courseId,
           title: src.title,
+          description: src.description,
           createdAt: iso(src.createdAt),
           updatedAt: iso(src.updatedAt),
           rows: src.rows
@@ -91,6 +98,8 @@ export class CourseService {
               tableId: r.tableId,
               rowIndex: r.rowIndex,
               createdBy: r.createdBy,
+              createdAt: iso(r.createdAt),
+              title: r.title ?? undefined,
               status: r.status,
               priority: r.priority,
               type: r.type,
@@ -243,6 +252,22 @@ export class CourseService {
       role: 'owner',
     });
 
+    const [generatedTable] = await this.db
+      .insert(courseTables)
+      .values({
+        courseId: course.id,
+        title: body.title ?? '',
+        description: body.description ?? '',
+      })
+      .returning();
+
+    for (let i = 0; i < 3; i++) {
+      await this.db.insert(courseRows).values({
+        rowIndex: i + 1,
+        tableId: generatedTable.id,
+      });
+    }
+
     return await this.getFullCourse(course.id, userId);
   }
 
@@ -261,5 +286,9 @@ export class CourseService {
         description: body?.description,
       })
       .where(eq(courses.id, courseId));
+  }
+
+  async deleteCourse(courseId: string) {
+    await this.db.delete(courses).where(eq(courses.id, courseId));
   }
 }
