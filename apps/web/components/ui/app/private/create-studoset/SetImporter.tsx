@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import SvenImport from "@/components/ui/app/private/create-studoset/svenimport";
 import Textimport from "@/components/ui/app/private/create-studoset/textimport";
