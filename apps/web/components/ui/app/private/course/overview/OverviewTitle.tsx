@@ -8,12 +8,7 @@ import classNames from "@/utils/classnames";
 import DatePicker from "@/components/ui/design_system/date_picker/DatePicker";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
 import { useDeleteCourse } from "@/hooks/app/courses/useDeleteCourse";
-import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { EllipsisVertical, Trash } from "lucide-react";
-import { MdEditNote } from "react-icons/md";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import { FiTrash2 } from "react-icons/fi";
+import { Trash } from "lucide-react";
 import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
 import { useRouter } from "@/i18n/routing";
 

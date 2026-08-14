@@ -17,6 +17,7 @@ export default function CourseFlowPage() {
 
   // lokale state seeden vanuit de server-tabel
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTitle(course?.table?.title ?? "");
     setDescription(course?.table?.description ?? "");
   }, [course?.table?.title, course?.table?.description]);

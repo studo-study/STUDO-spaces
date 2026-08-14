@@ -14,7 +14,6 @@ import { Grid2x2Plus } from "lucide-react";
 import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
 import { usePathname } from "@/i18n/routing";
 import { useCourseFlow } from "@/hooks/app/courses/useCourseFlow";
-import SmallProgress from "@/components/ui/design_system/progress/SmallProgress";
 import CourseProgress from "@/components/ui/design_system/progress/CourseProgress";
 
 interface Drag {

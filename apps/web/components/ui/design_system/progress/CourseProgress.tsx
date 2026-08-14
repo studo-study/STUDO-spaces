@@ -5,7 +5,7 @@ interface CourseProgressProps {
   totalLength: number;
 }
 const CourseProgress: React.FC<CourseProgressProps> = (props) => {
-  const { done, toDo, inProg, totalLength } = props;
+  const { done, inProg, totalLength } = props;
   const isFinished = totalLength === done;
   return (
     <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-studoborder/30">
