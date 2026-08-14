@@ -15,4 +15,5 @@ export * from "./admin";
 export * from "./suggestionimage";
 export * from "./course";
 export * from "./settings";
+export * from "./chat";
 export { default as UploadDocs } from "./course";
