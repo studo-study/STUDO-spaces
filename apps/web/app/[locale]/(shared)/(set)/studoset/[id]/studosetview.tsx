@@ -182,7 +182,6 @@ export default function StudosetView({ id }: viewProps) {
   }, [sessionCards, totalCards]);
 
   const isOwner = !!userId && userId === data?.userId;
-  const isInCourse = data?.course != null;
   const toggleTab = (input: string) => {
     if (filter === (input as Filter)) {
       setFilter("all");
