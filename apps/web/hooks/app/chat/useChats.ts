@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { AllUserChatsResponse } from "@studo/types/dist/chat";
+import { AllUserChatsResponse } from "@studo/types";
 import { useUser } from "@/components/providers/auth/UserProvider";
 
 export function useChats() {
