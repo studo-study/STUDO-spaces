@@ -131,6 +131,7 @@ export interface CourseRow {
   tableId: string;
   rowIndex: number;
   createdBy: string | null;
+  createdAt: string | null;
   status: RowStatus | null;
   priority: RowPriority | null;
   type: RowType | null;
@@ -147,11 +148,18 @@ export interface CourseRow {
 
 export interface CourseTable {
   id: string;
+  description: string | null;
   courseId: string;
   title: string;
   createdAt: string | null;
   updatedAt: string | null;
   rows: CourseRow[];
+}
+
+export interface UpdateCourseTable {
+  title?: string;
+  description?: string;
+  rows?: UpdateCourseRow[];
 }
 
 // --- Samengestelde responses ---
@@ -196,7 +204,13 @@ export interface CreateCourse {
 
 export type UpdateCourse = Partial<CreateCourse>;
 
+export interface CreateCourseResource {
+  id?: string;
+  link: string;
+}
+
 export interface CreateCourseRow {
+  id?: string;
   tableId?: string;
   courseId?: string;
   rowIndex?: number;
@@ -209,6 +223,7 @@ export interface CreateCourseRow {
   dueDate?: string;
   studosetId?: string;
   visualsetId?: string;
+  resources?: CreateCourseResource[];
 }
 
 export type UpdateCourseRow = Partial<Omit<CreateCourseRow, "tableId">>;

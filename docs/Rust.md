@@ -1504,7 +1504,7 @@ async fn mark_failed(pool: &PgPool, job_id: i64, error: &str) {
 Wanneer een gebruiker een PDF uploadt via de web app, doet Node.js het volgende:
 
 ```typescript
-// apps/api-node/src/flow/flow.service.ts (of een nieuwe document.service.ts)
+// apps/api-node/src/flow/table.service.ts (of een nieuwe document.service.ts)
 
 import { db } from "../drizzle/drizzle.provider";
 import { workerJobs, courseDocuments } from "../drizzle/schema";

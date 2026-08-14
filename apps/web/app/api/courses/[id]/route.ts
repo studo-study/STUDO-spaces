@@ -43,3 +43,20 @@ export async function PATCH(
 
   return NextResponse.json(data, { status: response.status });
 }
+
+export async function DELETE(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const [{ id }, session] = await Promise.all([params, auth()]);
+  if (!session?.accessToken || !session.user?.id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  const response = await fetch(`${process.env.AUTH_API_URL}/courses/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${session.accessToken}` },
+  });
+
+  return new NextResponse(null, { status: response.status });
+}

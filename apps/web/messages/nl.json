@@ -1183,7 +1183,8 @@
     },
     "flow": {
       "course": "vak",
-      "courses": "vakken"
+      "courses": "vakken",
+      "delete": ""
     }
   },
   "y_f": {
@@ -1624,7 +1625,24 @@
       },
       "document_settings": {
         "reprocess_btn": "Herverwerk document"
-      }
+      },
+      "delete": "Verwijder vak",
+      "title_in_row": "voeg een titel toe...",
+      "desc_in_row": "voeg een beschrijving toe...",
+      "add_resource": "Link toevoegen...",
+      "select": "Selecteer",
+      "not_started": "To do",
+      "doing": "In progress",
+      "done": "Done",
+      "high": "Hoog",
+      "medium": "Medium",
+      "low": "Laag",
+      "no_priority": "Geen",
+      "abstract": "Abstract",
+      "sample_exam": "Voorbeeldexamen",
+      "task": "Taak",
+      "set": "Set",
+      "course_label": "Cursus"
     }
   },
   "courses": {

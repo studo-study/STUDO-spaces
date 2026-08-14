@@ -13,7 +13,8 @@ import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { Grid2x2Plus } from "lucide-react";
 import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
 import { usePathname } from "@/i18n/routing";
-import { useCourseTable } from "@/hooks/app/courses/useCourse";
+import { useCourseFlow } from "@/hooks/app/courses/useCourseFlow";
+import CourseProgress from "@/components/ui/design_system/progress/CourseProgress";
 
 interface Drag {
   id: number;
@@ -30,37 +31,44 @@ const TableDisplay = () => {
   const content = useRef<HTMLDivElement>(null);
   const drag = useRef<Drag | null>(null);
   const courseId = usePathname().split("/")[2];
-  const table = useCourseTable(courseId);
-  //store
-  const rows = useCourseFlowStore((state) => state.rows);
+  // rij-data komt uit de react-query course-cache (persistent)
+  const { rows, addRow, updateRow, removeRow, removeRows, reorderRow } =
+    useCourseFlow(courseId);
+
+  // drag-reorder: bronindex in een ref, doelindex voor de visuele indicator
+  const dragFrom = useRef<number | null>(null);
+  const [overIndex, setOverIndex] = useState<number | null>(null);
+  const onRowDragStart = useCallback((index: number) => {
+    dragFrom.current = index;
+  }, []);
+  const onRowDragOver = useCallback((index: number) => {
+    setOverIndex(index);
+  }, []);
+  const onRowDrop = useCallback(
+    (index: number) => {
+      const from = dragFrom.current;
+      if (from !== null && from !== index) reorderRow(from, index);
+      dragFrom.current = null;
+      setOverIndex(null);
+    },
+    [reorderRow],
+  );
+  const onRowDragEnd = useCallback(() => {
+    dragFrom.current = null;
+    setOverIndex(null);
+  }, []);
   // Stabiele lijst van rij-ids: selectie/navigatie werkt op id i.p.v. index,
   // zodat een cel-selectie niet verspringt bij reorder/verwijderen.
   const rowIds = useMemo(() => rows.map((row) => row.id), [rows]);
-  const add = useCourseFlowStore((state) => state.addRow);
-  const addRow = (index?: number) => {
-    if (!table) {
-      return;
-    }
-    const newRow = {
-      id: crypto.randomUUID(),
-      tableId: table.id,
-      rowIndex: index ?? table.rows.length,
-      createdBy: new Date().toLocaleDateString(),
-      status: null,
-      priority: null,
-      type: null,
-      description: null,
-      resources: [],
-      dueDate: null,
-      title: undefined,
-      studosetId: null,
-      visualsetId: null,
-      courseLink: null,
-      summaryLink: null,
-    };
 
-    add(newRow, index ?? rows.length);
-  };
+  // geselecteerde rijen verwijderen (selectie in de store, data via de hook)
+  const selectedIds = useCourseFlowStore((state) => state.selectedIds);
+  const clearSelected = useCourseFlowStore((state) => state.clearSelected);
+  const removeSelected = useCallback(() => {
+    if (selectedIds.length === 0) return;
+    removeRows(selectedIds);
+    clearSelected();
+  }, [selectedIds, removeRows, clearSelected]);
 
   const [selectedCell, setSelectedCell] = useState<string>("");
 
@@ -138,10 +146,43 @@ const TableDisplay = () => {
     setOffset(clamp(d.offset + dx));
   };
 
+  const hasProgress = rows.some(
+    (row) => row.status === "doing" || row.status === "done",
+  );
   const stop = () => (drag.current = null);
+  const done = rows.reduce((ac, row) => {
+    if (row.status === "done") {
+      return ac + 1;
+    }
+    return ac;
+  }, 0);
+
+  const inProg = rows.reduce((ac, row) => {
+    if (row.status === "doing") {
+      return ac + 1;
+    }
+    return ac;
+  }, 0);
+
+  const toDo = rows.reduce((ac, row) => {
+    if (row.status === "not_started") {
+      return ac + 1;
+    }
+    return ac;
+  }, 0);
 
   return (
     <div className={"flex flex-col gap-3 w-full"}>
+      <div className={"mb-5 h-3"}>
+        {hasProgress && (
+          <CourseProgress
+            totalLength={rows.length}
+            done={done}
+            toDo={toDo}
+            inProg={inProg}
+          />
+        )}
+      </div>
       <div
         ref={viewport}
         className="relative w-full  overflow-visible cursor-grab select-none active:cursor-grabbing"
@@ -158,7 +199,13 @@ const TableDisplay = () => {
           style={{ transform: `translateX(${offset}px)` }}
         >
           <div role="grid" className={"min-w-0 h-fit flex flex-col w-fit"}>
-            <TableHeader offset={offset} gap={gap} addRow={addRow} />
+            <TableHeader
+              offset={offset}
+              gap={gap}
+              addRow={addRow}
+              rows={rows}
+              setSelectedCell={setSelectedCell}
+            />
             {rows.map((row, index) => (
               <TableRow
                 selectedCell={selectedCell}
@@ -168,8 +215,16 @@ const TableDisplay = () => {
                 gap={gap}
                 row={row}
                 addRow={addRow}
+                updateRow={updateRow}
+                removeRow={removeRow}
+                removeSelected={removeSelected}
                 rowIndex={index}
                 rowIds={rowIds}
+                onRowDragStart={onRowDragStart}
+                onRowDragOver={onRowDragOver}
+                onRowDrop={onRowDrop}
+                onRowDragEnd={onRowDragEnd}
+                isDragOver={overIndex === index}
               />
             ))}
           </div>
