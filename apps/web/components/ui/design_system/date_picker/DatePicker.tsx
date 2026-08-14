@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { createPortal } from "react-dom";
 import { useLocale, useTranslations } from "next-intl";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import classNames from "@/utils/classnames";
@@ -23,6 +24,7 @@ type DatePickerProps = {
   max?: Date;
   variant: "default" | "ghost";
   iconColor?: string;
+  className?: string;
 };
 
 const variantMap = {
@@ -56,6 +58,7 @@ const mondayIndex = (day: number) => (day + 6) % 7;
 
 const DatePicker = ({
   value,
+  className,
   onChange,
   placeholder,
   label,
@@ -80,6 +83,23 @@ const DatePicker = ({
     startOfDay(value ?? new Date()),
   );
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const panelRef = React.useRef<HTMLDivElement>(null);
+  const [coords, setCoords] = React.useState<{
+    top: number;
+    left: number;
+    width: number;
+  } | null>(null);
+
+  // trigger-positie meten zodat het portal-paneel op scherm-coords staat
+  const updateCoords = React.useCallback(() => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setCoords({ top: rect.bottom + 8, left: rect.left, width: rect.width });
+  }, []);
+
+  React.useLayoutEffect(() => {
+    if (open) updateCoords();
+  }, [open, updateCoords]);
 
   // paneel opent altijd op de maand van de huidige waarde
   React.useEffect(() => {
@@ -88,9 +108,10 @@ const DatePicker = ({
 
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
       if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
+        !containerRef.current?.contains(target) &&
+        !panelRef.current?.contains(target)
       ) {
         setOpen(false);
       }
@@ -98,15 +119,21 @@ const DatePicker = ({
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
+    // fixed paneel bijhouden bij scroll/resize
+    const reposition = () => updateCoords();
     if (open) {
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleEscape);
+      window.addEventListener("scroll", reposition, true);
+      window.addEventListener("resize", reposition);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscape);
+      window.removeEventListener("scroll", reposition, true);
+      window.removeEventListener("resize", reposition);
     };
-  }, [open]);
+  }, [open, updateCoords]);
 
   const triggerFmt = React.useMemo(
     () =>
@@ -186,6 +213,7 @@ const DatePicker = ({
             error ? "border-red-500" : "border-studoborder/30"
           } ${s.trigger}`,
           style,
+          className,
         )}
       >
         <Calendar
@@ -202,75 +230,91 @@ const DatePicker = ({
         <span className={`text-red-500 ${s.label} block mt-1`}>{error}</span>
       )}
 
-      <div
-        className={`absolute z-9999 top-full mt-2 w-max
-          ${align === "end" ? "right-0 origin-top-right" : "left-0 origin-top-left"}
-          p-3 border border-studoborder/30
+      {typeof document !== "undefined" &&
+        coords &&
+        createPortal(
+          <div
+            ref={panelRef}
+            style={{
+              position: "fixed",
+              top: coords.top,
+              ...(align === "end"
+                ? {
+                    left: coords.left + coords.width,
+                    transform: "translateX(-100%)",
+                  }
+                : { left: coords.left }),
+            }}
+            className={`z-200 w-max
+          ${align === "end" ? "origin-top-right" : "origin-top-left"}
+          p-3 border border-studoborder/30 dark:text-white text-studodarkblue
           rounded-2xl dark:bg-slate-800 bg-slate-100
           flex flex-col gap-3
           shadow-xl shadow-black/10 dark:shadow-black/30
           transition-all duration-300 ease-out
           ${
             open
-              ? "opacity-100 scale-100 translate-y-0 visible pointer-events-auto"
+              ? "opacity-100 scale-100 visible pointer-events-auto"
               : "opacity-0 scale-95 -translate-y-2 invisible pointer-events-none"
           }
         `}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* maand-navigatie */}
-        <div className={"w-full flex flex-row items-center justify-between"}>
-          <button
-            type={"button"}
-            onClick={() => goMonth(-1)}
-            className={
-              "p-1 rounded-full cursor-pointer hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50"
-            }
+            onClick={(e) => e.stopPropagation()}
           >
-            <ChevronLeft size={16} opacity={0.6} />
-          </button>
-          <span className={"text-sm font-semibold capitalize"}>
-            {monthFmt.format(viewDate)}
-          </span>
-          <button
-            type={"button"}
-            onClick={() => goMonth(1)}
-            className={
-              "p-1 rounded-full cursor-pointer hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50"
-            }
-          >
-            <ChevronRight size={16} opacity={0.6} />
-          </button>
-        </div>
-
-        {/* weekdag-headers */}
-        <div className={"grid grid-cols-7 gap-1"}>
-          {weekdays.map((w) => (
-            <span
-              key={w}
-              className={
-                "text-[11px] text-zinc-400 text-center capitalize select-none"
-              }
+            {/* maand-navigatie */}
+            <div
+              className={"w-full flex flex-row items-center justify-between"}
             >
-              {w}
-            </span>
-          ))}
-        </div>
-
-        {/* dagen */}
-        <div className={"grid grid-cols-7 gap-1"}>
-          {cells.map((d, i) => {
-            if (!d) return <span key={`e-${i}`} />;
-            const isSelected = value ? sameDay(d, value) : false;
-            const isToday = sameDay(d, today);
-            const disabledDay = isDisabledDay(d);
-            return (
               <button
-                key={d.toISOString()}
                 type={"button"}
-                disabled={disabledDay}
-                onClick={() => handleSelect(d)}
-                className={`w-9 h-9 rounded-full text-sm flex items-center justify-center transition-colors cursor-pointer
+                onClick={() => goMonth(-1)}
+                className={
+                  "p-1 rounded-full cursor-pointer hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50"
+                }
+              >
+                <ChevronLeft size={16} opacity={0.6} />
+              </button>
+              <span className={"text-sm font-semibold capitalize"}>
+                {monthFmt.format(viewDate)}
+              </span>
+              <button
+                type={"button"}
+                onClick={() => goMonth(1)}
+                className={
+                  "p-1 rounded-full cursor-pointer hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50"
+                }
+              >
+                <ChevronRight size={16} opacity={0.6} />
+              </button>
+            </div>
+
+            {/* weekdag-headers */}
+            <div className={"grid grid-cols-7 gap-1"}>
+              {weekdays.map((w) => (
+                <span
+                  key={w}
+                  className={
+                    "text-[11px] text-zinc-400 text-center capitalize select-none"
+                  }
+                >
+                  {w}
+                </span>
+              ))}
+            </div>
+
+            {/* dagen */}
+            <div className={"grid grid-cols-7 gap-1"}>
+              {cells.map((d, i) => {
+                if (!d) return <span key={`e-${i}`} />;
+                const isSelected = value ? sameDay(d, value) : false;
+                const isToday = sameDay(d, today);
+                const disabledDay = isDisabledDay(d);
+                return (
+                  <button
+                    key={d.toISOString()}
+                    type={"button"}
+                    disabled={disabledDay}
+                    onClick={() => handleSelect(d)}
+                    className={`w-9 h-9 rounded-full text-sm flex items-center justify-center transition-colors cursor-pointer
                   disabled:opacity-30 disabled:cursor-not-allowed
                   ${
                     isSelected
@@ -279,13 +323,15 @@ const DatePicker = ({
                   }
                   ${!isSelected && isToday ? "border border-studoborder" : ""}
                 `}
-              >
-                {d.getDate()}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+                  >
+                    {d.getDate()}
+                  </button>
+                );
+              })}
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 };

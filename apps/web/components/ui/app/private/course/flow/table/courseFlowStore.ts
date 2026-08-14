@@ -1,28 +1,17 @@
-import { CourseRow } from "@studo/types";
 import { create } from "zustand";
 
+/**
+ * Enkel efemere UI-selectie. De rij-data zelf leeft in de react-query
+ * course-cache (zie useCourseFlow) zodat alles persistent is.
+ */
 interface CourseFlowStore {
-  rows: CourseRow[];
-  addRow: (input: CourseRow, index: number) => void;
-  removeRow: (input: string) => void;
   selectedIds: string[];
   toggeSelectRow: (input: string) => void;
   toggleAll: (input: string[]) => void;
   clearSelected: () => void;
-  removeSelected: () => void;
 }
 
 const useCourseFlowStore = create<CourseFlowStore>((set) => ({
-  rows: [],
-  addRow: (input, index) =>
-    set((state) => ({
-      rows: [...state.rows.slice(0, index), input, ...state.rows.slice(index)],
-    })),
-  removeRow: (input) =>
-    set((state) => {
-      return { rows: state.rows.filter((row) => row.id != input) };
-    }),
-
   selectedIds: [],
   toggeSelectRow: (input) =>
     set((state) => {
@@ -41,17 +30,6 @@ const useCourseFlowStore = create<CourseFlowStore>((set) => ({
   clearSelected: () =>
     set((state) =>
       state.selectedIds.length === 0 ? state : { selectedIds: [] },
-    ),
-  removeSelected: () =>
-    set((state) =>
-      state.selectedIds.length === 0
-        ? state
-        : {
-            rows: state.rows.filter(
-              (row) => !state.selectedIds.includes(row.id),
-            ),
-            selectedIds: [],
-          },
     ),
 }));
 

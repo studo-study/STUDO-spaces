@@ -7,6 +7,10 @@ import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import classNames from "@/utils/classnames";
 import DatePicker from "@/components/ui/design_system/date_picker/DatePicker";
 import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import { useDeleteCourse } from "@/hooks/app/courses/useDeleteCourse";
+import { Trash } from "lucide-react";
+import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
+import { useRouter } from "@/i18n/routing";
 
 interface DatumChipProps {
   datum?: string;
@@ -50,47 +54,68 @@ const OverviewTitle: React.FC<OverviewTitleProps> = (props) => {
     (input: string) => updateCourse.mutate({ examDate: input }),
     [updateCourse],
   );
+  const { mutate: deleteCourse } = useDeleteCourse();
+  const Router = useRouter();
 
   return (
-    <div className={"w-full h-fit flex flex-col gap-5"}>
-      <div
-        className={"flex flex-row w-full items-center justify-between gap-2"}
-      >
-        <div className={"flex flex-row gap-3 items-center"}>
-          <FlowIcon
-            icon={course?.icon ?? ""}
-            size={25}
-            className={"min-w-15 min-h-15 w-15 h-15 rounded-2xl shrink-0"}
-          />
-          <div className={"flex flex-col gap-1"}>
-            <input
-              className={"text-2xl font-bold group outline-none"}
-              defaultValue={course?.title}
-              onBlur={(e) => {
-                if (e.target.value === "") {
-                  toast.error(t("no_title_error"));
-                  return;
+    <div className={"w-full h-fit flex flex-row justify-between gap-5"}>
+      <div className={"flex flex-col gap-5"}>
+        <div
+          className={"flex flex-row w-full items-center justify-between gap-2"}
+        >
+          <div className={"flex flex-row gap-3 items-center"}>
+            <FlowIcon
+              icon={course?.icon ?? ""}
+              size={25}
+              className={"min-w-15 min-h-15 w-15 h-15 rounded-2xl shrink-0"}
+            />
+            <div className={"flex flex-col gap-1"}>
+              <input
+                className={"text-2xl font-bold group outline-none"}
+                defaultValue={course?.title}
+                onBlur={(e) => {
+                  if (e.target.value === "") {
+                    toast.error(t("no_title_error"));
+                    return;
+                  }
+                  updateCourse.mutate({ title: e.target.value });
+                }}
+                placeholder={t("set_course_title")}
+              />
+              <input
+                className={
+                  " font-medium text-studogrey text-base group outline-none"
                 }
-                updateCourse.mutate({ title: e.target.value });
-              }}
-              placeholder={t("set_course_title")}
-            />
-            <input
-              className={
-                " font-medium text-studogrey text-base group outline-none"
-              }
-              defaultValue={course?.description ?? ""}
-              onBlur={(e) => {
-                updateCourse.mutate({ description: e.target.value });
-              }}
-              placeholder={t("set_course_description")}
-            />
+                defaultValue={course?.description ?? ""}
+                onBlur={(e) => {
+                  updateCourse.mutate({ description: e.target.value });
+                }}
+                placeholder={t("set_course_description")}
+              />
+            </div>
           </div>
+          {action}
         </div>
-        {action}
+        <div className={"w-full flex flex-row gap-3"}>
+          <DatumChip datum={course?.examDate ?? ""} updateDate={updateDate} />
+        </div>
       </div>
-      <div className={"w-full flex flex-row gap-3"}>
-        <DatumChip datum={course?.examDate ?? ""} updateDate={updateDate} />
+      <div>
+        <ItemOptions
+          options={[
+            {
+              label: t("delete"),
+              icon: <Trash size={15} />,
+              onClick: (ev) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+                deleteCourse(course?.id ?? "");
+                Router.push("/home");
+              },
+              danger: true,
+            },
+          ]}
+        />
       </div>
     </div>
   );
