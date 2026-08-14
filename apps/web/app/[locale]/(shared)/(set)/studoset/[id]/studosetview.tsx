@@ -29,7 +29,15 @@ import classNames from "@/utils/classnames";
 import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
 import SvenMessage from "@/components/ui/app/shared/studosets/SvenMessage";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import { CreditCard, GraduationCap, Pencil, Zap } from "lucide-react";
+import {
+  BookOpen,
+  CreditCard,
+  GraduationCap,
+  Pencil,
+  Printer,
+  Zap,
+} from "lucide-react";
+import CourseToggle from "@/components/ui/app/shared/studosets/CourseToggle";
 
 interface viewProps {
   id: string;
@@ -174,7 +182,7 @@ export default function StudosetView({ id }: viewProps) {
   }, [sessionCards, totalCards]);
 
   const isOwner = !!userId && userId === data?.userId;
-
+  const isInCourse = data?.course != null;
   const toggleTab = (input: string) => {
     if (filter === (input as Filter)) {
       setFilter("all");
@@ -221,6 +229,22 @@ export default function StudosetView({ id }: viewProps) {
               <EditToggle id={id} />
             </BaseTooltip>
           )}
+          <BaseTooltip content={t("course")}>
+            <CourseToggle isInCourse={isInCourse ?? false} />
+          </BaseTooltip>
+
+          <BaseTooltip content={t("print")}>
+            <Link
+              href={"/print/" + id}
+              className="inline-flex  cursor-pointer active:scale-95 transition-[scale] duration-300 flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
+                    font-atrament font-normal text-studodarkblue justify-center text-xl
+                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
+                    dark:text-white"
+            >
+              <Printer size={16} />
+            </Link>
+          </BaseTooltip>
+
           <BaseTooltip content={t("share")}>
             <SharePopup id={id} />
           </BaseTooltip>
@@ -236,21 +260,45 @@ export default function StudosetView({ id }: viewProps) {
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
-        {data?.classrooms?.[0] && (
-          <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
-            <GraduationCap size={20} />
-            <span>
-              {t("added_to")}:{" "}
-              <Link
-                href={"/classroom/" + data?.classrooms[0].id}
-                className={"hover:underline"}
-              >
-                {data?.classrooms[0]?.name}
-              </Link>
-            </span>
-          </div>
-        )}
-
+        {data?.classrooms?.length != 0 ||
+          (data?.course && (
+            <div className={"flex flex-col gap-2 mb-5"}>
+              {data?.course && (
+                <div
+                  className={
+                    "w-full flex flex-row gap-2 text-studogrey/70 items-center"
+                  }
+                >
+                  <BookOpen size={17} />
+                  <div>
+                    {t("in_course")}:{" "}
+                    <Link
+                      href={"/course/" + data?.course.id + "/overview"}
+                      className={"hover:underline font-semibold text-studogrey"}
+                    >
+                      {data?.course.title}
+                    </Link>
+                  </div>
+                </div>
+              )}
+              {data?.classrooms?.[0] && (
+                <div
+                  className={
+                    "w-full flex flex-row gap-2 text-studogrey/70 items-center"
+                  }
+                >
+                  <GraduationCap size={20} />
+                  {t("added_to")}:{" "}
+                  <Link
+                    href={"/classroom/" + data?.classrooms[0].id}
+                    className={"hover:underline font-bold text-studogrey"}
+                  >
+                    {data?.classrooms[0]?.name}
+                  </Link>
+                </div>
+              )}
+            </div>
+          ))}
         <div className={"w-full flex flex-row gap-2 items-center"}>
           <div
             onClick={() => {

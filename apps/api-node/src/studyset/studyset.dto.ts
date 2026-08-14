@@ -8,6 +8,7 @@ import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { SetLikeResponseDto } from './setlike.dto';
+import type { CourseResponse } from '@studo/types';
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -228,6 +229,14 @@ export class fullSetResponseDto extends StudysetResponseDto {
   })
   @Expose()
   classrooms: ClassroomResponseDto[] | undefined;
+
+  @ApiProperty({
+    description:
+      'Course van de opvragende user waarin deze set zit (indien van toepassing)',
+    required: false,
+  })
+  @Expose()
+  course?: CourseResponse;
 }
 
 export class UserStatsDto {

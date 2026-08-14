@@ -1501,7 +1501,10 @@
       "axis_time": "Gem. antwoordtijd (s)",
       "axis_accuracy": "Nauwkeurigheid (%)",
       "no_data": "Nog geen data"
-    }
+    },
+    "in_course": "In het vak",
+    "course": "vak",
+    "print": "print set"
   },
   "trackview": {
     "tracks": "Tracks",
@@ -1530,7 +1533,11 @@
     "by_dash": "Horizontaal streepje",
     "result_empty": "Plak tekst om een voorbeeld te zien",
     "cards_found": "{count} kaarten gevonden",
-    "title_library": "Jouw vakken"
+    "title_library": "Jouw vakken",
+    "select_course": "Selecteer een vak",
+    "no_docs_yet_in_course": "Nog geen documenten in vak",
+    "start_uploading": "Upload documenten",
+    "no_courses": "Nog geen vakken"
   },
   "flow": {
     "title": "Jouw Flow Boards",

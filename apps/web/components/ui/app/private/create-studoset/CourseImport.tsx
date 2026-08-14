@@ -7,6 +7,8 @@ import { useCourse } from "@/hooks/app/courses/useCourse";
 import classNames from "@/utils/classnames";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { HiSparkles } from "react-icons/hi";
+import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import { ArrowLeft, MoveUpLeft, Upload } from "lucide-react";
 
 interface CourseImportInterface {
   courseId?: string | null;
@@ -84,7 +86,51 @@ const CourseImport: React.FC<CourseImportInterface> = (props) => {
           <span className={"text-xl font-bold mb-3"}>
             {currentCourse?.title}
           </span>
-          <div className={"flex flex-row flex-wrap gap-3"}>
+          <div
+            className={"flex flex-row flex-wrap gap-3 min-w-0 min-h-0 flex-1"}
+          >
+            {courses.length === 0 && (
+              <div
+                className={
+                  "min-w-0 min-h-0 flex-1 text-studogrey flex items-center justify-center"
+                }
+              >
+                <span className={"font-bold text-studogrey mb-2"}>
+                  {t("no_courses")}
+                </span>
+              </div>
+            )}
+            {!currentCourse && courses.length != 0 && (
+              <div
+                className={
+                  "min-w-0 min-h-0 flex-1 text-studogrey flex flex-col items-center justify-center"
+                }
+              >
+                <MoveUpLeft />
+                <span className={"font-bold text-studogrey mb-2"}>
+                  {t("select_course")}
+                </span>
+              </div>
+            )}
+            {currentCourse?.documents.length === 0 && (
+              <div
+                className={
+                  "min-w-0 min-h-0 flex-1 flex flex-col gap-3 items-center justify-center"
+                }
+              >
+                <span className={"font-bold text-studogrey mb-2"}>
+                  {t("no_docs_yet_in_course")}
+                </span>
+                <div>
+                  <LinkButton
+                    variant="submit"
+                    href={"/course/" + currentCourse.id + "/documents"}
+                    label={t("start_uploading")}
+                    iconLeft={<Upload size={15} />}
+                  />
+                </div>
+              </div>
+            )}
             {currentCourse?.documents.map((doc, i) => {
               return (
                 <div

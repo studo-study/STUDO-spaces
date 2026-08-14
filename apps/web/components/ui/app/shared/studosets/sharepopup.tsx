@@ -1,11 +1,10 @@
 "use client";
 import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
 import { useLocale, useTranslations } from "next-intl";
-import { PiExport } from "react-icons/pi";
-import { MdCopyAll } from "react-icons/md";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { usePathname } from "@/i18n/routing";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
+import { Copy, Share } from "lucide-react";
 
 interface SharePopupProps {
   id: string;
@@ -33,7 +32,7 @@ export default function SharePopup(props: SharePopupProps) {
                     rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
                     dark:text-white"
         >
-          <PiExport />
+          <Share size={15} />
         </div>
       }
     >
@@ -56,7 +55,8 @@ export default function SharePopup(props: SharePopupProps) {
             value={buildLink}
             readOnly
           />
-          <MdCopyAll
+          <Copy
+            size={15}
             onClick={toggleCopy}
             className={
               "active:scale-95 transition-all opacity-0 group-hover:opacity-100 duration-300 cursor-pointer"

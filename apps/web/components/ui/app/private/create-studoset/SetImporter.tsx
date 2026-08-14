@@ -4,9 +4,9 @@ import SvenImport from "@/components/ui/app/private/create-studoset/svenimport";
 import Textimport from "@/components/ui/app/private/create-studoset/textimport";
 import { CardData } from "@/types/types";
 import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
-import { TextSearch, BroomSparkles, Library, XIcon } from "lucide-react";
 import CourseImport from "@/components/ui/app/private/create-studoset/CourseImport";
 import classNames from "@/utils/classnames";
+import { TextSearch, Library, XIcon, BroomSparkles } from "lucide-react";
 interface importerProps {
   onClose: () => void;
   cardArray: CardData[];

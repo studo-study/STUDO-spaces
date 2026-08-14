@@ -1,13 +1,13 @@
 "use client";
 import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
-import { IoIosSettings } from "react-icons/io";
 import { useTranslations } from "next-intl";
 import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
 import { useRouter } from "@/i18n/routing";
-import CheckboxField from "@/components/ui/design_system/input/ToggleField";
 import { useUpdateStudyset } from "@/hooks/app/sets/useUpdateStudoset";
 import { useResetSession } from "@/hooks/app/session/useResetSession";
 import { useToast } from "@/components/providers/app/ToastProvider";
+import { Cog } from "lucide-react";
+import ToggleField from "@/components/ui/design_system/input/ToggleField";
 
 interface SettingsPopupProps {
   isOwner: boolean;
@@ -65,7 +65,7 @@ export default function SettingsPopup({
                     rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
                     dark:text-white"
         >
-          <IoIosSettings />
+          <Cog size={18} />
         </div>
       }
     >
@@ -75,7 +75,7 @@ export default function SettingsPopup({
           {isOwner && (
             <div className={"flex justify-between items-center"}>
               <span>{t("make_private")}</span>
-              <CheckboxField checked={isPrivateSet} onChange={togglePrivate} />
+              <ToggleField checked={isPrivateSet} onChange={togglePrivate} />
             </div>
           )}
           <button

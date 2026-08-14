@@ -28,7 +28,9 @@ import {
   classrooms,
   classroomsets,
   classroomusers,
+  courses,
   courseSets,
+  courseUsers,
   pins,
   sessioncards,
   setlikes,
@@ -405,6 +407,9 @@ export class StudysetService {
       where: eq(setlikes.setId, setId),
     });
 
+    // Course van de opvragende user waarin deze set zit (indien van toepassing).
+    const usercourse = await this.getUserCourseForSet(userId, setId);
+
     return {
       ...set,
       cards: kaarten
@@ -416,6 +421,54 @@ export class StudysetService {
       likes: likes,
       session: sesh,
       classrooms: setclasses,
+      course: usercourse,
+    };
+  }
+
+  /**
+   * Zoekt de course van `userId` waarin de studoset `setId` zit.
+   * Geeft een lichte CourseResponse terug (geen sets/documenten/tabellen).
+   */
+  private async getUserCourseForSet(
+    userId: string,
+    setId: string,
+  ): Promise<fullSetResponseDto['course']> {
+    const links = await this.db.query.courseSets.findMany({
+      where: and(
+        eq(courseSets.setId, setId),
+        eq(courseSets.setType, 'studoset'),
+      ),
+    });
+
+    if (links.length === 0) {
+      return undefined;
+    }
+
+    const courseIds = links.map((l) => l.courseId);
+
+    const membership = await this.db.query.courseUsers.findFirst({
+      where: and(
+        eq(courseUsers.userId, userId),
+        inArray(courseUsers.courseId, courseIds),
+      ),
+    });
+
+    if (!membership) {
+      return undefined;
+    }
+
+    const course = await this.db.query.courses.findFirst({
+      where: eq(courses.id, membership.courseId),
+    });
+
+    if (!course) {
+      return undefined;
+    }
+
+    return {
+      ...course,
+      createdAt: course.createdAt?.toISOString() ?? null,
+      updatedAt: course.updatedAt?.toISOString() ?? null,
     };
   }
 
