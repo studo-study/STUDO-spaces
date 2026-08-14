@@ -8,7 +8,7 @@ import classNames from "@/utils/classnames";
 import BaseButton from "@/components/ui/design_system/button/BaseButton";
 import { HiSparkles } from "react-icons/hi";
 import LinkButton from "@/components/ui/design_system/button/LinkButton";
-import { ArrowLeft, MoveUpLeft, Upload } from "lucide-react";
+import { MoveUpLeft, Upload } from "lucide-react";
 
 interface CourseImportInterface {
   courseId?: string | null;

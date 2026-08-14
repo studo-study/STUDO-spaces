@@ -1,9 +1,6 @@
 import { BookOpen } from "lucide-react";
 
-interface CourseToggleProps {
-  isInCourse: boolean;
-}
-const CourseToggle: React.FC<CourseToggleProps> = (props) => {
+const CourseToggle: React.FC = () => {
   return (
     <button
       type={"button"}

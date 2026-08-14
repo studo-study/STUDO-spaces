@@ -230,7 +230,7 @@ export default function StudosetView({ id }: viewProps) {
             </BaseTooltip>
           )}
           <BaseTooltip content={t("course")}>
-            <CourseToggle isInCourse={isInCourse ?? false} />
+            <CourseToggle />
           </BaseTooltip>
 
           <BaseTooltip content={t("print")}>
