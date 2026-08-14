@@ -1513,8 +1513,9 @@
     "vakken": "vakken"
   },
   "import": {
-    "text": "Tekst import",
-    "sven": "SVEN import",
+    "text": "Importeer tekst",
+    "sven": "Upload document",
+    "course": "Eigen documenten",
     "import": "Importeer",
     "paste_here": "Plak je tekst hier",
     "text_import_title": "Instellingen",
@@ -1527,7 +1528,8 @@
     "by_semicolon": "Puntkomma",
     "by_dash": "Horizontaal streepje",
     "result_empty": "Plak tekst om een voorbeeld te zien",
-    "cards_found": "{count} kaarten gevonden"
+    "cards_found": "{count} kaarten gevonden",
+    "title_library": "Jouw vakken"
   },
   "flow": {
     "title": "Jouw Flow Boards",

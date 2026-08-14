@@ -20,7 +20,6 @@
     "clean": "rm -rf .next"
   },
   "dependencies": {
-    "pdfjs-dist": "5.4.296",
     "@hookform/resolvers": "^5.2.2",
     "@studo/types": "workspace:*",
     "@tanstack/react-query": "^5.90.16",
@@ -30,10 +29,11 @@
     "fast-average-color": "^9.5.2",
     "firebase": "^12.9.0",
     "katex": "^0.17.0",
-    "lucide-react": "^0.562.0",
+    "lucide-react": "^1.31.0",
     "next": "16.2.5",
     "next-auth": "5.0.0-beta.30",
     "next-intl": "4.9.2",
+    "pdfjs-dist": "5.4.296",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
