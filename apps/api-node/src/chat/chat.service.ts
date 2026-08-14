@@ -5,7 +5,7 @@ import {
 } from '../drizzle/drizzle.provider';
 import { eq } from 'drizzle-orm';
 import { chat } from '../drizzle/schema';
-import { AllUserChatsResponse, ChatResponse } from '@studo/types/dist/chat';
+import { AllUserChatsResponse, ChatResponse } from '@studo/types';
 
 @Injectable()
 export class ChatService {

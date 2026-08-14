@@ -10,7 +10,7 @@ import { CheckUserAccessGuard } from '../auth/guards/userAccess.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/roles';
 import { Request as ExpressRequest } from 'express';
-import { AllUserChatsResponse } from '@studo/types/dist/chat';
+import { AllUserChatsResponse } from '@studo/types';
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {
