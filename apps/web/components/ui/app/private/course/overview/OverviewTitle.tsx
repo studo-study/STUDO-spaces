@@ -5,11 +5,11 @@ import { useTranslations } from "next-intl";
 import { useUpdateCourse } from "@/hooks/app/courses/useUpdateCourse";
 import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import classNames from "@/utils/classnames";
-import DatePicker from "@/components/ui/design_system/date_picker/DatePicker";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import DatePicker from "@studo/ui/design_system/date_picker/DatePicker";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 import { useDeleteCourse } from "@/hooks/app/courses/useDeleteCourse";
 import { Trash } from "lucide-react";
-import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
+import ItemOptions from "@studo/ui/design_system/item_options/ItemOptions";
 import { useRouter } from "@/i18n/routing";
 
 interface DatumChipProps {

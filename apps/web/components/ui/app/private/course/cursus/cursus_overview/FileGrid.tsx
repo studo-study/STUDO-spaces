@@ -10,11 +10,11 @@ import { useParams } from "next/navigation";
 import { CourseDocument } from "@studo/types";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import CourseOverviewHeader from "@/components/ui/app/private/course/cursus/cursus_overview/CourseOverviewHeader";
-import EmptyFallback from "@/components/ui/design_system/EmptyFallback";
+import EmptyFallback from "@studo/ui/design_system/EmptyFallback";
 import UploadModal from "@/components/ui/app/private/course/cursus/cursus_overview/UploadModal";
 import { useCourseNavStore } from "@/store/course/CourseNavStore";
-import { ComposerAura } from "@/components/ui/design_system/composer_aura/ComposerAura";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import { ComposerAura } from "@studo/ui/design_system/composer_aura/ComposerAura";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { Sparkles } from "lucide-react";
 
 const MAX_FILES = 3;

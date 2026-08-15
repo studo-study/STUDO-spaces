@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { CardData } from "@/types/types";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { HiSparkles } from "react-icons/hi";
 import { LuImage } from "react-icons/lu";
 import { BsFilePdf } from "react-icons/bs";

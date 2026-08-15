@@ -3,7 +3,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useState, useEffect, useMemo, useRef } from "react";
 import "animate.css";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
 import { GrPowerReset } from "react-icons/gr";
 import { usePublicStudoset } from "@/hooks/app/sets/usePublicStudoset";

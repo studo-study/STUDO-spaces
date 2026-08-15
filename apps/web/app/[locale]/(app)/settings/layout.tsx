@@ -2,7 +2,7 @@
 import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/routing";
-import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
+import { Tabs } from "@studo/ui/design_system/tabs/Tabs";
 import {
   BadgeCheck,
   Bell,
@@ -11,7 +11,7 @@ import {
   SlidersHorizontal,
   UserRoundCog,
 } from "lucide-react";
-import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
+import BottomCredits from "@studo/ui/design_system/bottom_credits/BottomCredits";
 
 export default function SettingsLayout({ children }: { children: ReactNode }) {
   const t = useTranslations("settings");

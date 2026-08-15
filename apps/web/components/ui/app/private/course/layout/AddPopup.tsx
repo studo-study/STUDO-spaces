@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
+import SimpleMenu from "@studo/ui/design_system/simple_menu/SimpleMenu";
 import { IoIosAdd } from "react-icons/io";
 import { FiBookOpen } from "react-icons/fi";
 import { FaChevronRight } from "react-icons/fa";

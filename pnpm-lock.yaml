@@ -287,14 +287,87 @@ importers:
         specifier: ^7.1.10
         version: 7.3.1(@types/node@26.1.0)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0)
 
+  apps/marketing:
+    dependencies:
+      "@studo/i18n":
+        specifier: workspace:*
+        version: link:../../packages/i18n
+      "@studo/types":
+        specifier: workspace:*
+        version: link:../../packages/shared-types
+      "@studo/ui":
+        specifier: workspace:*
+        version: link:../../packages/ui
+      "@studo/utils":
+        specifier: workspace:*
+        version: link:../../packages/utils
+      "@tanstack/react-query":
+        specifier: ^5.90.16
+        version: 5.96.2(react@19.2.3)
+      lucide-react:
+        specifier: ^1.31.0
+        version: 1.31.0(react@19.2.3)
+      next:
+        specifier: 16.2.5
+        version: 16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next-intl:
+        specifier: 4.9.2
+        version: 4.9.2(next@16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
+      react:
+        specifier: 19.2.3
+        version: 19.2.3
+      react-dom:
+        specifier: 19.2.3
+        version: 19.2.3(react@19.2.3)
+      react-icons:
+        specifier: ^5.5.0
+        version: 5.6.0(react@19.2.3)
+      zustand:
+        specifier: ^5.0.11
+        version: 5.0.12(@types/react@19.2.14)(react@19.2.3)(use-sync-external-store@1.6.0(react@19.2.3))
+    devDependencies:
+      "@tailwindcss/postcss":
+        specifier: ^4
+        version: 4.2.2
+      "@types/node":
+        specifier: ^26.1.0
+        version: 26.1.0
+      "@types/react":
+        specifier: ^19
+        version: 19.2.14
+      "@types/react-dom":
+        specifier: ^19
+        version: 19.2.3(@types/react@19.2.14)
+      eslint:
+        specifier: ^9
+        version: 9.39.4(jiti@2.7.0)
+      eslint-config-next:
+        specifier: 16.1.1
+        version: 16.1.1(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
+      tailwindcss:
+        specifier: ^4
+        version: 4.3.2
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+
   apps/web:
     dependencies:
       "@hookform/resolvers":
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.72.1(react@19.2.3))
+      "@studo/i18n":
+        specifier: workspace:*
+        version: link:../../packages/i18n
       "@studo/types":
         specifier: workspace:*
         version: link:../../packages/shared-types
+      "@studo/ui":
+        specifier: workspace:*
+        version: link:../../packages/ui
+      "@studo/utils":
+        specifier: workspace:*
+        version: link:../../packages/utils
       "@tanstack/react-query":
         specifier: ^5.90.16
         version: 5.96.2(react@19.2.3)
@@ -317,8 +390,8 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0
       lucide-react:
-        specifier: ^0.562.0
-        version: 0.562.0(react@19.2.3)
+        specifier: ^1.31.0
+        version: 1.31.0(react@19.2.3)
       next:
         specifier: 16.2.5
         version: 16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -408,11 +481,89 @@ importers:
         specifier: ^5
         version: 5.9.3
 
+  packages/i18n:
+    dependencies:
+      next:
+        specifier: ">=15"
+        version: 16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next-intl:
+        specifier: ">=4"
+        version: 4.9.2(next@16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(typescript@6.0.3)
+      react:
+        specifier: ">=19"
+        version: 19.2.3
+    devDependencies:
+      "@types/react":
+        specifier: ^19
+        version: 19.2.14
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
   packages/shared-types:
     devDependencies:
       typescript:
         specifier: ^6.0.2
         version: 6.0.2
+
+  packages/ui:
+    dependencies:
+      "@studo/i18n":
+        specifier: workspace:*
+        version: link:../i18n
+      "@studo/utils":
+        specifier: workspace:*
+        version: link:../utils
+      katex:
+        specifier: ^0.17.0
+        version: 0.17.0
+      lucide-react:
+        specifier: ^1.31.0
+        version: 1.31.0(react@19.2.3)
+      next:
+        specifier: ">=15"
+        version: 16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next-intl:
+        specifier: ">=4"
+        version: 4.9.2(next@16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(typescript@6.0.3)
+      radix-ui:
+        specifier: ^1.4.3
+        version: 1.4.3(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react:
+        specifier: ">=19"
+        version: 19.2.3
+      react-dom:
+        specifier: ">=19"
+        version: 19.2.3(react@19.2.3)
+      react-icons:
+        specifier: ^5.5.0
+        version: 5.6.0(react@19.2.3)
+      shiki:
+        specifier: ^4.1.0
+        version: 4.1.0
+    devDependencies:
+      "@types/react":
+        specifier: ^19
+        version: 19.2.14
+      "@types/react-dom":
+        specifier: ^19
+        version: 19.2.3(@types/react@19.2.14)
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
+  packages/utils:
+    dependencies:
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      tailwind-merge:
+        specifier: ^3.4.0
+        version: 3.5.0
+    devDependencies:
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
 
 packages:
   "@alloc/quick-lru@5.2.0":
@@ -11214,6 +11365,14 @@ packages:
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
+  lucide-react@1.31.0:
+    resolution:
+      {
+        integrity: sha512-G8u2eEtoHUnUa9f8lbvqDhCiORMnYLdUEo06EEG9MQvHQrInKcX3Pa2TH39MM5qyzRcWETxB0+aOwAPI1g1kEg==,
+      }
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   luxon@3.7.2:
     resolution:
       {
@@ -16155,7 +16314,7 @@ snapshots:
   "@grpc/grpc-js@1.9.15":
     dependencies:
       "@grpc/proto-loader": 0.7.15
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
 
   "@grpc/proto-loader@0.7.15":
     dependencies:
@@ -18653,7 +18812,7 @@ snapshots:
   "@types/body-parser@1.19.6":
     dependencies:
       "@types/connect": 3.4.38
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
 
   "@types/chai@5.2.3":
     dependencies:
@@ -18662,7 +18821,7 @@ snapshots:
 
   "@types/connect@3.4.38":
     dependencies:
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
 
   "@types/cookiejar@2.1.5": {}
 
@@ -18670,13 +18829,13 @@ snapshots:
 
   "@types/docker-modem@3.0.6":
     dependencies:
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
       "@types/ssh2": 1.15.5
 
   "@types/dockerode@4.0.1":
     dependencies:
       "@types/docker-modem": 3.0.6
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
       "@types/ssh2": 1.15.5
 
   "@types/eslint-scope@3.7.7":
@@ -18695,7 +18854,7 @@ snapshots:
 
   "@types/express-serve-static-core@5.1.1":
     dependencies:
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
       "@types/qs": 6.15.0
       "@types/range-parser": 1.2.7
       "@types/send": 1.2.1
@@ -18719,7 +18878,7 @@ snapshots:
   "@types/jsonwebtoken@9.0.10":
     dependencies:
       "@types/ms": 2.1.0
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
 
   "@types/mdast@4.0.4":
     dependencies:
@@ -18755,7 +18914,7 @@ snapshots:
 
   "@types/oauth@0.9.6":
     dependencies:
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
 
   "@types/passport-facebook@3.0.4":
     dependencies:
@@ -18807,22 +18966,22 @@ snapshots:
 
   "@types/send@1.2.1":
     dependencies:
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
 
   "@types/serve-static@2.2.0":
     dependencies:
       "@types/http-errors": 2.0.5
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
 
   "@types/sortablejs@1.15.9": {}
 
   "@types/ssh2-streams@0.1.13":
     dependencies:
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
 
   "@types/ssh2@0.5.52":
     dependencies:
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
       "@types/ssh2-streams": 0.1.13
 
   "@types/ssh2@1.15.5":
@@ -18833,7 +18992,7 @@ snapshots:
     dependencies:
       "@types/cookiejar": 2.1.5
       "@types/methods": 1.1.4
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
       form-data: 4.0.5
 
   "@types/supertest@6.0.3":
@@ -21487,7 +21646,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -21766,6 +21925,10 @@ snapshots:
     dependencies:
       react: 19.2.3
 
+  lucide-react@1.31.0(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+
   luxon@3.7.2: {}
 
   magic-string@0.30.17:
@@ -21970,6 +22133,23 @@ snapshots:
       use-intl: 4.13.1(react@19.2.3)
     optionalDependencies:
       typescript: 5.9.3
+    transitivePeerDependencies:
+      - "@swc/helpers"
+
+  next-intl@4.9.2(next@16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(typescript@6.0.3):
+    dependencies:
+      "@formatjs/intl-localematcher": 0.8.2
+      "@parcel/watcher": 2.5.6
+      "@swc/core": 1.15.21
+      icu-minify: 4.13.1
+      negotiator: 1.0.0
+      next: 16.2.5(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next-intl-swc-plugin-extractor: 4.13.1
+      po-parser: 2.1.1
+      react: 19.2.3
+      use-intl: 4.13.1(react@19.2.3)
+    optionalDependencies:
+      typescript: 6.0.3
     transitivePeerDependencies:
       - "@swc/helpers"
 
@@ -22441,7 +22621,7 @@ snapshots:
       "@protobufjs/path": 1.1.2
       "@protobufjs/pool": 1.1.0
       "@protobufjs/utf8": 1.1.0
-      "@types/node": 22.19.17
+      "@types/node": 26.1.0
       long: 5.3.2
 
   proxy-addr@2.0.7:

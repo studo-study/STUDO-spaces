@@ -6,7 +6,7 @@ import { LiaUniversitySolid } from "react-icons/lia";
 import { IoSchoolOutline } from "react-icons/io5";
 import { TbWorld } from "react-icons/tb";
 import { FiTrash2 } from "react-icons/fi";
-import ItemOptions from "@/components/ui/design_system/item_options/ItemOptions";
+import ItemOptions from "@studo/ui/design_system/item_options/ItemOptions";
 
 interface ClassroomOverviewItemProps {
   t: ReturnType<typeof useTranslations>;

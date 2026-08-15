@@ -2,8 +2,8 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useUser } from "@/components/providers/auth/UserProvider";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import Verified from "@/components/ui/overige/icons/Verified";
 import Streak from "@/components/ui/overige/icons/Streak";

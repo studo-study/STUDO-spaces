@@ -2,11 +2,11 @@
 import ContextMenuHeader from "@/components/ui/app/private/course_context_menu/ContextMenuHeader";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { Pause, Play } from "lucide-react";
 import { pomodoroStore } from "@/store/course_context_menu/PomodoroStore";
 import Clock from "@/components/ui/app/private/course_context_menu/learn/pomodoro/Clock";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 const PomodoroTimer: React.FC = () => {
   const t = useTranslations("pomodoro");
   const isRunning = pomodoroStore((state) => state.isRunning);

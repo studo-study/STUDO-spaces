@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { StudoUser } from "@/types/types";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import Verified from "@/components/ui/overige/icons/Verified";
 import {

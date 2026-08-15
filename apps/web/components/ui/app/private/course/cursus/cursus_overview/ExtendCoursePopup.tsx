@@ -1,5 +1,5 @@
-import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
-import BasePopup from "@/components/ui/design_system/popup/BasePopup";
+import PopupBackdrop from "@studo/ui/design_system/popup/PopupBackdrop";
+import BasePopup from "@studo/ui/design_system/popup/BasePopup";
 import React, { SetStateAction, useRef, useState } from "react";
 import { RiAiGenerate } from "react-icons/ri";
 import { useTranslations } from "next-intl";

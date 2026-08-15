@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
+import PageContainer from "@studo/ui/design_system/page/PageContainer";
 import SearchHeader from "@/components/ui/app/shared/search/searchheader";
 import { useSearchParams } from "next/navigation";
 import { useSearchResult } from "@/hooks/app/search/useSearchResult";

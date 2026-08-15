@@ -18,7 +18,7 @@
     "db:seed": "pnpm --filter @studo/api-node db:seed",
     "db:reset": "pnpm --filter @studo/api-node db:reset",
     "db:reset-and-seed": "pnpm --filter @studo/api-node db:reset-and-seed",
-    "env:sync": "cp .env apps/api-node/.env && cp .env apps/web/.env && cp .env workers/.env",
+    "env:sync": "cp .env apps/api-node/.env && cp .env apps/web/.env && cp .env workers/.env && cp .env apps/marketing/",
     "web:cleanup": "pnpm --filter @studo/web rm -rf .next",
     "web:inspect": "NODE_OPTIONS='--max-old-space-size=4096 --inspect' pnpm --filter @studo/web dev",
     "knip": "knip"

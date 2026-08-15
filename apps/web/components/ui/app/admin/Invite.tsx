@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useBetaInvite } from "@/hooks/app/admin/useBetaInvite";
-import BaseButton from "../../design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { IoSend } from "react-icons/io5";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 

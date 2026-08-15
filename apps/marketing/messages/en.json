@@ -1,0 +1,1852 @@
+{
+  "datepicker": {
+    "placeholder": "Pick a date"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "subtitle_stats": "Quick stats (this month)",
+    "subtitle_overview": "Overview",
+    "total_usr": "Total users:",
+    "total_month": "MAU",
+    "total_ss": "Total Studosets",
+    "total_vs": "Total Visualsets",
+    "or": "or",
+    "stats": "Stats",
+    "reports": "Reports",
+    "users": "Users",
+    "search": "Search",
+    "invite": "Invite",
+    "recently_usrs": "Recently registered users",
+    "most_pp_set": "Most popular sets",
+    "graphs": "STUDO Charts",
+    "activity": "Other user activity",
+    "search_a": "find anything...",
+    "not_searched": "Enter a search term"
+  },
+  "landing": {
+    "header": {
+      "LogIn": "Log in",
+      "CreateAccount": "Create account",
+      "modes": "Study modes",
+      "tools": "Tools",
+      "ss": "studosets",
+      "vs": "visualsets",
+      "ai": "ai",
+      "learn": "learn",
+      "speedy": "time attack",
+      "flashcards": "flashcards",
+      "identify": "identify",
+      "point": "point",
+      "select": "Pick a mode and go",
+      "lm": "Study modes",
+      "st": "Tools",
+      "classrooms": "Classrooms",
+      "challenges": "challenges",
+      "class_group": "class groups",
+      "study_group": "study groups",
+      "community_group": "communities",
+      "duel": "duel",
+      "mastery": "mastery",
+      "time": "time race",
+      "select_classrooms": "Pick a challenge and go",
+      "coming": "sign up"
+    },
+    "footer": {
+      "footerQuote": "Stress less, Learn More!",
+      "aboutTitle": "about studo",
+      "selectTitle": "Products",
+      "setTitle": "Sets",
+      "supportTitle": "Support",
+      "ss": "studosets",
+      "vs": "visualsets",
+      "aboutBlock1": "About Us",
+      "aboutBlock2": "Privacy",
+      "aboutBlock3": "Terms of Service",
+      "aboutBlock4": "Contact",
+      "aboutNewsroom": "Newsroom",
+      "ssBlock1": "Create Studoset",
+      "ssBlock2": "Studosets",
+      "vsBlock1": "Create Visualset",
+      "vsBlock2": "Visualsets",
+      "loveGreen": "Built with 💚 with React",
+      "loveBlue": "Built with 💙 with React",
+      "Version": "Version",
+      "rights": "STUDO inc. All Rights Reserved.",
+      "select": "STUDO select",
+      "pricing": "Pricing",
+      "edu": "STUDO for Education",
+      "supportFaq": "FAQ",
+      "supportCenter": "Support",
+      "supportContact": "Contact",
+      "GDPR": "GDPR",
+      "gdpr": "GDPR",
+      "compliant": "compliant",
+      "privacy": "Privacy",
+      "first": "first",
+      "made_in_ghent": "Made in Ghent"
+    },
+    "welcome": {
+      "CreateCustom": "Create your own sets",
+      "TextVisualLearning": "Learn with text or visuals",
+      "AnywhereAnytime": "Study anywhere, anytime",
+      "HeroSection": "Hero section",
+      "NewStudyTool": "Your new study tool",
+      "Quote1": "Stress Less,",
+      "Quote2": "Learn More",
+      "Subtitle": "Free tools to study faster and smarter",
+      "KeyFeatures": "What you can do with it",
+      "CTA": "Call to action",
+      "SignUp": "sign up for free",
+      "LearnMore": "discover more",
+      "Methods": "Study methods",
+      "LearnMoreAbout": "Discover the {mode} mode",
+      "Learn": "Learn",
+      "Flashcards": "Flashcards",
+      "Speedy": "Time Attack",
+      "Identify": "Identify",
+      "Point": "Point",
+      "block1": "From messy notes to quick sketches: turn them into interactive flashcards, quizzes and visual study sets. STUDO keeps it simple and fast — less hassle, more learning.",
+      "block2": "Hey, I'm Charles. Full-time student and creator of STUDO. I was fed up: apps full of paywalls, unnecessary features and slow interfaces. So I built something better. Every feature has a purpose, nothing gets in the way.",
+      "block3": "Whether it's vocab, formulas or entire chapters, STUDO adapts to your way of learning. Smart practice modes and repetition make things stick. And soon you'll take everything with you in your pocket with our iOS app.",
+      "classroomFeatureTitle": "Learn together in\nyour own space",
+      "classroomBlock": "Whether you're in an official class, studying with friends or sharing material with thousands of students, STUDO has a classroom for every situation. Share sets, track progress and challenge each other. Learning together is simply better.",
+      "classroomCTA": "Discover classrooms",
+      "why": "Why STUDO?",
+      "subtitle1": "Everything you need to",
+      "subtitle2": "crush your studies",
+      "feature": "feature",
+      "featureTitle1": "Study Smarter",
+      "featureTitle2": "By students, for students",
+      "featureTitle3": "Ready for anything",
+      "signupfree": "sign up for free",
+      "stat1": "5 study tools",
+      "stat2": "unlimited set creation",
+      "stat3": "100% free",
+      "search_static": "search...",
+      "search_sets": "medical terminology...",
+      "search_visuals": "anatomy arm muscles...",
+      "search_people": "biochemistry study group...",
+      "search_classroom": "chemistry glossary..."
+    },
+    "studosets": {
+      "title_studyset": "This is where\nyour study begins",
+      "block1_studyset": "A studoset is the foundation of your learning experience: a set of terms and definitions you can practice in different ways",
+      "block2_studyset": "Every studoset contains terms + definitions",
+      "block3_studyset": "Create them yourself, import them or collaborate",
+      "block4_studyset": "Use the same set in every mode",
+      "create your own": "make one"
+    },
+    "visualsets": {
+      "title_visualset": "Visual learning,\npin by pin",
+      "block1_visualset": "With visualsets you link definitions to points on an image — perfect for anatomy, maps and diagrams",
+      "block2_visualset": "Upload an image instead of text",
+      "block3_visualset": "Every pin is a term",
+      "block4_visualset": "Link the right definition to each pin",
+      "block5_visualset": "Use your visualset in Identify or Point",
+      "create your own": "make one"
+    },
+    "ai": {
+      "title_ai": "AI builds your sets",
+      "block1_ai": "* coming soon",
+      "block2_ai": "Upload a word list, glossary or lecture notes and convert it into a studoset",
+      "block3_ai": "Take a photo of a page or diagram — AI detects the terms",
+      "block4_ai": "AI turns them into clean, ready-to-use pairs",
+      "block5_ai": "Your generated sets work in all modes"
+    },
+    "learn": {
+      "title_learn": "Type –\nRepeat –\nRemember",
+      "block1_learn": "An interactive mode that keeps testing you until everything sticks.",
+      "block2_learn": "Type your answer — no multiple choice",
+      "block3_learn": "Correct twice = term unlocked",
+      "block4_learn": "Train your memory through active learning",
+      "try it out": "try it out"
+    },
+    "speedy": {
+      "title_speedy": "Speed meets knowledge",
+      "block1_speedy": "A race against the clock that keeps you sharp under pressure",
+      "block2_speedy": "Race against the timer",
+      "block3_speedy": "Wrong answers? They come back",
+      "block4_speedy": "Clear everything to win",
+      "try it out": "try it out"
+    },
+    "flashcards": {
+      "title_flashcard": "Flip –\nLearn –\nRepeat",
+      "block1_flashcard": "Quickly browse through terms and definitions with interactive flashcards",
+      "block2_flashcard": "Swipe or flip for the answer",
+      "block3_flashcard": "Learn at your own pace",
+      "block4_flashcard": "Shuffle and repeat until you're sure",
+      "try it out": "try it out"
+    },
+    "identify": {
+      "title_identify": "Recognize the parts,\nunderstand the whole",
+      "block1_identify": "Type the correct term for each pin — ideal for anatomy, maps, diagrams and more",
+      "block2_identify": "Go through pin by pin",
+      "block3_identify": "Type the corresponding definition",
+      "block4_identify": "Missed pins come back later",
+      "block5_identify": "Only available with visualsets",
+      "try it out": "try it out"
+    },
+    "point": {
+      "title_point": "Read –\nPoint –\nRemember",
+      "block1_point": "Point to the correct pin based on the given definition",
+      "block2_point": "You are shown a definition",
+      "block3_point": "Tap the right spot on the image",
+      "block4_point": "Wrong choices come back until you've nailed them",
+      "block5_point": "Only available with visualsets",
+      "try it out": "try it out"
+    },
+    "about-us": {
+      "title": "About us",
+      "lastUpdated": "Last updated: February 24, 2026",
+      "intro1": "Hey. We are the developers behind STUDO — also students. The app was born out of frustration with existing study tools: too many unnecessary features, too many paywalls, and too little focus on what actually works.",
+      "intro2": "We wanted something clean, fast and distraction-free, so we built it ourselves. What started as a side project has grown into something we're proud of.",
+      "intro3": "STUDO is exactly what you need to study smarter: no hidden costs, no unnecessary extras, just powerful tools that work. Every feature solves a real problem.",
+      "storyTitle": "The story behind STUDO",
+      "storyText1": "It started during a busy exam period. We were juggling multiple subjects, trying out all kinds of study apps and kept getting disappointed. Some were packed with features nobody uses. Others locked basic functionality behind expensive subscriptions. And most felt like they weren't made by people who are still students.",
+      "storyText2": "So we opened our laptops and started coding. The first version was simple — just flashcards and a quiz. But it worked. From there, STUDO kept growing, driven by our own study needs and feedback from friends who started using it.",
+      "differentTitle": "What makes STUDO different",
+      "differentText": "There are plenty of study apps. Here's what makes STUDO different:",
+      "different1": "Studosets: our own take on flashcards with multiple built-in study modes",
+      "different2": "Visualsets: learning with images via pins and point features",
+      "different3": "Speedy mode: test your knowledge under time pressure",
+      "different4": "No ads, no distractions — just you and your study material",
+      "different5": "100% free core features — learning shouldn't have a paywall",
+      "listenTitle": "We listen",
+      "listenText1": "Because we're still small, your feedback has a direct impact on the future of the app. Got an idea, feature request or bug? Send it our way. Every suggestion gets read and many of them make it into the app.",
+      "listenText2": "STUDO grows with its users — every suggestion makes it better for everyone.",
+      "goingTitle": "Where we're headed",
+      "goingText1": "STUDO is currently a small, indie project. But the goal is clear: become the go-to study app for students without compromising on simplicity or accessibility.",
+      "goingText2": "With your support we can grow while staying true to our core mission: making studying smarter and less stressful. We don't want to be everything for everyone. We just want to be really good at helping people learn.",
+      "iosTitle": "iOS app - coming soon",
+      "iosText1": "We're working on the first official STUDO iOS app. All core features are coming to iPhone and iPad, with the same focus on speed and simplicity.",
+      "iosText2": "Study on the bus, in the library or right before an exam — STUDO is there. Release coming soon.",
+      "valuesTitle": "Our values",
+      "valuesIntro": "Everything we build is guided by these principles:",
+      "value1Title": "Student-first design",
+      "value1Text": "every feature is built with real student needs in mind, not metrics",
+      "value2Title": "No paywalls for essentials",
+      "value2Text": "learning should be accessible to everyone, regardless of budget",
+      "value3Title": "Feedback-driven development",
+      "value3Text": "your input determines what we build next",
+      "value4Title": "Focus over features",
+      "value4Text": "better to do five things well than fifty things mediocrely",
+      "value5Title": "Privacy",
+      "value5Text": "your data is yours — we don't sell it and don't use it for ads",
+      "teamTitle": "The team",
+      "teamText1": "Right now, STUDO is a small team of students. We handle design, development, testing and support — all alongside a full-time student life. That also means we know exactly what students need.",
+      "teamText2": "As STUDO grows, so does the team. But for now, when you reach out you're talking directly to the people who built the app.",
+      "thanksTitle": "Thank you",
+      "thanksText": "To everyone who uses STUDO, shares it with friends or sends feedback — thank you.",
+      "contactTitle": "Get in touch",
+      "contactText": "Found a bug, have an idea or just a question? Feel free to reach out:"
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated: January 7, 2026",
+      "intro": {
+        "welcome": "Welcome to STUDO. Your privacy matters to us. This policy explains how we collect, use, store and protect your data when you use our platform. STUDO is operated from Belgium and complies with the GDPR and Belgian privacy law.",
+        "agreement": "By using STUDO, you agree to the collection and use of information as described here. Don't agree? Then please do not use our services."
+      },
+      "whoAreWe": {
+        "title": "1. Who are we?",
+        "description": "STUDO is a digital learning platform that helps students study more effectively. We are the data controller for your personal data.",
+        "info": {
+          "project": "Project:",
+          "website": "Website:",
+          "email": "Email:",
+          "location": "Location:"
+        }
+      },
+      "dataCollect": {
+        "title": "2. What data do we collect?",
+        "provided": {
+          "title": "2.1 Data you share yourself",
+          "description": "When creating an account or using STUDO, you may share:",
+          "items": {
+            "name": "Name or username",
+            "email": "Email address",
+            "password": "Password (securely hashed, never plain text)",
+            "profile": "Profile info (optional)",
+            "content": "Study content you create (studosets, visualsets, notes)",
+            "feedback": "Feedback or support messages"
+          }
+        },
+        "automatic": {
+          "title": "2.2 Automatically collected data",
+          "description": "While using STUDO, we automatically collect:",
+          "items": {
+            "ip": "IP address",
+            "browser": "Browser type and version",
+            "device": "Device info",
+            "pages": "Pages visited and features used",
+            "time": "Time and date of access"
+          }
+        },
+        "thirdParty": {
+          "title": "2.3 Data from third parties",
+          "description": "Logging in via Google or Apple? Then we receive your name, email address and profile picture as permitted by your settings. We have no access to other data from these services."
+        }
+      },
+      "whyCollect": {
+        "title": "3. Why do we collect your data?",
+        "description": "We use your data for:",
+        "table": {
+          "purpose": "Purpose",
+          "legalBasis": "Legal basis (GDPR)"
+        },
+        "purposes": {
+          "account": {
+            "purpose": "Creating and managing your account",
+            "basis": "Performance of contract"
+          },
+          "features": {
+            "purpose": "Delivering features and storing your content",
+            "basis": "Performance of contract"
+          },
+          "improving": {
+            "purpose": "Improving STUDO and fixing bugs",
+            "basis": "Legitimate interest"
+          },
+          "responding": {
+            "purpose": "Responding to questions or feedback",
+            "basis": "Performance of contract"
+          },
+          "updates": {
+            "purpose": "Sending important updates",
+            "basis": "Legitimate interest"
+          },
+          "marketing": {
+            "purpose": "Marketing emails (only with consent)",
+            "basis": "Consent"
+          },
+          "security": {
+            "purpose": "Security and fraud prevention",
+            "basis": "Legitimate interest"
+          }
+        }
+      },
+      "storage": {
+        "title": "4. How do we store your data?",
+        "description": "Your data is securely stored on servers in the EU. We use standard security measures:",
+        "measures": {
+          "https": "HTTPS encryption for all data transfers",
+          "hashing": "Secure password hashing (never plain text)",
+          "updates": "Regular security updates and monitoring",
+          "access": "Access controls that determine who can see your data"
+        },
+        "disclaimer": "We take security seriously, but no system is 100% foolproof. Use a strong, unique password for your STUDO account."
+      },
+      "retention": {
+        "title": "5. How long do we keep your data?",
+        "table": {
+          "dataType": "Data type",
+          "period": "Retention period"
+        },
+        "types": {
+          "account": {
+            "type": "Account data (email, name)",
+            "period": "Until you delete your account"
+          },
+          "content": {
+            "type": "Study content (studosets, visualsets)",
+            "period": "Until you delete them or your account"
+          },
+          "logs": {
+            "type": "Usage logs",
+            "period": "90 days"
+          },
+          "support": {
+            "type": "Support messages",
+            "period": "2 years after resolution"
+          }
+        },
+        "deletion": "Delete your account? We'll erase your personal data within 30 days. Some anonymised data may be retained for analytics."
+      },
+      "sharing": {
+        "title": "6. Do we share your data?",
+        "description": "We do <bold>not sell</bold> your data. We only share in these situations:",
+        "situations": {
+          "providers": "<bold>Service providers:</bold> Trusted partners who help us run STUDO (hosting, email), bound by strict data agreements",
+          "legal": "<bold>Legal obligations:</bold> If required by law or a court order, or to protect our rights",
+          "consent": "<bold>With your consent:</bold> If you explicitly agree to sharing"
+        },
+        "compliance": "All external processors we use are GDPR-compliant and based in the EU or countries with adequate protection."
+      },
+      "cookies": {
+        "title": "7. Cookies",
+        "description": "STUDO uses cookies to keep you logged in and remember preferences. We use:",
+        "types": {
+          "essential": "<bold>Essential cookies:</bold> Required for the service to function (authentication, session)",
+          "preference": "<bold>Preference cookies:</bold> Remember your settings (dark mode, language)",
+          "analytics": "<bold>Analytics cookies:</bold> Help us understand how STUDO is used (anonymised)"
+        },
+        "manage": "You can manage cookies in your browser settings. Blocking essential cookies may cause STUDO to not work properly."
+      },
+      "rights": {
+        "title": "8. Your rights under the GDPR",
+        "description": "As an EU user you have these rights:",
+        "list": {
+          "access": "<bold>Access:</bold> Request a copy of your data",
+          "rectification": "<bold>Rectification:</bold> Have incorrect data corrected",
+          "erasure": "<bold>Erasure:</bold> Request deletion of your data (\"right to be forgotten\")",
+          "restriction": "<bold>Restriction:</bold> Limit how we process your data",
+          "portability": "<bold>Portability:</bold> Receive your data in an exportable format",
+          "object": "<bold>Object:</bold> Object to certain processing (e.g. marketing)",
+          "withdraw": "<bold>Withdraw consent:</bold> Withdraw consent at any time"
+        },
+        "contact": "Want to exercise one of these rights? Email us at <link>support@studo.study</link>. We respond within 30 days."
+      },
+      "children": {
+        "title": "9. Privacy of minors",
+        "description": "STUDO is intended for users aged 16+. Under 16? Then you need permission from a parent or guardian. We do not knowingly collect data from children under 16 without parental consent.",
+        "discovery": "If we discover we have collected data from someone under 16 without proper consent, we will delete it immediately. Parents can contact us at <link>support@studo.study</link>."
+      },
+      "changes": {
+        "title": "10. Changes to this policy",
+        "notify": "We may update this policy from time to time. For significant changes we will notify you by email or an in-app notification. Check the \"Last updated\" date at the top.",
+        "acceptance": "Continuing to use STUDO after changes = agreement with the new policy."
+      },
+      "contact": {
+        "title": "11. Contact",
+        "description": "Questions about this privacy policy or want to exercise your rights? Get in touch:",
+        "email": "Email:",
+        "complaint": "Feel we haven't handled your data correctly? You can file a complaint with the Belgian Data Protection Authority:",
+        "authority": {
+          "name": "Data Protection Authority (GBA)",
+          "address": "Drukpersstraat 35, 1000 Brussels"
+        }
+      }
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last updated: January 8, 2026",
+      "intro": {
+        "welcome": "Welcome to STUDO! These terms of service (\"Terms\") govern your use of the STUDO platform, including our website, apps and related services (collectively the \"Service\"). By using STUDO, you agree to these Terms.",
+        "readCarefully": "Please read these Terms carefully. Don't agree? Then you may not use the Service."
+      },
+      "about": {
+        "title": "1. About STUDO",
+        "description": "STUDO is a digital study platform that helps students learn more effectively. We offer tools such as studosets (flashcards), visualsets (visual learning) and various study modes.",
+        "contact": "STUDO is operated from Belgium. Questions? Email <link>support@studo.study</link>."
+      },
+      "account": {
+        "title": "2. Creating an account",
+        "description": "Certain features require an account. By registering you agree to:",
+        "rules": {
+          "accurate": "Provide accurate and complete information",
+          "secure": "Keep your login credentials safe and confidential",
+          "notify": "Notify us immediately if you suspect unauthorised access",
+          "responsible": "Be responsible for all activity under your account"
+        },
+        "ageRequirement": "You must be at least 16 to create an account. Under 16? Then you need permission from a parent or guardian."
+      },
+      "acceptableUse": {
+        "title": "3. Acceptable use",
+        "description": "You may only use STUDO for lawful purposes and in accordance with these Terms. You may <bold>not</bold>:",
+        "rules": {
+          "illegal": "Use the Service for illegal or unauthorised purposes",
+          "harmful": "Upload harmful, offensive or rights-infringing content",
+          "hack": "Attempt to hack, disrupt or interfere with the Service or servers",
+          "bots": "Use bots, scrapers or automated tools without permission",
+          "impersonate": "Impersonate someone else",
+          "shareCredentials": "Share your account credentials with others",
+          "spam": "Use the Service for spam or unsolicited messages",
+          "viruses": "Upload viruses, malware or other harmful code",
+          "circumvent": "Bypass security measures or access restrictions"
+        },
+        "reserve": "We may suspend or remove accounts that violate these rules."
+      },
+      "yourContent": {
+        "title": "4. Your content",
+        "ownership": "You may create and upload content (studosets, visualsets, notes, etc. — \"Your Content\"). You remain the owner.",
+        "license": "By uploading, you grant STUDO a non-exclusive, worldwide, royalty-free licence to store, display and process Your Content — solely to deliver the Service to you. We do not sell or share Your Content with third parties for their own purposes.",
+        "responsible": "You are responsible for Your Content. You warrant that:",
+        "rules": {
+          "own": "You own or have the right to use and share Your Content",
+          "infringe": "Your Content does not infringe the IP rights of others",
+          "violate": "Your Content does not violate any laws or these Terms"
+        },
+        "remove": "We may remove content that violates these Terms without notice."
+      },
+      "sharedContent": {
+        "title": "5. Shared & public content",
+        "description": "STUDO lets you share or make study material public. When sharing:",
+        "rules": {
+          "grant": "You give other users permission to view and use your shared content",
+          "owner": "You remain the owner of your content",
+          "change": "You can change sharing settings or delete content at any time",
+          "copied": "Others may have already copied your content before you delete it"
+        },
+        "respect": "Respect others' work. Do not claim shared content from others as your own."
+      },
+      "intellectualProperty": {
+        "title": "6. Intellectual property",
+        "ownership": "STUDO and its original content (excluding Your Content), features and functionality are owned by STUDO and protected by copyright and other IP laws.",
+        "restrictions": "You may not copy, modify, distribute, sell or lease any part of our Service or software, nor reverse-engineer or attempt to extract the source code — unless the law prohibits this or you have our written permission.",
+        "trademarks": "The STUDO name, logo and branding are trademarks of STUDO. Do not use them without our prior written permission."
+      },
+      "premium": {
+        "title": "7. Free and premium",
+        "description": "STUDO offers free and premium features. Core study features are free. In the future we may introduce paid subscriptions or one-time purchases for additional features.",
+        "purchase": "When purchasing a premium subscription:",
+        "rules": {
+          "payments": "Payments are securely processed through our payment provider",
+          "renew": "Subscriptions renew automatically unless cancelled before the end date",
+          "cancel": "You can cancel at any time; access continues until the end of the billing period",
+          "refunds": "Refunds are handled in accordance with applicable consumer laws"
+        },
+        "pricing": "We may change prices with reasonable notice. Existing subscriptions remain unaffected until renewal."
+      },
+      "availability": {
+        "title": "8. Availability",
+        "description": "We aim for 24/7 availability but cannot guarantee it. The Service may be temporarily unavailable due to:",
+        "reasons": {
+          "maintenance": "Scheduled maintenance (we try to notify you in advance)",
+          "technical": "Unexpected technical issues or bugs",
+          "circumstances": "Circumstances outside our control (server issues, internet outages)"
+        },
+        "liability": "We are not liable for loss or damage caused by interruptions."
+      },
+      "disclaimer": {
+        "title": "9. Disclaimer",
+        "description": "STUDO is provided \"as is\" and \"as available\" without warranties. We do not guarantee that:",
+        "noGuarantee": {
+          "requirements": "The Service meets your specific requirements",
+          "errorFree": "The Service is error-free or uninterrupted",
+          "accurate": "Content on STUDO (including user content) is accurate or reliable",
+          "success": "Use of STUDO guarantees academic success"
+        },
+        "studyTool": "STUDO is a study tool, not a substitute for attending classes, completing homework or meeting your school's requirements."
+      },
+      "liability": {
+        "title": "10. Limitation of liability",
+        "description": "To the extent permitted by law, STUDO is not liable for indirect, incidental, special or consequential damages, including:",
+        "damages": {
+          "data": "Loss of data or content",
+          "profits": "Loss of profits or revenue",
+          "academic": "Academic results or exam outcomes",
+          "interruptions": "Interruptions or downtime"
+        },
+        "totalLiability": "Our total liability is in any case limited to the amount you paid us (if applicable) in the 12 months prior to the claim.",
+        "jurisdictions": "Some jurisdictions do not allow certain limitations, so some of the above may not apply to you. In that case, our liability is limited to the legal maximum."
+      },
+      "indemnification": {
+        "title": "11. Indemnification",
+        "description": "You indemnify STUDO and its operator from claims, damages, losses or costs (including legal fees) arising from:",
+        "claims": {
+          "use": "Your use of the Service",
+          "content": "Your Content",
+          "violation": "Your violation of these Terms",
+          "rights": "Your violation of another person's rights"
+        }
+      },
+      "termination": {
+        "title": "12. Termination",
+        "userRight": "You can stop using STUDO at any time and delete your account via your settings or by contacting us.",
+        "ourRight": "We may suspend or terminate your access immediately, without notice, if:",
+        "reasons": {
+          "breach": "You violate these Terms",
+          "harm": "Your behaviour harms other users or the Service",
+          "law": "We are legally required to do so",
+          "discontinue": "We discontinue the Service (with reasonable notice)"
+        },
+        "effect": "Upon termination, your right to use the Service ends immediately. Provisions that logically survive (such as ownership, disclaimers and liability limitations) remain in effect."
+      },
+      "changes": {
+        "title": "13. Changes to these Terms",
+        "notify": "We may update these Terms from time to time. For significant changes we will notify you by email or a clear notice before they take effect.",
+        "acceptance": "Continuing to use STUDO after changes = agreement with the new Terms. Don't agree? Stop using the Service."
+      },
+      "governingLaw": {
+        "title": "14. Governing law & disputes",
+        "belgium": "These Terms are governed by Belgian law. Belgian courts have exclusive jurisdiction over disputes.",
+        "eu": "Are you a consumer in the EU? You retain the protection of mandatory consumer laws of your country of residence. You may also use the EU online dispute resolution platform at <link>ec.europa.eu/consumers/odr</link>."
+      },
+      "miscellaneous": {
+        "title": "15. Miscellaneous",
+        "entireAgreement": "<bold>Entire agreement:</bold> These Terms, together with our privacy policy, constitute the entire agreement between you and STUDO.",
+        "severability": "<bold>Severability:</bold> If any provision is invalid or unenforceable, the remainder stays in effect.",
+        "noWaiver": "<bold>No waiver:</bold> Failing to enforce a right does not mean we waive it.",
+        "assignment": "<bold>Assignment:</bold> You may not transfer your rights under these Terms. We may."
+      },
+      "contact": {
+        "title": "16. Contact",
+        "description": "Questions about these Terms? Get in touch:",
+        "email": "Email:",
+        "website": "Website:"
+      }
+    },
+    "classrooms": {
+      "official": {
+        "title": "Your class,\nextended digitally",
+        "subtitle": "Official class groups directly linked to your school or institution",
+        "block1": "Created by teachers or professors",
+        "block2": "Students join via invitation or code",
+        "block3": "Focused on subjects, courses and exams",
+        "cta": "Create a classroom"
+      },
+      "studygroup": {
+        "title": "Study together,\nat your own pace",
+        "subtitle": "Private study groups for friends, classmates or project teams",
+        "block1": "Created by students themselves",
+        "block2": "Invite friends or collaborate on a project",
+        "block3": "Flexible, informal and fully customisable",
+        "cta": "Start a study group"
+      },
+      "community": {
+        "title": "Share knowledge\nwith everyone",
+        "subtitle": "Open learning environments where anyone can find and contribute study material",
+        "block1": "Accessible to everyone, no invitation needed",
+        "block2": "Ideal for popular subjects and entrance exams",
+        "block3": "Discover sets from thousands of other students",
+        "cta": "Explore the community"
+      }
+    },
+    "challenges": {
+      "mastery": {
+        "title": "Prove you\ntruly know it",
+        "subtitle": "No luck, no guessing — hit 100% and earn your badge",
+        "block1": "Not a single mistake in the final round",
+        "block2": "Or three perfect rounds in a row",
+        "block3": "Earn badges like 'Anatomy Master' or 'Chapter 3 Conqueror'",
+        "cta": "Accept the challenge"
+      },
+      "duel": {
+        "title": "One vs one,\nbest wins",
+        "subtitle": "Challenge a fellow student on the same set and see who comes out on top",
+        "block1": "Same questions, time limit per card — live or async",
+        "block2": "Winner determined by accuracy and speed",
+        "block3": "Never learned this fast together...",
+        "cta": "Challenge someone"
+      },
+      "speedrun": {
+        "title": "Who finishes\nfirst?",
+        "subtitle": "Competitive studying against the clock — race through the material and see who ends up on top",
+        "block1": "Ranked by fewest rounds, then fastest time",
+        "block2": "Live leaderboard for extra excitement",
+        "block3": "Set a deadline and challenge your group",
+        "cta": "Start a Speed Run"
+      }
+    },
+    "search_result": {
+      "title": "Results for",
+      "all": "All results",
+      "users": "Users",
+      "classrooms": "Classrooms",
+      "tracks": "Studo Tracks",
+      "results": "results",
+      "result": "result",
+      "sets": "Sets",
+      "classroom": {
+        "classroom": "Classrooms",
+        "started_by": "started by",
+        "more": "more",
+        "not_found": "no classrooms",
+        "classroom_type": "classroom",
+        "classroom_group": "classroom",
+        "studygroup": "study group",
+        "community": "community",
+        "univeristy": "university",
+        "hogeschool": "university of applied sciences"
+      },
+      "set": {
+        "sets": "Sets",
+        "more": "more",
+        "not_found": "no sets",
+        "cards": "cards",
+        "pins": "pins",
+        "like": "like",
+        "likes": "likes"
+      },
+      "user": {
+        "users": "Users",
+        "more": "more",
+        "not_found": "no users"
+      },
+      "studo": {
+        "users": "Studo Tracks",
+        "more": "more",
+        "not_found": "no tracks found"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "lastUpdated": "Last updated: April 19, 2026",
+      "intro1": "We'd love to hear from you. Whether you have a question, want to share feedback, ran into a bug, or want to collaborate — the door is open.",
+      "intro2": "Below you'll find the best way to reach us, depending on what you need. We do our best to respond within 24 hours on weekdays.",
+      "supportTitle": "General support",
+      "supportText": "Have a question about your account, need help with a feature, or something not working as expected? Send us an email and we'll help you as quickly as possible.",
+      "businessTitle": "Business & partnerships",
+      "businessText": "Representing a school, organisation or company and think we could be a good match? Let us know. We're open to collaborations that genuinely add value for students.",
+      "pressTitle": "Press & media",
+      "pressText": "Are you a journalist, blogger or content creator looking to write about Studo? We're happy to share our experiences, stats and vision. Reach out via the press address below.",
+      "feedbackTitle": "Feedback",
+      "feedbackText1": "Feedback is invaluable to us. Studo was built by listening to students, and we intend to keep doing that. Whether it's a small detail that could be better or a big idea for a new feature — we read everything.",
+      "feedbackText2": "No need to be formal. Just write like you'd write to a friend who works on an app. Honest and direct is always welcome.",
+      "bugTitle": "Bug reports",
+      "bugText": "Something broken? Let us know and we'll fix it. The more info you can share, the faster we can resolve it. Helpful to include:",
+      "bug1": "Exactly what you were doing when it went wrong",
+      "bug2": "Which device and browser you're using",
+      "bug3": "A screenshot or screen recording if possible",
+      "bug4": "Whether it happens every time or just once",
+      "socialTitle": "Follow us",
+      "socialText": "For updates, tips, behind-the-scenes content and the occasional meme — follow us on social. We post regularly and read all your comments and DMs.",
+      "responseTitle": "Response time",
+      "responseText1": "We aim to reply within 24 hours on weekdays. On weekends it may take a little longer, but you will always get a response — we don't leave messages unanswered.",
+      "responseText2": "During exam periods it's busier than usual. Thanks for your patience if it takes an extra day then."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "lastUpdated": "Last updated: April 19, 2026",
+      "intro1": "Welcome to our FAQ. Here you'll find answers to the questions we get most often from students using or considering Studo.",
+      "intro2": "Can't find your question? No problem — at the bottom of this page you'll find how to reach us. We usually respond within 24 hours.",
+      "categories": {
+        "general": {
+          "title": "General",
+          "q1": {
+            "question": "What exactly is Studo?",
+            "answer": "Studo is an all-in-one study platform for students. Instead of switching between flashcard apps, note apps, planners and search engines, you'll find everything in one place: Studosets and Visualsets for active studying, Classrooms for collaboration, Flow to track your subjects, and SVEN, our AI coach, to help you where needed."
+          },
+          "q2": {
+            "question": "Who is Studo for?",
+            "answer": "Primarily for students in higher education, but anyone who wants to learn is welcome. From secondary school to university, from medicine to law to computer science — Studo is built to work with any subject and any study style."
+          },
+          "q3": {
+            "question": "What's the difference between Studo and other flashcard apps?",
+            "answer": "Flashcards are just one part of Studo. You also get Visualsets (ideal for anatomy or geography), a full tracking system via Flow, shared learning environments via Classrooms, and AI support via SVEN. It's not a standalone tool, but an ecosystem that grows with your studies."
+          },
+          "q4": {
+            "question": "What languages is Studo available in?",
+            "answer": "We currently support Dutch, English, French and Spanish. We're working on more languages and actively listen to which ones our community needs most."
+          },
+          "q5": {
+            "question": "Is there a mobile app?",
+            "answer": "Yes, we have an iOS app so you can study on the go. An Android version is on our roadmap."
+          }
+        },
+        "studosets": {
+          "title": "Studosets & Visualsets",
+          "q1": {
+            "question": "What are Studosets?",
+            "answer": "Studosets are term-definition pairs you can study in different ways. You can use them via Learn (spaced repetition that keeps testing you until you know everything), Time Attack (speed mode with rounds), or classic Flashcards. Every mode adapts to your level."
+          },
+          "q2": {
+            "question": "What makes Visualsets unique?",
+            "answer": "Visualsets are designed for visual subjects like anatomy, biology and geography. You upload an image, place pins with definitions on it, and study via two modes: Identify (you type what the pin represents) or Point (the system gives a definition and you indicate the correct pin). Perfect for memorising structures and locations."
+          },
+          "q3": {
+            "question": "How do I quickly create a Studoset?",
+            "answer": "You have several options. Enter terms one by one manually, import from a Word document or Excel file, or simply via copy-paste. For maths subjects there's Math Mode which correctly renders LaTeX formulas. You can also add images to your terms."
+          },
+          "q4": {
+            "question": "What is Health Mode during studying?",
+            "answer": "Health Mode reminds you every 20 minutes to stand up for 2 minutes and look outside — the 20-20-2 rule. A small detail that makes a big difference for your eyes and back during long study sessions. There's also a built-in pomodoro timer for those who work in intervals."
+          },
+          "q5": {
+            "question": "Can I make my sets public or private?",
+            "answer": "Your choice. Public sets are findable via our search function, which is handy if you want to share with fellow students or contribute to the community. Private sets are only visible to you or the people you invite."
+          }
+        },
+        "classrooms": {
+          "title": "Classrooms & studying together",
+          "q1": {
+            "question": "What are Classrooms?",
+            "answer": "Classrooms are shared learning environments where you can study, practise and share material together with others. There are three types: Official Classrooms (linked to a school or teacher), Study Groups (private groups with friends or project partners), and Communities (open public groups around a subject or topic)."
+          },
+          "q2": {
+            "question": "How do I join a Classroom?",
+            "answer": "For Official Classrooms and Study Groups you usually receive an invitation or a code from the organiser. Communities are open — find them via the search function and join directly."
+          },
+          "q3": {
+            "question": "Can I see how others are progressing in a Classroom?",
+            "answer": "In Classrooms and Study Groups you can optionally see each other's progress and statistics, which is motivating for studying together. You can always turn this off entirely via your privacy settings — you decide what you share."
+          },
+          "q4": {
+            "question": "What are competitions and challenges?",
+            "answer": "Within Classrooms and Study Groups someone can start a study competition that others can join. Ideal for memorising material together before an exam with a touch of competition."
+          },
+          "q5": {
+            "question": "If my teacher creates a Classroom, can they see my performance?",
+            "answer": "In an Official Classroom your teacher or professor can follow your progress to give targeted feedback. This is communicated transparently and is tied to the Classroom itself — outside that context your statistics remain yours."
+          }
+        },
+        "flow": {
+          "title": "Studo Flow",
+          "q1": {
+            "question": "What is Studo Flow?",
+            "answer": "Flow is our tracking system to visually manage your learning process. Organised by academic year, by subject and by learning activity. Think of it as a smart, visual version of the spreadsheet many students use to track what they've already covered — but with direct links to your studosets and visualsets."
+          },
+          "q2": {
+            "question": "How does Flow work in practice?",
+            "answer": "Flow is built from three layers: Flowboards (your study year or semester), Flowcourses (each subject) and Flowrows (concrete learning activities like a lecture or exercise). During class you quickly type a title and press Enter — done. At home you can structure things: update status, set priority, link resources."
+          },
+          "q3": {
+            "question": "Is Flow suitable if I'm not a planner type?",
+            "answer": "Absolutely. Flow is deliberately designed for both power users and students who do minimal planning. Entering a title is enough to get started. All extra fields like priority, type or deadline are optional. You can make it as simple or as detailed as you like."
+          },
+          "q4": {
+            "question": "How do I see my progress?",
+            "answer": "At two levels. Per subject you see a progress bar at the top of the table view showing how many items you've completed. On the overview of your Flowboard each Flowcourse appears as a card with a compact progress bar — one glance and you know where you stand for each subject."
+          }
+        },
+        "ai": {
+          "title": "SVEN & Studo Select",
+          "q1": {
+            "question": "What is SVEN?",
+            "answer": "SVEN is our AI coach and is part of Studo Select, the premium version of the platform. SVEN helps you get from course material to studyable content faster — think automatically generating Studosets from documents, or quickly looking something up in your course."
+          },
+          "q2": {
+            "question": "Can SVEN automatically create sets from my course?",
+            "answer": "Yes. You upload a PDF or Word document and SVEN generates a Studoset with terms and definitions. You always stay in control — you can review, edit and give final approval to the AI output before the set is finalised. We never publish anything automatically."
+          },
+          "q3": {
+            "question": "What is course linking?",
+            "answer": "When you link a course to a Studoset, a 'Check course' button appears next to each term that takes you directly to the relevant section. No more searching through hundreds of pages. You can also semantically search your uploaded courses by keywords or phrases."
+          },
+          "q4": {
+            "question": "Is AI-generated content always correct?",
+            "answer": "AI sometimes makes mistakes, which is why you always see a disclaimer to review the output. We work with human review steps and a feedback loop where you can rate every AI output. Always verify important content yourself before studying with it."
+          }
+        },
+        "courses": {
+          "title": "Courses & Verified Sets",
+          "q1": {
+            "question": "What are Studo Courses?",
+            "answer": "Studo Courses are pre-built learning paths curated by the Studo team itself to ensure quality. A Course (for example Medicine) consists of multiple Tracks — modules around a specific topic or exam — each linked to relevant subjects and verified sets."
+          },
+          "q2": {
+            "question": "What does the Verified badge mean?",
+            "answer": "Sets with a Verified badge are created or reviewed by the Studo team, have proven 95%+ accuracy on exams, or are approved by a teacher. Verified sets get priority in search results and are featured on subject pages."
+          },
+          "q3": {
+            "question": "Can I become a Verified creator?",
+            "answer": "Yes. If your sets meet the criteria, you receive Verified creator status. Benefits: Studo Select for free, a spot on the leaderboard of top creators, and in later phases a revenue share for popular sets."
+          }
+        },
+        "account": {
+          "title": "Account & privacy",
+          "q1": {
+            "question": "How do I create an account?",
+            "answer": "You can register with your email address, Google account or Microsoft account. It takes less than a minute and you have immediate access to the platform."
+          },
+          "q2": {
+            "question": "Can I delete my account?",
+            "answer": "Of course. In your account settings you'll find the option to permanently delete your account. All your data will then be deleted in accordance with our privacy policy."
+          },
+          "q3": {
+            "question": "What about privacy in Classrooms?",
+            "answer": "You decide what you share. Comparing progress and sharing statistics are optional and can be fully disabled via your settings. You can also set separate privacy preferences per Classroom."
+          },
+          "q4": {
+            "question": "I forgot my password, what now?",
+            "answer": "Click 'Forgot password' on the login page, enter your email address and you'll receive a reset link. Also check your spam folder if the email doesn't arrive immediately."
+          }
+        },
+        "pricing": {
+          "title": "Pricing",
+          "q1": {
+            "question": "Is Studo free?",
+            "answer": "The core features of Studo are free: Studosets, Visualsets, Classrooms, Flow and search. The AI features are part of Studo Select, our premium tier."
+          },
+          "q2": {
+            "question": "What do I get with Studo Select?",
+            "answer": "With Studo Select you get access to SVEN, our AI coach. In concrete terms: up to 8 GB of file uploads, automatic set generation from documents, course linking, semantic search within your courses, and 100 set credits for SVEN set generation."
+          },
+          "q3": {
+            "question": "Can I cancel Studo Select at any time?",
+            "answer": "Absolutely. You can cancel at any time in your account settings. You retain access to the premium features until the end of the billing period."
+          }
+        },
+        "technical": {
+          "title": "Technical",
+          "q1": {
+            "question": "Which browsers are supported?",
+            "answer": "Studo works on all modern browsers: Chrome, Firefox, Safari and Edge. We recommend keeping your browser up to date for the best experience."
+          },
+          "q2": {
+            "question": "Does Studo work offline?",
+            "answer": "Some features such as viewing downloaded Studosets work offline in the iOS app. The web version requires an internet connection for most features."
+          },
+          "q3": {
+            "question": "How secure is my data?",
+            "answer": "We take privacy seriously. All your data is stored encrypted and we never sell your data to third parties. Read our privacy policy for all details."
+          }
+        }
+      },
+      "stillTitle": "Still have questions?",
+      "stillText": "Can't find the answer to your question here? No problem — feel free to send us a message. We usually respond within 24 hours."
+    },
+    "waitinglist": {
+      "title": "Sign up",
+      "join_waitinglist": "Enter your email for the waiting list",
+      "email": "email",
+      "join": "sign up",
+      "Loading": "loading...",
+      "rights": "STUDO inc. All rights reserved.",
+      "hook": "students already signed up",
+      "Version": "Version",
+      "somethingWentWrong": "Something went wrong, please try again",
+      "alreadyRegistered": "This email address is already on the list"
+    },
+    "blog": {
+      "title": "Blog",
+      "lastUpdated": "Last updated:"
+    }
+  },
+  "login": {
+    "hook": "students already studying",
+    "Version": "Version",
+    "rights": "STUDO inc. All rights reserved.",
+    "Welcome back": "Welcome back",
+    "email": "email",
+    "password": "password",
+    "Log In": "Log In",
+    "log into account": "log in to your account",
+    "or log in with": "or log in with",
+    "Loading": "Loading...",
+    "Google": "Continue with Google",
+    "Microsoft": "Continue with Microsoft",
+    "Apple": "Continue with Apple",
+    "Smartschool": "Continue with Smartschool",
+    "Don't have an account?": "Don't have an account?",
+    "sign up": "sign up",
+    "successful_login": "Successfully logged in",
+    "failed": "Incorrect email or password",
+    "loading": "Loading..."
+  },
+  "register": {
+    "Create account": "Create account",
+    "create_account": "Create a new account",
+    "information": "Personal info",
+    "email": "email",
+    "name": "name",
+    "info_title": "Your personal info",
+    "password_title": "Your password",
+    "password": "password",
+    "repeat password": "repeat password",
+    "role_title": "You are a",
+    "teacher": "teacher",
+    "student": "student",
+    "professor": "professor",
+    "Loading": "Registering...",
+    "Register": "Register",
+    "other_register": "or register with",
+    "Already": "Already registered?",
+    "log in": "Log in",
+    "email_taken": "This email address is already in use",
+    "name_taken": "This username is already in use",
+    "failed": "Registration failed",
+    "success": "Account created",
+    "tos": "I agree to the ",
+    "terms": "terms of service",
+    "accept_terms": "Accept the terms to continue",
+    "and": "and the",
+    "privacy": "privacy policy"
+  },
+  "header": {
+    "create_ss": "Create Studoset",
+    "create_vs": "Create Visualset",
+    "create_f": "Create folder",
+    "notifs": "notifications",
+    "day streak": "day streak",
+    "studied": "You've studied ",
+    "days": " days in a row",
+    "settings": "Settings",
+    "privacy": "Privacy",
+    "logout": "Log out",
+    "ad": "Admin",
+    "home": "Home",
+    "courses": "Courses",
+    "planner": "Planner",
+    "flow": "Flow",
+    "create": "Create",
+    "groups": "Groups",
+    "account": "Account",
+    "nonotif": "no notifications",
+    "allup": "all up to date",
+    "search": "search...",
+    "search_btn": "Search",
+    "create_c": "Create Course",
+    "create_b": "Create board",
+    "create_btn": "Create",
+    "library": "Library"
+  },
+  "createfolder": {
+    "title": "create a folder",
+    "placeholder": "Enter a name...",
+    "button": "create"
+  },
+  "createclassroom": {
+    "title": "Create classroom",
+    "button": "create",
+    "subtitle_title": "Classroom name:",
+    "placeholder": "Enter a name...",
+    "subtitle_options": "Classroom type:",
+    "class": "Class – official class",
+    "study": "Study group – with friends",
+    "community": "Community – open to everyone",
+    "subtitle_school": "School name:",
+    "placeholder_school": "school name...",
+    "studygroup": "Study group – with friends"
+  },
+  "createstudoset": {
+    "title": "Create new Studoset",
+    "title_placeholder": "Enter a title...",
+    "course_placeholder": "Enter a subject...",
+    "folder_placeholder": "Select a folder...",
+    "term_language": "Term language...",
+    "def_language": "Definition language...",
+    "import": "Import",
+    "create": "Create Set",
+    "add_card": "Add card",
+    "title_error": "title is required",
+    "course_error": "subject is required",
+    "folder_error": "select a folder",
+    "term_lang_error": "select a language",
+    "def_lang_error": "select a language",
+    "card_error": "there are empty cards",
+    "saving": "Saving...",
+    "submit_error": "Something went wrong, please try again",
+    "draft": "(draft)",
+    "delete_draft": "Verwijder Draft",
+    "select_folder": "Choose a folder",
+    "select_language_term": "Choose a language for terms",
+    "select_language_def": "Choose a language for definitions",
+    "create_course": "Create subject",
+    "english": "English",
+    "dutch": "Dutch",
+    "french": "French",
+    "german": "German",
+    "spanish": "Spanish"
+  },
+  "editstudoset": {
+    "edit": "Edit Studoset",
+    "title_placeholder": "Enter a title...",
+    "course_placeholder": "Enter a subject...",
+    "term_language": "Term language...",
+    "def_language": "Definition language...",
+    "create": "Edit Set",
+    "add_card": "Add card",
+    "title_error": "title is required",
+    "course_error": "subject is required",
+    "term_lang_error": "select a language",
+    "def_lang_error": "select a language",
+    "card_error": "there are empty cards",
+    "saving": "Saving...",
+    "submit_error": "Something went wrong, please try again",
+    "draft": "(draft)",
+    "delete_draft": "Delete Draft"
+  },
+  "createvisualset": {
+    "title": "Create new Visualset",
+    "title_placeholder": "Enter a title...",
+    "course_placeholder": "Enter a subject...",
+    "folder_placeholder": "Select a folder...",
+    "create": "Create Visualset",
+    "saving": "Saving...",
+    "title_required": "Title is required",
+    "title_max": "Title max 100 characters",
+    "course_required": "Subject is required",
+    "course_max": "Subject max 100 characters",
+    "folder_required": "Folder is required",
+    "image_title": "Image title",
+    "image_title_placeholder": "Enter a title for this image...",
+    "image_title_max": "Title max 100 characters",
+    "pins": "Pins",
+    "click_to_add_pins": "Click on the image to add pins",
+    "click_to_upload": "Click to upload an image",
+    "type_definition": "Type a definition",
+    "definition_placeholder": "Definition...",
+    "cancel": "Cancel",
+    "add": "Add",
+    "title_error": "title is required",
+    "course_error": "subject is required",
+    "folder_error": "select a folder"
+  },
+  "card": {
+    "Definition": "Definition",
+    "Term": "Term",
+    "click_turn": "click to flip",
+    "click_flip_back": "click to flip back",
+    "learnt": "Learned",
+    "image_suggestion": "Suggestions",
+    "no_term": "no term",
+    "no_suggestions": "no suggestions found"
+  },
+  "notfound": {
+    "404": "404",
+    "return": "back"
+  },
+  "timed": {
+    "0": [
+      "Past midnight and still going strong!",
+      "Keep going!",
+      "Midnight and still crushing it!"
+    ],
+    "2": [
+      "Welcome back night owl",
+      "Still up this late? You're not the only one...",
+      "The night is still young.. and so are we 🎶",
+      "Study-maxxing it seems",
+      "Still going or already going???"
+    ],
+    "4": [
+      "Bro it's pretty late",
+      "Go to sleep!",
+      "Still awake... how!?",
+      "Seriously bro, go to bed",
+      "Grind, shower, Studo..",
+      "I could almost go to sleep myself",
+      "Okaaay letsgooo"
+    ],
+    "7": [
+      "Good morning {name}",
+      "You're awake, first small win of the day",
+      "Coffee and Studo (no better combo)",
+      "You're finally awake"
+    ],
+    "11": [
+      "Welcome back, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": [
+      "Good afternoon {name}",
+      "Keep it up, stay with it",
+      "You got this!"
+    ],
+    "19": [
+      "Good evening {name}",
+      "Welcome back",
+      "Evening shift activated",
+      "Let's Go Champ!"
+    ],
+    "22": [
+      "Welcome back, the night is still young, good luck",
+      "Working late, nice!",
+      "Time for a romantic evening date with your study material"
+    ]
+  },
+  "home": {
+    "jump-back-in_title": "Jump back in",
+    "jump-back-in_next": "Next",
+    "jump-back-in_previous": "Previous",
+    "jump-back-in_goto": "Go to item {index}",
+    "courses_overview_title": "Your Courses",
+    "flow_overview_title": "Your boards",
+    "getstarted_overview_title": "Start creating",
+    "pinned_title": "Pinned",
+    "stats": "Statistics",
+    "Streak": "Streak",
+    "days": "days",
+    "all_boards": "All boards",
+    "ready": "Ready to study?",
+    "totCards": "Total cards",
+    "tmStd": "Study time",
+    "min": "min",
+    "cards": "cards viewed",
+    "pins": "pins",
+    "week": "per week",
+    "cards_learned": "cards learned",
+    "card_learned": "Card learned",
+    "dagen": "days",
+    "Continue": "Sets",
+    "checkAll": "all sets",
+    "studied": "studied",
+    "checkCourse": "all courses",
+    "act": "Friends",
+    "CheckAct": "all activity",
+    "create_ss": "Create Studoset",
+    "create_vs": "Create Visualset",
+    "create_block": "create card or pin sets",
+    "checkStats": "more statistics",
+    "continue": "continue",
+    "last_studied": "last studied",
+    "day": "day",
+    "hour": "hour",
+    "hours": "hours",
+    "minute": "min",
+    "minutes": "min",
+    "card": "card viewed",
+    "set_studied": "set created",
+    "sets_studied": "sets studied",
+    "lets_go": "Start here",
+    "set_overview_title": "Your sets",
+    "all_courses": "All courses",
+    "all_sets": "All sets",
+    "flows_overview_title": "Your flowboards",
+    "visualset_btn_lbl": "Create a Visualset",
+    "studoset_btn_lbl": "Create a Studoset",
+    "fallback": {
+      "nothing_title": "No sets yet",
+      "nothing_paragraph": "You haven't created any sets yet"
+    },
+    "flow": {
+      "course": "subject",
+      "courses": "courses"
+    }
+  },
+  "y_f": {
+    "title": "Your files",
+    "subtitle": "Manage your study material",
+    "sets": "Sets",
+    "folders": "Folders",
+    "courses": "Courses",
+    "your_sets": {
+      "title": "Your sets",
+      "course_title": "Sets within course",
+      "cards": "cards",
+      "pins": "pins",
+      "studied": "studied",
+      "recent": "Recently studied",
+      "full_studied": "Fully studied",
+      "created": "Created by you",
+      "all": "All sets",
+      "search": "search set...",
+      "no_sets": "no sets yet",
+      "no_results": "no results",
+      "nothing_title": "No sets yet",
+      "nothing_paragraph": "You haven't created any sets yet",
+      "delete": "Delete set",
+      "delete_folder": "Delete folder",
+      "delete_course": "Delete subject",
+      "external_window": "Open in new tab",
+      "edit_set": "Edit set",
+      "share_folder": "Share folder",
+      "see_more": "see more"
+    }
+  },
+  "select": {
+    "pricing": "Pricing",
+    "plan": "Studo Select is our premium subscription for students who want to get the most out of their studies. No ads, no distractions — just smarter studying.",
+    "free": "Free plan",
+    "select": "Studo Select",
+    "month": "/month",
+    "free_expl": "Basic features with advertisements.",
+    "select_expl": "Full access, SVEN AI and no advertisements.",
+    "start_tdy": "Get started",
+    "current": "Current plan",
+    "popular": "Popular",
+    "korting_school": "Studo offers discounts for schools, companies and families",
+    "try_edu": "Try Studo for Education",
+    "group": "Want to order for a larger group?",
+    "options": "options"
+  },
+  "phrases": {
+    "Nice work": "Nice work",
+    "Well done": "Well done",
+    "Keep on going": "Keep on going!",
+    "You got this": "You got this",
+    "You're halfway there": "You're halfway there",
+    "You're doing great": "You're doing great",
+    "Keep pushing": "Keep pushing",
+    "Stay focused": "Stay focused",
+    "You can do it": "You can do it",
+    "Don't give up": "Don't give up",
+    "Nice progress": "Nice progress",
+    "You're improving": "You're improving",
+    "Keep up the good work": "Keep up the good work",
+    "Just a bit more": "Just a bit more",
+    "You're on the right track": "You're on the right track",
+    "Stay motivated": "Stay motivated",
+    "You're stronger than you think": "You're stronger than you think",
+    "Every step counts": "Every step counts",
+    "Believe in yourself": "Believe in yourself",
+    "Go Kylie, Go": "Go Kylie, Go",
+    "Look at you go": "Look at you go",
+    "You're doing amazing, sweetie": "You're doing amazing, sweetie",
+    "Slay the day away": "Slay the day away",
+    "Main character energy": "Main character energy",
+    "Look at you go, productivity queen": "Look at you go, productivity queen",
+    "Big brain moment": "Big brain moment",
+    "Somebody’s been studying": "Somebody’s been studying",
+    "Ate and left no crumbs": "Ate and left no crumbs",
+    "Who needs sleep when you have talent?": "Who needs sleep when you have talent?",
+    "You deserve a little dance break": "You deserve a little dance break",
+    "Certified genius mode unlocked": "Certified genius mode unlocked",
+    "Zero chill, maximum brainpower": "Zero chill, maximum brainpower",
+    "WOW WOW WOW": "WOW WOW WOW",
+    "Highkey crushing it right now": "Highkey crushing it right now",
+    "Congratulations, now get back to work": "Congratulations, now get back to work",
+    "yes, we can - Yoda": "yes, we can - Yoda"
+  },
+  "streak": {
+    "phrase_1": "You've studied for ",
+    "phrase_2": " days in a row",
+    "d_s": "day streak"
+  },
+  "groups": {
+    "title": "Your groups",
+    "subtitle": "All your groups, classes and communities",
+    "all": "All groups",
+    "last": "Recently joined",
+    "alphabetical": "Alphabetical order",
+    "search": "Search your groups...",
+    "members": "members",
+    "member": "member",
+    "leave": "Leave group",
+    "no_found": "No groups found",
+    "external_window": "Open in new tab"
+  },
+  "group": {
+    "overview": "Overview",
+    "set_title": "Sets",
+    "users": "Members",
+    "challenges_title": "Challenges",
+    "copy": "Copy link",
+    "invite": "Invite people",
+    "recent_sets": "Recently added",
+    "members": "Members",
+    "friends": "Friends",
+    "more": "show more sets",
+    "added_by": "added by",
+    "more_members": "show more members",
+    "no_sets": "no sets yet",
+    "pinned_sets": "Pinned",
+    "no_pinned": "no pinned sets yet",
+    "search_set": "search sets",
+    "search_user": "search members...",
+    "requests": "Requests",
+    "w_l_t_j": "wants to join",
+    "this_week": "Added this week",
+    "joined": "joined ",
+    "sets": {
+      "added by": "added by",
+      "cards": "cards",
+      "card": "card",
+      "pins": "pins",
+      "pin": "pin",
+      "challenge": "Challenge"
+    },
+    "invitepeople": {
+      "title": "Invite people",
+      "button": "Send invite",
+      "subtitle_title": "Find people to invite",
+      "placeholder": "search people...",
+      "subtitle_invited": "Invited"
+    },
+    "settings": {
+      "title": "Settings",
+      "leave": "Leave class",
+      "mute": "Mute notifications"
+    },
+    "addset": {
+      "title": "Add sets",
+      "button_m": "import sets",
+      "button_e": "import set"
+    },
+    "challenges": {
+      "current_leaderboard": "Leaderboard",
+      "running": "Active challenges"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "personal info": "Personal info",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "role": "Role",
+    "edit": "edit",
+    "subscription": "Current plan",
+    "free": "Free plan",
+    "upgrade": "upgrade",
+    "student": "student",
+    "teacher": "teacher",
+    "professor": "professor",
+    "accessibility": "Appearance & accessibility",
+    "language": "language",
+    "page_color": "Theme",
+    "auto": "auto",
+    "dark": "dark",
+    "light": "light",
+    "account_privacy": "Account & privacy",
+    "private_allsets": "Make all sets private",
+    "delete_title": "Delete account",
+    "delete_info": "Deleting your account will permanently erase all your personal data. This action cannot be undone.",
+    "delete": "delete",
+    "status": "Your status",
+    "inactive": "inactive",
+    "away": "away",
+    "active": "active",
+    "streak": "Show streak",
+    "learn_settings": "Learning settings",
+    "class_settings": "Class settings",
+    "limit_tracking": "Advanced progress tracking",
+    "request_verf": "Request verification",
+    "request_subt": "Get verified by Studo",
+    "request": "request",
+    "healthy_learn_title": "20-20-2 rule",
+    "healthy_learn_exp": "20 min focus, 20 sec eye rest, 2 min movement",
+    "pomodoro": "Pomodoro timer",
+    "pomodoro_exp": "25 min focus, 5 min break",
+    "font_size": "Font size / scaling",
+    "xl": "XL",
+    "lg": "LG",
+    "xxl": "XXL",
+    "share_progress": "Share progress",
+    "notifications": "Notifications",
+    "progress_notifications": "Progress notifications",
+    "streak_notifications": "Streak reminders",
+    "classroom_notifications": "Class notifications",
+    "classroom_invite": "Allow class invitations",
+    "auto_participate": "Automatically join competitions",
+    "experimental": "Enable experimental class features",
+    "shortcuts": "Keyboard shortcuts",
+    "shortcut_titles": {
+      "create_ss": "Create new Studoset",
+      "create_vs": "Create new Visualset",
+      "create_f": "Create new folder",
+      "toggle_s": "Trigger search",
+      "add_c": "Add card",
+      "save_s": "Create Set",
+      "del_c": "Delete last card",
+      "sven_i": "Use SVEN import"
+    },
+    "account": "Account",
+    "developer": "Developer",
+    "select": "Select",
+    "app": "App",
+    "access": "Accessibility",
+    "debug_mode": "Debug mode",
+    "reprocessing_toggle": "Reprocessing toggle",
+    "dev_mode": "Developer mode",
+    "save": "save",
+    "toast_update_success": "Setting updated",
+    "toast_update_error": "Failed to update setting",
+    "dnd": "Do not disturb",
+    "system": "System",
+    "email_taken": "This email address is already in use",
+    "name_taken": "This username is already in use"
+  },
+  "account": {
+    "role": "role",
+    "phone": "phone number",
+    "mail": "email",
+    "settings": "edit account",
+    "subtitle_sets": "Your sets",
+    "log_out": "Log out",
+    "delete": "Delete account",
+    "student": "Student",
+    "teacher": "Teacher",
+    "professor": "Professor",
+    "verified": "Verified",
+    "owner": "Owner",
+    "stats": {
+      "subtitle_stats": "Your statistics",
+      "total_cards": "Total cards",
+      "time_studied": "Study time",
+      "total_sets": "Total sets"
+    }
+  },
+  "studoset": {
+    "created": "Created by",
+    "set_title": "untitled set",
+    "learn": "learn",
+    "speedy": "speed challenge",
+    "flashcards": "flashcards",
+    "progress_title": "Your progress",
+    "cards_title": "Cards",
+    "not_learned": "Not learned",
+    "reviewed": "Reviewed",
+    "studied": "Studied",
+    "likes": "likes",
+    "like": "like",
+    "saved_in": "Saved in",
+    "added_to": "Added to",
+    "rights": "All rights reserved.",
+    "edit": "edit",
+    "save": "save",
+    "all": "All",
+    "flag": "Flagged",
+    "share": "share",
+    "settings": "settings",
+    "ns": "Not learned",
+    "edit_set": "edit set",
+    "set_private": "Studoset is private",
+    "cant_load": "Can't load set",
+    "open_course": "Open in course",
+    "flag_card": "Flag card",
+    "unflag_card": "Unflag card",
+    "flag_failed": "Flagging failed",
+    "no_cards": "No cards",
+    "progress_visualized": "Visualized progress",
+    "learn_desc": "Study in depth",
+    "speedy_desc": "Study lightning fast",
+    "flashcards_desc": "Quick review",
+    "classics": "Classic learn modes",
+    "stats": {
+      "title": "Progress",
+      "graph": "Graph",
+      "list": "List",
+      "general_title": "General",
+      "cards_title": "Per card",
+      "accuracy": "Accuracy",
+      "avg_time": "Avg. response time",
+      "longest_streak": "Longest streak",
+      "completions": "Completions",
+      "time_studied": "Time studied",
+      "learned": "Learned",
+      "min_unit": "m",
+      "axis_time": "Avg. response time (s)",
+      "axis_accuracy": "Accuracy (%)",
+      "no_data": "No data yet"
+    }
+  },
+  "trackview": {
+    "tracks": "Tracks",
+    "sets": "Sets",
+    "communities": "Communities",
+    "studosets": "Studosets",
+    "visualsets": "Visualsets",
+    "empty": "0 sets",
+    "vak": "subject",
+    "vakken": "subjects"
+  },
+  "import": {
+    "text": "Text import",
+    "sven": "SVEN import",
+    "import": "import",
+    "paste_here": "Paste your text here",
+    "text_import_title": "Settings",
+    "result": "Result",
+    "term_definition_separator": "Separator between term and definition",
+    "card_separator": "Separator between cards",
+    "by_comma": "Comma",
+    "by_tab": "Tab",
+    "by_newline": "New line",
+    "by_semicolon": "Semicolon",
+    "by_dash": "Dash",
+    "result_empty": "Paste text to see a preview",
+    "cards_found": "{count} cards found"
+  },
+  "flow": {
+    "title": "Your Flow Boards",
+    "created_by": "Created by",
+    "you": "(you)",
+    "create_title": "Create new Flow Board",
+    "add_title": "Board name",
+    "description": "Add a short description...",
+    "create_btn": "Create board",
+    "cancel_btn": "cancel",
+    "semester": "semester",
+    "error_year_required": "Year is required",
+    "add_metadata": "add details",
+    "add_later": "hide details",
+    "set_title": "board title...",
+    "set_year": "board year...",
+    "set_semester": "board semester...",
+    "delete": "Delete",
+    "delete_course": "Delete subject",
+    "overview": "Overview",
+    "add_course": "Add subject",
+    "your_courses": "Your subjects",
+    "external": "Open in new tab",
+    "courses": "subjects",
+    "course_1": "subject",
+    "course": {
+      "option": "Options",
+      "row": {
+        "done": "done",
+        "doing": "in progress",
+        "not_started": "not started",
+        "due_date": "due date",
+        "priority": "priority"
+      },
+      "add_title": "Add title",
+      "create_title": "New course",
+      "create_course": "Create course",
+      "create_btn": "Create",
+      "description": "Description",
+      "add_metadata": "Add metadata",
+      "add_later": "Add later",
+      "add_link": "Add link",
+      "add_course_link": "Connect learning portal",
+      "exam_date": "Exam date",
+      "add_exam_date": "Add exam date",
+      "exam_status": "Exam status",
+      "add_lesson_day": "Add lesson days",
+      "behind": "Behind schedule",
+      "slightly_behind": "Slightly behind",
+      "error_icon_required": "Icon required",
+      "error_title_required": "Title required",
+      "n": "n",
+      "cta_add_t": "Add row",
+      "flow_title": "Planning",
+      "upload_doc": "Upload document",
+      "summary": "Summary",
+      "all": "All",
+      "course": "Course",
+      "notes": "Notes",
+      "no_files_title": "No documents yet",
+      "no_files_paragraph": "Upload a PDF, Word or Excel file to get started.",
+      "pending_upload": "uploading…",
+      "error_file_types": "Only PDF, Word and Excel files are allowed.",
+      "error_upload": "Something went wrong while uploading.",
+      "doc_error": "Can't load document",
+      "processing": "processing",
+      "failed": "failed",
+      "overview": "Overview",
+      "flow": "Flow",
+      "documents": "Documents",
+      "sets": "Sets",
+      "stop_processing": "Stop processing",
+      "stop_upload": "Stop uploading",
+      "select_course": "Select a course",
+      "sven": "Sven",
+      "no_docs": "No documents yet",
+      "cta": "Upload your course",
+      "set_course_title": "Course title...",
+      "set_course_description": "Add description...",
+      "no_title_error": "Provide a title",
+      "table": {
+        "title": "Add title...",
+        "description": "Add description...",
+        "header": {
+          "title": "title",
+          "status": "status",
+          "createdAt": "created",
+          "description": "description",
+          "priority": "priority",
+          "dueDate": "deadline",
+          "type": "type",
+          "resource": "attachment"
+        }
+      },
+      "document_settings": {
+        "reprocess_btn": "Reprocess document"
+      }
+    }
+  },
+  "courses": {
+    "nothing_title": "No subjects yet",
+    "nothing_paragraph": "You haven't created any sets with a subject yet",
+    "search_course": "search course..."
+  },
+  "colorPicker": {
+    "search_ph": "search..."
+  },
+  "iconPicker": {
+    "no_icons_found": "No icons found"
+  },
+  "folders": {
+    "nothing_title": "Nothing to see here",
+    "nothing_paragraph": "You haven't added any sets to this folder yet"
+  },
+  "popup": {
+    "folders": {
+      "pop_title": "Add to folder",
+      "added_to_folder": "Added to",
+      "removed_from_folder": "Removed from"
+    },
+    "share": {
+      "pop_title": "Share set",
+      "copy_message": "Added to clipboard",
+      "isPrivate": "Set is private"
+    },
+    "settings": {
+      "pop_title": "Settings",
+      "reset_progress": "Reset progress",
+      "reset_success": "Progress reset",
+      "submit_error": "Something went wrong, please try again",
+      "make_private": "Public set",
+      "delete_set": "Delete set"
+    }
+  },
+  "flashcards": {
+    "definition": "Definition",
+    "term": "Term",
+    "answer_with": "answer with",
+    "shuffle": "shuffle",
+    "reset": "reset",
+    "all_set": "You've completed the entire set!",
+    "back": "back to set",
+    "restart": "practice again",
+    "progress": "reset progress",
+    "login_wall_title": "Log in to continue",
+    "login_wall_subtitle": "You've reached the free preview of 5 cards. Create a free account to study the full set.",
+    "register_wall_cta": "Register",
+    "login_wall_cta": "Log in"
+  },
+  "speedy": {
+    "modal_title": "Are you ready?",
+    "pause_title": "Taking a break...",
+    "modal_expl": "Answer questions as quickly as possible,\nbut be careful: incorrect answers will come back later.",
+    "return": "back to set",
+    "start": "start your round",
+    "pause": "pause",
+    "continue": "continue",
+    "answer_with": "answer with",
+    "definition": "Definition",
+    "term": "Term",
+    "type_definition": "type definition",
+    "type_term": "type term",
+    "round": "Round",
+    "restart": "restart",
+    "finished_title": "Set completed!",
+    "finished_expl": "Well done — here's your result.",
+    "stat_rounds": "Rounds",
+    "stat_time": "Time",
+    "stat_accuracy": "Accuracy"
+  },
+  "profile": {
+    "ss": "Studosets",
+    "vs": "Visualsets"
+  },
+  "offline": {
+    "offline": "You are offline",
+    "progress_explanation": "Progress will not be saved"
+  },
+  "latex": {
+    "LaTeX": "LaTeX",
+    "Code": "Code"
+  },
+  "svenimport": {
+    "title": "Let SVEN do the work",
+    "files_label": "Files",
+    "max_files": "Max {max} files per upload",
+    "selected": "Selected ({count}/{max})",
+    "no_files": "No files selected yet",
+    "drop_here": "Drop to add…",
+    "drag_or_click": "Drag a file here or click to choose",
+    "error_file_types": "Invalid file type",
+    "sum_wrong": "Something went wrong",
+    "loading": "Processing…",
+    "upload": "Import",
+    "server_error": "Server returned an error ({status})",
+    "rate_limit": "You've reached the daily limit of 3 imports. Try again tomorrow.",
+    "aborted": "Import cancelled"
+  },
+  "svenchat": {
+    "quote": "Sven is happy to help with course questions",
+    "new-chat": "New chat",
+    "history": "History",
+    "recommended_title": "Recommended"
+  },
+  "svenchatTimed": {
+    "0": [
+      "Past midnight and still going strong!",
+      "Keep it up!",
+      "Past midnight and still doing great!"
+    ],
+    "2": [
+      "Hey night owl",
+      "Ready to answer your questions!",
+      "What's the question?",
+      "Still at it or just getting started!?",
+      "{name} is back!"
+    ],
+    "4": [
+      "Isn't it bedtime?",
+      "Go to sleep!",
+      "Still awake... how!?",
+      "Not cool bro, go crash",
+      "Grind, shower, Studo..",
+      "Honestly I could almost crash myself",
+      "Okaaay letsgooo"
+    ],
+    "7": [
+      "Good morning {name}",
+      "You're awake, first small win of the day",
+      "Good morning morning, good day",
+      ""
+    ],
+    "11": [
+      "Welcome back, {name}",
+      "Halfway through the day and still at it? Solid.",
+      "A few more hours of focus before the break... hang in there."
+    ],
+    "15": ["Good afternoon {name}", "Doing great, keep it up", "You got this!"],
+    "19": [
+      "Good evening {name}",
+      "Welcome back",
+      "Evening shift activated",
+      "Let's Go Champ!"
+    ],
+    "22": [
+      "Welcome back, the evening is still young, good luck",
+      "Working late, doing great!",
+      "Time for a romantic evening date with your study material"
+    ],
+    "new-chat": "New chat",
+    "history": "History"
+  },
+  "pomodoro": {
+    "title": "Pomodoro Timer",
+    "play": "Start",
+    "pause": "Pause",
+    "focus_mode": "20 min of focused studying"
+  },
+  "learnsettings": {
+    "learning": "General settings",
+    "answer_with": "Answer with",
+    "answer_type": "Answer type",
+    "revision_count": "Revision count",
+    "term_def_description": "Choose whether you answer with the term or the definition.",
+    "health": "Healthy studying",
+    "twenty_twenty_two": "20-20-2 learning",
+    "twenty_description": "20 min study, 20 sec look away, 2 min break",
+    "pomodoro_timer": "Pomodoro timer",
+    "pomodoro_description": "A timer that helps you get into hyperfocus.",
+    "reset_progress": "Reset progress",
+    "reset_settings": "default settings",
+    "type_description": "Choose how you want to answer",
+    "revision_count_description": "Set how many times a card is repeated",
+    "flagged_mode": "Flagged cards",
+    "flagged_description": "Study only your flagged cards",
+    "strictness_level": "Strictness",
+    "strictness_level_description": "Set how strictly answers are graded"
+  },
+  "learn": {
+    "enter_continue": "*press enter to continue",
+    "type_answer": "type your answer...",
+    "reset": "reset",
+    "all_set": "You've gone through the whole set!",
+    "back": "back to set",
+    "restart": "practice again",
+    "revision": "revision",
+    "hint": "show hint",
+    "next": "next"
+  },
+  "widgets": {
+    "title": "Widgets"
+  },
+  "combobox": {
+    "options": "Options",
+    "noResults": "No results"
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "course": "Course",
+    "overview": "Overview",
+    "documents": "Documents",
+    "flow": "Flow",
+    "sets": "Sets",
+    "library": "Library",
+    "courses": "Courses",
+    "groups": "Groups",
+    "classrooms": "Classes",
+    "studoset": "Studoset",
+    "edit": "Edit",
+    "learn": "Learn",
+    "speedy": "Time attack",
+    "flashcards": "Flashcards",
+    "backoffice": "Backoffice",
+    "account": "Account",
+    "settings": "Settings",
+    "visualset": "Visualset",
+    "streak": "Streak",
+    "select": "Studo Select",
+    "pay": "Payment",
+    "sven": "Sven",
+    "admin": "Admin",
+    "invite": "Invite",
+    "reports": "Reports",
+    "search": "Search",
+    "stats": "Statistics",
+    "users": "Users",
+    "create-studoset": "Create studoset",
+    "create-visualset": "Create visualset",
+    "search-result": "Search results"
+  }
+}

@@ -1,9 +1,9 @@
 "use client";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { Plus } from "lucide-react";
 import CreateCoursePopup from "@/components/ui/app/private/course/CreateCourse";
 import { useState, type FC } from "react";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 import { useTranslations } from "next-intl";
 
 const CreateCourse: FC = () => {

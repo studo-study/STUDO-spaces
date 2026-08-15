@@ -3,6 +3,7 @@ import type { SetLikeResponse } from "./setlike";
 import type { StudysessionResponse } from "./studysession";
 import type { ClassroomResponse } from "./classroom";
 import type { VisualsetResponse } from "./visualset";
+import type { CourseResponse } from "./course";
 
 export interface CreateStudyset {
   title: string;
@@ -40,6 +41,8 @@ export interface FullStudysetResponse extends StudysetResponse {
   likes: SetLikeResponse[];
   session?: StudysessionResponse;
   classrooms?: ClassroomResponse[];
+  /** De course van de opvragende user waarin deze set zit (indien van toepassing). */
+  course?: CourseResponse;
 }
 
 export interface PublicStudysetResponse extends StudysetResponse {

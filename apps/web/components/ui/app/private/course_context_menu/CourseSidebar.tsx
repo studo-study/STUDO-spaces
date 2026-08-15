@@ -1,6 +1,6 @@
 "use client";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import {
   BookSearch,
   Clock,

@@ -11,7 +11,7 @@ import { CgDanger } from "react-icons/cg";
 import { MdOutlineBrightness1 } from "react-icons/md";
 import { RiProgress4Line, RiProgress8Line } from "react-icons/ri";
 import { useState } from "react";
-import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
+import PopupBackdrop from "@studo/ui/design_system/popup/PopupBackdrop";
 import IssueDetails from "@/components/ui/app/private/admin/reports/IssueDetails";
 interface IssueProps {
   item: Issue;

@@ -1,7 +1,7 @@
 import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import PageContainer from "@studo/ui/design_system/page/PageContainer";
+import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import { ArrowLeft } from "lucide-react";
 
 export default async function FlashCardPage({

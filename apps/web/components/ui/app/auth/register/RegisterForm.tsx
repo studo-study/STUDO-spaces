@@ -1,13 +1,13 @@
 "use client";
-import InputField from "@/components/ui/design_system/input/InputField";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import InputField from "@studo/ui/design_system/input/InputField";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import Link from "next/link";
 import { ArrowRight, Eye, EyeClosed } from "lucide-react";
 import GoogleIcon from "@/components/ui/overige/icons/companies/Google";
 import MicrosoftIcon from "@/components/ui/overige/icons/companies/Microsoft";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import { useRegisterForm } from "@/hooks/overige/useRegisterForm";
-import Check from "@/components/ui/design_system/input/Check";
+import Check from "@studo/ui/design_system/input/Check";
 
 const RegisterForm = () => {
   const {

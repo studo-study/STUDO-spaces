@@ -15,7 +15,7 @@ import TriggerInvite from "@/components/ui/app/private/classroom/header/TriggerI
 import InvitePeople from "@/components/ui/app/private/classroom/header/InvitePeople";
 import AddSet from "@/components/ui/app/private/classroom/header/AddSet";
 import TriggerSettings from "@/components/ui/app/private/classroom/header/Settings";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 
 const classroom: Classroom = mockFullClassrooms[0];
 

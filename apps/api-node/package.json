@@ -6,9 +6,12 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "prebuild": "pnpm --filter @studo/types build",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "prestart": "pnpm --filter @studo/types build",
     "start": "nest start",
+    "prestart:dev": "pnpm --filter @studo/types build",
     "start:dev": "nest start --watch --env-file .env",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",

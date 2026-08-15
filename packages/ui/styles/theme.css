@@ -1,0 +1,1034 @@
+body {
+    background-color: var(--color-sky-50); /* light mode: bg-blue-50 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    font-family: var(--font-sfpro);
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Voor dark mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--color-slate-900) /* dark mode: bg-gray-800 */
+    }
+
+    @theme {
+        --color-studoborder: rgb(131, 131, 131, 0.5);
+    }
+}
+
+
+
+
+@theme {
+    --font-akira: akira, sans-serif;
+    --font-bodoni: Bodoni Std, serif;
+    --font-sfpro: 'SF Pro Display', sans-serif;
+    --font-sigurd: "sigurd-variable", sans-serif;
+    --font-atrament: atrament-web, sans-serif;
+    --font-roboto: "Roboto Mono", monospace;
+    --font-georgia: "georgia", sans-serif;
+    --color-studogreen: #8bcca3;
+    --color-studoblue: #4f83ff;
+    --color-studodarkblue: #262626FF;
+    /*--color-studodarkblue: #2a3a42;*/
+    --color-bg-white: rgb(239, 246, 255);
+    --color-bg-dark: var(--color-slate-900);
+    /*--color-bg-dark: rgb(31, 41, 55);*/
+    --color-studodark: var(--color-slate-500);
+    /*--color-studodark: rgba(224, 224, 224, 0.19);*/
+    --color-studogrey: rgba(200, 210, 210, 0.5);
+    --color-studowhite: rgba(224, 224, 224, 0.19);
+    --color-inputcolor: rgba(255, 255, 255, 0.175);
+    --color-studoborder: rgb(131, 131, 131);
+    --breakpoint-3xl: 1800px;
+    --font-montserrat: "Montserrat", sans-serif;
+
+}
+
+
+.dark {
+    --color-studoborder: rgba(255, 255, 255, 0.3);
+    --color-studogrey: rgba(200, 210, 210, 0.19);
+}
+
+
+.montserrat-black {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.nav {
+    width: 50px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+.nav svg {
+    fill: none;
+
+    stroke-width: 7px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+.nav svg use:nth-of-type(1) {
+    opacity: 1;
+    stroke-dashoffset: 221;
+    stroke-dasharray: 46 249;
+    transition: stroke-dashoffset 0.12s linear 0.2s,
+    stroke-dasharray 0.12s linear 0.2s, opacity 0s linear 0.2s;
+}
+
+.nav svg use:nth-of-type(2) {
+    animation: stroke-animation-reverse 1.2s ease-out forwards;
+}
+
+.nav input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.nav input:checked + svg use:nth-of-type(1) {
+    stroke-dashoffset: 175;
+    stroke-dasharray: 0 295;
+    opacity: 0;
+    transition: stroke-dashoffset 0.07s linear 0.07s,
+    stroke-dasharray 0.07s linear 0.07s, opacity 0s linear 0.14s;
+}
+
+.nav input:checked + svg use:nth-of-type(2) {
+    animation: stroke-animation 1.2s ease-out forwards;
+}
+
+@keyframes stroke-animation {
+    0% {
+        stroke-dashoffset: 295;
+        stroke-dasharray: 25 270;
+    }
+    50% {
+        stroke-dashoffset: 68;
+        stroke-dasharray: 59 236;
+    }
+    65% {
+        stroke-dashoffset: 59;
+        stroke-dasharray: 59 236;
+    }
+    100% {
+        stroke-dashoffset: 68;
+        stroke-dasharray: 59 236;
+    }
+}
+
+@keyframes stroke-animation-reverse {
+    0% {
+        stroke-dashoffset: 68;
+        stroke-dasharray: 59 236;
+    }
+    50% {
+        stroke-dashoffset: 290;
+        stroke-dasharray: 25 270;
+    }
+    65% {
+        stroke-dashoffset: 295;
+        stroke-dasharray: 25 270;
+    }
+    100% {
+        stroke-dashoffset: 290;
+        stroke-dasharray: 25 270;
+    }
+}
+
+.scroll-hidden {
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+.background-profile {
+    background: linear-gradient(
+            90deg,
+            rgba(255, 154, 0, 0.8) 0%, /* goudoranje */ rgba(255, 204, 0, 0.8) 33%, /* goudgeel */ rgba(255, 120, 45, 0.8) 66%, /* oranje terug */ rgba(255, 154, 0, 0.8) 100%
+    );
+    background-size: 300% 300%;
+    animation: metallicShine 10s linear infinite;
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.25),
+    inset 0 0 16px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+}
+
+
+@keyframes metallicShine {
+    0% {
+        background-position: 300% 0;
+    }
+    100% {
+        background-position: -300% 0;
+    }
+}
+
+
+.neu-wrapper {
+    min-height: 100px;
+    width: 15vh;
+    border-radius: 20px;
+    position: relative;
+    padding: 1rem;
+    margin: 0;
+    padding: 3%;
+}
+
+.progress-svg {
+    width: 100%;
+    height: auto;
+}
+
+.progress-bg {
+    fill: none;
+    stroke: #d1d9e6;
+    stroke-width: 20;
+    stroke-linecap: round;
+}
+
+.progress-bar {
+    fill: none;
+    stroke: #6c63ff;
+    stroke-width: 20;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    transition: stroke-dashoffset 0.5s ease;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.progress-text {
+    position: absolute;
+    font-family: "sf pro", sans-serif;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.progress-vorm {
+    background: rgba(161, 189, 217, 0.19);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), 8px 8px 16px #bebebe,
+    -8px -8px 16px rgba(255, 255, 255, 0.33);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: bounceIn 1s ease-in-out;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 15vh;
+    max-height: 25vh;
+    padding: 5%;
+    gap: 0;
+    overflow: hidden;
+    gap: 1vh;
+    cursor: pointer;
+    stroke-linecap: round;
+}
+
+#progress-outer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+}
+
+.title-progress {
+    font-weight: 800;
+    color: #2a3a42;
+}
+
+
+.editable-field {
+    @apply min-w-full h-max bg-transparent text-gray-800
+    dark:text-white font-bold text-base
+    border-none outline-none p-0 m-0;
+}
+
+.glass-rgb {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(300px);
+    -webkit-backdrop-filter: blur(300px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+
+.searchAnimation {
+    animation: searchBar 2s ease-in-out;
+}
+
+@keyframes searchBar {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+
+.checkbox-wrapper-15 .cbx {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.checkbox-wrapper-15 .cbx span {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translate3d(0, 0, 0);
+}
+
+.checkbox-wrapper-15 .cbx span:first-child {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transform: scale(1);
+    vertical-align: middle;
+    border: 1px solid #B9B8C3;
+    transition: all 0.2s ease;
+}
+
+.checkbox-wrapper-15 .cbx span:first-child svg {
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    left: 6px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 16px;
+    stroke-dashoffset: 16px;
+    transition: all 0.3s ease;
+    transition-delay: 0.1s;
+    transform: translate3d(0, 0, 0);
+}
+
+.checkbox-wrapper-15 .cbx span:first-child:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: #506EEC;
+    display: block;
+    transform: scale(0);
+    opacity: 1;
+    border-radius: 50%;
+    transition-delay: 0.2s;
+}
+
+.checkbox-wrapper-15 .cbx span:last-child {
+    margin-left: 8px;
+}
+
+.checkbox-wrapper-15 .cbx span:last-child:after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: #B9B8C3;
+    transform-origin: 0 0;
+    transform: scaleX(0);
+}
+
+.checkbox-wrapper-15 .cbx:hover span:first-child {
+    border-color: #3c53c7;
+}
+
+.checkbox-wrapper-15 .inp-cbx:checked + .cbx span:first-child {
+    border-color: #3c53c7;
+    background: #3c53c7;
+    animation: check-15 0.6s ease;
+}
+
+.checkbox-wrapper-15 .inp-cbx:checked + .cbx span:first-child svg {
+    stroke-dashoffset: 0;
+}
+
+.checkbox-wrapper-15 .inp-cbx:checked + .cbx span:first-child:before {
+    transform: scale(2.2);
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+.checkbox-wrapper-15 .inp-cbx:checked + .cbx span:last-child {
+    color: #B9B8C3;
+    transition: all 0.3s ease;
+}
+
+.checkbox-wrapper-15 .inp-cbx:checked + .cbx span:last-child:after {
+    transform: scaleX(1);
+    transition: all 0.3s ease;
+}
+
+@keyframes check-15 {
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.floating-blob {
+    pointer-events: none;
+    transition: opacity 3s ease;
+    will-change: transform;
+    animation-timing-function: linear !important;
+    animation-fill-mode: forwards;
+    transform: translateZ(0);
+    /* blur via SVG filter is lichter, of gewoon weglaten */
+    opacity: 0;
+}
+
+.floating-blob.animate {
+    animation: superFloat var(--duration, 100s) linear infinite;
+    opacity: 0.15;
+}
+
+/* Hover: gebruik alleen opacity, GEEN filter */
+.floating-blob:hover {
+    opacity: 0.4 !important;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes superFloat {
+    0% {
+        transform: translate(0px, 0px) rotate(0deg) scale(var(--scale-min));
+    }
+    25% {
+        transform: translate(calc(var(--seed) * 25vw - 100px), -25vh) rotate(calc(var(--rotate) * 0.5)) scale(var(--scale-max));
+    }
+    50% {
+        transform: translate(calc((var(--seed) + 2) * -18vw + 60px), 25vh) rotate(var(--rotate)) scale(var(--scale-min));
+    }
+    75% {
+        transform: translate(calc(var(--seed) * -20vw + 80px), -20vh) rotate(calc(var(--rotate) * 1.5)) scale(var(--scale-max));
+    }
+    100% {
+        transform: translate(0px, 0px) rotate(calc(var(--rotate) * 2)) scale(var(--scale-min));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .floating-blob {
+        animation: none !important;
+        opacity: 0.1 !important;
+    }
+}
+
+.custom-select {
+    position: relative;
+}
+
+.custom-select select {
+    padding-left: 2vh;
+    padding-right: 4vh;
+    height: 4.5vh;
+    border-radius: 50px;
+    font-size: 1.5vh;
+    outline: none;
+    border: none;
+    background-color: rgba(213, 213, 213, 0.175);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.15);
+    border-bottom: 1.3px solid rgba(255, 255, 255, 0.352);
+    appearance: none;
+}
+
+.custom-select::before,
+.custom-select::after {
+    --size: 0.3rem;
+    content: "";
+    position: absolute;
+    right: 1rem;
+    pointer-events: none;
+}
+
+.custom-select::before {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid black;
+    top: 40%;
+}
+
+.custom-select::after {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid black;
+    top: 55%;
+}
+
+
+.side-card:first-child {
+    width: 100%;
+    height: 100%;
+    padding-right: 3%;
+}
+
+.side-card:last-child {
+    width: 100%;
+    height: 100%;
+    padding-left: 3%;
+    color: #2a3a42;
+    font-size: 2vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.side-card:last-child {
+    width: 100%;
+    height: 100%;
+    padding-left: 3%;
+    color: #2a3a42;
+    font-size: 2vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+
+.checkbox-wrapper-2 {
+    background: transparent; /* neutraal lichtblauw-grijs – dichter bij #e1f1fd */
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: none; /* Verwijder visuele gloed */
+}
+
+.checkbox-wrapper-2 .ikxBAC {
+    appearance: none;
+    background: #ecf0f3;
+    border-radius: 72px;
+    width: 50px;
+    height: 28px;
+    position: relative;
+    box-shadow: inset 2px 2px 4px #d1d9e6,
+    inset -1px -1px 2px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+/* De bol */
+.checkbox-wrapper-2 .ikxBAC::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ecf0f3;
+    box-shadow: 2px 2px 4px #d1d9e6, -1px -1px 2px rgba(255, 255, 255, 0.3); /* subtiel wit randje */
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+/* Bij togglen: groen met inset effect */
+.checkbox-wrapper-2 .ikxBAC:checked {
+    background: #76cea0;
+    box-shadow: inset 2px 2px 4px #5fb18a, inset -2px -2px 4px #9ff8c6;
+}
+
+/* Bol verschuiven */
+.checkbox-wrapper-2 .ikxBAC:checked::after {
+    left: 26px;
+    background: #ecf0f3;
+    box-shadow: 1px 1px 3px #5fb18a, -1px -1px 2px rgba(255, 255, 255, 0.1); /* héél lichte wit */
+}
+
+.checkbox-wrapper-2 :focus:not(.focus-visible) {
+    outline: 0;
+}
+
+.glass-border {
+    position: relative;
+}
+
+.glass-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 0.5px solid rgba(255, 255, 255, 0.25);
+    pointer-events: none;
+}
+
+
+@keyframes bigTada {
+    0%, 20% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(3);
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@KeyFrames rotate {
+    0% {
+        rotate: 0deg;
+    }
+    50% {
+        rotate: 180deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
+
+.aiBorderAnimation {
+    background: conic-gradient(
+            from var(--angle, 90deg),
+            #6366f1, #c026d3, #fb7185, #38bdf8, #6366f1
+    );
+    animation: rotate 2s linear infinite;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotate {
+    to {
+        --angle: 360deg;
+    }
+}
+
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes firework {
+    0% {
+        transform: translate(var(--x), var(--initialY));
+        width: var(--initialSize);
+        opacity: 1;
+    }
+    50% {
+        width: 0.5vmin;
+        opacity: 1;
+    }
+    100% {
+        width: var(--finalSize);
+        opacity: 0;
+    }
+}
+
+.firework,
+.firework::before,
+.firework::after {
+    z-index: 0;
+    --initialSize: 0.5vmin;
+    --finalSize: 30vmin;
+    --particleSize: 0.2vmin;
+    --color1: rgb(255, 255, 180);
+    --color2: rgb(255, 160, 160);
+    --color3: rgb(255, 255, 255);
+    --color4: rgb(180, 255, 180);
+    --color5: rgb(255, 235, 180);
+    --color6: rgb(170, 240, 200);
+    --y: -30vmin;
+    --x: -50%;
+    --initialY: 60vmin;
+    content: "";
+    animation: firework 2s infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, var(--y));
+    width: var(--initialSize);
+    aspect-ratio: 1;
+    background: radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
+    radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 50%,
+    radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 50% 100%,
+    radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 0% 50%,
+    radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 80% 90%,
+    radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 95% 90%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 90% 70%,
+    radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 60%,
+    radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 55% 80%,
+    radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 70% 77%,
+    radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 22% 90%,
+    radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 45% 90%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 70%,
+    radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 10% 60%,
+    radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 31% 80%,
+    radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 28% 77%,
+    radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 13% 72%,
+    radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 80% 10%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 95% 14%,
+    radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 90% 23%,
+    radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 100% 43%,
+    radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 85% 27%,
+    radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 77% 37%,
+    radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 60% 7%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 22% 14%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 45% 20%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 34%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 10% 29%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 31% 37%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 28% 7%,
+    radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
+    background-size: var(--initialSize) var(--initialSize);
+    background-repeat: no-repeat;
+}
+
+.firework::before {
+    --x: -50%;
+    --y: -50%;
+    --initialY: -50%;
+    transform: translate(-50%, -50%) rotate(40deg) scale(1.3) rotateY(40deg);
+}
+
+.firework::after {
+    --x: -50%;
+    --y: -50%;
+    --initialY: -50%;
+    transform: translate(-50%, -50%) rotate(170deg) scale(1.15) rotateY(-30deg);
+}
+
+.firework:nth-child(2) {
+    --x: 30vmin;
+}
+
+.firework:nth-child(2),
+.firework:nth-child(2)::before,
+.firework:nth-child(2)::after {
+    --color1: pink;
+    --color2: violet;
+    --color3: fuchsia;
+    --color4: orchid;
+    --color5: plum;
+    --color6: lavender;
+    --finalSize: 40vmin;
+    left: 30%;
+    top: 60%;
+    animation-delay: -0.25s;
+}
+
+.firework:nth-child(3) {
+    --x: -30vmin;
+    --y: -50vmin;
+}
+
+.firework:nth-child(3),
+.firework:nth-child(3)::before,
+.firework:nth-child(3)::after {
+    --color1: cyan;
+    --color2: lightcyan;
+    --color3: lightblue;
+    --color4: paleturquoise;
+    --color5: skyblue;
+    --color6: lavender;
+    --finalSize: 35vmin;
+    left: 70%;
+    top: 60%;
+    animation-delay: -0.4s;
+}
+
+
+/* globals.css */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.3s ease-out forwards;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(36px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.toast-slide-in {
+    animation: toastSlideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
+.card--container {
+    perspective: 1000px;
+    width: 100%;
+    height: 100%;
+}
+
+.card--container.flip .card--flipper {
+    transform: rotateX(180deg);
+}
+
+.side-a {
+    z-index: 2;
+    transform: rotateX(0deg);
+}
+
+.side-b {
+    z-index: 1;
+    transform: rotateX(180deg);
+}
+
+.checkbox-wrapper-7 .tgl {
+    display: none;
+}
+
+.checkbox-wrapper-7 .tgl,
+.checkbox-wrapper-7 .tgl:after,
+.checkbox-wrapper-7 .tgl:before,
+.checkbox-wrapper-7 .tgl *,
+.checkbox-wrapper-7 .tgl *:after,
+.checkbox-wrapper-7 .tgl *:before,
+.checkbox-wrapper-7 .tgl + .tgl-btn {
+    box-sizing: border-box;
+}
+
+.checkbox-wrapper-7 .tgl::selection,
+.checkbox-wrapper-7 .tgl *::selection {
+    background: none;
+}
+
+.checkbox-wrapper-7 .tgl + .tgl-btn {
+    outline: 0;
+    display: block;
+    width: 4em;
+    height: 2em;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-wrapper-7 .tgl + .tgl-btn:after,
+.checkbox-wrapper-7 .tgl + .tgl-btn:before {
+    position: relative;
+    display: block;
+    content: "";
+    width: 50%;
+    height: 100%;
+}
+
+.checkbox-wrapper-7 .tgl + .tgl-btn:after {
+    left: 0;
+}
+
+.checkbox-wrapper-7 .tgl + .tgl-btn:before {
+    display: none;
+}
+
+.checkbox-wrapper-7 .tgl:checked + .tgl-btn:after {
+    left: 50%;
+}
+
+/* iOS style */
+.checkbox-wrapper-7 .tgl-ios + .tgl-btn {
+    background: #fbfbfb;
+    border-radius: 2em;
+    padding: 2px;
+    transition: all 0.4s ease;
+    border: 1px solid #e8eae9;
+}
+
+.checkbox-wrapper-7 .tgl-ios + .tgl-btn:after {
+    border-radius: 2em;
+    background: #fbfbfb;
+    transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    padding 0.3s ease,
+    margin 0.3s ease;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.checkbox-wrapper-7 .tgl-ios + .tgl-btn:hover:after {
+    will-change: padding;
+}
+
+.checkbox-wrapper-7 .tgl-ios + .tgl-btn:active {
+    box-shadow: inset 0 0 0 2em #e8eae9;
+}
+
+.checkbox-wrapper-7 .tgl-ios + .tgl-btn:active:after {
+    padding-right: 0.8em;
+}
+
+.checkbox-wrapper-7 .tgl-ios:checked + .tgl-btn {
+    background: #86d993;
+}
+
+.checkbox-wrapper-7 .tgl-ios:checked + .tgl-btn:active {
+    box-shadow: none;
+}
+
+.checkbox-wrapper-7 .tgl-ios:checked + .tgl-btn:active:after {
+    margin-left: -0.8em;
+}
+
+.segmented-controls-stretch {
+    display: flex;
+    width: 100%;
+}
+
+.segmented-controls-stretch > button {
+    flex: 1 1 0%;
+    min-width: 0;
+}
+
+.segmented-controls-stretch .segmented-controls-tab {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+/* react-grid-layout drag/resize placeholder — match the dashed studoblue grid
+   instead of the default red block. */
+.react-grid-item.react-grid-placeholder {
+    background: rgb(79 131 255 / 0.1) !important;
+    border: 1px dashed rgb(79 131 255 / 0.4);
+    border-radius: 1.5rem;
+    opacity: 1;
+}
+
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+@keyframes widget-wiggle {
+    0% {
+        rotate: 0deg;
+    }
+    25% {
+        rotate: 1deg;
+    }
+    50% {
+        rotate: 0deg;
+    }
+    75% {
+        rotate: -1deg;
+    }
+}
+
+.animate-widget-wiggle {
+    animation: widget-wiggle 0.3s ease-in-out infinite;
+}
+
+/* Firefox */
+input:autofill,
+input:-moz-autofill,
+input:-moz-autofill-preview,
+textarea:autofill,
+select:autofill {
+    filter: none;
+    background-image: none;
+    background-color: transparent;
+    -moz-text-fill-color: inherit;
+}
+
+/* Chrome, Edge, Safari */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-text-fill-color: inherit;
+    caret-color: inherit;
+    /* de UA background-color is !important, maar de transitie ernaartoe niet.
+       9999s betekent dat hij praktisch nooit aankomt. */
+    transition: background-color 100000s ease-in-out 0s;
+}
+
+/* Native reveal/clear/password-key knoppen verbergen zodat enkel onze eigen
+   iconRight-UI zichtbaar is (Edge, Safari, Chrome). */
+.input-clean::-ms-reveal,
+.input-clean::-ms-clear {
+    display: none;
+}
+
+.input-clean::-webkit-credentials-auto-fill-button,
+.input-clean::-webkit-strong-password-auto-fill-button,
+.input-clean::-webkit-contacts-auto-fill-button,
+.input-clean::-webkit-caps-lock-indicator {
+    display: none !important;
+    visibility: hidden;
+    pointer-events: none;
+    margin: 0;
+    width: 0;
+}

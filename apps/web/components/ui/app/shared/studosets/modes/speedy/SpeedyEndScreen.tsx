@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { IoArrowBack, IoRefresh } from "react-icons/io5";
 import { useSpeedyContext } from "./SpeedyContext";
 

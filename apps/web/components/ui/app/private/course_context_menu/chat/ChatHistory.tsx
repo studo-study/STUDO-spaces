@@ -1,4 +1,4 @@
-import InputField from "@/components/ui/design_system/input/InputField";
+import InputField from "@studo/ui/design_system/input/InputField";
 import { useChats } from "@/hooks/app/chat/useChats";
 import { ChatResponse } from "@studo/types";
 import { Pin } from "lucide-react";

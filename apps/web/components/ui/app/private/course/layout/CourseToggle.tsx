@@ -1,7 +1,7 @@
 "use client";
 import classNames from "@/utils/classnames";
 import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
-import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
+import SimpleMenu from "@studo/ui/design_system/simple_menu/SimpleMenu";
 import { useCourses } from "@/hooks/app/courses/useCourses";
 import { useActiveCourse } from "@/hooks/app/courses/useCourseData";
 import { useRouter } from "next/navigation";

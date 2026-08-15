@@ -1,7 +1,7 @@
 "use client";
 
 import { useAdminUserDetail } from "@/hooks/app/admin/useAdminUserDetail";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
 import { GoDotFill } from "react-icons/go";
 import { TbFlameFilled } from "react-icons/tb";
 import {
@@ -19,7 +19,7 @@ import { RiVerifiedBadgeFill } from "react-icons/ri";
 import SetItem from "@/components/ui/app/private/home/YourSets/SetItem";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
-import BaseButton from "../../design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { OctagonX, VenetianMask } from "lucide-react";
 import { useRouter } from "next/navigation";
 

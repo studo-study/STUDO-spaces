@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import SvenIcon from "@/components/ui/overige/icons/SvenLogo";
-import { ComposerAura } from "@/components/ui/design_system/composer_aura/ComposerAura";
+import { ComposerAura } from "@studo/ui/design_system/composer_aura/ComposerAura";
 
 interface SvenMessageProps {
   description?: string;
@@ -14,7 +14,7 @@ const SvenMessage: React.FC<SvenMessageProps> = (props) => {
       <ComposerAura>
         <div
           className={
-            "border border-studoborder/30 h-fit hover:border-studoborder duration-300 transition-colors shadow-xl rounded-full bg-studogrey/10 p-3 flex flex-row gap-3"
+            "border border-studoborder/30 h-fit hover:border-studoborder duration-300 transition-colors shadow-xl rounded-full bg-studogrey/10 p-3 pr-5 flex flex-row gap-3"
           }
         >
           <div

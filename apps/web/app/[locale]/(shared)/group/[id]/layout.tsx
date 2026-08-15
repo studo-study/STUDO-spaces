@@ -5,7 +5,7 @@ import AppLayoutClient from "@/components/ui/app/private/AppLayoutClient";
 import { ReactNode } from "react";
 import PrivateClassroomHeader from "@/components/ui/app/private/classroom/PrivateClassroomHeader";
 import PublicClassroomHeader from "@/components/ui/app/private/classroom/PublicClassroomHeader";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
+import PageContainer from "@studo/ui/design_system/page/PageContainer";
 
 export default async function ClassroomLayout({
   children,

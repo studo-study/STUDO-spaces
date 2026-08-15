@@ -6,7 +6,7 @@ import { ClassroomUser } from "@/types/types";
 import { useTranslations } from "next-intl";
 import { FaCheck } from "react-icons/fa6";
 import Link from "next/link";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
 import UserSearch from "@/components/ui/app/private/classroom/users/UserSearch";
 import { JoinRequest } from "@studo/types";
 

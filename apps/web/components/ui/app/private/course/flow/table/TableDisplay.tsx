@@ -9,12 +9,12 @@ import {
 } from "react";
 import TableHeader from "@/components/ui/app/private/course/flow/table/TableHeader";
 import TableRow from "@/components/ui/app/private/course/flow/table/TableRow";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { Grid2x2Plus } from "lucide-react";
 import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
 import { usePathname } from "@/i18n/routing";
 import { useCourseFlow } from "@/hooks/app/courses/useCourseFlow";
-import CourseProgress from "@/components/ui/design_system/progress/CourseProgress";
+import CourseProgress from "@studo/ui/design_system/progress/CourseProgress";
 
 interface Drag {
   id: number;

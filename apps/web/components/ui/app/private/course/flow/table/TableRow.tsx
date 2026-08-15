@@ -28,10 +28,10 @@ import {
 } from "react";
 import { CourseRow, RowPriority, RowStatus, RowType } from "@studo/types";
 import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
-import Check from "@/components/ui/design_system/input/Check";
+import Check from "@studo/ui/design_system/input/Check";
 import { useLocale, useTranslations } from "next-intl";
-import Select from "@/components/ui/design_system/select/Select";
-import DatePicker from "@/components/ui/design_system/date_picker/DatePicker";
+import Select from "@studo/ui/design_system/select/Select";
+import DatePicker from "@studo/ui/design_system/date_picker/DatePicker";
 import ResourceCell from "@/components/ui/app/private/course/flow/table/ResourceCell";
 
 type UpdateRow = (id: string, patch: Partial<CourseRow>) => void;

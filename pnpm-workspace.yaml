@@ -1,6 +1,7 @@
 packages:
   - "apps/api-node"
   - "apps/web"
+  - "apps/marketing"
   - "apps/dev-tools"
   - "packages/*"
 allowBuilds:

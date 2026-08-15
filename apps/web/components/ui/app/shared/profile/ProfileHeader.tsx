@@ -1,10 +1,10 @@
 "use client";
 
-import Banner from "@/components/ui/design_system/banner/Banner";
+import Banner from "@studo/ui/design_system/banner/Banner";
 import { ProfileResponse } from "@studo/types";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
 import { useImageTextColor } from "@/hooks/overige/useImageTextColor";
-import BaseToolTip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseToolTip from "@studo/ui/design_system/tooltip/BaseToolTip";
 import { useLocale, useTranslations } from "next-intl";
 import { Hash } from "lucide-react";
 import Verified from "@/components/ui/overige/icons/Verified";

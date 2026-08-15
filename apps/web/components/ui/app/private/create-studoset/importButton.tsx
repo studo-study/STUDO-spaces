@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
 import React, { useState } from "react";
-import { ComposerAura } from "@/components/ui/design_system/composer_aura/ComposerAura";
+import { ComposerAura } from "@studo/ui/design_system/composer_aura/ComposerAura";
 
 interface ImportButtonProps {
   setShowImporter: (value: boolean) => void;

@@ -2,6 +2,10 @@ init-web:
 	@echo "installing dependencies for web"
 	cd apps/web/ && pnpm install
 
+init-marketing:
+	@echo "installing dependencies for marketing"
+	cd apps/marketing/ && pnpm install
+
 init-api:
 	@echo "installing dependencies for api"
 	cd apps/api-node/ && pnpm install
@@ -14,7 +18,7 @@ init-dev-tools:
 	@echo "intalling dependencies for devtools"
 	cd apps/dev-tools && pnpm install
 
-init-all: init-web init-api init-dev-tools init-workers
+init-all: init-web init-marketing init-api init-dev-tools init-workers
 	@echo "installing all dependencies"
 
 start-docker:
@@ -37,6 +41,10 @@ start-web:
 	@echo "starting up web..."
 	cd apps/web/ && pnpm run dev
 
+start-marketing:
+	@echo "starting up marketing..."
+	cd apps/marketing/ && pnpm run dev
+
 start-api:
 	@echo "starting up the api..."
 	cd apps/api-node/ && pnpm start dev
@@ -51,7 +59,7 @@ start-rust-workers:
 
 clean-frontend:
 	@echo "cleaning up cache..."
-	rm -rf apps/web/.next
+	rm -rf apps/web/.next apps/marketing/.next
 
 clippy:
 	@echo "running Clippy check..."

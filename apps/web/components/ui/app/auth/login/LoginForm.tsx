@@ -1,17 +1,18 @@
 "use client";
-import InputField from "@/components/ui/design_system/input/InputField";
+import InputField from "@studo/ui/design_system/input/InputField";
 import { useLocale, useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { ArrowRight, Eye, EyeClosed } from "lucide-react";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import GoogleIcon from "@/components/ui/overige/icons/companies/Google";
 import MicrosoftIcon from "@/components/ui/overige/icons/companies/Microsoft";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import { useToast } from "@/components/providers/app/ToastProvider";
+import { useRegisterForm } from "@/hooks/overige/useRegisterForm";
 
 const LoginForm = () => {
   const t = useTranslations("login");
@@ -26,6 +27,7 @@ const LoginForm = () => {
   const callbackUrl = searchParams.get("callbackUrl") || `/${locale}/home`;
   const toast = useToast();
 
+  const { loginGoogle, loginMicrosoft } = useRegisterForm();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -68,22 +70,22 @@ const LoginForm = () => {
 
       <AnimateOnMount delay={200} className={"min-w-full"}>
         <div className={"max-h-fit w-full gap-5 flex flex-col"}>
-          <LinkButton
-            href={""}
+          <BaseButton
+            onClick={loginGoogle}
             variant={"outline_link"}
             className={"min-h-12 gap-5 flex flex-row font-medium text-base"}
           >
             <GoogleIcon size={20} />
             <span className={"font-medium text-sm"}> {t("Google")}</span>
-          </LinkButton>
-          <LinkButton
-            href={""}
+          </BaseButton>
+          <BaseButton
+            onClick={loginMicrosoft}
             variant={"outline_link"}
             className={"min-h-12 gap-5 flex flex-row"}
           >
             <MicrosoftIcon size={20} />
             <span className={"font-medium text-sm"}> {t("Microsoft")}</span>
-          </LinkButton>
+          </BaseButton>
         </div>
       </AnimateOnMount>
 

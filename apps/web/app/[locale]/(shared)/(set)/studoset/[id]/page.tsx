@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import StudosetView from "@/app/[locale]/(shared)/(set)/studoset/[id]/studosetview";
-import MarketingLayout from "@/app/[locale]/(marketing)/layout";
+import MarketingLayout from "@/components/ui/app/public/PublicChrome";
 import StudosetSplashWrapper from "@/app/[locale]/(shared)/(set)/studoset/[id]/StudosetSplashWrapper";
 import PublicStudosetView from "@/app/[locale]/(shared)/(set)/studoset/[id]/PublicStudosetview";
 import { LearnStoreProvider } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";

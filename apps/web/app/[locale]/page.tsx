@@ -10,6 +10,7 @@ export default async function LocalePage() {
   if (session) {
     redirect(`/${locale}/home`);
   } else {
-    redirect(`/${locale}/welcome`); // Of waar je marketing pagina staat
+    // Marketing/landing leeft nu op studo.study; de app start op login.
+    redirect(`/${locale}/login`);
   }
 }

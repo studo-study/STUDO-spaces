@@ -1,5 +1,5 @@
 "use client";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 interface LearnLoadingProps {

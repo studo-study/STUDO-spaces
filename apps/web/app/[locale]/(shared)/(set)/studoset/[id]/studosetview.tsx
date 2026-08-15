@@ -6,8 +6,8 @@ import { Progress } from "@/components/ui/app/shared/studosets/progress/progress
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import SharePopup from "@/components/ui/app/shared/studosets/sharepopup";
 import SettingsPopup from "@/components/ui/app/shared/studosets/settingspopup";
-import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import BottomCredits from "@studo/ui/design_system/bottom_credits/BottomCredits";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
 import { useTranslations } from "next-intl";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
@@ -18,18 +18,26 @@ import { useRouter } from "next/navigation";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
-import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
+import { SegmentedControls } from "@studo/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useInView } from "react-intersection-observer";
 import JumpToBottom from "@/components/ui/app/private/create-studoset/JumpToBottom";
 import EditToggle from "@/components/ui/app/shared/studosets/EditToggle";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 import { pomodoroStore } from "@/store/course_context_menu/PomodoroStore";
 import { useLearnStore } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import classNames from "@/utils/classnames";
 import ProgressPopUpTrigger from "@/components/ui/app/shared/studosets/ProgressPopUp";
 import SvenMessage from "@/components/ui/app/shared/studosets/SvenMessage";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import { CreditCard, GraduationCap, Pencil, Zap } from "lucide-react";
+import {
+  BookOpen,
+  CreditCard,
+  GraduationCap,
+  Pencil,
+  Printer,
+  Zap,
+} from "lucide-react";
+import CourseToggle from "@/components/ui/app/shared/studosets/CourseToggle";
 
 interface viewProps {
   id: string;
@@ -75,6 +83,7 @@ export default function StudosetView({ id }: viewProps) {
   const learnSettings = useLearnStore((state) => state.learnSettings);
   const StudoSession = useStudosetStore((state) => state.studosetSession);
   const [showMessage] = useState(false);
+
   // init tab uit de store zodat de tab-visual matcht met de opgeslagen setting
   const [tab, setTab] = useState<Tab>(
     learnSettings.flaggedMode ? "flagged" : "all",
@@ -174,7 +183,6 @@ export default function StudosetView({ id }: viewProps) {
   }, [sessionCards, totalCards]);
 
   const isOwner = !!userId && userId === data?.userId;
-
   const toggleTab = (input: string) => {
     if (filter === (input as Filter)) {
       setFilter("all");
@@ -221,6 +229,22 @@ export default function StudosetView({ id }: viewProps) {
               <EditToggle id={id} />
             </BaseTooltip>
           )}
+          <BaseTooltip content={t("course")}>
+            <CourseToggle courseId={data?.course?.id ?? null} setId={id} />
+          </BaseTooltip>
+
+          <BaseTooltip content={t("print")}>
+            <Link
+              href={"/print/" + id}
+              className="inline-flex  cursor-pointer active:scale-95 transition-[scale] duration-300 flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
+                    font-atrament font-normal text-studodarkblue justify-center text-xl
+                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
+                    dark:text-white"
+            >
+              <Printer size={16} />
+            </Link>
+          </BaseTooltip>
+
           <BaseTooltip content={t("share")}>
             <SharePopup id={id} />
           </BaseTooltip>
@@ -236,21 +260,45 @@ export default function StudosetView({ id }: viewProps) {
         </div>
       </div>
       <div className={"w-full h-fit flex flex-col gap-2 mb-3"}>
-        {data?.classrooms?.[0] && (
-          <div className={"w-full flex flex-row gap-2 opacity-40 items-center"}>
-            <GraduationCap size={20} />
-            <span>
-              {t("added_to")}:{" "}
-              <Link
-                href={"/classroom/" + data?.classrooms[0].id}
-                className={"hover:underline"}
-              >
-                {data?.classrooms[0]?.name}
-              </Link>
-            </span>
-          </div>
-        )}
-
+        {data?.classrooms?.length != 0 ||
+          (data?.course && (
+            <div className={"flex flex-col gap-2 mb-5"}>
+              {data?.course && (
+                <div
+                  className={
+                    "w-full flex flex-row gap-2 text-studogrey/70 items-center"
+                  }
+                >
+                  <BookOpen size={17} />
+                  <div>
+                    {t("in_course")}:{" "}
+                    <Link
+                      href={"/course/" + data?.course.id + "/overview"}
+                      className={"hover:underline font-semibold text-studogrey"}
+                    >
+                      {data?.course.title}
+                    </Link>
+                  </div>
+                </div>
+              )}
+              {data?.classrooms?.[0] && (
+                <div
+                  className={
+                    "w-full flex flex-row gap-2 text-studogrey/70 items-center"
+                  }
+                >
+                  <GraduationCap size={20} />
+                  {t("added_to")}:{" "}
+                  <Link
+                    href={"/classroom/" + data?.classrooms[0].id}
+                    className={"hover:underline font-bold text-studogrey"}
+                  >
+                    {data?.classrooms[0]?.name}
+                  </Link>
+                </div>
+              )}
+            </div>
+          ))}
         <div className={"w-full flex flex-row gap-2 items-center"}>
           <div
             onClick={() => {

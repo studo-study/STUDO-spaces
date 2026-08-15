@@ -1,24 +1,24 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import BasePopup from "@/components/ui/design_system/popup/BasePopup";
-import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
-import InputField from "@/components/ui/design_system/input/InputField";
+import BasePopup from "@studo/ui/design_system/popup/BasePopup";
+import PopupBackdrop from "@studo/ui/design_system/popup/PopupBackdrop";
+import InputField from "@studo/ui/design_system/input/InputField";
 import IconPicker from "@/components/ui/app/private/course/layout/IconPicker";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import TagSelector from "@/components/ui/design_system/tag/TagSelector";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
+import TagSelector from "@studo/ui/design_system/tag/TagSelector";
 import { useRouter } from "next/navigation";
 import { useKeyboardShortcut } from "@/hooks/overige/useKeyboardShortcut";
 import { FaChevronRight } from "react-icons/fa";
-import IconButton from "@/components/ui/design_system/button/IconButton";
+import IconButton from "@studo/ui/design_system/button/IconButton";
 import { IoClose } from "react-icons/io5";
-import TextArea from "@/components/ui/design_system/input/TextArea";
+import TextArea from "@studo/ui/design_system/input/TextArea";
 import { FiMinus } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
 import { CalendarCheck, Link, Presentation } from "lucide-react";
 import { useCreateCourse } from "@/hooks/app/courses/useCreateCourse";
 import { useToast } from "@/components/providers/app/ToastProvider";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 
 const DEFAULT_ICON = "blue:bookopen";
 

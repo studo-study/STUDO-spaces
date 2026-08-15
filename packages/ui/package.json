@@ -1,0 +1,31 @@
+{
+  "name": "@studo/ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles/theme.css": "./styles/theme.css",
+    "./design_system/*": "./src/design_system/*"
+  },
+  "dependencies": {
+    "@studo/i18n": "workspace:*",
+    "@studo/utils": "workspace:*",
+    "katex": "^0.17.0",
+    "lucide-react": "^1.31.0",
+    "radix-ui": "^1.4.3",
+    "react-icons": "^5.5.0",
+    "shiki": "^4.1.0"
+  },
+  "peerDependencies": {
+    "next": ">=15",
+    "next-intl": ">=4",
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^6.0.3"
+  }
+}

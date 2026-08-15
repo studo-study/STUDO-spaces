@@ -1,4 +1,4 @@
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { ArrowDownUp, Funnel, SlidersHorizontal } from "lucide-react";
 import SvenIcon from "@/components/ui/overige/icons/SvenLogo";
 

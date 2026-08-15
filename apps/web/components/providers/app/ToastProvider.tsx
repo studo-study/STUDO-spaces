@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { ToastVariant } from "@/components/ui/design_system/toast/Toast.types";
-import { Toast } from "@/components/ui/design_system/toast";
+import { ToastVariant } from "@studo/ui/design_system/toast/Toast.types";
+import { Toast } from "@studo/ui/design_system/toast";
 
 type ToastItem = {
   id: string;

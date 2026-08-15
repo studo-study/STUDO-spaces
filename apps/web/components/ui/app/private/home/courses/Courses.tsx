@@ -1,6 +1,6 @@
 "use client";
-import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
-import Container from "@/components/ui/design_system/container/Container";
+import SectionHeader from "@studo/ui/design_system/section/SectionHeader";
+import Container from "@studo/ui/design_system/container/Container";
 import { useTranslations } from "next-intl";
 import CourseItem from "@/components/ui/app/private/library/courses/courseItem";
 import { useCourses } from "@/hooks/app/courses/useCourses";

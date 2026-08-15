@@ -1,6 +1,6 @@
 "use client";
-import Container from "@/components/ui/design_system/container/Container";
-import SectionHeader from "@/components/ui/design_system/section/SectionHeader";
+import Container from "@studo/ui/design_system/container/Container";
+import SectionHeader from "@studo/ui/design_system/section/SectionHeader";
 import { useTranslations } from "next-intl";
 import { BsCollection } from "react-icons/bs";
 import { LastStudied } from "@studo/types";

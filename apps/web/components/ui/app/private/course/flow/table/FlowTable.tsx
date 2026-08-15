@@ -1,5 +1,5 @@
 "use client";
-import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
+import { SegmentedControls } from "@studo/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useState } from "react";
 import { List, Table } from "lucide-react";
 import TableControls from "@/components/ui/app/private/course/flow/table/TableControls";

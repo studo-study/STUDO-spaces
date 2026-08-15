@@ -1,8 +1,8 @@
 "use client";
 import { Link, usePathname } from "@/i18n/routing";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { CircleX, LoaderCircle, Plus } from "lucide-react";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 import ExtendCoursePopup from "@/components/ui/app/private/course/cursus/cursus_overview/ExtendCoursePopup";
 import { useState } from "react";
 import { CourseDocument } from "@studo/types";

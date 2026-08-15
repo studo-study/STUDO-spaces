@@ -11,7 +11,7 @@ import CreateCourse from "@/components/ui/app/private/course/CreateCourse";
 import AppLayoutContext from "@/components/context/AppLayoutContext";
 import { useAppStore } from "@/store/useAppStore";
 import { usePathname } from "next/navigation";
-import ResizablePanelLayout from "@/components/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
+import ResizablePanelLayout from "@studo/ui/design_system/resizable_panel_layout/ResizablePanelLayout";
 import CourseSidebar from "@/components/ui/app/private/course_context_menu/CourseSidebar";
 import SideMenu from "@/components/ui/app/private/course_context_menu/SideMenu";
 import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";

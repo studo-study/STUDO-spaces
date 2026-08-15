@@ -1,7 +1,7 @@
 // (set)/layout.tsx
 import { auth } from "@/auth";
 import AuthLayout from "@/app/[locale]/(app)/layout";
-import MarketingLayout from "@/app/[locale]/(marketing)/layout";
+import MarketingLayout from "@/components/ui/app/public/PublicChrome";
 import { ReactNode } from "react";
 
 export default async function SetLayout({ children }: { children: ReactNode }) {

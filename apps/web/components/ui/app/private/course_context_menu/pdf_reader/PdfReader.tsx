@@ -1,12 +1,12 @@
 "use client";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
-import ToggleAbleSearchbar from "@/components/ui/design_system/search/ToggleAbleSearchbar";
+import ToggleAbleSearchbar from "@studo/ui/design_system/search/ToggleAbleSearchbar";
 import PdfIndex from "@/components/ui/app/private/course_context_menu/pdf_reader/PdfIndex";
 import { useRef } from "react";
 import PdfCanvas from "@/components/ui/app/private/course_context_menu/pdf_reader/PdfCanvas";
 import { mockDocument } from "@/components/ui/app/private/course_context_menu/pdf_reader/mock/mock";
 import { usePdfReader } from "@/store/course_context_menu/PdfStore";
-import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
+import ButtonRow from "@studo/ui/design_system/button/ButtonRow";
 import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
 
 const PdfReader: React.FC = () => {

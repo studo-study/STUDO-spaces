@@ -1,0 +1,37 @@
+@import url('https://use.typekit.net/fmn3jvz.css');
+
+@import "tailwindcss";
+@import "@studo/ui/styles/theme.css";
+
+/* Design-system componenten leven in het @studo/ui pakket; scan hun classes. */
+@source "../../../packages/ui/src/design_system";
+/* Scan ook de landing-componenten van deze app. */
+@source "../components";
+
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('../public/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('../public/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'akira';
+    src: url('../public/fonts/akira/akira.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'georgia';
+    src: url('../public/fonts/georgia/georgia.woff') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
