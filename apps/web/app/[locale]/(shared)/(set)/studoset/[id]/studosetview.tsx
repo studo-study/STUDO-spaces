@@ -16,7 +16,13 @@ import { useSplash } from "@/components/providers/app/SplashProvider";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useRouter } from "next/navigation";
 import { useLikeStudoset } from "@/hooks/app/sets/useLikeStudoset";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import FlashcardMode from "@/components/ui/app/shared/studosets/modes/flashcards/FlashcardMode";
 import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useInView } from "react-intersection-observer";
@@ -38,6 +44,7 @@ import {
   Zap,
 } from "lucide-react";
 import CourseToggle from "@/components/ui/app/shared/studosets/CourseToggle";
+import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
 
 interface viewProps {
   id: string;
@@ -83,6 +90,7 @@ export default function StudosetView({ id }: viewProps) {
   const learnSettings = useLearnStore((state) => state.learnSettings);
   const StudoSession = useStudosetStore((state) => state.studosetSession);
   const [showMessage] = useState(false);
+
   // init tab uit de store zodat de tab-visual matcht met de opgeslagen setting
   const [tab, setTab] = useState<Tab>(
     learnSettings.flaggedMode ? "flagged" : "all",
@@ -229,7 +237,7 @@ export default function StudosetView({ id }: viewProps) {
             </BaseTooltip>
           )}
           <BaseTooltip content={t("course")}>
-            <CourseToggle />
+            <CourseToggle courseId={data?.course?.id ?? null} setId={id} />
           </BaseTooltip>
 
           <BaseTooltip content={t("print")}>

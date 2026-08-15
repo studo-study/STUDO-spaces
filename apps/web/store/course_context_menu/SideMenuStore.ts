@@ -13,6 +13,8 @@ export interface menuInfo {
   isOpen: boolean;
   origin: MenuOrigin | null;
   chat_id?: string | null;
+  course_id?: string | null;
+  set_id?: string | null;
 }
 
 interface SideMenuStore {
