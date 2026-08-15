@@ -1,6 +1,6 @@
 import ContextMenuHeader from "@/components/ui/app/private/course_context_menu/ContextMenuHeader";
 import { useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useReprocessDocument } from "@/hooks/app/courses/useReprocessDocument";
 import { usePathname } from "@/i18n/routing";

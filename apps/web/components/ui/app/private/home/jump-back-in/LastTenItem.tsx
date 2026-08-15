@@ -1,6 +1,6 @@
-import Container from "@/components/ui/design_system/container/Container";
+import Container from "@studo/ui/design_system/container/Container";
 import { LastStudied } from "@studo/types";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
 import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
 import Link from "next/link";

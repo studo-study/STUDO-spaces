@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
+import SimpleMenu from "@studo/ui/design_system/simple_menu/SimpleMenu";
 import { BookOpen, ChevronRight, GalleryVerticalEnd, Plus } from "lucide-react";
 
 interface TriggerAddProps {

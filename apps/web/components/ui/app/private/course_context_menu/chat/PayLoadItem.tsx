@@ -1,11 +1,11 @@
 "use client";
 import { CreditCardIcon, Layers, X } from "lucide-react";
 import { Payload } from "@/components/ui/app/private/course_context_menu/chat/ChatInput";
-import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
+import SimpleMenu from "@studo/ui/design_system/simple_menu/SimpleMenu";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { SetStateAction } from "react";
 import classNames from "@/utils/classnames";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 
 interface SetCardsProps {
   id: string;

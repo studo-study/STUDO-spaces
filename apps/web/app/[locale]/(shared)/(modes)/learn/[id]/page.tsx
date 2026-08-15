@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import LearnController from "@/app/[locale]/(shared)/(modes)/learn/[id]/learncontroller";
 import { LearnStoreProvider } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import { ArrowLeft } from "lucide-react";
 
 export default async function LearnPage({

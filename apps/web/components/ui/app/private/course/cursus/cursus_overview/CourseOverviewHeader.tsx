@@ -1,6 +1,6 @@
 "use client";
 import BottomProgress from "@/components/ui/app/private/course/cursus/cursus_overview/BottomProgress";
-import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
+import { Tabs } from "@studo/ui/design_system/tabs/Tabs";
 import {
   BookOpen,
   Files,
@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import SearchBar from "@/components/ui/app/private/app_header/SearchContainer";
 import React, { SetStateAction, useRef, useState } from "react";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { useTranslations } from "next-intl";
 import { CourseTab } from "@/components/ui/app/private/course/cursus/cursus_overview/FileGrid";
 import { CourseDocument } from "@studo/types";

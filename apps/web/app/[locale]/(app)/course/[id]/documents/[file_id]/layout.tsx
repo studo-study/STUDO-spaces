@@ -2,7 +2,7 @@
 import { usePathname } from "@/i18n/routing";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import React, { ReactNode } from "react";
-import ButtonRow from "@/components/ui/design_system/button/ButtonRow";
+import ButtonRow from "@studo/ui/design_system/button/ButtonRow";
 import { ChevronDown, ChevronUp, LoaderCircle, Plus } from "lucide-react";
 import { useCourseNavStore } from "@/store/course/CourseNavStore";
 import { useFile } from "@/hooks/app/courses/useFile";

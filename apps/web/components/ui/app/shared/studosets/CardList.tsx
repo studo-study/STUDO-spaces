@@ -4,7 +4,7 @@ import CardItem from "@/components/ui/app/shared/studosets/carditem";
 import { useStudosetStore } from "@/store/slices/studoset/studosetStore";
 import { useTranslations } from "next-intl";
 import { MdEdit } from "react-icons/md";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import { CardResponse, SessionCardResponse } from "@studo/types";
 
 interface CardListProps {

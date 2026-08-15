@@ -1,5 +1,5 @@
 "use client";
-import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
+import SimpleMenu from "@studo/ui/design_system/simple_menu/SimpleMenu";
 import { useLocale, useTranslations } from "next-intl";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { usePathname } from "@/i18n/routing";

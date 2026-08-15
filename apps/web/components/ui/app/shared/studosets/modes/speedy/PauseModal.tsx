@@ -1,9 +1,9 @@
 "use client";
-import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
-import BasePopup from "@/components/ui/design_system/popup/BasePopup";
+import PopupBackdrop from "@studo/ui/design_system/popup/PopupBackdrop";
+import BasePopup from "@studo/ui/design_system/popup/BasePopup";
 import { useRef } from "react";
 import { useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { IoArrowBack } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa";
 

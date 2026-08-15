@@ -1,5 +1,5 @@
 "use client";
-import SimpleMenu from "@/components/ui/design_system/simple_menu/SimpleMenu";
+import SimpleMenu from "@studo/ui/design_system/simple_menu/SimpleMenu";
 import { useTranslations } from "next-intl";
 import { useDeleteStudoset } from "@/hooks/app/sets/useDeleteStudoset";
 import { useRouter } from "@/i18n/routing";
@@ -7,7 +7,7 @@ import { useUpdateStudyset } from "@/hooks/app/sets/useUpdateStudoset";
 import { useResetSession } from "@/hooks/app/session/useResetSession";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { Cog } from "lucide-react";
-import ToggleField from "@/components/ui/design_system/input/ToggleField";
+import ToggleField from "@studo/ui/design_system/input/ToggleField";
 
 interface SettingsPopupProps {
   isOwner: boolean;

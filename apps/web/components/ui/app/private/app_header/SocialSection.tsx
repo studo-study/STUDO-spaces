@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { RiWifiOffLine } from "react-icons/ri";
 import { useTranslations } from "next-intl";
-import BaseToolTip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseToolTip from "@studo/ui/design_system/tooltip/BaseToolTip";
 
 const OnlineScanner = () => {
   const [isOnline, setIsOnline] = useState(() =>

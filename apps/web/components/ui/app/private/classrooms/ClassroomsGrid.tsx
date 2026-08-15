@@ -7,7 +7,7 @@ import ClassroomOverviewItem from "@/components/ui/app/private/classrooms/Classr
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useClassrooms } from "@/hooks/app/classrooms/useClassrooms";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import Select from "@/components/ui/design_system/select/Select";
+import Select from "@studo/ui/design_system/select/Select";
 
 export default function ClassroomGrid() {
   const { classrooms, isLoading } = useClassrooms();

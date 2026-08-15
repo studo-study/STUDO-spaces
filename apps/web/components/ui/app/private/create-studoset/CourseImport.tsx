@@ -5,9 +5,9 @@ import { useCourses } from "@/hooks/app/courses/useCourses";
 import FlowIcon from "@/components/ui/app/private/course/layout/FlowIcon";
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import classNames from "@/utils/classnames";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { HiSparkles } from "react-icons/hi";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import { MoveUpLeft, Upload } from "lucide-react";
 
 interface CourseImportInterface {

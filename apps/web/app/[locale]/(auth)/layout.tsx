@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import { ArrowLeft } from "lucide-react";
-import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
+import BottomCredits from "@studo/ui/design_system/bottom_credits/BottomCredits";
 import Image from "next/image";
 import { headers } from "next/headers";
+import IcoSwitcher from "@/components/ui/overige/effects/IcoSwitcher";
 export default async function AuthLayout({
   children,
 }: {
@@ -17,6 +18,7 @@ export default async function AuthLayout({
         "dark:text-white text-studodarkblue relative min-w-0 min-h-full flex-1 flex"
       }
     >
+      <IcoSwitcher />
       <div
         className={
           "z-30 flex flex-col gap-5 min-w-0 min-h-0 flex-1 p-5 bg-white dark:bg-bg-dark"
@@ -34,7 +36,7 @@ export default async function AuthLayout({
           >
             <div className={"max-w-fit"}>
               <LinkButton
-                href={"/welcome"}
+                href={process.env.NEXT_PUBLIC_MARKETING + "/welcome"}
                 icon={<ArrowLeft />}
                 variant={"hover"}
               />

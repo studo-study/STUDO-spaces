@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { ArrowRight, CircleQuestionMark } from "lucide-react";
 import classNames from "@/utils/classnames";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import HintCanvas from "@/app/[locale]/(shared)/(modes)/learn/[id]/HintCanvas";
 import type { Phase } from "@/app/[locale]/(shared)/(modes)/learn/[id]/useLearnCard";
 

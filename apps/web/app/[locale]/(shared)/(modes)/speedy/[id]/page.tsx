@@ -1,7 +1,7 @@
 import SpeedyMode from "@/components/ui/app/shared/studosets/modes/speedy/SpeedyMode";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
+import PageContainer from "@studo/ui/design_system/page/PageContainer";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import { ArrowLeft } from "lucide-react";
 
 export default async function SpeedyPage({

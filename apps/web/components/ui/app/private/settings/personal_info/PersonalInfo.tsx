@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import classNames from "@/utils/classnames";
 import { useUser } from "@/components/providers/auth/UserProvider";
 import { useUpdateUser } from "@/hooks/app/account/useUpdateUser";

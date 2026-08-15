@@ -1,5 +1,5 @@
 import { UserResponse } from "@studo/types";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
 import { GoDotFill } from "react-icons/go";
 import { TbFlameFilled } from "react-icons/tb";
 import Link from "next/link";

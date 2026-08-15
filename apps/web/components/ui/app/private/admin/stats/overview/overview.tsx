@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useAdminStats } from "@/hooks/app/admin/useAdminStats";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
 import Link from "next/link";
 import { TbBook, TbPhoto } from "react-icons/tb";
 import { GoDotFill } from "react-icons/go";

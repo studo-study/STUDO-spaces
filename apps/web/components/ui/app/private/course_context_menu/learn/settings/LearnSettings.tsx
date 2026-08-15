@@ -1,13 +1,13 @@
 import ContextMenuHeader from "@/components/ui/app/private/course_context_menu/ContextMenuHeader";
-import { SwitchToggle } from "@/components/ui/design_system/toggle/Toggle";
+import { SwitchToggle } from "@studo/ui/design_system/toggle/Toggle";
 import {
   DEFAULT_LEARN_SETTINGS,
   useLearnStore,
 } from "@/app/[locale]/(shared)/(modes)/learn/[id]/learnStore";
 import { useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
-import SimpleSlider from "@/components/ui/design_system/slider/SimpleSlider";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
+import { Tabs } from "@studo/ui/design_system/tabs/Tabs";
+import SimpleSlider from "@studo/ui/design_system/slider/SimpleSlider";
 import { useToast } from "@/components/providers/app/ToastProvider";
 import { useResetSession } from "@/hooks/app/session/useResetSession";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";

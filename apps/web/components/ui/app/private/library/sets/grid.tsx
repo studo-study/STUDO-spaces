@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useSets } from "@/hooks/app/sets/useSets";
 import { StudysetResponse, type VisualsetResponse } from "@studo/types";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import Select from "@/components/ui/design_system/select/Select";
+import Select from "@studo/ui/design_system/select/Select";
 
 export interface StudySetItem {
   id: string;

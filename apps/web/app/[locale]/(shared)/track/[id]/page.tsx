@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import AuthLayout from "@/app/[locale]/(app)/layout";
-import MarketingLayout from "@/app/[locale]/(marketing)/layout";
+import MarketingLayout from "@/components/ui/app/public/PublicChrome";
 import TrackView from "@/app/[locale]/(shared)/track/[id]/TrackView";
 
 export default async function TrackPage() {

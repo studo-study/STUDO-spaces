@@ -7,7 +7,7 @@ import type { StudySetItem } from "@/components/ui/app/private/library/sets/grid
 import { useCourse } from "@/hooks/app/courses/useCourse";
 import { useParams } from "next/navigation";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
-import Select from "@/components/ui/design_system/select/Select";
+import Select from "@studo/ui/design_system/select/Select";
 
 export default function CourseSetsGrid() {
   const { id } = useParams<{ id: string }>();

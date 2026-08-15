@@ -1,7 +1,7 @@
 "use client";
 import React, { SetStateAction, useCallback, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { HiSparkles } from "react-icons/hi";
 import { LuFileText } from "react-icons/lu";
 import { BsFilePdf } from "react-icons/bs";

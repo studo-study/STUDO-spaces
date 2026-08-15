@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { IoIosAdd } from "react-icons/io";
 import React, { useState } from "react";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
-import LaTexInput from "@/components/ui/design_system/input/LaTeXInput";
+import LaTexInput from "@studo/ui/design_system/input/LaTeXInput";
 import ImageTrigger from "@/components/ui/app/private/create-studoset/ImageTrigger";
 import ImageSuggestionTab from "@/components/ui/app/private/create-studoset/ImageSuggestionTab";
 import { SuggestionImage } from "@studo/types";

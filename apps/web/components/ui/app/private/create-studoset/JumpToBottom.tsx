@@ -1,5 +1,5 @@
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import AnimateOnScroll from "@/components/ui/overige/effects/AnimateOnScroll";
 
 interface JumpToBottomProps {

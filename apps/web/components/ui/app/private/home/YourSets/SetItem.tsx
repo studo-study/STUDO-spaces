@@ -1,6 +1,6 @@
 import { LastStudied } from "@studo/types";
 import { Link } from "@/i18n/routing";
-import SmallProgress from "@/components/ui/design_system/progress/SmallProgress";
+import SmallProgress from "@studo/ui/design_system/progress/SmallProgress";
 import { GalleryVerticalEnd, Images } from "lucide-react";
 
 interface SetItemProps {

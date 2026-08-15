@@ -1,6 +1,6 @@
 "use client";
 import { mockSummary } from "@/components/ui/app/private/course_context_menu/pdf_reader/mock/mock";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 import classNames from "@/utils/classnames";
 import { useMemo, useState } from "react";
 

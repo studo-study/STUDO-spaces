@@ -1,7 +1,7 @@
 // app/studosets/[flow_id]/layout.tsx
 import { auth } from "@/auth";
 import AuthLayout from "@/app/[locale]/(app)/layout";
-import MarketingLayout from "@/app/[locale]/(marketing)/layout";
+import MarketingLayout from "@/components/ui/app/public/PublicChrome";
 import ProfileView from "@/app/[locale]/(shared)/profile/[id]/ProfileView";
 
 export default async function ProfilePage({

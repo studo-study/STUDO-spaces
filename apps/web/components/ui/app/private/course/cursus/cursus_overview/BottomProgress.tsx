@@ -1,4 +1,4 @@
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { LoaderCircle, File } from "lucide-react";
 import { CourseDocument } from "@studo/types";
 import { useTranslations } from "next-intl";

@@ -1,6 +1,6 @@
 "use client";
-import PopupBackdrop from "@/components/ui/design_system/popup/PopupBackdrop";
-import BasePopup from "@/components/ui/design_system/popup/BasePopup";
+import PopupBackdrop from "@studo/ui/design_system/popup/PopupBackdrop";
+import BasePopup from "@studo/ui/design_system/popup/BasePopup";
 import { SetStateAction, useEffect, useMemo, useRef, useState } from "react";
 import {
   CheckCheck,

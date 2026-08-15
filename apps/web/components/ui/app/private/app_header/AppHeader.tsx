@@ -16,7 +16,7 @@ import {
   SpecialeDagTitel,
 } from "@/components/ui/app/private/app_header/SpecialeDag";
 import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import Streak from "@/components/ui/overige/icons/Streak";
 import { useSettings } from "@/hooks/app/settings/useSettings";
 

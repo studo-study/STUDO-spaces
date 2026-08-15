@@ -1,5 +1,5 @@
 "use client";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import { PaperclipIcon, Send } from "lucide-react";
 import { useRef, useState } from "react";
 import EntityPickerDropdown from "@/components/ui/app/private/course_context_menu/chat/EntityPickerDropdown";

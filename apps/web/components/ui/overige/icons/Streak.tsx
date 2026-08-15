@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import StreakPopup from "@/components/ui/app/private/app_header/StreakPopup";
-import BaseTooltip from "@/components/ui/design_system/tooltip/BaseToolTip";
+import BaseTooltip from "@studo/ui/design_system/tooltip/BaseToolTip";
 
 interface StreakProps {
   size?: number;

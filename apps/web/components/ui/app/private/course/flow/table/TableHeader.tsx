@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import classNames from "@/utils/classnames";
 import { GripVertical, Plus } from "lucide-react";
 import { CSSProperties, Dispatch, SetStateAction } from "react";
-import Check from "@/components/ui/design_system/input/Check";
+import Check from "@studo/ui/design_system/input/Check";
 import useCourseFlowStore from "@/components/ui/app/private/course/flow/table/courseFlowStore";
 import type { CourseRow } from "@studo/types";
 

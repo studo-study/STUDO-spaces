@@ -1,11 +1,11 @@
 "use client";
 
 import { ReactNode } from "react";
-import CheckBox from "@/components/ui/design_system/input/ToggleField";
-import Select from "@/components/ui/design_system/select/Select";
+import CheckBox from "@studo/ui/design_system/input/ToggleField";
+import Select from "@studo/ui/design_system/select/Select";
 import BaseButton, {
   BaseButtonVariant,
-} from "@/components/ui/design_system/button/BaseButton";
+} from "@studo/ui/design_system/button/BaseButton";
 
 interface ICheckboxItem {
   label: string;

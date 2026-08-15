@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { GrPowerReset } from "react-icons/gr";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 
 interface LearnDoneProps {
   count: number;

@@ -2,8 +2,8 @@
 import { useSideMenu } from "@/store/course_context_menu/SideMenuStore";
 import PdfReader from "./PdfReader";
 import { useTranslations } from "next-intl";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
-import { Link, X } from "lucide-react";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
+import { Link } from "lucide-react";
 import ContextMenuHeader from "@/components/ui/app/private/course_context_menu/ContextMenuHeader";
 
 const CourseOverview = () => {

@@ -3,7 +3,7 @@ import { useState } from "react";
 import SvenImport from "@/components/ui/app/private/create-studoset/svenimport";
 import Textimport from "@/components/ui/app/private/create-studoset/textimport";
 import { CardData } from "@/types/types";
-import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
+import { SegmentedControls } from "@studo/ui/design_system/segmentedcontrols/SegmentedControls";
 import CourseImport from "@/components/ui/app/private/create-studoset/CourseImport";
 import classNames from "@/utils/classnames";
 import { TextSearch, Library, XIcon, BroomSparkles } from "lucide-react";

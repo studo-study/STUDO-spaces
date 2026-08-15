@@ -1,16 +1,16 @@
 "use client";
 import ProfileHeader from "@/components/ui/app/shared/profile/ProfileHeader";
-import PageContainer from "@/components/ui/design_system/page/PageContainer";
+import PageContainer from "@studo/ui/design_system/page/PageContainer";
 import { useProfile } from "@/hooks/app/profile/useProfiles";
 import { usePublicProfile } from "@/hooks/app/profile/usePublicProfile";
-import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
+import { SegmentedControls } from "@studo/ui/design_system/segmentedcontrols/SegmentedControls";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "@/i18n/routing";
 import { StudysetResponse, VisualsetResponse } from "@studo/types";
 import { useCourseNav } from "@/hooks/app/courses/useCourseNav";
 import { ArrowRight, GalleryVerticalEnd, Images } from "lucide-react";
-import BottomCredits from "@/components/ui/design_system/bottom_credits/BottomCredits";
+import BottomCredits from "@studo/ui/design_system/bottom_credits/BottomCredits";
 
 interface viewProps {
   id: string;

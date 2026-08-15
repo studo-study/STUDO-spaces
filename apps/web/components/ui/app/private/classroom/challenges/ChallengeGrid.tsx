@@ -11,7 +11,7 @@ import { IoHourglassOutline } from "react-icons/io5";
 import { GiPodium, GiSwordsEmblem } from "react-icons/gi";
 import { useEffect, useRef, useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import Avatar from "@/components/ui/design_system/avatar/Avatar";
+import Avatar from "@studo/ui/design_system/avatar/Avatar";
 
 export default function ChallengeGrid() {
   const challenges = mockChallenges;

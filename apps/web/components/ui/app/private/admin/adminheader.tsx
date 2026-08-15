@@ -1,10 +1,10 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { Tabs } from "@/components/ui/design_system/tabs/Tabs";
+import { Tabs } from "@studo/ui/design_system/tabs/Tabs";
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import LinkButton from "@/components/ui/design_system/button/LinkButton";
+import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import { ChevronLeft } from "lucide-react";
 
 export default function AdminHeader() {

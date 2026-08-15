@@ -1,7 +1,7 @@
 "use client";
 import { SetStateAction, useEffect, useRef, useState } from "react";
 import classNames from "@/utils/classnames";
-import { SegmentedControls } from "@/components/ui/design_system/segmentedcontrols/SegmentedControls";
+import { SegmentedControls } from "@studo/ui/design_system/segmentedcontrols/SegmentedControls";
 import { usePathname } from "@/i18n/routing";
 import { useStudoset } from "@/hooks/app/sets/useStudoset";
 import { useTranslations } from "next-intl";

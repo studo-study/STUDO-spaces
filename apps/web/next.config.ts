@@ -10,6 +10,12 @@ const withBundleAnalyzer = createBundleAnalyzer({
 
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname, "../.."),
+  transpilePackages: [
+    "@studo/ui",
+    "@studo/utils",
+    "@studo/i18n",
+    "@studo/types",
+  ],
   experimental: {
     optimizePackageImports: [
       "react-icons",

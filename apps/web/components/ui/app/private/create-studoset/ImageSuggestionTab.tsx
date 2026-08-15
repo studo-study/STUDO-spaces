@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useImageSuggestions } from "@/hooks/app/sets/useImageSuggestions";
 import { IoMdRefresh } from "react-icons/io";
-import BaseButton from "@/components/ui/design_system/button/BaseButton";
+import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import ImageItem from "@/components/ui/app/private/create-studoset/ImageItem";
 import { SuggestionImage } from "@studo/types";
 

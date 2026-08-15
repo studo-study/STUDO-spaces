@@ -20,7 +20,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@studo/ui/design_system/*": ["../../packages/ui/src/design_system/*"]
     }
   },
   "include": [
