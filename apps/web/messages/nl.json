@@ -1651,7 +1651,9 @@
       "sample_exam": "Voorbeeldexamen",
       "task": "Taak",
       "set": "Set",
-      "course_label": "Cursus"
+      "course_label": "Cursus",
+      "not_in_course_yet": "Nog niet in een vak",
+      "add_to_course": "toevoegen aan vak"
     }
   },
   "courses": {
