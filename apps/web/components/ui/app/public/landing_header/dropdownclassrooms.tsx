@@ -53,19 +53,19 @@ const toolCategories = [
     color: "emerald",
     items: [
       {
-        to: "/classes",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/classes",
         icon: <IoSchoolOutline />,
         label: "class_group",
         gradient: "from-green-300 to-emerald-500",
       },
       {
-        to: "/studygroups",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/studygroups",
         icon: <FaUserFriends />,
         label: "study_group",
         gradient: "from-cyan-300 to-sky-500",
       },
       {
-        to: "/communities",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/communities",
         icon: <TbWorld />,
         label: "community_group",
         gradient: "from-indigo-300 to-violet-500",
@@ -77,19 +77,20 @@ const toolCategories = [
     color: "violet",
     items: [
       {
-        to: "/challenges/time-attack",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/challenges/time-attack",
         icon: <IoHourglassOutline />,
         label: "time",
         gradient: "from-fuchsia-300 to-pink-500",
       },
       {
-        to: "/challenges/mastery-tournament",
+        to:
+          process.env.NEXT_PUBLIC_MARKETING + "/challenges/mastery-tournament",
         icon: <GiPodium />,
         label: "mastery",
         gradient: "from-red-300 to-orange-500",
       },
       {
-        to: "/challenges/duel",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/challenges/duel",
         icon: <GiSwordsEmblem />,
         label: "duel",
         gradient: "from-amber-300 to-yellow-600",

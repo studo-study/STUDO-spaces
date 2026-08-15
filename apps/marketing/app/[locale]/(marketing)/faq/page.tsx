@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { buildSeoMetadata } from "@/lib/seo";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import BlogItem from "@/components/ui/app/public/blog/BlogItem";
 
@@ -8,81 +9,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const messages = (await import(`../../../../messages/seo/faq/${locale}.json`))
-    .default;
-
-  const baseUrl = "https://studo.study";
-  const localeUrl = `${baseUrl}/${locale}/faq`;
-
-  return {
-    title: messages.title,
-    description: messages.description,
-    keywords: messages.keywords,
-
-    alternates: {
-      canonical: localeUrl,
-      languages: {
-        en: `${baseUrl}/en/faq`,
-        nl: `${baseUrl}/nl/faq`,
-        fr: `${baseUrl}/fr/faq`,
-        es: `${baseUrl}/es/faq`,
-        "x-default": `${baseUrl}/en/faq`,
-      },
-    },
-
-    openGraph: {
-      title: messages.title,
-      description: messages.description,
-      url: localeUrl,
-      siteName: "Studo",
-      type: "website",
-      locale: locale === "en" ? "en_US" : `${locale}_${locale.toUpperCase()}`,
-      alternateLocale: ["en_US", "nl_NL", "fr_FR", "es_ES"].filter(
-        (l) => !l.startsWith(locale),
-      ),
-      images: [
-        {
-          url: `${baseUrl}${messages.ogImage}`,
-          width: 1200,
-          height: 630,
-          alt: messages.title,
-        },
-      ],
-    },
-
-    twitter: {
-      card: "summary_large_image",
-      title: messages.title,
-      description: messages.description,
-      images: [`${baseUrl}${messages.ogImage}`],
-      creator: "@studo",
-      site: "@studo",
-    },
-
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-snippet": -1,
-        "max-image-preview": "large",
-        "max-video-preview": -1,
-      },
-    },
-
-    icons: {
-      icon: "/favicon.ico",
-      apple: "/apple-touch-icon.png",
-    },
-
-    applicationName: "Studo",
-    category: "education",
-
-    verification: {
-      google: "jouw-google-verification-code",
-    },
-  };
+  return buildSeoMetadata("faq", "/faq", locale);
 }
 
 const FAQ_CATEGORIES = [

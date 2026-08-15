@@ -55,19 +55,19 @@ const toolCategories = [
     color: "emerald",
     items: [
       {
-        to: "/tools/learn",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/tools/learn",
         icon: Pencil,
         label: "learn",
         gradient: "from-emerald-400 to-emerald-500",
       },
       {
-        to: "/tools/speedy",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/tools/speedy",
         icon: Timer,
         label: "speedy",
         gradient: "from-amber-400 to-orange-500",
       },
       {
-        to: "/tools/flashcards",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/tools/flashcards",
         icon: GalleryHorizontalEnd,
         label: "flashcards",
         gradient: "from-blue-400 to-blue-500",
@@ -79,13 +79,13 @@ const toolCategories = [
     color: "violet",
     items: [
       {
-        to: "/tools/identify",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/tools/identify",
         icon: Crosshair,
         label: "identify",
         gradient: "from-rose-400 to-red-500",
       },
       {
-        to: "/tools/point",
+        to: process.env.NEXT_PUBLIC_MARKETING + "/tools/point",
         icon: MousePointer2,
         label: "point",
         gradient: "from-violet-400 to-purple-500",

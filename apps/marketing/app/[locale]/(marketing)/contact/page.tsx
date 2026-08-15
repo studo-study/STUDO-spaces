@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { buildSeoMetadata } from "@/lib/seo";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 
 export async function generateMetadata({
@@ -7,82 +8,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const messages = (
-    await import(`../../../../messages/seo/contact/${locale}.json`)
-  ).default;
-
-  const baseUrl = "https://studo.study";
-  const localeUrl = `${baseUrl}/${locale}/contact`;
-
-  return {
-    title: messages.title,
-    description: messages.description,
-    keywords: messages.keywords,
-
-    alternates: {
-      canonical: localeUrl,
-      languages: {
-        en: `${baseUrl}/en/contact`,
-        nl: `${baseUrl}/nl/contact`,
-        fr: `${baseUrl}/fr/contact`,
-        es: `${baseUrl}/es/contact`,
-        "x-default": `${baseUrl}/en/contact`,
-      },
-    },
-
-    openGraph: {
-      title: messages.title,
-      description: messages.description,
-      url: localeUrl,
-      siteName: "Studo",
-      type: "website",
-      locale: locale === "en" ? "en_US" : `${locale}_${locale.toUpperCase()}`,
-      alternateLocale: ["en_US", "nl_NL", "fr_FR", "es_ES"].filter(
-        (l) => !l.startsWith(locale),
-      ),
-      images: [
-        {
-          url: `${baseUrl}${messages.ogImage}`,
-          width: 1200,
-          height: 630,
-          alt: messages.title,
-        },
-      ],
-    },
-
-    twitter: {
-      card: "summary_large_image",
-      title: messages.title,
-      description: messages.description,
-      images: [`${baseUrl}${messages.ogImage}`],
-      creator: "@studo",
-      site: "@studo",
-    },
-
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-snippet": -1,
-        "max-image-preview": "large",
-        "max-video-preview": -1,
-      },
-    },
-
-    icons: {
-      icon: "/favicon.ico",
-      apple: "/apple-touch-icon.png",
-    },
-
-    applicationName: "Studo",
-    category: "education",
-
-    verification: {
-      google: "jouw-google-verification-code",
-    },
-  };
+  return buildSeoMetadata("contact", "/contact", locale);
 }
 
 export default function ContactPage() {
