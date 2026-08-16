@@ -46,19 +46,19 @@ export default function TriggerMethods({
 
 const menuItems = [
   {
-    to: "/modes/studosets",
+    to: process.env.NEXT_PUBLIC_MARKETING + "/modes/studosets",
     icon: Layers,
     label: "ss",
     color: "from-emerald-400 to-teal-500",
   },
   {
-    to: "/modes/visualsets",
+    to: process.env.NEXT_PUBLIC_MARKETING + "/modes/visualsets",
     icon: Images,
     label: "vs",
     color: "from-blue-400 to-indigo-500",
   },
   {
-    to: "/modes/ai",
+    to: process.env.NEXT_PUBLIC_MARKETING + "/modes/ai",
     icon: Sparkles,
     label: "ai",
     color: "from-violet-400 to-purple-500",

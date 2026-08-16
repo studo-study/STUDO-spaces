@@ -29,49 +29,63 @@ Studo lost dit op met:
 
 ## Tech Stack
 
-| Layer           | Technologie                                          |
-| --------------- | ---------------------------------------------------- |
-| Frontend        | Next.js 16, React 19, TypeScript, Tailwind CSS 4     |
-| Backend (Node)  | NestJS 11, TypeScript, Drizzle ORM                   |
-| Backend (Rust)  | Rust microservices                                   |
-| Backend (Swift) | Swift API services                                   |
-| Mobile          | React Native, Expo                                   |
-| Database        | PostgreSQL, Redis, Qdrant                            |
-| Storage         | Scaleway S3                                          |
-| Auth            | NextAuth 5 (Google, Microsoft Entra ID, Credentials) |
-| AI              | Google Generative AI                                 |
-| State           | Zustand, React Query                                 |
-| UI              | Lucide Icons                                         |
-| i18n            | next-intl (en, nl, fr)                               |
-| Infra           | Docker, Railway, Turborepo                           |
+| Layer           | Technologie                                                                    |
+| --------------- | ------------------------------------------------------------------------------ |
+| Frontend        | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Radix UI        |
+| Marketing       | Next.js 16 (aparte app, next-intl, geen auth)                                  |
+| Dev-tools       | Vite 7, React Router 7, Tailwind 4                                             |
+| Backend (Node)  | NestJS 11, Express 5, Drizzle ORM, Swagger                                     |
+| Backend (Rust)  | Rust worker — Diesel (async) + pgvector, pdfium-render (PDF), Tokio            |
+| Backend (Swift) | Swift API services _(legacy — nog niet verwijderd)_                            |
+| Mobile          | React Native 0.81, Expo 54 (expo-router, Reanimated 4)                         |
+| Database        | PostgreSQL + pgvector (embeddings), Redis (cache + streams-queue)              |
+| Storage         | S3 (AWS SDK, Scaleway-compatible)                                              |
+| Auth (Web)      | NextAuth 5 (Google, Microsoft Entra ID, Credentials)                           |
+| Auth (API)      | NestJS Passport — Google / Microsoft / Facebook OAuth + JWT, argon2            |
+| AI              | Google Generative AI (Gemini) + RAG-pipeline (pgvector, text-splitter) in Rust |
+| State / Data    | Zustand, TanStack React Query                                                  |
+| Validatie       | Zod, react-hook-form, class-validator                                          |
+| Email           | Resend                                                                         |
+| Push            | Firebase (FCM)                                                                 |
+| i18n            | next-intl (en, nl, fr, es)                                                     |
+| Testing         | Vitest + Testcontainers (api-node)                                             |
+| Tooling         | pnpm workspaces, Turborepo, ESLint 9, Prettier, Husky, Knip                    |
+| Infra           | Docker, Turborepo; Vercel (Next apps)                                          |
 
 ## Monorepo Structuur
 
 ```
 studo-spaces/
 ├── apps/
-│   ├── api-node/             # NestJS API (TypeScript)
+│   ├── api-node/             # NestJS API (Drizzle, Redis, S3, Passport)
 │   │   ├── src/
-│   │   ├── migrations/
+│   │   │   └── drizzle/      # schema + provider (Drizzle ORM)
 │   │   ├── test/
 │   │   └── drizzle.config.ts
 │   │
-│   ├── web/                  # Next.js frontend
+│   ├── web/                  # Next.js hoofd-app (auth, app-features)
 │   │   ├── app/
 │   │   ├── components/
-│   │   ├── store/
+│   │   ├── store/            # Zustand
 │   │   ├── hooks/
 │   │   ├── lib/
-│   │   ├── messages/         # i18n vertalingen
-│   │   └── types/
+│   │   └── messages/         # i18n vertalingen
 │   │
+│   ├── marketing/            # Next.js marketing-site (publiek, geen auth)
+│   ├── dev-tools/            # Vite intern tool
 │   └── mobile/               # React Native (Expo) app
 │
-├── workers/
-│   └── rust-services/   # Rust microservices
+├── workers/                  # Rust worker (Diesel + pgvector, pdfium, Redis streams)
+│   ├── src/
+│   └── Cargo.toml
 │
 ├── packages/
-│   └── shared-types/         # Gedeelde TypeScript types
+│   ├── ui/                   # gedeelde React-componenten (@studo/ui)
+│   ├── i18n/                 # next-intl routing (@studo/i18n)
+│   ├── shared-types/         # gedeelde TypeScript types (@studo/types)
+│   ├── utils/                # gedeelde helpers (@studo/utils)
+│   └── config/               # gedeelde config
+│
 ├── turbo.json
 ├── pnpm-workspace.yaml
 └── package.json
@@ -86,8 +100,9 @@ Gemanaged met **pnpm workspaces** en **Turborepo**.
 ### Vereisten
 
 - Node.js ≥ 20
-- pnpm ≥ 10
+- pnpm ≥ 11
 - Docker
+- Rust toolchain + Diesel CLI (voor `workers/`)
 
 ### Installatie
 

@@ -6,6 +6,7 @@ import { ProfileSearchResult } from "@studo/types";
 import Avatar from "@studo/ui/design_system/avatar/Avatar";
 import { useSearchParams } from "next/navigation";
 import { useSearchResult } from "@/hooks/app/search/useSearchResult";
+import { useUser } from "@/components/providers/auth/UserProvider";
 
 export default function SearchResultUsers() {
   const searchParams = useSearchParams();
@@ -43,10 +44,10 @@ interface SetResultProps {
 }
 
 function UserResult({ item }: SetResultProps) {
-  console.log("img_url:", JSON.stringify(item.imgUrl));
+  const user = useUser().user;
   return (
     <Link
-      href={"profile/" + item.id}
+      href={item.id === user?.id ? "/account" : "profile/" + item.id}
       className={`w-full min-h-fit h-fit  p-3 rounded-4xl border flex flex-row gap-3 border-studogrey/30 glass-rgb drop-shadow-3xl`}
     >
       <Avatar size={30} displayName={item.displayName} id={item.id} />

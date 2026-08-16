@@ -1,5 +1,15 @@
 import { useTranslations } from "next-intl";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
+import { buildSeoMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildSeoMetadata("newsroom", "/newsroom", locale);
+}
 
 export default function Page() {
   const t = useTranslations("landing.blog");

@@ -941,7 +941,10 @@
     "terms": "gebruiksvoorwaarden",
     "accept_terms": "Accepteer de voorwaarden om verder te gaan",
     "and": "en het",
-    "privacy": "privacybeleid"
+    "privacy": "privacybeleid",
+    "email_required": "email verplicht",
+    "name_2_char_min": "naam moet minimaal 2 karakters zijn",
+    "confirm_pwd": "bevestig je wachtwoord"
   },
   "header": {
     "create_ss": "Maak Studoset",

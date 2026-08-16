@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { ArrowRight, Eye, EyeClosed } from "lucide-react";
-import LinkButton from "@studo/ui/design_system/button/LinkButton";
 import GoogleIcon from "@/components/ui/overige/icons/companies/Google";
 import MicrosoftIcon from "@/components/ui/overige/icons/companies/Microsoft";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";

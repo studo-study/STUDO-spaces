@@ -158,7 +158,7 @@ export default function LandingHeader() {
         >
           <div className="flex items-center justify-start gap-4 lg:gap-10 min-w-0 flex-1">
             <Link
-              href={`/welcome`}
+              href={process.env.NEXT_PUBLIC_MARKETING + `/welcome`}
               className="group relative font-georgia font-bold text-3xl md:text-4xl whitespace-nowrap flex items-center justify-center"
             >
               <Image

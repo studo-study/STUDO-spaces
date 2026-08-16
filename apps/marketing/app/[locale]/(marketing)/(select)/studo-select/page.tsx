@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import { Check, Leaf, LucideVerified } from "lucide-react";
+import { buildSeoMetadata } from "@/lib/seo";
 
 const free = [
   { feature: "Create basic Studosets" },
@@ -17,6 +18,15 @@ const select = [
   { feature: "Semantic search" },
   { feature: "8GB upload & 100 AI samenvattingscredits" },
 ];
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildSeoMetadata("studo-select", "/studo-select", locale);
+}
 
 export default function SelectPage() {
   const t = useTranslations("select");
