@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate {
         act: payload.act,
       };
     } catch (err) {
-      if (err.name === 'TokenExpiredError') {
+      if ((err as Error).name === 'TokenExpiredError') {
         throw new UnauthorizedException('Token has expired');
       } else {
         throw new UnauthorizedException('Invalid authentication token');

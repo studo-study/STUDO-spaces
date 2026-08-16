@@ -36,11 +36,13 @@ export async function buildSeoMetadata(
   const url = (l: string) => `${SEO_BASE_URL}/${l}${path}`;
   const localeUrl = url(locale);
   const index = opts.index ?? true;
-  const ogImage = messages.ogImage ?? "/og/default.png";
+  const ogImage = messages.ogImage ?? "/images/og/default.png";
 
   return {
     metadataBase: new URL(SEO_BASE_URL),
-    title: messages.title,
+    // absolute → bypass the root layout "%s | Studo" template
+    // (page titles already carry their own "- Studo" branding)
+    title: { absolute: messages.title },
     description: messages.description,
     keywords: messages.keywords,
 
@@ -84,11 +86,6 @@ export async function buildSeoMetadata(
         "max-image-preview": "large",
         "max-video-preview": -1,
       },
-    },
-
-    icons: {
-      icon: "/favicon.ico",
-      apple: "/apple-touch-icon.png",
     },
 
     applicationName: "Studo",

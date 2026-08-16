@@ -18,7 +18,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "studo.study" },
-      { protocol: "https", hostname: "*" },
+      { protocol: "https", hostname: "**.studo.study" },
+      // TODO: add the studoset image CDN host here when the public
+      // set-detail pages ship (see Linear programmatic-SEO ticket).
     ],
   },
 };
