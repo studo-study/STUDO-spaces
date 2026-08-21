@@ -33,6 +33,23 @@ export default function JsonLd({ locale }: { locale: string }) {
           "query-input": "required name=search_term_string",
         },
       },
+      {
+        // The product entity — surfaces in AI answers / knowledge results
+        // as a real, machine-readable "app" with category + free offer.
+        "@type": "SoftwareApplication",
+        "@id": `${SEO_BASE_URL}/#app`,
+        name: "Studo",
+        url: SEO_BASE_URL,
+        applicationCategory: "EducationalApplication",
+        operatingSystem: "Web, iOS, Android",
+        inLanguage: locale,
+        publisher: { "@id": `${SEO_BASE_URL}/#organization` },
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "EUR",
+        },
+      },
     ],
   };
 

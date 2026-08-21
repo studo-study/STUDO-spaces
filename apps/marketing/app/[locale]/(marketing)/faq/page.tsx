@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { buildSeoMetadata } from "@/lib/seo";
 import AnimateOnMount from "@/components/ui/overige/effects/AnimateOnMount";
 import BlogItem from "@/components/ui/app/public/blog/BlogItem";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 
 export async function generateMetadata({
   params,
@@ -41,6 +42,7 @@ export default function FAQPage() {
                 min-h-screen pt-25 p-10 md:p-20 xl:px-40 xl:py-30 
                 bg-gradient-to-b from-transparent via-transparent to-emerald-400/40`}
     >
+      <FaqJsonLd />
       <div className="max-w-4xl mx-auto flex flex-col gap-12">
         {/* Header */}
         <AnimateOnMount delay={100} className="w-full">
