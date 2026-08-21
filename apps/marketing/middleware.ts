@@ -5,5 +5,7 @@ import { routing } from "@studo/i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
+  // `og` = dynamic OG image route; must bypass locale routing.
+  // Paths with a dot (llms.txt, sitemap.xml, robots.txt) already bypass.
+  matcher: ["/((?!api|og|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 };
