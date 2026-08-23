@@ -104,3 +104,38 @@ deps:
 count-lines:
 	cloc --vcs=git --exclude-dir=node_modules,.next,dist,build,target \
          --not-match-f='(package-lock|pnpm-lock)\.(json|yaml)|\.gen\.ts$'
+
+# single root install (isolated pnpm hoists everything to the root store)
+install:
+	pnpm install
+
+start-all:
+	@echo "starting all apps via turborepo..."
+	pnpm dev
+
+start-workers: start-rust-workers
+
+build-workers:
+	@echo "building rust workers (release)..."
+	cd workers && cargo build --release
+
+# --- Docker images (Coolify / Hetzner) ---
+# web/api/workers build from the REPO ROOT context (turbo prune / vendored crate);
+# postgres/redis build from their own dir (local COPY of init.sql / redis.conf).
+docker-build-web:
+	docker build -f infra/web/Dockerfile -t studo-web .
+
+docker-build-api:
+	docker build -f infra/api-node/Dockerfile -t studo-api .
+
+docker-build-workers:
+	docker build -f infra/rust-services/Dockerfile -t studo-workers .
+
+docker-build-postgres:
+	docker build -f infra/postgres/Dockerfile -t studo-postgres infra/postgres
+
+docker-build-redis:
+	docker build -f infra/redis/Dockerfile -t studo-redis infra/redis
+
+docker-build-all: docker-build-web docker-build-api docker-build-workers docker-build-postgres docker-build-redis
+	@echo "built all service images"

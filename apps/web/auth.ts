@@ -1,11 +1,8 @@
-// auth.ts
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
 import GoogleProvider from "next-auth/providers/google";
 
-// backend user-shape (snake_case) → session user-shape (camelCase), zelfde
-// mapping als de credentials-login.
 interface BackendUser {
   id: string;
   email: string;
@@ -83,9 +80,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
       },
     }),
 
-    // ========================================
-    // MICROSOFT (nieuw)
-    // ========================================
+    //microslop
     MicrosoftEntraID({
       clientId: process.env.MICROSOFT_CLIENT_ID!,
       clientSecret: process.env.MICROSOFT_CLIENT_SECRET!,
@@ -108,11 +103,9 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   },
 
   callbacks: {
-    // ========================================
     // JWT CALLBACK
-    // ========================================
     jwt: async ({ token, user, account, profile, trigger, session }) => {
-      // ── Impersonatie ────────────────────────────────────────────────
+      // hele impersonation dinges
       // Admin swapt naar een backend-minted token; de admin-identiteit
       // bewaren we in `original` zodat "stop" geen re-login vereist.
       const update = session as
@@ -194,7 +187,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
         };
       }
 
-      // Bij MICROSOFT login (nieuw)
+      // Bij microslop login
       if (account?.provider === "microsoft-entra-id") {
         try {
           const imgUrl = profile?.picture || "default";

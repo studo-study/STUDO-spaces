@@ -1,0 +1,32 @@
+# Build artifacts & deps are reinstalled/rebuilt inside the image — never ship them
+# in the build context (they were bloating it to >15GB).
+**/node_modules
+**/.next
+**/dist
+**/build
+**/coverage
+**/.turbo
+.turbo
+
+# Rust build output (11GB+); Cargo.toml/lock, src and vendor/ are kept
+workers/target
+
+# VCS & tooling
+.git
+.gitignore
+.idea
+.vscode
+**/.DS_Store
+**/*.log
+
+# Secrets — build gets env via build args / platform env, not .env files
+**/.env
+**/.env.*
+!**/.env.example
+
+# Not needed for any service build
+apps/mobile
+apps/legacy
+docs
+# turbo prune scratch output
+out
