@@ -44,6 +44,10 @@ import { SettingsModule } from './settings/settings.module';
       }),
     }),
     ConfigModule.forRoot({
+      // Read the single monorepo-root .env (cwd is always the package dir, so
+      // ../../.env resolves to the repo root). In containers env is injected by
+      // the platform and this file simply won't exist, which is fine.
+      envFilePath: '../../.env',
       load: [configuration],
       isGlobal: true,
     }),

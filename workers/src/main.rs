@@ -10,6 +10,7 @@ mod storage;
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     //logger initialiseren
+    //cooked
     tracing_subscriber::fmt::init();
     info!("Logging initialized");
     info!("Worker initialized");
@@ -35,7 +36,7 @@ async fn main() -> anyhow::Result<()> {
     queue::consumer::ensure_group(&mut connection).await.context("REDIS GROUP failed")?;
     queue::consumer::read_batch(&mut connection, 10).await.context("Queue reading failed")?;
 
-    //gracefull shutdown
+    //gracefull shutdown (afsluiten)
     tokio::signal::ctrl_c()
         .await
         .context("catching signal failed")?;

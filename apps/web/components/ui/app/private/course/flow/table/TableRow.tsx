@@ -285,11 +285,12 @@ interface TableCellProps {
   rowIds: string[];
   colId: string;
   colIds: string[];
-  selectedCell: string;
-  setSelectedCell: React.Dispatch<SetStateAction<string>>;
+  selectedCells: string[];
+  setSelectedCells: React.Dispatch<SetStateAction<string[]>>;
   clearSelected: () => void;
   row: CourseRow;
   updateRow: UpdateRow;
+  addRow: (input?: number) => void;
 }
 
 const TableCell: React.FC<TableCellProps> = ({
@@ -298,51 +299,61 @@ const TableCell: React.FC<TableCellProps> = ({
   rowIds,
   colId,
   colIds,
-  selectedCell,
-  setSelectedCell,
+  selectedCells,
+  setSelectedCells,
   clearSelected,
   row,
   updateRow,
+  addRow,
 }: TableCellProps) => {
   const cellRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  // Cel-identiteit hangt aan row.id (niet index) zodat de selectie de rij volgt
-  // bij reorder/verwijderen; navigatie gebruikt de positie in rowIds.
+
   const celId = `${colId}-${rowId}`;
-  const selected = selectedCell === celId;
+  const selected = selectedCells.includes(celId);
+  const soleSelected = selectedCells.length === 1 && selectedCells[0] === celId;
   const colIndex = colIds.indexOf(colId);
 
   useEffect(() => {
-    if (selected) {
+    if (soleSelected) {
       cellRef.current?.focus();
       inputRef?.current?.focus();
     }
-  }, [selected]);
+  }, [soleSelected]);
 
   const moveUp = () => {
     if (rowIndex > 0) {
-      setSelectedCell(`${colId}-${rowIds[rowIndex - 1]}`);
+      setSelectedCells([`${colId}-${rowIds[rowIndex - 1]}`]);
     }
   };
 
   const moveDown = () => {
     if (rowIndex < rowIds.length - 1) {
-      setSelectedCell(`${colId}-${rowIds[rowIndex + 1]}`);
+      setSelectedCells([`${colId}-${rowIds[rowIndex + 1]}`]);
     }
   };
 
   const moveLeft = () => {
     if (colIndex > 0) {
       const leftId = colIds[colIndex - 1];
-      setSelectedCell(`${leftId}-${rowId}`);
+      setSelectedCells([`${leftId}-${rowId}`]);
     }
   };
 
   const moveRight = () => {
     if (colIndex < colIds.length - 1) {
       const rightId = colIds[colIndex + 1];
-      setSelectedCell(`${rightId}-${rowId}`);
+      setSelectedCells([`${rightId}-${rowId}`]);
     }
+  };
+
+  // toggle deze cel in/uit de multi-selectie (ctrl/cmd-klik).
+  const toggleCell = () => {
+    setSelectedCells((prev) =>
+      prev.includes(celId)
+        ? prev.filter((id) => id !== celId)
+        : [...prev, celId],
+    );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -350,6 +361,14 @@ const TableCell: React.FC<TableCellProps> = ({
       case "ArrowDown":
       case "Enter":
         e.preventDefault();
+        if (e.shiftKey) {
+          moveUp();
+          break;
+        }
+        if (rowIndex == rowIds.length - 1) {
+          addRow(rowIds.length);
+          setSelectedCells([`${colId}-${rowIds[rowIndex + 1]}`]);
+        }
         moveDown();
         break;
       case "ArrowUp":
@@ -372,7 +391,7 @@ const TableCell: React.FC<TableCellProps> = ({
         break;
       case "Escape":
         e.preventDefault();
-        setSelectedCell("");
+        setSelectedCells([]);
         break;
     }
   };
@@ -383,9 +402,14 @@ const TableCell: React.FC<TableCellProps> = ({
       role="gridcell"
       aria-selected={selected}
       tabIndex={selected ? 0 : -1}
-      onClick={() => {
-        clearSelected();
-        setSelectedCell(celId);
+      onClick={(e) => {
+        // ctrl/cmd-klik = cel toevoegen/verwijderen uit selectie, anders vervangen.
+        if (e.metaKey || e.ctrlKey) {
+          toggleCell();
+        } else {
+          clearSelected();
+          setSelectedCells([celId]);
+        }
       }}
       onKeyDown={handleKeyDown}
       className={classNames(
@@ -420,8 +444,8 @@ interface TableRowProps {
   removeSelected: () => void;
   rowIndex: number;
   rowIds: string[];
-  selectedCell: string;
-  setSelectedCell: React.Dispatch<SetStateAction<string>>;
+  selectedCells: string[];
+  setSelectedCells: React.Dispatch<SetStateAction<string[]>>;
   onRowDragStart: (index: number) => void;
   onRowDragOver: (index: number) => void;
   onRowDrop: (index: number) => void;
@@ -443,16 +467,14 @@ const TableRow = ({
   removeSelected,
   rowIndex,
   rowIds,
-  selectedCell,
-  setSelectedCell,
+  selectedCells,
+  setSelectedCells,
   onRowDragStart,
   onRowDragOver,
   onRowDrop,
   onRowDragEnd,
   isDragOver,
 }: TableRowProps) => {
-  // Predicate in de selector: rij abonneert enkel op zijn eigen selectie-status,
-  // niet op de hele selectedIds-array (anders re-rendert elke rij bij elke toggle).
   const checked = useCourseFlowStore((state) =>
     state.selectedIds.includes(row.id),
   );
@@ -468,8 +490,7 @@ const TableRow = ({
   );
   const checkRow = useCourseFlowStore((state) => state.toggeSelectRow);
   const clearSelected = useCourseFlowStore((state) => state.clearSelected);
-  // rij is enkel sleepbaar terwijl de grip ingedrukt wordt (anders breekt het
-  // tekstselectie in de cellen).
+
   const [dragArmed, setDragArmed] = useState(false);
   const pinStyle = (pinned: boolean, cellX: number): CSSProperties =>
     pinned
@@ -545,7 +566,7 @@ const TableRow = ({
         />
         <div
           onClick={() => {
-            setSelectedCell("");
+            setSelectedCells([]);
             checkRow(row.id);
           }}
           className={classNames(
@@ -586,7 +607,7 @@ const TableRow = ({
               checked={checked}
               onChange={() => {
                 // Rij (de)selecteren = de cel-selectie loslaten.
-                setSelectedCell("");
+                setSelectedCells([]);
                 checkRow(row.id);
               }}
               className={classNames(
@@ -621,10 +642,11 @@ const TableRow = ({
                 rowIndex={rowIndex}
                 rowId={row.id}
                 rowIds={rowIds}
-                selectedCell={selectedCell}
-                setSelectedCell={setSelectedCell}
+                selectedCells={selectedCells}
+                setSelectedCells={setSelectedCells}
                 clearSelected={clearSelected}
                 updateRow={updateRow}
+                addRow={addRow}
               />
             </div>
             <div
