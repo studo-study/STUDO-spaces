@@ -1,4 +1,7 @@
 import { defineConfig } from 'drizzle-kit';
+import { config } from 'dotenv';
+
+config({ path: '../../.env' }); // single monorepo-root .env
 
 // Note: don't throw at module load — static analysis tools (e.g. knip) import
 // this config without a DATABASE_URL. drizzle-kit itself fails loudly on an
