@@ -9,6 +9,8 @@ const withBundleAnalyzer = createBundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  // Required for the Docker runner stage: emits .next/standalone + server.js
+  output: "standalone",
   outputFileTracingRoot: path.join(__dirname, "../.."),
   transpilePackages: [
     "@studo/ui",

@@ -5,16 +5,15 @@ ARG NODE_VERSION=24.13.0-slim
 # pruner
 FROM node:${NODE_VERSION} AS pruner
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@9 --activate
-RUN pnpm install -g turbo
+RUN corepack enable && corepack prepare pnpm@11.1.1 --activate
 COPY . .
-RUN turbo prune @studo/web --docker
+RUN npx --yes turbo@2.9.3 prune @studo/web --docker
 
 
 # installer
 FROM node:${NODE_VERSION} AS installer
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@9 --activate
+RUN corepack enable && corepack prepare pnpm@11.1.1 --activate
 COPY --from=pruner /app/out/json/ .
 RUN pnpm install --frozen-lockfile
 
@@ -32,7 +31,7 @@ ARG NEXT_PUBLIC_OPENBREIN
 ARG NEXT_PUBLIC_BETA
 ARG NEXT_PUBLIC_PREMIUM
 
-RUN corepack enable && corepack prepare pnpm@9 --activate
+RUN corepack enable && corepack prepare pnpm@11.1.1 --activate
 COPY --from=installer /app/ .
 COPY --from=pruner /app/out/full/ .
 

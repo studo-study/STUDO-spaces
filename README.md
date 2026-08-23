@@ -39,7 +39,7 @@ Studo lost dit op met:
 | Backend (Swift) | Swift API services _(legacy — nog niet verwijderd)_                            |
 | Mobile          | React Native 0.81, Expo 54 (expo-router, Reanimated 4)                         |
 | Database        | PostgreSQL + pgvector (embeddings), Redis (cache + streams-queue)              |
-| Storage         | S3 (AWS SDK, Scaleway-compatible)                                              |
+| Storage         | S3-compatible object storage (AWS SDK)                                         |
 | Auth (Web)      | NextAuth 5 (Google, Microsoft Entra ID, Credentials)                           |
 | Auth (API)      | NestJS Passport — Google / Microsoft / Facebook OAuth + JWT, argon2            |
 | AI              | Google Generative AI (Gemini) + RAG-pipeline (pgvector, text-splitter) in Rust |
@@ -50,7 +50,7 @@ Studo lost dit op met:
 | i18n            | next-intl (en, nl, fr, es)                                                     |
 | Testing         | Vitest + Testcontainers (api-node)                                             |
 | Tooling         | pnpm workspaces, Turborepo, ESLint 9, Prettier, Husky, Knip                    |
-| Infra           | Docker, Turborepo; Vercel (Next apps)                                          |
+| Infra           | Docker + Coolify op Hetzner; Turborepo. Per-service Dockerfiles in `infra/`    |
 
 ## Monorepo Structuur
 
@@ -78,6 +78,13 @@ studo-spaces/
 ├── workers/                  # Rust worker (Diesel + pgvector, pdfium, Redis streams)
 │   ├── src/
 │   └── Cargo.toml
+│
+├── infra/                    # Dockerfiles per service (Coolify / Hetzner)
+│   ├── web/                  # Next.js standalone image
+│   ├── api-node/             # NestJS image (+ drizzle migrate on start)
+│   ├── rust-services/        # Rust worker image
+│   ├── postgres/             # Postgres + pgvector (init.sql)
+│   └── redis/                # Redis (cache + streams-queue, redis.conf)
 │
 ├── packages/
 │   ├── ui/                   # gedeelde React-componenten (@studo/ui)
@@ -111,16 +118,13 @@ Gemanaged met **pnpm workspaces** en **Turborepo**.
 git clone https://github.com/studo-study/STUDO-web.git
 cd STUDO-web
 
-# Installeer dependencies
-make init-all
-# of
-make init-api
-make init-web
-make init-workers
+# Installeer dependencies (één root-install voor de hele workspace)
+pnpm install
+# of via make
+make install
 
-# Maak de root .env aan en distribueer naar alle apps
+# Eén root .env — alle apps lezen hieruit (geen distributie meer nodig)
 cp .env.example .env   # vul de waarden in
-pnpm env:sync
 ```
 
 ### Docker
@@ -172,21 +176,30 @@ pnpm build:api
 make build-workers
 ```
 
-### Docker Deployment
+### Docker Deployment (Coolify / Hetzner)
+
+Elke service heeft een eigen Dockerfile onder `infra/<service>/`. Belangrijk:
+
+- **web / api-node / rust-services** bouwen met **build-context = repo-root** (ze gebruiken `turbo prune` resp. de vendored `pgvector`-crate). In Coolify: build-context `/`, Dockerfile-pad `infra/<service>/Dockerfile`.
+- **postgres / redis** bouwen vanuit hun eigen map (ze `COPY` lokaal `init.sql` / `redis.conf`).
+- **redis**: wachtwoord wordt runtime geïnjecteerd via de env-var `REDIS_PASSWORD` (Coolify-secret), niet in `redis.conf`.
+- **api-node** draait bij start automatisch `drizzle-kit migrate` vóór de server.
 
 ```bash
-# Dev workspace
+# Lokaal images bouwen (zelfde contexten als Coolify)
+make docker-build-all
+# of per service
+make docker-build-web
+make docker-build-api
+make docker-build-workers
+
+# Lokale dev-stack (Postgres + Redis)
 make start-docker
 
-# Volledige backend stack
+# Volledige backend stack (compose)
 make start-docker-api
-
-# Met seeding
-make start-docker-api-seeded
-
-# Docker stoppen
+make start-docker-api-seeded   # met seeding
 make stop-docker
-
 ```
 
 ---
@@ -208,7 +221,8 @@ make stop-docker
 | `make start-workers`     | Start alleen Rust workers                      |
 | `pnpm build:web`         | Build alleen de frontend                       |
 | `pnpm build:api`         | Build alleen de api                            |
-| `pnpm env:sync`          | Distribueer root `.env` naar alle apps         |
+| `make build-workers`     | Build Rust workers (release)                   |
+| `make docker-build-all`  | Bouw alle service-images (Coolify/Hetzner)     |
 | `pnpm db:generate`       | Genereer migraties uit schema wijzigingen      |
 | `pnpm db:migrate`        | Voer migraties uit                             |
 | `pnpm db:seed`           | Seed de database                               |
