@@ -15,7 +15,7 @@ interface TableHeaderProps {
   gap: number;
   addRow: (index: number) => void;
   rows: CourseRow[];
-  setSelectedCell: Dispatch<SetStateAction<string>>;
+  setSelectedCells: Dispatch<SetStateAction<string[]>>;
 }
 
 // controls-kolom zit 80px links van de content-origin (-mx-20), de eerste
@@ -28,7 +28,7 @@ const TableHeader = ({
   gap,
   addRow,
   rows,
-  setSelectedCell,
+  setSelectedCells,
 }: TableHeaderProps) => {
   const checkedIds = useCourseFlowStore((state) => state.selectedIds);
   const unCertain = checkedIds.length != 0 && checkedIds.length != rows.length;
@@ -71,7 +71,7 @@ const TableHeader = ({
             checked={checked}
             onChange={() => {
               setChecked(rows.map((row) => row.id));
-              setSelectedCell("");
+              setSelectedCells([]);
             }}
           />
         </div>

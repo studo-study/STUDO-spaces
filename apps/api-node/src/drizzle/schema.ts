@@ -53,9 +53,6 @@ export const users = pgTable(
     acceptedTermsDate: timestamp('accepted_terms_date').notNull().defaultNow(),
     privacyVersion: varchar('privacy_version').notNull().default('v0.1'),
   },
-  // Case-insensitieve uniekheid: 'Bob@x.com' en 'bob@x.com' zijn dezelfde
-  // account. Uniek op lower(...) zodat casing-duplicaten onmogelijk zijn (ook
-  // bij races), niet enkel via de app-check.
   (table) => [
     uniqueIndex('users_email_lower_unique').on(sql`lower(${table.email})`),
     uniqueIndex('users_displayname_lower_unique').on(

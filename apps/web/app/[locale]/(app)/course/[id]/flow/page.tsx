@@ -8,14 +8,12 @@ import { useCourse } from "@/hooks/app/courses/useCourse";
 import { useUpdateCourseTable } from "@/hooks/app/courses/useUpdateCourseTable";
 
 export default function CourseFlowPage() {
-  //effectieve data
   const { id } = useParams<{ id: string }>();
   const course = useCourse(id)?.data;
   const updateTable = useUpdateCourseTable(id);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  // lokale state seeden vanuit de server-tabel
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTitle(course?.table?.title ?? "");

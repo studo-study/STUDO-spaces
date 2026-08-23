@@ -25,17 +25,14 @@ interface Drag {
 }
 
 const TableDisplay = () => {
-  // horizontale pan/scroll van de tabel
   const [offset, setOffset] = useState(0);
   const viewport = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const drag = useRef<Drag | null>(null);
   const courseId = usePathname().split("/")[2];
-  // rij-data komt uit de react-query course-cache (persistent)
   const { rows, addRow, updateRow, removeRow, removeRows, reorderRow } =
     useCourseFlow(courseId);
 
-  // drag-reorder: bronindex in een ref, doelindex voor de visuele indicator
   const dragFrom = useRef<number | null>(null);
   const [overIndex, setOverIndex] = useState<number | null>(null);
   const onRowDragStart = useCallback((index: number) => {
@@ -57,11 +54,9 @@ const TableDisplay = () => {
     dragFrom.current = null;
     setOverIndex(null);
   }, []);
-  // Stabiele lijst van rij-ids: selectie/navigatie werkt op id i.p.v. index,
-  // zodat een cel-selectie niet verspringt bij reorder/verwijderen.
+
   const rowIds = useMemo(() => rows.map((row) => row.id), [rows]);
 
-  // geselecteerde rijen verwijderen (selectie in de store, data via de hook)
   const selectedIds = useCourseFlowStore((state) => state.selectedIds);
   const clearSelected = useCourseFlowStore((state) => state.clearSelected);
   const removeSelected = useCallback(() => {
@@ -70,7 +65,7 @@ const TableDisplay = () => {
     clearSelected();
   }, [selectedIds, removeRows, clearSelected]);
 
-  const [selectedCell, setSelectedCell] = useState<string>("");
+  const [selectedCells, setSelectedCells] = useState<string[]>([]);
 
   // afstand van de viewport-linkerrand tot de pagina-rand ([data-flow-boundary]).
   // gepinde kolommen pannen mee tot ze die rand raken en blijven daar plakken.
@@ -135,7 +130,6 @@ const TableDisplay = () => {
     const dx = e.clientX - d.x;
     const dy = e.clientY - d.y;
 
-    // eerst bepalen of dit een horizontale pan of een verticale scroll wordt
     if (d.axis === null) {
       if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
       d.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
@@ -204,12 +198,12 @@ const TableDisplay = () => {
               gap={gap}
               addRow={addRow}
               rows={rows}
-              setSelectedCell={setSelectedCell}
+              setSelectedCells={setSelectedCells}
             />
             {rows.map((row, index) => (
               <TableRow
-                selectedCell={selectedCell}
-                setSelectedCell={setSelectedCell}
+                selectedCells={selectedCells}
+                setSelectedCells={setSelectedCells}
                 key={row.id}
                 offset={offset}
                 gap={gap}
