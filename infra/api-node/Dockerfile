@@ -35,17 +35,17 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Isolated pnpm resolves runtime deps via BOTH the root store and the package's
-# own node_modules (symlinks into ../../node_modules/.pnpm) — copy both.
-COPY --from=installer /app/node_modules ./node_modules
-COPY --from=installer /app/apps/api-node/node_modules ./apps/api-node/node_modules
-COPY --from=builder /app/apps/api-node/dist ./apps/api-node/dist
-COPY --from=builder /app/apps/api-node/package.json ./apps/api-node/package.json
-# drizzle.config out is './migrations'; ship that dir (not the schema src)
-COPY --from=builder /app/apps/api-node/migrations ./apps/api-node/migrations
-COPY --from=builder /app/apps/api-node/drizzle.config.ts ./apps/api-node/drizzle.config.ts
+# Copy the fully-installed & built workspace subset from the builder so all pnpm
+# symlinks resolve at runtime — including the workspace package @studo/types,
+# which the compiled dist require()s. Cherry-picking only dist + node_modules
+# leaves that symlink dangling (packages/shared-types missing) → boot crash.
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/packages ./packages
+COPY --from=builder /app/apps/api-node ./apps/api-node
 
 EXPOSE 3000
 # Run from the package dir so drizzle-kit resolves ./migrations correctly
 WORKDIR /app/apps/api-node
-CMD ["sh", "-c", "npx drizzle-kit migrate --config=drizzle.config.ts && node dist/main.js"]
+# nest compiles to dist/src/main.js in this monorepo (tsc preserves src/ due to
+# the @studo/types project reference), not dist/main.js
+CMD ["sh", "-c", "npx drizzle-kit migrate --config=drizzle.config.ts && node dist/src/main.js"]
