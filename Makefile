@@ -61,6 +61,17 @@ clean-frontend:
 	@echo "cleaning up cache..."
 	rm -rf apps/web/.next apps/marketing/.next
 
+# Turbo has NO cache-size cap and caches every build output (incl .next) per
+# hash — it grows unbounded. Run this periodically.
+clean-cache:
+	@echo "wiping turbo cache..."
+	rm -rf .turbo/cache apps/*/.turbo packages/*/.turbo
+
+clean-all: clean-frontend clean-cache
+	@echo "wiping rust target + docker build cache..."
+	rm -rf workers/target
+	docker builder prune -f
+
 clippy:
 	@echo "running Clippy check..."
 	cd workers && cargo clippy --all-targets --all-features -- -D warnings
