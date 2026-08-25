@@ -15,14 +15,14 @@ aan anatomie, STEM-vakken of medische opleidingen.
 
 Studo lost dit op met:
 
-- **Studosets** — Term-definitie paren met spaced repetition, tijdstrijd en flashcard modi. Ondersteuning voor LaTeX,
+- **Studosets**: Term-definitie paren met spaced repetition, tijdstrijd en flashcard modi. Ondersteuning voor LaTeX,
   afbeeldingen en import uit Word/Excel.
-- **Visualsets** — Upload afbeeldingen, plaats pins met definities. Ideaal voor anatomie, aardrijkskunde en schema's.
+- **Visualsets**: Upload afbeeldingen, plaats pins met definities. Ideaal voor anatomie, aardrijkskunde en schema's.
   Leer via _Spotten_ (typ de definitie) of _Aanwijzen_ (duid de juiste pin aan).
-- **Classrooms** — Officiële klasgroepen, informele studygroups en open communities. Deel sets, volg voortgang en daag
+- **Classrooms**: Officiële klasgroepen, informele studygroups en open communities. Deel sets, volg voortgang en daag
   elkaar uit.
-- **Challenges** — Time Attack, Mastery Tournament en Duels om competitief te studeren.
-- **Studo Select** _(coming soon)_ — AI-laag met SVEN: automatische set-generatie uit PDF's, course linking en semantic
+- **Challenges**: Time Attack, Mastery Tournament en Duels om competitief te studeren.
+- **Studo Select**: _(coming soon)_ — AI-laag met SVEN: automatische set-generatie uit PDF's, course linking en semantic
   search.
 
 ---
@@ -37,7 +37,7 @@ Studo lost dit op met:
 | Backend (Node)  | NestJS 11, Express 5, Drizzle ORM, Swagger                                     |
 | Backend (Rust)  | Rust worker — Diesel (async) + pgvector, pdfium-render (PDF), Tokio            |
 | Backend (Swift) | Swift API services _(legacy — nog niet verwijderd)_                            |
-| Mobile          | React Native 0.81, Expo 54 (expo-router, Reanimated 4)                         |
+| Mobile          | Flutter                                                                        |
 | Database        | PostgreSQL + pgvector (embeddings), Redis (cache + streams-queue)              |
 | Storage         | S3-compatible object storage (AWS SDK)                                         |
 | Auth (Web)      | NextAuth 5 (Google, Microsoft Entra ID, Credentials)                           |
@@ -71,9 +71,11 @@ studo-spaces/
 │   │   ├── lib/
 │   │   └── messages/         # i18n vertalingen
 │   │
-│   ├── marketing/            # Next.js marketing-site (publiek, geen auth)
 │   ├── dev-tools/            # Vite intern tool
-│   └── mobile/               # React Native (Expo) app
+│   └── mobile/               # Flutter app
+│       ├── android/
+│       ├── ios/
+│       └── lib/
 │
 ├── workers/                  # Rust worker (Diesel + pgvector, pdfium, Redis streams)
 │   ├── src/
@@ -110,6 +112,7 @@ Gemanaged met **pnpm workspaces** en **Turborepo**.
 - pnpm ≥ 11
 - Docker
 - Rust toolchain + Diesel CLI (voor `workers/`)
+- Dart & Flutter SDK
 
 ### Installatie
 
