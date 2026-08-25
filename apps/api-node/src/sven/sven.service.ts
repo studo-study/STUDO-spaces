@@ -10,6 +10,7 @@ import { REDIS_CLIENT } from '../redis/redis.provider';
 
 @Injectable()
 export class SvenService {
+  private static readonly MAX_DAILY_USES = 3;
   genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
   prompt =
@@ -105,7 +106,7 @@ export class SvenService {
     if (count === 1) {
       await this.redis.expire(key, this.secondsUntilMidnight());
     }
-    if (count > 3) {
+    if (count > SvenService.MAX_DAILY_USES) {
       throw new BadRequestException('rate_limit');
     }
   }

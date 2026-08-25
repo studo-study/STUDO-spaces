@@ -17,32 +17,32 @@ export default function Textimport(props: importerProps) {
   const { onClose, cardArray, setCardArray } = props;
   const t = useTranslations("import");
   const [input, setInput] = useState<string>("");
-  const [valueSeperator, setValueSeperator] = useState<ValueSeperator>("komma");
-  const [lineSeperator, seLineSeperator] = useState<LineSeperator>("puntkomma");
+  const [valueSeparator, setValueSeparator] = useState<ValueSeperator>("komma");
+  const [lineSeparator, seLineSeparator] = useState<LineSeperator>("puntkomma");
 
   const toggleValueSeperator = (value: string) => {
-    setValueSeperator(value as ValueSeperator);
+    setValueSeparator(value as ValueSeperator);
   };
   const toggleLineSepereator = () => {
-    if (lineSeperator === "enter") {
-      seLineSeperator("puntkomma");
-    } else seLineSeperator("enter");
+    if (lineSeparator === "enter") {
+      seLineSeparator("puntkomma");
+    } else seLineSeparator("enter");
   };
 
   const checkSettings = (text: string) => {
-    if (text.includes("\t")) setValueSeperator("tab");
-    if (text.includes("-")) setValueSeperator("dash");
-    else setValueSeperator("komma");
-    if (text.includes("\n")) seLineSeperator("enter");
-    else if (text.includes(";")) seLineSeperator("puntkomma");
+    if (text.includes("\t")) setValueSeparator("tab");
+    if (text.includes("-")) setValueSeparator("dash");
+    else setValueSeparator("komma");
+    if (text.includes("\n")) seLineSeparator("enter");
+    else if (text.includes(";")) seLineSeparator("puntkomma");
   };
 
   const parsedCards = useMemo<CardData[]>(() => {
     if (input.trim().length === 0) return [];
 
     const sep =
-      valueSeperator === "komma" ? "," : valueSeperator === "tab" ? "\t" : "-";
-    return (lineSeperator === "enter" ? input.split(/\r?\n/) : input.split(";"))
+      valueSeparator === "komma" ? "," : valueSeparator === "tab" ? "\t" : "-";
+    return (lineSeparator === "enter" ? input.split(/\r?\n/) : input.split(";"))
       .map((line) => line.trim())
       .filter((line) => line.length > 0)
       .map((card, i) => {
@@ -60,7 +60,7 @@ export default function Textimport(props: importerProps) {
           codeLanguage: "typescript",
         };
       });
-  }, [input, valueSeperator, lineSeperator, cardArray.length]);
+  }, [input, valueSeparator, lineSeparator, cardArray.length]);
 
   const importCards = () => {
     setCardArray((prev) => {
@@ -116,21 +116,21 @@ export default function Textimport(props: importerProps) {
                 <div className={"w-full flex justify-between items-center"}>
                   <span>{t("by_comma")}</span>
                   <CheckBox
-                    checked={valueSeperator === "komma"}
+                    checked={valueSeparator === "komma"}
                     onChange={() => toggleValueSeperator("komma")}
                   />
                 </div>
                 <div className={"w-full flex justify-between items-center"}>
                   <span className={""}>{t("by_tab")}</span>
                   <CheckBox
-                    checked={valueSeperator === "tab"}
+                    checked={valueSeparator === "tab"}
                     onChange={() => toggleValueSeperator("tab")}
                   />
                 </div>
                 <div className={"w-full flex justify-between items-center"}>
                   <span className={""}>{t("by_dash")}</span>
                   <CheckBox
-                    checked={valueSeperator === "dash"}
+                    checked={valueSeparator === "dash"}
                     onChange={() => toggleValueSeperator("dash")}
                   />
                 </div>
@@ -143,14 +143,14 @@ export default function Textimport(props: importerProps) {
                 <div className={"w-full flex justify-between items-center"}>
                   <span>{t("by_semicolon")}</span>
                   <CheckBox
-                    checked={lineSeperator === "puntkomma"}
+                    checked={lineSeparator === "puntkomma"}
                     onChange={toggleLineSepereator}
                   />
                 </div>
                 <div className={"w-full flex justify-between items-center"}>
                   <span>{t("by_newline")}</span>
                   <CheckBox
-                    checked={lineSeperator === "enter"}
+                    checked={lineSeparator === "enter"}
                     onChange={toggleLineSepereator}
                   />
                 </div>
