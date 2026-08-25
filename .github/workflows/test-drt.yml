@@ -4,11 +4,11 @@ on:
   workflow_call:
   pull_request:
     paths:
-      - "apps/mobile/**"
+      - "apps/mobile/lib/**"
     branches: ["**"]
   push:
     paths:
-      - "apps/mobile/**"
+      - "apps/mobile/lib/**"
     branches:
       - main
       - develop
