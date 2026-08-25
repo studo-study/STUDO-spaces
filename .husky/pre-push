@@ -1,1 +1,3 @@
 pnpm turbo lint
+cd apps/mobile
+flutter analyze
