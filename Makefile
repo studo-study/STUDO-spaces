@@ -18,7 +18,15 @@ init-dev-tools:
 	@echo "intalling dependencies for devtools"
 	cd apps/dev-tools && pnpm install
 
-init-all: init-web init-marketing init-api init-dev-tools init-workers
+# Flutter build output is redirected to the repo-root build/mobile/ (kept out
+# of apps/mobile). This is a GLOBAL flutter setting (~/.config/flutter/settings),
+# not committed — every dev must run this once. build-dir is relative to the
+# flutter project, so ../../build/mobile resolves to <root>/build/mobile.
+init-mobile:
+	@echo "installing dependencies for mobile + redirecting build output to root"
+	cd apps/mobile && flutter config --build-dir=../../build/mobile && flutter pub get
+
+init-all: init-web init-marketing init-api init-dev-tools init-workers init-mobile
 	@echo "installing all dependencies"
 
 start-docker:
@@ -35,7 +43,6 @@ start-docker-api-seeded:
 
 stop-docker:
 	docker compose down
-
 
 start-web:
 	@echo "starting up web..."
@@ -56,6 +63,10 @@ start-dev-tools:
 start-rust-workers:
 	@echo "starting up the api..."
 	cd workers/ && cargo run
+
+start-mobile:
+	@echo "starting up the api..."
+	cd apps/mobile/ && flutter run
 
 clean-frontend:
 	@echo "cleaning up cache..."
@@ -129,6 +140,20 @@ start-workers: start-rust-workers
 build-workers:
 	@echo "building rust workers (release)..."
 	cd workers && cargo build --release
+
+# Outputs land in <root>/build/mobile/ (see init-mobile).
+build-mobile-apk:
+	@echo "building mobile release apk..."
+	cd apps/mobile && flutter build apk --release
+
+build-mobile-ios:
+	@echo "building mobile release ios..."
+	cd apps/mobile && flutter build ios --release
+
+clean-mobile:
+	@echo "cleaning mobile build..."
+	cd apps/mobile && flutter clean
+	rm -rf build/mobile
 
 # --- Docker images (Coolify / Hetzner) ---
 # web/api/workers build from the REPO ROOT context (turbo prune / vendored crate);
