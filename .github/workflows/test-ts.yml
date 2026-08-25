@@ -4,11 +4,15 @@ on:
   workflow_call:
   pull_request:
     paths:
-      - "apps/**"
+      - "apps/web/**"
+      - "apps/api-node/**"
+      - "apps/dev-tools/**"
     branches: ["**"]
   push:
     paths:
-      - "apps/**"
+      - "apps/web/**"
+      - "apps/api-node/**"
+      - "apps/dev-tools/**"
     branches:
       - main
       - develop
