@@ -16,6 +16,11 @@ jobs:
     uses: ./.github/workflows/test-rs.yml
     secrets: inherit
 
+  test-drt:
+    name: CI Flutter
+    uses: ./.github/workflows/test-drt.yml
+    secrets: inherit
+
   deploy-web:
     name: Deploy Web to Vercel (preview)
     runs-on: ubuntu-latest
