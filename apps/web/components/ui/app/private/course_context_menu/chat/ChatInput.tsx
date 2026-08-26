@@ -18,7 +18,7 @@ const ChatInput = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const ButtonRef = useRef<HTMLButtonElement>(null);
-  const [message, setMessage] = useState<string>("");
+  const [, setMessage] = useState<string>("");
   const [payload, setPayload] = useState<Payload[]>([]);
 
   const getMessage = () => {
