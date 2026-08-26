@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import { Sql } from 'postgres';
-import seed, { seedStudo } from './seed';
+import { seedStudo } from './seed';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import * as schema from '../src/drizzle/schema';
 import postgres from 'postgres';

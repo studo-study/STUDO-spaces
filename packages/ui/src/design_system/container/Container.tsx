@@ -8,7 +8,7 @@ const Container = (props: ContainerType) => {
   const { children, className } = props;
   return (
     <div
-      className={`relative overflow-hidden p-5 flex flex-col gap-3 ${className && className} h-full rounded-3xl border border-studoborder/30 bg-studogrey/30`}
+      className={`relative overflow-hidden p-5 flex flex-col gap-3 ${className} h-full rounded-3xl border border-studoborder/30 bg-studogrey/30`}
     >
       {children}
     </div>
