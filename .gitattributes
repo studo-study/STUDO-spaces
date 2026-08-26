@@ -1,0 +1,4 @@
+# Vendored/minified assets — exclude from GitHub language stats (Linguist)
+apps/marketing/public/pdf.worker.min.mjs linguist-vendored
+*.min.js linguist-vendored
+*.min.mjs linguist-vendored

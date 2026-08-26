@@ -18,7 +18,7 @@ const ChatInput = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const ButtonRef = useRef<HTMLButtonElement>(null);
-  const [message, setMessage] = useState<string>("");
+  const [, setMessage] = useState<string>("");
   const [payload, setPayload] = useState<Payload[]>([]);
 
   const getMessage = () => {
@@ -29,12 +29,6 @@ const ChatInput = () => {
   };
   const onSubmit = () => {
     if (!inputRef.current) return;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const body = {
-      message: message,
-      payload: payload,
-    };
-
     //send etc
     inputRef.current.value = "";
   };
