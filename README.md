@@ -2,8 +2,17 @@
 
 **Building the studytools of tomorrow**
 
-Studo is een all-in-one studieplatform voor studenten hoger onderwijs. Het combineert bewezen leermethodes zoals spaced
-repetition, visueel leren en actieve recall in één geïntegreerd platform dat zich aanpast aan de student.
+Studo is een all-in-one studeerplatform. Het splitst studeren en student zijn op in vier aspecten — het **voorbereidende**,
+het **opvolgende**, het **leer-** en het **sociale** aspect — en voorziet elke student van genoeg boilerplate om eender
+welke studie volledig binnen Studo tot een goed einde te brengen.
+
+Twee kernprincipes sturen elke feature:
+
+- **_"It just works"_** — elke feature werkt met minimale setup en input.
+- **Opschaalbaar tot powertool** — hoe meer user input, des te beter de performance. Casual-users én power-users worden
+  bediend, oppervlakkig of zeer diepgaand.
+
+> Volledige productscope: [`docs/Scope.md`](docs/Scope.md).
 
 ---
 
@@ -13,44 +22,53 @@ Studenten gebruiken gemiddeld 3 tot 5 losse tools om te studeren: Quizlet voor v
 voor notities, losse PDF's voor schema's. Geen van deze tools is gebouwd voor de complexiteit van hoger onderwijs — denk
 aan anatomie, STEM-vakken of medische opleidingen.
 
-Studo lost dit op met:
+Studo bundelt dat in één adaptief platform, rond een centrale AI-laag die groeit met elk geüpload document:
 
-- **Studosets**: Term-definitie paren met spaced repetition, tijdstrijd en flashcard modi. Ondersteuning voor LaTeX,
-  afbeeldingen en import uit Word/Excel.
-- **Visualsets**: Upload afbeeldingen, plaats pins met definities. Ideaal voor anatomie, aardrijkskunde en schema's.
-  Leer via _Spotten_ (typ de definitie) of _Aanwijzen_ (duid de juiste pin aan).
-- **Classrooms**: Officiële klasgroepen, informele studygroups en open communities. Deel sets, volg voortgang en daag
-  elkaar uit.
-- **Challenges**: Time Attack, Mastery Tournament en Duels om competitief te studeren.
-- **Studo Select**: _(coming soon)_ — AI-laag met SVEN: automatische set-generatie uit PDF's, course linking en semantic
-  search.
+- **Vakken**: de basisentiteit. Een vak wordt aangemaakt met enkel een titel en groepeert vak-resources, een
+  kennisdatabank en externe resources. Aanvulbare metadata (examendatum, lesdagen, semester, studiepunten) voedt de AI.
+- **Kennisdatabank**: geüploade cursussen worden weggeschreven naar object-storage, gechunkt, geëmbed (pgvector) en
+  gestructureerd (hoofdstukken, secties). Deze doorzoekbare pool van chunks voedt élke andere feature — hoe meer en beter
+  gestructureerd materiaal, hoe accurater alles wordt.
+- **Flow**: een opvolgbord per vak, weergeefbaar als spreadsheet, kanban, kalender of tijdlijn (zelfde onderliggende
+  rijen/kolommen). Rijen linken naar entiteiten (documenten, taken, proefexamens, Studosets, Visualsets, notities,
+  samenvattingen). De kennisdatabank kan rij-suggesties, deadline-spreiding, gap-detectie en automatische voortgang voeden.
+- **Boards**: verzamelingen van vakken, gemodelleerd op academiejaren, met overzicht- en planner-tab.
+- **Studosets**: rijke flashcards (tekst, KaTeX, Shiki-code, afbeeldingen) met spaced repetition (FSRS). Manueel,
+  (semi-)automatisch uit de kennisdatabank, of geïmporteerd (bv. Quizlet).
+- **Visualsets**: afbeeldingen met pins/vectoren gekoppeld aan definities — ideaal voor anatomie, kaarten, diagrammen.
+  Leer via _Pin_ (duid de locatie aan) of _Point_ (geef de definitie). Draait op dezelfde FSRS-logica.
+- **Notes**: native, in-Studo geschreven markdown-resources met versiegeschiedenis, optioneel gekoppeld aan de
+  kennisdatabank.
+- **Leersessies**: Learn (FSRS-adaptief), Speedy (tijdsgebonden) en Classic flashcards, met kaarten flaggen, pomodoro,
+  20/20/20 en printen (woordenlijst / schema). AI stelt remediëring voor op onvoldoende gekende kaarten.
+- **Vak-samenwerking**: een vak delen met Viewer / Editor / Owner rollen (naar analogie met Google Drive). De content-laag
+  is gedeeld; Flow en de FSRS-leerstand blijven altijd persoonlijk.
 
 ---
 
 ## Tech Stack
 
-| Layer           | Technologie                                                                    |
-| --------------- | ------------------------------------------------------------------------------ |
-| Frontend        | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Radix UI        |
-| Marketing       | Next.js 16 (aparte app, next-intl, geen auth)                                  |
-| Dev-tools       | Vite 7, React Router 7, Tailwind 4                                             |
-| Backend (Node)  | NestJS 11, Express 5, Drizzle ORM, Swagger                                     |
-| Backend (Rust)  | Rust worker — Diesel (async) + pgvector, pdfium-render (PDF), Tokio            |
-| Backend (Swift) | Swift API services _(legacy — nog niet verwijderd)_                            |
-| Mobile          | Flutter                                                                        |
-| Database        | PostgreSQL + pgvector (embeddings), Redis (cache + streams-queue)              |
-| Storage         | S3-compatible object storage (AWS SDK)                                         |
-| Auth (Web)      | NextAuth 5 (Google, Microsoft Entra ID, Credentials)                           |
-| Auth (API)      | NestJS Passport — Google / Microsoft / Facebook OAuth + JWT, argon2            |
-| AI              | Google Generative AI (Gemini) + RAG-pipeline (pgvector, text-splitter) in Rust |
-| State / Data    | Zustand, TanStack React Query                                                  |
-| Validatie       | Zod, react-hook-form, class-validator                                          |
-| Email           | Resend                                                                         |
-| Push            | Firebase (FCM)                                                                 |
-| i18n            | next-intl (en, nl, fr, es)                                                     |
-| Testing         | Vitest + Testcontainers (api-node)                                             |
-| Tooling         | pnpm workspaces, Turborepo, ESLint 9, Prettier, Husky, Knip                    |
-| Infra           | Docker + Coolify op Hetzner; Turborepo. Per-service Dockerfiles in `infra/`    |
+| Layer          | Technologie                                                                    |
+| -------------- | ------------------------------------------------------------------------------ |
+| Frontend       | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Radix UI        |
+| Marketing      | Astro (aparte rep, statisch, geen auth)                                        |
+| Dev-tools      | Vite 7, React Router 7, Tailwind 4                                             |
+| Backend (Node) | NestJS 11, Express 5, Drizzle ORM, Swagger                                     |
+| Backend (Rust) | Rust worker — Diesel (async) + pgvector, pdfium-render (PDF), Tokio            |
+| Mobile         | Flutter                                                                        |
+| Database       | PostgreSQL + pgvector (embeddings), Redis (cache + streams-queue)              |
+| Storage        | S3-compatible object storage (AWS SDK)                                         |
+| Auth (Web)     | NextAuth 5 (Google, Microsoft Entra ID, Credentials)                           |
+| Auth (API)     | NestJS Passport — Google / Microsoft / Facebook OAuth + JWT, argon2            |
+| AI             | Google Generative AI (Gemini) + RAG-pipeline (pgvector, text-splitter) in Rust |
+| State / Data   | Zustand, TanStack React Query                                                  |
+| Validatie      | Zod, react-hook-form, class-validator                                          |
+| Email          | Resend                                                                         |
+| Push           | Firebase (FCM)                                                                 |
+| i18n           | next-intl (en, nl, fr, es)                                                     |
+| Testing        | Vitest + Testcontainers (api-node)                                             |
+| Tooling        | pnpm workspaces, Turborepo, ESLint 9, Prettier, Husky, Knip                    |
+| Infra          | Docker + Coolify op Hetzner; Turborepo. Per-service Dockerfiles in `infra/`    |
 
 ## Monorepo Structuur
 
@@ -240,15 +258,31 @@ make stop-docker
 
 ## Roadmap
 
-- [x] Studosets met spaced repetition & leermodi
-- [ ] Visualsets met pin-based learning
-- [x] Classrooms, Study Groups & Communities
-- [x] Zoekfunctie & ecosysteem
-- [x] Challenges (Time Attack, Duels, Mastery Tournament)
-- [x] Statistieken dashboard
-- [x] Studo Courses & Verified Sets
-- [ ] Studo Select (AI-laag met SVEN)
-- [ ] B2B schoollicenties
+**Voorbereidend aspect**
+
+- [ ] Vakken met resources, mappen, tags & metadata
+- [ ] Vakonboarding: upload → object-storage → chunking → embeddings (kennisdatabank)
+- [ ] Structuurherkenning (hoofdstukken, secties)
+
+**Opvolgend aspect**
+
+- [ ] Flow-borden (spreadsheet / kanban / kalender / tijdlijn)
+- [ ] Boards (overzicht + planner) over academiejaren
+- [ ] AI Flow-integratie: rij-suggesties, gap-detectie, deadline-spreiding, automatische voortgang
+
+**Leer-aspect**
+
+- [x] Studosets met spaced repetition (FSRS) & leermodi (Learn / Speedy / Classic)
+- [ ] Visualsets met pin/point-learning
+- [ ] Notes (native markdown-resources)
+- [ ] Focus-tools (pomodoro, 20/20/20) & printen (woordenlijst / schema)
+- [ ] (Semi-)automatische set-generatie uit de kennisdatabank
+- [ ] AI-remediëring op onvoldoende gekende kaarten
+
+**Sociaal aspect**
+
+- [ ] Vak-samenwerking (Viewer / Editor / Owner)
+- [ ] Publiek delen van Studosets/Visualsets
 
 ---
 

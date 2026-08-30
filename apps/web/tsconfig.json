@@ -31,7 +31,8 @@
     "**/*.mts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "../../node_modules/.pnpm/preact@10.24.3/node_modules/preact/src/internal.d.ts"
+    "../../node_modules/.pnpm/preact@10.24.3/node_modules/preact/src/internal.d.ts",
+    ".next/dev/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules", ".next"]
 }

@@ -56,7 +56,7 @@ const FileGrid: React.FC = () => {
     setDocument("");
   }, [setDocument]);
 
-  // server-documenten = bron van waarheid
+  // server-documenten = bron van waarheid enz
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const documents: CourseDocument[] = useCourse(id).data?.documents ?? [];
 

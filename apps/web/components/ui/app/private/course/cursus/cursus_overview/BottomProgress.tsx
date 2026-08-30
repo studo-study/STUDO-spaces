@@ -22,7 +22,7 @@ const BottomProgress: React.FC<BottomProgressProps> = (props) => {
         }
       >
         <BaseButton
-          label={processingDocs[0].title}
+          label={processingDocs[0]?.title}
           variant={"hover"}
           size={"sm"}
           iconLeft={<File size={12} />}
