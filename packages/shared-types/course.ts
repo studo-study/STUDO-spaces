@@ -3,14 +3,7 @@ import type { VisualsetResponse } from "./visualset";
 
 export type CourseRole = "owner" | "editor" | "viewer";
 export type SetType = "studoset" | "visualset";
-export type WidgetType =
-  | "notes"
-  | "flashcards"
-  | "document"
-  | "set"
-  | "todo"
-  | "timer"
-  | "calendar";
+export type WidgetType = "progress" | "urgent" | "sets" | "files" | "notes";
 export type RowStatus = "not_started" | "doing" | "done";
 export type RowType =
   | "course"
@@ -69,6 +62,21 @@ export interface CourseWidget {
   config: Record<string, unknown> | unknown;
   createdAt: string;
   updatedAt: string;
+}
+
+/** One widget as sent by the client when persisting a course's layout. */
+export interface CourseWidgetInput {
+  type: WidgetType;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  config?: Record<string, unknown>;
+}
+
+/** PUT body for `courses/:id/widgets` — replaces the whole layout. */
+export interface UpdateCourseWidgets {
+  widgets: CourseWidgetInput[];
 }
 
 export interface CourseDocument {

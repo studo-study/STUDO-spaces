@@ -1068,9 +1068,9 @@ export async function seedStudo(
       .insert(schema.courseWorkspaces)
       .values([{ id: workspaceId1, courseId: courseId1 }]);
     await db.insert(schema.courseWidgets).values([
-      { workspaceId: workspaceId1, type: 'notes', x: 0, y: 0, w: 2, h: 2 },
-      { workspaceId: workspaceId1, type: 'flashcards', x: 2, y: 0, w: 2, h: 2 },
-      { workspaceId: workspaceId1, type: 'timer', x: 0, y: 2, w: 1, h: 1 },
+      { workspaceId: workspaceId1, type: 'progress', x: 0, y: 0, w: 2, h: 1 },
+      { workspaceId: workspaceId1, type: 'urgent', x: 2, y: 0, w: 1, h: 1 },
+      { workspaceId: workspaceId1, type: 'notes', x: 0, y: 1, w: 1, h: 1 },
     ]);
     console.log('Course workspace seeded\n');
 

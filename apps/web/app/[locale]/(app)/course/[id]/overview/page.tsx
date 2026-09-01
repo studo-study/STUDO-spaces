@@ -51,7 +51,6 @@ export default function CourseOverviewPage() {
       className={"min-w-0 min-h-0 flex-1 flex flex-col items-center gap-5 p-5"}
     >
       <OverviewTitle course={course ?? null} id={id} />
-      <div className={"max-w-200 min-w-0 min-h-0 flex-1 flex flex-col"}></div>
       {noCourse && (
         <EmptyFallback
           title={t("no_docs")}
@@ -75,7 +74,9 @@ export default function CourseOverviewPage() {
           icon={"boxes"}
         />
       )}
-      <WigetGridLayout courseId={id} />
+      <div className={"w-full max-w-200 min-w-0 min-h-0 flex-1 flex flex-col"}>
+        <WigetGridLayout courseId={id} />
+      </div>
       <UploadModal
         addFiles={addFiles}
         isOpen={uploadModalOpen}

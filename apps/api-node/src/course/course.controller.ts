@@ -7,6 +7,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Put,
   Request,
   UploadedFiles,
   UseInterceptors,
@@ -126,6 +127,25 @@ export class CourseController {
     @Body() body: types.UpdateCourseTable,
   ): Promise<types.CourseTable> {
     return this.tableService.updateTable(courseId, body);
+  }
+
+  @Roles(Role.USER, Role.ADMIN)
+  @Get(':course_id/widgets')
+  async getWidgets(
+    @Param('course_id', ParseUUIDPipe) courseId: string,
+    @Request() req: AuthenticatedRequest,
+  ): Promise<{ widgets: types.CourseWidget[] }> {
+    return this.courseService.getWidgets(courseId, req.user.id);
+  }
+
+  @Roles(Role.USER, Role.ADMIN)
+  @Put(':course_id/widgets')
+  async replaceWidgets(
+    @Param('course_id', ParseUUIDPipe) courseId: string,
+    @Body() body: types.UpdateCourseWidgets,
+    @Request() req: AuthenticatedRequest,
+  ): Promise<{ widgets: types.CourseWidget[] }> {
+    return this.courseService.replaceWidgets(courseId, req.user.id, body);
   }
 
   @Roles(Role.USER, Role.ADMIN)

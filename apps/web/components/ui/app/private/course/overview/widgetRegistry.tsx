@@ -19,17 +19,12 @@ export type WidgetType = "progress" | "urgent" | "sets" | "files" | "notes";
 
 export interface WidgetDef {
   type: WidgetType;
-  /** i18n key under `flow.widgets.<label>` */
   label: string;
   icon: ReactNode;
-  /** Default size in grid units (grid has 12 cols). */
   defaultW: number;
   defaultH: number;
-  /** Minimum size in grid units, enforced on resize. */
   minW: number;
   minH: number;
-  /** Content rendered inside a WidgetItem. Kept simple for now — swap in
-   *  the real data-bound components as they get wired up. */
   render: () => ReactNode;
 }
 
@@ -40,7 +35,7 @@ export const WIDGET_REGISTRY: Record<WidgetType, WidgetDef> = {
     icon: <BarChart3 size={16} />,
     defaultW: 2,
     defaultH: 1,
-    minW: 2,
+    minW: 1,
     minH: 1,
     render: () => (
       <ProgressWidget icon={<BarChart3 size={18} />} type={"progress"} />
