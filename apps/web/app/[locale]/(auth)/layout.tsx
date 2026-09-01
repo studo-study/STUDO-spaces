@@ -37,7 +37,7 @@ export default async function AuthLayout({
             <div className={"max-w-fit"}>
               <LinkButton
                 href={
-                  process.env.NEXT_PUBLIC_MARKETING ?? "https://www.studo.study"
+                  process.env.NEXT_PUBLIC_MARKETING ?? "https://studo.study"
                 }
                 icon={<ArrowLeft />}
                 variant={"hover"}

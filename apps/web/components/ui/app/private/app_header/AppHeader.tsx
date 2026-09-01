@@ -11,10 +11,7 @@ import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection"
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
 import { ArrowRight, Menu, OctagonX, PanelRightOpen } from "lucide-react";
 import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
-import {
-  SpecialeDag,
-  SpecialeDagTitel,
-} from "@/components/ui/app/private/app_header/SpecialeDag";
+import { SpecialeDagTitel } from "@/components/ui/app/private/app_header/SpecialeDag";
 import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
 import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import Streak from "@/components/ui/overige/icons/Streak";
@@ -91,21 +88,6 @@ export default function AppHeader({
             title={SpecialeDagTitel()}
             className={"w-fit flex flex-row gap-1"}
           >
-            {premium ? (
-              <span
-                className={
-                  "font-georgia text-3xl font-bold truncate flex flex-row gap-1 bg-linear-to-r bg-clip-text text-transparent transition-all duration-300 from-indigo-300 to-blue-300"
-                }
-              >
-                Studo Select
-              </span>
-            ) : (
-              <span
-                className={`font-georgia text-3xl font-bold truncate flex flex-row gap-1 bg-linear-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}
-              >
-                Studo
-              </span>
-            )}
             {beta && (
               <span
                 className={
