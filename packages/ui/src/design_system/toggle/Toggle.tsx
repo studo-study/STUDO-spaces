@@ -55,7 +55,7 @@ export const SwitchToggle: React.FC<ISwitchToggleProps> = (props) => {
       >
         <div
           className={classNames(
-            "absolute left-0.5 top-0.5 rounded-full bg-white shadow-md transform transition-transform duration-300 ease-in-out",
+            "absolute left-0.5 top-0.5 rounded-full bg-white z-999 shadow-md transform transition-transform duration-300 ease-in-out",
             {
               "w-3 h-3": size === 4,
               "translate-x-4": size === 4 && isChecked,
