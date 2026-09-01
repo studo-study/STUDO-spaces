@@ -273,6 +273,7 @@ const CreateCourse = (props: CreateCourseProps) => {
           />
 
           <BaseButton
+            disabled={!title}
             size={"sm"}
             onSubmit={onSubmit}
             bg={"bg-blue-500"}
