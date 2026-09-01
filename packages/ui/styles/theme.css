@@ -63,6 +63,12 @@ body::-webkit-scrollbar {
     --color-studogrey: rgba(200, 210, 210, 0.19);
 }
 
+/* Class-based dark also needs the body bg (the @media block only fires on a
+   dark *system*; the forced `.dark` class must set it regardless). */
+.dark body {
+    background-color: var(--color-slate-900);
+}
+
 
 .montserrat-black {
     font-family: "Montserrat", sans-serif;
