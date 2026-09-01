@@ -91,21 +91,6 @@ export default function AppHeader({
             title={SpecialeDagTitel()}
             className={"w-fit flex flex-row gap-1"}
           >
-            {premium ? (
-              <span
-                className={
-                  "font-georgia text-3xl font-bold truncate flex flex-row gap-1 bg-linear-to-r bg-clip-text text-transparent transition-all duration-300 from-indigo-300 to-blue-300"
-                }
-              >
-                Studo Select
-              </span>
-            ) : (
-              <span
-                className={`font-georgia text-3xl font-bold truncate flex flex-row gap-1 bg-linear-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}
-              >
-                Studo
-              </span>
-            )}
             {beta && (
               <span
                 className={
