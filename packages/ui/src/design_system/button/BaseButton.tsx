@@ -38,7 +38,7 @@ const textSizeMap = {
 } as const;
 
 const borderMap = {
-  default: "border border-studoborder/30 hover:border-studoborder",
+  default: "border border-neutral-200/30 hover:border-neutral-400",
   red: "border border-red-500",
 } as const;
 
@@ -53,24 +53,24 @@ const sizeMap = {
 
 const variantMap = {
   primary:
-    "bg-emerald-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
+    "bg-emerald-500 text-white px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
   danger:
-    "bg-rose-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
+    "bg-rose-500 text-white px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
   danger_outline:
-    "bg-rose-500/30 text-white shadow-2xl px-5 min-h-full h-10 rounded-lg max-w-fit disabled:cursor-not-allowed disabled:active:scale-100 border-rose-500",
+    "bg-rose-500/30 text-white px-5 min-h-full h-10 rounded-lg max-w-fit disabled:cursor-not-allowed disabled:active:scale-100 border-rose-500",
   outline: "border border-gray-300 text-black dark:text-white",
   outline_link:
-    "border border-studoborder dark:bg-studogrey/30 text-studodarkblue dark:text-white w-full",
+    "border border-neutral-200 dark:bg-studogrey/30 text-studodarkblue dark:text-white w-full",
   prompt: "border border-zinc-300 text-zinc-500",
   ghost:
     "text-studodarkblue dark:text-white border-none hover:text-studoblue transition-colors duration-200 active:scale-100",
   approve:
     "text-white bg-emerald-500 px-5 min-h-fit h-12 rounded-full max-w-fit max-h-12",
   submit:
-    "bg-blue-500 text-white shadow-2xl px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
+    "bg-blue-500 text-white px-5 min-h-full h-12 rounded-full max-w-fit disabled:cursor-not-allowed disabled:active:scale-100",
   default: "text-studodarkblue dark:text-white",
-  icon: "h-fit px-0  py-0 rounded-full border border-studoborder/30 bg-studogrey/30",
-  plus: "shadow-2xl bg-blue-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder",
+  icon: "h-fit px-0  py-0 rounded-full border border-neutral-200/30 bg-studogrey/30",
+  plus: " bg-blue-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-neutral-200",
   hover:
     "hover:bg-studogrey/30 text-studodarkblue dark:text-white backdrop-blur-sm transition-[colors, scale] duration-200 border-none truncate",
 } as const;

@@ -166,7 +166,7 @@ const LearnSettings = () => {
               >
                 {t(section.label)}:
               </span>
-              <hr className={"border-studoborder/30 h-px w-full mb-3"} />
+              <hr className={"border-neutral-200/30 h-px w-full mb-3"} />
               {section.subItems.map((subItem) => {
                 return (
                   <div

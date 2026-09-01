@@ -53,7 +53,7 @@ export default function PublicStudosetView({ id }: viewProps) {
           href={`/profile/` + data?.userId}
           className="flex flex-row w-fit h-fit rounded-full sm:rounded-4xl
                             gap-1.5 sm:gap-2 px-1 pr-3 py-1 l max-w-fit
-                             bg-studogrey/30 border border-studoborder/30 shadow-2x
+                             bg-studogrey/30 border border-neutral-200/30 shadow-2x
                             dark:text-white min-w-0"
         >
           <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full shrink-0">
@@ -87,12 +87,12 @@ export default function PublicStudosetView({ id }: viewProps) {
         </div>
       </div>
       <div className="w-full h-fit flex flex-col gap-6 sm:gap-8 md:gap-10 justify-center pt-5 items-center">
-        <hr className="w-full border-0.5 border-solid border-studoborder/30" />
+        <hr className="w-full border-0.5 border-solid border-neutral-200/30" />
         <div ref={ref} className={"relative w-full max-h-300 min-h-150 h-150 "}>
           <PublicFlashcardMode id={id} />
         </div>
 
-        <hr className="w-full border-0.5 border-solid border-studoborder/30" />
+        <hr className="w-full border-0.5 border-solid border-neutral-200/30" />
         <div className={"w-full flex justify-between items-center"}>
           <span className="w-full h-fit font-bold text-sm sm:text-base">
             {t("cards_title")}:

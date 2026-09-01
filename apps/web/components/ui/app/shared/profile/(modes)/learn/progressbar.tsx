@@ -45,7 +45,7 @@ export default function ProgressBar({
 
       <div
         className={
-          "w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row items-center justify-baseline h-2 rounded-full border border-gray-300 dark:border-studoborder/30"
+          "w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row items-center justify-baseline h-2 rounded-full border border-gray-300 dark:border-neutral-200/30"
         }
       >
         <div

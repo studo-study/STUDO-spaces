@@ -43,12 +43,12 @@ export default function ChallengeGrid() {
         <div className={"grid grid-cols-2 min-w-full h-full gap-5 w-full"}>
           <div
             className={
-              "min-w-full rounded-3xl bg-studogrey/30 border-studoborder/30 border"
+              "min-w-full rounded-3xl bg-studogrey/30 border-neutral-200/30 border"
             }
           />
           <div
             className={
-              "min-w-full rounded-3xl p-5 bg-studogrey/30 border-studoborder/30 border "
+              "min-w-full rounded-3xl p-5 bg-studogrey/30 border-neutral-200/30 border "
             }
           >
             <span className={"text-studodarkblue dark:text-white font-bold"}>
@@ -87,7 +87,7 @@ function ChallengeItem({ challenge }: ChallengeItemProps) {
         onClick={() => setPopupChallenge((prev) => !prev)}
         className={`w-full h-10 rounded-full bg-studoblue/30 cursor-pointer
                     flex items-center dark:text-white text-studodarkblue justify-center gap-3
-                    border border-studoborder/30 hover:border-studoborder transition-all duration-300`}
+                    border border-neutral-200/30 hover:border-neutral-400 transition-all duration-300`}
       >
         {challenge.challengeType === "time attack" ? (
           <IoHourglassOutline />
@@ -188,7 +188,7 @@ function UserItem({ user }: UserItemProps) {
     <div
       className={`w-full h-16 lg:h-20 rounded-3xl bg-studogrey/10 px-4 lg:px-5
             flex items-center dark:text-white text-studodarkblue justify-start gap-3
-            border border-studogrey/20 hover:border-studogrey/40 transition-all duration-300 shadow-2xl`}
+            border border-neutral-200/20 hover:border-neutral-400/40 transition-all duration-300 shadow-2xl`}
     >
       <span
         className={"text-sm lg:text-base font-medium w-5 text-center shrink-0"}

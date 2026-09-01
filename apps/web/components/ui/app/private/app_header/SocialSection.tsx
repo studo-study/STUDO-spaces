@@ -27,7 +27,7 @@ const OnlineScanner = () => {
         <BaseToolTip position={"bottom"} content={t("progress_explanation")}>
           <div
             className={
-              "truncate dark:text-white px-2 py-1 rounded-full transition-all duration-300 select-none text-rose-700 font-semibold border border-transparent hover:bg-studogrey/30 hover:border-studogrey/30 text-sm flex flex-row gap-1 sm:gap-2 items-center"
+              "truncate dark:text-white px-2 py-1 rounded-full transition-all duration-300 select-none text-rose-700 font-semibold border border-transparent hover:bg-studogrey/30 hover:border-neutral-400/30 text-sm flex flex-row gap-1 sm:gap-2 items-center"
             }
           >
             <RiWifiOffLine />

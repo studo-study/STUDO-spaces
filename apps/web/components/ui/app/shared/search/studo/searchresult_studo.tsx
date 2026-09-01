@@ -47,7 +47,7 @@ function UserResult({ item }: SetResultProps) {
   return (
     <Link
       href={`track/${item.id}`}
-      className="relative w-full h-40 rounded-2xl hover:scale-102 transition-transform duration-500 overflow-hidden border border-studogrey/30 drop-shadow-3xl"
+      className="relative w-full h-40 rounded-2xl hover:scale-102 transition-transform duration-500 overflow-hidden border border-neutral-200/30 drop-shadow-3xl"
     >
       {/* Banner */}
       <Image

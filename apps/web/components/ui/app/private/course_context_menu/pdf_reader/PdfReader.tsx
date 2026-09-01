@@ -24,7 +24,7 @@ const PdfReader: React.FC = () => {
         </span>
         <span
           className={
-            "px-3 py-1 rounded-full border border-studoborder/30 dark:text-white"
+            "px-3 py-1 rounded-full border border-neutral-200/30 dark:text-white"
           }
         >
           {currentPage} / {pageCount}

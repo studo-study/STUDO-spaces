@@ -14,7 +14,7 @@ const SvenMessage: React.FC<SvenMessageProps> = (props) => {
       <ComposerAura>
         <div
           className={
-            "border border-studoborder/30 h-fit hover:border-studoborder duration-300 transition-colors shadow-xl rounded-full bg-studogrey/10 p-3 pr-5 flex flex-row gap-3"
+            "border border-neutral-200/30 h-fit hover:border-neutral-400 duration-300 transition-colors shadow-xl rounded-full bg-studogrey/10 p-3 pr-5 flex flex-row gap-3"
           }
         >
           <div

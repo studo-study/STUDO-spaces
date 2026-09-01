@@ -27,7 +27,7 @@ const UserSearch = () => {
     <div className={"w-full h-full flex flex-1 flex-col gap-5"}>
       <div
         className={`min-w-1/3 lg:w-1/2 w-full h-14 flex flex-row items-center  px-7 bg-gray-300/30 dark:bg-gray-500/10
-        rounded-full dark:text-white text-studodarkblue focus-within:border-gray-300 border-2 border-gray-400/30 dark:border-studoborder/20`}
+        rounded-full dark:text-white text-studodarkblue focus-within:border-gray-300 border-2 border-gray-400/30 dark:border-neutral-200/20`}
       >
         <input
           type="text"

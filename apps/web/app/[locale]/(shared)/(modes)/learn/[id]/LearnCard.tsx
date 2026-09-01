@@ -26,7 +26,7 @@ const LearnCard = () => {
 
   return (
     <div className="flex flex-col gap-10 w-full max-w-2xl 2xl:max-w-4xl px-10">
-      <div className="w-full h-150 bg-studogrey/30 border shadow-lg border-studoborder/30 hover:border-studoborder transition-colors duration-300 rounded-4xl flex flex-col justify-between gap-3 p-3">
+      <div className="w-full h-150 bg-studogrey/30 border shadow-lg border-neutral-200/30 hover:border-neutral-400 transition-colors duration-300 rounded-4xl flex flex-col justify-between gap-3 p-3">
         <LearnProgress
           phase={card.phase}
           totalViews={card.totalViews}

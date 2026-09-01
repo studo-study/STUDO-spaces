@@ -122,7 +122,7 @@ function TrackItem({ track }: TrackItemProps) {
       {isOpen && (
         <div className="w-full px-5 pr-8 flex flex-col gap-1 mt-2">
           {track.studysets.length > 0 || track.visualsets.length > 0 ? (
-            <hr className={"w-full h-0.5 border-studoborder"} />
+            <hr className={"w-full h-0.5 border-neutral-200"} />
           ) : null}
 
           {track.studysets.length != 0 && (

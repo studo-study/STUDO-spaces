@@ -72,7 +72,7 @@ export default function CardItem({
   return (
     <div className={"w-full h-fit relative mb-5"}>
       <div
-        className={`flex flex-col justify-around items-baseline relative h-fit w-full gap-3 sm:gap-4 md:gap-5 border  ${isDouble ? "border-emerald-400 dark:border-studoblue" : "border-studoborder/30"} rounded-2xl sm:rounded-4xl`}
+        className={`flex flex-col justify-around items-baseline relative h-fit w-full gap-3 sm:gap-4 md:gap-5 border  ${isDouble ? "border-emerald-400 dark:border-studoblue" : "border-neutral-200/30"} rounded-2xl sm:rounded-4xl`}
       >
         <div className="w-full h-10 sm:h-13 rounded-t-3xl dark:bg-gray-700/50 bg-zinc-300/20 flex justify-between items-center p-2 px-4 sm:p-3 sm:px-6 md:px-8">
           <span className="text-sm sm:text-base text-studodarkblue dark:text-white">
@@ -160,7 +160,7 @@ export default function CardItem({
         <button
           type={"button"}
           onClick={insertCard}
-          className="relative cursor-pointer bg-blue-500 min-h-7 min-w-7 flex items-center justify-center text-xl text-white rounded-full border border-studoborder opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 duration-300 active:scale-95 transition-all z-10"
+          className="relative cursor-pointer bg-blue-500 min-h-7 min-w-7 flex items-center justify-center text-xl text-white rounded-full border border-neutral-200 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 duration-300 active:scale-95 transition-all z-10"
         >
           <IoIosAdd />
         </button>

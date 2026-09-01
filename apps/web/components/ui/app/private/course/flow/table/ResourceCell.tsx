@@ -111,7 +111,7 @@ const ResourceCell: React.FC<ResourceCellProps> = ({ row, updateRow }) => {
               transform: "translateX(-50%)",
             }}
             className={`z-200 w-64 max-w-[90vw] origin-top
-              p-2 border border-studoborder/30 dark:text-white text-studodarkblue
+              p-2 border border-neutral-200/30 dark:text-white text-studodarkblue
               rounded-2xl dark:bg-slate-800 bg-slate-100
               flex flex-col gap-2
               shadow-xl shadow-black/10 dark:shadow-black/30
@@ -170,7 +170,7 @@ const ResourceCell: React.FC<ResourceCellProps> = ({ row, updateRow }) => {
                 }}
                 placeholder={t("add_resource")}
                 className={
-                  "min-w-0 flex-1 outline-none text-xs bg-studogrey/30 rounded-full px-3 py-1.5 border border-studoborder/30"
+                  "min-w-0 flex-1 outline-none text-xs bg-studogrey/30 rounded-full px-3 py-1.5 border border-neutral-200/30"
                 }
               />
               <button

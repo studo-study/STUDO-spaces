@@ -78,7 +78,7 @@ export default function SearchSets() {
   return (
     <div
       className={`min-w-1/3 lg:w-2/3 w-full h-18 flex flex-row items-center  px-7 bg-gray-300/30 dark:bg-gray-500/10
-        rounded-full dark:text-white text-studodarkblue border-2 border-gray-400/30 dark:border-studoborder/20`}
+        rounded-full dark:text-white text-studodarkblue border-2 border-gray-400/30 dark:border-neutral-200/20`}
     >
       <input
         ref={inputFieldRef}

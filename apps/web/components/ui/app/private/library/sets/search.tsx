@@ -24,7 +24,7 @@ export default function SetSearch({
     <div
       className={classNames(
         `h-10 gap-5 px-5 dark:text-white w-70 rounded-4xl glass-rgb transition-all duration-300
-        ${search ? "dark:border-white border-gray-500" : "dark:border-studoborder/30 border-gray-300"}
+        ${search ? "dark:border-white border-gray-500" : "dark:border-neutral-200/30 border-gray-300"}
         border focus:border-white shadow-2xl flex justify-around`,
         className,
       )}

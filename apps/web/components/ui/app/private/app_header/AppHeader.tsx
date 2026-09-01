@@ -78,7 +78,7 @@ export default function AppHeader({
         <div className="flex items-center gap-8 w-fit">
           <button
             onClick={toggleSidebar}
-            className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl glass-rgb"
+            className="flex items-center justify-center cursor-pointer text-2xl dark:text-white text-studodarkblue min-w-10 min-h-10 rounded-full border dark:border-neutral-200/20 border-gray-300 shadow-xl glass-rgb"
           >
             {burgerOpen ? (
               <PanelRightOpen size={20} className={"dark:opacity-30"} />
@@ -120,7 +120,7 @@ export default function AppHeader({
             <Link
               href={"/select"}
               className={
-                "hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-studoborder bg-white backdrop-blur-2xl text-studodarkblue"
+                "hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-neutral-200 bg-white backdrop-blur-2xl text-studodarkblue"
               }
             >
               upgrade to select

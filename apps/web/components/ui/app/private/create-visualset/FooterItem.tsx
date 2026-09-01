@@ -51,7 +51,7 @@ const FooterItem = memo(function FooterItem({
       </div>
 
       <div
-        className={`min-w-11 min-h-11 rounded-lg glass-rgb border border-studoborder/30 flex justify-center items-center overflow-hidden
+        className={`min-w-11 min-h-11 rounded-lg glass-rgb border border-neutral-200/30 flex justify-center items-center overflow-hidden
                     ${isActive ? "ring-2 ring-white ring-offset-0" : ""}`}
       >
         {previewUrl ? (

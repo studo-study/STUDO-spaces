@@ -86,7 +86,7 @@ const SimpleMenu = (props: SimpleMenuProps) => {
 
   const variantClasses =
     variant === "entity"
-      ? "p-3 gap-2 rounded-4xl backdrop-blur-2xl border border-studoborder/30 bg-studogrey/20"
+      ? "p-3 gap-2 rounded-4xl backdrop-blur-2xl border border-neutral-200/30 bg-studogrey/20"
       : classNames(
           width ? String(width) : "w-55",
           "p-2 rounded-2xl backdrop-blur-xl",

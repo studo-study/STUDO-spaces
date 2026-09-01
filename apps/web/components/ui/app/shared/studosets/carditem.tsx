@@ -202,13 +202,13 @@ export default function CardItem({
     <div
       className={`w-full overflow-hidden rounded-3xl border bg-studogrey/30 flex flex-col items-center
         transition-all duration-200
-        ${isEditing ? "border-emerald-400/40 shadow-lg shadow-emerald-400/5" : "border-studoborder/30"}
+        ${isEditing ? "border-emerald-400/40 shadow-lg shadow-emerald-400/5" : "border-neutral-200/30"}
         ${isEditing ? "min-h-26 h-fit" : "h-fit min-h-26"}`}
       onBlur={handleContainerBlur}
       onFocus={handleContainerFocus}
     >
       {/* Header */}
-      <div className="w-full h-10 bg-studogrey/30 flex pr-2 px-5 py-2 items-center justify-between border-b border-studoborder/30 shrink-0">
+      <div className="w-full h-10 bg-studogrey/30 flex pr-2 px-5 py-2 items-center justify-between border-b border-neutral-200/30 shrink-0">
         <span className="text-sm">{index + 1}</span>
         <div className={"w-fit flex flex-row items-center gap-2"}>
           {!isPublic && (
@@ -291,14 +291,14 @@ export default function CardItem({
               <SafeKaTeX value={currentCard.term} />
             </span>
           ) : currentCard.termContentType === "code" ? (
-            <div className="w-full px-3 h-10 flex items-center border border-studoborder/30 rounded-full bg-studogrey/10 overflow-hidden">
+            <div className="w-full px-3 h-10 flex items-center border border-neutral-200/30 rounded-full bg-studogrey/10 overflow-hidden">
               <CodeBlock
                 value={currentCard.term}
                 lang={currentCard.codeLanguage}
               />
             </div>
           ) : (
-            <span className="w-full px-5 h-10 flex truncate items-center border border-studoborder/30 rounded-full bg-studogrey/10 overflow-hidden text-sm">
+            <span className="w-full px-5 h-10 flex truncate items-center border border-neutral-200/30 rounded-full bg-studogrey/10 overflow-hidden text-sm">
               {currentCard.term}
             </span>
           )}
@@ -318,7 +318,7 @@ export default function CardItem({
             />
           ) : (
             <div
-              className={`w-full flex truncate items-center border border-studoborder/30 rounded-full overflow-hidden bg-studogrey/10 text-sm`}
+              className={`w-full flex truncate items-center border border-neutral-200/30 rounded-full overflow-hidden bg-studogrey/10 text-sm`}
             >
               <span
                 className={`${isPublic && "blur-xs pointer-events-none select-none"} w-full flex truncate items-center px-5 h-10`}

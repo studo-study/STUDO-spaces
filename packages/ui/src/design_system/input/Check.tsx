@@ -44,7 +44,7 @@ const Check: React.FC<CheckProps> = (props) => {
           disabled={disabled}
           onChange={(e) => onChange(e.target.checked)}
           className={classNames(
-            "appearance-none cursor-pointer relative w-full h-full rounded-[5px] border border-studoborder/30 hover:border-indigo-500 transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50",
+            "appearance-none cursor-pointer relative w-full h-full rounded-[5px] border border-neutral-200/30 hover:border-indigo-500 transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50",
             className,
             (checked || unCertain) && "bg-indigo-500 border-indigo-500",
           )}
@@ -56,7 +56,7 @@ const Check: React.FC<CheckProps> = (props) => {
               width,
               height,
             }}
-            className="pointer-events-none absolute inset-0 h-full w-full flex items-center justify-center"
+            className="pointer-events-none text-white absolute inset-0 h-full w-full flex items-center justify-center"
           >
             <Minus size={12} strokeWidth={2.7} />
           </span>
@@ -67,7 +67,7 @@ const Check: React.FC<CheckProps> = (props) => {
               width,
               height,
             }}
-            className="pointer-events-none absolute inset-0 h-full w-full flex items-center justify-center"
+            className="pointer-events-none text-white absolute inset-0 h-full w-full flex items-center justify-center"
           >
             <CheckIcon size={12} strokeWidth={2.7} />
           </span>

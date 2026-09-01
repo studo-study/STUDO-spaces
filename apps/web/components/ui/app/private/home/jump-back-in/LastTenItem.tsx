@@ -14,7 +14,7 @@ const LastTenItem = (props: LastTenItemProps) => {
   const { data } = props;
   const t = useTranslations("home");
   return (
-    <Container className="min-w-150 w-150 px-10 justify-center hover:border-studoborder transition-all duration-300">
+    <Container className="min-w-150 w-150 px-10 justify-center hover:border-neutral-400 transition-all duration-300">
       <div className="absolute -z-10 w-full h-full bg-linear-0 from-blue-400/5 to-transparent  left-0" />
       <div className={"w-full flex flex-row gap-5"}>
         <div className={"p-5 w-2/3 flex flex-col gap-2"}>

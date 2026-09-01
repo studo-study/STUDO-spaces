@@ -16,7 +16,7 @@ const ImageTrigger = ({
   return (
     <button
       className={
-        "h-10.5 min-w-10.5 relative rounded-4xl overflow-hidden border text-xl items-center justify-center flex cursor-pointer select-none border-studoborder/30 bg-studogrey/30"
+        "h-10.5 min-w-10.5 relative rounded-4xl overflow-hidden border text-xl items-center justify-center flex cursor-pointer select-none border-neutral-200/30 bg-studogrey/30"
       }
       type={"button"}
       onClick={() => setImageTabOpen(!imageTabOpen)}

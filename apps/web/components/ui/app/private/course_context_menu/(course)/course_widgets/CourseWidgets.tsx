@@ -21,7 +21,7 @@ const CourseWidgets = () => {
           type={"button"}
           onClick={() => setEditMode(!editMode)}
           className={
-            "flex items-center justify-center gap-2 h-10 rounded-full border border-studoborder/30 bg-studogrey/30 text-sm font-semibold hover:border-studoborder dark:text-white transition-colors"
+            "flex items-center justify-center gap-2 h-10 rounded-full border border-neutral-200/30 bg-studogrey/30 text-sm font-semibold hover:border-neutral-400 dark:text-white transition-colors"
           }
         >
           {editMode ? <Check size={15} /> : <Pencil size={15} />}
@@ -37,7 +37,7 @@ const CourseWidgets = () => {
                 type={"button"}
                 onClick={() => addWidget(type)}
                 className={
-                  "flex items-center cursor-pointer gap-3 h-11 px-4 rounded-2xl border border-studoborder/30 bg-studogrey/30 hover:border-studoborder transition-colors text-sm"
+                  "flex items-center cursor-pointer gap-3 h-11 px-4 rounded-2xl border border-neutral-200/30 bg-studogrey/30 hover:border-neutral-400 transition-colors text-sm"
                 }
               >
                 <span className={"dark:text-white"}>{def.icon}</span>

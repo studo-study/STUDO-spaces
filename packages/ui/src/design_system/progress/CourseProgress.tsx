@@ -8,7 +8,7 @@ const CourseProgress: React.FC<CourseProgressProps> = (props) => {
   const { done, inProg, totalLength } = props;
   const isFinished = totalLength === done;
   return (
-    <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-studoborder/30">
+    <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-neutral-200/30">
       <div
         style={{
           width: `${isFinished ? 100 : (done / totalLength) * 100}%`,

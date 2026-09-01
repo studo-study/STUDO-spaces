@@ -17,7 +17,7 @@ export default function CourseItem({ course, options }: CourseCardProps) {
   return (
     <Link
       href={`/course/${course.id}`}
-      className="relative min-w-35 max-w-35 group p-5 rounded-2xl bg-studogrey/30 border  border-studoborder/30 hover:border-studoborder transition-all duration-300 text-center"
+      className="relative min-w-35 max-w-35 group p-5 rounded-2xl bg-studogrey/30 border  border-neutral-200/30 hover:border-neutral-400 transition-all duration-300 text-center"
     >
       {options && (
         <div className={"absolute right-2 top-2"}>

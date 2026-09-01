@@ -94,7 +94,7 @@ export default function PersonalInfo() {
       </span>
       <div
         className={
-          "w-full min-h-40 h-fit rounded-3xl border border-studoborder/30 divide-studoborder/30 divide-y "
+          "w-full min-h-40 h-fit rounded-3xl border border-neutral-200/30 divide-studoborder/30 divide-y "
         }
       >
         {personalInfo.map((option, index) => {

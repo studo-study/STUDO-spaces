@@ -53,7 +53,6 @@ const CellContent: React.FC<CellContentProps> = (props) => {
   if (colId === "titleColumn") {
     return (
       <div className={"w-full h-full text-sm px-3"}>
-        {/* uncontrolled + key: pas persisteren op blur, reset bij server-wijziging */}
         <input
           key={row.title ?? ""}
           ref={ref}
@@ -74,14 +73,14 @@ const CellContent: React.FC<CellContentProps> = (props) => {
     return (
       <div
         className={
-          "w-full dark:text-white text-studodarkblue h-full flex items-center justify-center"
+          "w-full dark:text-white text-studodarkblue h-full flex items-center"
         }
       >
         <Select
           value={row.status ?? undefined}
           onChange={(val) => updateRow(row.id, { status: val as RowStatus })}
           className={
-            "text-sm px-2 w-full h-full z-9999 bg-none border-none bg-transparent"
+            "text-sm px-2 min-w-full h-full z-9999 justify-between bg-none border-none bg-transparent truncate text-start w-full"
           }
           size={"xs"}
           align={"center"}
@@ -114,7 +113,7 @@ const CellContent: React.FC<CellContentProps> = (props) => {
         {creationDate && (
           <span
             className={
-              "min-w-fit text-center text-xs px-3 py-1.5 rounded-full bg-studogrey/30"
+              "min-w-fit text-center text-xs px-3 py-1.5 rounded-full truncate bg-studogrey/30"
             }
           >
             {creationDate}
@@ -201,12 +200,14 @@ const CellContent: React.FC<CellContentProps> = (props) => {
 
   if (colId === "dueDateColumn") {
     return (
-      <div className={"min-w-full h-full flex items-center justify-center"}>
+      <div className={"min-w-full h-full flex items-center"}>
         <DatePicker
           size={"sm"}
           align={"start"}
           variant={"default"}
-          className={"w-full flex-1 min-w-0 border-none text-sm bg-transparent"}
+          className={
+            "w-full truncate flex-1 min-w-0 border-none text-sm bg-transparent"
+          }
           value={row.dueDate ? new Date(row.dueDate) : null}
           onChange={(date) =>
             updateRow(row.id, { dueDate: date.toISOString().slice(0, 10) })
@@ -403,7 +404,6 @@ const TableCell: React.FC<TableCellProps> = ({
       aria-selected={selected}
       tabIndex={selected ? 0 : -1}
       onClick={(e) => {
-        // ctrl/cmd-klik = cel toevoegen/verwijderen uit selectie, anders vervangen.
         if (e.metaKey || e.ctrlKey) {
           toggleCell();
         } else {
@@ -521,7 +521,7 @@ const TableRow = ({
         onRowDragEnd();
       }}
       className={classNames(
-        "h-10 max-h-10 z-100 relative min-h-10 min-w-0 -mx-20 flex-1 w-full grid group/row border-b border-studoborder/30",
+        "h-10 max-h-10 z-100 relative min-h-10 min-w-0 -mx-20 flex-1 w-full grid group/row border-b border-neutral-200/30",
         checked && "border-transparent",
         isDragOver && "border-b-2 border-indigo-500",
       )}
@@ -551,7 +551,7 @@ const TableRow = ({
       <div
         style={pinStyle(true, CONTROLS_CELL_X)}
         className={classNames(
-          "h-full relative border-b border-studoborder/30 border-r w-full ",
+          "h-full relative border-b border-neutral-200/30 border-r w-full ",
           checked && !nextChecked && "rounded-bl-2xl",
           pinClass(true),
         )}
@@ -651,7 +651,7 @@ const TableRow = ({
             </div>
             <div
               className={
-                "h-full border-r border-studoborder/30 group-last-of-type/cell:border-none flex"
+                "h-full border-r border-neutral-200/30 group-last-of-type/cell:border-none flex"
               }
             />
           </div>

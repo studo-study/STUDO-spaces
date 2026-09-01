@@ -48,7 +48,7 @@ function UserResult({ item }: SetResultProps) {
   return (
     <Link
       href={item.id === user?.id ? "/account" : "profile/" + item.id}
-      className={`w-full min-h-fit h-fit  p-3 rounded-4xl border flex flex-row gap-3 border-studogrey/30 glass-rgb drop-shadow-3xl`}
+      className={`w-full min-h-fit h-fit  p-3 rounded-4xl border flex flex-row gap-3 border-neutral-200/30 glass-rgb drop-shadow-3xl`}
     >
       <Avatar size={30} displayName={item.displayName} id={item.id} />
       <span className={"font-bold truncate"}>{item.displayName}</span>

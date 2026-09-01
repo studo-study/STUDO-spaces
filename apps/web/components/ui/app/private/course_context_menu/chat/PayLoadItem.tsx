@@ -50,7 +50,7 @@ const SetCards: React.FC<SetCardsProps> = (props) => {
             "rounded-full dark:text-white cursor-pointer truncate border bg-studogrey/30 px-2 py-1",
             payLoad.cardId === card.id
               ? "border-studoblue"
-              : "border-studoborder/30",
+              : "border-neutral-200/30",
           )}
         >
           {card.term} - {card.definition}
@@ -80,7 +80,7 @@ const PayloadItem: React.FC<PayloadItemProps> = (props) => {
         trigger={
           <div
             className={
-              "flex flex-row items-center cursor-pointer gap-1 pl-3 pr-2 py-1 rounded-full border border-studoborder/30 bg-studogrey/30 text-sm dark:text-white"
+              "flex flex-row items-center cursor-pointer gap-1 pl-3 pr-2 py-1 rounded-full border border-neutral-200/30 bg-studogrey/30 text-sm dark:text-white"
             }
           >
             <span

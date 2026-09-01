@@ -34,7 +34,7 @@ const CourseImport: React.FC<CourseImportInterface> = (props) => {
     <div className="w-2/3 h-full relative min-h-[80vh] flex flex-row items-center justify-center gap-6 px-4 py-10">
       <div
         className={
-          "w-full h-full max-w-65 min-w-0 flex-1 min-h-0 border  border-studoborder rounded-3xl bg-studogrey/30 p-5 flex flex-col gap-1"
+          "w-full h-full max-w-65 min-w-0 flex-1 min-h-0 border  border-neutral-200 rounded-3xl bg-studogrey/30 p-5 flex flex-col gap-1"
         }
       >
         <span className={"text-sm text-studogrey font-medium"}>
@@ -53,7 +53,7 @@ const CourseImport: React.FC<CourseImportInterface> = (props) => {
                 }}
                 key={courseId + i.toString()}
                 className={classNames(
-                  "w-full h-10 bg-studogrey/25 rounded-2xl transition-colors duration-300 flex flex-row items-center px-2 cursor-pointer border border-studoborder/30 hover:border-studoborder",
+                  "w-full h-10 bg-studogrey/25 rounded-2xl transition-colors duration-300 flex flex-row items-center px-2 cursor-pointer border border-neutral-200/30 hover:border-neutral-400",
                   activeCourse === course.id && "bg-studogrey/75",
                 )}
               >
@@ -80,7 +80,7 @@ const CourseImport: React.FC<CourseImportInterface> = (props) => {
       >
         <div
           className={
-            "flex-1 min-h-0 p-5 min-w-0 border border-studogrey/30 rounded-3xl bg-studogrey/10 flex flex-col"
+            "flex-1 min-h-0 p-5 min-w-0 border border-neutral-200/30 rounded-3xl bg-studogrey/10 flex flex-col"
           }
         >
           <span className={"text-xl font-bold mb-3"}>

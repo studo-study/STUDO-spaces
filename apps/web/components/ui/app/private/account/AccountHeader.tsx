@@ -26,7 +26,7 @@ export default function AccountHeader() {
   return (
     <div
       className={
-        "w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-50 bg-studogrey/30 rounded-3xl border border-studoborder/30"
+        "w-full flex flex-col gap-5 px-10 justify-center py-5 min-h-50 bg-studogrey/30 rounded-3xl border border-neutral-200/30"
       }
     >
       <div

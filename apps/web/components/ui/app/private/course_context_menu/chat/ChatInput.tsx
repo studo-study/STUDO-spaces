@@ -38,7 +38,7 @@ const ChatInput = () => {
       <div className={"w-full flex-col flex items-center justify-center px-8"}>
         <div
           className={
-            "mx-10 rounded-tl-3xl rounded-tr-3xl border border-studoborder/30"
+            "mx-10 rounded-tl-3xl rounded-tr-3xl border border-neutral-200/30"
           }
         ></div>
         {payload.length > 0 && (
@@ -61,7 +61,7 @@ const ChatInput = () => {
             onSubmit();
           }}
           className={
-            "relative p-3 gap-2 h-fit flex flex-row w-full bg-studogrey/5 rounded-full border border-studoborder/30 mx-10 mb-10"
+            "relative p-3 gap-2 h-fit flex flex-row w-full bg-studogrey/5 rounded-full border border-neutral-200/30 mx-10 mb-10"
           }
         >
           <div

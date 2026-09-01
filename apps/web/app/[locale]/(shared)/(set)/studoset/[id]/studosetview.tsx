@@ -204,7 +204,7 @@ export default function StudosetView({ id }: viewProps) {
           href={isOwner ? "/account" : `/profile/` + data?.userId}
           className="flex flex-row w-fit h-fit rounded-full sm:rounded-4xl
                             gap-1.5 sm:gap-2 px-1 pr-3 py-1 l max-w-fit
-                             bg-studogrey/30 border border-studoborder/30 shadow-2x
+                             bg-studogrey/30 border border-neutral-200/30 shadow-2x
                             dark:text-white min-w-0"
         >
           <div className="min-h-4 max-h-4 min-w-4 justify-center items-center flex max-w-4 sm:min-h-5 sm:max-h-5 sm:min-w-5 sm:max-w-5 bg-emerald-400 overflow-hidden rounded-full shrink-0">
@@ -238,7 +238,7 @@ export default function StudosetView({ id }: viewProps) {
               href={"/print/" + id}
               className="inline-flex  cursor-pointer active:scale-95 transition-[scale] duration-300 flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
                     font-atrament font-normal text-studodarkblue justify-center text-xl
-                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
+                    rounded-full bg-studogrey/30 border border-neutral-200/30 shadow-2x
                     dark:text-white"
             >
               <Printer size={16} />
@@ -315,7 +315,7 @@ export default function StudosetView({ id }: viewProps) {
       </div>
       {showMessage && <SvenMessage />}
       <div className="w-full h-fit flex flex-col gap-5 justify-center pt-5 items-center">
-        <hr className="w-full border-0.5 border-solid border-studoborder/30" />
+        <hr className="w-full border-0.5 border-solid border-neutral-200/30" />
         <div className={"flex flex-col gap-2 w-full h-fit"}>
           <div className="w-full grid gap-3 grid-cols-1 sm:grid-cols-3">
             {LEARN_OPTIONS.map((option) => {
@@ -325,7 +325,7 @@ export default function StudosetView({ id }: viewProps) {
                   href={option.href + id}
                   key={option.label}
                   className={
-                    "w-full p-2 flex transition-colors bg-studogrey/30 hover:border-studoborder duration-300 items-center justify-center flex-row gap-2 border border-studogrey/30 rounded-full"
+                    "w-full p-2 flex transition-colors bg-studogrey/30 hover:border-neutral-400 duration-300 items-center justify-center flex-row gap-2 border border-neutral-200/30 rounded-full"
                   }
                 >
                   <div
@@ -353,12 +353,12 @@ export default function StudosetView({ id }: viewProps) {
             })}
           </div>
         </div>
-        <hr className="w-full mb-8  border-0.5 border-solid border-studoborder/30" />
+        <hr className="w-full mb-8  border-0.5 border-solid border-neutral-200/30" />
         <div ref={ref} className={"w-full max-h-300 p-0 min-h-130 h-190 "}>
           <FlashcardMode id={id} isHome />
         </div>
 
-        <hr className="w-full border-0.5 border-solid border-studoborder/30" />
+        <hr className="w-full border-0.5 border-solid border-neutral-200/30" />
         <div className={"flex items-center justify-between w-full"}>
           <span className="w-full h-fit font-bold text-sm sm:text-base">
             {t("progress_title")}
@@ -376,7 +376,7 @@ export default function StudosetView({ id }: viewProps) {
               filter !== "all" && filter !== "not_learned"
                 ? "opacity-50"
                 : null,
-              "w-full select-none h-full cursor-pointer p-5 transition-[opacity, colors] duration-300 border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[opacity, colors] duration-300 border border-neutral-200/30 hover:border-neutral-400 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("not_learned")}</span>
@@ -390,7 +390,7 @@ export default function StudosetView({ id }: viewProps) {
             onClick={() => toggleTab("reviewed")}
             className={classNames(
               filter !== "all" && filter !== "reviewed" ? "opacity-50" : null,
-              "w-full select-none h-full cursor-pointer p-5 transition-[colors, opacity] duration-300  border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[colors, opacity] duration-300  border border-neutral-200/30 hover:border-neutral-400 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("reviewed")}</span>
@@ -400,7 +400,7 @@ export default function StudosetView({ id }: viewProps) {
             onClick={() => toggleTab("learned")}
             className={classNames(
               filter !== "all" && filter !== "learned" ? "opacity-50" : null,
-              "w-full select-none h-full cursor-pointer p-5 transition-[opacity, colors]  duration-300 border border-studoborder/30 hover:border-studoborder rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
+              "w-full select-none h-full cursor-pointer p-5 transition-[opacity, colors]  duration-300 border border-neutral-200/30 hover:border-neutral-400 rounded-3xl bg-studogrey/30 flex flex-col items-center justify-center gap-2",
             )}
           >
             <span className={"font-bold"}>{t("studied")}</span>
@@ -408,7 +408,7 @@ export default function StudosetView({ id }: viewProps) {
           </div>
         </div>
 
-        <hr className="w-full border-0.5 border-solid border-studoborder/30" />
+        <hr className="w-full border-0.5 border-solid border-neutral-200/30" />
         <div className={"w-full flex justify-between items-center"}>
           <span className="w-full h-fit font-bold text-sm sm:text-base">
             {t("cards_title")}: ({filteredCards?.length})

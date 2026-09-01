@@ -114,21 +114,21 @@ export default function TicketingGrid() {
         >
           <span
             className={
-              "w-fit px-3 py-1 cursor-pointer rounded-full border border-studoborder/30 bg-studogrey/30"
+              "w-fit px-3 py-1 cursor-pointer rounded-full border border-neutral-200/30 bg-studogrey/30"
             }
           >
             My Issues
           </span>
           <div
             className={
-              "p-2 cursor-pointer rounded-full border border-studoborder/30 bg-studogrey/30"
+              "p-2 cursor-pointer rounded-full border border-neutral-200/30 bg-studogrey/30"
             }
           >
             <IoFilter size={12} />
           </div>
           <div
             className={
-              "p-2 cursor-pointer rounded-full border border-studoborder/30 bg-studogrey/30"
+              "p-2 cursor-pointer rounded-full border border-neutral-200/30 bg-studogrey/30"
             }
           >
             <FaPlus size={12} />

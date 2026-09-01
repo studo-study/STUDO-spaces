@@ -36,7 +36,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
     return (
       <div
         className={
-          "w-full flex flex-col gap-5 p-5 justify-center min-h-30 bg-studogrey/30 rounded-full border border-studoborder/30"
+          "w-full flex flex-col gap-5 p-5 justify-center min-h-30 bg-studogrey/30 rounded-full border border-neutral-200/30"
         }
       >
         <div className={"w-full h-fit relative flex gap-5"}>

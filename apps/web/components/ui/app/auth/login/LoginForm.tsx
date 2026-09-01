@@ -38,8 +38,6 @@ const LoginForm = () => {
         redirect: false,
       });
 
-      // next-auth geeft bij foute credentials een generieke code terug (geen
-      // bruikbare boodschap), dus tonen we een vertaalde generieke melding.
       if (result?.error) {
         setLoading(false);
         toast.error(t("failed"));
@@ -62,7 +60,7 @@ const LoginForm = () => {
     >
       <AnimateOnMount>
         <div className={"mb-10 flex min-w-full flex-col items-center"}>
-          <h1 className="text-4xl font-bolde">{t("Welcome back")}</h1>
+          <h1 className="text-4xl font-medium">{t("Welcome back")}</h1>
           <p className="text-slate-400 text-sm">{t("log into account")}</p>
         </div>
       </AnimateOnMount>

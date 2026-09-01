@@ -41,8 +41,8 @@ const EntityPickerItem: React.FC<EntityPickerItemProps> = (props) => {
     <div
       onClick={toggleAdd}
       className={classNames(
-        "w-full flex flex-row gap-2 px-2 py-2 rounded-full cursor-pointer hover:border-studoborder transition-colors duration-300 border bg-studogrey/30",
-        isAdded ? "border-studoblue" : "border-studoborder/30",
+        "w-full flex flex-row gap-2 px-2 py-2 rounded-full cursor-pointer hover:border-neutral-400 transition-colors duration-300 border bg-studogrey/30",
+        isAdded ? "border-studoblue" : "border-neutral-200/30",
       )}
     >
       {type === "course" && "icon" in item && item.icon ? (
@@ -103,7 +103,7 @@ const EntityPickerDropdown: React.FC<EntityPickerDropdownProps> = (props) => {
     if (!recommended) return null;
     return (
       <div
-        className={"w-full flex flex-col border-b border-studoborder/30 pb-5"}
+        className={"w-full flex flex-col border-b border-neutral-200/30 pb-5"}
       >
         <span
           className={
@@ -126,7 +126,7 @@ const EntityPickerDropdown: React.FC<EntityPickerDropdownProps> = (props) => {
       ref={modalRef}
       onClick={(ev) => ev.stopPropagation()}
       className={classNames(
-        "absolute min-w-80 h-110 backdrop-blur-2xl flex flex-col gap-2 p-3 rounded-4xl border border-studoborder/30 bg-studogrey/20",
+        "absolute min-w-80 h-110 backdrop-blur-2xl flex flex-col gap-2 p-3 rounded-4xl border border-neutral-200/30 bg-studogrey/20",
         "absolute left-0 z-50 bottom-15",
       )}
     >

@@ -18,7 +18,7 @@ export default function AdminHeader() {
   return (
     <div
       className={
-        "p-5 flex flex-col gap-3 items-start border-b border-studoborder/30"
+        "p-5 flex flex-col gap-3 items-start border-b border-neutral-200/30"
       }
     >
       <span

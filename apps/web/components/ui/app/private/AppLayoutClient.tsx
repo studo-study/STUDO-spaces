@@ -79,7 +79,7 @@ function AppLayoutInner({ children }: { children: ReactNode }) {
 
           <div
             className={classNames(
-              "relative border rounded-4xl border-studoborder/30 min-w-0 min-h-0 flex-1 flex mb-5 mx-5 dark:bg-slate-800  overflow-hidden",
+              "relative border rounded-4xl border-neutral-200/30 min-w-0 min-h-0 flex-1 flex mb-5 mx-5 dark:bg-slate-800  overflow-hidden",
               impersonating && "bg-emerald-800 dark:bg-emerald-800",
             )}
           >

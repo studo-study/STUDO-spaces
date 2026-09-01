@@ -121,7 +121,7 @@ export default function Grid() {
             className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
           >
             <div className="absolute bg-blue-500/50 h-8 w-8 rounded-full blur-sm" />
-            <div className="relative z-10 shadow-2xl bg-blue-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-studoborder">
+            <div className="relative z-10 shadow-2xl bg-blue-500 h-8 min-w-8 text-3xl flex items-center justify-center text-white rounded-full border border-neutral-200">
               <IoIosAdd />
             </div>
             <AddPopUp

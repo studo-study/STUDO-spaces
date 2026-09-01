@@ -17,12 +17,12 @@ const VARIANTS: Record<InputVariant, VariantStyle> = {
   },
   cardInput: {
     wrapper:
-      "glass-rgb flex flex-1 justify-between rounded-3xl border border-studoborder/30 text-sm",
+      "glass-rgb flex flex-1 justify-between rounded-3xl border border-neutral-200/30 text-sm",
     control: "min-w-0 flex-1 bg-transparent px-5 outline-none",
   },
   inputfield: {
     wrapper:
-      "flex w-full items-center rounded-2xl border border-studoborder/30 bg-white/5 text-sm",
+      "flex w-full items-center rounded-2xl border border-neutral-200/30 bg-white/5 text-sm",
     control: "min-w-0 flex-1 bg-transparent px-4 outline-none",
   },
 };
@@ -38,10 +38,6 @@ const TEXT_SIZES = {
 } as const;
 
 export type TextSize = keyof typeof TEXT_SIZES;
-
-/* -------------------------------------------------------------------------- */
-/*  Props                                                                      */
-/* -------------------------------------------------------------------------- */
 
 export type InputFieldElement = HTMLInputElement | HTMLTextAreaElement;
 
@@ -77,10 +73,6 @@ type TextareaOnly = Omit<
 export type InputFieldProps = BaseProps &
   (({ textarea: true } & TextareaOnly) | ({ textarea?: false } & InputOnly));
 
-/* -------------------------------------------------------------------------- */
-/*  Helpers                                                                    */
-/* -------------------------------------------------------------------------- */
-
 function useComposedRef<T>(...refs: Array<React.Ref<T> | undefined>) {
   return React.useCallback((node: T | null) => {
     for (const ref of refs) {
@@ -91,7 +83,6 @@ function useComposedRef<T>(...refs: Array<React.Ref<T> | undefined>) {
   }, refs);
 }
 
-/** Groeit mee met de inhoud, ook bij een resize van de container. */
 function useAutoResize(
   ref: React.RefObject<HTMLTextAreaElement | null>,
   value: unknown,
@@ -120,10 +111,6 @@ function useAutoResize(
   return resize;
 }
 
-/* -------------------------------------------------------------------------- */
-/*  Component                                                                  */
-/* -------------------------------------------------------------------------- */
-
 function InputFieldImpl(
   props: InputFieldProps,
   forwardedRef: React.Ref<InputFieldElement>,
@@ -142,7 +129,6 @@ function InputFieldImpl(
     inputClassName,
     showCount,
     iconRight,
-    // De ghost-span krimptruc slaat enkel op een veld dat niet stretcht.
     autoWidth = !stretch && variant === "default",
     onValueChange,
     setValue,
@@ -162,7 +148,6 @@ function InputFieldImpl(
   const errorId = `${id}-error`;
   const hintId = `${id}-hint`;
 
-  // `initialValue` was in de praktijk gewoon de controlled value.
   const value = valueProp ?? initialValue;
   const isControlled = value !== undefined;
 
@@ -206,8 +191,6 @@ function InputFieldImpl(
     fontBold && "font-bold",
     textSize && TEXT_SIZES[textSize],
     disabled && "cursor-not-allowed opacity-50",
-    // Verbergt de browser-autofill-highlight + native reveal/clear-knoppen
-    // (Firefox/Edge/webkit) zodat enkel onze eigen UI zichtbaar is.
     !textarea && "input-clean",
     inputClassName,
   );

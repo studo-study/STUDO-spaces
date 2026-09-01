@@ -28,7 +28,7 @@ export default function TriggerSettings({
     >
       <div
         className={
-          "min-h-7 min-w-7 dark:text-white active:scale-95 transition-all duration-300 cursor-pointer text-xl text-studodarkblue border border-studoborder flex items-center justify-center rounded-full"
+          "min-h-7 min-w-7 dark:text-white active:scale-95 transition-all duration-300 cursor-pointer text-xl text-studodarkblue border border-neutral-200 flex items-center justify-center rounded-full"
         }
       >
         <FaEllipsis />

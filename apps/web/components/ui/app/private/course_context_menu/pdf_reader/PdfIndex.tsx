@@ -51,7 +51,7 @@ const IndexItem: React.FC<IndexItemProps> = (props) => {
         <div
           style={{ width }}
           className={classNames(
-            "h-0.5 rounded-full transition-all duration-150 ease-out shadow-sm border-px border-studoborder",
+            "h-0.5 rounded-full transition-all duration-150 ease-out shadow-sm border-px border-neutral-200",
             isHovering ? "bg-studoblue" : "dark:bg-white/75 bg-studoborder",
           )}
         />

@@ -16,7 +16,7 @@ const ImageItem = ({ image, selectImage, selected }: ImageItemProps) => {
   return (
     <div
       onClick={() => onSelect()}
-      className={`rounded-2xl relative border-2 hover:border-studoblue ${isSelected ? "border-studoblue" : "border-studoborder/30"} overflow-hidden cursor-pointer w-full min-h-full bg-studogrey/30 `}
+      className={`rounded-2xl relative border-2 hover:border-studoblue ${isSelected ? "border-studoblue" : "border-neutral-200/30"} overflow-hidden cursor-pointer w-full min-h-full bg-studogrey/30 `}
     >
       <Image
         src={image.displayUrl}

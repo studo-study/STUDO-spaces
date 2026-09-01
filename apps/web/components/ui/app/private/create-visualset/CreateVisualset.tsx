@@ -219,7 +219,7 @@ export default function CreateVisualsetForm() {
             <input
               ref={titleRef}
               type="text"
-              className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
+              className="w-full h-12 px-5 rounded-full glass-rgb border border-neutral-200/30 text-white outline-none"
               autoComplete="off"
               placeholder={t("title_placeholder")}
             />

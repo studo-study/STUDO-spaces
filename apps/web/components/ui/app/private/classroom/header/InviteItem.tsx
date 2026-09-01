@@ -4,7 +4,7 @@ export default function InviteItem() {
   return (
     <div
       className={
-        "w-full h-15 rounded-4xl bg-studogrey/30 text-studodarkblue dark:text-white border border-studoborder/30 flex px-3 pl-2 justify-between items-center"
+        "w-full h-15 rounded-4xl bg-studogrey/30 text-studodarkblue dark:text-white border border-neutral-200/30 flex px-3 pl-2 justify-between items-center"
       }
     >
       <div className={"w-1/2 h-15 flex items-center gap-3"}>

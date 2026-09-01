@@ -210,7 +210,7 @@ const DatePicker = ({
         onClick={() => !disabled && setOpen((prev) => !prev)}
         className={classNames(
           `flex flex-row gap-2 items-center cursor-pointer ${
-            error ? "border-red-500" : "border-studoborder/30"
+            error ? "border-red-500" : "border-neutral-200/30"
           } ${s.trigger}`,
           style,
           className,
@@ -247,7 +247,7 @@ const DatePicker = ({
             }}
             className={`z-200 w-max
           ${align === "end" ? "origin-top-right" : "origin-top-left"}
-          p-3 border border-studoborder/30 dark:text-white text-studodarkblue
+          p-3 border border-neutral-200/30 dark:text-white text-studodarkblue
           rounded-2xl dark:bg-slate-800 bg-slate-100
           flex flex-col gap-3
           shadow-xl shadow-black/10 dark:shadow-black/30
@@ -321,7 +321,7 @@ const DatePicker = ({
                       ? "bg-blue-500 text-white"
                       : "hover:dark:bg-zinc-400/20 hover:bg-zinc-200/50"
                   }
-                  ${!isSelected && isToday ? "border border-studoborder" : ""}
+                  ${!isSelected && isToday ? "border border-neutral-200" : ""}
                 `}
                   >
                     {d.getDate()}

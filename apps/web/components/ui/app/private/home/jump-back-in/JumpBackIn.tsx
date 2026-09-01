@@ -103,7 +103,7 @@ const JumpBackIn = () => {
             <button
               onClick={handleBackward}
               aria-label={t("jump-back-in_previous")}
-              className="relative z-10 ml-2 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-sm border border-studoborder shadow-sm cursor-pointer active:scale-95 transition-transform duration-150 dark:text-white text-studodarkblue"
+              className="relative z-10 ml-2 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-sm border border-neutral-200 shadow-sm cursor-pointer active:scale-95 transition-transform duration-150 dark:text-white text-studodarkblue"
             >
               <ChevronLeft size={15} />
             </button>
@@ -132,7 +132,7 @@ const JumpBackIn = () => {
             <button
               onClick={handleForward}
               aria-label={t("jump-back-in_next")}
-              className="relative z-10 mr-2 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-sm border border-studoborder shadow-sm cursor-pointer active:scale-95 transition-transform duration-150 dark:text-white text-studodarkblue"
+              className="relative z-10 mr-2 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-sm border border-neutral-200 shadow-sm cursor-pointer active:scale-95 transition-transform duration-150 dark:text-white text-studodarkblue"
             >
               <ChevronRight size={15} />
             </button>

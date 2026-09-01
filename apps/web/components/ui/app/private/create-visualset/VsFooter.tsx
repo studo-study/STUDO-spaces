@@ -58,14 +58,14 @@ export default function VsFooter({
   return (
     <div
       className="w-full h-auto min-h-[68px] sm:min-h-[76px]
-            glass-rgb border border-studoborder/30 rounded-2xl sm:rounded-4xl
+            glass-rgb border border-neutral-200/30 rounded-2xl sm:rounded-4xl
             flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center
             p-2 sm:p-3 justify-between overflow-visible"
     >
       <div
         onClick={onAddImage}
         className="h-10 sm:h-12 w-10 sm:w-12 flex-shrink-0 flex justify-center items-center
-                    rounded-lg cursor-pointer glass-rgb border border-studoborder/30
+                    rounded-lg cursor-pointer glass-rgb border border-neutral-200/30
                     hover:opacity-80 transition-opacity self-start sm:self-auto"
       >
         <Image
@@ -104,7 +104,7 @@ export default function VsFooter({
                     rounded-full font-bold text-xs sm:text-sm
                     active:scale-105 transition-transform z-[2]
                     bg-gradient-to-br from-blue-400 to-blue-500 text-white
-                    border border-studoborder shadow-2xl
+                    border border-neutral-200 shadow-2xl
                     disabled:opacity-50 flex-shrink-0"
       >
         {isMutating ? t("saving") : t("create")}

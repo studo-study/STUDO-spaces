@@ -13,7 +13,7 @@ const BottomProgress: React.FC<BottomProgressProps> = (props) => {
   return (
     <div
       className={
-        "absolute -bottom-5 left-1/2 -translate-1/2 z-90 shadow-xl max-w-100 w-fit rounded-full p-3 bg-studogrey/30 border border-studoborder/30 flex flex-row items-center gap-5 divide-x divide-studoborder/30"
+        "absolute -bottom-5 left-1/2 -translate-1/2 z-90 shadow-xl w-fit rounded-full p-3 bg-studogrey/30 border border-neutral-200/30 flex flex-row items-center gap-5 divide-x divide-studoborder/30"
       }
     >
       <div

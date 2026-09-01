@@ -84,7 +84,7 @@ function JoinRequestItem({
   return (
     <div
       className={`max-h-15 h-15 px-3 max-w-full min-w-full cursor-pointer justify-between
-                 flex gap-3 items-center w-full rounded-full bg-studogrey/30 border border-studoborder/30 hover:border-studoborder transition-all duration-300 overflow-hidden`}
+                 flex gap-3 items-center w-full rounded-full bg-studogrey/30 border border-neutral-200/30 hover:border-neutral-400 transition-all duration-300 overflow-hidden`}
     >
       <div className={"w-fit flex flex-row gap-5 items-center"}>
         <Avatar id={request.id} displayName={request.displayName} />
@@ -127,8 +127,8 @@ function UserItem({ t, user }: UserItemProps) {
     <Link
       href={"/apps/web/components/ui/app/shared/profile" + user.userId}
       className={`max-h-15 min-h-15 flex-col sm:flex-row px-3 py-4 sm:py-0 max-w-full min-w-full cursor-pointer
-                 flex gap-3 items-center w-full rounded-full bg-studogrey/30 border border-studoborder/30 
-                 hover:border-studoborder transition-all duration-300 overflow-hidden`}
+                 flex gap-3 items-center w-full rounded-full bg-studogrey/30 border border-neutral-200/30 
+                 hover:border-neutral-400 transition-all duration-300 overflow-hidden`}
     >
       <Avatar id={user.userId} displayName={user.displayName} />
       <div className={"w-full flex flex-col"}>
@@ -158,7 +158,7 @@ function UserItem({ t, user }: UserItemProps) {
         {user.role === "teacher" ? (
           <span
             className={
-              "w-fit text-studodarkblue/30 border-2 border-studoborder bg-studogrey/20 px-3 py-1 rounded-full dark:text-white/30"
+              "w-fit text-studodarkblue/30 border-2 border-neutral-200 bg-studogrey/20 px-3 py-1 rounded-full dark:text-white/30"
             }
           >
             {user.role}

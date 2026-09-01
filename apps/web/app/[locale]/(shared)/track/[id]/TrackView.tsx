@@ -72,7 +72,7 @@ export default function TrackView() {
           >
             <div
               className={
-                "rounded-full border border-studoborder overflow-hidden w-20 h-20 min-w-20 min-h-20"
+                "rounded-full border border-neutral-200 overflow-hidden w-20 h-20 min-w-20 min-h-20"
               }
             >
               <Image

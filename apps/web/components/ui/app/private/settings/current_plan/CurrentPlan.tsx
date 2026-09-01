@@ -10,7 +10,7 @@ export default function CurrentPlan() {
       <span className={"w-full text-base font-bold h-fit"}>
         {t("subscription")}
       </span>
-      <div className={"w-full h-fit rounded-4xl border border-studoborder/30"}>
+      <div className={"w-full h-fit rounded-4xl border border-neutral-200/30"}>
         <div className={"w-full gap-4 p-5 flex flex-col"}>
           <div className={"w-full flex flex-row justify-between items-center"}>
             <span className={"w-full text-base font-bold h-fit"}>
