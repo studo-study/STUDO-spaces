@@ -11,10 +11,7 @@ import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection"
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
 import { ArrowRight, Menu, OctagonX, PanelRightOpen } from "lucide-react";
 import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
-import {
-  SpecialeDag,
-  SpecialeDagTitel,
-} from "@/components/ui/app/private/app_header/SpecialeDag";
+import { SpecialeDagTitel } from "@/components/ui/app/private/app_header/SpecialeDag";
 import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
 import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import Streak from "@/components/ui/overige/icons/Streak";
