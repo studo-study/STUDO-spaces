@@ -96,7 +96,7 @@ export default function InvitePeople({
                 type="text"
                 autoFocus={inviteOpen}
                 className={
-                  "h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
+                  "h-12 px-5 gap-5 text-white w-full rounded-4xl glass-rgb transition-all duration-300 border border-neutral-200/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
                 }
               />
             </div>
@@ -113,7 +113,7 @@ export default function InvitePeople({
         </div>
         <button
           type="submit"
-          className="bg-gradient-to-br from-yellow-400 to-amber-500 w-full cursor-pointer h-12 text-xl text-white border-studoborder border
+          className="bg-gradient-to-br from-yellow-400 to-amber-500 w-full cursor-pointer h-12 text-xl text-white border-neutral-200 border
                     rounded-4xl font-bold active:scale-95 transition-all duration-300 shadow-3xl"
         >
           {t("button")}

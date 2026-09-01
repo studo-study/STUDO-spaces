@@ -92,7 +92,7 @@ const CourseSidebar: React.FC = () => {
     },
   ];
   return (
-    <div className="shrink-0 w-20 h-full border-studoborder/30 shadow-3xl border-l bg-studogrey/10 flex flex-col gap-5 py-5 items-center justify-start">
+    <div className="shrink-0 w-20 h-full border-neutral-200/30 shadow-3xl border-l bg-studogrey/10 flex flex-col gap-5 py-5 items-center justify-start">
       {MenuItems.filter((item) => menuConfig[item.key] && item.isEnabled).map(
         (item) => (
           <BaseTooltip key={item.key} content={item.tooltip} position={"left"}>

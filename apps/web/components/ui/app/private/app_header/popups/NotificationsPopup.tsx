@@ -26,11 +26,11 @@ export default function TriggerNotif({
       ref={containerRef}
       className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-300"
     >
-      <div className="flex items-center justify-center bg-slate-200 dark:bg-gray-700/50 text-2xl dark:text-white/30 min-w-10 min-h-10 rounded-full border dark:border-studoborder/20 border-gray-300 shadow-xl">
+      <div className="flex items-center justify-center bg-slate-200 dark:bg-gray-700/50 text-2xl dark:text-white/30 min-w-10 min-h-10 rounded-full border dark:border-neutral-200/20 border-gray-300 shadow-xl">
         <Bell size={20} />
       </div>
       {notifications.notifications.length > 0 && (
-        <div className="absolute top-0.5 right-0.5 rounded-full border-studoborder border bg-rose-500 w-2 h-2" />
+        <div className="absolute top-0.5 right-0.5 rounded-full border-neutral-200 border bg-rose-500 w-2 h-2" />
       )}
       <NotifPopup
         NotifIsOpen={NotifIsOpen}
@@ -123,7 +123,7 @@ function NotifPopup({
       <div className={"w-full h-full flex flex-col"}>
         <div
           className={
-            "w-full flex text-sm items-center dark:text-white/30 h-10 border-b border-studoborder/30 px-5 "
+            "w-full flex text-sm items-center dark:text-white/30 h-10 border-b border-neutral-200/30 px-5 "
           }
         >
           {t("notifs")}:

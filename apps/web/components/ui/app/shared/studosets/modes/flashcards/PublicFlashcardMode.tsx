@@ -143,7 +143,7 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
     <div className="relative w-full min-h-150 h-full  flex flex-col gap-3 sm:gap-5">
       {/* Toolbar */}
       <div className="w-full h-fit flex flex-row gap-2 sm:gap-5 items-center">
-        <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-studoborder/30">
+        <div className="w-full bg-studogrey/30 shadow-2xl overflow-hidden flex flex-row h-2 rounded-full border border-gray-300 dark:border-neutral-200/30">
           <div
             style={{
               width: `${isFinished ? 100 : (learntIds.length / cards.length) * 100}%`,
@@ -187,7 +187,7 @@ function FlashcardModeInner({ id, cards }: { id: string; cards: Card[] }) {
 
       {/* Navigatie */}
       <div className="flex flex-row gap-3 sm:gap-5 items-center justify-center pb-4 sm:pb-6">
-        <div className="w-fit flex flex-row gap-3 px-2 items-center border border-studoborder/30 rounded-full shadow-xl bg-studogrey/30">
+        <div className="w-fit flex flex-row gap-3 px-2 items-center border border-neutral-200/30 rounded-full shadow-xl bg-studogrey/30">
           <button
             onClick={goBack}
             disabled={hitLimit}
@@ -227,7 +227,7 @@ function LoginWall({
 
   return (
     <div className="animate__fadeInLeft animate__animate w-full h-full card--container">
-      <div className="side-a backface-hidden top-0 left-0 absolute w-full shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20">
+      <div className="side-a backface-hidden top-0 left-0 absolute w-full shadow-2xl h-full flex items-center justify-center rounded-3xl border border-neutral-200/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20">
         <AnimateOnMount className="w-fit flex flex-col gap-5 items-center justify-center">
           <div className="gap-2 flex-col flex items-center justify-center text-center">
             <span className="font-georgia font-bold text-2xl">
@@ -279,7 +279,7 @@ function CardView({ card, termMode, onLearnt }: CardProps) {
         {/* term / definitie voorzijde */}
         <div
           className={
-            "side-a shadow-lg backface-hidden top-0 left-0 absolute w-full cursor-pointer h-full flex items-center justify-center rounded-3xl border hover:border-studoborder transition-all duration-300 border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20"
+            "side-a shadow-lg backface-hidden top-0 left-0 absolute w-full cursor-pointer h-full flex items-center justify-center rounded-3xl border hover:border-neutral-400 transition-all duration-300 border-neutral-200/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20"
           }
         >
           <div
@@ -333,7 +333,7 @@ function CardView({ card, termMode, onLearnt }: CardProps) {
 
         <div
           className={
-            "side-b backface-hidden top-0 left-0 absolute px-10 w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-studogrey/30"
+            "side-b backface-hidden top-0 left-0 absolute px-10 w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-neutral-200/30 bg-studogrey/30"
           }
         >
           {termMode ? (
@@ -416,7 +416,7 @@ const FinishedScreen = ({
 
   return (
     <div className="animate__fadeInLeft animate__animate w-full h-full card--container">
-      <div className="side-a backface-hidden top-0 left-0 absolute w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-studoborder/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20">
+      <div className="side-a backface-hidden top-0 left-0 absolute w-full cursor-pointer shadow-2xl h-full flex items-center justify-center rounded-3xl border border-neutral-200/30 bg-linear-45 from-studogrey/30 to to-zinc-200/30 dark:to-zinc-400/20">
         <AnimateOnMount className="w-fit flex flex-col gap-5 items-center justify-center">
           <div className="gap-2 flex-col flex items-center justify-center">
             <Image

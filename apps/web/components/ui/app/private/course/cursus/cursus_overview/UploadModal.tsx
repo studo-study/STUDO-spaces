@@ -113,7 +113,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 ${
                   isDragging
                     ? "border-blue-400/50 shadow-[0_0_60px_-10px_rgba(96,165,250,0.3)]"
-                    : "border-studoborder hover:border-studoborder/80"
+                    : "border-neutral-200 hover:border-neutral-400/80"
                 }
                 bg-studogrey/10
               `}
@@ -157,7 +157,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
                 {files.map((file, i) => (
                   <div
                     key={`${file.name}-${i}`}
-                    className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl border cursor-pointer hover:border-studogrey transition-all duration-300 border-studoborder/30 bg-studogrey/30"
+                    className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl border cursor-pointer hover:border-neutral-400 transition-all duration-300 border-neutral-200/30 bg-studogrey/30"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="w-10 h-10 rounded-lg bg-studoborder/60 flex items-center justify-center shrink-0">

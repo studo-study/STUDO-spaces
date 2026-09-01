@@ -8,6 +8,8 @@ import {
   courses,
   courseTables,
   courseUsers,
+  courseWidgets,
+  courseWorkspaces,
   studysets,
   visualsets,
 } from '../drizzle/schema';
@@ -15,9 +17,11 @@ import { and, eq, inArray } from 'drizzle-orm';
 import {
   Course,
   CourseSetItem,
+  CourseWidget,
   CreateCourse,
   FullCourseResponse,
   UpdateCourse,
+  UpdateCourseWidgets,
 } from '@studo/types';
 
 const iso = (d: Date | null): string | null => d?.toISOString() ?? null;
@@ -227,6 +231,88 @@ export class CourseService {
         })),
       ),
     };
+  }
+
+  private mapWidget(w: typeof courseWidgets.$inferSelect): CourseWidget {
+    return {
+      id: w.id,
+      workspaceId: w.workspaceId,
+      type: w.type,
+      x: w.x,
+      y: w.y,
+      w: w.w,
+      h: w.h,
+      config: w.config,
+      createdAt: iso(w.createdAt) ?? '',
+      updatedAt: iso(w.updatedAt) ?? '',
+    };
+  }
+
+  /** First workspace of a course, creating one if none exists yet. */
+  private async resolveWorkspaceId(courseId: string): Promise<string> {
+    const existing = await this.db.query.courseWorkspaces.findFirst({
+      where: eq(courseWorkspaces.courseId, courseId),
+    });
+    if (existing) return existing.id;
+
+    const [created] = await this.db
+      .insert(courseWorkspaces)
+      .values({ courseId })
+      .returning();
+    return created.id;
+  }
+
+  async getWidgets(
+    courseId: string,
+    userId: string,
+  ): Promise<{ widgets: CourseWidget[] }> {
+    await this.CourseUserCheck(userId, courseId);
+
+    const workspaces = await this.db.query.courseWorkspaces.findMany({
+      where: eq(courseWorkspaces.courseId, courseId),
+      with: { widgets: true },
+    });
+
+    return {
+      widgets: workspaces.flatMap((ws) =>
+        ws.widgets.map((w) => this.mapWidget(w)),
+      ),
+    };
+  }
+
+  /** Replace the entire widget layout for a course (its default workspace). */
+  async replaceWidgets(
+    courseId: string,
+    userId: string,
+    body: UpdateCourseWidgets,
+  ): Promise<{ widgets: CourseWidget[] }> {
+    await this.CourseUserCheck(userId, courseId);
+
+    const workspaceId = await this.resolveWorkspaceId(courseId);
+
+    await this.db
+      .delete(courseWidgets)
+      .where(eq(courseWidgets.workspaceId, workspaceId));
+
+    const rows = body.widgets ?? [];
+    if (rows.length === 0) return { widgets: [] };
+
+    const inserted = await this.db
+      .insert(courseWidgets)
+      .values(
+        rows.map((w) => ({
+          workspaceId,
+          type: w.type,
+          x: w.x,
+          y: w.y,
+          w: w.w,
+          h: w.h,
+          config: w.config ?? {},
+        })),
+      )
+      .returning();
+
+    return { widgets: inserted.map((w) => this.mapWidget(w)) };
   }
 
   async createCourse(

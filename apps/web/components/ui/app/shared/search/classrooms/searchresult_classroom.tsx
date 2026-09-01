@@ -54,7 +54,7 @@ function SetResult({ item, t }: SetResultProps) {
   return (
     <Link
       href={"classroom/" + item.id}
-      className={`w-full min-h-40 rounded-2xl border-1  border-gray-300 dark:border-studogrey glass-rgb
+      className={`w-full min-h-40 rounded-2xl border-1  border-gray-300 dark:border-neutral-200 glass-rgb
                 drop-shadow-4xl drop-shadow-4xl drop-shadow-black p-5 flex flex-col gap-2`}
     >
       <div className={"w-full h-fit flex items-center justify-baseline gap-2"}>

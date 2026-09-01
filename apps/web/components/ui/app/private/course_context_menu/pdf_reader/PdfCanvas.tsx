@@ -13,7 +13,7 @@ const PdfPage: React.FC<PdfPageProps> = ({ width, pageRef }) => {
     <div
       ref={pageRef}
       style={{ width, height }}
-      className={"bg-white border rounded-xl border-studoborder/30 shrink-0"}
+      className={"bg-white border rounded-xl border-neutral-200/30 shrink-0"}
     />
   );
 };

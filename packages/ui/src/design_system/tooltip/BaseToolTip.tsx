@@ -90,7 +90,7 @@ const BaseTooltip = ({
           <div
             role="tooltip"
             className={classNames(
-              "fixed whitespace-nowrap rounded-full border border-studoborder/30",
+              "fixed whitespace-nowrap rounded-full border border-neutral-200/30",
               "bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg",
               "pointer-events-none backdrop-blur-sm",
               "transition-all duration-150 ease-out",
@@ -109,7 +109,7 @@ const BaseTooltip = ({
             {content}
             <span
               className={`absolute h-2 w-2 rotate-45 bg-zinc-900
-                border-studoborder/30 ${arrowMap[position]}`}
+                border-neutral-200/30 ${arrowMap[position]}`}
             />
           </div>,
           document.body,

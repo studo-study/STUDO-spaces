@@ -26,6 +26,16 @@ export default function RootLayout({
     <html lang="en" className={montserrat.variable} suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/fmn3jvz.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        />
         <IcoSwitcher />
       </head>
 

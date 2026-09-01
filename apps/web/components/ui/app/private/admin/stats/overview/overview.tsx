@@ -9,7 +9,7 @@ import { GoDotFill } from "react-icons/go";
 
 function SkeletonRow() {
   return (
-    <div className="w-full rounded-2xl h-14 bg-studogrey/10 border border-studoborder/30 animate-pulse" />
+    <div className="w-full rounded-2xl h-14 bg-studogrey/10 border border-neutral-200/30 animate-pulse" />
   );
 }
 
@@ -21,7 +21,7 @@ function ColumnWrapper({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-w-0 min-h-0 rounded-4xl dark:bg-studogrey/10 bg-studogrey border border-studoborder/30 p-7 flex flex-col gap-1">
+    <div className="min-w-0 min-h-0 rounded-4xl dark:bg-studogrey/10 bg-studogrey border border-neutral-200/30 p-7 flex flex-col gap-1">
       <span className="w-full font-bold dark:text-white/50 text-sm text-studodarkblue/50 items-baseline flex gap-2 flex-row">
         {title}
       </span>
@@ -62,7 +62,7 @@ export default function Overview() {
           data.popularSets.map((set) => (
             <div
               key={set.id}
-              className="w-full flex items-center gap-3 rounded-2xl border border-studoborder/20 px-4 py-3"
+              className="w-full flex items-center gap-3 rounded-2xl border border-neutral-200/20 px-4 py-3"
             >
               <span className="text-lg font-bold opacity-30 w-5 text-right shrink-0">
                 {set.rank}
@@ -95,7 +95,7 @@ export default function Overview() {
             <Link
               key={act.id}
               href={`/backoffice/users/${act.userId}`}
-              className="w-full flex items-center gap-3 rounded-full bg-studogrey/20 dark:text-white text-studodarkblue border border-studoborder/20 px-4 py-3 hover:border-studoborder transition-colors"
+              className="w-full flex items-center gap-3 rounded-full bg-studogrey/20 dark:text-white text-studodarkblue border border-neutral-200/20 px-4 py-3 hover:border-neutral-400 transition-colors"
             >
               <Avatar displayName={act.displayName} id={act.userId} size={32} />
               <div className="min-w-0 flex-1">
@@ -118,7 +118,7 @@ export default function Overview() {
           <Link
             key={user.id}
             href={`/backoffice/users/${user.id}`}
-            className="w-full flex items-center gap-3 rounded-full border border-studoborder/30 bg-studogrey/20 dark:text-white text-studodarkblue px-4 py-3 hover:border-studoborder transition-colors"
+            className="w-full flex items-center gap-3 rounded-full border border-neutral-200/30 bg-studogrey/20 dark:text-white text-studodarkblue px-4 py-3 hover:border-neutral-400 transition-colors"
           >
             <Avatar displayName={user.displayName} id={user.id} size={32} />
             <div className="min-w-0 flex-1">

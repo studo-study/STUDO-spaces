@@ -217,7 +217,7 @@ const PdfReader: React.FC<PdfReaderProps> = ({ file }) => {
             <div
               key={i}
               ref={(node) => void registerPage(node, i + 1)}
-              className="overflow-hidden shadow-lg rounded-xl border border-studoborder/30"
+              className="overflow-hidden shadow-lg rounded-xl border border-neutral-200/30"
             >
               <Page
                 pageNumber={i + 1}

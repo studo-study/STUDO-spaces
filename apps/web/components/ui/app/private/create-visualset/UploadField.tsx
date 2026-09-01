@@ -188,7 +188,7 @@ export default function UploadField({
       {showPopup && (
         <div className="fixed inset-0 z-50" onClick={handlePopupCancel}>
           <div
-            className="absolute glass-rgb border border-studoborder/30 rounded-2xl p-4 shadow-2xl min-w-64"
+            className="absolute glass-rgb border border-neutral-200/30 rounded-2xl p-4 shadow-2xl min-w-64"
             style={{
               left: `${popupPosition.screenX}px`,
               top: `${popupPosition.screenY + 20}px`,
@@ -206,14 +206,14 @@ export default function UploadField({
               onKeyDown={handleKeyDown}
               autoFocus
               placeholder={t("definition_placeholder")}
-              className="w-full h-10 px-4 rounded-full glass-rgb border border-studoborder/30 text-white outline-none text-sm"
+              className="w-full h-10 px-4 rounded-full glass-rgb border border-neutral-200/30 text-white outline-none text-sm"
             />
             <div className="flex gap-2 mt-3">
               <button
                 type="button"
                 onClick={handlePopupCancel}
                 className="flex-1 py-1.5 px-3 rounded-full text-sm
-                                    glass-rgb border border-studoborder/30 text-white
+                                    glass-rgb border border-neutral-200/30 text-white
                                     hover:opacity-80 transition-opacity cursor-pointer"
               >
                 {t("cancel")}
@@ -223,7 +223,7 @@ export default function UploadField({
                 onClick={handlePopupSubmit}
                 className="flex-1 py-1.5 px-3 rounded-full text-sm
                                     bg-gradient-to-br from-blue-400 to-blue-500 text-white
-                                    border border-studoborder hover:opacity-90 transition-opacity cursor-pointer"
+                                    border border-neutral-200 hover:opacity-90 transition-opacity cursor-pointer"
               >
                 {t("add")}
               </button>

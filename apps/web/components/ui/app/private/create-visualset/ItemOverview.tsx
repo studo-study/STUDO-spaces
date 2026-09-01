@@ -17,7 +17,7 @@ const ItemOverview = memo(function ItemOverview({
 
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="p-3 sm:p-4 md:p-5 border-b border-studoborder/30">
+      <div className="p-3 sm:p-4 md:p-5 border-b border-neutral-200/30">
         <span className="font-semibold text-xs sm:text-sm text-white">
           {t("pins")} ({pins.length})
         </span>
@@ -33,7 +33,7 @@ const ItemOverview = memo(function ItemOverview({
             <li
               key={`${pin.x}-${pin.y}-${index}`}
               className="flex items-center justify-between p-2 sm:p-3 mb-2
-                                glass-rgb border border-studoborder/30 rounded-xl
+                                glass-rgb border border-neutral-200/30 rounded-xl
                                 hover:opacity-80 transition-opacity
                                 cursor-pointer group"
               onClick={() => onRemovePin(index)}

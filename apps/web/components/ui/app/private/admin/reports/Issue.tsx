@@ -26,7 +26,7 @@ export default function IssueItem({ item, status }: IssueProps) {
     <div
       onClick={toggleOpen}
       className={
-        "relative w-full handle min-h-fit flex cursor-pointer active:cursor-grabbing flex-col gap-2 border border-studoborder/30 bg-studogrey/30 rounded-2xl p-3"
+        "relative w-full handle min-h-fit flex cursor-pointer active:cursor-grabbing flex-col gap-2 border border-neutral-200/30 bg-studogrey/30 rounded-2xl p-3"
       }
     >
       <div
@@ -41,7 +41,7 @@ export default function IssueItem({ item, status }: IssueProps) {
           {item.assigneeId ? (
             <div
               className={
-                "min-w-5 text-xs p-0.5 min-h-5 w-5 h-5 cursor-pointer max-w-5 max-h-5 rounded-full bg-emerald-800 uppercase flex items-center justify-center text-center border border-studoborder"
+                "min-w-5 text-xs p-0.5 min-h-5 w-5 h-5 cursor-pointer max-w-5 max-h-5 rounded-full bg-emerald-800 uppercase flex items-center justify-center text-center border border-neutral-200"
               }
             >
               {item.assignee_displayName

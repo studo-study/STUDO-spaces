@@ -24,7 +24,7 @@ const DatumChip: React.FC<DatumChipProps> = (props) => {
     <BaseTooltip content={t("exam_date")} position={"bottom"}>
       <div
         className={classNames(
-          "w-fit px-2 py-1 text-sm cursor-pointer bg-studogrey/30 font-bold rounded-full border border-studoborder/30",
+          "w-fit px-2 py-1 text-sm cursor-pointer bg-studogrey/30 font-bold rounded-full border border-neutral-200/30",
         )}
       >
         <DatePicker

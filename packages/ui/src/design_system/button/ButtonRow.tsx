@@ -35,7 +35,7 @@ const ButtonRow: React.FC<ButtonRowProps> = (props) => {
   return (
     <div
       className={classNames(
-        "dark:text-white rounded-full border border-studoborder/30 flex flex-row gap-2 p-1.5 bg-studogrey/30",
+        "dark:text-white rounded-full border border-neutral-200/30 flex flex-row gap-2 p-1.5 bg-studogrey/30",
       )}
     >
       {buttons.map((btn, index) => {
@@ -58,7 +58,7 @@ const ButtonRow: React.FC<ButtonRowProps> = (props) => {
             <button
               key={(btn.label ?? "") + index}
               className={classNames(
-                "cursor-pointer w-7 h-7 rounded-full flex items-center justify-center border transition-transform active:scale-95 duration-300 border-studoborder/30 bg-studogrey/30",
+                "cursor-pointer w-7 h-7 rounded-full flex items-center justify-center border transition-transform active:scale-95 duration-300 border-neutral-200/30 bg-studogrey/30",
                 btn.className,
                 btn.disabled && "opacity-50 cursor-not-allowed",
               )}

@@ -129,7 +129,7 @@ function ListItem({ set, t }: SetItemProps) {
       href={link}
       className={`
                      max-h-20 h-20 flex-col sm:flex-row px-10 pl-2.5 py-3 sm:py-0 max-w-full min-w-full cursor-pointer
-                 flex gap-3 items-center w-full rounded-3xl bg-studogrey/30 border border-studoborder/30 hover:border-studoborder transition-all duration-300 overflow-hidden`}
+                 flex gap-3 items-center w-full rounded-3xl bg-studogrey/30 border border-neutral-200/30 hover:border-neutral-400 transition-all duration-300 overflow-hidden`}
     >
       <div
         className={`flex flex-row gap-3 items-center "w-full sm:w-1/2 sm:flex-1`}

@@ -61,7 +61,7 @@ const TableHeader = ({
       >
         <div
           className={
-            "group cursor-pointer transition-opacity text-white duration-300 gap-2 h-full w-full flex items-center justify-between px-2 border-b border-studoborder/30 border-r"
+            "group cursor-pointer transition-opacity text-white duration-300 gap-2 h-full w-full flex items-center justify-between px-2 border-b border-neutral-200/30 border-r"
           }
         >
           <Plus onClick={() => addRow(0)} />
@@ -81,7 +81,7 @@ const TableHeader = ({
         return (
           <div
             className={classNames(
-              "h-10 flex border-b border-studoborder/30 capitalize cursor-pointer font-medium items-center gap-2 hover:bg-studogrey/30 transition-colors duration-300 group/cell",
+              "h-10 flex border-b border-neutral-200/30 capitalize cursor-pointer font-medium items-center gap-2 hover:bg-studogrey/30 transition-colors duration-300 group/cell",
               pinClass(col.isPinned),
             )}
             key={col.colId + index}
@@ -99,7 +99,7 @@ const TableHeader = ({
             <button
               type={"button"}
               className={
-                "h-10 cursor-col-resize w-1 border-r border-studoborder/30 group-last-of-type/cell:border-r-0"
+                "h-10 cursor-col-resize w-1 border-r border-neutral-200/30 group-last-of-type/cell:border-r-0"
               }
             />
           </div>

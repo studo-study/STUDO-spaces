@@ -32,7 +32,7 @@ export function Shortcuts() {
     <section className={"flex flex-col gap-5 w-full min-h-fit"}>
       <span className="w-full text-base font-bold h-fit">{t("shortcuts")}</span>
 
-      <div className="flex flex-col divide-y divide-studoborder/30 px-5 py-3  rounded-3xl border border-studoborder/30">
+      <div className="flex flex-col divide-y divide-studoborder/30 px-5 py-3  rounded-3xl border border-neutral-200/30">
         {shortcuts.map((s, i) => (
           <ShortcutItem key={i} shortcut={s} isMac={isMac} />
         ))}
@@ -43,7 +43,7 @@ export function Shortcuts() {
 
 function KeyCap({ children }: { children: React.ReactNode }) {
   return (
-    <div className="border border-studoborder opacity-50 max-h-5 h-5 min-w-5 max-w-5 px-1 flex items-center justify-center rounded-md">
+    <div className="border border-neutral-200 opacity-50 max-h-5 h-5 min-w-5 max-w-5 px-1 flex items-center justify-center rounded-md">
       {children}
     </div>
   );

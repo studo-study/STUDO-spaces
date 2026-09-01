@@ -27,7 +27,7 @@ export default function ImportButton({ setShowImporter }: ImportButtonProps) {
         )}
         <div
           onClick={() => setShowImporter(true)}
-          className="flex items-center border border-studoborder/30 justify-center w-fit h-10 rounded-full overflow-hidden cursor-pointer active:scale-95 transition-transform"
+          className="flex items-center border border-neutral-200/30 justify-center w-fit h-10 rounded-full overflow-hidden cursor-pointer active:scale-95 transition-transform"
           data-cy="import_button"
         >
           <div className="relative group flex items-center h-full justify-center  p-0.5 dark:bg-gray-700 bg-blue-50">

@@ -24,7 +24,7 @@ const UserCard = ({ user }: UserCardProps) => {
   return (
     <Link
       href={"/backoffice/users/" + user.id}
-      className="grid h-20 grid-cols-[auto_1.5fr_2fr_1fr_1fr_1fr] items-center gap-6 rounded-2xl border hover:border-studoborder border-studoborder/30 px-5"
+      className="grid h-20 grid-cols-[auto_1.5fr_2fr_1fr_1fr_1fr] items-center gap-6 rounded-2xl border hover:border-neutral-400 border-neutral-200/30 px-5"
     >
       <Avatar displayName={user.displayName} id={user.id} />
 
@@ -48,7 +48,7 @@ const UserCard = ({ user }: UserCardProps) => {
       <span className="flex min-w-0 flex-col justify-center">
         <p className="text-xs opacity-50">status</p>
         <span
-          className={`flex w-fit flex-row items-center justify-center gap-1 rounded-full border border-studoborder/30 pl-1 pr-2 text-sm ${
+          className={`flex w-fit flex-row items-center justify-center gap-1 rounded-full border border-neutral-200/30 pl-1 pr-2 text-sm ${
             user.banned ? "bg-rose-300/30" : "bg-emerald-300/30"
           }`}
         >

@@ -193,7 +193,7 @@ const ComboBox = ({
         data-cy={dataCy}
         tabIndex={tabIndex}
         onClick={() => !disabled && setOpen((prev) => !prev)}
-        className={`w-full flex flex-row items-center justify-between cursor-pointer rounded-4xl glass-rgb border border-studoborder/30 shadow-2xl text-studodarkblue dark:text-white text-left transition-all duration-300 outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
+        className={`w-full flex flex-row items-center justify-between cursor-pointer rounded-4xl glass-rgb border border-neutral-200/30 shadow-2xl text-studodarkblue dark:text-white text-left transition-all duration-300 outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed ${s.trigger}`}
       >
         <span className={selected ? "" : "text-zinc-400"}>
           {selected ? selected.label : placeholder}
@@ -207,7 +207,7 @@ const ComboBox = ({
 
       <div
         className={`absolute left-0 right-0 top-full mt-2
-          z-9999 p-3 border border-studoborder/30
+          z-9999 p-3 border border-neutral-200/30
           rounded-2xl backdrop-blur-2xl min-w-30
           glass-rgb gap-2 flex flex-col h-fit
           shadow-xl shadow-black/10 dark:shadow-black/30
@@ -222,7 +222,7 @@ const ComboBox = ({
       >
         {searchable && (
           <div className={"flex flex-row gap-2 items-center min-w-0 flex-1"}>
-            <div className="flex glass-rgb w-full rounded-3xl justify-between border border-studoborder/30 text-sm">
+            <div className="flex glass-rgb w-full rounded-3xl justify-between border border-neutral-200/30 text-sm">
               <input
                 ref={searchRef}
                 type="text"

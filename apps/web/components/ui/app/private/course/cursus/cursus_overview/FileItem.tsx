@@ -36,7 +36,7 @@ const FileItem: React.FC<FileItemProps> = (props) => {
         >
           <div
             className={
-              "relative max-w-50 w-50 group h-70 max-h-70 bg-white dark:group-hover:border-studogrey border border-studogrey/30 rounded-sm"
+              "relative max-w-50 w-50 group h-70 max-h-70 bg-white dark:group-hover:border-neutral-400 border border-neutral-200/30 rounded-sm"
             }
           >
             {file.status === "failed" && (

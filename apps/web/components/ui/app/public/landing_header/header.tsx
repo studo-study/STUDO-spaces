@@ -277,7 +277,7 @@ export default function LandingHeader() {
             }
 						transition-all duration-500 ease-out origin-bottom
 					h-3/4w-screen z-50 bg-white dark:bg-[#182536] rounded-tl-4xl rounded-tr-4xl md:hidden flex flex-col
-					border-t border-l border-r border-studoborder`}
+					border-t border-l border-r border-neutral-200`}
           >
             <div className={"flex flex-col gap-8 p-7 w-full h-fit"}>
               <div className={"flex flex-col gap-3"}>

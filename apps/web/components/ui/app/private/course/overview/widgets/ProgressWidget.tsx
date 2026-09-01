@@ -1,4 +1,7 @@
+import { Progress } from "@/components/ui/app/shared/studosets/progress/progress";
 import type { ReactNode } from "react";
+import { useWidgetMenu } from "@/store/course_context_menu/WidgetMenuStore";
+import { useCourseTable } from "@/hooks/app/courses/useCourse";
 
 export default function ProgressWidget({
   icon,
@@ -7,6 +10,12 @@ export default function ProgressWidget({
   icon: ReactNode;
   type: string;
 }) {
+  const courseId = useWidgetMenu((s) => s.courseId);
+  const table = useCourseTable(courseId ?? "");
+  const rows = table?.rows ?? [];
+  const total = rows.length;
+  const done = rows.filter((r) => r.status === "done").length;
+
   return (
     <div
       className={
@@ -17,7 +26,16 @@ export default function ProgressWidget({
         {icon}
         <span className={"font-semibold capitalize"}>{type}</span>
       </div>
-      <div className={"flex-1 min-h-0"}></div>
+      <div
+        className={
+          "flex-1 min-h-0 p-3 gap-3 flex items-center justify-center flex-col"
+        }
+      >
+        <Progress length={total || 1} progress={done} height={90} />
+        <span className={"text-studogrey"}>
+          {done}/{total} tasks done
+        </span>
+      </div>
     </div>
   );
 }

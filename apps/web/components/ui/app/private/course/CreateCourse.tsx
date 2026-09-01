@@ -156,7 +156,7 @@ const CreateCourse = (props: CreateCourseProps) => {
             <div>
               <span
                 className={
-                  "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
+                  "text-xs px-3 py-1 border border-neutral-200/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
                 }
               >
                 {""}
@@ -165,7 +165,7 @@ const CreateCourse = (props: CreateCourseProps) => {
               <FaChevronRight size={12} />
               <span
                 className={
-                  "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
+                  "text-xs px-3 py-1 border border-neutral-200/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
                 }
               >
                 {" "}
@@ -175,7 +175,7 @@ const CreateCourse = (props: CreateCourseProps) => {
           ) : (
             <span
               className={
-                "text-xs px-3 py-1 border border-studoborder/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
+                "text-xs px-3 py-1 border border-neutral-200/30 rounded-xl bg-studogrey/50 font-bold text-studodarkblue dark:text-white"
               }
             >
               {t("create_course")}
@@ -260,7 +260,7 @@ const CreateCourse = (props: CreateCourseProps) => {
         </div>
         <hr
           className={
-            "mt-5 w-full border border-transparent  border-b-studoborder/30"
+            "mt-5 w-full border border-transparent  border-b-neutral-200/30"
           }
         />
         <div className={"w-full flex flex-row justify-end gap-2 px-3 py-3"}>
@@ -273,6 +273,7 @@ const CreateCourse = (props: CreateCourseProps) => {
           />
 
           <BaseButton
+            disabled={!title}
             size={"sm"}
             onSubmit={onSubmit}
             bg={"bg-blue-500"}

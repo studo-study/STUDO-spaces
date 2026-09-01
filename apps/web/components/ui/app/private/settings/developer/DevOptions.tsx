@@ -30,7 +30,7 @@ const DevOptions = (props: SettingsSection) => {
   return (
     <div
       className={
-        "w-full h-fit flex flex-col rounded-3xl divide-y divide-studoborder/30 border border-studoborder/30"
+        "w-full h-fit flex flex-col rounded-3xl divide-y divide-studoborder/30 border border-neutral-200/30"
       }
     >
       {devOptions.map((option, i) => (

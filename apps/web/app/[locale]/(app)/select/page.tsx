@@ -75,7 +75,7 @@ export default function SelectPage() {
         >
           <div
             className={` min-w-0 flex-1 h-fit max-w-fit hover:scale-102 transition-all duration-300 border shadow-2xl bg-studogrey/10 rounded-3xl
-                        border-studoborder/30 p-5 flex flex-col items-baseline gap-8`}
+                        border-neutral-200/30 p-5 flex flex-col items-baseline gap-8`}
           >
             <span className={"dark:text-emerald-500 font-semibold"}>
               {t("free")}
@@ -97,7 +97,7 @@ export default function SelectPage() {
                 </span>
               ))}
             </div>
-            <div className="w-full text-center py-3 rounded-4xl bg-emerald-500/10 text-white font-bold border border-studoborder">
+            <div className="w-full text-center py-3 rounded-4xl bg-emerald-500/10 text-white font-bold border border-neutral-200">
               {t("current")}
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function SelectPage() {
               ))}
             </div>
             <Link
-              className="w-full text-center py-3 rounded-4xl bg-blue-500 text-white font-bold border border-studoborder"
+              className="w-full text-center py-3 rounded-4xl bg-blue-500 text-white font-bold border border-neutral-200"
               href={"/pay"}
             >
               {t("start_tdy")}

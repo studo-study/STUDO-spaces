@@ -20,7 +20,7 @@ export default function ClassroomOverviewItem({
     <Link
       href={"/classroom/" + classroom.id + "/sets"}
       className={
-        "group w-full h-20 rounded-3xl flex flex-row items-center justify-between px-5 gap-5 bg-studogrey/30 border border-studoborder/30 hover:border-studoborder"
+        "group w-full h-20 rounded-3xl flex flex-row items-center justify-between px-5 gap-5 bg-studogrey/30 border border-neutral-200/30 hover:border-neutral-400"
       }
     >
       <div

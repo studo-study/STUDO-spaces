@@ -21,7 +21,7 @@ const ChatItem: React.FC<ChatItemProps> = (props) => {
         })
       }
       className={
-        "w-full h-15 rounded-2xl border border-studoborder/30 flex flex-row items-center cursor-pointer hover:border-studogrey transition-all duration-300 gap px-4 bg-studogrey/30"
+        "w-full h-15 rounded-2xl border border-neutral-200/30 flex flex-row items-center cursor-pointer hover:border-neutral-400 transition-all duration-300 gap px-4 bg-studogrey/30"
       }
     >
       <div className={"flex flex-col gap-1 h-fit dark:text-white"}>

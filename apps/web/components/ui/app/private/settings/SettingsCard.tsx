@@ -52,7 +52,7 @@ export function SettingsCard({ title, items }: SettingsCardProps) {
 
       <div
         className={
-          "w-full min-h-40 h-fit rounded-3xl border border-studoborder/30 divide-y divide-studoborder/30"
+          "w-full min-h-40 h-fit rounded-3xl border border-neutral-200/30 divide-y divide-studoborder/30"
         }
       >
         {items.map((option, index) => (

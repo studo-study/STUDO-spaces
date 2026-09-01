@@ -22,7 +22,7 @@ const ExtendCoursePopup: React.FC<ExtendCoursePopupProps> = (props) => {
           </span>
           <div
             className={
-              "border border-studoborder flex items-center flex-col justify-center gap-10 bg-studogrey/10 w-full h-full rounded-lg min-h-0 flex-1"
+              "border border-neutral-200 flex items-center flex-col justify-center gap-10 bg-studogrey/10 w-full h-full rounded-lg min-h-0 flex-1"
             }
           >
             <div className="relative flex items-center justify-center">

@@ -26,7 +26,7 @@ const SpeedyEndScreen = ({ back }: SpeedyEndScreenProps) => {
   ];
 
   return (
-    <div className="w-full max-w-xl h-fit rounded-4xl border border-gray-300 dark:border-studoborder/30 bg-studogrey/30 shadow-xl p-8 gap-8 flex flex-col justify-between items-center font-sfpro dark:text-white text-studodarkblue">
+    <div className="w-full max-w-xl h-fit rounded-4xl border border-gray-300 dark:border-neutral-200/30 bg-studogrey/30 shadow-xl p-8 gap-8 flex flex-col justify-between items-center font-sfpro dark:text-white text-studodarkblue">
       <div className="flex flex-col gap-2 items-center text-center">
         <span className="text-2xl font-bold">{t("finished_title")}</span>
         <p className="opacity-75">{t("finished_expl")}</p>

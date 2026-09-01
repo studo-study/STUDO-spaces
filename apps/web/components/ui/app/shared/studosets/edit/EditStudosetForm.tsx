@@ -429,7 +429,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
               <div className="w-full sm:w-1/2 gap-1 flex flex-col">
                 <select
                   ref={termLangRef}
-                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
+                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-neutral-200/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
                   data-cy="term_language_select"
                 >
                   <option value="">{t("term_language")}</option>
@@ -444,7 +444,7 @@ export default function EditStudosetForm({ id }: EditsetProps) {
               <div className="w-full sm:w-1/2 gap-1 flex flex-col">
                 <select
                   ref={defLangRef}
-                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-studoborder/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
+                  className="h-10 text-sm px-5 gap-5 text-studodarkblue dark:text-white cursor-pointer w-full rounded-4xl glass-rgb transition-all duration-300 border appearance-none border-neutral-200/30 shadow-2xl focus:ring-0 outline-none flex justify-around"
                   data-cy="definition_language_select"
                 >
                   <option value="">{t("def_language")}</option>

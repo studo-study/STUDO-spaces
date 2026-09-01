@@ -37,7 +37,7 @@ const SpeedyInput = () => {
           ? "border-emerald-400"
           : incorrect
             ? "border-rose-400"
-            : "border-transparent focus-within:border-gray-300 focus-within:dark:border-studoborder/30"
+            : "border-transparent focus-within:border-gray-300 focus-within:dark:border-neutral-200/30"
       }`}
     >
       <input

@@ -19,7 +19,7 @@ const WidgetItem: React.FC<WidgetItemProps> = (props) => {
   return (
     <div
       className={classNames(
-        "group relative h-full max-h-60 w-full border border-studoborder/30 transition-colors duration-300 rounded-3xl p-4 bg-studogrey/30 hover:border-studoborder",
+        "group relative h-full max-h-60 w-full border border-neutral-200/30 transition-colors duration-300 rounded-3xl p-4 bg-studogrey/30 hover:border-neutral-400",
         editMode && "border-dashed animate-widget-wiggle",
       )}
     >
@@ -46,7 +46,7 @@ const WidgetItem: React.FC<WidgetItemProps> = (props) => {
                 type={"button"}
                 onClick={() => removeWidget(id)}
                 className={
-                  "flex w-40 h-10 items-center gap-2 rounded-full border border-studoborder/30 bg-studogrey/30 px-4 text-sm text-rose-500 hover:bg-rose-500/10"
+                  "flex w-40 h-10 items-center gap-2 rounded-full border border-neutral-200/30 bg-studogrey/30 px-4 text-sm text-rose-500 hover:bg-rose-500/10"
                 }
               >
                 <Trash2 size={14} />

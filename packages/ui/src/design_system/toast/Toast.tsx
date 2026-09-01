@@ -59,7 +59,7 @@ const Toast = (props: ToastProps) => {
       role={"status"}
       aria-live={"polite"}
       className={`border shadow-2xl bg-studogrey/50 backdrop-blur-2xl
-                      rounded-full border-studoborder/30 text-white
+                      rounded-full border-neutral-200/30 text-white
                       min-w-64 max-w-sm h-fit
                       flex items-center gap-3 pl-4 pr-2 py-2
                       transition-all duration-300 ease-out

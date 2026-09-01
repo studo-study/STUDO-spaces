@@ -17,7 +17,7 @@ const SideMenu: React.FC<SideMenuProps> = (props) => {
   const isOnLearn = path.split("/")[1] === "learn";
 
   return (
-    <div className="relative h-full w-full flex flex-col bg-studogrey/5 border-l border-studoborder/30">
+    <div className="relative h-full w-full flex flex-col bg-studogrey/5 border-l border-neutral-200/30">
       {origin === "pomodoro" && isOnLearn && <PomodorTimer />}
       {origin === "settings" && isOnLearn && <LearnSettings />}
       {origin === "chat" && <SvenChat />}

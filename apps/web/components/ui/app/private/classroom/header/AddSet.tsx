@@ -102,7 +102,7 @@ export default function AddSet({ addOpen, setAddOpen }: InvitePeopleProps) {
           <button
             type="submit"
             disabled={importedClassrooms.length === 0}
-            className={`disabled:opacity-60 disabled:active:scale-100 disabled:cursor-not-allowed bg-gradient-to-br from-emerald-400 to-green-500 w-full cursor-pointer h-12 text-xl text-white border-studoborder border
+            className={`disabled:opacity-60 disabled:active:scale-100 disabled:cursor-not-allowed bg-gradient-to-br from-emerald-400 to-green-500 w-full cursor-pointer h-12 text-xl text-white border-neutral-200 border
                     rounded-4xl font-bold active:scale-95 transition-all duration-300 shadow-3xl`}
           >
             {importedClassrooms.length === 1 ? t("button_e") : t("button_m")}

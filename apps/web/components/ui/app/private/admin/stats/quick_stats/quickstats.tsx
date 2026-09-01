@@ -85,7 +85,7 @@ function StatCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full h-25 rounded-4xl dark:bg-studogrey/10 bg-studogrey border dark:border-studoborder/30 border-studodarkblue/20 p-5 flex flex-col gap-1">
+    <div className="w-full h-25 rounded-4xl dark:bg-studogrey/10 bg-studogrey border dark:border-neutral-200/30 border-studodarkblue/20 p-5 flex flex-col gap-1">
       <span className="w-full font-bold dark:text-white/50 text-sm text-studodarkblue/50 items-baseline flex gap-2 flex-row">
         {label}
       </span>
@@ -118,7 +118,7 @@ export default function QuickStats() {
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="w-full h-25 rounded-4xl dark:bg-studogrey/10 bg-studogrey border dark:border-studoborder/30 border-studodarkblue/20 p-5 animate-pulse"
+            className="w-full h-25 rounded-4xl dark:bg-studogrey/10 bg-studogrey border dark:border-neutral-200/30 border-studodarkblue/20 p-5 animate-pulse"
           />
         ))}
       </div>

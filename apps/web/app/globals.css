@@ -1,24 +1,9 @@
 @import url('https://use.typekit.net/fmn3jvz.css');
-
 @import "tailwindcss";
 @import "@studo/ui/styles/theme.css";
 
 /* Design-system componenten leven in het @studo/ui pakket; scan hun classes. */
 @source "../../../packages/ui/src/design_system";
-
-@font-face {
-    font-family: 'SF Pro Display';
-    src: url('../public/fonts/sfpro/SFPRODISPLAYREGULAR.OTF') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SF Pro Display';
-    src: url('../public/fonts/sfpro/SFPRODISPLAYBOLD.OTF') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
 
 @font-face {
     font-family: 'akira';
@@ -32,4 +17,12 @@
     src: url('../public/fonts/georgia/georgia.woff') format('opentype');
     font-weight: normal;
     font-style: normal;
+}
+
+.google-sans {
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "GRAD" 0;
 }

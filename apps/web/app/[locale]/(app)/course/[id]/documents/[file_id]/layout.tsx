@@ -68,7 +68,7 @@ export default function CourseDetailPage({
     <div className={"min-w-0 min-h-0 flex-1 flex flex-col"}>
       <div
         className={
-          "w-full flex flex-row items-center justify-between gap-3 p-5 border-b border-studoborder/30"
+          "w-full flex flex-row items-center justify-between gap-3 p-5 border-b border-neutral-200/30"
         }
       >
         <div className={"flex flex-row items-center gap-2"}>

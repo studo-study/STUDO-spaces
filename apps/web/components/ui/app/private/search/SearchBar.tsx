@@ -55,7 +55,7 @@ export default function AppSearchbar({
     <div
       className={`flex w-full min-w-24 max-w-40 lg:max-w-50 xl:max-w-100 shrink
             px-4 h-10 rounded-full bg-gray-300/30 dark:bg-gray-500/10 flex-row items-center 
-         dark:text-white text-studodarkblue border-2 border-gray-400/30 dark:border-studoborder/20`}
+         dark:text-white text-studodarkblue border-2 border-gray-400/30 dark:border-neutral-200/20`}
     >
       <input
         type="text"

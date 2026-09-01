@@ -58,7 +58,7 @@ const ImageSuggestionTab = ({
 
   if (isPending) {
     const cardClass =
-      "rounded-2xl hover:border-studoblue overflow-hidden w-full h-full bg-studogrey/30 border border-studoborder/30";
+      "rounded-2xl hover:border-studoblue overflow-hidden w-full h-full bg-studogrey/30 border border-neutral-200/30";
     return (
       <div className={"w-full min-h-full gap-2 h-full flex flex-col"}>
         {header}

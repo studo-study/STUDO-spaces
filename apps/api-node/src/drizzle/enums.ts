@@ -16,13 +16,11 @@ export const courseDocumentStatusEnum = pgEnum('course_document_status', [
 export const setTypeEnum = pgEnum('set_type', ['studoset', 'visualset']);
 
 export const widgetTypeEnum = pgEnum('widget_type', [
+  'progress',
+  'urgent',
+  'sets',
+  'files',
   'notes',
-  'flashcards',
-  'document',
-  'set',
-  'todo',
-  'timer',
-  'calendar',
 ]);
 
 export const mimeTypeEnum = pgEnum('mime_type', ['pdf', 'docx']);

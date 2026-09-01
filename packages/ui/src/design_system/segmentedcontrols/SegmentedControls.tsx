@@ -80,7 +80,7 @@ export const SegmentedControls = <T extends string = string>({
       <div
         ref={containerRef}
         className={classNames(
-          `relative flex gap-1 bg-studogrey/30 border border-studoborder/30 rounded-full ${styles.padding}`,
+          `relative flex gap-1 bg-studogrey/30 border border-neutral-200/30 rounded-full ${styles.padding}`,
           stretch && "w-full",
         )}
       >

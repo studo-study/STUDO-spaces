@@ -19,7 +19,7 @@ export default function ImageInfo({ title, onUpdateTitle }: ImageInfoProps) {
         type="text"
         value={title}
         onChange={(e) => onUpdateTitle(e.target.value)}
-        className="w-full h-12 px-5 rounded-full glass-rgb border border-studoborder/30 text-white outline-none"
+        className="w-full h-12 px-5 rounded-full glass-rgb border border-neutral-200/30 text-white outline-none"
         autoComplete="off"
         placeholder={t("image_title_placeholder")}
       />

@@ -1,5 +1,13 @@
+.google-sans {
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "GRAD" 0;
+}
+
 body {
-    background-color: var(--color-sky-50); /* light mode: bg-blue-50 */
+    background-color: white; /* light mode: bg-blue-50 */
     scrollbar-width: none;
     -ms-overflow-style: none;
     font-family: var(--font-sfpro);
@@ -26,7 +34,7 @@ body::-webkit-scrollbar {
 @theme {
     --font-akira: akira, sans-serif;
     --font-bodoni: Bodoni Std, serif;
-    --font-sfpro: 'SF Pro Display', sans-serif;
+    --font-sfpro: "Google Sans", sans-serif;
     --font-sigurd: "sigurd-variable", sans-serif;
     --font-atrament: atrament-web, sans-serif;
     --font-roboto: "Roboto Mono", monospace;
@@ -222,7 +230,7 @@ body::-webkit-scrollbar {
 
 .progress-text {
     position: absolute;
-    font-family: "sf pro", sans-serif;
+    font-family: "Google Sans", sans-serif;
     top: 55%;
     left: 50%;
     transform: translate(-50%, -20%);
@@ -276,10 +284,10 @@ body::-webkit-scrollbar {
 }
 
 .glass-rgb {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(300px);
     -webkit-backdrop-filter: blur(300px);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);*/
 }
 
 

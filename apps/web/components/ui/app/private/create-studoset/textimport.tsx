@@ -79,7 +79,7 @@ export default function Textimport(props: importerProps) {
         <div className={"w-full h-full flex flex-col gap-5"}>
           <div
             className={
-              "w-full h-full overflow-hidden rounded-4xl border border-studoborder"
+              "w-full h-full overflow-hidden rounded-4xl border border-neutral-200"
             }
           >
             <textarea
@@ -135,7 +135,7 @@ export default function Textimport(props: importerProps) {
                   />
                 </div>
               </div>
-              <hr className={"border-studogrey/30 my-3"} />
+              <hr className={"border-neutral-200/30 my-3"} />
               <div className={"flex flex-col gap-3"}>
                 <span className={"font-bold opacity-50"}>
                   {t("card_separator")}

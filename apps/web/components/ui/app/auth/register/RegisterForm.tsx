@@ -25,7 +25,6 @@ const RegisterForm = () => {
     loginMicrosoft,
   } = useRegisterForm();
 
-  // Aan de RHF-waarde gebonden zodat validatie + submit-payload kloppen.
   const acceptedTerms = watch("acceptedTerms");
 
   return (
@@ -38,7 +37,7 @@ const RegisterForm = () => {
     >
       <AnimateOnMount>
         <div className={"mb-10 flex min-w-full flex-col items-center"}>
-          <h1 className="text-4xl font-bold">{t("Create account")}</h1>
+          <h1 className="text-4xl font-medium">{t("Create account")}</h1>
           <p className="text-slate-400 text-sm">{t("create_account")}</p>
         </div>
       </AnimateOnMount>
@@ -109,7 +108,9 @@ const RegisterForm = () => {
               />
             </div>
             <span
-              className={"flex flex-row flex-wrap gap-1 text-sm text-studogrey"}
+              className={
+                "flex flex-row flex-wrap gap-1 text-sm text-neutral-400 dark:text-studogrey"
+              }
             >
               {t("tos")}
               <Link

@@ -82,7 +82,7 @@ export const Tabs = <T extends string = string>({
           const className = classNames(
             `relative z-10 flex truncate items-center justify-center gap-1 rounded-full font-bold transition-colors duration-300 border border-transparent cursor-pointer ${styles.button} ${
               value === t.key
-                ? "dark:text-white text-studodarkblue bg-studogrey/30 border-studoborder/30"
+                ? "dark:text-white text-studodarkblue bg-studogrey/30 border-neutral-200/30"
                 : "text-studodarkblue/50 dark:text-studogrey hover:text-zinc-400"
             }`,
           );

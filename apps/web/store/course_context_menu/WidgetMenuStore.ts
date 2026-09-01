@@ -21,6 +21,8 @@ interface WidgetMenuStore {
   editMode: boolean;
 
   hydrate: (courseId: string, widgets: WidgetInstance[]) => void;
+  /** Register the active course without touching local widgets. */
+  setCourseId: (courseId: string) => void;
   addWidget: (type: WidgetType) => void;
   removeWidget: (id: string) => void;
   /** Merge new positions/sizes from react-grid-layout's onLayoutChange. */
@@ -36,7 +38,7 @@ function schedulePersist(courseId: string | null, widgets: WidgetInstance[]) {
   if (persistTimer) clearTimeout(persistTimer);
   persistTimer = setTimeout(() => {
     persistTimer = null;
-    fetch(`/api/flows/course/${courseId}/widgets`, {
+    fetch(`/api/courses/${courseId}/widgets`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ widgets }),
@@ -74,6 +76,8 @@ export const useWidgetMenu = create<WidgetMenuStore>((set) => ({
   editMode: false,
 
   hydrate: (courseId, widgets) => set({ courseId, activeWidgets: widgets }),
+
+  setCourseId: (courseId) => set({ courseId }),
 
   addWidget: (type) => {
     const def = WIDGET_REGISTRY[type];

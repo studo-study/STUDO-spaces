@@ -30,7 +30,7 @@ export default function SearchBar({
   return (
     <div
       className={classNames(
-        `relative px-5 h-10 gap-5 dark:text-white rounded-4xl glass-rgb transition-all duration-300 ${Search ? "dark:border-white border-gray-500" : "dark:border-studoborder/30 border-gray-300"} border focus:border-white shadow-2xl flex justify-around`,
+        `relative px-5 h-10 gap-5 dark:text-white rounded-4xl glass-rgb transition-all duration-300 ${Search ? "dark:border-white border-gray-500" : "dark:border-neutral-200/30 border-gray-300"} border focus:border-white shadow-2xl flex justify-around`,
         width ? width : "w-1/3",
       )}
     >

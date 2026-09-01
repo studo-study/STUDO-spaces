@@ -141,7 +141,7 @@ const LaTexInput = forwardRef<HTMLInputElement, LaTexInputProps>(
           ) : showCodePreview ? (
             <div
               className={
-                "text-xs w-full rounded-3xl min-h-10 border border-studoborder/30 overflow-hidden px-1 overflow-x-auto scroll-hidden dark:invert cursor-pointer [&>pre]:p-3 [&>pre]:rounded-xl [&>pre]:text-xs [&>pre]:!bg-transparent [&>pre]:whitespace-pre-wrap"
+                "text-xs w-full rounded-3xl min-h-10 border border-neutral-200/30 overflow-hidden px-1 overflow-x-auto scroll-hidden dark:invert cursor-pointer [&>pre]:p-3 [&>pre]:rounded-xl [&>pre]:text-xs [&>pre]:!bg-transparent [&>pre]:whitespace-pre-wrap"
               }
               onClick={() => {
                 isTypingRef.current = true;

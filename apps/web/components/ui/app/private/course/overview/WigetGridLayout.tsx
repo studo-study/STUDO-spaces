@@ -26,6 +26,7 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
   const activeWidgets = useWidgetMenu((s) => s.activeWidgets);
   const editMode = useWidgetMenu((s) => s.editMode);
   const hydrate = useWidgetMenu((s) => s.hydrate);
+  const setCourseId = useWidgetMenu((s) => s.setCourseId);
   const applyLayout = useWidgetMenu((s) => s.applyLayout);
   const course = useCourse(courseId)?.data;
 
@@ -55,22 +56,26 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
   // rowHeight so START_ROWS rows (+ gaps + padding) exactly fill the height.
   const rowHeight = 240;
 
-  // Load persisted layout for the active course.
+  // Load persisted layout for the active course. Only *replace* local widgets
+  // when the server actually returns some — a failed/empty response must never
+  // clobber widgets the user just added (otherwise optimistic adds vanish when
+  // the fetch resolves, e.g. under StrictMode double-invoke).
   useEffect(() => {
     if (!courseId) return;
+    setCourseId(courseId);
     let cancelled = false;
     fetch(`/api/courses/${courseId}/widgets`)
-      .then((res) => (res.ok ? res.json() : { widgets: [] }))
-      .then((data: { widgets?: WidgetInstance[] }) => {
-        if (!cancelled) hydrate(courseId, data.widgets ?? []);
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { widgets?: WidgetInstance[] } | null) => {
+        if (!cancelled && data?.widgets && data.widgets.length > 0) {
+          hydrate(courseId, data.widgets);
+        }
       })
-      .catch(() => {
-        if (!cancelled) hydrate(courseId, []);
-      });
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
-  }, [courseId, hydrate]);
+  }, [courseId, hydrate, setCourseId]);
 
   const layout: Layout = activeWidgets.map((w) => {
     const def = WIDGET_REGISTRY[w.type];

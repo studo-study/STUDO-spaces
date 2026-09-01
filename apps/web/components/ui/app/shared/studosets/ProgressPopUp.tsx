@@ -93,7 +93,7 @@ const GraphContent: React.FC<ListContentProps> = ({ cards }) => {
       if (!el) {
         el = document.createElement("div");
         el.className =
-          "fixed z-[100000] whitespace-nowrap rounded-full border border-studoborder/30 " +
+          "fixed z-[100000] whitespace-nowrap rounded-full border border-neutral-200/30 " +
           "bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg " +
           "pointer-events-none backdrop-blur-sm transition-opacity duration-150";
         el.style.transform = "translate(-50%, -100%)";
@@ -198,7 +198,7 @@ const GraphContent: React.FC<ListContentProps> = ({ cards }) => {
       >
         <div
           className={
-            "border p-2 min-w-1/4 flex flex-col border-studoborder/10 bg-studogrey/5 rounded-2xl"
+            "border p-2 min-w-1/4 flex flex-col border-neutral-200/10 bg-studogrey/5 rounded-2xl"
           }
         >
           <span
@@ -216,7 +216,7 @@ const GraphContent: React.FC<ListContentProps> = ({ cards }) => {
 
         <div
           className={
-            "min-w-1/4 border p-2 flex flex-col border-studoborder/10 bg-studogrey/5 rounded-2xl"
+            "min-w-1/4 border p-2 flex flex-col border-neutral-200/10 bg-studogrey/5 rounded-2xl"
           }
         >
           <span
@@ -233,7 +233,7 @@ const GraphContent: React.FC<ListContentProps> = ({ cards }) => {
         </div>
         <div
           className={
-            "min-w-1/4 border p-2 flex flex-col border-studoborder/10 bg-studogrey/5 rounded-2xl"
+            "min-w-1/4 border p-2 flex flex-col border-neutral-200/10 bg-studogrey/5 rounded-2xl"
           }
         >
           <span
@@ -250,7 +250,7 @@ const GraphContent: React.FC<ListContentProps> = ({ cards }) => {
         </div>
         <div
           className={
-            "min-w-1/4 border p-2 flex flex-col border-studoborder/10 bg-studogrey/5 rounded-2xl"
+            "min-w-1/4 border p-2 flex flex-col border-neutral-200/10 bg-studogrey/5 rounded-2xl"
           }
         >
           <span
@@ -267,7 +267,7 @@ const GraphContent: React.FC<ListContentProps> = ({ cards }) => {
         </div>
         <div
           className={
-            "min-w-1/4 border p-2 flex flex-col border-studoborder/10 bg-studogrey/5 rounded-2xl"
+            "min-w-1/4 border p-2 flex flex-col border-neutral-200/10 bg-studogrey/5 rounded-2xl"
           }
         >
           <span
@@ -284,7 +284,7 @@ const GraphContent: React.FC<ListContentProps> = ({ cards }) => {
         </div>
         <div
           className={
-            "min-w-1/4 border p-2 flex flex-col border-studoborder/10 bg-studogrey/5 rounded-2xl"
+            "min-w-1/4 border p-2 flex flex-col border-neutral-200/10 bg-studogrey/5 rounded-2xl"
           }
         >
           <span
@@ -358,7 +358,7 @@ const ProgressPopUpTrigger = () => {
         type={"button"}
         onClick={() => setIsOpen((prev) => !prev)}
         className={
-          "p-1 rounded-full hover:bg-studogrey/30 transition-colors duration-300 cursor-pointer border-transparent border hover:border-studoborder/30"
+          "p-1 rounded-full hover:bg-studogrey/30 transition-colors duration-300 cursor-pointer border-transparent border hover:border-neutral-400/30"
         }
       >
         <Info size={20} />

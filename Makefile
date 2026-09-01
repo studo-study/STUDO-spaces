@@ -18,10 +18,6 @@ init-dev-tools:
 	@echo "intalling dependencies for devtools"
 	cd apps/dev-tools && pnpm install
 
-# Flutter build output is redirected to the repo-root build/mobile/ (kept out
-# of apps/mobile). This is a GLOBAL flutter setting (~/.config/flutter/settings),
-# not committed — every dev must run this once. build-dir is relative to the
-# flutter project, so ../../build/mobile resolves to <root>/build/mobile.
 init-mobile:
 	@echo "installing dependencies for mobile + redirecting build output to root"
 	cd apps/mobile && flutter config --build-dir=../../build/mobile && flutter pub get

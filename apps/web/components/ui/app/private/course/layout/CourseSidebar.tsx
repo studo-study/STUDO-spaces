@@ -30,7 +30,7 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({ burgerOpen }) => {
         )}
       >
         <div className="flex flex-col gap-1 pl-5 pt-1">
-          <div className="pl-2 border-l border-studoborder/40 dark:border-white/10 flex flex-col gap-1">
+          <div className="pl-2 border-l border-neutral-200/40 dark:border-white/10 flex flex-col gap-1">
             {COURSE_TABS.map(({ key, slug, Icon }) => (
               <Link
                 key={key}
@@ -38,7 +38,7 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({ burgerOpen }) => {
                 className={classNames(
                   "flex flex-row items-center font-sfpro gap-2.5 px-3 py-1.5 rounded-full text-[13px] transition-colors duration-200",
                   activeTab === key
-                    ? "dark:text-white bg-studogrey/15 text-studodarkblue font-medium"
+                    ? "dark:text-white bg-studogrey/15 text-studodarkblue"
                     : "dark:text-studogrey text-studodarkblue/40 hover:bg-studogrey/10",
                 )}
               >

@@ -106,7 +106,7 @@ function CollapsibleSection({
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="flex items-center justify-between px-3 py-1 min-h-6 max-h-6 rounded-full select-none cursor-pointer text-[11px] uppercase tracking-wider font-medium text-studodarkblue/40 dark:text-white/30 hover:bg-studogrey/10 transition-colors duration-200"
+          className="flex items-center justify-between px-3 py-1 min-h-6 max-h-6 rounded-full select-none cursor-pointer text-[11px] uppercase tracking-wider text-studodarkblue/40 dark:text-white/30 hover:bg-studogrey/10 transition-colors duration-200"
         >
           <span>{title}</span>
           <ChevronDown
@@ -136,7 +136,7 @@ export default function BurgerMenu({ burgerOpen, toggleSearch }: BurgerProps) {
 
   return (
     <div
-      className={`h-full select-none border-studoborder/30
+      className={`h-full select-none border-neutral-200/30
             transition-[width] duration-500 ease-in-out flex flex-col gap-10 py-10 pb-5 px-3
             ${burgerOpen ? "w-57" : "w-30"}`}
     >

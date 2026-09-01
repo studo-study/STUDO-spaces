@@ -37,7 +37,7 @@ function StatCard({
   value: string | number;
 }) {
   return (
-    <div className="flex flex-col gap-1 rounded-3xl border bg-studogrey/20 border-studoborder/30 p-4">
+    <div className="flex flex-col gap-1 rounded-3xl border bg-studogrey/20 border-neutral-200/30 p-4">
       <span className="text-studoborder opacity-60">{icon}</span>
       <p className="text-xs opacity-50">{label}</p>
       <p className="text-lg font-bold">{value}</p>
@@ -67,7 +67,7 @@ function SessionRow({
   startedAt: string;
 }) {
   return (
-    <div className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-4 rounded-xl border border-studoborder/20 px-4 py-3">
+    <div className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-4 rounded-xl border border-neutral-200/20 px-4 py-3">
       <p className="truncate text-xs font-mono opacity-50">{setId}</p>
       <span className="text-xs opacity-40">{setType}</span>
       <span className="text-xs font-medium text-emerald-500">{accuracy}%</span>
@@ -126,7 +126,7 @@ const AdminUserDetail = ({ userId }: Props) => {
 
   return (
     <div className="min-h-0 min-w-0 overflow-y-scroll scroll-hidden flex w-full flex-col gap-8 pb-16">
-      <div className="flex row justify-between items-start gap-4 rounded-4xl bg-studogrey/20 border border-studoborder/30 p-6">
+      <div className="flex row justify-between items-start gap-4 rounded-4xl bg-studogrey/20 border border-neutral-200/30 p-6">
         <div
           className={"flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6"}
         >
@@ -234,7 +234,7 @@ const AdminUserDetail = ({ userId }: Props) => {
       {/* Persoonlijke info */}
       <div>
         <SectionTitle>Account info</SectionTitle>
-        <div className="mt-3 grid grid-cols-1 gap-2 rounded-3xl bg-studogrey/20 border border-studoborder/20 p-4 sm:grid-cols-2">
+        <div className="mt-3 grid grid-cols-1 gap-2 rounded-3xl bg-studogrey/20 border border-neutral-200/20 p-4 sm:grid-cols-2">
           {[
             { label: "ID", value: data.id },
             { label: "Email", value: data.email },
@@ -350,7 +350,7 @@ const AdminUserDetail = ({ userId }: Props) => {
               data.classrooms.map((c) => (
                 <div
                   key={c.id}
-                  className="flex items-center gap-3 rounded-xl border border-studoborder/20 px-4 py-3"
+                  className="flex items-center gap-3 rounded-xl border border-neutral-200/20 px-4 py-3"
                 >
                   <TbSchool size={16} className="shrink-0 opacity-40" />
                   <div className="min-w-0 flex-1">
@@ -373,7 +373,7 @@ const AdminUserDetail = ({ userId }: Props) => {
       {data.studoprofile && (
         <div>
           <SectionTitle>Studo profiel</SectionTitle>
-          <div className="mt-3 rounded-2xl border border-studoborder/20 p-4">
+          <div className="mt-3 rounded-2xl border border-neutral-200/20 p-4">
             <div className="flex items-center gap-3">
               <Avatar
                 displayName={data.studoprofile.displayName}
@@ -386,7 +386,7 @@ const AdminUserDetail = ({ userId }: Props) => {
                   {data.studoprofile.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-studoborder/30 px-2 py-0.5 text-xs opacity-60"
+                      className="rounded-full border border-neutral-200/30 px-2 py-0.5 text-xs opacity-60"
                     >
                       {tag}
                     </span>

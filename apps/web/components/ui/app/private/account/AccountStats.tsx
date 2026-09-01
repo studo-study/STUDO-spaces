@@ -14,7 +14,7 @@ export default function Stats() {
       <div className={"w-full flex flex-row gap-5"}>
         <div
           className={
-            "w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
+            "w-1/3 border border-neutral-200/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
           }
         >
           <CreditCard
@@ -27,7 +27,7 @@ export default function Stats() {
 
         <div
           className={
-            "w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
+            "w-1/3 border border-neutral-200/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
           }
         >
           <ClockFading
@@ -40,7 +40,7 @@ export default function Stats() {
 
         <div
           className={
-            "w-1/3 border border-studoborder/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
+            "w-1/3 border border-neutral-200/30 h-20 rounded-3xl bg-gray-700 px-10 py-5 flex items-center justify-center dark:text-white textstudodarkblue font-bold gap-2"
           }
         >
           <Trophy size={20} className="dark:text-white text-studodarkblue" />

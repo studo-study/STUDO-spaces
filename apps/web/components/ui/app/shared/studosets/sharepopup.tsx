@@ -29,7 +29,7 @@ export default function SharePopup(props: SharePopupProps) {
         <div
           className="inline-flex  cursor-pointer active:scale-95 transition-[scale] duration-300 flex-row items-center gap-[0.6em] min-h-9 min-w-9 sm:min-h-10 sm:min-w-10
                     font-atrament font-normal text-studodarkblue justify-center text-xl
-                    rounded-full bg-studogrey/30 border border-studoborder/30 shadow-2x
+                    rounded-full bg-studogrey/30 border border-neutral-200/30 shadow-2x
                     dark:text-white"
         >
           <Share size={15} />
@@ -42,11 +42,11 @@ export default function SharePopup(props: SharePopupProps) {
           <span className={"text-xs text-studogrey"}>{t("isPrivate")}*</span>
         )}
         <div
-          className={"border-0.5 rounded h-1 border-studoborder/30 w-full"}
+          className={"border-0.5 rounded h-1 border-neutral-200/30 w-full"}
         />
         <div
           className={
-            "w-full h-10 rounded-lg flex p-2 justify-between items-center gap-1 bg-studogrey/20 border border-studoborder/30"
+            "w-full h-10 rounded-lg flex p-2 justify-between items-center gap-1 bg-studogrey/20 border border-neutral-200/30"
           }
         >
           <input

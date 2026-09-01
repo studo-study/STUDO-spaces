@@ -309,6 +309,13 @@
       "when": 1786442868710,
       "tag": "0043_user_terms_privacy",
       "breakpoints": true
+    },
+    {
+      "idx": 44,
+      "version": "7",
+      "when": 1788228950749,
+      "tag": "0044_widget_type_ui_set",
+      "breakpoints": true
     }
   ]
 }

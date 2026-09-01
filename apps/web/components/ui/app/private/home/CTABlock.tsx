@@ -14,7 +14,7 @@ export default function CTABlock() {
   if (sets.length > 0 || (courses ?? []).length > 0) return null;
 
   return (
-    <div className="p-6 rounded-3xl shadow-2xl backdrop-blur-xl bg-gradient-to-br dark:from-emerald-500/10 dark:to-emerald-400/10 from-emerald-500/50 to-teal-500/50 border border-studoborder/30">
+    <div className="p-6 rounded-3xl shadow-2xl backdrop-blur-xl bg-gradient-to-br dark:from-emerald-500/10 dark:to-emerald-400/10 from-emerald-500/50 to-teal-500/50 border border-neutral-200/30">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
           <h3 className="text-lg font-semibold text-white mb-1">

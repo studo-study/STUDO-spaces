@@ -141,7 +141,7 @@ function ProfilePopup({
           <Link
             href={"/account"}
             className={
-              "px-5 flex justify-center items-baseline flex-col w-full glass-rgb h-20 border-b border-studoborder/30"
+              "px-5 flex justify-center items-baseline flex-col w-full glass-rgb h-20 border-b border-neutral-200/30"
             }
           >
             <div

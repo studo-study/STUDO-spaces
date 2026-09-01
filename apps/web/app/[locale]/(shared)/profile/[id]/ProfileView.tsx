@@ -87,7 +87,7 @@ const StudosetItem = ({ item }: StudosetItemProps) => {
     <Link
       href={"/studoset/" + item.id}
       className={
-        "w-full cursor-pointer h-15 rounded-4xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
+        "w-full cursor-pointer h-15 rounded-4xl border bg-studogrey/30 border-neutral-200/30 hover:border-neutral-400 transition-all duration-300 flex justify-between items-center px-5 gap-2"
       }
     >
       <div className={"flex flex-row items-center gap-3"}>
@@ -112,7 +112,7 @@ const VisualsetItem = ({ item }: VisualsetItemProps) => {
     <Link
       href={"/visualset/" + item.id}
       className={
-        "w-full cursor-pointer h-15 rounded-xl border bg-studogrey/30 border-studoborder/30 hover:border-studoborder transition-all duration-300 flex justify-between items-center px-5 gap-2"
+        "w-full cursor-pointer h-15 rounded-xl border bg-studogrey/30 border-neutral-200/30 hover:border-neutral-400 transition-all duration-300 flex justify-between items-center px-5 gap-2"
       }
     >
       <div className={"flex flex-row items-center gap-2"}>
