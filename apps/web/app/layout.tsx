@@ -23,7 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={montserrat.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${montserrat.variable} dark`}
+      suppressHydrationWarning
+    >
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/fmn3jvz.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -2,6 +2,10 @@
 @import "tailwindcss";
 @import "@studo/ui/styles/theme.css";
 
+/* Force class-based dark variant (was media/system). Combined with the `dark`
+   class hardcoded on <html> this pins the app to permanent dark mode for now. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Design-system componenten leven in het @studo/ui pakket; scan hun classes. */
 @source "../../../packages/ui/src/design_system";
 
