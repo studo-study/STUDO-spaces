@@ -21,7 +21,6 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 export class FileService {
   private readonly s3 = new S3Client({
     region: 'auto',
-    // jurisdiction-scoped bucket (bv. eu) vereist het jurisdiction-endpoint;
     // val terug op het standaard account-endpoint als het niet gezet is.
     endpoint:
       process.env.R2_JURISDICTION_ENDPOINT ??

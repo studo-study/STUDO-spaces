@@ -84,7 +84,7 @@ const OverviewTitle: React.FC<OverviewTitleProps> = (props) => {
               />
               <input
                 className={
-                  " font-medium text-studogrey text-base group outline-none"
+                  " font-medium text-neutral-400  text-base group outline-none"
                 }
                 defaultValue={course?.description ?? ""}
                 onBlur={(e) => {

@@ -53,13 +53,9 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
 
   const { width, containerRef, mounted } = useContainerWidth();
 
-  // rowHeight so START_ROWS rows (+ gaps + padding) exactly fill the height.
+  //TODO deze aanpasse
   const rowHeight = 240;
 
-  // Load persisted layout for the active course. Only *replace* local widgets
-  // when the server actually returns some — a failed/empty response must never
-  // clobber widgets the user just added (otherwise optimistic adds vanish when
-  // the fetch resolves, e.g. under StrictMode double-invoke).
   useEffect(() => {
     if (!courseId) return;
     setCourseId(courseId);
@@ -90,7 +86,6 @@ const WigetGridLayout: React.FC<WigetGridLayoutProps> = ({ courseId }) => {
     };
   });
 
-  // Rows to paint behind the grid: cover the content plus a little headroom.
   const bottomRow = activeWidgets.reduce(
     (max, w) => Math.max(max, w.y + w.h),
     0,

@@ -27,7 +27,6 @@ interface AuthenticatedRequest extends ExpressRequest {
     id: string;
     email?: string;
     role?: string;
-    // wat je JWT ook bevat
   };
 }
 

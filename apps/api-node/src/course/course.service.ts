@@ -248,7 +248,6 @@ export class CourseService {
     };
   }
 
-  /** First workspace of a course, creating one if none exists yet. */
   private async resolveWorkspaceId(courseId: string): Promise<string> {
     const existing = await this.db.query.courseWorkspaces.findFirst({
       where: eq(courseWorkspaces.courseId, courseId),
@@ -280,7 +279,6 @@ export class CourseService {
     };
   }
 
-  /** Replace the entire widget layout for a course (its default workspace). */
   async replaceWidgets(
     courseId: string,
     userId: string,

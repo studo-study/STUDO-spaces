@@ -19,7 +19,7 @@ export default function ProgressWidget({
   return (
     <div
       className={
-        "flex h-full w-full flex-col items-center gap-2 text-sm text-studogrey"
+        "flex h-full w-full flex-col items-center gap-2 text-sm text-neutral-400 "
       }
     >
       <div className={"w-full flex flex-row gap-2 items-center"}>
@@ -32,7 +32,7 @@ export default function ProgressWidget({
         }
       >
         <Progress length={total || 1} progress={done} height={90} />
-        <span className={"text-studogrey"}>
+        <span className={"text-neutral-400 "}>
           {done}/{total} tasks done
         </span>
       </div>
