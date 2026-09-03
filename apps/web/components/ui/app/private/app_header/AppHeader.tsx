@@ -1,4 +1,3 @@
-// components/app/app_header/header.tsx
 "use client";
 import TriggerAddPopup from "@/components/ui/app/private/app_header/popups/AddPopup";
 import { useState } from "react";
@@ -45,7 +44,6 @@ export default function AppHeader({
   const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === "true";
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
-  const premium = process.env.NEXT_PUBLIC_PREMIUM === "true";
   const settings = useSettings()?.data;
   const { impersonating, stop } = useImpersonation();
 
