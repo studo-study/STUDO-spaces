@@ -10,7 +10,7 @@ export default function SetsWidget({
   return (
     <div
       className={
-        "flex h-full w-full flex-col items-center gap-2 text-sm text-studogrey"
+        "flex h-full w-full flex-col items-center gap-2 text-sm text-neutral-400"
       }
     >
       <div className={"w-full flex flex-row gap-2 items-center"}>

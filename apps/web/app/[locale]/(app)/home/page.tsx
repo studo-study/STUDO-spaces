@@ -32,9 +32,7 @@ export default async function HomePage() {
             <span className="font-georgia font-bold dark:text-white text-studodarkblue text-2xl">
               {welcome}
             </span>
-            <span className="dark:text-studogrey text-gray-400">
-              {t("ready")}
-            </span>
+            <span className="text-neutral-400 ">{t("ready")}</span>
           </div>
         </div>
         <QuickStats />

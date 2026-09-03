@@ -34,7 +34,7 @@ const WidgetItem: React.FC<WidgetItemProps> = (props) => {
                 type={"button"}
                 aria-label={"Widget options"}
                 className={
-                  "flex h-6 w-6 items-center justify-center rounded-lg text-studogrey transition-opacity duration-200 cursor-pointer hover:bg-studogrey/40"
+                  "flex h-6 w-6 items-center justify-center rounded-lg text-neutral-400  transition-opacity duration-200 cursor-pointer hover:bg-studogrey/40"
                 }
               >
                 <EllipsisVertical size={14} />
