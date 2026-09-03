@@ -23,8 +23,8 @@ const Courses = () => {
           href={"/library/courses"}
         />
         <Container height={"30"}>
-          <div className="min-w-full w-full flex flex-row gap-5">
-            {courses.map((item) => (
+          <div className="min-w-full w-full overflow-y-scroll flex flex-row gap-5 scroll-hidden">
+            {courses.slice(0, 6).map((item) => (
               <CourseItem course={item} key={item.id} />
             ))}
           </div>

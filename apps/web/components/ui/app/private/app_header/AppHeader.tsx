@@ -1,4 +1,3 @@
-// components/app/app_header/header.tsx
 "use client";
 import TriggerAddPopup from "@/components/ui/app/private/app_header/popups/AddPopup";
 import { useState } from "react";
@@ -11,7 +10,10 @@ import OnlineScanner from "@/components/ui/app/private/app_header/SocialSection"
 import AppSearchbar from "@/components/ui/app/private/search/SearchBar";
 import { ArrowRight, Menu, OctagonX, PanelRightOpen } from "lucide-react";
 import BreadCrumbs from "@/components/ui/app/private/course/layout/BreadCrumbs";
-import { SpecialeDagTitel } from "@/components/ui/app/private/app_header/SpecialeDag";
+import {
+  SpecialeDag,
+  SpecialeDagTitel,
+} from "@/components/ui/app/private/app_header/SpecialeDag";
 import { useImpersonation } from "@/hooks/app/auth/useImpersonation";
 import BaseButton from "@studo/ui/design_system/button/BaseButton";
 import Streak from "@/components/ui/overige/icons/Streak";
@@ -42,7 +44,6 @@ export default function AppHeader({
   const openbrein = process.env.NEXT_PUBLIC_OPENBREIN === "true";
   const beta = process.env.NEXT_PUBLIC_BETA === "true";
   const toggleSidebar = useAppStore((s) => s.toggleSidebar);
-  const premium = process.env.NEXT_PUBLIC_PREMIUM === "true";
   const settings = useSettings()?.data;
   const { impersonating, stop } = useImpersonation();
 
@@ -88,6 +89,11 @@ export default function AppHeader({
             title={SpecialeDagTitel()}
             className={"w-fit flex flex-row gap-1"}
           >
+            <span
+              className={`font-georgia text-3xl font-bold truncate flex flex-row gap-1 bg-linear-to-r ${SpecialeDag()} bg-clip-text text-transparent transition-all duration-300`}
+            >
+              Studo
+            </span>
             {beta && (
               <span
                 className={
@@ -98,16 +104,6 @@ export default function AppHeader({
               </span>
             )}
           </Link>
-          {!premium && !beta && (
-            <Link
-              href={"/select"}
-              className={
-                "hover:scale-105 transition-all duration-300 px-5 py-1 text-sm font-bold shadow-2xl rounded-4xl border-neutral-200 bg-white backdrop-blur-2xl text-studodarkblue"
-              }
-            >
-              upgrade to select
-            </Link>
-          )}
         </div>
         <div className={"min-w-fit truncate flex-row flex items-center"}>
           <BreadCrumbs />
